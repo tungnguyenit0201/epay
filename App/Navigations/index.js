@@ -24,6 +24,7 @@ import QRPay from 'containers/Wallet/QRPay';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
+import Confirmation from 'containers/Wallet/Confirmation';
 
 const AppNavigator = () => {
   const initialRoute = 'Auth';
@@ -52,6 +53,7 @@ const AppNavigator = () => {
           <Stack.Screen name="QRPay" component={QRPay} />
           <Stack.Screen name="Transfer" component={Transfer} />
           <Stack.Screen name="TrafficFee" component={TrafficFee} />
+          <Stack.Screen name="Confirmation" component={Confirmation} />
           <Stack.Screen
             name="TrafficViolationPayment"
             component={TrafficViolationPayment}

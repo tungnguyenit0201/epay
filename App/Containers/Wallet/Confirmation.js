@@ -5,7 +5,7 @@ import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
 
-const Withdraw = () => {
+const TopUp = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let forgotRef = useRef({
@@ -20,13 +20,15 @@ const Withdraw = () => {
   };
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Rút tiền" />
-      <InputBlock label="Số tiền" />
+      <Header back title="Xác nhận" />
+      <InputBlock label="Xác nhận giao dịch" />
+      <Text>Số tiền: 99999đ</Text>
+      <Text>Phí giao dịch: 99999đ</Text>
+      <Text>Tổng tiền: 99999đ</Text>
       <Button
-        label="Liên kết ngân hàng"
-        onPress={() => Navigator.navigate('Bank')}
+        label="Tiếp tục"
+        onPress={() => Navigator.navigate('TabNavigation')}
       />
-      <Button label="Rút" onPress={() => Navigator.navigate('Confirmation')} />
     </ScrollView>
   );
 };
@@ -49,4 +51,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default Withdraw;
+export default TopUp;

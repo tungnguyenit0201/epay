@@ -25,7 +25,7 @@ const ForgotPassword = () => {
         onChangePassword={value => onChange('newPassword', value)}
         onChangeConfirm={value => onChange('passwordConfirm', value)}
       />
-      <Button label="Tối luôn bác tài" onPress={onPress} />
+      <Button label="Tới luôn bác tài" onPress={onPress} />
     </ScrollView>
   );
 };
