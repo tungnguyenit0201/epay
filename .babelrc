@@ -1,0 +1,35 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "actions": "./App/Redux/Actions",
+          "components": "./App/Components",
+          "containers": "./App/Containers",
+          "configs": "./App/Configs",
+          "hooks": "./App/Redux/Hooks",
+          "images": "./App/Images",
+          "navigations": "./App/Navigations",
+          "reducers": "./App/Redux/Reducers",
+          "sagas": "./App/Redux/Sagas",
+          "services": "./App/Services",
+          "themes": "./App/Themes",
+          "utils": "./App/Utils",
+          "context": "./App/Context"
+        }
+      }
+    ],
+    ["module:react-native-dotenv", {
+      "moduleName": "@env",
+      "path": ".env",
+      "blocklist": null,
+      "allowlist": null,
+      "blacklist": null, // DEPRECATED
+      "whitelist": null, // DEPRECATED
+      "safe": false,
+      "allowUndefined": true
+    }]
+  ]
+}

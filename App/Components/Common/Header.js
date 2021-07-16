@@ -1,0 +1,130 @@
+import React, {useState, useEffect} from 'react';
+import {View, Pressable, Image, StyleSheet, Platform} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Text, Icon} from 'components';
+import {Colors, Fonts, Images, Spacing} from 'themes';
+import Navigator from 'navigations/Navigator';
+import {scale} from 'utils/Functions';
+import _ from 'lodash';
+
+const Header = ({
+  title,
+  shadow = true,
+  style,
+  titleStyle,
+  back = false,
+  cart = false,
+  onPressBack,
+  renderRightComponent,
+}) => {
+  const {top} = useSafeAreaInsets();
+  const goBack = () => {
+    !!onPressBack ? onPressBack() : Navigator.goBack();
+  };
+  return (
+    <View
+      style={[
+        styles.wrap,
+        shadow ? styles.shadow : {},
+        {paddingTop: top > 40 ? top : top + scale(6)},
+        style,
+      ]}>
+      <View style={{minHeight: scale(24)}}>
+        <Text semibold style={[styles.title, titleStyle]}>
+          {title}
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            position: 'absolute',
+            justifyContent: 'space-between',
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}>
+          {Platform.isPad || Platform.OS == 'macos' ? (
+            <Pressable
+              style={styles.menuIcon}
+              onPress={() => Navigator.openDrawer()}>
+              <Image
+                source={Images.MenuIcon}
+                style={{height: scale(12), width: scale(12)}}
+              />
+            </Pressable>
+          ) : (
+            <>
+              {back ? (
+                <Pressable
+                  style={styles.left}
+                  onPress={() => goBack()}
+                  hitSlop={{
+                    right: scale(30),
+                    top: scale(20),
+                    bottom: scale(20),
+                    left: scale(30),
+                  }}>
+                  <View style={styles.back}>
+                    <Icon icon={Images.ArrowLeft} />
+                  </View>
+                </Pressable>
+              ) : (
+                <View />
+              )}
+            </>
+          )}
+
+          {cart && (
+            <View
+              style={{
+                marginHorizontal: Spacing.PADDING,
+              }}></View>
+          )}
+          {!!renderRightComponent && renderRightComponent()}
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  wrap: {
+    paddingBottom: scale(10),
+    backgroundColor: Colors.BACKGROUNDCOLOR,
+  },
+  shadow: {
+    shadowColor: Colors.BLACK,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 5,
+    zIndex: 1,
+  },
+  left: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  back: {
+    paddingHorizontal: Spacing.PADDING / 2,
+  },
+  right: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: Fonts.FONT_LARGE,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  },
+  menuIcon: {
+    paddingLeft: Spacing.PADDING,
+    paddingVertical: scale(8),
+    paddingRight: Spacing.PADDING * 10,
+  },
+});
+
+export default React.memo(Header);

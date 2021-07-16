@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "actions/*": ["App/Redux/Actions/*"],
+      "components/*": ["App/Components/*"],
+      "components": ["App/Components/index"],
+      "configs/*": ["App/Configs/*"],
+      "configs": ["App/Configs/index"],
+      "containers/*": ["App/Containers/*"],
+      "hooks/*": ["App/Redux/Hooks/*"],
+      "images/*": ["App/Images/*"],
+      "navigations/*": ["App/Navigations/*"],
+      "navigations": ["App/Navigations/index"],
+      "reducers/*": ["App/Redux/Reducers/*"],
+      "reducers": ["App/Redux/Reducers/index"],
+      "services/*": ["App/Services/*"],
+      "services": ["App/Services/index"],
+      "themes/*": ["App/Themes/*"],
+      "themes": ["App/Themes/index"],
+      "utils/*": ["App/Utils/*"],
+      "utils": ["App/Utils/index"], 
+      "context/*": ["App/Context/*"]
+}
+  },
+  "exclude": ["node_modules"]
+}
+
