@@ -11,7 +11,7 @@ const Tab = createBottomTabNavigator();
 
 import User from 'containers/User';
 import Home from 'containers/Home';
-import Transaction from 'containers/Transaction';
+import Transaction from 'containers/Wallet/Transaction';
 import {scale} from 'utils/Functions';
 import {TEXT} from 'configs/Constants';
 

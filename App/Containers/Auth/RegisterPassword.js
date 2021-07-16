@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
+import Password from 'components/Auth/Password';
 
 const ForgotPassword = () => {
   let {height} = useWindowDimensions();
@@ -20,8 +21,11 @@ const ForgotPassword = () => {
   return (
     <ScrollView style={styles.container}>
       <Header back title="Nhập mật khẩu" />
-      <InputBlock label="Nhập mật khẩu" />
-      <Button label="Tiếp tục" onPress={onPress} />
+      <Password
+        onChangePassword={value => onChange('newPassword', value)}
+        onChangeConfirm={value => onChange('passwordConfirm', value)}
+      />
+      <Button label="Tối luôn bác tài" onPress={onPress} />
     </ScrollView>
   );
 };

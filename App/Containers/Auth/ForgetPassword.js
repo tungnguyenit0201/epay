@@ -10,18 +10,21 @@ const ForgotPassword = () => {
   let forgotRef = useRef({
     phone: '',
   });
-  const onChange = (key, val) => {
-    forgotRef.current[key] = val;
+  const onPress = (key, val) => {
+    Navigator.navigate('OTP');
   };
 
-  const onPress = async () => {
-    Navigator.navigate('TabNavigation');
-  };
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Nhập mật khẩu" />
-      <InputBlock label="Nhập mật khẩu" />
-      <Button label="Tiếp tục" onPress={onPress} />
+      <Header back title="Quên mật khẩu à?" />
+      <Text>Hãy chọn định mệnh của bạn:</Text>
+      <Button label="Nhận mã OTP" onPress={onPress} />
+      <Button
+        label="Gọi 0987654321"
+        onPress={() => {
+          alert('Gọi xong');
+        }}
+      />
     </ScrollView>
   );
 };

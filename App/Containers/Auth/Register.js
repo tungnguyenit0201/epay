@@ -17,7 +17,7 @@ import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
 
-const OTP = () => {
+const Register = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let forgotRef = useRef({
@@ -40,11 +40,6 @@ const OTP = () => {
       {!loading ? (
         <View style={styles.wrap}>
           <OTPContainer onChange={value => onChange('otp', value)} />
-
-          {/* <Password
-            onChangePassword={value => onChange('newPassword', value)}
-            onChangeConfirm={value => onChange('passwordConfirm', value)}
-          /> */}
 
           <Button
             label={TEXT.CONFIRM}
@@ -81,4 +76,4 @@ const styles = StyleSheet.create({
     marginTop: Spacing.PADDING * 2,
   },
 });
-export default OTP;
+export default Register;

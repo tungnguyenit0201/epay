@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import {Button} from 'components';
+import {Button, InputBlock} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useUser} from '../../Context/User';
@@ -16,9 +16,15 @@ const Splash = () => {
           }}
           style={{width: '100%', height: '50%'}}
         />
+        <InputBlock numeric label="Nhập số điện thoại" />
+        <Button label="Đăng nhập" onPress={() => Navigator.navigate('Login')} />
         <Button
-          label="Đăng nhập bằng số điện thoại"
-          onPress={() => Navigator.navigate('Login')}
+          label="Quên mật khẩu"
+          onPress={() => Navigator.navigate('ForgetPassword')}
+        />
+        <Button
+          label="Đăng ký"
+          onPress={() => Navigator.navigate('Register')}
         />
       </View>
     </View>
