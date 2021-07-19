@@ -82,5 +82,7 @@ const TEXT = {
   SAVE_INFO: 'Lưu tên, email cho lần nhập tiếp theo',
   TRANSACTION_HISTORY: 'Lịch sử giao dịch',
   PROFILE: 'Profile',
+  CHANGE_PASSWORD: 'Đổi mật khẩu',
+  LIMIT_SETTING: 'Cài đặt hạn mức',
 };
 export default TEXT;

@@ -26,6 +26,12 @@ import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
 import Confirmation from 'containers/Wallet/Confirmation';
+import Security from 'containers/User/Security';
+import ChangePassword from 'containers/User/ChangePassword';
+import UserInfo from 'containers/User/UserInfo';
+import PaymentSettings from 'containers/User/PaymentSettings';
+import EditInfo from 'containers/User/EditInfo';
+import NewPassword from 'containers/User/NewPassword';
 
 const AppNavigator = () => {
   const initialRoute = 'Auth';
@@ -64,6 +70,18 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
+          <Stack.Screen name={SCREEN.SECURITY} component={Security} />
+          <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
+          <Stack.Screen name={SCREEN.EDIT_INFO} component={EditInfo} />
+          <Stack.Screen name={SCREEN.NEW_PASSWORD} component={NewPassword} />
+          <Stack.Screen
+            name={SCREEN.PAYMENT_SETTINGS}
+            component={PaymentSettings}
+          />
+          <Stack.Screen
+            name={SCREEN.CHANGE_PASSWORD}
+            component={ChangePassword}
+          />
           <Stack.Screen
             name="TrafficViolationPayment"
             component={TrafficViolationPayment}

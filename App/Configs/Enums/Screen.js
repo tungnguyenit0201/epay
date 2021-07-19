@@ -19,5 +19,12 @@ const SCREEN = {
   HOME: 'Home',
   TRANSACTION: 'Transaction',
   TAB_NAVIGATION: 'TabNavigation',
+  CHANGE_PASSWORD: 'ChangePassword',
+  SECURITY: 'Security',
+  USER_INFO: 'UserInfo',
+  PAYMENT_SETTINGS: 'PaymentSettings',
+  LIMIT_SETTING: 'LimitSetting',
+  EDIT_INFO: 'EditInfo',
+  NEW_PASSWORD: 'NewPassword',
 };
 export default SCREEN;
