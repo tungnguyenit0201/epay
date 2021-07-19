@@ -1,0 +1,23 @@
+const SCREEN = {
+  HOME: 'Home',
+  AUTH: 'Auth',
+  LOGIN: 'Login',
+  REGISTER: 'Register',
+  FORGET_PASSWORD: 'ForgetPassword',
+  REGISTER_PASSWORD: 'RegisterPassword',
+  OTP: 'OTP',
+  BANK: 'Bank',
+  NOTIFICATION: 'Notification',
+  TOP_UP: 'TopUp',
+  WITHDRAW: 'Withdraw',
+  QRPAY: 'QRPay',
+  TRANSFER: 'Transfer',
+  TRAFFIC_FEE: 'TrafficFee',
+  TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
+  CONFIRMATION: 'Confirmation',
+  USER: 'User',
+  HOME: 'Home',
+  TRANSACTION: 'Transaction',
+  TAB_NAVIGATION: 'TabNavigation',
+};
+export default SCREEN;

@@ -4,6 +4,7 @@ import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
+import {SCREEN} from 'configs/Constants';
 
 const ForgotPassword = () => {
   let {height} = useWindowDimensions();
@@ -16,7 +17,7 @@ const ForgotPassword = () => {
   };
 
   const onPress = async () => {
-    Navigator.navigate('TabNavigation');
+    Navigator.navigate(SCREEN.TAB_NAVIGATION);
   };
   return (
     <ScrollView style={styles.container}>

@@ -4,6 +4,8 @@ import {Button, InputBlock} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useUser} from '../../Context/User';
+import {SCREEN} from 'configs/Constants';
+
 const Splash = () => {
   const {userInfo} = useUser();
   console.log('userInfo :>> ', userInfo);
@@ -17,14 +19,17 @@ const Splash = () => {
           style={{width: '100%', height: '50%'}}
         />
         <InputBlock numeric label="Nhập số điện thoại" />
-        <Button label="Đăng nhập" onPress={() => Navigator.navigate('Login')} />
+        <Button
+          label="Đăng nhập"
+          onPress={() => Navigator.navigate(SCREEN.LOGIN)}
+        />
         <Button
           label="Quên mật khẩu"
-          onPress={() => Navigator.navigate('ForgetPassword')}
+          onPress={() => Navigator.navigate(SCREEN.FORGET_PASSWORD)}
         />
         <Button
           label="Đăng ký"
-          onPress={() => Navigator.navigate('Register')}
+          onPress={() => Navigator.navigate(SCREEN.REGISTER)}
         />
       </View>
     </View>

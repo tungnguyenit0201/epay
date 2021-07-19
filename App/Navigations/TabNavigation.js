@@ -4,6 +4,8 @@ import {Text} from 'components';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import _ from 'lodash';
+import {scale} from 'utils/Functions';
+import {TEXT, SCREEN} from 'configs/Constants';
 
 import {Colors, Fonts, Images} from 'themes';
 
@@ -12,8 +14,6 @@ const Tab = createBottomTabNavigator();
 import User from 'containers/User';
 import Home from 'containers/Home';
 import Transaction from 'containers/Wallet/Transaction';
-import {scale} from 'utils/Functions';
-import {TEXT} from 'configs/Constants';
 
 const TabIcons = {
   Home: Images.TabBar.Home,
@@ -86,9 +86,9 @@ const TabNavigation = () => {
             marginBottom: bottom ? (-bottom / 5) * 2 : 0,
           },
         }}>
-        <Tab.Screen name={'Home'} component={Home} />
-        <Tab.Screen name={'Transaction'} component={Transaction} />
-        <Tab.Screen name={'User'} component={User} />
+        <Tab.Screen name={SCREEN.HOME} component={Home} />
+        <Tab.Screen name={SCREEN.TRANSACTION} component={Transaction} />
+        <Tab.Screen name={SCREEN.USER} component={User} />
       </Tab.Navigator>
     </View>
   );

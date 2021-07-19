@@ -10,6 +10,7 @@ import POST_TYPE from './Enums/PostType';
 import TEXT from './Enums/Text';
 import SOCIAL from './Enums/Social';
 import RATING from './Enums/Rating';
+import SCREEN from './Enums/Screen';
 
 const TABS_TABLET = ['Giới thiệu', 'Khoá học liên quan'];
 
@@ -27,4 +28,5 @@ export {
   TEXT,
   SOCIAL,
   RATING,
+  SCREEN,
 };

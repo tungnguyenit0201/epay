@@ -4,6 +4,7 @@ import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
+import {SCREEN} from 'configs/Constants';
 
 const TopUp = () => {
   let {height} = useWindowDimensions();
@@ -15,9 +16,6 @@ const TopUp = () => {
     forgotRef.current[key] = val;
   };
 
-  const onPress = async () => {
-    Navigator.navigate('TabNavigation');
-  };
   return (
     <ScrollView style={styles.container}>
       <Header back title="Xác nhận" />
@@ -27,7 +25,7 @@ const TopUp = () => {
       <Text>Tổng tiền: 99999đ</Text>
       <Button
         label="Tiếp tục"
-        onPress={() => Navigator.navigate('TabNavigation')}
+        onPress={() => Navigator.navigate(SCREEN.TAB_NAVIGATION)}
       />
     </ScrollView>
   );

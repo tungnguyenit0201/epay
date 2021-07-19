@@ -5,6 +5,7 @@ import {Colors, Fonts, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Content from 'components/Home/Content';
+import {SCREEN} from 'configs/Constants';
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
@@ -18,19 +19,19 @@ const Home = () => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              Navigator.navigate('User');
+              Navigator.navigate(SCREEN.USER);
             }}>
             <Text>Tên - SĐT Ví của tôi 900đ {'>'}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push('Bank');
+              Navigator.push(SCREEN.BANK);
             }}>
             <Text>Liên kết NH</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push('Notification');
+              Navigator.push(SCREEN.NOTIFICATION);
             }}>
             <Text>🔔 Thông báo</Text>
           </TouchableOpacity>
@@ -38,7 +39,7 @@ const Home = () => {
         <View style={styles.action}>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push('TopUp');
+              Navigator.push(SCREEN.TOP_UP);
             }}>
             <Icon
               icon={Images.Withdraw}
@@ -49,7 +50,7 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push('Withdraw');
+              Navigator.push(SCREEN.WITHDRAW);
             }}>
             <Icon
               icon={Images.Withdraw}
@@ -60,7 +61,7 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push('QRPay');
+              Navigator.push(SCREEN.QRPAY);
             }}>
             <Icon
               icon={Images.QRCode}
@@ -71,7 +72,7 @@ const Home = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push('Transfer');
+              Navigator.push(SCREEN.TRANSFER);
             }}>
             <Icon
               icon={Images.QRCode}

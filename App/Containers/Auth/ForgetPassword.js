@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 
 const ForgotPassword = () => {
   let {height} = useWindowDimensions();
@@ -11,7 +12,7 @@ const ForgotPassword = () => {
     phone: '',
   });
   const onPress = (key, val) => {
-    Navigator.navigate('OTP');
+    Navigator.navigate(SCREEN.OTP);
   };
 
   return (

@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
+import {SCREEN} from 'configs/Constants';
 
 const Stack = createStackNavigator();
 
@@ -38,22 +39,31 @@ const AppNavigator = () => {
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
           }}>
-          <Stack.Screen name="TabNavigation" component={TabNavigation} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Auth" component={Auth} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-          <Stack.Screen name="RegisterPassword" component={RegisterPassword} />
-          <Stack.Screen name="OTP" component={OTP} />
-          <Stack.Screen name="Bank" component={Bank} />
-          <Stack.Screen name="Notification" component={Notification} />
-          <Stack.Screen name="TopUp" component={TopUp} />
-          <Stack.Screen name="Withdraw" component={Withdraw} />
-          <Stack.Screen name="QRPay" component={QRPay} />
-          <Stack.Screen name="Transfer" component={Transfer} />
-          <Stack.Screen name="TrafficFee" component={TrafficFee} />
-          <Stack.Screen name="Confirmation" component={Confirmation} />
+          <Stack.Screen
+            name={SCREEN.TAB_NAVIGATION}
+            component={TabNavigation}
+          />
+          <Stack.Screen name={SCREEN.HOME} component={Home} />
+          <Stack.Screen name={SCREEN.AUTH} component={Auth} />
+          <Stack.Screen name={SCREEN.LOGIN} component={Login} />
+          <Stack.Screen name={SCREEN.REGISTER} component={Register} />
+          <Stack.Screen
+            name={SCREEN.FORGET_PASSWORD}
+            component={ForgetPassword}
+          />
+          <Stack.Screen
+            name={SCREEN.REGISTER_PASSWORD}
+            component={RegisterPassword}
+          />
+          <Stack.Screen name={SCREEN.OTP} component={OTP} />
+          <Stack.Screen name={SCREEN.BANK} component={Bank} />
+          <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
+          <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
+          <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
+          <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
+          <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
+          <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
+          <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen
             name="TrafficViolationPayment"
             component={TrafficViolationPayment}

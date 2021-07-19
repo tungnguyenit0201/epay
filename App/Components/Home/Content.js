@@ -11,13 +11,14 @@ import {Text} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 
 const Content = () => {
   return (
     <View style={styles.container}>
       {[
-        {name: 'Thanh toán vi phạm gt', screen: 'TrafficFee'},
-        {name: 'Dịch vụ phí gt', screen: 'TrafficViolationPayment'},
+        {name: 'Thanh toán vi phạm gt', screen: SCREEN.TRAFFIC_FEE},
+        {name: 'Dịch vụ phí gt', screen: SCREEN.TRAFFIC_VIOLATION_PAYMENT},
       ].map(item => {
         return (
           <TouchableOpacity

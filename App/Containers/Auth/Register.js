@@ -16,6 +16,7 @@ import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
+import {SCREEN} from 'configs/Constants';
 
 const Register = () => {
   let {height} = useWindowDimensions();
@@ -30,7 +31,7 @@ const Register = () => {
   };
 
   const register = async () => {
-    Navigator.navigate('RegisterPassword');
+    Navigator.navigate(SCREEN.REGISTER_PASSWORD);
   };
 
   return (

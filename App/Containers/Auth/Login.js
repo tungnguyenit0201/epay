@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 
 const ForgotPassword = () => {
   let {height} = useWindowDimensions();
@@ -15,7 +16,7 @@ const ForgotPassword = () => {
   };
 
   const onPress = async () => {
-    Navigator.navigate('TabNavigation');
+    Navigator.navigate(SCREEN.TAB_NAVIGATION);
   };
   return (
     <ScrollView style={styles.container}>
