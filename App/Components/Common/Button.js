@@ -39,8 +39,8 @@ export default ({
           marginLeft: ml || mh,
           marginRight: mr || mh,
         },
-        style,
         styles.button,
+        style,
         mode == 'text' && styles.textButton,
         mode == 'outlined' && styles.outlinedButton,
       ]}>
