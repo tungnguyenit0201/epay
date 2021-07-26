@@ -32,6 +32,7 @@ import UserInfo from 'containers/User/UserInfo';
 import PaymentSettings from 'containers/User/PaymentSettings';
 import EditInfo from 'containers/User/EditInfo';
 import NewPassword from 'containers/User/NewPassword';
+import Contacts from 'containers/Wallet/Contacts';
 
 const AppNavigator = () => {
   const initialRoute = 'Auth';
@@ -86,6 +87,7 @@ const AppNavigator = () => {
             name="TrafficViolationPayment"
             component={TrafficViolationPayment}
           />
+          <Stack.Screen name={SCREEN.CONTACTS} component={Contacts} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

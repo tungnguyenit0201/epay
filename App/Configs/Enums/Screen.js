@@ -26,5 +26,6 @@ const SCREEN = {
   LIMIT_SETTING: 'LimitSetting',
   EDIT_INFO: 'EditInfo',
   NEW_PASSWORD: 'NewPassword',
+  CONTACTS: 'Contacts',
 };
 export default SCREEN;
