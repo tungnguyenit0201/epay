@@ -21,6 +21,7 @@ import {SCREEN} from 'configs/Constants';
 const OTP = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
+  let [countdown, setCountDown] = useState(100);
   let forgotRef = useRef({
     otp: null,
     newPassword: null,
@@ -41,7 +42,6 @@ const OTP = () => {
       {!loading ? (
         <View style={styles.wrap}>
           <OTPContainer onChange={value => onChange('otp', value)} />
-
           {/* <Password
             onChangePassword={value => onChange('newPassword', value)}
             onChangeConfirm={value => onChange('passwordConfirm', value)}
@@ -51,6 +51,7 @@ const OTP = () => {
             label={TEXT.CONFIRM}
             onPress={register}
             style={styles.confirmation}
+            labelStyle={styles.textLable}
           />
         </View>
       ) : (
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING * 3,
   },
   header: {
-    fontSize: Fonts.FONT_LARGE,
+    fontSize: Fonts.FONT_LARGE + 16,
     fontWeight: 'bold',
     paddingBottom: Spacing.PADDING,
   },
@@ -80,6 +81,10 @@ const styles = StyleSheet.create({
   },
   confirmation: {
     marginTop: Spacing.PADDING * 2,
+    paddingVertical: scale(16),
   },
+  textLable: {
+    fontSize: Fonts.FONT_MEDIUM_LARGE
+  }
 });
 export default OTP;

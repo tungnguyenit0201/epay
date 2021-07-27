@@ -29,6 +29,7 @@ const OTP = ({onChange}) => {
           maxLength={1}
           selectTextOnFocus
           key={index}
+          
         />
       ))}
     </View>
@@ -39,12 +40,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: scale(200),
+    width: Spacing.SCREEN_WIDTH,
     alignSelf: 'center',
     marginBottom: Spacing.PADDING * 2,
   },
   otp: {
-    width: scale(40),
+    width: scale(60),
     backgroundColor: 'transparent',
     fontSize: Fonts.FONT_LARGE,
     textAlign: 'center',
