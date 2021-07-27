@@ -69,5 +69,9 @@
 		<string>UTM-Neo-Sans-IntelBold_Italic.ttf</string>
 		<string>UTM-Neo-Sans-IntelBold.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
 </dict>
 </plist>
