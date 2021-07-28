@@ -5,7 +5,13 @@ import {Colors, Fonts, Spacing} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 
-const OTP = ({onChange}) => {
+const OTP = ({
+  numDigits = 6,
+  onChange,
+  containerStyle,
+  inputStyle,
+  seperatorStyle,
+}) => {
   const contentRef = useRef({
     values: [],
     refs: [],
@@ -19,17 +25,20 @@ const OTP = ({onChange}) => {
   };
 
   return (
-    <View style={styles.container}>
-      {[...Array(4)].map((item, index) => (
-        <TextInput
-          ref={ref => contentRef.current.refs.push(ref)}
-          onChange={value => _onChange(value, index)}
-          style={styles.otp}
-          numeric
-          maxLength={1}
-          selectTextOnFocus
-          key={index}
-        />
+    <View style={[styles.container, containerStyle]}>
+      {[...Array(numDigits)].map((item, index) => (
+        <>
+          {!!index && <View style={[styles.seperator, seperatorStyle]} />}
+          <TextInput
+            ref={ref => contentRef.current.refs.push(ref)}
+            onChange={value => _onChange(value, index)}
+            style={[styles.otp, inputStyle]}
+            numeric
+            maxLength={1}
+            selectTextOnFocus
+            key={index}
+          />
+        </>
       ))}
     </View>
   );
@@ -39,7 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: scale(200),
     alignSelf: 'center',
     marginBottom: Spacing.PADDING * 2,
   },
@@ -48,8 +56,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontSize: Fonts.FONT_LARGE,
     textAlign: 'center',
-    borderColor: Colors.BORDER,
-    borderWidth: 2,
+    borderColor: Colors.BLACKTEXT,
+    borderWidth: 1,
+    borderRadius: 0,
+  },
+  seperator: {
+    width: Spacing.PADDING / 2,
   },
 });
 
