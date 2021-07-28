@@ -45,7 +45,7 @@ export default ({
         mode == 'outlined' && styles.outlinedButton,
       ]}>
       <Text centered semibold color={textColor} style={labelStyle}>
-        {label}
+        {typeof label == 'function' ? label() : label}
       </Text>
       {!!icon && (
         <Image

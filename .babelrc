@@ -9,7 +9,7 @@
           "components": "./App/Components",
           "containers": "./App/Containers",
           "configs": "./App/Configs",
-          "hooks": "./App/Redux/Hooks",
+          "hooks": "./App/Hooks",
           "images": "./App/Images",
           "navigations": "./App/Navigations",
           "reducers": "./App/Redux/Reducers",
