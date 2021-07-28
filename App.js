@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Navigation from 'navigations';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {UserProvider} from 'App/Context/User';
+import {LanguageProvider} from 'App/Context/Language';
 // import Storybook from './storybook';
 // import {MODE} from '@env';
 
@@ -10,9 +11,11 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <UserProvider>
-        <Navigation />
-      </UserProvider>
+      <LanguageProvider>
+        <UserProvider>
+          <Navigation />
+        </UserProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 };
