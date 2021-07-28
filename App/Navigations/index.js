@@ -33,6 +33,9 @@ import PaymentSettings from 'containers/User/PaymentSettings';
 import EditInfo from 'containers/User/EditInfo';
 import NewPassword from 'containers/User/NewPassword';
 import Contacts from 'containers/Wallet/Contacts';
+import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
+import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
+import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 
 const AppNavigator = () => {
   const initialRoute = 'Auth';
@@ -88,6 +91,18 @@ const AppNavigator = () => {
             component={TrafficViolationPayment}
           />
           <Stack.Screen name={SCREEN.CONTACTS} component={Contacts} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_USER_INFO}
+            component={VerifyUserInfo}
+          />
+          <Stack.Screen
+            name={SCREEN.VERIFY_IDENTITY_CARD}
+            component={VerifyIdentityCard}
+          />
+          <Stack.Screen
+            name={SCREEN.VERIFY_USER_PORTRAIT}
+            component={VerifyUserPortrait}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
