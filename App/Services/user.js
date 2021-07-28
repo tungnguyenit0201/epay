@@ -12,7 +12,6 @@ export const getProfile = async ({userId}) => {
     isWooApi: true,
     success: res => {
       response = res;
-      console.log('res :>> ', res);
     },
     failure: res => {
       if (res) console.log('Some thing went wrong', res?.message);

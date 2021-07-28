@@ -12,7 +12,6 @@ import {getProfile} from 'services/user';
 const UserContext = createContext({});
 export const UserProvider = ({children}) => {
   const {data} = useQuery('userInfo', getProfile, {staleTime: 10000});
-  console.log('data :>> ', data);
   const [userInfo, dispatch] = React.useReducer(userReducer, data);
 
   const value = React.useMemo(
