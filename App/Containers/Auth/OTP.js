@@ -30,7 +30,6 @@ const OTP = () => {
     forgotRef.current[key] = val;
   };
 
-  //test
   const register = async () => {
     Navigator.navigate(SCREEN.REGISTER_PASSWORD);
   };
@@ -43,7 +42,7 @@ const OTP = () => {
         <View style={styles.wrap}>
           <OTPContainer 
             onChange={value => onChange('otp', value)}/>
-  
+
           {/* <Password
             onChangePassword={value => onChange('newPassword', value)}
             onChangeConfirm={value => onChange('passwordConfirm', value)}
