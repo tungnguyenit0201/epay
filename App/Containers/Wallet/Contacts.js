@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
-import {useContacts} from 'hooks/wallet/contacts';
+import {useContacts} from 'context/Wallet/utils';
 import {FWLoading, Header, Text, TextInput} from 'components';
 import {TEXT} from 'configs/Constants';
 

@@ -5,7 +5,7 @@ import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 
-const ForgotPassword = () => {
+const ForgetPassword = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let forgotRef = useRef({
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default ForgotPassword;
+export default ForgetPassword;

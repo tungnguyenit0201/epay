@@ -84,5 +84,9 @@ const TEXT = {
   PROFILE: 'Profile',
   CHANGE_PASSWORD: 'Đổi mật khẩu',
   LIMIT_SETTING: 'Cài đặt hạn mức',
+  VERIFY_ACCOUNT: 'Xác thực tài khoản',
+  CONTINUE: 'Tiếp tục',
+  TAKE_PHOTO: 'Chụp ảnh',
+  SELECT_IMAGE_IN_LIBRARY: 'Chọn ảnh trong điện thoại',
 };
 export default TEXT;
