@@ -30,6 +30,7 @@ const OTP = () => {
     forgotRef.current[key] = val;
   };
 
+  //test
   const register = async () => {
     Navigator.navigate(SCREEN.REGISTER_PASSWORD);
   };
