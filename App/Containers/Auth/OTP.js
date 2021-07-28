@@ -36,22 +36,35 @@ const OTP = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Nhập mã OTP" />
+      <Header back />
 
       {!loading ? (
         <View style={styles.wrap}>
-          <OTPContainer onChange={value => onChange('otp', value)} />
+          <OTPContainer 
+            onChange={value => onChange('otp', value)}/>
 
           {/* <Password
             onChangePassword={value => onChange('newPassword', value)}
             onChangeConfirm={value => onChange('passwordConfirm', value)}
           /> */}
 
-          <Button
-            label={TEXT.CONFIRM}
+          {/* <Button
+            mb={10}
+            disabled
+            label='Gửi lại (56s)'
             onPress={register}
-            style={styles.confirmation}
+            labelStyle={{color: Colors.GRAY}}
+            style={styles.btn_send}/> 
+            //button send which waiting for [number] seconds*/}
+          <Button
+            mb={10}
+            label='Gửi lại (56s)'
+            //onPress={register}
           />
+          <Button
+            disabled
+            label='Tiếp tục'
+            onPress={register}/>
         </View>
       ) : (
         <FWLoading wrapStyle={[styles.loading, {height: height}]} />
@@ -81,5 +94,13 @@ const styles = StyleSheet.create({
   confirmation: {
     marginTop: Spacing.PADDING * 2,
   },
+  btn_send: {
+    // color: Colors.BLACK,
+    backgroundColor: '#fff',
+    borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: Colors.BLACK,
+    borderStyle: 'solid'
+  }
 });
 export default OTP;
