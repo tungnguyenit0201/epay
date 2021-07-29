@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
+import {ScrollView, StyleSheet, View, Pressable, useWindowDimensions} from 'react-native';
 import {
   Text,
   InputBlock,
@@ -48,23 +48,26 @@ const OTP = () => {
             onChangeConfirm={value => onChange('passwordConfirm', value)}
           /> */}
 
-          {/* <Button
-            mb={10}
-            disabled
-            label='Gửi lại (56s)'
-            onPress={register}
-            labelStyle={{color: Colors.GRAY}}
-            style={styles.btn_send}/> 
-            //button send which waiting for [number] seconds*/}
           <Button
             mb={10}
-            label='Gửi lại (56s)'
-            //onPress={register}
-          />
-          <Button
             disabled
-            label='Tiếp tục'
+            label={() => (
+              <Text style={{color: Colors.BACKGROUNDACCORDION}}>
+                {TEXT.CONFIRM} <Text>(60s)</Text>
+              </Text>
+            )}
+            style={styles.disabled_btn}
             onPress={register}/>
+          
+          <View style={[styles.box_1, {marginTop: 20}]}>
+            <Pressable onPress={register}>
+              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
+            </Pressable>
+
+            <Pressable onPress={register}>
+              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+            </Pressable>
+          </View>
         </View>
       ) : (
         <FWLoading wrapStyle={[styles.loading, {height: height}]} />
@@ -94,13 +97,23 @@ const styles = StyleSheet.create({
   confirmation: {
     marginTop: Spacing.PADDING * 2,
   },
-  btn_send: {
+  disabled_btn: {
     // color: Colors.BLACK,
     backgroundColor: '#fff',
     borderRadius: 3,
     borderWidth: 0.5,
-    borderColor: Colors.BLACK,
+    borderColor: Colors.BACKGROUNDACCORDION,
     borderStyle: 'solid'
+  },
+  link_text: {
+    textDecorationStyle: 'solid',
+    textDecorationColor: Colors.BLACK,
+    textDecorationLine: 'underline',
+  },
+  box_1: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   }
 });
 export default OTP;
