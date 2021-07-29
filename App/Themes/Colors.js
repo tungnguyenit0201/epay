@@ -1,4 +1,20 @@
 export default {
+  cl1:    '#3665f3',
+  cl2:    '#03a5fc',
+  cl3:    '#03a5fc',
+  white:  '#fff',
+  black:  '#000',
+  g1:     '#F3F4F6',
+  g2:     '#E5E7EB',
+  g3:     '#FD1D5DB',
+  g4:     '#9CA3AF',
+  g5:     '#6B7280',
+  g6:     '#4B5563',
+  g7:     '#374151',
+  g8:     '#1F2937',
+  g9:     '#111827',
+
+
   PRIMARY: '#03a5fc',
   TEXT: '#555555',
   GRAY: '#696969',
