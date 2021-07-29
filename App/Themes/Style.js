@@ -4,7 +4,7 @@ import {Colors, Spacing} from 'themes';
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: scale(15),
+    paddingHorizontal: scale(20),
     position : 'relative',
   },
 

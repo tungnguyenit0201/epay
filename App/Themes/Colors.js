@@ -1,9 +1,20 @@
 export default {
-  cl1:    '#3665f3',
-  cl2:    '#03a5fc',
-  cl3:    '#03a5fc',
+  cl1:    '#437EC0',
+  cl2:    '#6FC3EA',
+  cl3:    '#969696',
+  cl4:    '#CCCCCB',
+  
   white:  '#fff',
-  black:  '#000',
+  black:  '#222',
+  gray:   '#666',
+
+  l1:     '#F8F8F8',
+  l2:     '#EEEEEE',
+  l3:     '#DCDCDC',
+  l4:     '#CCCCCC',
+  l5:     '#AAAAAA',
+  l6:     '#999999',
+
   g1:     '#F3F4F6',
   g2:     '#E5E7EB',
   g3:     '#FD1D5DB',
@@ -13,6 +24,8 @@ export default {
   g7:     '#374151',
   g8:     '#1F2937',
   g9:     '#111827',
+
+  Highlight : '#FF0000',
 
 
   PRIMARY: '#03a5fc',
