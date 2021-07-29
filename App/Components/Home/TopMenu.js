@@ -11,12 +11,12 @@ const Content = ({data}) => {
   return (
     <Row>
       {
-      data.map(item => {
+      data.map((item,index) => {
         return (
-          <Col  width="25%">
+          <Col  width="25%" key={index}>
             <TouchableOpacity
               style={styles.item}
-              key={item.screen}
+              
               onPress={() => { Navigator.push(item.screen);  }}
             >
                 <Icon
