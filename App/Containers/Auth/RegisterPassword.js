@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
   },
   buttonBlock: {
     marginTop: Spacing.PADDING,
-    paddingVertical: Fonts.FONT_LARGE
+    paddingVertical: Fonts.FONT_LARGE,
+    backgroundColor: Colors.g9
   },
   textError: {
     color: "red",

@@ -53,7 +53,7 @@ const ForgetPassword = () => {
         <Button
           style={styles.buttonBlock}
           label="Tiếp tục"
-          labelStyle={styles.textLable}
+          fs={Fonts.FONT_MEDIUM_LARGE}
           onPress={onPress}
           disabled={disable}
         />
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   },
   buttonBlock: {
     marginTop: Spacing.PADDING,
-    paddingVertical: Fonts.FONT_LARGE
+    paddingVertical: Fonts.FONT_LARGE,
+    backgroundColor: Colors.g9
   },
   textLable: {
     fontSize: Fonts.FONT_MEDIUM_LARGE,

@@ -17,11 +17,11 @@ import { scale } from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
 import { SCREEN } from 'configs/Constants';
-
+import Col from 'components/Common/Col'
+import Row from 'components/Common/Row'
 const OTP = () => {
   let { height } = useWindowDimensions();
   let [loading, setLoading] = useState(false);
-  let [countdown, setCountDown] = useState(100);
   let forgotRef = useRef({
     otp: null,
     newPassword: null,
@@ -60,14 +60,22 @@ const OTP = () => {
           <Button
             mb={10}
             label='Gửi lại (56s)'
+            style={styles.buttonBlock}
+            disabled={true}
+            fs={Fonts.FONT_MEDIUM_LARGE}
           //onPress={register}
           />
           <Button
             disabled = {false}
             label='Tiếp tục'
+            fs={Fonts.FONT_MEDIUM_LARGE}
             onPress={register} 
             style={styles.buttonBlock}
           />
+          <View style={styles.row}>
+            <Text style={styles.textUnderline}>Không nhận được OTP</Text>
+            <Text style={styles.textUnderline}>Đổi số điện thoại </Text>
+          </View>
         </View>
       ) : (
         <FWLoading wrapStyle={[styles.loading, { height: height }]} />
@@ -103,10 +111,21 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 0.5,
     borderColor: Colors.BLACK,
-    borderStyle: 'solid'
+    borderStyle: 'solid',
   },
   buttonBlock: {
     paddingVertical: Spacing.PADDING,
+    backgroundColor: Colors.g9
   },
+  row: {
+    flex: 1, 
+    flexDirection:"row", 
+    justifyContent: "space-between", 
+    marginTop: scale(24)
+  },
+  textUnderline: {
+    textDecorationLine: 'underline',
+    fontSize: Fonts.FONT_MEDIUM_LARGE,
+  }
 });
 export default OTP;
