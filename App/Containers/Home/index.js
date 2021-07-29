@@ -1,114 +1,97 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {Button, Icon, Search, Text} from 'components';
-import {Colors, Fonts, Images, Spacing} from 'themes';
+import {Button, Icon,  Text} from 'components';
+import {Colors, Fonts, Images, Spacing,  base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Content from 'components/Home/Content';
+import TopMenu from 'components/Home/TopMenu';
+
 import {SCREEN} from 'configs/Constants';
+
+
+const dataMenu = [
+  {icon: Images.QRCode, name: 'Nạp tiền', screen: SCREEN.TOP_UP},
+  {icon: Images.QRCode, name: 'Rút tiền', screen: SCREEN.WITHDRAW},
+  {icon: Images.QRCode, name: 'QR Pay', screen: SCREEN.QRPAY},
+  {icon: Images.QRCode, name: 'Quét mã', screen: SCREEN.QRPAY},    
+];
+
+const dataBlock = [
+  {icon: Images.QRCode, name: 'Nạp tiền giao thông', screen: SCREEN.TOP_UP},
+  {icon: Images.QRCode, name: 'Rút tiền 2', screen: SCREEN.WITHDRAW},
+  {icon: Images.QRCode, name: 'QR Pay 2', screen: SCREEN.QRPAY},
+  {icon: Images.QRCode, name: 'Quét mã 2', screen: SCREEN.QRPAY},    
+];
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
+  const [isMoney, setIsMoney] = useState(true);
   return (
-    <View style={styles.container}>
-      <View style={styles.top}>
-        <View
-          style={{
-            paddingTop: top,
-            paddingHorizontal: Spacing.PADDING,
+    <>
+    <View style={[base.container,{paddingTop:top+10, paddingBottom:10, marginBottom:20, backgroundColor:Colors.cl1}]}>
+      <View  style={{ marginBottom:20,  position:'relative' }}>
+        <TouchableOpacity
+          onPress={() => {
+            Navigator.navigate(SCREEN.USER);
           }}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.navigate(SCREEN.USER);
-            }}>
-            <Text>Tên - SĐT Ví của tôi 900đ {'>'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.BANK);
-            }}>
-            <Text>Liên kết NH</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
-            }}>
-            <Text>🔔 Thông báo</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.action}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.TOP_UP);
-            }}>
-            <Icon
-              icon={Images.Withdraw}
-              tintColor={Colors.BACKGROUNDCOLOR}
-              size={Spacing.PADDING * 2.5}
-            />
-            <Text style={styles.text}>Nạp tiền</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.WITHDRAW);
-            }}>
-            <Icon
-              icon={Images.Withdraw}
-              tintColor={Colors.BACKGROUNDCOLOR}
-              size={Spacing.PADDING * 2.5}
-            />
-            <Text style={styles.text}>Rút tiền</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.QRPAY);
-            }}>
-            <Icon
-              icon={Images.QRCode}
-              tintColor={Colors.BACKGROUNDCOLOR}
-              size={Spacing.PADDING * 2.5}
-            />
-            <Text style={styles.text}>QR Pay</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.TRANSFER);
-            }}>
-            <Icon
-              icon={Images.QRCode}
-              tintColor={Colors.BACKGROUNDCOLOR}
-              size={Spacing.PADDING * 2.5}
-            />
-            <Text style={styles.text}>Chuyển tiền</Text>
-          </TouchableOpacity>
-        </View>
+
+          <Text color="#fff" size={Fonts.FONT_SMALL}>Hello</Text>
+          <Text color="#fff">Nguyen Van A </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ marginBottom:20,position:'absolute',right:0  }}
+          onPress={() => {
+            Navigator.push(SCREEN.NOTIFICATION);
+          }}>
+          <Text>🔔</Text>
+        </TouchableOpacity>
       </View>
-      <Content />
+      <View  style={{ marginBottom:20,  position:'relative' }}>
+        <View  style={{  flexDirection:'row', alignItems:'center'}}>
+          <Text color="#fff" size={Fonts.FONT_SMALL}>Ví của tôi</Text>
+          <TouchableOpacity style={{ marginLeft:20}} onPress={() => setIsMoney(!isMoney)}>
+            <Text color="#fff"  >aa</Text>
+          </TouchableOpacity>
+        </View>
+        {!isMoney ? (
+          <Text color="#fff" size={20} style={{height:20}}>****** </Text>
+        ) : (
+          <Text color="#fff"  style={{height:20}}>5555 đ </Text>
+        )}
+        
+        
+        
+
+        <TouchableOpacity
+          style={{ marginBottom:20,position:'absolute',right:-5, top:0  }}
+          onPress={() => {
+            Navigator.push(SCREEN.NOTIFICATION);
+          }}>
+          <Icon
+            icon={Images.ArrowRight}
+            tintColor={Colors.white}
+            size={30}
+          />   
+
+        </TouchableOpacity>
+      </View>
+      <TopMenu data={dataMenu} />
+    </View>     
+
+    <View style={base.container}>
+      <View style={{ marginBottom:20}}>
+        <Text style ={{ fontWeight: 'bold'}} size={Fonts.FONT_MEDIUM_LARGE} mb={10}>Dịch vụ Ebay</Text>
+        <Content  data={dataBlock} />
+      </View>
+      <View style={{ marginBottom:20}}>
+        <Text style ={{ fontWeight: 'bold'}} size={Fonts.FONT_MEDIUM_LARGE} mb={10}>Dịch vụ giao thông</Text>
+        <Content  data={dataBlock} />
+      </View>  
     </View>
+    </>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  content: {
-    flex: 1,
-  },
-  top: {
-    backgroundColor: Colors.PRIMARY,
-    height: '30%',
-  },
-  action: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: Spacing.PADDING,
-    paddingVertical: Spacing.PADDING * 1.5,
-  },
-  text: {
-    fontSize: Fonts.FONT_MEDIUM_LARGE,
-    paddingTop: Spacing.PADDING,
-    color: Colors.BACKGROUNDCOLOR,
-  },
-});
+
 export default Home;
