@@ -8,7 +8,7 @@ import {useSelector} from 'react-redux';
 
 export default ({
   onPress,
-  label,
+  label,label2,
   icon,
   border,
   color,
@@ -19,6 +19,7 @@ export default ({
   mt,mb,ml,mr,mh,mv,
   disabled,
   style,
+  label2Style
 
 }) => {
   return (
@@ -50,7 +51,14 @@ export default ({
             color: color ? color : '#fff',
           },
         ]}>
+
         {label}
+        {
+        label2 && ([
+          <><Text> </Text><Text style={label2Style}>{label2}</Text></>
+        ]) 
+        //label2 && typeof label2 == 'function' ? label2() : label2
+        }
       </Text>
       {!!icon && (
         <Image
@@ -68,6 +76,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     backgroundColor : Colors.cl1,
+    // flexDirection:'row',
+    // alignItems:'center'
   },
   sm: {paddingVertical: 5},
   lg: {paddingVertical: 20},
