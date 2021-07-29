@@ -18,6 +18,7 @@ import Login from 'containers/Auth/Login';
 import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
+import RegisterName from 'containers/Auth/RegisterName';
 import OTP from 'containers/Auth/OTP';
 import Bank from 'containers/Wallet/Bank';
 import Notification from 'containers/Notification';
@@ -75,6 +76,7 @@ const AppNavigator = () => {
             name={SCREEN.REGISTER_PASSWORD}
             component={RegisterPassword}
           />
+          <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
           <Stack.Screen name={SCREEN.BANK} component={Bank} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
