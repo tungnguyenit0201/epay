@@ -23,3 +23,5 @@ export {default as Draggable} from './Common/Draggable';
 export {default as Icon} from './Common/Icon';
 export {default as Avatar} from './Common/Avatar';
 export {default as OTP} from './Common/OTP';
+export {default as Row} from './Common/Row';
+export {default as Col} from './Common/Col';

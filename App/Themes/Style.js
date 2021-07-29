@@ -1,7 +1,13 @@
 import {StyleSheet} from 'react-native';
+import {scale} from 'utils/Functions';
+import {Colors, Spacing} from 'themes';
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'red',
+    paddingHorizontal: scale(15),
+    position : 'relative',
   },
+
+
 });
 export default styles;
