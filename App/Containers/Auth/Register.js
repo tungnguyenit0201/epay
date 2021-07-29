@@ -83,9 +83,10 @@ const styles = StyleSheet.create({
   //   // boxShadow: unset
   // },
   title: {
-    fontSize: Fonts.FONT_LARGE,
+    fontSize: 30,
     // marginBottom: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
   },
   text: {
     fontSize: 14

@@ -24,8 +24,9 @@ const ForgotPassword = () => {
       <Header back shadow={false}/>
 
       <View style={styles.wrap}>
-        <Text bold size={35} mb={20} style={styles.title}>Đặt mật khẩu</Text>
-
+        <Text bold size={35} mb={15} style={styles.title}>Đặt mật khẩu</Text>
+        <Text mb={30}>Lorem Ipsum is simply dummy text of 
+          the printing and typesetting industry.</Text>
         <Password
           onChangePassword={value => onChange('newPassword', value)}
           onChangeConfirm={value => onChange('passwordConfirm', value)}

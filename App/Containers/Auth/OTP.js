@@ -50,22 +50,20 @@ const OTP = () => {
             /> */}
 
             {/* button use to waiting for otp code */}
-            {/* <Button
-              mb={10}
-              disabled
-              bg='#999'
-              label={() => (
-                <Text style={{color: Colors.BACKGROUNDACCORDION}}>
-                  {TEXT.CONFIRM} <Text>(60s)</Text>
-                </Text>
-              )}
-              style={styles.disabled_btn}
-              onPress={register}/> */}
-            
             <Button
               mb={10}
-              label='Gửi lại'
+              disabled
+              color={{color: Colors.BACKGROUNDACCORDION}}
+              bg='#ffffff'
+              label={TEXT.CONFIRM}
+              label2=" (60s)"
+              style={styles.disabled_btn}
               onPress={register}/>
+            
+            {/* <Button
+              mb={10}
+              label='Gửi lại'
+              onPress={register}/> */}
             
             <View style={[styles.box_1, {marginTop: 20}]}>
               <Pressable onPress={register}>
