@@ -4,7 +4,7 @@ import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
-import {SCREEN} from 'configs/Constants';
+import {TEXT, SCREEN} from 'configs/Constants';
 
 const ForgotPassword = () => {
   let {height} = useWindowDimensions();
@@ -21,12 +21,18 @@ const ForgotPassword = () => {
   };
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Nhập mật khẩu" />
-      <Password
-        onChangePassword={value => onChange('newPassword', value)}
-        onChangeConfirm={value => onChange('passwordConfirm', value)}
-      />
-      <Button label="Tới luôn bác tài" onPress={onPress} />
+      <Header back shadow={false}/>
+
+      <View style={styles.wrap}>
+        <Text bold size={35} mb={20} style={styles.title}>Đặt mật khẩu</Text>
+
+        <Password
+          onChangePassword={value => onChange('newPassword', value)}
+          onChangeConfirm={value => onChange('passwordConfirm', value)}
+        />
+        <Text>Mật khẩu k trùng khớp</Text>
+        <Button mt={50} label={TEXT.CONTINUE} onPress={onPress} />
+      </View>
     </ScrollView>
   );
 };
@@ -48,5 +54,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  title: {
+    textTransform: 'uppercase'
+  }
 });
 export default ForgotPassword;

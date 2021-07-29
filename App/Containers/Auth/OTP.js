@@ -39,36 +39,50 @@ const OTP = () => {
       <Header back />
 
       {!loading ? (
-        <View style={styles.wrap}>
-          <OTPContainer 
-            onChange={value => onChange('otp', value)}/>
+        <>
+          <View style={styles.wrap}>
+            <OTPContainer 
+              onChange={value => onChange('otp', value)}/>
 
-          {/* <Password
-            onChangePassword={value => onChange('newPassword', value)}
-            onChangeConfirm={value => onChange('passwordConfirm', value)}
-          /> */}
+            {/* <Password
+              onChangePassword={value => onChange('newPassword', value)}
+              onChangeConfirm={value => onChange('passwordConfirm', value)}
+            /> */}
 
-          <Button
-            mb={10}
-            disabled
-            label={() => (
-              <Text style={{color: Colors.BACKGROUNDACCORDION}}>
-                {TEXT.CONFIRM} <Text>(60s)</Text>
-              </Text>
-            )}
-            style={styles.disabled_btn}
-            onPress={register}/>
-          
-          <View style={[styles.box_1, {marginTop: 20}]}>
-            <Pressable onPress={register}>
-              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
-            </Pressable>
+            {/* button use to waiting for otp code */}
+            {/* <Button
+              mb={10}
+              disabled
+              bg='#999'
+              label={() => (
+                <Text style={{color: Colors.BACKGROUNDACCORDION}}>
+                  {TEXT.CONFIRM} <Text>(60s)</Text>
+                </Text>
+              )}
+              style={styles.disabled_btn}
+              onPress={register}/> */}
+            
+            <Button
+              mb={10}
+              label='Gửi lại'
+              onPress={register}/>
+            
+            <View style={[styles.box_1, {marginTop: 20}]}>
+              <Pressable onPress={register}>
+                <Text style={[styles.link_text]}>Không nhận được OTP</Text>
+              </Pressable>
 
-            <Pressable onPress={register}>
-              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-            </Pressable>
+              <Pressable onPress={register}>
+                <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
+          <Text style={[styles.otp_code, {marginTop: 20}]}>
+            <Text style={{
+              textAlign: 'center',
+              color: '#ccc'}}>OTP:</Text> 098909
+          </Text>
+        </>
       ) : (
         <FWLoading wrapStyle={[styles.loading, {height: height}]} />
       )}
@@ -114,6 +128,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: 'space-between',
     flexWrap: 'wrap',
+  },
+  otp_code: {
+    paddingVertical: Spacing.PADDING,
+    textAlign: 'center',
+    backgroundColor: "#F5F5F5"
   }
 });
 export default OTP;
