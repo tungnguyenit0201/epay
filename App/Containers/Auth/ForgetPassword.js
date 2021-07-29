@@ -6,8 +6,8 @@ import Navigator from 'navigations/Navigator';
 import { SCREEN } from 'configs/Constants';
 import { scale } from 'utils/Functions';
 
-const ForgotPassword = () => {
-  let { height } = useWindowDimensions();
+const ForgetPassword = () => {
+  let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [disable, setDisable] = useState(true);
   const validateInput = (checkingText) => {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING * 3,
   },
   header: {
-    fontSize: Fonts.FONT_LARGE + 16,
+    fontSize: Fonts.FONT_LARGE,
     fontWeight: 'bold',
     paddingBottom: Spacing.PADDING,
   },
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   }
 });
-export default ForgotPassword;
+export default ForgetPassword;

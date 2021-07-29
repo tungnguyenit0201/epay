@@ -9,7 +9,7 @@
       "configs/*": ["App/Configs/*"],
       "configs": ["App/Configs/index"],
       "containers/*": ["App/Containers/*"],
-      "hooks/*": ["App/Redux/Hooks/*"],
+      "hooks/*": ["App/Hooks/*"],
       "images/*": ["App/Images/*"],
       "navigations/*": ["App/Navigations/*"],
       "navigations": ["App/Navigations/index"],

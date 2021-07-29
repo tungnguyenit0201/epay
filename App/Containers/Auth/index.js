@@ -3,12 +3,12 @@ import {View, Image, StyleSheet} from 'react-native';
 import {Button, InputBlock} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
-import {useUser} from '../../Context/User';
+import {useUser} from 'context/User';
 import {SCREEN} from 'configs/Constants';
-
+import {useTranslation} from 'context/Language';
 const Splash = () => {
   const {userInfo} = useUser();
-  console.log('userInfo :>> ', userInfo);
+  const {login} = useTranslation();
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -20,7 +20,7 @@ const Splash = () => {
         />
         <InputBlock numeric label="Nhập số điện thoại" />
         <Button
-          label="Đăng nhập"
+          label={login}
           onPress={() => Navigator.navigate(SCREEN.LOGIN)}
         />
         <Button

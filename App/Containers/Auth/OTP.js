@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import {
   Text,
   InputBlock,
@@ -8,18 +8,18 @@ import {
   FWLoading,
   TextInput,
 } from 'components';
-import {TEXT} from 'configs/Constants';
-import {Colors, Fonts, Spacing} from 'themes';
-import {User} from 'services';
+import { TEXT } from 'configs/Constants';
+import { Colors, Fonts, Spacing } from 'themes';
+import { User } from 'services';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
-import {scale} from 'utils/Functions';
+import { scale } from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
-import {SCREEN} from 'configs/Constants';
+import { SCREEN } from 'configs/Constants';
 
 const OTP = () => {
-  let {height} = useWindowDimensions();
+  let { height } = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [countdown, setCountDown] = useState(100);
   let forgotRef = useRef({
@@ -37,25 +37,40 @@ const OTP = () => {
 
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Nhập mã OTP" />
+      <Header back />
 
       {!loading ? (
         <View style={styles.wrap}>
-          <OTPContainer onChange={value => onChange('otp', value)} />
+          <OTPContainer
+            onChange={value => onChange('otp', value)} />
+
           {/* <Password
             onChangePassword={value => onChange('newPassword', value)}
             onChangeConfirm={value => onChange('passwordConfirm', value)}
           /> */}
 
-          <Button
-            label={TEXT.CONFIRM}
+          {/* <Button
+            mb={10}
+            disabled
+            label='Gửi lại (56s)'
             onPress={register}
-            style={styles.confirmation}
-            labelStyle={styles.textLable}
+            labelStyle={{color: Colors.GRAY}}
+            style={styles.btn_send}/> 
+            //button send which waiting for [number] seconds*/}
+          <Button
+            mb={10}
+            label='Gửi lại (56s)'
+          //onPress={register}
+          />
+          <Button
+            disabled = {false}
+            label='Tiếp tục'
+            onPress={register} 
+            style={styles.buttonBlock}
           />
         </View>
       ) : (
-        <FWLoading wrapStyle={[styles.loading, {height: height}]} />
+        <FWLoading wrapStyle={[styles.loading, { height: height }]} />
       )}
     </ScrollView>
   );
@@ -71,7 +86,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING * 3,
   },
   header: {
-    fontSize: Fonts.FONT_LARGE + 16,
+    fontSize: Fonts.FONT_LARGE,
     fontWeight: 'bold',
     paddingBottom: Spacing.PADDING,
   },
@@ -81,10 +96,17 @@ const styles = StyleSheet.create({
   },
   confirmation: {
     marginTop: Spacing.PADDING * 2,
-    paddingVertical: scale(16),
   },
-  textLable: {
-    fontSize: Fonts.FONT_MEDIUM_LARGE
-  }
+  btn_send: {
+    // color: Colors.BLACK,
+    backgroundColor: '#fff',
+    borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: Colors.BLACK,
+    borderStyle: 'solid'
+  },
+  buttonBlock: {
+    paddingVertical: Spacing.PADDING,
+  },
 });
 export default OTP;

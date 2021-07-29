@@ -15,6 +15,10 @@ const User = () => {
         onPress={() => Navigator.push(SCREEN.USER_INFO)}
       />
       <Button
+        label="Xác thực tài khoản"
+        onPress={() => Navigator.push(SCREEN.VERIFY_USER_INFO)}
+      />
+      <Button
         label="Ngân hàng liên kết (2)"
         onPress={() => Navigator.push(SCREEN.BANK)}
       />

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING * 3,
   },
   header: {
-    fontSize: Fonts.FONT_LARGE + 16,
+    fontSize: Fonts.FONT_LARGE,
     fontWeight: 'bold',
     paddingBottom: Spacing.PADDING,
   },

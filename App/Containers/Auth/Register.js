@@ -33,19 +33,22 @@ const Register = () => {
   const register = async () => {
     Navigator.navigate(SCREEN.REGISTER_PASSWORD);
   };
-
+  
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Nhập mã OTP" />
+      <Header back shadow={false}/>
 
       {!loading ? (
         <View style={styles.wrap}>
-          <OTPContainer onChange={value => onChange('otp', value)} />
-
+          <Text style={[styles.title]}>Nhập số điện thoại</Text>
+          <Text style={[styles.text]} mb={40}>Lorem Ipsum is simply dummy text of 
+            the printing and typesetting industry.</Text>
+          <InputBlock phone style={[styles.input]} placeholder="Nhập số điện thoại"/>
           <Button
-            label={TEXT.CONFIRM}
-            onPress={register}
-            style={styles.confirmation}
+            mode="no"
+            label="Tiếp tục"
+            style={styles.btn}
+            onPress={() => Navigator.navigate(SCREEN.LOGIN)}
           />
         </View>
       ) : (
@@ -61,13 +64,35 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUNDCOLOR,
   },
   wrap: {
-    paddingHorizontal: Spacing.PADDING,
+    paddingHorizontal: Spacing.PADDING * 2,
     paddingTop: Spacing.PADDING * 3,
   },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
+  // header: {
+  //   // fontSize: Fonts.FONT_LARGE,
+  //   // fontWeight: 'bold',
+  //   // paddingBottom: Spacing.PADDING,
+  //   // boxShadow: unset
+  // },
+  title: {
+    fontSize: 35,
+    marginBottom: 20,
+    fontWeight: 'bold'
+  },
+  text: {
+    fontSize: 14
+  },
+  input: {
+    marginBottom: 56,
+    borderColor: 'black',
+    borderRadius: 3,
+    backgroundColor: '#fff'
+  },
+  btn: {
+    color: Colors.BLACK,
+    fontSize: 30,
+    paddingTop: 15,
+    paddingBottom: 15,
+    backgroundColor: '#CCCCCC'
   },
   loading: {
     justifyContent: 'center',

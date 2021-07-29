@@ -5,6 +5,8 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
 import {SCREEN} from 'configs/Constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useTranslation} from 'context/Language';
 
 const Stack = createStackNavigator();
 
@@ -32,10 +34,22 @@ import UserInfo from 'containers/User/UserInfo';
 import PaymentSettings from 'containers/User/PaymentSettings';
 import EditInfo from 'containers/User/EditInfo';
 import NewPassword from 'containers/User/NewPassword';
+import Contacts from 'containers/Wallet/Contacts';
+import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
+import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
+import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 
 const AppNavigator = () => {
   const initialRoute = 'Auth';
+  const {setLanguage} = useTranslation();
 
+  const getCurrentLanguage = async () => {
+    let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+    setLanguage(currentLanguage ? currentLanguage : 'vi');
+  };
+  React.useEffect(() => {
+    getCurrentLanguage();
+  }, []);
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
@@ -85,6 +99,19 @@ const AppNavigator = () => {
           <Stack.Screen
             name="TrafficViolationPayment"
             component={TrafficViolationPayment}
+          />
+          <Stack.Screen name={SCREEN.CONTACTS} component={Contacts} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_USER_INFO}
+            component={VerifyUserInfo}
+          />
+          <Stack.Screen
+            name={SCREEN.VERIFY_IDENTITY_CARD}
+            component={VerifyIdentityCard}
+          />
+          <Stack.Screen
+            name={SCREEN.VERIFY_USER_PORTRAIT}
+            component={VerifyUserPortrait}
           />
         </Stack.Navigator>
       </KeyboardStateProvider>

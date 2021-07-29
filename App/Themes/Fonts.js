@@ -2,11 +2,11 @@ import {scale} from 'utils/Functions';
 import {Platform} from 'react-native';
 
 // export const FONT_NAME ='UTM-Neo-Sans-Intel'
-export const FONT_NAME = Platform.isPad ? 'Inter' : 'UTM-Neo-Sans-Intel';
+export const FONT_NAME = 'Roboto';
 
 export const FONT_REGULAR = FONT_NAME;
-export const FONT_ITALIC = FONT_NAME + '_Italic';
-export const FONT_BOLD_ITALIC = FONT_NAME + 'Bold_Italic';
+export const FONT_ITALIC = FONT_NAME + '-Italic';
+export const FONT_BOLD_ITALIC = FONT_NAME + '-BoldItalic';
 export const FONT_BOLD = FONT_NAME + '-Bold';
 
 const FONT_SMALL = scale(
