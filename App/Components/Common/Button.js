@@ -1,56 +1,61 @@
 import React from 'react';
-import {Pressable, Image, StyleSheet} from 'react-native';
-import {Colors} from 'themes';
+import {Pressable, Image, StyleSheet, View} from 'react-native';
+import {Colors, Var} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 import {useSelector} from 'react-redux';
 
+
 export default ({
   onPress,
   label,
-  lableColor = Colors.BACKGROUNDCOLOR,
   icon,
-  backgroundColor = Colors.BLACKTEXT,
-  mt,
-  mb,
-  ml,
-  mr,
-  mh,
-  mv,
-  flex = null,
+  border,
+  color,
+  bg,
+  radius,
+  fs,
+  size,
+  mt,mb,ml,mr,mh,mv,
   disabled,
   style,
-  labelStyle,
-  mode = 'contained', //text, outlined, contained
-  className = 'button-primary',
+
 }) => {
-  let textColor = mode == 'contained' ? lableColor : Colors.BLACKTEXT;
-  let tintColor = mode == 'contained' ? Colors.BACKGROUNDCOLOR : Colors.BLACK;
   return (
     <Pressable
       disabled={disabled}
       onPress={onPress}
       style={[
-        {
-          flex,
-          backgroundColor: disabled ? Colors.GRAY : backgroundColor,
-          marginTop: mt || mv,
-          marginBottom: mb || mv,
-          marginLeft: ml || mh,
-          marginRight: mr || mh,
-        },
         styles.button,
+        border    && { borderColor: border, borderWidth: 1},
+        radius    && { borderRadius: radius},
+        bg        && { backgroundColor: bg},
+        mt        && { marginTop: mt},
+        mb        && { marginBottom: mb},
+        ml        && { marginLeft: ml},
+        mr        && { marginRight: mr},
+        mv        && { marginVertical: mv},
+        mh        && { marginHorizontal: mh},
+        size == 'sm'  ? styles.sm:'' ,
+        size == 'lg'  ? styles.lg:'' ,
+        size == 'xl'  ? styles.xl:'' ,
         style,
-        mode == 'text' && styles.textButton,
-        mode == 'outlined' && styles.outlinedButton,
+        disabled  && { backgroundColor: Colors.g4},
       ]}>
-      <Text centered semibold color={textColor} style={labelStyle}>
-        {typeof label == 'function' ? label() : label}
+
+      <Text centered semibold  
+        style={[
+          fs    && { fontSize: fs},
+          {
+            color: color ? color : '#fff',
+          },
+        ]}>
+        {label}
       </Text>
       {!!icon && (
         <Image
           source={icon}
-          style={[styles.image, tintColor]}
+          style={[styles.image]}
           resizeMode={'contain'}
         />
       )}
@@ -59,19 +64,15 @@ export default ({
 };
 const styles = StyleSheet.create({
   button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 11,
-    paddingHorizontal: 19,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
+    backgroundColor : Colors.cl1,
   },
-  textButton: {backgroundColor: Colors.BACKGROUNDCOLOR},
-  outlinedButton: {
-    borderColor: Colors.GRAY,
-    borderWidth: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
+  sm: {paddingVertical: 5},
+  lg: {paddingVertical: 20},
+  xl: {paddingVertical: 30},
+
   image: {
     width: scale(15),
     height: scale(15),
@@ -79,3 +80,13 @@ const styles = StyleSheet.create({
   },
   // ...stylesCss,
 });
+
+{/* <Button
+  label="Đăng ký" 
+  border='#fff'
+  color='#f00'
+  bg='#999'
+  radius={50}
+  style={[{marginTop:30}]}
+  onPress={() => Navigator.navigate(SCREEN.REGISTER)}
+/> */}

@@ -6,7 +6,6 @@ import {
 import {Text, Icon, Row, Col} from 'components';
 import {Colors,  Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
-import { View } from 'react-native-ui-lib';
 
 const Content = ({data}) => {
   return (
@@ -22,10 +21,10 @@ const Content = ({data}) => {
             >
                 <Icon
                   icon={item.icon}
-                  //tintColor={Colors.white}
+                  tintColor={Colors.white}
                   size={Spacing.PADDING * 2.5}
                 />
-                <Text centered  mt={5}    >{item.name}</Text>
+                <Text centered  mt={5} color="#fff"   >{item.name}</Text>
             </TouchableOpacity> 
           </Col>
         );
