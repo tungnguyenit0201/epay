@@ -21,6 +21,8 @@ import {SCREEN} from 'configs/Constants';
 const Register = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
+  let [disable, setDisable] = useState(true);
+
   let forgotRef = useRef({
     otp: null,
     newPassword: null,
@@ -33,6 +35,10 @@ const Register = () => {
   const register = async () => {
     Navigator.navigate(SCREEN.REGISTER_PASSWORD);
   };
+
+  const pressOTP = () => {
+    Navigator.navigate(SCREEN.OTP);
+  };
   
   return (
     <ScrollView style={styles.container}>
@@ -40,16 +46,19 @@ const Register = () => {
 
       {!loading ? (
         <View style={styles.wrap}>
-          <Text style={[styles.title]}>Nhập số điện thoại</Text>
-          <Text style={[styles.text]} mb={40}>Lorem Ipsum is simply dummy text of 
+          <Text style={[styles.title]} mb={20}>Nhập số điện thoại</Text>
+          <Text style={styles.text} mb={40}>Lorem Ipsum is simply dummy text of 
             the printing and typesetting industry.</Text>
-          <InputBlock phone style={[styles.input]} placeholder="Nhập số điện thoại"/>
+          <InputBlock phone style={[styles.input]} 
+            placeholder="Nhập số điện thoại"
+            onFocus={e => setDisable(false)}/>
+          <Text style={styles.text}>Số điện thoại không đúng</Text>
           <Button
-            mode="no"
+            mt={56}
+            disabled={disable}
             label="Tiếp tục"
             style={styles.btn}
-            onPress={() => Navigator.navigate(SCREEN.LOGIN)}
-          />
+            onPress={pressOTP}/>
         </View>
       ) : (
         <FWLoading wrapStyle={[styles.loading, {height: height}]} />
@@ -74,25 +83,26 @@ const styles = StyleSheet.create({
   //   // boxShadow: unset
   // },
   title: {
-    fontSize: 35,
-    marginBottom: 20,
-    fontWeight: 'bold'
+    fontSize: 30,
+    // marginBottom: 20,
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
   },
   text: {
     fontSize: 14
   },
   input: {
-    marginBottom: 56,
+    // marginBottom: 56,
     borderColor: 'black',
     borderRadius: 3,
     backgroundColor: '#fff'
   },
   btn: {
-    color: Colors.BLACK,
-    fontSize: 30,
+    // color: Colors.BLACK,
+    // fontSize: 30,
     paddingTop: 15,
     paddingBottom: 15,
-    backgroundColor: '#CCCCCC'
+    // backgroundColor: '#CCCCCC'
   },
   loading: {
     justifyContent: 'center',
