@@ -1,4 +1,5 @@
 import React from 'react';
+import {scale} from 'utils/Functions';
 import {View,StyleSheet} from 'react-native';
 
 
@@ -10,7 +11,7 @@ const Row = ({children,align,space,justify,wrap,direction}) => {
       justify   &&{ justifyContent: justify},
       wrap      &&{ flexWrap: wrap},
       direction &&{ flexDirection: direction},
-      space     &&{ marginHorizontal: -space/2},
+      space     &&{ marginHorizontal: scale(-space/2)},
       ]} >
       {children}
     </View>
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
   row :{
     flexWrap: 'wrap',
     flexDirection: 'row',
-    marginHorizontal:-10
+    marginHorizontal:scale(-10)
   }
 
 });

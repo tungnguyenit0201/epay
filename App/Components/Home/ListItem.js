@@ -8,62 +8,61 @@ import {Text, Icon, Row, Col} from 'components';
 import {Colors,  Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import { View } from 'react-native-ui-lib';
+import {scale} from 'utils/Functions';
 
-const Content = ({data,layout,col}) => {
+const ListItem = ({data,scroll,col,space,width}) => {
   const _screenWidth = Math.min(
     Dimensions.get('window').width,
-    Dimensions.get('window').height,
+    //Dimensions.get('window').height,
   );  
+  const screenContent = _screenWidth - Spacing.PADDING*2;
 
-  console.log(_screenWidth);
+  const Item = ({ title,icon,screen }) => (
+    <TouchableOpacity
+    style={styles.item}
+    onPress={() => { Navigator.push(screen);  }}
+    >
+      <Icon
+        icon={icon}
+        //tintColor={Colors.white}
+        size={Spacing.PADDING * 2.5}
+      />
+      <Text centered  mt={5} >{title}</Text>
+    </TouchableOpacity> 
+  );
  
-  const renderItem = ({ item }) => (
-    <View style={{width:150}} >
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => { Navigator.push(item.screen);  }}
-      >
-        <Icon
-          icon={item.icon}
-          //tintColor={Colors.white}
-          size={Spacing.PADDING * 2.5}
-        />
-        <Text centered  mt={5}    >{item.name}</Text>
-      </TouchableOpacity> 
+  const renderItem = ({ item,index }) => (
+    <View style={[
+      col>1 &&{width:scale((screenContent-(col-1)*space)/col)},
+      width &&{width:scale(width)},
+      space &&{marginBottom:scale(space)},
+      index &&{marginLeft:scale(space)}
+      ]} >
+      <Item title={item.name} icon={item.icon} screen={item.screen} />
     </View>
   );
 
   return (
   <>
-    {col>1 ?  (
-      <Row>
+    {scroll ?  (
+      <FlatList
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => item.name}
+      //showsHorizontalScrollIndicator={true}
+      horizontal={true}
+    />     
+    ) : (       
+      <Row space={space}>
         {
         data.map((item,index) => {
           return (
-            <Col  width={`${100/col}%`}  key={index} style={{}}>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => { Navigator.push(item.screen);  }}
-              >
-                <Icon
-                  icon={item.icon}
-                  //tintColor={Colors.white}
-                  size={Spacing.PADDING * 2.5}
-                />
-                <Text centered  mt={5}    >{item.name}</Text>
-              </TouchableOpacity> 
+            <Col  width={`${100/col}%`} space={space}  key={index} style={[space &&{marginBottom:space}]}>
+              <Item title={item.name} icon={item.icon} screen={item.screen} /> 
             </Col>
           );
         })}
       </Row>
-    ) : (
-      <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={item => item.name}
-      //showsHorizontalScrollIndicator={true}
-      horizontal={true}
-    />  
    )}
     </>
   );
@@ -71,8 +70,9 @@ const Content = ({data,layout,col}) => {
 
 const styles = StyleSheet.create({
   item: {
-    alignItems: 'center'
+    alignItems: 'center',
+    //height:'100%'
   },
 });
 
-export default Content;
+export default ListItem;

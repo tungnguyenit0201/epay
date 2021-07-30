@@ -87,11 +87,11 @@ const Home = () => {
     <View style={base.container}>
       <View style={{ marginBottom:20}}>
         <Text style ={{ fontWeight: 'bold'}} size={Fonts.FONT_MEDIUM_LARGE} mb={10}>Dịch vụ Ebay</Text>
-        <ListItem layout="scroll" itemWidth={100}  data={dataBlock} />
+        <ListItem scroll space={20}  col={4} data={dataBlock} />
       </View>
       <View style={{ marginBottom:20}}>
         <Text style ={{ fontWeight: 'bold'}} size={Fonts.FONT_MEDIUM_LARGE} mb={10}>Dịch vụ giao thông</Text>
-        <ListItem  col={4} data={dataBlock} />
+        <ListItem   space={20} col={4} data={dataBlock} />
       </View>  
     </View>
     </>
