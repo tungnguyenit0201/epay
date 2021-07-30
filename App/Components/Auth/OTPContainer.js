@@ -19,8 +19,8 @@ import {OTP} from 'components';
 const OTPContainer = ({onChange}) => {
   return (
     <>
-      <Text style={styles.header}>{`Nhập mã OTP`}</Text>
-      <Text style={{color: Colors.GRAY, paddingBottom: Spacing.PADDING}}>
+      <Text style={styles.header}>{`Nhập OTP`}</Text>
+      <Text style={styles.textDefault}>
         {`Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`}
       </Text>
 
@@ -46,5 +46,10 @@ const styles = StyleSheet.create({
   confirmation: {
     marginTop: Spacing.PADDING * 2,
   },
+  textDefault: {
+    color: Colors.GRAY, 
+    paddingBottom: Spacing.PADDING,
+    fontSize: Fonts.FONT_MEDIUM_LARGE
+  }
 });
 export default OTPContainer;

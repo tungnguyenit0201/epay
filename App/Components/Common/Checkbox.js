@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, Image, Pressable} from 'react-native';
+import {StyleSheet, Image, Pressable, View} from 'react-native';
+import {Text} from 'components';
 import Colors from 'themes/Colors';
 import Images from 'themes/Images';
 import {scale} from 'utils/Functions';
 
-const Checkbox = ({onPress, hitSlop}) => {
+const Checkbox = ({onPress, hitSlop, label}) => {
   const [active, setActive] = useState(false);
   const _onPress = () => {
     onPress && onPress(!active);
@@ -14,9 +15,16 @@ const Checkbox = ({onPress, hitSlop}) => {
   return (
     <Pressable
       hitSlop={hitSlop}
-      style={[styles.container, !active && styles.checked]}
+      style={{ flexDirection:'row' }}
       onPress={_onPress}>
       {
+        <>
+        <View style={[
+          styles.container, 
+          !active && styles.checked,
+          label && {marginRight:10},
+          ,
+          ]}>
         <Image
           resizeMode="cover"
           source={Images.Check}
@@ -25,6 +33,12 @@ const Checkbox = ({onPress, hitSlop}) => {
             height: '100%',
             display: active ? 'flex' : 'none', //tránh tạo lại component mới load hình lâu
           }}></Image>
+          </View> 
+          {
+          <Text>{label}</Text>
+          }
+        </>
+         
       }
     </Pressable>
   );
