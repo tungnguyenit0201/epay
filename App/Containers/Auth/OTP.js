@@ -83,24 +83,22 @@ const OTP = () => {
           </Text> */}
 
           {/* buttom call me */}
-          {/* <Text style={[styles.otp_code, {marginTop: 20}]}> */}
-            <Pressable 
-              style={[styles.otp_code, 
-                {
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  marginTop: 20}]}
-              onPress={register}>
-              <Image
-                source={Images.Register.phone_1}
-                style={{
-                  height: scale(12), 
-                  width: scale(12),
-                  marginRight: 10,
-                  textAlign: 'center'}}/>
-              <Text bold style={[styles.link_text]}>Gọi cho tôi</Text>
-            </Pressable>
-          {/* </Text> */}
+          <Pressable 
+            style={[styles.otp_code, 
+              {
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 20}]}
+            onPress={register}>
+            <Image
+              source={Images.Register.phone_1}
+              style={{
+                height: scale(12), 
+                width: scale(12),
+                marginRight: 10,
+                textAlign: 'center'}}/>
+            <Text bold style={[styles.link_text]}>Gọi cho tôi</Text>
+          </Pressable>
         </>
       ) : (
         <FWLoading wrapStyle={[styles.loading, {height: height}]} />
