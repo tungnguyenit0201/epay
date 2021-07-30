@@ -29,4 +29,12 @@ export default {
   QRCode: require('images/QRCode.jpeg'),
   Withdraw: require('images/Withdraw.png'),
   Edit: require('images/Edit.png'),
+  Register: {
+    phone_1: require('images/register/phone-1.png'),
+  },
+  WidthDraw: {
+    Done: require('images/Done.png'),
+    Plus: require('images/Plus+.png'),
+    Close: require('images/Close.png'),
+  }
 };
