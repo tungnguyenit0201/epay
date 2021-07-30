@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Text, InputBlock, Header, Button, FWLoading } from 'components';
+import { Text, InputBlock, Header, Button, FWLoading, TextInput } from 'components';
 import { Colors, Fonts, Spacing } from 'themes';
 import Navigator from 'navigations/Navigator';
 import { SCREEN } from 'configs/Constants';
@@ -45,15 +45,16 @@ const ForgetPassword = () => {
         <Text style={styles.textDescription}>
           {`Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print`}
         </Text>
-        <InputBlock
+        <TextInput
           /* onChange={handleChange} */
           style={styles.inputBlock}
-          placeholder={'Nhập số điện thoại'}
+          placeholderTextColor={Colors.BLACK}
+          placeholder='Nhập số điện thoại'
         />
         <Button
           style={styles.buttonBlock}
           label="Tiếp tục"
-          fs={Fonts.FONT_MEDIUM_LARGE}
+          fs={Fonts.FONT_MEDIUM}
           onPress={onPress}
           /* disabled={disable} */
         />
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING * 3,
   },
   header: {
-    fontSize: Fonts.FONT_LARGE,
+    fontSize: Fonts.H2,
     fontWeight: 'bold',
     paddingBottom: Spacing.PADDING,
   },
@@ -88,23 +89,24 @@ const styles = StyleSheet.create({
   inputBlock: {
     backgroundColor: "transparent",
     borderColor: Colors.BLACK,
-    fontSize: Fonts.FONT_MEDIUM_LARGE,
+    fontSize: Fonts.FONT_MEDIUM,
+    marginTop: Spacing.PADDING
   },
   textDescription: {
     color: Colors.GRAY,
-    fontSize: scale(14)
+    fontSize: Fonts.FONT_MEDIUM
   },
   buttonBlock: {
     marginTop: Spacing.PADDING,
-    paddingVertical: Fonts.FONT_LARGE,
+    paddingVertical: Fonts.H6,
     backgroundColor: Colors.g9
   },
   textLable: {
-    fontSize: Fonts.FONT_MEDIUM_LARGE,
+    fontSize: Fonts.FONT_MEDIUM,
   },
   textUnderline: {
     textAlign: 'center',
-    fontSize: Fonts.FONT_MEDIUM_LARGE,
+    fontSize: Fonts.FONT_MEDIUM,
     marginTop: Spacing.PADDING + 20,
     textDecorationLine: 'underline',
   }
