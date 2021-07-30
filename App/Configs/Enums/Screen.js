@@ -31,5 +31,7 @@ const SCREEN = {
   VERIFY_USER_INFO: 'VerifyUserInfo',
   VERIFY_IDENTITY_CARD: 'VerifyIdentityCard',
   VERIFY_USER_PORTRAIT: 'VerifyUserPortrait',
+  CHECKOUT_SUCCESS: 'CheckoutSuccess',
+  CHECKOUT_FAILURE: 'CheckoutFailure',
 };
 export default SCREEN;

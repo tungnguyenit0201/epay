@@ -39,6 +39,8 @@ import Contacts from 'containers/Wallet/Contacts';
 import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
 import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
 import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
+import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
+import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
 
 const AppNavigator = () => {
   const initialRoute = 'Auth';
@@ -114,6 +116,14 @@ const AppNavigator = () => {
           <Stack.Screen
             name={SCREEN.VERIFY_USER_PORTRAIT}
             component={VerifyUserPortrait}
+          />
+          <Stack.Screen
+            name={SCREEN.CHECKOUT_FAILURE}
+            component={CheckoutFailure}
+          />
+          <Stack.Screen
+            name={SCREEN.CHECKOUT_SUCCESS}
+            component={CheckoutSuccess}
           />
         </Stack.Navigator>
       </KeyboardStateProvider>
