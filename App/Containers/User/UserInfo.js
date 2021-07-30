@@ -10,6 +10,7 @@ import {scale} from 'utils/Functions';
 
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
+
   const data = [
     {name: 'Họ tên', val: 'Nguyen van an'},
     {name: 'Ngày sinh', val: '09/09/1999'},
@@ -40,12 +41,12 @@ const UserInfo = () => {
             </View>
             <View 
               style={{
-                overflow:'hidden', borderRadius:99, position:'absolute', alignItems:'center', justifyContent:'center', bottom:0, right:-10, width: 42, height: 42, backgroundColor: Colors.cl4
+                overflow:'hidden', borderRadius:99, position:'absolute', alignItems:'center', justifyContent:'center', bottom:0, right:-10, width: 40, height: 40, backgroundColor: Colors.cl4
               }}               
             >
               <Image
                 style={{width: 16,height: 16}}
-                source={Images.MoMo}
+                source={Images.Edit}
               />
             </View>            
           </View>
