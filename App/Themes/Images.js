@@ -28,4 +28,10 @@ export default {
   ZaloPay: require('images/ZaloPay.png'),
   QRCode: require('images/QRCode.jpeg'),
   Withdraw: require('images/Withdraw.png'),
+  
+  WidthDraw: {
+    Done: require('images/Done.png'),
+    Plus: require('images/Plus+.png'),
+    Close: require('images/Close.png'),
+  }
 };
