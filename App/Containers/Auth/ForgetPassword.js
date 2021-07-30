@@ -10,7 +10,7 @@ const ForgetPassword = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [disable, setDisable] = useState(true);
-  const validateInput = (checkingText) => {
+  /* const validateInput = (checkingText) => {
     const regexp = /((09|03|07|08|05)+([0-9]{8})\b)/g;
     const checkingResult = regexp.exec(checkingText);
     if (checkingResult !== null) {
@@ -24,11 +24,11 @@ const ForgetPassword = () => {
         errorMessage: 'Số điện thoại không đúng'
       };
     }
-  }
+  } */
   const onPress = () => {
     Navigator.navigate(SCREEN.OTP);
   };
-  const handleChange = async (e) => {
+  /* const handleChange = async (e) => {
     const handleText = e.trim();
     if (validateInput(handleText).isInputValid) {
       setDisable(false)
@@ -36,7 +36,7 @@ const ForgetPassword = () => {
     else {
       setDisable(true);
     }
-  }
+  } */
   return (
     <ScrollView style={styles.container}>
       <Header back title="Quên mật khẩu" />
@@ -46,7 +46,7 @@ const ForgetPassword = () => {
           {`Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print`}
         </Text>
         <InputBlock
-          onChange={handleChange}
+          /* onChange={handleChange} */
           style={styles.inputBlock}
           placeholder={'Nhập số điện thoại'}
         />
@@ -55,7 +55,7 @@ const ForgetPassword = () => {
           label="Tiếp tục"
           fs={Fonts.FONT_MEDIUM_LARGE}
           onPress={onPress}
-          disabled={disable}
+          /* disabled={disable} */
         />
         <Text style={styles.textUnderline}>Hoặc vui lòng gọi 1900-0000</Text>
       </View>

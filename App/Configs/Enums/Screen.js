@@ -5,6 +5,7 @@ const SCREEN = {
   REGISTER: 'Register',
   FORGET_PASSWORD: 'ForgetPassword',
   REGISTER_PASSWORD: 'RegisterPassword',
+  REGISTER_NAME: 'RegisterName',
   OTP: 'OTP',
   BANK: 'Bank',
   NOTIFICATION: 'Notification',
