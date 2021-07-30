@@ -17,7 +17,7 @@ const ForgotPassword = () => {
   };
 
   const onPress = async () => {
-    Navigator.navigate(SCREEN.TAB_NAVIGATION);
+    Navigator.navigate(SCREEN.REGISTER_NAME);
   };
   return (
     <ScrollView style={styles.container}>
