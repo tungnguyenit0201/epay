@@ -1,24 +1,20 @@
 import {scale} from 'utils/Functions';
-import {Platform} from 'react-native';
 
-// export const FONT_NAME ='UTM-Neo-Sans-Intel'
-export const FONT_NAME = 'Roboto';
+export const FONT_NAME = 'SVN-Gilroy';
 
 export const FONT_REGULAR = FONT_NAME;
-export const FONT_ITALIC = FONT_NAME + '-Italic';
-export const FONT_BOLD_ITALIC = FONT_NAME + '-BoldItalic';
-export const FONT_BOLD = FONT_NAME + '-Bold';
+export const FONT_ITALIC = FONT_NAME + 'Italic';
+export const FONT_BOLD_ITALIC = FONT_NAME + 'BoldItalic';
+export const FONT_BOLD = FONT_NAME + 'Bold';
 
-const FONT_SMALL = scale(
-  Platform.isPad || Platform.isTV || Platform.OS == 'macos' ? 12 : 10,
-);
-const FONT_MEDIUM = scale(
-  Platform.isPad || Platform.isTV || Platform.OS == 'macos' ? 13 : 12,
-);
-const FONT_MEDIUM_LARGE = scale(14);
-const FONT_LARGE = scale(
-  Platform.isPad || Platform.isTV || Platform.OS == 'macos' ? 16 : 16,
-);
+const FONT_SMALL = scale(12);
+const FONT_MEDIUM = scale(14);
+const H6 = scale(16);
+const H5 = scale(20);
+const H4 = scale(24);
+const H3 = scale(28);
+const H2 = scale(32);
+const H1 = scale(40);
 export default {
   FONT_NAME,
   FONT_REGULAR,
@@ -27,6 +23,10 @@ export default {
   FONT_BOLD,
   FONT_SMALL,
   FONT_MEDIUM,
-  FONT_MEDIUM_LARGE,
-  FONT_LARGE,
+  H6,
+  H5,
+  H4,
+  H3,
+  H2,
+  H1,
 };
