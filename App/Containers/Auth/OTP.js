@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, Pressable, useWindowDimensions} from 'react-native';
+import {ScrollView, Image, StyleSheet, View, Pressable, useWindowDimensions} from 'react-native';
 import {
   Text,
   InputBlock,
@@ -8,9 +8,11 @@ import {
   FWLoading,
   TextInput,
 } from 'components';
+
 import { TEXT } from 'configs/Constants';
 import { Colors, Fonts, Spacing } from 'themes';
 import { User } from 'services';
+
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
 import { scale } from 'utils/Functions';
@@ -51,7 +53,7 @@ const OTP = () => {
             /> */}
 
             {/* button use to waiting for otp code */}
-            <Button
+            {/* <Button
               mb={10}
               disabled
               color={{color: Colors.BACKGROUNDACCORDION}}
@@ -59,12 +61,12 @@ const OTP = () => {
               label={TEXT.CONFIRM}
               label2=" (60s)"
               style={styles.disabled_btn}
-              onPress={register}/>
+              onPress={register}/> */}
             
-            {/* <Button
+            <Button
               mb={10}
               label='Gửi lại'
-              onPress={register}/> */}
+              onPress={register}/>
             
             <View style={[styles.box_1, {marginTop: 20}]}>
               <Pressable onPress={register}>
@@ -76,11 +78,30 @@ const OTP = () => {
               </Pressable>
             </View>
           </View>
-          <Text style={[styles.otp_code, {marginTop: 20}]}>
+
+          {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
             <Text style={{
               textAlign: 'center',
               color: '#ccc'}}>OTP:</Text> 098909
-          </Text>
+          </Text> */}
+
+          {/* buttom call me */}
+          <Pressable 
+            style={[styles.otp_code, 
+              {
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 20}]}
+            onPress={register}>
+            <Image
+              source={Images.Register.phone_1}
+              style={{
+                height: scale(12), 
+                width: scale(12),
+                marginRight: 10,
+                textAlign: 'center'}}/>
+            <Text bold style={[styles.link_text]}>Gọi cho tôi</Text>
+          </Pressable>
         </>
       ) : (
         <FWLoading wrapStyle={[styles.loading, { height: height }]} />

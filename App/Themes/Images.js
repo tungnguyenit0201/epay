@@ -28,7 +28,9 @@ export default {
   ZaloPay: require('images/ZaloPay.png'),
   QRCode: require('images/QRCode.jpeg'),
   Withdraw: require('images/Withdraw.png'),
-  
+  Register: {
+    phone_1: require('images/register/phone-1.png'),
+  },
   WidthDraw: {
     Done: require('images/Done.png'),
     Plus: require('images/Plus+.png'),

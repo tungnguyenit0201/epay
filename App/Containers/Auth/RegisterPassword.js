@@ -43,6 +43,7 @@ const ForgotPassword = () => {
   };
 
   const onPress = async () => {
+    // Navigator.navigate(SCREEN.REGISTER_NAME);
     if (validateInput(forgotRef.current.newPassword).isInputValid || forgotRef.current.newPassword === "") {
       setError("")
       Navigator.navigate(SCREEN.TAB_NAVIGATION);
