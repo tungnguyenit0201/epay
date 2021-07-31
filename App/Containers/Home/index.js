@@ -4,8 +4,8 @@ import {Button, Icon,  Text} from 'components';
 import {Colors, Fonts, Images, Spacing,  base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Content from 'components/Home/Content';
 import TopMenu from 'components/Home/TopMenu';
+import ListItem from 'components/Home/ListItem';
 
 import {SCREEN} from 'configs/Constants';
 
@@ -18,15 +18,19 @@ const dataMenu = [
 ];
 
 const dataBlock = [
-  {icon: Images.QRCode, name: 'Nạp tiền giao thông', screen: SCREEN.TOP_UP},
+  {icon: Images.QRCode, name: 'Nạp tiền giao thông 1', screen: SCREEN.TOP_UP},
   {icon: Images.QRCode, name: 'Rút tiền 2', screen: SCREEN.WITHDRAW},
   {icon: Images.QRCode, name: 'QR Pay 2', screen: SCREEN.QRPAY},
-  {icon: Images.QRCode, name: 'Quét mã 2', screen: SCREEN.QRPAY},    
+  {icon: Images.QRCode, name: 'Quét mã 3', screen: SCREEN.QRPAY},    
+  {icon: Images.QRCode, name: 'Nạp tiền giao thông 5' , screen: SCREEN.TOP_UP},
+  {icon: Images.QRCode, name: 'Rút tiền 6', screen: SCREEN.WITHDRAW},
+  {icon: Images.QRCode, name: 'QR Pay 7', screen: SCREEN.QRPAY},
+  {icon: Images.QRCode, name: 'Quét mã 8', screen: SCREEN.QRPAY},     
 ];
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
-  const [isMoney, setIsMoney] = useState(true);
+  const [isMoney, setIsMoney] = useState(false);
   return (
     <>
     <View style={[base.container,{paddingTop:top+10, paddingBottom:10, marginBottom:20, backgroundColor:Colors.cl1}]}>
@@ -52,7 +56,11 @@ const Home = () => {
         <View  style={{  flexDirection:'row', alignItems:'center'}}>
           <Text color="#fff" size={Fonts.FONT_SMALL}>Ví của tôi</Text>
           <TouchableOpacity style={{ marginLeft:20}} onPress={() => setIsMoney(!isMoney)}>
-            <Text color="#fff"  >aa</Text>
+            <Icon
+              icon={isMoney ? Images.Eye : Images.EyeGray}
+              tintColor={Colors.l4}
+              size={15}
+            />   
           </TouchableOpacity>
         </View>
         {!isMoney ? (
@@ -60,9 +68,6 @@ const Home = () => {
         ) : (
           <Text color="#fff"  style={{height:20}}>5555 đ </Text>
         )}
-        
-        
-        
 
         <TouchableOpacity
           style={{ marginBottom:20,position:'absolute',right:-5, top:0  }}
@@ -74,7 +79,6 @@ const Home = () => {
             tintColor={Colors.white}
             size={30}
           />   
-
         </TouchableOpacity>
       </View>
       <TopMenu data={dataMenu} />
@@ -83,11 +87,11 @@ const Home = () => {
     <View style={base.container}>
       <View style={{ marginBottom:20}}>
         <Text style ={{ fontWeight: 'bold'}} size={Fonts.FONT_MEDIUM_LARGE} mb={10}>Dịch vụ Ebay</Text>
-        <Content  data={dataBlock} />
+        <ListItem scroll space={20}  col={4} data={dataBlock} />
       </View>
       <View style={{ marginBottom:20}}>
         <Text style ={{ fontWeight: 'bold'}} size={Fonts.FONT_MEDIUM_LARGE} mb={10}>Dịch vụ giao thông</Text>
-        <Content  data={dataBlock} />
+        <ListItem   space={20} col={4} data={dataBlock} />
       </View>  
     </View>
     </>
