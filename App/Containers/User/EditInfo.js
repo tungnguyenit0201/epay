@@ -26,10 +26,8 @@ const EditInfo = () => {
             {label: 'Nữ', value: 1},
             {label: 'Nam', value: 2},
           ]}
-          //value={1}
-          //onChange
-          onPress={() => true}
         />
+
         <InputBlock
           label="CMND / CCCD"
           value="356789099"

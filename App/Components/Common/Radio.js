@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
-import { Colors, Fonts } from 'themes';
+import React, {useState} from 'react';
+import {View, StyleSheet, Pressable} from 'react-native';
+import {Colors, Fonts} from 'themes';
+import {scale} from 'utils/Functions';
 import Text from './Text';
 
 export default ({
@@ -9,27 +10,29 @@ export default ({
   style,
   marginBottom = 19,
   error,
-  value,
-  showErrorLabel = true
+  active,
+  showErrorLabel = true,
 }) => {
-  const renderRadio = (item) => {
-    const isSelected = item?.value === value;
+  const [checked, setChecked] = React.useState(active ? active : 1);
+  const renderRadio = item => {
+    //const isSelected = item?.value === value;
     return (
       <Pressable
-        onPress={() => onChange?.(item?.value)}
+        //onPress={() => onChange?.(item?.value)}
+        onPress={() => setChecked(item?.value)}
         key={item?.value}
         style={styles.radio}>
         <View style={styles.tickWrap}>
-          {isSelected && <View style={styles.tick} />}
+          {checked === item?.value && <View style={styles.tick} />}
         </View>
-        <Text>{item?.label}</Text>
+        <Text mt={2}>{item?.label}</Text>
       </Pressable>
     );
   };
 
   return (
     <>
-      <View style={[{ marginBottom }, style]}>
+      <View style={[{marginBottom}, style]}>
         <View style={styles.wrap}>{items?.map(renderRadio)}</View>
         {!!error && showErrorLabel && (
           <Text color={'#FF0600'} mt={3} size={12}>
@@ -44,12 +47,12 @@ export default ({
 const styles = StyleSheet.create({
   wrap: {
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   radio: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 42
+    marginRight: scale(40),
   },
   tickWrap: {
     width: 15,
@@ -59,12 +62,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10
+    marginRight: 6,
   },
   tick: {
     width: 9,
     height: 9,
     borderRadius: 5,
-    backgroundColor: '#555'
-  }
+    backgroundColor: Colors.cl1,
+  },
 });
