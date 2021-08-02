@@ -1,29 +1,29 @@
 import React from 'react';
 import {scale} from 'utils/Functions';
-import {View,StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
-
-const Row = ({children,align,space,justify,wrap,direction}) => {
+const Row = ({children, align, space, justify, wrap, direction, style}) => {
   return (
-    <View style={[
-      styles.row, 
-      align     &&{ alignItems: align},
-      justify   &&{ justifyContent: justify},
-      wrap      &&{ flexWrap: wrap},
-      direction &&{ flexDirection: direction},
-      space     &&{ marginHorizontal: scale(-space/2)},
-      ]} >
+    <View
+      style={[
+        styles.row,
+        align && {alignItems: align},
+        justify && {justifyContent: justify},
+        wrap && {flexWrap: wrap},
+        direction && {flexDirection: direction},
+        space && {marginHorizontal: scale(-space / 2)},
+        style,
+      ]}>
       {children}
     </View>
   );
 };
 const styles = StyleSheet.create({
-  row :{
+  row: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    marginHorizontal:scale(-10)
-  }
-
+    marginHorizontal: scale(-10),
+  },
 });
 export default Row;
 
