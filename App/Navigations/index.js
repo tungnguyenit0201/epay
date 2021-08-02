@@ -20,7 +20,9 @@ import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
 import RegisterName from 'containers/Auth/RegisterName';
 import OTP from 'containers/Auth/OTP';
-import Bank from 'containers/Wallet/Bank';
+import BankList from 'containers/Wallet/Bank/BankList';
+import BankInfo from 'containers/Wallet/Bank/BankInfo';
+import BankResult from 'containers/Wallet/Bank/BankResult';
 import Notification from 'containers/Notification';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
@@ -80,7 +82,9 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
-          <Stack.Screen name={SCREEN.BANK} component={Bank} />
+          <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
+          <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
+          <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
           <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
