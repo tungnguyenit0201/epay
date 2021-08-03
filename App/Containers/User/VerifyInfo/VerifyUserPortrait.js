@@ -9,15 +9,53 @@ import {useVerifyInfo} from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import {base} from 'themes';
+import region from '../RegionSelect/region';
 
 const VerifyUserPortrait = ({route}) => {
   const {data, onChange} = useVerifyInfo(route?.params);
+  const {type} = route?.params;
 
   const onPress = () => {
     console.log('data', data);
     alert(data);
   };
+  const pleaseChooseFirst = type => {
+    Alert.alert('Lỗi', `Vui lòng chọn ${type} trước`);
+  };
 
+  const goRegionSelect = _type => {
+    switch (_type) {
+      case 'cites':
+        Navigator.navigate('RegionSelect', {
+          items: region?.cites,
+          type: _type,
+          parentType: type,
+        });
+        break;
+      case 'districts':
+        if (!region?.city?.value) {
+          pleaseChooseFirst('thành phố / tỉnh');
+        } else {
+          Navigator.navigate('RegionSelect', {
+            items: region?.districts?.[region?.city?.value],
+            type: _type,
+            parentType: type,
+          });
+        }
+        break;
+      case 'wards':
+        if (!region?.city?.value) {
+          pleaseChooseFirst('huyện / xã');
+        } else {
+          Navigator.navigate('RegionSelect', {
+            items: region?.wards?.[region?.district?.value],
+            type: _type,
+            parentType: type,
+          });
+        }
+        break;
+    }
+  };
   return (
     <ScrollView style={{backgroundColor: '#fff'}}>
       <Header back title={TEXT.VERIFY_ACCOUNT} />
@@ -51,10 +89,29 @@ const VerifyUserPortrait = ({route}) => {
           style={{marginBottom: 10}}
         />
         <InputBlock
-          label="Địa chỉ"
-          value="TP. HỒ Chí Minh"
+          label="Tỉnh / Thành phố"
+          onChange={value => true}
           rightIcon={Images.Down}
-          style={{marginBottom: 10}}
+          isSelect
+          required
+          onPress={() => goRegionSelect('cites')}
+        />
+
+        <InputBlock
+          label="Quận / Huyện"
+          onChange={value => true}
+          rightIcon={Images.Down}
+          isSelect
+          required
+          onPress={() => goRegionSelect('districts')}
+        />
+        <InputBlock
+          label="Phường / Xã"
+          onChange={value => true}
+          rightIcon={Images.Down}
+          isSelect
+          required
+          onPress={() => goRegionSelect('wards')}
         />
         <Button label={TEXT.DONE} onPress={onPress} />
       </View>

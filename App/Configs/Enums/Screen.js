@@ -35,5 +35,6 @@ const SCREEN = {
   VERIFY_USER_PORTRAIT: 'VerifyUserPortrait',
   CHECKOUT_SUCCESS: 'CheckoutSuccess',
   CHECKOUT_FAILURE: 'CheckoutFailure',
+  REGION_SELECT: 'RegionSelect',
 };
 export default SCREEN;

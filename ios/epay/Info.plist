@@ -36,11 +36,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSContactsUsageDescription</key>
 	<string>Cho phép ePay kết nối danh bạ của bạn?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Cho phép ePay kết nối thư viện của bạn?</string>
 	<key>UIAppFonts</key>

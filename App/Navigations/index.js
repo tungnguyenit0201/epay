@@ -41,6 +41,7 @@ import Contacts from 'containers/Wallet/Contacts';
 import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
 import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
 import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
+import RegionSelect from 'containers/User/RegionSelect';
 import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
 import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
 
@@ -129,6 +130,7 @@ const AppNavigator = () => {
             name={SCREEN.CHECKOUT_SUCCESS}
             component={CheckoutSuccess}
           />
+          <Stack.Screen name={SCREEN.REGION_SELECT} component={RegionSelect} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
