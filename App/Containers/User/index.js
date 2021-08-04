@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import Login from 'components/User/Login';
 import {Text, Button, Icon} from 'components';
-import {ScrollView, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-import {Colors, Fonts, Images, Spacing,  base} from 'themes';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
-
 
 const User = () => {
   const {top} = useSafeAreaInsets();
@@ -18,41 +23,63 @@ const User = () => {
     {name: 'CMND', val: 'sss'},
     {name: 'Nơi cấp', val: 'sss'},
     {name: 'Địa chỉ', val: 'sss'},
-  ];  
+  ];
   return (
     <ScrollView>
-      <View style={[base.container,{paddingTop:top+10, paddingBottom:30,  backgroundColor:Colors.cl1}]}>
-          <View style={{flexDirection:'row'}}>
-            <View style={{overflow:'hidden', marginRight:20, height:48, with:48, borderRadius:99, backgroundColor:Colors.black}}>
-              <Image
-                style={{width: 48,height: 48}}
-                source={Images.MoMo}
-              />
-            </View>
-            <View>
-              <Text color="#fff" size={Fonts.FONT_MEDIUM_LARGE} mb={5}>Nguyễn Văn A</Text>
-              <Text color="#fff" mb={10}>0908000000</Text>
-              <Button
-                bg={Colors.cl4}
-                radius={30}
-                color={Colors.black}
-                label="Xác thực tài khoản"
-                onPress={() => Navigator.push(SCREEN.VERIFY_USER_INFO)}
-              />              
-            </View>
-            <View style={{marginLeft:'auto'}}>
-              <TouchableOpacity
-                onPress={() => {
-                  Navigator.push(SCREEN.USER_INFO);
-                }}>
-                <Icon
-                  icon={Images.ArrowRight}
-                  tintColor={Colors.white}
-                  size={30}
-                />   
-              </TouchableOpacity>
-            </View>
+      <View
+        style={[
+          base.container,
+          {
+            paddingTop: top + 10,
+            paddingBottom: 30,
+            backgroundColor: Colors.cl1,
+          },
+        ]}>
+        <View style={{flexDirection: 'row'}}>
+          <View
+            style={{
+              overflow: 'hidden',
+              marginRight: 20,
+              height: 48,
+              with: 48,
+              borderRadius: 99,
+              backgroundColor: Colors.black,
+            }}>
+            <Image
+              style={{width: 48, height: 48}}
+              source={{
+                uri: 'https://mangoads.vn/learn/wp-content/uploads/2020/08/7-huong-dan-phan-hoi-680x510.jpg',
+              }}
+            />
           </View>
+          <View>
+            <Text color="#fff" size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
+              Nguyễn Văn A
+            </Text>
+            <Text color="#fff" mb={10}>
+              0908000000
+            </Text>
+            <Button
+              bg={Colors.cl4}
+              radius={30}
+              color={Colors.black}
+              label="Xác thực tài khoản"
+              onPress={() => Navigator.push(SCREEN.VERIFY_USER_INFO)}
+            />
+          </View>
+          <View style={{marginLeft: 'auto'}}>
+            <TouchableOpacity
+              onPress={() => {
+                Navigator.push(SCREEN.USER_INFO);
+              }}>
+              <Icon
+                icon={Images.ArrowRight}
+                tintColor={Colors.white}
+                size={30}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
       <View style={[base.container, styles.heading]}>
         <View style={styles.item}>
@@ -62,23 +89,25 @@ const User = () => {
       <View style={[base.container, styles.row]}>
         <View style={styles.item}>
           <TouchableOpacity
-            style={{flexDirection:'row'}}
+            style={{flexDirection: 'row'}}
             onPress={() => {
               Navigator.push(SCREEN.NOTIFICATION);
             }}>
-            <Text>Số dư</Text>    
-            <Text style={{marginLeft:10}} bold>12.000.000 vnd</Text>      
-          </TouchableOpacity>      
+            <Text>Số dư</Text>
+            <Text style={{marginLeft: 10}} bold>
+              12.000.000 vnd
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={[base.container, styles.row]}>
         <View style={styles.item}>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push(SCREEN.BANK);
+              Navigator.push(SCREEN.BANK_LIST);
             }}>
-            <Text>Ngân hàng liên kết (2)</Text>      
-          </TouchableOpacity>      
+            <Text>Ngân hàng liên kết (2)</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={[base.container, styles.row]}>
@@ -87,10 +116,10 @@ const User = () => {
             onPress={() => {
               Navigator.push(SCREEN.NOTIFICATION);
             }}>
-            <Text>Mã thanh toán của tôi</Text>      
-          </TouchableOpacity>      
+            <Text>Mã thanh toán của tôi</Text>
+          </TouchableOpacity>
         </View>
-      </View> 
+      </View>
 
       <View style={[base.container, styles.heading]}>
         <View style={styles.item}>
@@ -103,8 +132,8 @@ const User = () => {
             onPress={() => {
               Navigator.push(SCREEN.PAYMENT_SETTINGS);
             }}>
-            <Text>Cài đặt thanh toán</Text>      
-          </TouchableOpacity>      
+            <Text>Cài đặt thanh toán</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={[base.container, styles.row]}>
@@ -113,18 +142,18 @@ const User = () => {
             onPress={() => {
               Navigator.push(SCREEN.SECURITY);
             }}>
-            <Text>Mật khẩu và bảo mật</Text>      
-          </TouchableOpacity>      
+            <Text>Mật khẩu và bảo mật</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={[base.container, styles.row]}>
         <View style={styles.item}>
           <TouchableOpacity
             onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
+              Navigator.push(SCREEN.LANGUAGE_SETTING);
             }}>
-            <Text>Cài đặt ngôn ngữ</Text>      
-          </TouchableOpacity>      
+            <Text>Cài đặt ngôn ngữ</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -139,37 +168,36 @@ const User = () => {
             onPress={() => {
               Navigator.push(SCREEN.NOTIFICATION);
             }}>
-            <Text>Trung tâm trợ giúp</Text>      
-          </TouchableOpacity>      
+            <Text>Trung tâm trợ giúp</Text>
+          </TouchableOpacity>
         </View>
       </View>
-       
     </ScrollView>
   );
 };
 const styles = StyleSheet.create({
   heading: {
-    marginTop:20,
-    borderBottomColor:Colors.l4,
-    borderBottomWidth:1    
-  },  
+    marginTop: 20,
+    borderBottomColor: Colors.l4,
+    borderBottomWidth: 1,
+  },
   title: {
-    textTransform:'uppercase'
-  },   
+    textTransform: 'uppercase',
+  },
   link: {
-    textDecorationLine: 'underline'
-  },   
+    textDecorationLine: 'underline',
+  },
   row: {
-    backgroundColor:Colors.white,
-    borderBottomColor:Colors.l4,
-    borderBottomWidth:1
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l4,
+    borderBottomWidth: 1,
   },
   item: {
-    flexDirection:'row',
-    paddingVertical:12,
-  },  
+    flexDirection: 'row',
+    paddingVertical: 12,
+  },
   itemRight: {
-    marginLeft:'auto'
-  },  
+    marginLeft: 'auto',
+  },
 });
 export default User;

@@ -36,5 +36,7 @@ const SCREEN = {
   CHECKOUT_SUCCESS: 'CheckoutSuccess',
   CHECKOUT_FAILURE: 'CheckoutFailure',
   REGION_SELECT: 'RegionSelect',
+  LANGUAGE_SETTING: 'LanguageSetting',
+  MY_WALLET: 'MyWallet',
 };
 export default SCREEN;

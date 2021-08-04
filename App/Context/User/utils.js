@@ -1,6 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 
 const imagePickerOptions = {
   width: 850,
@@ -44,4 +45,20 @@ const useVerifyInfo = (initialValue = {}) => {
   return {data: contentRef.current, onChange, onContinue};
 };
 
-export {useImagePicker, useVerifyInfo};
+const useAuth = () => {
+  const contentRef = useRef({
+    phone: '',
+  });
+
+  const onChange = value => {
+    contentRef.current.phone = value;
+  };
+
+  const onPress = () => {
+    Navigator.push(contentRef.current.phone ? SCREEN.LOGIN : SCREEN.OTP);
+  };
+
+  return {onChange, onPress};
+};
+
+export {useImagePicker, useVerifyInfo, useAuth};
