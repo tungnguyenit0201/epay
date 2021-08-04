@@ -11,7 +11,7 @@ import {useAuth} from 'context/User/utils';
 const Auth = () => {
   const {userInfo} = useUser();
   const {onChange, onPress} = useAuth();
-  // const {} = useTranslation();
+  const translation = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -24,10 +24,10 @@ const Auth = () => {
         />
         <InputBlock
           numeric
-          label={'Vui lòng nhập số điện thoại'}
+          label={translation.please_enter_your_phone_number}
           onChange={onChange}
         />
-        <Button label={'Tiếp tục'} onPress={onPress} />
+        <Button label={translation.continue} onPress={onPress} />
       </View>
     </View>
   );
