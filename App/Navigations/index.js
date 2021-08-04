@@ -23,7 +23,7 @@ import OTP from 'containers/Auth/OTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
-import Notification from 'containers/Notification';
+import Notification from 'containers/Home/Notification';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
 import QRPay from 'containers/Wallet/QRPay';
@@ -44,9 +44,11 @@ import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 import RegionSelect from 'containers/User/RegionSelect';
 import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
 import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
+import LanguageSetting from 'containers/User/LanguageSetting';
+import MyWallet from 'containers/Home/MyWallet';
 
 const AppNavigator = () => {
-  const initialRoute = 'Auth';
+  const initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
 
   const getCurrentLanguage = async () => {
@@ -131,6 +133,11 @@ const AppNavigator = () => {
             component={CheckoutSuccess}
           />
           <Stack.Screen name={SCREEN.REGION_SELECT} component={RegionSelect} />
+          <Stack.Screen
+            name={SCREEN.LANGUAGE_SETTING}
+            component={LanguageSetting}
+          />
+          <Stack.Screen name={SCREEN.MY_WALLET} component={MyWallet} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

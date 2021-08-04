@@ -1,5 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, Image, StyleSheet, View, Pressable, useWindowDimensions} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  View,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import {
   Text,
   InputBlock,
@@ -9,20 +16,20 @@ import {
   TextInput,
 } from 'components';
 
-import { TEXT } from 'configs/Constants';
-import { Colors, Fonts, Spacing } from 'themes';
-import { User } from 'services';
+import {TEXT} from 'configs/Constants';
+import {Colors, Fonts, Images, Spacing} from 'themes';
+import {User} from 'services';
 
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
-import { scale } from 'utils/Functions';
+import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
-import { SCREEN } from 'configs/Constants';
-import Col from 'components/Common/Col'
-import Row from 'components/Common/Row'
+import {SCREEN} from 'configs/Constants';
+import Col from 'components/Common/Col';
+import Row from 'components/Common/Row';
 const OTP = () => {
-  let { height } = useWindowDimensions();
+  let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let forgotRef = useRef({
     otp: null,
@@ -44,8 +51,7 @@ const OTP = () => {
       {!loading ? (
         <>
           <View style={styles.wrap}>
-            <OTPContainer 
-              onChange={value => onChange('otp', value)}/>
+            <OTPContainer onChange={value => onChange('otp', value)} />
 
             {/* <Password
               onChangePassword={value => onChange('newPassword', value)}
@@ -62,12 +68,9 @@ const OTP = () => {
               label2=" (60s)"
               style={styles.disabled_btn}
               onPress={register}/> */}
-            
-            <Button
-              mb={10}
-              label='Gửi lại'
-              onPress={register}/>
-            
+
+            <Button mb={10} label="Gửi lại" onPress={register} />
+
             <View style={[styles.box_1, {marginTop: 20}]}>
               <Pressable onPress={register}>
                 <Text style={[styles.link_text]}>Không nhận được OTP</Text>
@@ -86,25 +89,32 @@ const OTP = () => {
           </Text> */}
 
           {/* buttom call me */}
-          <Pressable 
-            style={[styles.otp_code, 
+          <Pressable
+            style={[
+              styles.otp_code,
               {
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: 20}]}
+                marginTop: 20,
+              },
+            ]}
             onPress={register}>
             <Image
               source={Images.Register.phone_1}
               style={{
-                height: scale(12), 
+                height: scale(12),
                 width: scale(12),
                 marginRight: 10,
-                textAlign: 'center'}}/>
-            <Text bold style={[styles.link_text]}>Gọi cho tôi</Text>
+                textAlign: 'center',
+              }}
+            />
+            <Text bold style={[styles.link_text]}>
+              Gọi cho tôi
+            </Text>
           </Pressable>
         </>
       ) : (
-        <FWLoading wrapStyle={[styles.loading, { height: height }]} />
+        <FWLoading wrapStyle={[styles.loading, {height: height}]} />
       )}
     </ScrollView>
   );
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderWidth: 0.5,
     borderColor: Colors.BACKGROUNDACCORDION,
-    borderStyle: 'solid'
+    borderStyle: 'solid',
   },
   link_text: {
     textDecorationStyle: 'solid',
@@ -145,14 +155,14 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   box_1: {
-    flexDirection: "row",
+    flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
   otp_code: {
     paddingVertical: Spacing.PADDING,
     textAlign: 'center',
-    backgroundColor: "#F5F5F5"
-  }
+    backgroundColor: '#F5F5F5',
+  },
 });
 export default OTP;
