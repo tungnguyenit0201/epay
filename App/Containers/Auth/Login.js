@@ -10,10 +10,10 @@ import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-// import {useTranslation} from 'context/Language';
+import {useTranslation} from 'context/Language';
 
 const ForgotPassword = () => {
-  // const translation = useTranslation();
+  const translation = useTranslation();
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [disable, setDisable] = useState(true);
@@ -55,7 +55,7 @@ const ForgotPassword = () => {
         <View style={[styles.box_1, {marginTop: 40}]}>
           <Pressable onPress={() => Navigator.push(SCREEN.FORGET_PASSWORD)}>
             <Text style={[styles.link_text]}>
-              {/* {translation.forgot_password} */}
+              {translation.forgot_password}
             </Text>
           </Pressable>
 
