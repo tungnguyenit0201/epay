@@ -1,17 +1,12 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
 import {Button, Icon, Text} from 'components';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {Colors, Fonts, Images, Spacing, base, Row, Col} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import TopMenu from 'components/Home/TopMenu';
+
 import ListItem from 'components/Common/ListItem';
+import Monney from 'components/Home/Monney';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
@@ -19,13 +14,25 @@ import {useTranslation} from 'context/Language';
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
-  const [isMoney, setIsMoney] = useState(false);
+
   const translation = useTranslation();
   const dataMenu = [
-    {icon: Images.Homes.NapViTuDong, name: 'Nạp tiền', screen: SCREEN.TOP_UP},
-    {icon: Images.QRCode, name: 'Rút tiền', screen: SCREEN.WITHDRAW},
-    {icon: Images.QRCode, name: 'QR Pay', screen: SCREEN.QRPAY},
-    {icon: Images.QRCode, name: 'Quét mã', screen: SCREEN.QRPAY},
+    {
+      icon: Images.Homes.NapTien,
+      name: translation.top_up,
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.RutTien,
+      name: translation.withdraw,
+      screen: SCREEN.WITHDRAW,
+    },
+    {icon: Images.Homes.QAPAY, name: translation.pay_qr, screen: SCREEN.QRPAY},
+    {
+      icon: Images.Homes.ChuyenTien,
+      name: translation.transfer,
+      screen: SCREEN.QRPAY,
+    },
   ];
   const dataEpay = [
     {
@@ -74,11 +81,43 @@ const Home = () => {
           {
             paddingTop: top + 10,
             paddingBottom: 10,
-            marginBottom: 20,
+            marginBottom: 50,
             backgroundColor: Colors.cl1,
           },
         ]}>
         <View style={{marginBottom: 20, position: 'relative'}}>
+          <View
+            style={[
+              {
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 20,
+              },
+            ]}>
+            <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
+            <TouchableOpacity
+              style={[{marginLeft: 'auto', position: 'relative'}]}
+              onPress={() => {
+                Navigator.push(SCREEN.NOTIFICATION);
+              }}>
+              <Text
+                size={10}
+                color="#fff"
+                style={[
+                  {
+                    backgroundColor: '#D70000',
+                    position: 'absolute',
+                    borderRadius: 99,
+                    with: 56,
+                    height: 16,
+                  },
+                ]}>
+                10
+              </Text>
+              <Icon icon={Images.Noti} tintColor="#fff" />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
             onPress={() => {
               Navigator.navigate(SCREEN.USER);
@@ -88,49 +127,18 @@ const Home = () => {
             </Text>
             <Text color="#fff">Nguyen Van A </Text>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{marginBottom: 20, position: 'absolute', right: 0}}
-            onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
-            }}>
-            <Text>🔔</Text>
-          </TouchableOpacity>
         </View>
-        <View style={{marginBottom: 20, position: 'relative'}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text color="#fff" size={Fonts.FONT_SMALL}>
-              Ví của tôi
-            </Text>
-            <TouchableOpacity
-              style={{marginLeft: 20}}
-              onPress={() => setIsMoney(!isMoney)}>
-              <Icon
-                icon={isMoney ? Images.Eye : Images.EyeGray}
-                tintColor={Colors.l4}
-                size={15}
-              />
-            </TouchableOpacity>
-          </View>
-          {!isMoney ? (
-            <Text color="#fff" size={20} style={{height: 20}}>
-              ******{' '}
-            </Text>
-          ) : (
-            <Text color="#fff" style={{height: 20}}>
-              5555 đ{' '}
-            </Text>
-          )}
 
-          <TouchableOpacity
-            style={{marginBottom: 20, position: 'absolute', right: -5, top: 0}}
-            onPress={() => {
-              Navigator.push(SCREEN.MY_WALLET);
-            }}>
-            <Icon icon={Images.ArrowRight} tintColor={Colors.white} size={30} />
-          </TouchableOpacity>
-        </View>
-        <TopMenu data={dataMenu} />
+        <Monney
+          style={[
+            {
+              position: 'absolute',
+              bottom: -20,
+              left: Spacing.PADDING,
+              right: Spacing.PADDING,
+            },
+          ]}
+        />
       </View>
 
       <View style={base.container}>
@@ -140,7 +148,7 @@ const Home = () => {
             space={1}
             col={4}
             data={dataMenu}
-            styleText={[{fontSize: 16}]}
+            styleText={[{fontSize: 14}]}
             styleWicon={[{backgroundColor: '#437EC0'}]}
             styleIcon={[{tintColor: '#fff'}]}
           />

@@ -37,6 +37,8 @@ export default {
     Plus: require('images/Plus+.png'),
     Close: require('images/Close.png'),
   },
+  Logo: require('images/Logo.png'),
+  Noti: require('images/Noti.png'),
   Homes: {
     NapViTuDong: require('images/home/NapViTuDong.png'),
     ThanhToanGt: require('images/home/ThanhToanGt.png'),
@@ -46,7 +48,10 @@ export default {
     LichSuXe: require('images/home/LichSuXe.png'),
     TramDichvVu: require('images/home/TramDichvVu.png'),
     Banner: require('images/home/Banner.png'),
-
-    NapViTuDong: require('images/home/NapViTuDong.png'),
+    NapTien: require('images/home/NapTien.png'),
+    RutTien: require('images/home/RutTien.png'),
+    QAPAY: require('images/home/QAPAY.png'),
+    ChuyenTien: require('images/home/ChuyenTien.png'),
+    NapTien: require('images/home/NapTien.png'),
   },
 };
