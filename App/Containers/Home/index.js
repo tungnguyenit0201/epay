@@ -1,37 +1,73 @@
 import React, {useState} from 'react';
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {Button, Icon, Text} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import TopMenu from 'components/Home/TopMenu';
-import ListItem from 'components/Home/ListItem';
+import ListItem from 'components/Common/ListItem';
 
 import {SCREEN} from 'configs/Constants';
-
-const dataMenu = [
-  {icon: Images.QRCode, name: 'Nạp tiền', screen: SCREEN.TOP_UP},
-  {icon: Images.QRCode, name: 'Rút tiền', screen: SCREEN.WITHDRAW},
-  {icon: Images.QRCode, name: 'QR Pay', screen: SCREEN.QRPAY},
-  {icon: Images.QRCode, name: 'Quét mã', screen: SCREEN.QRPAY},
-];
-
-const dataBlock = [
-  {icon: Images.QRCode, name: 'Chuyển tiền', screen: SCREEN.TRANSFER},
-  {icon: Images.QRCode, name: 'Rút tiền 2', screen: SCREEN.WITHDRAW},
-  {icon: Images.QRCode, name: 'QR Pay 2', screen: SCREEN.QRPAY},
-  {icon: Images.QRCode, name: 'Quét mã 3', screen: SCREEN.QRPAY},
-  {icon: Images.QRCode, name: 'Nạp tiền giao thông 5', screen: SCREEN.TOP_UP},
-  {icon: Images.QRCode, name: 'Rút tiền 6', screen: SCREEN.WITHDRAW},
-  {icon: Images.QRCode, name: 'QR Pay 7', screen: SCREEN.QRPAY},
-  {icon: Images.QRCode, name: 'Quét mã 8', screen: SCREEN.QRPAY},
-];
+import {scale} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
   const [isMoney, setIsMoney] = useState(false);
+  const translation = useTranslation();
+  const dataMenu = [
+    {icon: Images.Homes.NapViTuDong, name: 'Nạp tiền', screen: SCREEN.TOP_UP},
+    {icon: Images.QRCode, name: 'Rút tiền', screen: SCREEN.WITHDRAW},
+    {icon: Images.QRCode, name: 'QR Pay', screen: SCREEN.QRPAY},
+    {icon: Images.QRCode, name: 'Quét mã', screen: SCREEN.QRPAY},
+  ];
+  const dataEpay = [
+    {
+      icon: Images.Homes.NapViTuDong,
+      name: translation.vehicle_list,
+      screen: SCREEN.TRANSFER,
+    },
+    {
+      icon: Images.Homes.ThanhToanGt,
+      name: translation.pay_traffic_fines,
+      screen: SCREEN.WITHDRAW,
+    },
+    {
+      icon: Images.Homes.DichVuGt,
+      name: translation.traffic_fee_service,
+      screen: SCREEN.QRPAY,
+    },
+  ];
+  const dataGT = [
+    {
+      icon: Images.Homes.DanhSachXe,
+      name: translation.vehicle_list,
+      screen: SCREEN.TRANSFER,
+    },
+    {
+      icon: Images.Homes.MuaVe,
+      name: translation.traffic_fee_service,
+      screen: SCREEN.WITHDRAW,
+    },
+    {
+      icon: Images.Homes.LichSuXe,
+      name: translation.history_of_passed_stations,
+      screen: SCREEN.QRPAY,
+    },
+    {
+      icon: Images.Homes.TramDichvVu,
+      name: translation.stationservice,
+      screen: SCREEN.QRPAY,
+    },
+  ];
   return (
-    <>
+    <ScrollView style={base.wrap}>
       <View
         style={[
           base.container,
@@ -99,25 +135,42 @@ const Home = () => {
 
       <View style={base.container}>
         <View style={{marginBottom: 20}}>
-          <Text
-            style={{fontWeight: 'bold'}}
-            size={Fonts.FONT_MEDIUM_LARGE}
-            mb={10}>
-            Dịch vụ EPAY
+          <ListItem
+            scroll
+            space={1}
+            col={4}
+            data={dataMenu}
+            styleText={[{fontSize: 16}]}
+            styleWicon={[{backgroundColor: '#437EC0'}]}
+            styleIcon={[{tintColor: '#fff'}]}
+          />
+        </View>
+
+        <View style={{marginBottom: 20}}>
+          <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
+            {translation.epay_services}
           </Text>
-          <ListItem scroll space={20} col={4} data={dataBlock} />
+          <ListItem scroll space={1} col={4} data={dataEpay} />
         </View>
         <View style={{marginBottom: 20}}>
-          <Text
-            style={{fontWeight: 'bold'}}
-            size={Fonts.FONT_MEDIUM_LARGE}
-            mb={10}>
-            Dịch vụ giao thông
+          <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
+            {translation.traffic_payment_services}
           </Text>
-          <ListItem space={20} col={4} data={dataBlock} />
+          <ListItem space={20} col={4} data={dataGT} />
+        </View>
+        <View style={{marginBottom: 20}}>
+          <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
+            {translation.how_to_use_epay}
+          </Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Image
+              source={Images.Homes.Banner}
+              style={[{height: scale(128), width: scale(335)}]}
+            />
+          </TouchableOpacity>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

@@ -36,5 +36,17 @@ export default {
     Done: require('images/Done.png'),
     Plus: require('images/Plus+.png'),
     Close: require('images/Close.png'),
-  }
+  },
+  Homes: {
+    NapViTuDong: require('images/home/NapViTuDong.png'),
+    ThanhToanGt: require('images/home/ThanhToanGt.png'),
+    DichVuGt: require('images/home/DichVuGt.png'),
+    DanhSachXe: require('images/home/DanhSachXe.png'),
+    MuaVe: require('images/home/MuaVe.png'),
+    LichSuXe: require('images/home/LichSuXe.png'),
+    TramDichvVu: require('images/home/TramDichvVu.png'),
+    Banner: require('images/home/Banner.png'),
+
+    NapViTuDong: require('images/home/NapViTuDong.png'),
+  },
 };
