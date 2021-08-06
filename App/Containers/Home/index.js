@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
-import {Button, Icon, Text} from 'components';
-import {Colors, Fonts, Images, Spacing, base, Row, Col} from 'themes';
+import {Text} from 'components';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import ListItem from 'components/Common/ListItem';
 import Monney from 'components/Home/Monney';
+import Notification from 'components/Home/Notification';
+import User from 'components/Home/User';
+import XacThuc from 'components/Home/XacThuc';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
@@ -14,7 +17,6 @@ import {useTranslation} from 'context/Language';
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
-
   const translation = useTranslation();
   const dataMenu = [
     {
@@ -79,54 +81,55 @@ const Home = () => {
         style={[
           base.container,
           {
-            paddingTop: top + 10,
+            paddingTop: top + 5,
             paddingBottom: 10,
             marginBottom: 50,
-            backgroundColor: Colors.cl1,
+            height: 172,
           },
         ]}>
-        <View style={{marginBottom: 20, position: 'relative'}}>
+        <View
+          style={[
+            {
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              overflow: 'hidden',
+              borderRadius: Spacing.PADDING,
+              backgroundColor: Colors.cl1,
+            },
+          ]}>
+          <Image
+            source={Images.Homes.BgHeader}
+            style={[
+              {
+                width: scale(375),
+                height: 172,
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                resizeMode: 'cover',
+              },
+            ]}
+          />
+        </View>
+
+        <View style={{position: 'relative'}}>
           <View
             style={[
               {
                 flexWrap: 'wrap',
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 20,
+                marginBottom: 15,
               },
             ]}>
             <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
-            <TouchableOpacity
-              style={[{marginLeft: 'auto', position: 'relative'}]}
-              onPress={() => {
-                Navigator.push(SCREEN.NOTIFICATION);
-              }}>
-              <Text
-                size={10}
-                color="#fff"
-                style={[
-                  {
-                    backgroundColor: '#D70000',
-                    position: 'absolute',
-                    borderRadius: 99,
-                    with: 56,
-                    height: 16,
-                  },
-                ]}>
-                10
-              </Text>
-              <Icon icon={Images.Noti} tintColor="#fff" />
-            </TouchableOpacity>
+            <Notification data={5} />
           </View>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.navigate(SCREEN.USER);
-            }}>
-            <Text color="#fff" size={Fonts.FONT_SMALL}>
-              Hello
-            </Text>
-            <Text color="#fff">Nguyen Van A </Text>
-          </TouchableOpacity>
+          <User />
         </View>
 
         <Monney
@@ -153,6 +156,7 @@ const Home = () => {
             styleIcon={[{tintColor: '#fff'}]}
           />
         </View>
+        <XacThuc />
 
         <View style={{marginBottom: 20}}>
           <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>

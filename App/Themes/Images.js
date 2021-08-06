@@ -39,7 +39,9 @@ export default {
   },
   Logo: require('images/Logo.png'),
   Noti: require('images/Noti.png'),
+  Avatar: require('images/Avatar.jpg'),
   Homes: {
+    BgHeader: require('images/home/BgHeader.jpg'),
     NapViTuDong: require('images/home/NapViTuDong.png'),
     ThanhToanGt: require('images/home/ThanhToanGt.png'),
     DichVuGt: require('images/home/DichVuGt.png'),
