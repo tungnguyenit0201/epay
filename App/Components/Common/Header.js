@@ -22,15 +22,9 @@ const Header = ({
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
   return (
-    <View
-      style={[
-        styles.wrap,
-        shadow ? styles.shadow : {},
-        {paddingTop: top > 40 ? top : top + scale(6)},
-        style,
-      ]}>
+    <View style={[style, {}]}>
       <View style={{minHeight: scale(24)}}>
-        <Text semibold style={[styles.title, titleStyle]}>
+        <Text semibold size={Fonts.H6} style={[styles.title, titleStyle]}>
           {title}
         </Text>
         <View
@@ -64,7 +58,7 @@ const Header = ({
                     left: scale(30),
                   }}>
                   <View style={styles.back}>
-                    <Icon icon={Images.ArrowLeft} />
+                    <Icon icon={Images.ArrowLeft} tintColor="#fff" />
                   </View>
                 </Pressable>
               ) : (
@@ -116,9 +110,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: Fonts.FONT_LARGE,
     fontWeight: 'bold',
     alignSelf: 'center',
+    color: '#fff',
+    paddingTop: 5,
   },
   menuIcon: {
     paddingLeft: Spacing.PADDING,

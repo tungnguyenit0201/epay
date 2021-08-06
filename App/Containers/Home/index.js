@@ -10,6 +10,7 @@ import Monney from 'components/Home/Monney';
 import Notification from 'components/Home/Notification';
 import User from 'components/Home/User';
 import XacThuc from 'components/Home/XacThuc';
+import HeaderBg from 'components/Common/HeaderBg';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
@@ -77,61 +78,20 @@ const Home = () => {
   ];
   return (
     <ScrollView style={base.wrap}>
-      <View
-        style={[
-          base.container,
-          {
-            paddingTop: top + 5,
-            paddingBottom: 10,
-            marginBottom: 50,
-            height: 172,
-          },
-        ]}>
+      <HeaderBg style={{marginBottom: 50}}>
         <View
           style={[
             {
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              overflow: 'hidden',
-              borderRadius: Spacing.PADDING,
-              backgroundColor: Colors.cl1,
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 15,
             },
           ]}>
-          <Image
-            source={Images.Homes.BgHeader}
-            style={[
-              {
-                width: scale(375),
-                height: 172,
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                top: 0,
-                resizeMode: 'cover',
-              },
-            ]}
-          />
+          <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
+          <Notification data={5} />
         </View>
-
-        <View style={{position: 'relative'}}>
-          <View
-            style={[
-              {
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 15,
-              },
-            ]}>
-            <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
-            <Notification data={5} />
-          </View>
-          <User />
-        </View>
-
+        <User style={{marginBottom: 20}} />
         <Monney
           style={[
             {
@@ -142,7 +102,7 @@ const Home = () => {
             },
           ]}
         />
-      </View>
+      </HeaderBg>
 
       <View style={base.container}>
         <View style={{marginBottom: 20}}>

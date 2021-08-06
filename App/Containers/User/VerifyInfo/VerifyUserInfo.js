@@ -6,14 +6,19 @@ import {SCREEN, TEXT} from 'configs/Constants';
 import Progress from 'components/User/VerifyInfo/Progress';
 import {useVerifyInfo} from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
+import HeaderBg from 'components/Common/HeaderBg';
+
 const VerifyUserInfo = () => {
   const {onChange, onContinue} = useVerifyInfo();
   let [domain, setDomain] = useState(0);
 
   return (
     <>
-      <ScrollView style={{backgroundColor: '#fff'}}>
-        <Header back title={TEXT.VERIFY_ACCOUNT} />
+      <ScrollView style={base.wrap}>
+        <HeaderBg>
+          <Header back title={TEXT.VERIFY_ACCOUNT} />
+        </HeaderBg>
+
         <View style={[base.container, {paddingTop: 20}]}>
           <Progress step={1} />
 
