@@ -56,4 +56,16 @@ export default {
     ChuyenTien: require('images/home/ChuyenTien.png'),
     NapTien: require('images/home/NapTien.png'),
   },
+  Profile: {
+    SoDu: require('images/profile/SoDu.png'),
+    Bank: require('images/profile/Bank.png'),
+    BaoMat: require('images/profile/BaoMat.png'),
+    Edit: require('images/profile/Edit.png'),
+    Help: require('images/profile/Help.png'),
+    Location: require('images/profile/Location.png'),
+    Logout: require('images/profile/Logout.png'),
+    MaThanhToan: require('images/profile/MaThanhToan.png'),
+    ThanhToan: require('images/profile/ThanhToan.png'),
+    Translate: require('images/profile/Translate.png'),
+  },
 };

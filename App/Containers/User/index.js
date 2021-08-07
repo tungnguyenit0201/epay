@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Login from 'components/User/Login';
-import {Text, Button, Icon} from 'components';
+import {Text, Button, Icon, Header} from 'components';
 import {
   ScrollView,
   View,
@@ -13,165 +13,172 @@ import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
+
+import HeaderBg from 'components/Common/HeaderBg';
+import UserInfo from 'components/User/UserInfo';
 
 const User = () => {
   const {top} = useSafeAreaInsets();
-  const data = [
-    {name: 'Họ tên', val: 'Nguyen van an'},
-    {name: 'Ngày sinh', val: '09/09/1999'},
-    {name: 'Giới tính', val: 'Nam'},
-    {name: 'CMND', val: 'sss'},
-    {name: 'Nơi cấp', val: 'sss'},
-    {name: 'Địa chỉ', val: 'sss'},
-  ];
+  const translation = useTranslation();
+
   return (
-    <ScrollView>
-      <View
-        style={[
-          base.container,
-          {
-            paddingTop: top + 10,
-            paddingBottom: 30,
-            backgroundColor: Colors.cl1,
-          },
-        ]}>
-        <View style={{flexDirection: 'row'}}>
-          <View
-            style={{
-              overflow: 'hidden',
-              marginRight: 20,
-              height: 48,
-              with: 48,
-              borderRadius: 99,
-              backgroundColor: Colors.black,
-            }}>
-            <Image
-              style={{width: 48, height: 48}}
-              source={{
-                uri: 'https://mangoads.vn/learn/wp-content/uploads/2020/08/7-huong-dan-phan-hoi-680x510.jpg',
-              }}
-            />
-          </View>
-          <View>
-            <Text color="#fff" size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
-              Nguyễn Văn A
-            </Text>
-            <Text color="#fff" mb={10}>
-              0908000000
-            </Text>
-            <Button
-              bg={Colors.cl4}
-              radius={30}
-              color={Colors.black}
-              label="Xác thực tài khoản"
-              onPress={() => Navigator.push(SCREEN.VERIFY_USER_INFO)}
-            />
-          </View>
-          <View style={{marginLeft: 'auto'}}>
-            <TouchableOpacity
-              onPress={() => {
-                Navigator.push(SCREEN.USER_INFO);
-              }}>
-              <Icon
-                icon={Images.ArrowRight}
-                tintColor={Colors.white}
-                size={30}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
+    <ScrollView style={base.wrap}>
+      <HeaderBg>
+        <Header back title={translation.bank_account} />
+      </HeaderBg>
+
+      <View style={[base.container]}>
+        <UserInfo />
       </View>
-      <View style={[base.container, styles.heading]}>
-        <View style={styles.item}>
-          <Text style={styles.title}>Epay của tôi</Text>
-        </View>
-      </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            style={{flexDirection: 'row'}}
-            onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
-            }}>
-            <Text>Số dư</Text>
-            <Text style={{marginLeft: 10}} bold>
-              12.000.000 vnd
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.BANK_LIST);
-            }}>
-            <Text>Ngân hàng liên kết (2)</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
-            }}>
-            <Text>Mã thanh toán của tôi</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.block}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.NOTIFICATION);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.my_wallet}</Text>
+          <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
+            12.000.000 vnd
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.BANK_LIST);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.Bank}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>
+            {translation.bank_linking}
+            <Text> (2)</Text>
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.NOTIFICATION);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.payment_code} </Text>
+        </TouchableOpacity>
       </View>
 
-      <View style={[base.container, styles.heading]}>
-        <View style={styles.item}>
-          <Text style={styles.title}>Cài Đặt</Text>
-        </View>
-      </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.PAYMENT_SETTINGS);
-            }}>
-            <Text>Cài đặt thanh toán</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.SECURITY);
-            }}>
-            <Text>Mật khẩu và bảo mật</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.LANGUAGE_SETTING);
-            }}>
-            <Text>Cài đặt ngôn ngữ</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.block}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.PAYMENT_SETTINGS);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.ThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.payment_setting} </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.SECURITY);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.BaoMat}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.password_and_security} </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.LANGUAGE_SETTING);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.Translate}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.language_setting} </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.LANGUAGE_SETTING);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.Location}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.location_setting} </Text>
+        </TouchableOpacity>
       </View>
 
-      <View style={[base.container, styles.heading]}>
-        <View style={styles.item}>
-          <Text style={styles.title}>Hỗ trợ</Text>
-        </View>
+      <View style={styles.block}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.NOTIFICATION);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.Help}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>Trung tâm trợ giúp</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.NOTIFICATION);
+          }}>
+          <Icon
+            style={[styles.icon]}
+            icon={Images.Profile.Edit}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{translation.feedback} </Text>
+        </TouchableOpacity>
       </View>
-      <View style={[base.container, styles.row]}>
-        <View style={styles.item}>
-          <TouchableOpacity
-            onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
-            }}>
-            <Text>Trung tâm trợ giúp</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => {
+          Navigator.push(SCREEN.NOTIFICATION);
+        }}>
+        <Icon
+          style={[styles.icon]}
+          icon={Images.Profile.Logout}
+          size={24}
+          tintColor={Colors.cl1}
+        />
+        <Text size={Fonts.H6}>{translation.log_out} </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -187,15 +194,23 @@ const styles = StyleSheet.create({
   link: {
     textDecorationLine: 'underline',
   },
-  row: {
-    backgroundColor: Colors.white,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
+  block: {
+    borderBottomColor: '#EEEEEE',
+    borderBottomWidth: 8,
   },
   item: {
+    backgroundColor: '#fff',
+    borderBottomColor: '#EEEEEE',
+    borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
+    paddingHorizontal: Spacing.PADDING,
+    alignItems: 'center',
   },
+  icon: {
+    marginRight: 10,
+  },
+
   itemRight: {
     marginLeft: 'auto',
   },
