@@ -15,10 +15,10 @@ const SelectImage = ({title, onSelectImage}) => {
       <Text size={Fonts.H6} mb={10}>
         {title}
       </Text>
-      {image && (
+      {image?.path && (
         <Image
           style={{marginBottom: 20, width: '100%', height: scale(270)}}
-          source={{uri: image}}
+          source={{uri: image?.path}}
         />
       )}
 
