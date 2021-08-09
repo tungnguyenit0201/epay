@@ -68,4 +68,10 @@ export default {
     ThanhToan: require('images/profile/ThanhToan.png'),
     Translate: require('images/profile/Translate.png'),
   },
+  Bank: {
+    Vietinbank: require('images/bank/Vietinbank.png'),
+    Eximbank: require('images/bank/Eximbank.png'),
+    Vietcombank: require('images/bank/Vietcombank.png'),
+    Plus: require('images/bank/Plus.png'),
+  },
 };

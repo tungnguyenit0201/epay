@@ -19,7 +19,6 @@ import HeaderBg from 'components/Common/HeaderBg';
 import UserInfo from 'components/User/UserInfo';
 
 const User = () => {
-  const {top} = useSafeAreaInsets();
   const translation = useTranslation();
 
   return (
@@ -32,11 +31,7 @@ const User = () => {
         <UserInfo />
       </View>
       <View style={styles.block}>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.NOTIFICATION);
-          }}>
+        <View style={styles.item}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.MaThanhToan}
@@ -47,7 +42,7 @@ const User = () => {
           <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
             12.000.000 vnd
           </Text>
-        </TouchableOpacity>
+        </View>
 
         <TouchableOpacity
           style={styles.item}

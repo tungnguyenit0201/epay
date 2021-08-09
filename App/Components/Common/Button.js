@@ -1,14 +1,14 @@
 import React from 'react';
 import {Pressable, Image, StyleSheet, View} from 'react-native';
-import {Colors, Var} from 'themes';
+import {Colors, Fonts} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 import {useSelector} from 'react-redux';
 
-
 export default ({
   onPress,
-  label,label2,
+  label,
+  label2,
   icon,
   border,
   color,
@@ -16,11 +16,15 @@ export default ({
   radius,
   fs,
   size,
-  mt,mb,ml,mr,mh,mv,
+  mt,
+  mb,
+  ml,
+  mr,
+  mh,
+  mv,
   disabled,
   style,
-  label2Style
-
+  label2Style,
 }) => {
   return (
     <Pressable
@@ -28,60 +32,64 @@ export default ({
       onPress={onPress}
       style={[
         styles.button,
-        border    && { borderColor: border, borderWidth: 1},
-        radius    && { borderRadius: radius},
-        bg        && { backgroundColor: bg},
-        mt        && { marginTop: mt},
-        mb        && { marginBottom: mb},
-        ml        && { marginLeft: ml},
-        mr        && { marginRight: mr},
-        mv        && { marginVertical: mv},
-        mh        && { marginHorizontal: mh},
-        size == 'sm'  ? styles.sm:'' ,
-        size == 'lg'  ? styles.lg:'' ,
-        size == 'xl'  ? styles.xl:'' ,
+        border && {borderColor: border, borderWidth: 1},
+        radius && {borderRadius: radius},
+        bg && {backgroundColor: bg},
+        mt && {marginTop: mt},
+        mb && {marginBottom: mb},
+        ml && {marginLeft: ml},
+        mr && {marginRight: mr},
+        mv && {marginVertical: mv},
+        mh && {marginHorizontal: mh},
+        size == 'xs' ? styles.xs : '',
+        size == 'sm' ? styles.sm : '',
+        size == 'lg' ? styles.lg : '',
+        size == 'xl' ? styles.xl : '',
         style,
-        disabled  && { backgroundColor: Colors.g4},
+        disabled && {backgroundColor: Colors.g4},
       ]}>
-
-      <Text centered semibold  
+      <Text
+        centered
+        semibold
         style={[
-          fs    && { fontSize: fs},
+          fs && {fontSize: fs},
           {
             color: color ? color : '#fff',
+            lineHeight: 20,
           },
         ]}>
-
         {label}
         {
-        label2 && ([
-          <><Text> </Text><Text style={label2Style}>{label2}</Text></>
-        ]) 
-        //label2 && typeof label2 == 'function' ? label2() : label2
+          label2 && [
+            <>
+              <Text> </Text>
+              <Text style={label2Style}>{label2}</Text>
+            </>,
+          ]
+          //label2 && typeof label2 == 'function' ? label2() : label2
         }
       </Text>
       {!!icon && (
-        <Image
-          source={icon}
-          style={[styles.image]}
-          resizeMode={'contain'}
-        />
+        <Image source={icon} style={[styles.image]} resizeMode={'contain'} />
       )}
     </Pressable>
   );
 };
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5,
     paddingHorizontal: 20,
-    borderRadius: 5,
-    backgroundColor : Colors.cl1,
-    // flexDirection:'row',
-    // alignItems:'center'
+    borderRadius: scale(8),
+    backgroundColor: Colors.cl1,
+    height: 48,
   },
-  sm: {paddingVertical: 5},
-  lg: {paddingVertical: 20},
-  xl: {paddingVertical: 30},
+  xs: {height: 20, paddingHorizontal: 10},
+  sm: {height: 30, paddingHorizontal: 15},
+  lg: {height: 55},
+  xl: {height: 70},
 
   image: {
     width: scale(15),
@@ -91,7 +99,8 @@ const styles = StyleSheet.create({
   // ...stylesCss,
 });
 
-{/* <Button
+{
+  /* <Button
   label="Đăng ký" 
   border='#fff'
   color='#f00'
@@ -99,4 +108,5 @@ const styles = StyleSheet.create({
   radius={50}
   style={[{marginTop:30}]}
   onPress={() => Navigator.navigate(SCREEN.REGISTER)}
-/> */}
+/> */
+}
