@@ -14,13 +14,13 @@ const useImagePicker = onSelectImage => {
 
   const onPhoto = () => {
     ImagePicker.openPicker(imagePickerOptions).then(image => {
-      setImage(image?.path);
+      setImage(image);
     });
   };
 
   const onCamera = () => {
     ImagePicker.openCamera(imagePickerOptions).then(image => {
-      setImage(image?.path);
+      setImage(image);
     });
   };
 
