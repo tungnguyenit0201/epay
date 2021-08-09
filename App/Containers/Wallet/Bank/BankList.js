@@ -7,38 +7,55 @@ import {Button, Header,
   Icon, InputBlock, Row, Col} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {SCREEN, TEXT} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import ListItem from 'components/Home/ListItem';
+import HeaderBg from 'components/Common/HeaderBg';
+import { scale } from 'utils/Functions';
 
 const BankList = () => {
   const translation = useTranslation();
   const dataBlock = [
-    {icon: Images.QRCode, name: 'Agribank', screen: SCREEN.TRANSFER},
-    {icon: Images.QRCode, name: 'Rút tiền 2', screen: SCREEN.WITHDRAW},
-    {icon: Images.QRCode, name: 'QR Pay 2', screen: SCREEN.QRPAY},
-    {icon: Images.QRCode, name: 'Quét mã 3', screen: SCREEN.QRPAY},
-    {icon: Images.QRCode, name: 'Nạp tiền giao thông 5', screen: SCREEN.TOP_UP},
-    {icon: Images.QRCode, name: 'Rút tiền 6', screen: SCREEN.WITHDRAW},
-    {icon: Images.QRCode, name: 'QR Pay 7', screen: SCREEN.QRPAY},
-    {icon: Images.QRCode, name: 'Quét mã 8', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoAgribank, name: 'Agribank', screen: SCREEN.TRANSFER},
+    {icon: Images.ConnectBank.logoBidv, name: 'BIDV', screen: SCREEN.WITHDRAW},
+    {icon: Images.ConnectBank.logoVcb, name: 'Vietcombank', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoVtb, name: 'Vietinbank', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoExb, name: 'Eximbank', screen: SCREEN.TOP_UP},
+    {icon: Images.ConnectBank.logoHdb, name: 'HDbank', screen: SCREEN.WITHDRAW},
+    {icon: Images.ConnectBank.logoMbb, name: 'MBbank', screen: SCREEN.QRPAY, iconHeight: 13},
+    {icon: Images.ConnectBank.logoScob, name: 'Sacombank', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoScb, name: 'SCB', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoVbb, name: 'VPbank', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoShb, name: 'SHB', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoTpb, name: 'TPbank', screen: SCREEN.QRPAY},
   ];
 
-  const Item = ({ title,icon,screen }) => (
+  const Item = ({ title,icon,screen,iconHeight,iconWidth }) => (
     <TouchableOpacity
       style={styles.item}
       onPress={() => { Navigator.push(screen); }}>
-      <Icon
-        icon={icon}
-        size={Spacing.PADDING * 2.5}
-      />
-      <Text centered style={{marginTop: 6}}>{title}</Text>
+      <View style={{
+        width: 48,
+        height: 48,
+        borderRadius: 100,
+        backgroundColor: Colors.BORDER,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <Image
+          source={icon}
+          style={{
+            width: iconWidth?iconWidth:scale(26),
+            height: iconHeight?scale(iconHeight):scale(26),}}/>
+      </View>
+      <Text centered style={{marginTop: 10}}>{title}</Text>
     </TouchableOpacity> 
   );
 
   return (
     <ScrollView style={styles.container}>
-      <Header back title="Liên kết Ngân hàng"/>
+      <HeaderBg>
+        <Header back title={translation.connect_bank} />
+      </HeaderBg>
       <View>
         <View style={styles.p_1}>
           <View>
@@ -59,17 +76,17 @@ const BankList = () => {
           backgroundColor: Colors.l4
         }}></View>
 
-        <View style={[styles.px_1,styles.py_1]}>
-          <Text size={Fonts.h6} mb={20}
-            style={{fontWeight: 'bold'}}>Nhập số điện thoại</Text>
-          
+        <View style={[styles.px_1, styles.py_1]}>
+          <Text size={Fonts.h6}
+            style={{fontWeight: 'bold', marginBottom: 16}}>
+            {translation.bank_linking}</Text>         
           <Row space={10}>
           {
             dataBlock.map((item,index) => {
               return (
                 <Col width={`33.333%`} space={10} key={index}
-                style={{marginBottom:10}}>
-                  <Item title={item.name} icon={item.icon} screen={item.screen} /> 
+                style={{marginBottom:16}}>
+                  <Item title={item.name} icon={item.icon} screen={item.screen} iconHeight={item.iconHeight}/> 
                 </Col>
               );
           })}
