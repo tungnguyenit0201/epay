@@ -25,7 +25,7 @@ export default {
   g8: '#1F2937',
   g9: '#111827',
 
-  Highlight: '#FF0000',
+  Highlight: '#E10000',
 
   PRIMARY: '#03a5fc',
   TEXT: '#555555',

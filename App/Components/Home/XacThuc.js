@@ -6,7 +6,7 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 const User = ({data, style}) => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   return (
     <>
       {isShow && (
