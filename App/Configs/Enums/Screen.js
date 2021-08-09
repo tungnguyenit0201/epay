@@ -38,5 +38,6 @@ const SCREEN = {
   REGION_SELECT: 'RegionSelect',
   LANGUAGE_SETTING: 'LanguageSetting',
   MY_WALLET: 'MyWallet',
+  AUTOPAYMENT: 'AutoPayment',
 };
 export default SCREEN;
