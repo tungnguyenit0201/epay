@@ -56,4 +56,22 @@ export default {
     ChuyenTien: require('images/home/ChuyenTien.png'),
     NapTien: require('images/home/NapTien.png'),
   },
+  Transfer: {
+    Ellipse: require('images/Ellipse.png'),
+    Rectangle: require('images/Rectangle.png'),
+    Bank: require('images/bank.png'),
+    ArrowRight: require('images/arrow-right.png'),
+    Mobile: require('images/mobile.png'),
+    User_1: require('images/user/user1.png'),
+    User_2: require('images/user/user2.png'),
+    User_3: require('images/user/user3.png'),
+    User_4: require('images/user/user4.png'),
+    EmptyWallet: require('images/empty-wallet.png'),
+    ArrowCircleDown: require('images/arrow-circle-down.png'),
+    VIETCOMBANK: require('images/vietcombank.png'),
+    VIETTINBANK: require('images/viettinbank.png'),
+    EXIMBANK: require('images/eximbank.png'),
+    UNION: require('images/Union.png'),
+    Background: require('images/LogoBG.png')
+  }
 };

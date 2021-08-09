@@ -38,5 +38,6 @@ const SCREEN = {
   REGION_SELECT: 'RegionSelect',
   LANGUAGE_SETTING: 'LanguageSetting',
   MY_WALLET: 'MyWallet',
+  TRANSFER_PHONE: 'TransferPhone',
 };
 export default SCREEN;

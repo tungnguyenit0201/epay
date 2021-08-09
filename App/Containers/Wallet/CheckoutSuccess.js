@@ -1,16 +1,19 @@
 import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, View, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import { Text, InputBlock, Header, Button, FWLoading, TextInput, Icon } from 'components';
-import { Colors, Fonts, Spacing, Images } from 'themes';
+import { Colors, Fonts, Images, Spacing } from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
 import { SCREEN } from 'configs/Constants';
 import { scale } from 'utils/Functions';
-const Withdraw = () => {
-  let { height, width } = useWindowDimensions();
+import Modal from 'react-native-modal';
+import { useTranslation } from 'context/Language';
+import HeaderBg from 'components/Common/HeaderBg';
+const CheckoutSuccess = () => {
+  const translation = useTranslation();
+  let { height } = useWindowDimensions();
   let [loading, setLoading] = useState(false);
-  let [value, setValue] = useState();
-  let [error, setError] = useState(false);
+  let [open, setOpen] = useState(false);
   let forgotRef = useRef({
     phone: '',
   });
@@ -19,46 +22,62 @@ const Withdraw = () => {
   };
   const renderItem = (key, val) => {
     return (
-      <View style={styles.content}>
-        <Text style={styles.textContent}>{key}
+      <View style={styles.blockRender}>
+        <Text style={styles.font_16}>{key}
         </Text>
-        <Text style={styles.textContent}>{val}
+        <Text bold style={styles.font_16}>{val}
         </Text>
       </View>
     )
   }
+  const handleClick = () => {
+    setOpen(true)
+  }
+  const handleChange = (e) => {
+    if (e === "thanhcong") {
+      setOpen(false)
+      Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
+    }
+    if (e === "thatbai") {
+      setOpen(false)
+      Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <Header
-        style={styles.blackColor}
-        titleStyle={styles.textWhite}
-        back
-        title="Chi tiết giao dịch"
-      />
-      <View style={styles.mt_30}>
-        <View style={styles.contentAbove}>
-          <Icon
-            style={styles.icon}
-            icon={Images.WidthDraw.Done}
-            tintColor={Colors.white}
-          />
-          <Text style={styles.header}>Rút tiền thành công</Text>
-          <Text style={styles.textSub}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
-        </View>
-        <View style={styles.flexBox}>
-          <View style={styles.wrap}>
-            {renderItem("NH nhận tiền", "Vietcombank")}
-            {renderItem("Số tiền", "1.000.000 vnđ")}
-            {renderItem("Phí giao dịch", "miễn phí")}
-            {renderItem("Tổng tiền", "1.000.000 vnđ")}
-            {renderItem("Số dư ví", "1.800.000 vnđ")}
+      <HeaderBg style={styles.header}>
+        <Text bold style={styles.headerTitle}>{translation.transaction_details}</Text>
+      </HeaderBg>
+      <View style={styles.wrap}>
+        <ImageBackground
+          source={Images.Transfer.Background}
+          resizeMode="center"
+          style={styles.image}
+        >
+          <Text bold style={styles.information}>{translation.successfully_transfer}</Text>
+          {renderItem("Chuyển từ", "Ví Epay")}
+          {renderItem("Chuyển đến", "Bảo An Đỗ")}
+          {renderItem("Số điện thoại", "909000999")}
+          {renderItem("Số tiền", "10.000 vnđ")}
+          {renderItem("Số tiền", "10.000 vnđ")}
+          {renderItem("Lời nhắn", "Nạp tiền điện thoại")}
+          {renderItem("Phí giao dịch", "Miễn phí")}
+          {renderItem("Tổng tiền", "10.000 vnđ")}
+          <View style={styles.blockButton}>
             <Button
-          label="Nạp thêm"
-          style={styles.buttonBlock}
-          fs={Fonts.FONT_MEDIUM}
-        />
+              label="Lưu ảnh"
+              style={styles.buttonSave}
+              color={Colors.cl1}
+              fs={Fonts.H6}
+            />
+            <Button
+              label="Chia sẻ ảnh"
+              style={styles.buttonShare}
+              fs={Fonts.H6}
+            />
           </View>
-        </View>
+        </ImageBackground>
       </View>
     </ScrollView>
   );
@@ -70,78 +89,64 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING,
+    paddingTop: Spacing.PADDING * 3,
   },
   header: {
-    fontSize: Fonts.H4,
-    marginTop: scale(14),
-    color: Colors.white,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
+    height: scale(80),
+  },
+  headerTitle: {
+    color: Colors.white, 
+    marginTop: scale(35), 
+    fontSize: Fonts.H6,
+    textAlign: 'center'
   },
   loading: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  blackColor: {
-    backgroundColor: Colors.g9
-  },
   input: {
     borderColor: Colors.BLACK,
-    color: Colors.BLACK,
     backgroundColor: "transparent",
     fontSize: Fonts.H6,
+    marginTop: Spacing.PADDING + scale(10)
   },
-  textWhite: {
-    color: Colors.white
-  },
-  contentAbove: {
+  image: {
     flex: 1,
-    backgroundColor: Colors.g9,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  header: {
-    fontSize: Fonts.H4,
-    marginTop: scale(14),
-    color: Colors.white,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
-  },
-  textSub: {
-    color: Colors.white,
-    paddingHorizontal: Spacing.PADDING + scale(45),
-    fontSize: Fonts.FONT_MEDIUM,
-    lineHeight: scale(26),
-    textAlign: 'center',
-    marginBottom: scale(32)
-  },
-  icon: {
-    width: scale(47),
-    height: scale(32),
-    marginTop: scale(40)
-  },
-  buttonBlock: {
-    marginTop: Spacing.PADDING,
-    paddingVertical: Spacing.PADDING,
-    backgroundColor: Colors.g9
-  },
-  mt_30: {
+    justifyContent: "center",
     marginBottom: scale(30)
   },
-  flexBox: {
-    flex: 3,
-    marginTop: scale(25)
+  blockRender: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: Colors.g2,
+    paddingVertical: scale(15),
+    borderStyle: 'dotted'
   },
-  content: {
+  font_16: {
+    fontSize: Fonts.H6
+  },
+  information: {
+    fontSize: Fonts.H5,
+    marginBottom: scale(16)
+  },
+  blockButton: {
     flex: 1, 
     flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    marginBottom: scale(12),
+    justifyContent:'space-between',
+    marginTop: scale(16)
   },
-  textContent: {
-    fontSize: Fonts.FONT_MEDIUM, 
-    textTransform: 'uppercase',
-  }
+  buttonSave: {
+    width: scale(160), 
+    height: scale(42), 
+    backgroundColor: 'transparent', 
+    borderColor: Colors.cl1, 
+    borderWidth: 1,
+  },
+  buttonShare: {
+    width: scale(160), 
+    height: scale(42) 
+  },
 });
-export default Withdraw;
+export default CheckoutSuccess;
