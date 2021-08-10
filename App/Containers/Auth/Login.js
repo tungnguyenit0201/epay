@@ -11,21 +11,35 @@ import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
+import {useTouchID} from 'context/Auth/utils';
+import _ from 'lodash';
 
 const ForgotPassword = () => {
   const translation = useTranslation();
   let {height} = useWindowDimensions();
-  let [loading, setLoading] = useState(false);
   let [disable, setDisable] = useState(true);
   let forgotRef = useRef({
     phone: '',
   });
+  const {biometryType, onTouchID} = useTouchID();
+
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
 
   const onPress = async () => {
     Navigator.navigate(SCREEN.TAB_NAVIGATION);
+  };
+
+  const onLoginByTouchID = async () => {
+    try {
+      const result = await onTouchID();
+      if (result) {
+        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -50,7 +64,13 @@ const ForgotPassword = () => {
           label="Đăng nhập"
           onPress={onPress}
         />
-        <Button label="Touch/Face ID" onPress={onPress} />
+
+        {!!biometryType && (
+          <Button
+            label={_.startCase(biometryType)}
+            onPress={onLoginByTouchID}
+          />
+        )}
 
         <View style={[styles.box_1, {marginTop: 40}]}>
           <Pressable onPress={() => Navigator.push(SCREEN.FORGET_PASSWORD)}>
