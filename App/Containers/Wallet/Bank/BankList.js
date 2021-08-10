@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ImageBackground, View, ScrollView, StyleSheet, Text,
+  View, ScrollView, StyleSheet, Text,
   Image, TouchableOpacity,
 } from 'react-native';
 import {Button, Header, 
@@ -15,18 +15,18 @@ import { scale } from 'utils/Functions';
 const BankList = () => {
   const translation = useTranslation();
   const dataBlock = [
-    {icon: Images.ConnectBank.logoAgribank, name: 'Agribank', screen: SCREEN.TRANSFER},
-    {icon: Images.ConnectBank.logoBidv, name: 'BIDV', screen: SCREEN.WITHDRAW},
-    {icon: Images.ConnectBank.logoVcb, name: 'Vietcombank', screen: SCREEN.QRPAY},
-    {icon: Images.ConnectBank.logoVtb, name: 'Vietinbank', screen: SCREEN.QRPAY},
-    {icon: Images.ConnectBank.logoExb, name: 'Eximbank', screen: SCREEN.TOP_UP},
-    {icon: Images.ConnectBank.logoHdb, name: 'HDbank', screen: SCREEN.WITHDRAW},
-    {icon: Images.ConnectBank.logoMbb, name: 'MBbank', screen: SCREEN.QRPAY, iconHeight: 13},
-    {icon: Images.ConnectBank.logoScob, name: 'Sacombank', screen: SCREEN.QRPAY},
-    {icon: Images.ConnectBank.logoScb, name: 'SCB', screen: SCREEN.QRPAY},
-    {icon: Images.ConnectBank.logoVbb, name: 'VPbank', screen: SCREEN.QRPAY},
-    {icon: Images.ConnectBank.logoShb, name: 'SHB', screen: SCREEN.QRPAY},
-    {icon: Images.ConnectBank.logoTpb, name: 'TPbank', screen: SCREEN.QRPAY},
+    {icon: Images.ConnectBank.logoAgribank, name: 'Agribank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoBidv, name: 'BIDV', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoVcb, name: 'Vietcombank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoVtb, name: 'Vietinbank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoExb, name: 'Eximbank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoHdb, name: 'HDbank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoMbb, name: 'MBbank', screen: SCREEN.BANK_INFO, iconHeight: 13},
+    {icon: Images.ConnectBank.logoScob, name: 'Sacombank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoScb, name: 'SCB', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoVbb, name: 'VPbank', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoShb, name: 'SHB', screen: SCREEN.BANK_INFO},
+    {icon: Images.ConnectBank.logoTpb, name: 'TPbank', screen: SCREEN.BANK_INFO},
   ];
 
   const Item = ({ title,icon,screen,iconHeight,iconWidth }) => (
@@ -92,11 +92,6 @@ const BankList = () => {
           })}
           </Row>
         </View>
-
-        {/* <Button
-          onPress={() => Navigator.push(SCREEN.BANK_INFO)}
-          label="Vietcombank"
-        /> */}
       </View>
     </ScrollView>
   );
