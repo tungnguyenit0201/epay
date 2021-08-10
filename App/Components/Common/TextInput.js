@@ -78,12 +78,13 @@ export default React.forwardRef(
 const styles = StyleSheet.create({
   textInput: {
     margin: 0,
-    padding: scale(11),
-    borderRadius: scale(6),
-    backgroundColor: '#F6F6F6',
+    paddingHorizontal: scale(10),
+    height: 48,
+    borderRadius: scale(8),
+    backgroundColor: '#fff',
     fontFamily: Fonts.FONT_REGULAR,
     borderWidth: 1,
-    borderColor: '#F6F6F6',
+    borderColor: '#CCCCCB',
     color: Colors.TEXT,
     fontSize: Fonts.FONT_MEDIUM,
   },

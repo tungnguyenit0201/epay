@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-} from 'react-native';
+import {FlatList, Dimensions} from 'react-native';
 import {Row, Col} from 'components';
 import {Spacing} from 'themes';
 import {View} from 'react-native-ui-lib';
@@ -19,6 +13,7 @@ const ListItem = ({
   col,
   space,
   width,
+  style,
   styleItem,
   styleWicon,
   styleIcon,
@@ -63,9 +58,10 @@ const ListItem = ({
           keyExtractor={(item, index) => item.name}
           //showsHorizontalScrollIndicator={true}
           horizontal={true}
+          style={style}
         />
       ) : (
-        <Row space={space}>
+        <Row space={space} style={style}>
           {data.map((item, index) => {
             return (
               <Col
