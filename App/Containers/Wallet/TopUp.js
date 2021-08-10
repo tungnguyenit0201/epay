@@ -1,53 +1,86 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Text, InputBlock, Header, Button, FWLoading} from 'components';
-import {Colors, Fonts, Spacing} from 'themes';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
+import {
+  Text,
+  TextInput,
+  Header,
+  InputBlock,
+  Button,
+  Row,
+  Col,
+} from 'components';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
-import Password from 'components/Auth/Password';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import Monney from 'components/Home/Monney';
+
+import InputMoney from 'components/User/InputMoney';
+import SelectBank from 'components/User/TopUp/SelectBank';
+
+import ListItem from 'components/Common/ListItem';
+import HeaderBg from 'components/Common/HeaderBg';
+
 import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 
 const TopUp = () => {
-  let {height} = useWindowDimensions();
-  let [loading, setLoading] = useState(false);
-  let forgotRef = useRef({
-    phone: '',
-  });
-  const onChange = (key, val) => {
-    forgotRef.current[key] = val;
-  };
+  const translation = useTranslation();
+  const dataBank = [
+    {
+      id: 1,
+      icon: Images.Bank.Vietinbank,
+      name: 'Vietinbank',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      id: 2,
+      icon: Images.Bank.Eximbank,
+      name: 'Eximbank',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      id: 3,
+      icon: Images.Bank.Vietcombank,
+      name: 'Vietcombank',
+      screen: SCREEN.TOP_UP,
+    },
+  ];
 
   return (
-    <ScrollView style={styles.container}>
-      <Header back title="Nạp tiền" />
-      <InputBlock label="Số tiền" />
-      <Button
-        label="Liên kết ngân hàng"
-        onPress={() => Navigator.navigate(SCREEN.BANK)}
-      />
-      <Button
-        label="Nạp"
-        onPress={() => Navigator.navigate(SCREEN.CONFIRMATION)}
-      />
+    <ScrollView style={base.wrap}>
+      <HeaderBg style={{marginBottom: 50}}>
+        <Header title={translation.top_up} back style={{marginBottom: 20}} />
+        <Monney
+          style={[
+            {
+              position: 'absolute',
+              bottom: -20,
+              left: Spacing.PADDING,
+              right: Spacing.PADDING,
+            },
+          ]}
+        />
+      </HeaderBg>
+      <View style={base.container}>
+        <InputMoney />
+        <SelectBank data={dataBank} label={translation.source} />
+
+        <Button
+          label="Nạp"
+          onPress={() => Navigator.navigate(SCREEN.CONFIRMATION)}
+        />
+      </View>
     </ScrollView>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
-  },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+
 export default TopUp;
