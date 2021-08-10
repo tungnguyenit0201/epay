@@ -161,7 +161,8 @@ const styles = StyleSheet.create({
   inputSearch: {
     flex: 1, 
     backgroundColor: 'transparent', 
-    fontSize: Fonts.H6, 
+    fontSize: Fonts.H6,
+    borderColor: 'transparent',
   },
   iconRectangle: {
     height: scale(8), 

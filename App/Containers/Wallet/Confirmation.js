@@ -79,7 +79,8 @@ const TopUp = () => {
         style={{ flex: 1 }}
         useNativeDriver
         hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
+        backdropTransitionOutTiming={0}
+      >
         <View style={styles.modal}>
           <Text bold style={styles.modalTitle}>{translation.password}</Text>
           {/* Input with Icon */}
@@ -101,35 +102,11 @@ const TopUp = () => {
           </View>
           {/* Input with Icon */}
           <View></View>
-          <Text style={styles.textUnderline}>
+          <Text style={styles.textMedium}>
             {translation.forgot_password}
           </Text>
         </View>
       </Modal>
-      
-      {/* Modal Show when Checkout Failure */}
-      {/* <Modal
-        isVisible={true}
-        animationIn="fadeIn"
-        animationOut="fadeOut"
-        style={{ flex: 1 }}
-        useNativeDriver
-        hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
-        <View style={styles.modal}>
-          <Text bold style={styles.modalTitle}>{translation.unsuccessfully_transfer}</Text>
-          <Text style={styles.textCenter}>
-            {translation.the_connection_is_failed_please_try_again}
-          </Text>
-          <View style={styles.flexCenter}>
-            <Button
-              label={translation.back}
-              style={styles.buttonBack}
-              fs={Fonts.H6}
-            />
-          </View>
-        </View>
-      </Modal> */}
     </ScrollView>
   );
 };
@@ -149,9 +126,7 @@ const styles = StyleSheet.create({
   mt_20: {
     marginTop: scale(20)
   },
-  textUnderline: {
-    fontSize: Fonts.FONT_MEDIUM,
-    textDecorationLine: 'underline',
+  textMedium: {
     marginTop: scale(10),
     textAlign: 'center'
   },
@@ -213,6 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     fontSize: Fonts.H6,
+    borderColor: 'transparent',
   },
   textCenter: {
     textAlign: 'center',

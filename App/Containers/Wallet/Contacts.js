@@ -12,32 +12,7 @@ import HeaderBg from 'components/Common/HeaderBg';
 const Contacts = () => {
   const translation = useTranslation();
   const [show, setShow] = useState(false);
-  /* const {data, onSearch} = useContacts();
-
-  const renderItem = ({item}) => (
-    <Text>
-      {item.givenName} {item.familyName}
-    </Text>
-  );
-
-  return (
-    <View style={styles.container}>
-      <Header back />
-      {data === null ? (
-        <FWLoading />
-      ) : (
-        <>
-          <TextInput onChange={onSearch} placeholder={TEXT.SEARCH} />
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item.recordID}
-          />
-        </>
-      )}
-    </View> 
-    
-  );*/
+  const {data, onSearch} = useContacts();
   const listUsers = [
     {
       "id": 1,
@@ -93,7 +68,7 @@ const Contacts = () => {
         source={item.avatar}
         style={styles.avatar}
       />
-      <View style={{ marginLeft: scale(16) }}>
+      <View style={styles.ml_16}>
         <Text bold >{item.name}</Text>
         <Text style={styles.fontSmall}>{item.phone}</Text>
       </View>
@@ -135,7 +110,6 @@ const Contacts = () => {
               </TouchableOpacity>
             ) : <View></View>
           }
-
         </View>
         {/* Input with Icon */}
         {/* Icon Rectangle */}
@@ -249,6 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
     fontSize: Fonts.H6,
+    borderColor: 'transparent',
   },
   closeCircle: {
     width: scale(20), 
@@ -256,5 +231,8 @@ const styles = StyleSheet.create({
   },
   pr_10: {
     paddingRight: scale(10)
+  },
+  ml_16: {
+    marginLeft: scale(16)
   }
 });
