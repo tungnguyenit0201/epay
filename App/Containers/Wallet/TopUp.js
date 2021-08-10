@@ -25,11 +25,9 @@ import Monney from 'components/Home/Monney';
 import InputMoney from 'components/User/InputMoney';
 import SelectBank from 'components/User/TopUp/SelectBank';
 
-import ListItem from 'components/Common/ListItem';
 import HeaderBg from 'components/Common/HeaderBg';
 
 import {SCREEN} from 'configs/Constants';
-import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 
 const TopUp = () => {

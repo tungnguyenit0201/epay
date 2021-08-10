@@ -30,11 +30,15 @@ const SelectBank = ({data, label, style}) => {
               onPress={() => setChecked(item.id)}>
               <View style={[styles.wicon]}>
                 <Image source={item.icon} style={[styles.icon]} />
+                {checked === item.id && (
+                  <View style={styles.active}>
+                    <Image source={Images.Down} style={styles.activeImg} />
+                  </View>
+                )}
               </View>
               <Text centered size={12} mt={5}>
                 {item.name}
               </Text>
-              {checked === item.id && <Text>sss</Text>}
             </Pressable>
           </Col>
         ))}
@@ -86,6 +90,23 @@ const styles = StyleSheet.create({
     height: scale(20),
     resizeMode: 'contain',
     marginBottom: 10,
+  },
+
+  active: {
+    backgroundColor: '#5786F7',
+    width: 15,
+    height: 15,
+    borderRadius: 99,
+    overflow: 'hidden',
+    padding: 2,
+    position: 'absolute',
+    top: -4,
+    right: -4,
+  },
+  activeImg: {
+    width: 12,
+    height: 12,
+    tintColor: '#fff',
   },
 });
 export default SelectBank;
