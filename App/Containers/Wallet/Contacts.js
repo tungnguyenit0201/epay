@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View, useWindowDimensions, TouchableOpacity, Image, FlatList } from 'react-native';
 import { useContacts } from 'context/Wallet/utils';
 import { Text, InputBlock, Header, Button, FWLoading, TextInput, Icon } from 'components';
 import { TEXT } from 'configs/Constants';
-import { Colors, Fonts, Spacing, Images } from 'themes';
+import { Colors, Fonts, Spacing, Images, base } from 'themes';
 import Navigator from 'navigations/Navigator';
 import { SCREEN } from 'configs/Constants';
 import { scale } from 'utils/Functions';
@@ -11,6 +11,7 @@ import { useTranslation } from 'context/Language';
 import HeaderBg from 'components/Common/HeaderBg';
 const Contacts = () => {
   const translation = useTranslation();
+  const [show, setShow] = useState(false);
   /* const {data, onSearch} = useContacts();
 
   const renderItem = ({item}) => (
@@ -98,17 +99,45 @@ const Contacts = () => {
       </View>
     </TouchableOpacity>
   )
+
+  const handleChange = (e) => {
+    e ? setShow(true) : setShow(false);
+  }
   return (
     <View style={styles.container}>
       <HeaderBg style={styles.header}>
         <Text bold style={styles.headerTitle}>{translation.transfer_to_phone_number}</Text>
       </HeaderBg>
       <View style={styles.wrap}>
-        <TextInput
-          placeholder={translation.enter_name_or_phone_number}
-          style={styles.inputBlock}
-          placeholderTextColor={Colors.BLACK}
-        />
+        {/* Input with Icon */}
+        <View style={styles.inputIcon}>
+          <TouchableOpacity
+            style={styles.iconSearch}>
+            <Icon
+              icon={Images.Search}
+              tintColor={Colors.g4}
+            />
+          </TouchableOpacity>
+          <TextInput
+            style={styles.inputSearch}
+            placeholder={translation.enter_name_or_phone_number}
+            placeholderTextColor={Colors.g4}
+            onChange={handleChange}
+          />
+          {show ? (
+              <TouchableOpacity
+                style={styles.pr_10}>
+                <Icon
+                  icon={Images.Transfer.CloseCircle}
+                  tintColor={Colors.g4}
+                  style={styles.closeCircle}
+                />
+              </TouchableOpacity>
+            ) : <View></View>
+          }
+
+        </View>
+        {/* Input with Icon */}
         {/* Icon Rectangle */}
         <Icon
           style={styles.iconRectangle}
@@ -179,8 +208,8 @@ const styles = StyleSheet.create({
     height: scale(80),
   },
   headerTitle: {
-    color: Colors.white, 
-    marginTop: scale(35), 
+    color: Colors.white,
+    marginTop: scale(35),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },
@@ -203,4 +232,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderColor: Colors.g4
   },
+  inputIcon: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: Colors.g2,
+    borderWidth: 1,
+    borderRadius: scale(5)
+  },
+  iconSearch: {
+    paddingHorizontal: scale(10),
+    borderRightWidth: 1,
+    borderColor: Colors.g2,
+  },
+  inputSearch: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    fontSize: Fonts.H6,
+  },
+  closeCircle: {
+    width: scale(20), 
+    height: scale(20)
+  },
+  pr_10: {
+    paddingRight: scale(10)
+  }
 });

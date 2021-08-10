@@ -39,5 +39,6 @@ const SCREEN = {
   LANGUAGE_SETTING: 'LanguageSetting',
   MY_WALLET: 'MyWallet',
   TRANSFER_PHONE: 'TransferPhone',
+  AUTOPAYMENT: 'AutoPayment',
 };
 export default SCREEN;

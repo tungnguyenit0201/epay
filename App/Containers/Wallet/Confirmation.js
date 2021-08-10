@@ -55,7 +55,7 @@ const TopUp = () => {
           resizeMode="center"
           style={styles.image}
         >
-          <Text bold style={styles.information}>Thông tin chuyển tiền</Text>
+          <Text bold style={styles.information}>{translation.transfer_information}</Text>
           {renderItem("Chuyển từ", "Ví Epay")}
           {renderItem("Chuyển đến", "Bảo An Đỗ")}
           {renderItem("Số điện thoại", "909000999")}
@@ -81,20 +81,55 @@ const TopUp = () => {
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}>
         <View style={styles.modal}>
-          <Text style={styles.modalTitle}>Nhập mật khẩu</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nhập mật khẩu"
-            password
-            placeholderTextColor="black"
-            onChange={handleChange}
-          />
+          <Text bold style={styles.modalTitle}>{translation.password}</Text>
+          {/* Input with Icon */}
+          <View style={styles.inputIcon}>
+            <TouchableOpacity
+              style={styles.iconLock}>
+              <Icon
+                icon={Images.Transfer.Lock}
+                tintColor={Colors.g4}
+              />
+            </TouchableOpacity>
+            <TextInput
+              style={styles.inputLock}
+              placeholder={translation.enter_name_or_phone_number}
+              placeholderTextColor={Colors.g4}
+              onChange={handleChange}
+              password
+            />
+          </View>
+          {/* Input with Icon */}
           <View></View>
           <Text style={styles.textUnderline}>
-            Quên mật khẩu?
+            {translation.forgot_password}
           </Text>
         </View>
       </Modal>
+      
+      {/* Modal Show when Checkout Failure */}
+      {/* <Modal
+        isVisible={true}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        style={{ flex: 1 }}
+        useNativeDriver
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}>
+        <View style={styles.modal}>
+          <Text bold style={styles.modalTitle}>{translation.unsuccessfully_transfer}</Text>
+          <Text style={styles.textCenter}>
+            {translation.the_connection_is_failed_please_try_again}
+          </Text>
+          <View style={styles.flexCenter}>
+            <Button
+              label={translation.back}
+              style={styles.buttonBack}
+              fs={Fonts.H6}
+            />
+          </View>
+        </View>
+      </Modal> */}
     </ScrollView>
   );
 };
@@ -114,12 +149,6 @@ const styles = StyleSheet.create({
   mt_20: {
     marginTop: scale(20)
   },
-  input: {
-    borderColor: Colors.BLACK,
-    backgroundColor: "transparent",
-    fontSize: Fonts.H6,
-    marginTop: Spacing.PADDING + scale(10)
-  },
   textUnderline: {
     fontSize: Fonts.FONT_MEDIUM,
     textDecorationLine: 'underline',
@@ -130,11 +159,12 @@ const styles = StyleSheet.create({
     height: scale(200),
     backgroundColor: Colors.white,
     padding: Spacing.PADDING,
+    borderRadius: 10,
   },
   modalTitle: {
-    fontSize: Fonts.H4,
+    fontSize: Fonts.H5,
     textAlign: "center",
-    fontWeight: 'bold'
+    marginBottom: scale(20),
   },
   image: {
     flex: 1,
@@ -154,8 +184,8 @@ const styles = StyleSheet.create({
     height: scale(80),
   },
   headerTitle: {
-    color: Colors.white, 
-    marginTop: scale(35), 
+    color: Colors.white,
+    marginTop: scale(35),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },
@@ -163,8 +193,39 @@ const styles = StyleSheet.create({
     fontSize: Fonts.H6
   },
   information: {
-    fontSize: Fonts.H5, 
+    fontSize: Fonts.H5,
     marginBottom: scale(16)
+  },
+  inputIcon: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: Colors.g4,
+    borderWidth: 1,
+    borderRadius: scale(5)
+  },
+  iconLock: {
+    paddingHorizontal: scale(10),
+    borderRightWidth: 1,
+    borderColor: Colors.g2,
+  },
+  inputLock: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    fontSize: Fonts.H6,
+  },
+  textCenter: {
+    textAlign: 'center',
+    marginTop: scale(-8)
+  },
+  buttonBack: {
+    width: scale(120),
+    height: scale(45),
+  },
+  flexCenter: {
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent:'center'
   }
 });
 export default TopUp;

@@ -57,13 +57,14 @@ const Transfer = () => {
                 <Icon
                   icon={Images.Transfer.ArrowRight}
                   tintColor={Colors.black}
+                  style={styles.arrowRight}
                 />
               </View>
             </TouchableOpacity>
             {/* Text with Icon */}
 
             {/* Text with Icon */}
-            <TouchableOpacity style={styles.inputNavigate} >
+            <TouchableOpacity style={styles.inputNavigate}>
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Bank}
@@ -76,6 +77,7 @@ const Transfer = () => {
                 <Icon
                   icon={Images.Transfer.ArrowRight}
                   tintColor={Colors.black}
+                  style={styles.arrowRight}
                 />
               </View>
             </TouchableOpacity>
@@ -173,7 +175,6 @@ const styles = StyleSheet.create({
   textDescription: {
     fontSize: Fonts.FONT_MEDIUM, 
     marginTop: scale(8), 
-    paddingHorizontal: Spacing.PADDING, 
     textAlign: 'center'
   },
   buttonCancle: {
@@ -198,7 +199,6 @@ const styles = StyleSheet.create({
   },
   flexBox: {
     flex: 3,
-    marginTop: scale(15)
   },
   iconLocation: {
     position: 'absolute',
@@ -228,5 +228,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING + scale(20),
     borderRadius: scale(5)
   },
+  arrowRight: {
+    position: 'relative',
+    top: scale(4)
+  }
 });
 export default Transfer;

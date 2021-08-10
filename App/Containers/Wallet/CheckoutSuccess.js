@@ -25,7 +25,13 @@ const CheckoutSuccess = () => {
       <View style={styles.blockRender}>
         <Text style={styles.font_16}>{key}
         </Text>
-        <Text bold style={styles.font_16}>{val}
+        <Text
+          numberOfLines={1}
+          ellipsizeMode='tail'
+          bold
+          style={styles.font_16}
+        >
+          {val}
         </Text>
       </View>
     )
@@ -89,14 +95,14 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
+    paddingTop: Spacing.PADDING * 2,
   },
   header: {
     height: scale(80),
   },
   headerTitle: {
-    color: Colors.white, 
-    marginTop: scale(35), 
+    color: Colors.white,
+    marginTop: scale(35),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },
@@ -125,28 +131,28 @@ const styles = StyleSheet.create({
     borderStyle: 'dotted'
   },
   font_16: {
-    fontSize: Fonts.H6
+    fontSize: Fonts.H6,
   },
   information: {
     fontSize: Fonts.H5,
     marginBottom: scale(16)
   },
   blockButton: {
-    flex: 1, 
-    flexDirection: 'row', 
-    justifyContent:'space-between',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: scale(16)
   },
   buttonSave: {
-    width: scale(160), 
-    height: scale(42), 
-    backgroundColor: 'transparent', 
-    borderColor: Colors.cl1, 
+    width: scale(160),
+    height: scale(42),
+    backgroundColor: 'transparent',
+    borderColor: Colors.cl1,
     borderWidth: 1,
   },
   buttonShare: {
-    width: scale(160), 
-    height: scale(42) 
+    width: scale(160),
+    height: scale(42)
   },
 });
 export default CheckoutSuccess;
