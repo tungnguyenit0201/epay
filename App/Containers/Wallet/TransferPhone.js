@@ -31,7 +31,7 @@ const TransactionDetails = () => {
     ]
     return (
         <ScrollView style={styles.container}>
-            <HeaderBg style={styles.header}>
+            <HeaderBg>
                 <Text bold style={styles.headerTitle}>{translation.transfer_to_phone_number}</Text>
                 <View>
                     <Text bold style={styles.textHeader}>{translation.transfer_to}:</Text>
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         color: Colors.white,
-        marginTop: scale(30),
         fontSize: Fonts.H6,
         textAlign: 'center'
     },

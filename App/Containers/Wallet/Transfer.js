@@ -14,7 +14,7 @@ const Transfer = () => {
   const translation = useTranslation();
   return (
     <ScrollView style={styles.container}>
-      <HeaderBg style={styles.header}>
+      <HeaderBg>
         <Text bold style={styles.headerTitle}>{translation.transaction_details}</Text>
       </HeaderBg>
       <View style={styles.mt_30}>
@@ -64,7 +64,7 @@ const Transfer = () => {
             {/* Text with Icon */}
 
             {/* Text with Icon */}
-            <TouchableOpacity style={styles.inputNavigate}>
+            <TouchableOpacity onPress={() => {Navigator.navigate(SCREEN.BANK_LIST)}} style={styles.inputNavigate}>
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Bank}
@@ -129,12 +129,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  header: {
-    height: scale(75),
-  },
   headerTitle: {
     color: Colors.white, 
-    marginTop: scale(30), 
     fontSize: Fonts.H6,
     textAlign: 'center'
   },

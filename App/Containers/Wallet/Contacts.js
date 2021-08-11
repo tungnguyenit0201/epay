@@ -80,7 +80,7 @@ const Contacts = () => {
   }
   return (
     <View style={styles.container}>
-      <HeaderBg style={styles.header}>
+      <HeaderBg>
         <Text bold style={styles.headerTitle}>{translation.transfer_to_phone_number}</Text>
       </HeaderBg>
       <View style={styles.wrap}>
@@ -178,12 +178,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: scale(16)
   },
-  header: {
-    height: scale(75),
-  },
   headerTitle: {
     color: Colors.white,
-    marginTop: scale(30),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },
