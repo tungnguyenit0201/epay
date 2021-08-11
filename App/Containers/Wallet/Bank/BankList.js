@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-    // paddingTop: Spacing.PADDING * 6,
   },
   p_1: {
     paddingHorizontal: 16,
@@ -139,7 +138,6 @@ const styles = StyleSheet.create({
   },
   item: {
     alignItems: 'center',
-    //height:'100%'
   },
 });
 

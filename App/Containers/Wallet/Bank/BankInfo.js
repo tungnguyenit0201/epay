@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import {Button, Header, InputBlock, Row, Col} from 'components';
+import {Button, Header, InputBlock} from 'components';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
 import HeaderBg from 'components/Common/HeaderBg';
-import { scale } from 'utils/Functions';
 
 const BankInfo = () => {
   const translation = useTranslation();
   let [cardOption, setCardOption] = useState(false);
   let [accountOption, setAccountOption] = useState(false);
 
-  let chooseCard = () => {
+  let chooseCard = useCallback(() => {
     setCardOption(true);
     setAccountOption(false);
-  }
+  });
 
-  let chooseAccount = () => {
+  let chooseAccount = useCallback(() => {
     setCardOption(false);
     setAccountOption(true);
-  }
+  });
 
   useEffect(() => {
     setCardOption(true);
@@ -64,15 +63,6 @@ const BankInfo = () => {
         <InputBlock placeholder={translation.issue_date}
           style={styles.mb_minus_1}/>
         <InputBlock placeholder={translation.cvv}/>
-
-        {/* <Picker
-          // selectedValue={selectedValue}
-          style={{ height: 50, width: 150 }}
-          // onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-        </Picker> */}
       </View>
       
       <View style={{
