@@ -1,158 +1,156 @@
-import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native';
-import { Text, InputBlock, Header, Button, FWLoading, TextInput, Icon } from 'components';
-import { Colors, Fonts, Images, Spacing } from 'themes';
+import React, {useRef, useState} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Pressable,
+  Image,
+  FlatList,
+} from 'react-native';
+import {Text, Header, Button, Row, Col, ListItem} from 'components';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
-import Password from 'components/Auth/Password';
-import { SCREEN } from 'configs/Constants';
-import { scale } from 'utils/Functions';
-import Modal from 'react-native-modal';
-import { useTranslation } from 'context/Language';
+
+import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
+
 import HeaderBg from 'components/Common/HeaderBg';
+import {useTranslation} from 'context/Language';
 const CheckoutSuccess = () => {
   const translation = useTranslation();
-  let { height } = useWindowDimensions();
-  let [loading, setLoading] = useState(false);
-  let [open, setOpen] = useState(false);
-  let forgotRef = useRef({
-    phone: '',
-  });
-  const onChange = (key, val) => {
-    forgotRef.current[key] = val;
-  };
-  const renderItem = (key, val) => {
-    return (
-      <View style={styles.blockRender}>
-        <Text style={styles.font_16}>{key}
-        </Text>
-        <Text
-          numberOfLines={1}
-          ellipsizeMode='tail'
-          bold
-          style={styles.font_16}
-        >
-          {val}
-        </Text>
-      </View>
-    )
-  }
-  const handleClick = () => {
-    setOpen(true)
-  }
-  const handleChange = (e) => {
-    if (e === "thanhcong") {
-      setOpen(false)
-      Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
-    }
-    if (e === "thatbai") {
-      setOpen(false)
-      Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
-    }
-  }
+  const data = [
+    {
+      name: 'Nguồn tiền',
+      val: 'Vietcombank',
+    },
+    {
+      name: 'Số tiền',
+      val: '550.000 vnđ',
+    },
+    {
+      name: 'Phí giao dịch',
+      val: '0 vnđ',
+    },
+    {
+      name: 'Tổng số tiền',
+      val: '550.000 vnđ',
+    },
+  ];
 
   return (
-    <ScrollView style={styles.container}>
-      <HeaderBg style={styles.header}>
-        <Text bold style={styles.headerTitle}>{translation.transaction_details}</Text>
-      </HeaderBg>
-      <View style={styles.wrap}>
-        <ImageBackground
-          source={Images.Transfer.Background}
-          resizeMode="center"
-          style={styles.image}
-        >
-          <Text bold style={styles.information}>{translation.successfully_transfer}</Text>
-          {renderItem("Chuyển từ", "Ví Epay")}
-          {renderItem("Chuyển đến", "Bảo An Đỗ")}
-          {renderItem("Số điện thoại", "909000999")}
-          {renderItem("Số tiền", "10.000 vnđ")}
-          {renderItem("Số tiền", "10.000 vnđ")}
-          {renderItem("Lời nhắn", "Nạp tiền điện thoại")}
-          {renderItem("Phí giao dịch", "Miễn phí")}
-          {renderItem("Tổng tiền", "10.000 vnđ")}
-          <View style={styles.blockButton}>
-            <Button
-              label="Lưu ảnh"
-              style={styles.buttonSave}
-              color={Colors.cl1}
-              fs={Fonts.H6}
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg style={{marginBottom: 50}}>
+          <Header title={translation.transaction_details} back />
+        </HeaderBg>
+        <View style={base.container}>
+          <Text bold size={Fonts.H5} mb={20}>
+            Nạp tiền thành công
+          </Text>
+          <View style={styles.block}>
+            <Image
+              source={require('images/bgXacNhan.png')}
+              style={styles.bgImg}
             />
-            <Button
-              label="Chia sẻ ảnh"
-              style={styles.buttonShare}
-              fs={Fonts.H6}
-            />
+            {data.map((item, index) => {
+              console.log(item);
+              return (
+                <View key={index}>
+                  <View
+                    style={[
+                      styles.row,
+                      index + 1 === data.length && {
+                        borderBottomWidth: 0,
+                      },
+                    ]}>
+                    <Text style={styles.textLeft}>{item.name}</Text>
+
+                    {index + 1 === data.length ? (
+                      <Text bold size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    ) : (
+                      <Text size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              );
+            })}
+
+            <View style={styles.total}>
+              <Text size={Fonts.H6} bold>
+                Số dư ví
+              </Text>
+              <Text size={Fonts.H6} bold color={Colors.cl1}>
+                1.550.000 vnđ
+              </Text>
+            </View>
           </View>
-        </ImageBackground>
+        </View>
+      </ScrollView>
+      <View style={base.bottom}>
+        <Row>
+          <Col width="50%">
+            <Button
+              bg="#fff"
+              border={Colors.cl1}
+              color={Colors.cl1}
+              label="Quay về ví"
+              onPress={() => Navigator.navigate(SCREEN.TOP_UP)}
+            />
+          </Col>
+          <Col width="50%">
+            <Button
+              label="Tiếp tục"
+              onPress={() => Navigator.navigate(SCREEN.TOP_UP)}
+            />
+          </Col>
+        </Row>
       </View>
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+  block: {
+    marginBottom: 20,
+    position: 'relative',
+    minHeight: 128,
   },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 2,
+  bgImg: {
+    width: 128,
+    height: 128,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{translateX: scale(-64)}, {translateY: scale(-64)}],
   },
-  header: {
-    height: scale(75),
-  },
-  headerTitle: {
-    color: Colors.white,
-    marginTop: scale(30),
-    fontSize: Fonts.H6,
-    textAlign: 'center'
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    borderColor: Colors.BLACK,
-    backgroundColor: "transparent",
-    fontSize: Fonts.H6,
-    marginTop: Spacing.PADDING + scale(10)
-  },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    marginBottom: scale(30)
-  },
-  blockRender: {
+  row: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderBottomColor: Colors.l3,
     borderBottomWidth: 1,
-    borderColor: Colors.g2,
-    paddingVertical: scale(15),
-    borderStyle: 'dotted'
+    paddingVertical: 15,
   },
-  font_16: {
+
+  textLeft: {
     fontSize: Fonts.H6,
+    color: '#969696',
   },
-  information: {
-    fontSize: Fonts.H5,
-    marginBottom: scale(16)
+  textRight: {
+    fontSize: Fonts.H6,
+    color: '#222222',
   },
-  blockButton: {
-    flex: 1,
+
+  total: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: scale(16)
-  },
-  buttonSave: {
-    width: scale(160),
-    height: scale(42),
-    backgroundColor: 'transparent',
-    borderColor: Colors.cl1,
-    borderWidth: 1,
-  },
-  buttonShare: {
-    width: scale(160),
-    height: scale(42)
+    padding: 15,
+    backgroundColor: '#C8DFF4',
+    borderRadius: 8,
+    overflow: 'hidden',
   },
 });
 export default CheckoutSuccess;

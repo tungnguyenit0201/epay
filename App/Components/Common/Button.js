@@ -50,7 +50,8 @@ export default ({
       ]}>
       <Text
         centered
-        semibold
+        size={Fonts.H6}
+        bold
         style={[
           fs && {fontSize: fs},
           {

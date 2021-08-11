@@ -179,11 +179,11 @@ const styles = StyleSheet.create({
     marginBottom: scale(16)
   },
   header: {
-    height: scale(80),
+    height: scale(75),
   },
   headerTitle: {
     color: Colors.white,
-    marginTop: scale(35),
+    marginTop: scale(30),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },

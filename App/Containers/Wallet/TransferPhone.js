@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         color: Colors.white,
-        marginTop: scale(35),
+        marginTop: scale(30),
         fontSize: Fonts.H6,
         textAlign: 'center'
     },

@@ -1,207 +1,187 @@
-import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native';
-import { Text, InputBlock, Header, Button, FWLoading, TextInput, Icon } from 'components';
-import { Colors, Fonts, Images, Spacing } from 'themes';
+import React, {useRef, useState} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+  Pressable,
+  Image,
+  FlatList,
+} from 'react-native';
+import {
+  Text,
+  InputBlock,
+  Header,
+  Button,
+  FWLoading,
+  TextInput,
+} from 'components';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
-import { SCREEN } from 'configs/Constants';
-import { scale } from 'utils/Functions';
+import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
+
 import HeaderBg from 'components/Common/HeaderBg';
-import { useTranslation } from 'context/Language';
-const TopUp = () => {
+import {useTranslation} from 'context/Language';
+const Confirmation = () => {
   const translation = useTranslation();
-  let { height } = useWindowDimensions();
+  let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(false);
+
   let forgotRef = useRef({
     phone: '',
   });
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
-  const renderItem = (key, val) => {
-    return (
-      <View style={styles.blockRender}>
-        <Text style={styles.font_16}>{key}
-        </Text>
-        <Text bold style={styles.font_16}>{val}
-        </Text>
-      </View>
-    )
-  }
-  const handleClick = () => {
-    setOpen(true)
-  }
-  const handleChange = (e) => {
-    if (e === "thanhcong") {
-      setOpen(false)
+  const data = [
+    {
+      name: 'Nguồn tiền',
+      val: 'Vietcombank',
+    },
+    {
+      name: 'Số tiền',
+      val: '550.000 vnđ',
+    },
+    {
+      name: 'Phí giao dịch',
+      val: '0 vnđ',
+    },
+    {
+      name: 'Tổng số tiền',
+      val: '550.000 vnđ',
+    },
+  ];
+
+  const handleChange = e => {
+    if (e === '1') {
+      setOpen(false);
       Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
     }
-    if (e === "thatbai") {
-      setOpen(false)
-      Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
+    if (e === '0') {
+      setOpen(!open);
+      //Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
     }
-  }
+  };
+  const toggleModal = () => {
+    setOpen(!open);
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <HeaderBg style={styles.header}>
-        <Text bold style={styles.headerTitle}>{translation.transaction_details}</Text>
-      </HeaderBg>
-      <View style={styles.wrap}>
-        <ImageBackground
-          source={Images.Transfer.Background}
-          resizeMode="center"
-          style={styles.image}
-        >
-          <Text bold style={styles.information}>{translation.transfer_information}</Text>
-          {renderItem("Chuyển từ", "Ví Epay")}
-          {renderItem("Chuyển đến", "Bảo An Đỗ")}
-          {renderItem("Số điện thoại", "909000999")}
-          {renderItem("Số tiền", "10.000 vnđ")}
-          {renderItem("Số tiền", "10.000 vnđ")}
-          {renderItem("Lời nhắn", "Nạp tiền điện thoại")}
-          {renderItem("Phí giao dịch", "Miễn phí")}
-          {renderItem("Tổng tiền", "10.000 vnđ")}
-          <Button
-            label="Tiếp tục"
-            onPress={handleClick}
-            style={styles.mt_20}
-            fs={Fonts.FONT_MEDIUM}
-          />
-        </ImageBackground>
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg style={{marginBottom: 50}}>
+          <Header title={translation.confirm_withdraw} back />
+        </HeaderBg>
+        <View style={base.container}>
+          <Text bold size={Fonts.H5} mb={20}>
+            Thông tin nạp tiền
+          </Text>
+          <View style={styles.block}>
+            <Image
+              source={require('images/bgXacNhan.png')}
+              style={styles.bgImg}
+            />
+
+            {data.map((item, index) => {
+              console.log(item);
+              return (
+                <View key={index}>
+                  <View
+                    style={[
+                      styles.row,
+                      index + 1 === data.length && {
+                        borderBottomWidth: 0,
+                      },
+                    ]}>
+                    <Text style={styles.textLeft}>{item.name}</Text>
+
+                    {index + 1 === data.length ? (
+                      <Text bold size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    ) : (
+                      <Text size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      </ScrollView>
+      <View style={base.bottom}>
+        <Button label="Tiếp tục" onPress={toggleModal} />
       </View>
       <Modal
         isVisible={open}
         animationIn="fadeIn"
         animationOut="fadeOut"
-        style={{ flex: 1 }}
+        //style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}
-      >
-        <View style={styles.modal}>
-          <Text bold style={styles.modalTitle}>{translation.password}</Text>
-          {/* Input with Icon */}
-          <View style={styles.inputIcon}>
-            <TouchableOpacity
-              style={styles.iconLock}>
-              <Icon
-                icon={Images.Transfer.Lock}
-                tintColor={Colors.g4}
-              />
-            </TouchableOpacity>
-            <TextInput
-              style={styles.inputLock}
-              placeholder={translation.enter_name_or_phone_number}
-              placeholderTextColor={Colors.g4}
-              onChange={handleChange}
-              password
-            />
-          </View>
-          {/* Input with Icon */}
-          <View></View>
-          <Text style={styles.textMedium}>
-            {translation.forgot_password}
-          </Text>
+        backdropTransitionOutTiming={0}>
+        <View style={base.modal}>
+          <Text style={base.modalTitle}>Nhập mật khẩu</Text>
+          <TextInput
+            placeholder="1 -> next , 0 -> error"
+            password
+            placeholderTextColor="black"
+            placeholderTextColor={Colors.l5}
+            onChange={handleChange}
+          />
+          <Text style={styles.textUnderline}>Quên mật khẩu?</Text>
+          <Pressable style={base.close} onPress={toggleModal}>
+            <Text style={base.closeText}>x</Text>
+          </Pressable>
         </View>
       </Modal>
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING,
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mt_20: {
-    marginTop: scale(20)
-  },
-  textMedium: {
+  textUnderline: {
+    textDecorationLine: 'underline',
     marginTop: scale(10),
-    textAlign: 'center'
+    textAlign: 'center',
   },
-  modal: {
-    height: scale(200),
-    backgroundColor: Colors.white,
-    padding: Spacing.PADDING,
-    borderRadius: 10,
+
+  block: {
+    marginBottom: 20,
+    position: 'relative',
+    minHeight: 128,
   },
-  modalTitle: {
-    fontSize: Fonts.H5,
-    textAlign: "center",
-    marginBottom: scale(20),
+  bgImg: {
+    width: 128,
+    height: 128,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{translateX: scale(-64)}, {translateY: scale(-64)}],
   },
-  image: {
-    flex: 1,
-    justifyContent: "center",
-    marginBottom: scale(30)
-  },
-  blockRender: {
-    flex: 1,
+  row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderBottomColor: Colors.l3,
     borderBottomWidth: 1,
-    borderColor: Colors.g2,
-    paddingVertical: scale(15),
-    borderStyle: 'dotted'
+    paddingVertical: 15,
   },
-  header: {
-    height: scale(75),
+  title: {
+    fontSize: scale(50),
   },
-  headerTitle: {
-    color: Colors.white,
-    marginTop: scale(30),
+
+  textLeft: {
     fontSize: Fonts.H6,
-    textAlign: 'center'
+    color: '#969696',
   },
-  font_16: {
-    fontSize: Fonts.H6
-  },
-  information: {
-    fontSize: Fonts.H5,
-    marginBottom: scale(16)
-  },
-  inputIcon: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: Colors.g4,
-    borderWidth: 1,
-    borderRadius: scale(5)
-  },
-  iconLock: {
-    paddingHorizontal: scale(10),
-    borderRightWidth: 1,
-    borderColor: Colors.g2,
-  },
-  inputLock: {
-    flex: 1,
-    backgroundColor: 'transparent',
+  textRight: {
     fontSize: Fonts.H6,
-    borderColor: 'transparent',
+    color: '#222222',
   },
-  textCenter: {
-    textAlign: 'center',
-    marginTop: scale(-8)
-  },
-  buttonBack: {
-    width: scale(120),
-    height: scale(45),
-  },
-  flexCenter: {
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent:'center'
-  }
 });
-export default TopUp;
+export default Confirmation;
