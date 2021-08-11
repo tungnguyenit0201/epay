@@ -1,146 +1,187 @@
-import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Text, InputBlock, Header, Button, FWLoading, TextInput } from 'components';
-import { Colors, Fonts, Spacing } from 'themes';
+import React, {useRef, useState} from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+  Pressable,
+  Image,
+  FlatList,
+} from 'react-native';
+import {
+  Text,
+  InputBlock,
+  Header,
+  Button,
+  FWLoading,
+  TextInput,
+} from 'components';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
-import { SCREEN } from 'configs/Constants';
-import { scale } from 'utils/Functions';
+import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
-const TopUp = () => {
-  let { height } = useWindowDimensions();
+
+import HeaderBg from 'components/Common/HeaderBg';
+import {useTranslation} from 'context/Language';
+const Confirmation = () => {
+  const translation = useTranslation();
+  let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(false);
+
   let forgotRef = useRef({
     phone: '',
   });
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
-  const renderItem = (key, val) => {
-    return (
-      <View style={styles.content}>
-        <Text style={styles.textContent}>{key}
-        </Text>
-        <Text style={styles.textContent}>{val}
-        </Text>
-      </View>
-    )
-  }
-  const handleClick = () => {
-    setOpen(true)
-  }
-  const handleChange = (e) => {
-    if(e === "thanhcong"){
-      setOpen(false)
+  const data = [
+    {
+      name: 'Nguồn tiền',
+      val: 'Vietcombank',
+    },
+    {
+      name: 'Số tiền',
+      val: '550.000 vnđ',
+    },
+    {
+      name: 'Phí giao dịch',
+      val: '0 vnđ',
+    },
+    {
+      name: 'Tổng số tiền',
+      val: '550.000 vnđ',
+    },
+  ];
+
+  const handleChange = e => {
+    if (e === '1') {
+      setOpen(false);
       Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
     }
-    if(e === "thatbai"){
-      setOpen(false)
-      Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
+    if (e === '0') {
+      setOpen(!open);
+      //Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
     }
-  }
+  };
+  const toggleModal = () => {
+    setOpen(!open);
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      <Header 
-        back 
-        title="Xác nhận rút tiền" 
-      />
-      <View style={styles.wrap}>
-        {renderItem("Ngân hàng nhận tiền", "Vietcombank")}
-        {renderItem("Số tiền", "550.000 vnđ")}
-        {renderItem("Phí giao dịch", "0 vnđ")}
-        {renderItem("Tổng số tiền", "550.000 vnđ")}
-        <Button
-          label="Tiếp tục"
-          onPress={handleClick}
-          style={styles.buttonBlock}
-          fs={Fonts.FONT_MEDIUM}
-        />
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg style={{marginBottom: 50}}>
+          <Header title={translation.confirm_withdraw} back />
+        </HeaderBg>
+        <View style={base.container}>
+          <Text bold size={Fonts.H5} mb={20}>
+            Thông tin nạp tiền
+          </Text>
+          <View style={styles.block}>
+            <Image
+              source={require('images/bgXacNhan.png')}
+              style={styles.bgImg}
+            />
+
+            {data.map((item, index) => {
+              console.log(item);
+              return (
+                <View key={index}>
+                  <View
+                    style={[
+                      styles.row,
+                      index + 1 === data.length && {
+                        borderBottomWidth: 0,
+                      },
+                    ]}>
+                    <Text style={styles.textLeft}>{item.name}</Text>
+
+                    {index + 1 === data.length ? (
+                      <Text bold size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    ) : (
+                      <Text size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      </ScrollView>
+      <View style={base.bottom}>
+        <Button label="Tiếp tục" onPress={toggleModal} />
       </View>
       <Modal
-          isVisible={open}
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          style={{flex: 1}}
-          useNativeDriver
-          hideModalContentWhileAnimating
-          backdropTransitionOutTiming={0}>
-          <View style={styles.modal}>
-              <Text style={styles.modalTitle}>Nhập mật khẩu</Text>
-              <TextInput
-                  style={styles.input}
-                  placeholder="Nhập mật khẩu"
-                  password
-                  placeholderTextColor="black"
-                  onChange={handleChange}
-              />
-              <View></View>
-              <Text style={styles.textUnderline}>
-                Quên mật khẩu?
-              </Text>
-          </View>
-        </Modal>
-    </ScrollView>
+        isVisible={open}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        //style={{flex: 1}}
+        useNativeDriver
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}>
+        <View style={base.modal}>
+          <Text style={base.modalTitle}>Nhập mật khẩu</Text>
+          <TextInput
+            placeholder="1 -> next , 0 -> error"
+            password
+            placeholderTextColor="black"
+            placeholderTextColor={Colors.l5}
+            onChange={handleChange}
+          />
+          <Text style={styles.textUnderline}>Quên mật khẩu?</Text>
+          <Pressable style={base.close} onPress={toggleModal}>
+            <Text style={base.closeText}>x</Text>
+          </Pressable>
+        </View>
+      </Modal>
+    </>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
-  },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonBlock: {
-    paddingVertical: Spacing.PADDING,
-    backgroundColor: Colors.g9
-  },
-  input: {
-    borderColor: Colors.BLACK, 
-    backgroundColor: "transparent", 
-    fontSize: Fonts.H6, 
-    marginTop: Spacing.PADDING + scale(10)
-  },
   textUnderline: {
-    fontSize: Fonts.FONT_MEDIUM, 
-    textDecorationLine: 'underline', 
-    marginTop: scale(10), 
-    textAlign: 'center'
+    textDecorationLine: 'underline',
+    marginTop: scale(10),
+    textAlign: 'center',
   },
-  content: {
-    flex: 1, 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    marginBottom: scale(36)
+
+  block: {
+    marginBottom: 20,
+    position: 'relative',
+    minHeight: 128,
+  },
+  bgImg: {
+    width: 128,
+    height: 128,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{translateX: scale(-64)}, {translateY: scale(-64)}],
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomColor: Colors.l3,
+    borderBottomWidth: 1,
+    paddingVertical: 15,
   },
   title: {
-    fontSize: scale(50)
+    fontSize: scale(50),
   },
-  modal: {
-    height: scale(200), 
-    backgroundColor: Colors.white, 
-    padding: Spacing.PADDING
+
+  textLeft: {
+    fontSize: Fonts.H6,
+    color: '#969696',
   },
-  modalTitle: {
-    fontSize: Fonts.H4, 
-    textAlign: "center", 
-    fontWeight: 'bold'
+  textRight: {
+    fontSize: Fonts.H6,
+    color: '#222222',
   },
-  textContent: {
-    fontSize: Fonts.FONT_MEDIUM, 
-    textTransform: 'uppercase'
-  }
 });
-export default TopUp;
+export default Confirmation;
