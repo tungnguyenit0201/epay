@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
+    paddingTop: Spacing.PADDING,
   },
   loading: {
     justifyContent: 'center',
@@ -156,11 +156,11 @@ const styles = StyleSheet.create({
     borderStyle: 'dotted'
   },
   header: {
-    height: scale(80),
+    height: scale(75),
   },
   headerTitle: {
     color: Colors.white,
-    marginTop: scale(35),
+    marginTop: scale(30),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },

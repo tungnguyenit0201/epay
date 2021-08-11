@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING * 2,
   },
   header: {
-    height: scale(80),
+    height: scale(75),
   },
   headerTitle: {
     color: Colors.white,
-    marginTop: scale(35),
+    marginTop: scale(30),
     fontSize: Fonts.H6,
     textAlign: 'center'
   },
