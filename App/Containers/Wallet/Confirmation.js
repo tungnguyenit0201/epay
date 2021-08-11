@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   Pressable,
   Image,
+  FlatList,
 } from 'react-native';
 import {
   Text,
@@ -29,55 +30,92 @@ const Confirmation = () => {
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(false);
+
   let forgotRef = useRef({
     phone: '',
   });
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
-  const renderItem = (key, val) => {
-    return (
-      <View style={styles.row}>
-        <Text style={styles.textLeft}>{key}</Text>
-        <Text style={styles.textRight}>{val}</Text>
-      </View>
-    );
-  };
+  const data = [
+    {
+      name: 'Nguồn tiền',
+      val: 'Vietcombank',
+    },
+    {
+      name: 'Số tiền',
+      val: '550.000 vnđ',
+    },
+    {
+      name: 'Phí giao dịch',
+      val: '0 vnđ',
+    },
+    {
+      name: 'Tổng số tiền',
+      val: '550.000 vnđ',
+    },
+  ];
 
   const handleChange = e => {
-    if (e === 'thanhcong') {
+    if (e === '1') {
       setOpen(false);
       Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
     }
-    if (e === 'thatbai') {
-      setOpen(false);
-      Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
+    if (e === '0') {
+      setOpen(!open);
+      //Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
     }
   };
   const toggleModal = () => {
     setOpen(!open);
   };
+
   return (
-    <ScrollView style={base.wrap}>
-      <HeaderBg style={{marginBottom: 50}}>
-        <Header title={translation.confirm_withdraw} back />
-      </HeaderBg>
-      <View style={base.container}>
-        <View style={styles.block}>
-          <Image
-            source={require('images/bgXacNhan.png')}
-            style={styles.bgImg}
-          />
-          {renderItem('Ngân hàng nhận tiền', 'Vietcombank')}
-          {renderItem('Số tiền', '550.000 vnđ')}
-          {renderItem('Phí giao dịch', '0 vnđ')}
-          {renderItem(
-            'Tổng số tiền',
-            <Text size={Fonts.H6} bold>
-              550.000 vnđ
-            </Text>,
-          )}
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg style={{marginBottom: 50}}>
+          <Header title={translation.confirm_withdraw} back />
+        </HeaderBg>
+        <View style={base.container}>
+          <Text bold size={Fonts.H5} mb={20}>
+            Thông tin nạp tiền
+          </Text>
+          <View style={styles.block}>
+            <Image
+              source={require('images/bgXacNhan.png')}
+              style={styles.bgImg}
+            />
+
+            {data.map((item, index) => {
+              console.log(item);
+              return (
+                <View key={index}>
+                  <View
+                    style={[
+                      styles.row,
+                      index + 1 === data.length && {
+                        borderBottomWidth: 0,
+                      },
+                    ]}>
+                    <Text style={styles.textLeft}>{item.name}</Text>
+
+                    {index + 1 === data.length ? (
+                      <Text bold size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    ) : (
+                      <Text size={Fonts.H6} style={styles.textRight}>
+                        {item.val}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              );
+            })}
+          </View>
         </View>
+      </ScrollView>
+      <View style={base.bottom}>
         <Button label="Tiếp tục" onPress={toggleModal} />
       </View>
       <Modal
@@ -91,7 +129,7 @@ const Confirmation = () => {
         <View style={base.modal}>
           <Text style={base.modalTitle}>Nhập mật khẩu</Text>
           <TextInput
-            placeholder="Nhập mật khẩu"
+            placeholder="1 -> next , 0 -> error"
             password
             placeholderTextColor="black"
             placeholderTextColor={Colors.l5}
@@ -103,7 +141,7 @@ const Confirmation = () => {
           </Pressable>
         </View>
       </Modal>
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -127,7 +165,6 @@ const styles = StyleSheet.create({
     transform: [{translateX: scale(-64)}, {translateY: scale(-64)}],
   },
   row: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomColor: Colors.l3,

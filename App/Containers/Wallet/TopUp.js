@@ -54,30 +54,33 @@ const TopUp = () => {
   ];
 
   return (
-    <ScrollView style={base.wrap}>
-      <HeaderBg style={{marginBottom: 50}}>
-        <Header title={translation.top_up} back style={{marginBottom: 20}} />
-        <Monney
-          style={[
-            {
-              position: 'absolute',
-              bottom: -20,
-              left: Spacing.PADDING,
-              right: Spacing.PADDING,
-            },
-          ]}
-        />
-      </HeaderBg>
-      <View style={base.container}>
-        <InputMoney />
-        <SelectBank data={dataBank} label={translation.source} />
-
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg style={{marginBottom: 50}}>
+          <Header title={translation.top_up} back style={{marginBottom: 20}} />
+          <Monney
+            style={[
+              {
+                position: 'absolute',
+                bottom: -20,
+                left: Spacing.PADDING,
+                right: Spacing.PADDING,
+              },
+            ]}
+          />
+        </HeaderBg>
+        <View style={base.container}>
+          <InputMoney />
+          <SelectBank data={dataBank} label={translation.source} />
+        </View>
+      </ScrollView>
+      <View style={base.bottom}>
         <Button
           label="Nạp"
           onPress={() => Navigator.navigate(SCREEN.CONFIRMATION)}
         />
       </View>
-    </ScrollView>
+    </>
   );
 };
 

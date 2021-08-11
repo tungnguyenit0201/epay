@@ -48,5 +48,10 @@ const styles = StyleSheet.create({
     marginTop: -1,
     color: '#fff',
   },
+  bottom: {
+    padding: Spacing.PADDING,
+    position: 'relative',
+    backgroundColor: '#fff',
+  },
 });
 export default styles;
