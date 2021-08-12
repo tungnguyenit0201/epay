@@ -58,11 +58,10 @@ const MyWallet = () => {
                 right: Spacing.PADDING,
                 shadowColor: "black",
               },
-            ]}
-          />
+            ]}/>
         </HeaderBg>
 
-        <View style={[styles.wrap,{marginTop: 40,marginBottom: 20}]}>
+        <View style={[styles.wrap,{marginTop: 24,marginBottom: 24}]}>
           <ListItem
             scroll
             space={1}
@@ -70,9 +69,9 @@ const MyWallet = () => {
             data={dataMenu}
             styleText={[{fontSize: 14}]}
             styleWicon={[{backgroundColor: '#437EC0'}]}
-            styleIcon={[{tintColor: '#fff'}]}
-          />
+            styleIcon={[{tintColor: '#fff'}]}/>
         </View>
+
         <View style={{
           backgroundColor: Colors.BORDER,
           height: 8
