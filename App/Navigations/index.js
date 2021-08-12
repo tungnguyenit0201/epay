@@ -46,6 +46,7 @@ import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
 import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
 import LanguageSetting from 'containers/User/LanguageSetting';
 import MyWallet from 'containers/Home/MyWallet';
+import TransferPhone from 'containers/Wallet/TransferPhone';
 import AutoPayment from 'containers/User/AutoPayment';
 
 const AppNavigator = () => {
@@ -139,6 +140,7 @@ const AppNavigator = () => {
             component={LanguageSetting}
           />
           <Stack.Screen name={SCREEN.MY_WALLET} component={MyWallet} />
+          <Stack.Screen name={SCREEN.TRANSFER_PHONE} component={TransferPhone} />
           <Stack.Screen name={SCREEN.AUTOPAYMENT} component={AutoPayment} />
         </Stack.Navigator>
       </KeyboardStateProvider>
