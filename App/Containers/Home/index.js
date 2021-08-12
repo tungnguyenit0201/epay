@@ -34,7 +34,7 @@ const Home = () => {
     {
       icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
-      screen: SCREEN.QRPAY,
+      screen: SCREEN.TRANSFER,
     },
   ];
   const dataEpay = [
