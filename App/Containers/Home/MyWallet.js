@@ -10,7 +10,6 @@ import {useTranslation} from 'context/Language';
 import HeaderBg from 'components/Common/HeaderBg';
 import Monney from 'components/Home/Monney';
 import ListItem from 'components/Common/ListItem';
-import SelectBank from 'components/User/TopUp/SelectBank';
 import { scale } from 'utils/Functions';
 
 const MyWallet = () => {
@@ -84,9 +83,7 @@ const MyWallet = () => {
             marginBottom: 10,
             fontSize: Fonts.H6,
             fontWeight: "bold"
-          }}>
-            {translation.connect_cardbank_account}
-          </Text>
+          }}>{translation.connect_cardbank_account}</Text>
           <Text style={styles.text}>
             {translation.you_have_not_connected_your_cardbank_account_yet}
           </Text>
