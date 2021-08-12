@@ -61,10 +61,10 @@ const MyWallet = () => {
             ]}/>
         </HeaderBg>
 
-        <View style={[styles.wrap,{marginTop: 24,marginBottom: 24}]}>
+        <View style={[styles.wrap,{marginTop: 24,marginBottom: 14}]}>
           <ListItem
             scroll
-            space={1}
+            space={10}
             col={4}
             data={dataMenu}
             styleText={[{fontSize: 14}]}
