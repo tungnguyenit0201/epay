@@ -12,6 +12,7 @@ export default ({
   icon,
   border,
   color,
+  bold,
   bg,
   radius,
   fs,
@@ -24,6 +25,7 @@ export default ({
   mv,
   disabled,
   style,
+  labelStyle,
   label2Style,
 }) => {
   return (
@@ -51,13 +53,14 @@ export default ({
       <Text
         centered
         size={Fonts.H6}
-        bold
         style={[
           fs && {fontSize: fs},
+          bold && {fontWeight: 'bold'},
           {
             color: color ? color : '#fff',
             lineHeight: 20,
           },
+          labelStyle,
         ]}>
         {label}
         {
@@ -82,13 +85,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingHorizontal: scale(20),
     borderRadius: scale(8),
     backgroundColor: Colors.cl1,
     height: 48,
   },
-  xs: {height: 20, paddingHorizontal: 10},
-  sm: {height: 30, paddingHorizontal: 15},
+  xs: {
+    height: 28,
+    paddingHorizontal: 10,
+    paddingVertical: 0,
+  },
+  sm: {height: 34, paddingHorizontal: 15},
   lg: {height: 55},
   xl: {height: 70},
 

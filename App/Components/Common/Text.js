@@ -40,6 +40,7 @@ const CustomText = ({
   return (
     <Text
       style={[
+        styles.text,
         {
           color,
           fontFamily,
@@ -49,7 +50,7 @@ const CustomText = ({
           marginBottom: mb || mv,
           marginLeft: ml || mh,
           marginRight: mr || mh,
-          lineHeight,
+          //lineHeight,
         },
         style,
       ]}
@@ -58,5 +59,9 @@ const CustomText = ({
     </Text>
   );
 };
-
+const styles = StyleSheet.create({
+  text: {
+    lineHeight: 20,
+  },
+});
 export default CustomText;

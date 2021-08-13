@@ -11,6 +11,8 @@ const SCREEN = {
   BANK_INFO: 'BankInfo',
   BANK_RESULT: 'BankResult',
   NOTIFICATION: 'Notification',
+  TRANSACTION_SUCCESS: 'TransactionSuccess',
+  EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
   QRPAY: 'QRPay',

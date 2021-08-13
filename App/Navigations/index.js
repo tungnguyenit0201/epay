@@ -23,7 +23,9 @@ import OTP from 'containers/Auth/OTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
-import Notification from 'containers/Home/Notification';
+import Notification from 'containers/Notification';
+import TransactionSuccess from 'containers/Notification/TransactionSuccess';
+import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
 import QRPay from 'containers/Wallet/QRPay';
@@ -91,6 +93,12 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
+          <Stack.Screen
+            name={SCREEN.TRANSACTION_SUCCESS}
+            component={TransactionSuccess}
+          />
+          <Stack.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
+
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
           <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
@@ -140,7 +148,10 @@ const AppNavigator = () => {
             component={LanguageSetting}
           />
           <Stack.Screen name={SCREEN.MY_WALLET} component={MyWallet} />
-          <Stack.Screen name={SCREEN.TRANSFER_PHONE} component={TransferPhone} />
+          <Stack.Screen
+            name={SCREEN.TRANSFER_PHONE}
+            component={TransferPhone}
+          />
           <Stack.Screen name={SCREEN.AUTOPAYMENT} component={AutoPayment} />
         </Stack.Navigator>
       </KeyboardStateProvider>
