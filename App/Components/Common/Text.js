@@ -40,17 +40,15 @@ const CustomText = ({
   return (
     <Text
       style={[
-        styles.text,
         {
           color,
           fontFamily,
           textAlign: centered ? 'center' : right ? 'right' : 'left',
-          fontSize: size || Fonts.FONT_MEDIUM,
+          fontSize: size || Fonts.MD,
           marginTop: mt || mv,
           marginBottom: mb || mv,
           marginLeft: ml || mh,
           marginRight: mr || mh,
-          //lineHeight,
         },
         style,
       ]}
@@ -59,9 +57,5 @@ const CustomText = ({
     </Text>
   );
 };
-const styles = StyleSheet.create({
-  text: {
-    lineHeight: 20,
-  },
-});
+
 export default CustomText;

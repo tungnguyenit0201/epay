@@ -26,14 +26,14 @@ const PaymentSettings = () => {
           Navigator.push(SCREEN.AUTOPAYMENT);
         }}>
         <Icon
-          style={[styles.icon]}
+          mr={8}
           icon={Images.Profile.MaThanhToan}
           size={24}
           tintColor={Colors.cl1}
         />
-        <Text size={Fonts.H6}> Cài đặt nạp tiền tự động</Text>
+        <Text style={styles.text}> Cài đặt nạp tiền tự động</Text>
         <Icon
-          style={[styles.itemRight]}
+          style={[base.leftAuto]}
           icon={Images.ArrowRight}
           size={24}
           tintColor="#000"
@@ -45,14 +45,14 @@ const PaymentSettings = () => {
           Navigator.push(SCREEN.NOTIFICATION);
         }}>
         <Icon
-          style={[styles.icon]}
+          mr={8}
           icon={Images.Profile.MaThanhToan}
           size={24}
           tintColor={Colors.cl1}
         />
-        <Text size={Fonts.H6}> Xác nhận thanh toán nhanh</Text>
+        <Text style={styles.text}> Xác nhận thanh toán nhanh</Text>
         <Switch
-          style={styles.itemRight}
+          style={base.leftAuto}
           onColor={Colors.cl1}
           offColor={Colors.l3}
           value={xacNhan}
@@ -65,12 +65,12 @@ const PaymentSettings = () => {
           Navigator.push(SCREEN.NOTIFICATION);
         }}>
         <Icon
-          style={[styles.icon]}
+          mr={8}
           icon={Images.Profile.MaThanhToan}
           size={24}
           tintColor={Colors.cl1}
         />
-        <Text size={Fonts.H6}> Hạn mức trong ngày</Text>
+        <Text style={styles.text}> Hạn mức trong ngày</Text>
       </View>
       <TouchableOpacity
         style={styles.item}
@@ -78,14 +78,14 @@ const PaymentSettings = () => {
           Navigator.push(SCREEN.NOTIFICATION);
         }}>
         <Icon
-          style={[styles.icon]}
+          mr={8}
           icon={Images.Profile.MaThanhToan}
           size={24}
           tintColor={Colors.cl1}
         />
-        <Text size={Fonts.H6}> Đăng ký thanh toán giao thông</Text>
+        <Text style={styles.text}> Đăng ký thanh toán giao thông</Text>
         <Icon
-          style={[styles.itemRight]}
+          style={[base.leftAuto]}
           icon={Images.ArrowRight}
           size={24}
           tintColor="#000"
@@ -99,21 +99,6 @@ const PaymentSettings = () => {
   );
 };
 const styles = StyleSheet.create({
-  heading: {
-    marginTop: 20,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
-  },
-  title: {
-    textTransform: 'uppercase',
-  },
-  link: {
-    textDecorationLine: 'underline',
-  },
-  block: {
-    borderBottomColor: '#EEEEEE',
-    borderBottomWidth: 8,
-  },
   item: {
     backgroundColor: '#fff',
     borderBottomColor: '#EEEEEE',
@@ -123,12 +108,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     alignItems: 'center',
   },
-  icon: {
-    marginRight: 10,
-  },
-
-  itemRight: {
-    marginLeft: 'auto',
+  text: {
+    marginRight: 80,
+    fontSize: Fonts.H6,
   },
 });
 export default PaymentSettings;
