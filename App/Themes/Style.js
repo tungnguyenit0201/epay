@@ -49,7 +49,9 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   bottom: {
-    padding: Spacing.PADDING,
+    paddingHorizontal: Spacing.PADDING,
+    paddingBottom: Spacing.PADDING,
+    paddingTop: 10,
     position: 'relative',
     backgroundColor: '#fff',
   },

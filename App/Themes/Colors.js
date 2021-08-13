@@ -1,5 +1,5 @@
 export default {
-  cl1: '#10508F',
+  cl1: '#437EC0',
   cl2: '#6FC3EA',
   cl3: '#969696',
   cl4: '#CCCCCB',

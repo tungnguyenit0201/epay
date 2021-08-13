@@ -3,6 +3,7 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Icon, Text} from 'components';
 import {Images} from 'themes';
 import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 
 const Notification = ({data, style}) => {
   return (
