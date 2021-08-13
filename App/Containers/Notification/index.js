@@ -22,21 +22,21 @@ const Notification = () => {
     {id: 3, title: 'Khác'},
   ];
   const data = [
-    {type: 1, labelType: 'Nhắc cước'},
-    {type: 2, labelType: 'Khuyến mãi'},
-    {type: 3, labelType: 'Nạp tiền'},
-    {type: 1, labelType: 'Nhắc cước 2 '},
-    {type: 2, labelType: 'Khuyến mãi 2'},
-    {type: 3, labelType: 'Nạp tiền 2'},
-    {type: 1, labelType: 'Nhắc cước 3'},
-    {type: 2, labelType: 'Khuyến mãi 3'},
-    {type: 3, labelType: 'Nạp tiền 3'},
-    {type: 1, labelType: 'Nhắc cước 4'},
-    {type: 2, labelType: 'Khuyến mãi 4'},
-    {type: 3, labelType: 'Nạp tiền 4'},
-    {type: 1, labelType: 'Nhắc cước 5'},
-    {type: 2, labelType: 'Khuyến mãi 5'},
-    {type: 3, labelType: 'Nạp tiền 5'},
+    {type: 1, labelType: 'Nhắc cước', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 2, labelType: 'Khuyến mãi', screen: SCREEN.EPAY_SUCCESS},
+    {type: 3, labelType: 'Nạp tiền', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 1, labelType: 'Nhắc cước 2 ', screen: SCREEN.EPAY_SUCCESS},
+    {type: 2, labelType: 'Khuyến mãi 2', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 3, labelType: 'Nạp tiền 2', screen: SCREEN.EPAY_SUCCESS},
+    {type: 1, labelType: 'Nhắc cước 3', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 2, labelType: 'Khuyến mãi 3', screen: SCREEN.EPAY_SUCCESS},
+    {type: 3, labelType: 'Nạp tiền 3', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 1, labelType: 'Nhắc cước 4', screen: SCREEN.EPAY_SUCCESS},
+    {type: 2, labelType: 'Khuyến mãi 4', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 3, labelType: 'Nạp tiền 4', screen: SCREEN.EPAY_SUCCESS},
+    {type: 1, labelType: 'Nhắc cước 5', screen: SCREEN.TRANSACTION_SUCCESS},
+    {type: 2, labelType: 'Khuyến mãi 5', screen: SCREEN.EPAY_SUCCESS},
+    {type: 3, labelType: 'Nạp tiền 5', screen: SCREEN.TRANSACTION_SUCCESS},
   ];
 
   return (
@@ -49,6 +49,7 @@ const Notification = () => {
           {dataType.map((item, index) => {
             return (
               <Pressable
+                key={index}
                 style={[styles.tag, type === item.id && styles.tagActive]}
                 onPress={() => setType(item.id)}>
                 <Text style={[type === item.id && {color: '#fff'}]}>
@@ -63,7 +64,12 @@ const Notification = () => {
           return (
             <>
               {(type === 0 || type === item.type) && (
-                <View style={[base.container, styles.row]} key={index}>
+                <Pressable
+                  style={[base.container, styles.row]}
+                  key={index}
+                  onPress={() => {
+                    Navigator.push(item.screen);
+                  }}>
                   <View style={styles.head}>
                     <View style={styles.circle}></View>
                     <Text style={styles.type}>{item.labelType}</Text>
@@ -74,7 +80,7 @@ const Notification = () => {
                     Lorem ipsum Lorem ipsum dolor sit amet, consectetur
                     adipiscing elit, sed do eiusmod tempor
                   </Text>
-                </View>
+                </Pressable>
               )}
             </>
           );

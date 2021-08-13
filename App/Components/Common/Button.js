@@ -12,6 +12,7 @@ export default ({
   icon,
   border,
   color,
+  bold,
   bg,
   radius,
   fs,
@@ -52,9 +53,9 @@ export default ({
       <Text
         centered
         size={Fonts.H6}
-        bold
         style={[
           fs && {fontSize: fs},
+          bold && {fontWeight: 'bold'},
           {
             color: color ? color : '#fff',
             lineHeight: 20,
@@ -89,8 +90,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cl1,
     height: 48,
   },
-  xs: {height: 20, paddingHorizontal: 10},
-  sm: {height: 30, paddingHorizontal: 15},
+  xs: {
+    height: 28,
+    paddingHorizontal: 10,
+    paddingVertical: 0,
+  },
+  sm: {height: 34, paddingHorizontal: 15},
   lg: {height: 55},
   xl: {height: 70},
 
