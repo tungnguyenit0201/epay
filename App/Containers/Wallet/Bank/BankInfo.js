@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
-import {Button, Header, InputBlock, SelectInput, TextInput} from 'components';
+import {Button, Header, SelectInput, TextInput} from 'components';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {SCREEN} from 'configs/Constants';
