@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
-import {Button, Header, InputBlock} from 'components';
+import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
+import {Button, Header, InputBlock, SelectInput} from 'components';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {SCREEN} from 'configs/Constants';
@@ -62,7 +62,23 @@ const BankInfo = () => {
           style={styles.mb_minus_1}/>
         <InputBlock placeholder={translation.issue_date}
           style={styles.mb_minus_1}/>
-        <InputBlock placeholder={translation.cvv}/>
+        <InputBlock placeholder={translation.cvv}
+          style={{marginBottom: 30}}/>
+
+        <SelectInput
+          optionList={[
+            {label: 'CMND', value: 'cmnd'},
+            {label: 'Căn cước', value: 'cancuoc'},
+          ]}
+          defaultValue={'cmnd'}
+          style={{
+            paddingHorizontal: 10,
+            marginHorizontal: 0,
+            borderWidth: 1,
+            borderStyle: "solid",
+            borderColor: "#CCCCCB",
+          }}
+          inputStyle={{}}/>
       </View>
       
       <View style={{
@@ -135,7 +151,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#666666',
     borderRadius: 100
   },
-  text_gray: { color: '#666666' }
+  text_gray: { color: '#666666' },
+  // icon: {
+  //   position: "absolute",
+  //   top: 49,
+  //   left: 10,
+  //   paddingRight: 10,
+  //   borderRightWidth: 1,
+  //   borderStyle: "solid",
+  //   borderColor: Colors.GRAY,
+  //   zIndex: 1
+  // },
+  // icon_img: {
+  //   width: 20,
+  //   height: 20,
+  // },
+  // input_text: {
+  //   paddingLeft: 50,
+  // },
 });
 
 export default BankInfo;
