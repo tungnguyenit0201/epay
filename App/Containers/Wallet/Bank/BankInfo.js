@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
-import {Button, Header, InputBlock, SelectInput} from 'components';
+import {Button, Header, InputBlock, SelectInput, TextInput} from 'components';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {SCREEN} from 'configs/Constants';
@@ -34,14 +34,15 @@ const BankInfo = () => {
 
       <View style={[styles.wrap,{paddingBottom: 30}]}>
         <View style={[styles.flex,{
-            alignItems: "center"
+            alignItems: "center",
+            marginBottom: 24
           }]}>
           <Text bold size={Fonts.H6}
             style={{fontWeight: "bold"}}>
             Loại liên kết
           </Text>
 
-          <View style={styles.flex} mb={30}>
+          <View style={styles.flex}>
             <Button bg={cardOption?"#6FC3EA":Colors.BORDER}
               color={!cardOption && "#666"} 
               label='Thẻ' onPress={chooseCard} mr={10}
@@ -55,15 +56,24 @@ const BankInfo = () => {
           </View>
         </View>
 
-        <InputBlock placeholder={translation.card_number}
-          style={styles.mb_minus_1}/>
-        <Text style={{color:"red"}}>{translation.incorrect_card_number}</Text>
-        <InputBlock placeholder={translation.cardholder_name}
-          style={styles.mb_minus_1}/>
-        <InputBlock placeholder={translation.issue_date}
-          style={styles.mb_minus_1}/>
-        <InputBlock placeholder={translation.cvv}
-          style={{marginBottom: 30}}/>
+        <View style={styles.mb_1}>
+          <TextInput placeholder={translation.card_number}/>
+          <Text style={{color:"red"}}>
+            {translation.incorrect_card_number}
+          </Text>
+        </View>
+
+        <View style={styles.mb_1}>
+          <TextInput placeholder={translation.cardholder_name}/>
+        </View>
+
+        <View style={styles.mb_1}>
+          <TextInput placeholder={translation.issue_date}/>
+        </View>
+
+        <View style={styles.mb_1}>
+          <TextInput placeholder={translation.cvv}/>
+        </View>
 
         <SelectInput
           optionList={[
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: '#fff'
   },
-  mb_minus_1: { marginBottom: -5 },
+  mb_1: { marginBottom: 16 },
   dot: {
     width: 3,
     height: 3,
@@ -152,23 +162,6 @@ const styles = StyleSheet.create({
     borderRadius: 100
   },
   text_gray: { color: '#666666' },
-  // icon: {
-  //   position: "absolute",
-  //   top: 49,
-  //   left: 10,
-  //   paddingRight: 10,
-  //   borderRightWidth: 1,
-  //   borderStyle: "solid",
-  //   borderColor: Colors.GRAY,
-  //   zIndex: 1
-  // },
-  // icon_img: {
-  //   width: 20,
-  //   height: 20,
-  // },
-  // input_text: {
-  //   paddingLeft: 50,
-  // },
 });
 
 export default BankInfo;
