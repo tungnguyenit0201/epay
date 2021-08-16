@@ -25,3 +25,4 @@ export {default as Avatar} from './Common/Avatar';
 export {default as OTP} from './Common/OTP';
 export {default as Row} from './Common/Row';
 export {default as Col} from './Common/Col';
+export {default as SelectInput} from './Common/SelectInput';
