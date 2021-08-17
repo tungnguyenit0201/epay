@@ -43,6 +43,7 @@ export const reviewsSchema = yup.object().shape({
 export const phoneSchema = yup.object().shape({
   phone: yup
     .string()
+    .required(TEXT.PHONE_INVALID)
     .matches(
       /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
       TEXT.PHONE_INVALID,

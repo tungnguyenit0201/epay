@@ -68,7 +68,7 @@ const Auth = () => {
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}
-                  bg={_.isEmpty(errors) ? Colors.cl1 : Colors.cl4}
+                  disabled={!_.isEmpty(errors)}
                 />
               </View>
             );
