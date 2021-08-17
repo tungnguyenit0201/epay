@@ -375,6 +375,8 @@ PODS:
   - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
+  - RNSha256 (1.4.7):
+    - React
   - TOCropViewController (2.6.0)
   - TouchID (4.4.1):
     - React
@@ -443,6 +445,7 @@ DEPENDENCIES:
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSha256 (from `../node_modules/react-native-sha256`)
   - TouchID (from `../node_modules/react-native-touch-id`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -541,6 +544,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSha256:
+    :path: "../node_modules/react-native-sha256"
   TouchID:
     :path: "../node_modules/react-native-touch-id"
   Yoga:
@@ -551,7 +556,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: f78471677d7780e6c14f1cd44e808782366074a1
+  FBReactNativeSpec: 0ee8d94bf623937cea0463ffdf721bf6c8bccaeb
   Flipper: d3da1aa199aad94455ae725e9f3aa43f3ec17021
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
   Flipper-Folly: 755929a4f851b2fb2c347d533a23f191b008554c
@@ -597,6 +602,7 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 35a3ceb837446fa11547704709bb22b5fac6d584
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNSha256: bf2c90a9e0cec6dcbcc4100e4e19715ae7feaa34
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
@@ -604,4 +610,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1e787b058b8d64d4cd51728bc830ddbd91f0785e
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.10.1

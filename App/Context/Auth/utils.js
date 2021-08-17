@@ -1,6 +1,12 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
-import {checkPhone, getConfigInfo} from 'services/auth';
+import {checkPhone, getConfigInfo, login} from 'services/auth';
+import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import _ from 'lodash';
+import Navigator from 'navigations/Navigator';
+import {sha256} from 'react-native-sha256';
+import {Alert} from 'react-native';
+import {useTranslation} from 'context/Language';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -47,22 +53,44 @@ const useTouchID = () => {
 };
 
 const useAuth = () => {
-  const contentRef = useRef({
-    phone: '',
-  });
+  const {incorrect_password} = useTranslation();
 
-  const onChange = value => {
-    contentRef.current.phone = value;
+  const onCheckPhoneExist = async ({phone}) => {
+    const result = await checkPhone(phone);
+
+    switch (_.get(result, 'ErrorCode', '')) {
+      // register
+      case ERROR_CODE.ACCOUNT_IS_NOT_EXISTED_OR_INVALID_PASSWORD:
+        return Navigator.push(SCREEN.OTP, {phone, action: 'register'});
+
+      // login
+      case ERROR_CODE.PHONE_IS_REGISTERED:
+        return Navigator.push(SCREEN.LOGIN, {phone});
+    }
   };
 
-  const onPress = () => {
-    // contentRef.current.phone
-    getConfigInfo();
-    checkPhone(contentRef.current.phone);
-    // Navigator.push(contentRef.current.phone ? SCREEN.LOGIN : SCREEN.OTP);
+  const onChangePhone = () => {
+    Navigator.goBack();
   };
 
-  return {onChange, onPress};
+  const onForgetPassword = () => {
+    Navigator.replaceLast(SCREEN.FORGET_PASSWORD);
+  };
+
+  const onLogin = async ({phone, password}) => {
+    const passwordEncrypted = await sha256(password);
+    const result = await login(phone, passwordEncrypted);
+
+    switch (_.get(result, 'ErrorCode', '')) {
+      case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
+        return Alert.alert(incorrect_password);
+
+      case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
+        return Navigator.push(SCREEN.OTP, {phone, action: 'login'});
+    }
+  };
+
+  return {onCheckPhoneExist, onChangePhone, onForgetPassword, onLogin};
 };
 
 export {useTouchID, useAuth};
