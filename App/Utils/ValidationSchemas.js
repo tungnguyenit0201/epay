@@ -1,7 +1,8 @@
 import {TEXT} from 'configs/Constants';
 import * as yup from 'yup';
 
-const FULLNAME_REGEX = /^[aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
+const FULLNAME_REGEX =
+  /^[aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
 
 export const registerSchema = yup.object().shape({
   username: yup.string().required(TEXT.USERNAME_NOT_BLANK),
@@ -37,6 +38,17 @@ export const reviewsSchema = yup.object().shape({
     .email(TEXT.EMAIL_INVALID)
     .required(TEXT.EMAIL_NOT_BLANK),
   rating: yup.number().moreThan(0, TEXT.REVIEWS).required(TEXT.EMAIL_NOT_BLANK),
+});
+
+export const phoneSchema = yup.object().shape({
+  phone: yup
+    .string()
+    .required(TEXT.PHONE_INVALID)
+    .matches(
+      /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
+      TEXT.PHONE_INVALID,
+    )
+    .label(TEXT.PHONE),
 });
 
 // export const guesetAddressSchema = yup.object().shape({

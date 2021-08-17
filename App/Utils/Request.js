@@ -1,37 +1,58 @@
+import {Platform} from 'react-native';
 import axios from './Axios';
 import {API} from 'configs';
-// import WooCommerce from 'utils/WooCommerce';
 import {buildURL} from './Functions';
 import _ from 'lodash';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import WooCommerceAPI from 'react-native-woocommerce-api';
+import moment from 'moment';
+import {
+  getUniqueId,
+  getVersion,
+  getReadableVersion,
+} from 'react-native-device-info';
 
-const getRoot = async () => {
-  let root = await AsyncStorage.getItem('root');
-  return !!root ? JSON.parse(root)?.value_index : API.ROOT;
+let TRANSACTION_ID = '';
+
+const getCommonParams = async (url, language = 'vi') => {
+  const uniqueDeviceID = getUniqueId();
+  let urlPart = url.split('/');
+
+  return {
+    MsgID: uniqueDeviceID + moment().format('DD-MM-YYYY HH:mm:ss.SSS'),
+    MsgType: urlPart[urlPart.length - 1],
+    TransactionID:
+      TRANSACTION_ID !== null && TRANSACTION_ID !== ''
+        ? TRANSACTION_ID
+        : (
+            new Date().getTime() +
+            '' +
+            Math.floor(Math.random() * 10000)
+          ).toString(),
+    RequestTime: moment().format('DD-MM-YYYY HH:mm:ss'),
+    Lang: language,
+    Channel: 'App',
+    AppVersion: getVersion(),
+    AppCode: getReadableVersion(),
+    DeviceOS: Platform.OS,
+    OsVersion: Platform.Version,
+    IpAddress: '0.0.0.0',
+    DeviceInfo:
+      (Platform.OS === 'ios' ? 'Iphone iOS ' : 'Android ') + Platform.Version,
+    DeviceID: uniqueDeviceID,
+  };
 };
+
 async function request({
   method = 'get',
   url,
   query,
   params,
   success,
-  failure,
+  failure = defaultFailureHandle,
   headers,
   form = false,
-  isWooApi = false,
 }) {
-  let root = await getRoot();
-  const WooCommerce = new WooCommerceAPI({
-    url: root,
-    ssl: true,
-    consumerKey: 'ck_ba5ad7ba6f705e2b7158bd8b1a6b4a0406eae1a4',
-    consumerSecret: 'cs_6fb40253eb3dd217e30d5d9640003b0da9d83615',
-    wpAPI: true,
-    version: 'wc/v3',
-    queryStringAuth: true,
-  });
-  const requestMethod = isWooApi ? WooCommerce : axios;
+  let root = API.ROOT;
+  const requestMethod = axios;
 
   if (__DEV__) {
     console.log(method, buildURL(root + url, query), params);
@@ -41,11 +62,11 @@ async function request({
     try {
       let result;
       if (method === 'get' || method === 'delete') {
-        result = isWooApi
-          ? await requestMethod[method](buildURL(url), {...query, headers})
-          : await requestMethod[method](buildURL(root + url, query), {headers});
+        result = await requestMethod[method](buildURL(root + url, query), {
+          headers,
+        });
       } else {
-        let postParams = params;
+        let postParams = {...getCommonParams(url), ...params};
         if (form) {
           postParams = new FormData();
           _.forIn(params, (value, key) => {
@@ -66,8 +87,7 @@ async function request({
       if (
         result.status === 200 ||
         result.status === 201 ||
-        result.status === 203 ||
-        (!!result && isWooApi)
+        result.status === 203
       ) {
         if (_.get(result, 'data.error', null)) {
           throw {response: result};
@@ -103,5 +123,9 @@ async function request({
     }
   }
 }
+
+const defaultFailureHandle = error => {
+  console.error(error);
+};
 
 export {request};

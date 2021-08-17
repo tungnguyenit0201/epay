@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Button, InputBlock} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
-import {useUser} from 'context/User';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import {useAuth} from 'context/User/utils';
+import {useAuth} from 'context/Auth/utils';
+import {Formik} from 'formik';
+import {phoneSchema} from 'utils/ValidationSchemas';
+import _ from 'lodash';
 
 const Auth = () => {
-  const {userInfo} = useUser();
-  const {onChange, onPress} = useAuth();
+  const {onCheckPhoneExist} = useAuth();
   const translation = useTranslation();
 
   return (
@@ -32,12 +33,47 @@ const Auth = () => {
             }}
           />
         </Pressable>
-        <InputBlock
-          numeric
-          label={translation.please_enter_your_phone_number}
-          onChange={onChange}
-        />
-        <Button label={translation.continue} onPress={onPress} />
+
+        <Formik
+          initialValues={{
+            phone: '',
+          }}
+          validationSchema={phoneSchema}
+          onSubmit={onCheckPhoneExist}>
+          {({
+            handleChange: _handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            values,
+          }) => {
+            const handleChange = field => value => {
+              setFieldValue(field, value);
+              setFieldTouched(field, true, false);
+            };
+
+            return (
+              <View>
+                <InputBlock
+                  numeric
+                  label={translation.please_enter_your_phone_number}
+                  onChange={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  error={touched.phone && errors.phone}
+                  value={values.phone}
+                />
+                <Button
+                  label={translation.continue}
+                  onPress={handleSubmit}
+                  disabled={!_.isEmpty(errors)}
+                />
+              </View>
+            );
+          }}
+        </Formik>
       </View>
     </View>
   );

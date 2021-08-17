@@ -1,10 +1,18 @@
-import {request} from 'utils/Request';
 import {API} from 'configs';
-import {Alert} from 'react-native';
 import {useQuery} from 'react-query';
+import {request} from 'utils/Request';
 
 const {USER} = API;
 
+export const login = async ({phoneNumber, password}) => {
+  return await request({
+    path: USER.LOGIN,
+    data: {phoneNumber, password},
+    success: res => {
+      console.log(res);
+    },
+  });
+};
 export const getProfile = async ({userId}) => {
   let response = [];
   await request({
@@ -19,6 +27,13 @@ export const getProfile = async ({userId}) => {
   });
   return response;
 };
-export const useUserQuery = slug => {
-  return useQuery('getProfile', getProfile);
+
+export const register = async ({phoneNumber}) => {
+  return await request({
+    path: USER.LOGIN,
+    data: {phoneNumber},
+    success: res => {
+      console.log(res);
+    },
+  });
 };
