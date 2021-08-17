@@ -4,7 +4,7 @@ import {API} from 'configs';
 export const genOtp = async ({phone, functionType}) => {
   let response = null;
   await request({
-    url: API.AUTH.GEN_OTP,
+    url: API.COMMON.GEN_OTP,
     method: 'post',
     params: {PhoneNumber: phone, FunctionType: functionType},
     success: res => {
@@ -14,7 +14,7 @@ export const genOtp = async ({phone, functionType}) => {
   return response;
 };
 
-export const confrimOTP = async ({
+export const confirmOTP = async ({
   phone,
   functionType,
   OtpCode,
