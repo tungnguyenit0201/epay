@@ -77,7 +77,7 @@ const BankInfo = () => {
 
         <SelectInput
           optionList={[
-            {label: 'CMND', value: 'cmnd'},
+            {label: 'Số CMND', value: 'cmnd'},
             {label: 'Căn cước', value: 'cancuoc'},
           ]}
           defaultValue={'cmnd'}
@@ -86,9 +86,9 @@ const BankInfo = () => {
             marginHorizontal: 0,
             borderWidth: 1,
             borderStyle: "solid",
-            borderColor: "#CCCCCB",
+            borderColor: Colors.cl4,
           }}
-          inputStyle={{}}/>
+          inputStyle={{color: Colors.cl4}}/>
       </View>
       
       <View style={{
