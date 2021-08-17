@@ -26,7 +26,7 @@ const User = ({data, style}) => {
         </Text>
 
         <Button
-          size="sm"
+          size="xs"
           bg={Colors.Highlight}
           radius={30}
           color="#fff"

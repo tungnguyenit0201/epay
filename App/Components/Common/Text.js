@@ -14,6 +14,7 @@ const CustomText = ({
   bold,
   children,
   size,
+  fs = 'md',
   lineHeight,
   mt,
   mb,
@@ -50,6 +51,15 @@ const CustomText = ({
           marginLeft: ml || mh,
           marginRight: mr || mh,
         },
+        fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 48},
+        fs === 'md' && {fontSize: Fonts.MD, lineHeight: 20},
+        fs === 'h1' && {fontSize: Fonts.H1, lineHeight: 44},
+        fs === 'h2' && {fontSize: Fonts.H2, lineHeight: 40},
+        fs === 'h3' && {fontSize: Fonts.H3, lineHeight: 36},
+        fs === 'h4' && {fontSize: Fonts.H4, lineHeight: 32},
+        fs === 'h5' && {fontSize: Fonts.H5, lineHeight: 28},
+        fs === 'h6' && {fontSize: Fonts.H6, lineHeight: 24},
+
         style,
       ]}
       {...props}>

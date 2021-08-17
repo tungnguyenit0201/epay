@@ -42,6 +42,25 @@ const PaymentSettings = () => {
           tintColor="#000"
         />
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={() => {
+          Navigator.push(SCREEN.ACTIVE_OTP);
+        }}>
+        <Icon
+          mr={8}
+          icon={Images.Profile.MaThanhToan}
+          size={24}
+          tintColor={Colors.cl1}
+        />
+        <Text style={styles.text}> Smart OTP</Text>
+        <Icon
+          style={[base.leftAuto]}
+          icon={Images.ArrowRight}
+          size={24}
+          tintColor="#000"
+        />
+      </TouchableOpacity>
       <View style={styles.item}>
         <Icon
           mr={8}
@@ -74,22 +93,7 @@ const PaymentSettings = () => {
           onValueChange={setValue2}
         />
       </View>
-      <View style={styles.item}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Kích hoạt smart OTP</Text>
-        <Switch
-          style={base.leftAuto}
-          onColor={Colors.cl1}
-          offColor={Colors.l3}
-          value={value3}
-          onValueChange={setValue3}
-        />
-      </View>
+
       <View style={styles.item}>
         <Icon
           mr={8}
