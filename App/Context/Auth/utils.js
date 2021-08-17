@@ -7,6 +7,8 @@ import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
 import {Alert} from 'react-native';
 import {useTranslation} from 'context/Language';
+import {useLoading} from 'context/Common/utils';
+import {useCommon} from 'context/Common';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -54,9 +56,12 @@ const useTouchID = () => {
 
 const useAuth = () => {
   const {incorrect_password} = useTranslation();
+  const {setLoading} = useLoading();
 
   const onCheckPhoneExist = async ({phone}) => {
+    setLoading(true);
     const result = await checkPhone(phone);
+    setLoading(false);
 
     switch (_.get(result, 'ErrorCode', '')) {
       // register

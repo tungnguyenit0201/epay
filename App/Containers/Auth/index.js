@@ -9,21 +9,11 @@ import {useAuth} from 'context/Auth/utils';
 import {Formik} from 'formik';
 import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
-import {useCommon} from 'context/Common';
 
 const Auth = () => {
   const {onCheckPhoneExist} = useAuth();
   const translation = useTranslation();
-  const {loading, setLoading} = useCommon();
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
