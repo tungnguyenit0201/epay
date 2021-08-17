@@ -3,13 +3,11 @@ import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Button, InputBlock} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
-import {useUser} from 'context/User';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import {useAuth} from 'context/User/utils';
+import {useAuth} from 'context/Auth/utils';
 
 const Auth = () => {
-  const {userInfo} = useUser();
   const {onChange, onPress} = useAuth();
   const translation = useTranslation();
 
