@@ -61,7 +61,7 @@ const useAuth = () => {
     switch (_.get(result, 'ErrorCode', '')) {
       // register
       case ERROR_CODE.ACCOUNT_IS_NOT_EXISTED_OR_INVALID_PASSWORD:
-        return Navigator.push(SCREEN.OTP, {phone});
+        return Navigator.push(SCREEN.OTP, {phone, action: 'register'});
 
       // login
       case ERROR_CODE.PHONE_IS_REGISTERED:
@@ -86,7 +86,7 @@ const useAuth = () => {
         return Alert.alert(incorrect_password);
 
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
-        return Navigator.push(SCREEN.OTP, {phone});
+        return Navigator.push(SCREEN.OTP, {phone, action: 'login'});
     }
   };
 
