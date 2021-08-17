@@ -1,6 +1,9 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
 import {checkPhone, getConfigInfo} from 'services/auth';
+import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import _ from 'lodash';
+import Navigator from 'navigations/Navigator';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -62,7 +65,21 @@ const useAuth = () => {
     // Navigator.push(contentRef.current.phone ? SCREEN.LOGIN : SCREEN.OTP);
   };
 
-  return {onChange, onPress};
+  const onCheckPhoneExist = async ({phone}) => {
+    const result = await checkPhone(phone);
+
+    switch (_.get(result, 'ErrorCode', '')) {
+      // register
+      case ERROR_CODE.ACCOUNT_IS_NOT_EXISTED_OR_INVALID_PASSWORD:
+        return Navigator.push(SCREEN.OTP);
+
+      // login
+      case ERROR_CODE.PHONE_IS_REGISTERED:
+        return Navigator.push(SCREEN.LOGIN);
+    }
+  };
+
+  return {onChange, onPress, onCheckPhoneExist};
 };
 
 export {useTouchID, useAuth};
