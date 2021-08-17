@@ -11,5 +11,6 @@ export default {
   },
   COMMON: {
     GEN_OTP: 'common/otp/gen_otp',
+    CONFIRM_OTP: 'common/otp/confirm_otp',
   },
 };
