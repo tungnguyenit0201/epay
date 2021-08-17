@@ -1,9 +1,7 @@
 import axios from 'axios';
 import {API} from 'configs';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const {API_ROOT, TIMEOUT, ROOT} = API;
-
+const {TIMEOUT, ROOT} = API;
 const instance = axios.create({
   withCredentials: false,
   baseURL: ROOT,
