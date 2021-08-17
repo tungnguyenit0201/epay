@@ -84,8 +84,6 @@ async function request({
         );
       }
 
-      console.log('result', result);
-
       if (
         result.status === 200 ||
         result.status === 201 ||
