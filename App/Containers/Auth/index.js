@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Button, InputBlock} from 'components';
 import {Colors, Images, Spacing} from 'themes';
@@ -6,11 +6,21 @@ import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
+import {useCommon} from 'context/Common';
 
 const Auth = () => {
   const {onChange, onPress} = useAuth();
   const translation = useTranslation();
-
+  const {loading, setLoading} = useCommon();
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.content}>
