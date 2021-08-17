@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
-import {getConfigInfo} from 'services/auth';
+import {checkPhone, getConfigInfo} from 'services/auth';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -58,6 +58,7 @@ const useAuth = () => {
   const onPress = () => {
     // contentRef.current.phone
     getConfigInfo();
+    checkPhone(contentRef.current.phone);
     // Navigator.push(contentRef.current.phone ? SCREEN.LOGIN : SCREEN.OTP);
   };
 

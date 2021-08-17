@@ -4,20 +4,26 @@ import {Alert} from 'react-native';
 import {useQuery} from 'react-query';
 
 export const getConfigInfo = async () => {
-  let response = [];
+  let response = {};
   await request({
     url: API.AUTH.GET_CONFIG_INFO,
     method: 'post',
     success: res => {
       response = res;
     },
-    failure: res => {
-      if (res) console.log('Some thing went wrong', res?.message);
-    },
   });
   return response;
 };
 
-// export const useUserQuery = slug => {
-//   return useQuery('getProfile', getProfile);
-// };
+export const checkPhone = async phone => {
+  let response = [];
+  await request({
+    url: API.AUTH.CHECK_PHONE,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

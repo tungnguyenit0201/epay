@@ -47,7 +47,7 @@ async function request({
   query,
   params,
   success,
-  failure,
+  failure = defaultFailureHandle,
   headers,
   form = false,
 }) {
@@ -83,6 +83,8 @@ async function request({
           },
         );
       }
+
+      console.log('result', result);
 
       if (
         result.status === 200 ||
@@ -123,5 +125,9 @@ async function request({
     }
   }
 }
+
+const defaultFailureHandle = error => {
+  console.error(error);
+};
 
 export {request};
