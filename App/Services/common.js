@@ -24,7 +24,7 @@ export const confrimOTP = async ({
   await request({
     url: API.COMMON.CONFIRM_OTP,
     method: 'post',
-    params: {PhoneNumber: phone, FunctionType: functionType},
+    params: {PhoneNumber: phone, FunctionType: functionType, OtpCode, OtpType},
     success: res => {
       response = res;
     },
