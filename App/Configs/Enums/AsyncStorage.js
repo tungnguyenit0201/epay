@@ -1,0 +1,4 @@
+const ASYNC_STORAGE_KEY = {
+  USER_DATA: 'USER_DATA',
+};
+export default ASYNC_STORAGE_KEY;

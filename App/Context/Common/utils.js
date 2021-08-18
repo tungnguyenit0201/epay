@@ -1,12 +1,18 @@
 import {useReducer, useEffect, useRef, useState} from 'react';
 import commonReducer from './reducer';
 import {useCommon} from 'context/Common';
-import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {
+  ASYNC_STORAGE_KEY,
+  ERROR_CODE,
+  FUNCTION_TYPE,
+  SCREEN,
+} from 'configs/Constants';
 import {confirmOTP, genOtp} from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useLoading = () => {
   const {dispatch} = useCommon();
@@ -34,12 +40,14 @@ const useOTP = ({functionType, phone, password}) => {
   };
 
   const onConfirmOTP = async () => {
+    setLoading(true);
     const result = await confirmOTP({
       phone,
       functionType,
       OtpCode: otpRef.current,
       OtpType: OTP_TYPE.EPAY,
     });
+    setLoading(false);
 
     // fail
     if (_.get(result, 'ErrorCode', '') === ERROR_CODE.OTP_IS_NOT_CORRECT) {
@@ -58,4 +66,16 @@ const useOTP = ({functionType, phone, password}) => {
   return {errorMessage, onChange, onConfirmOTP};
 };
 
-export {useLoading, useOTP};
+const useAsyncStorage = () => {
+  const getUserData = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER_DATA);
+  };
+
+  const setUserData = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER_DATA, value);
+  };
+
+  return {...AsyncStorage, getUserData, setUserData};
+};
+
+export {useLoading, useOTP, useAsyncStorage};

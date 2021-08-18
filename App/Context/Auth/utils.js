@@ -88,8 +88,10 @@ const useAuth = () => {
   };
 
   const onLogin = async ({phone, password}) => {
+    setLoading(true);
     const passwordEncrypted = await sha256(password);
     const result = await login(phone, passwordEncrypted);
+    setLoading(false);
 
     switch (_.get(result, 'ErrorCode', '')) {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
