@@ -1,19 +1,34 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Button, Header, InputBlock} from 'components';
+import {StyleSheet, View, ScrollView} from 'react-native';
+import {Button, Header, InputBlock, Text} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-
+import HeaderBg from 'components/Common/HeaderBg';
+import {useTranslation} from 'context/Language';
+import {base} from 'themes';
 const ChangePassword = () => {
+  const translation = useTranslation();
   return (
-    <View>
-      <Header title={'Đổi mật khẩu'} back />
-      <InputBlock label="Mật khẩu hiện tại" />
-      <Button
-        label={TEXT.CHANGE_PASSWORD}
-        onPress={() => Navigator.push(SCREEN.NEW_PASSWORD)}
-      />
-    </View>
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg>
+          <Header back title="Đổi mật khẩu" back />
+        </HeaderBg>
+        <View style={base.container}>
+          <Text mb={20}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </Text>
+          <InputBlock password label="Mật khẩu hiện tại" />
+        </View>
+      </ScrollView>
+      <View style={base.bottom}>
+        <Button
+          label={TEXT.CHANGE_PASSWORD}
+          onPress={() => Navigator.push(SCREEN.NEW_PASSWORD)}
+        />
+      </View>
+    </>
   );
 };
 

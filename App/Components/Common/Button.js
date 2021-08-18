@@ -54,6 +54,10 @@ export default ({
         centered
         size={Fonts.H6}
         style={[
+          size == 'xs' && {fontSize: scale(12)},
+          size == 'sm' && {fontSize: scale(14)},
+          size == 'lg' && {fontSize: scale(18)},
+          size == 'xl' && {fontSize: scale(20)},
           fs && {fontSize: fs},
           bold && {fontWeight: 'bold'},
           {

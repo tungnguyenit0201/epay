@@ -1,23 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-import {TEXT} from 'configs/Constants';
+import {StyleSheet} from 'react-native';
+import {Text, OTP} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
-import {User} from 'services';
-import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
-import {OTP} from 'components';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 
-const OTPContainer = ({onChange, onCodeFilled}) => {
+const OTPContainer = ({onChange, onCodeFilled, message}) => {
   return (
     <>
       <Text style={styles.header}>{`Nhập OTP`}</Text>
@@ -33,7 +22,8 @@ const OTPContainer = ({onChange, onCodeFilled}) => {
         codeInputHighlightStyle={{}}
         onCodeFilled={onCodeFilled}
       />
-      {/* <OTP onChange={onChange} /> */}
+      <Text style={styles.message}>{message}</Text>
+      {/* <OTP onChange={onChange} message={message} /> */}
     </>
   );
 };
@@ -76,6 +66,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.BLACKTEXT,
     borderWidth: 1,
     borderRadius: 0,
+  },
+  message: {
+    color: Colors.Highlight,
+    marginBottom: Spacing.PADDING,
   },
 });
 export default OTPContainer;

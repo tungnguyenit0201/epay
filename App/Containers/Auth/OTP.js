@@ -9,9 +9,12 @@ import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
 import {useRegister} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
+import {useAuth} from 'context/Auth/utils';
+
 const OTP = ({route}) => {
   let {phone, action} = route?.params;
   const {onChange, confrimOTPRegister} = useRegister();
+  const {onChangePhone} = useAuth();
   const {sign_up} = useTranslation();
   const register = async OtpCode => {
     confrimOTPRegister({phone, OtpCode});
@@ -27,12 +30,12 @@ const OTP = ({route}) => {
             onCodeFilled={register}
           />
 
-          {action == 'password' && (
+          {/* {action == 'password' && (
             <Password
               onChangePassword={value => onChange('newPassword', value)}
               onChangeConfirm={value => onChange('passwordConfirm', value)}
             />
-          )}
+          )} */}
 
           <Button
             mb={10}
@@ -48,11 +51,11 @@ const OTP = ({route}) => {
           {/* <Button mb={10} label="Gửi lại" onPress={register} /> */}
 
           <View style={[styles.box_1, {marginTop: 20}]}>
-            <Pressable onPress={register}>
+            <Pressable onPress={() => {}}>
               <Text style={[styles.link_text]}>Không nhận được OTP</Text>
             </Pressable>
 
-            <Pressable onPress={register}>
+            <Pressable onPress={onChangePhone}>
               <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
             </Pressable>
           </View>
@@ -73,14 +76,13 @@ const OTP = ({route}) => {
               marginTop: 20,
             },
           ]}
-          onPress={register}>
+          onPress={() => {}}>
           <Image
             source={Images.Register.phone_1}
             style={{
               height: scale(12),
               width: scale(12),
               marginRight: 10,
-              textAlign: 'center',
             }}
           />
           <Text bold style={[styles.link_text]}>
