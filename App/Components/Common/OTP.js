@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {TextInput} from 'components';
+import {Text, TextInput} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
@@ -11,6 +11,7 @@ const OTP = ({
   containerStyle,
   inputStyle,
   seperatorStyle,
+  message = '',
 }) => {
   const contentRef = useRef({
     values: [],
@@ -25,21 +26,24 @@ const OTP = ({
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      {[...Array(numDigits)].map((item, index) => (
-        <>
-          {!!index && <View style={[styles.seperator, seperatorStyle]} />}
-          <TextInput
-            ref={ref => contentRef.current.refs.push(ref)}
-            onChange={value => _onChange(value, index)}
-            style={[styles.otp, inputStyle]}
-            numeric
-            maxLength={1}
-            selectTextOnFocus
-            key={index}
-          />
-        </>
-      ))}
+    <View>
+      <View style={[styles.container, containerStyle]}>
+        {[...Array(numDigits)].map((item, index) => (
+          <View key={index} style={styles.itemContainer}>
+            {!!index && <View style={[styles.seperator, seperatorStyle]} />}
+            <TextInput
+              ref={ref => contentRef.current.refs.push(ref)}
+              onChange={value => _onChange(value, index)}
+              style={[styles.otp, inputStyle]}
+              numeric
+              maxLength={1}
+              selectTextOnFocus
+              key={index}
+            />
+          </View>
+        ))}
+      </View>
+      <Text style={styles.message}>{message}</Text>
     </View>
   );
 };
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'center',
-    marginBottom: Spacing.PADDING * 2,
+    marginBottom: Spacing.PADDING,
   },
   otp: {
     width: scale(40),
@@ -62,6 +66,13 @@ const styles = StyleSheet.create({
   },
   seperator: {
     width: Spacing.PADDING / 2,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+  },
+  message: {
+    color: Colors.Highlight,
+    marginBottom: Spacing.PADDING,
   },
 });
 

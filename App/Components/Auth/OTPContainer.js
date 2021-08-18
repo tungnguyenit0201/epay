@@ -16,7 +16,7 @@ import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import {OTP} from 'components';
 
-const OTPContainer = ({onChange}) => {
+const OTPContainer = ({onChange, message}) => {
   return (
     <>
       <Text style={styles.header}>{`Nhập OTP`}</Text>
@@ -24,7 +24,7 @@ const OTPContainer = ({onChange}) => {
         {`Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`}
       </Text>
 
-      <OTP onChange={onChange} />
+      <OTP onChange={onChange} message={message} />
     </>
   );
 };
@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
     marginTop: Spacing.PADDING * 2,
   },
   textDefault: {
-    color: Colors.GRAY, 
+    color: Colors.GRAY,
     paddingBottom: Spacing.PADDING,
-    fontSize: Fonts.FONT_MEDIUM_LARGE
-  }
+    fontSize: Fonts.FONT_MEDIUM_LARGE,
+  },
 });
 export default OTPContainer;

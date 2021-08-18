@@ -8,6 +8,7 @@ import {sha256} from 'react-native-sha256';
 import {Alert} from 'react-native';
 import {useTranslation} from 'context/Language';
 import {useLoading} from 'context/Common/utils';
+import {useUser} from 'context/User';
 import {genOtp, confirmOTP} from 'services/common';
 
 const useTouchID = () => {
@@ -57,6 +58,7 @@ const useTouchID = () => {
 const useAuth = () => {
   const {incorrect_password} = useTranslation();
   const {setLoading} = useLoading();
+  const {dispatch} = useUser();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -66,39 +68,14 @@ const useAuth = () => {
     switch (_.get(result, 'ErrorCode', '')) {
       // register
       case ERROR_CODE.ACCOUNT_IS_NOT_EXISTED_OR_INVALID_PASSWORD:
-        return genOTPRegister(phone);
+        return Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
+        });
 
       // login
       case ERROR_CODE.PHONE_IS_REGISTERED:
         return Navigator.push(SCREEN.LOGIN, {phone});
-    }
-  };
-
-  const genOTPRegister = async phone => {
-    setLoading(true);
-    const result = await genOtp({
-      phone,
-      functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
-    });
-    setLoading(false);
-    switch (_.get(result, 'ErrorCode', '')) {
-      case ERROR_CODE.SUCCESS:
-        Navigator.push(SCREEN.OTP, {phone, action: 'register'});
-        break;
-      case ERROR_CODE.SYSTEM_IS_UPGRADING:
-        // this.refs.upgradeModal.show()
-        break;
-      case ERROR_CODE.FEATURE_RESEND_OTP_OVER_TIME:
-      case ERROR_CODE.FEATURE_LOCK_BY_RESEND_OTP:
-        // this.state.popupMessage = ret.ErrorMessage
-        // this.setState(this.state)
-        // this.refs.infoModal.show()
-        break;
-      default:
-        // this.state.popupMessage = ret.ErrorMessage
-        // this.setState(this.state)
-        // this.refs.infoModal.show()
-        break;
     }
   };
 
@@ -119,7 +96,16 @@ const useAuth = () => {
         return Alert.alert(incorrect_password);
 
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
-        return Navigator.push(SCREEN.OTP, {phone, action: 'login'});
+        return Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
+          password,
+        });
+
+      case ERROR_CODE.SUCCESS:
+        dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        return;
     }
   };
 
