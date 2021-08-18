@@ -25,7 +25,8 @@ const Login = ({route}) => {
     try {
       const result = await onTouchID();
       if (result) {
-        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        alert('xác thực xong. Chưa xử lý tiếp');
+        // Navigator.navigate(SCREEN.TAB_NAVIGATION);
       }
     } catch (error) {
       alert(error);

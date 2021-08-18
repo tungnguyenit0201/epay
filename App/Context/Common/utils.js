@@ -1,12 +1,18 @@
 import {useReducer, useEffect, useRef, useState} from 'react';
 import commonReducer from './reducer';
 import {useCommon} from 'context/Common';
-import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {
+  ASYNC_STORAGE_KEY,
+  ERROR_CODE,
+  FUNCTION_TYPE,
+  SCREEN,
+} from 'configs/Constants';
 import {confirmOTP, genOtp} from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useLoading = () => {
   const {dispatch} = useCommon();
@@ -42,12 +48,14 @@ const useOTP = ({functionType, phone, password}) => {
   };
 
   const onConfirmOTP = async () => {
+    setLoading(true);
     const result = await confirmOTP({
       phone,
       functionType,
       OtpCode: otpRef.current,
       OtpType: OTP_TYPE.EPAY,
     });
+    setLoading(false);
 
     // fail
     if (_.get(result, 'ErrorCode', '') === ERROR_CODE.OTP_IS_NOT_CORRECT) {
@@ -66,4 +74,42 @@ const useOTP = ({functionType, phone, password}) => {
   return {errorMessage, onChange, onConfirmOTP};
 };
 
-export {useLoading, useOTP, useError};
+const useAsyncStorage = () => {
+  const getPhone = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.PHONE);
+  };
+
+  const setPhone = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.PHONE, value);
+  };
+
+  const getPasswordEncrypted = async () => {
+    return await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.USER.PASSWORD_ENCRYPTED,
+    );
+  };
+
+  const setPasswordEncrypted = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.PHONE, value);
+  };
+
+  const getTouchIdEnabled = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED);
+  };
+
+  const setTouchIdEnabled = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED, value);
+  };
+
+  return {
+    ...AsyncStorage,
+    getPhone,
+    setPhone,
+    getPasswordEncrypted,
+    setPasswordEncrypted,
+    getTouchIdEnabled,
+    setTouchIdEnabled,
+  };
+};
+
+export {useLoading, useOTP, useError, useAsyncStorage};
