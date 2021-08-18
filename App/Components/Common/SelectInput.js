@@ -51,7 +51,7 @@ const SelectInput = ({
             {selectedValue?.label ||
               optionList.find(x => x.value === defaultValue)?.label}
           </Text>
-          <Icon icon={Images.Down} />
+          <Icon icon={Images.Down} style={{width: 12}} />
         </Row>
       </TouchableOpacity>
       <View style={styles.seperator} />
@@ -77,7 +77,14 @@ const ModalContent = ({optionList, onselect}) => {
       {optionList.map(item => {
         const {value, label} = item;
         return (
-          <TouchableOpacity key={value} onPress={() => onselect(item)}>
+          <TouchableOpacity key={value} 
+            onPress={() => onselect(item)}
+            style={{
+              paddingBottom: 10,
+              marginBottom: 10,
+              borderColor: Colors.gray,
+              borderBottomWidth: 1,
+            }}>
             <Text>{label}</Text>
           </TouchableOpacity>
         );
@@ -95,15 +102,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   selectContainer: {
-    padding: Spacing.PADDING / 2,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: 113,
+    marginRight: 10,
+    paddingVertical: Spacing.PADDING / 2,
+    paddingLeft: Spacing.PADDING / 2
   },
   seperator: {
     width: 1,
-    height: '100%',
-    backgroundColor: Colors.gray,
+    height: '55%',
+    marginTop: 10,
+    backgroundColor: Colors.cl4,
   },
   modalContainer: {
     backgroundColor: Colors.BACKGROUNDCOLOR,
+    padding: Spacing.PADDING / 2,
   },
   input: {
     flex: 1,
