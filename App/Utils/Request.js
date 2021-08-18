@@ -10,7 +10,7 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 
-let TRANSACTION_ID = '';
+let transactionID = '';
 
 const getCommonParams = async (url, language = 'vi') => {
   const uniqueDeviceID = getUniqueId();
@@ -20,8 +20,8 @@ const getCommonParams = async (url, language = 'vi') => {
     MsgID: uniqueDeviceID + moment().format('DD-MM-YYYY HH:mm:ss.SSS'),
     MsgType: urlPart[urlPart.length - 1],
     TransactionID:
-      TRANSACTION_ID !== null && TRANSACTION_ID !== ''
-        ? TRANSACTION_ID
+      transactionID !== null && transactionID !== ''
+        ? transactionID
         : (
             new Date().getTime() +
             '' +
@@ -66,7 +66,7 @@ async function request({
           headers,
         });
       } else {
-        let postParams = {...getCommonParams(url), ...params};
+        let postParams = {...(await getCommonParams(url)), ...params};
         if (form) {
           postParams = new FormData();
           _.forIn(params, (value, key) => {
@@ -89,8 +89,8 @@ async function request({
         result.status === 201 ||
         result.status === 203
       ) {
-        if (_.get(result, 'data.error', null)) {
-          throw {response: result};
+        if (_.get(result, 'data.TransactionID', '')) {
+          transactionID = _.get(result, 'data.TransactionID', '');
         }
 
         if (typeof success === 'function') {

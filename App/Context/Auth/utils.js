@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
 import {checkPhone, getConfigInfo, login} from 'services/auth';
-import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
@@ -9,6 +9,7 @@ import {Alert} from 'react-native';
 import {useTranslation} from 'context/Language';
 import {useLoading} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
+import {useUser} from 'context/User';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -57,6 +58,7 @@ const useTouchID = () => {
 const useAuth = () => {
   const {incorrect_password} = useTranslation();
   const {setLoading} = useLoading();
+  const {dispatch} = useUser();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -66,7 +68,10 @@ const useAuth = () => {
     switch (_.get(result, 'ErrorCode', '')) {
       // register
       case ERROR_CODE.ACCOUNT_IS_NOT_EXISTED_OR_INVALID_PASSWORD:
-        return Navigator.push(SCREEN.OTP, {phone, action: 'register'});
+        return Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
+        });
 
       // login
       case ERROR_CODE.PHONE_IS_REGISTERED:
@@ -91,7 +96,16 @@ const useAuth = () => {
         return Alert.alert(incorrect_password);
 
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
-        return Navigator.push(SCREEN.OTP, {phone, action: 'login'});
+        return Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
+          password,
+        });
+
+      case ERROR_CODE.SUCCESS:
+        dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        return;
     }
   };
 
