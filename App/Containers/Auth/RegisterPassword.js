@@ -1,98 +1,100 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Text, InputBlock, Header, Button, FWLoading} from 'components';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Text, InputBlock, Header, Button} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
-import Navigator from 'navigations/Navigator';
-import Password from 'components/Auth/Password';
-import {TEXT, SCREEN} from 'configs/Constants';
 import {useRegister} from 'context/Auth/utils';
+import {scale} from 'utils/Functions';
+import {Formik} from 'formik';
+import {passwordSchema} from 'utils/ValidationSchemas';
+import {useTranslation} from 'context/Language';
 const ForgotPassword = ({route}) => {
   const {phone} = route?.params;
-  const {onChange, createAccount} = useRegister();
-  // let {height} = useWindowDimensions();
-  // let [loading, setLoading] = useState(false);
-  // const [disable, setDisable] = useState(true);
-  // const [errors, setError] = useState('');
-  // let forgotRef = useRef({
-  //   phone: '',
-  // });
-
-  // const validateInput = checkingText => {
-  //   const regexp =
-  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
-  //   const checkingResult = regexp.exec(checkingText);
-  //   if (checkingResult !== null) {
-  //     return {
-  //       isInputValid: true,
-  //       errorMessage: 'done',
-  //     };
-  //   } else {
-  //     return {
-  //       isInputValid: false,
-  //       errorMessage:
-  //         'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
-  //     };
-  //   }
-  // };
-
-  // const onChange = (key, val) => {
-  //   forgotRef.current[key] = val;
-  //   const newPassword = forgotRef.current['newPassword'];
-  //   const passwordConfirm = forgotRef.current['passwordConfirm'];
-  //   if (newPassword === passwordConfirm && forgotRef.current[key]) {
-  //     setDisable(false);
-  //   } else {
-  //     setDisable(true);
-  //   }
-  // };
-
-  // const onPress = async () => {
-  //   // Navigator.navigate(SCREEN.REGISTER_NAME);
-  //   if (
-  //     validateInput(forgotRef.current.newPassword).isInputValid ||
-  //     forgotRef.current.newPassword === ''
-  //   ) {
-  //     setError('');
-  //     Navigator.navigate(SCREEN.TAB_NAVIGATION);
-  //   } else {
-  //     setError(validateInput(forgotRef.current.newPassword).errorMessage);
-  //   }
-  // };
+  const {createAccount} = useRegister();
+  const scrollViewRef = useRef(null);
+  const translation = useTranslation();
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Header back shadow={false} />
 
-      <View style={styles.wrap}>
-        <Text bold size={35} mb={15} style={styles.title}>
-          Đặt mật khẩu
-        </Text>
-        <Text mb={30}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </Text>
-        <Password
-          onChangePassword={value => onChange('newPassword', value)}
-          onChangeConfirm={value => onChange('passwordConfirm', value)}
-        />
-        <Text>Mật khẩu k trùng khớp</Text>
-        <Button
-          mt={50}
-          label={TEXT.CONTINUE}
-          onPress={() => createAccount({phone})}
-        />
-      </View>
-    </ScrollView>
+      <Formik
+        initialValues={{
+          newPassword: '',
+          passwordConfirm: '',
+        }}
+        validationSchema={passwordSchema}
+        onSubmit={values => createAccount({...values, phone})}>
+        {({
+          handleChange: _handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          setFieldTouched,
+          touched,
+          errors,
+          values,
+        }) => {
+          const handleChange = field => value => {
+            setFieldValue(field, value);
+            setFieldTouched(field, true, false);
+          };
+
+          return (
+            <View style={{flex: 1}}>
+              <Text bold size={35} mb={15} style={styles.title}>
+                Đặt mật khẩu
+              </Text>
+              <Text mb={30}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry.
+              </Text>
+
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{
+                  flex: 1,
+                }}
+                keyboardShouldPersistTaps="always"
+                contentContainerStyle={{paddingVertical: scale(35)}}
+                ref={scrollViewRef}>
+                <InputBlock
+                  label="Mật khẩu"
+                  password
+                  required
+                  onChange={handleChange('newPassword')}
+                  onBlur={handleBlur('newPassword')}
+                  error={touched.newPassword && errors.newPassword}
+                  value={values.newPassword}
+                  scrollViewRef={scrollViewRef}
+                />
+                <InputBlock
+                  label="Xác nhận mật khẩu"
+                  password
+                  required
+                  onChange={handleChange('passwordConfirm')}
+                  onBlur={handleBlur('passwordConfirm')}
+                  error={touched.passwordConfirm && errors.passwordConfirm}
+                  value={values.passwordConfirm}
+                  scrollViewRef={scrollViewRef}
+                />
+                <Button
+                  mt={50}
+                  label={translation?.continue}
+                  onPress={handleSubmit}
+                />
+              </ScrollView>
+            </View>
+          );
+        }}
+      </Formik>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
   },
   header: {
     fontSize: Fonts.FONT_LARGE,

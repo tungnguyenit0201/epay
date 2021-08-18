@@ -41,7 +41,6 @@ export const login = async (phone, password) => {
 
 export const register = async ({phone, password}) => {
   let response = null;
-  console.log('phone :>> ', phone);
   await request({
     url: API.AUTH.REGISTER,
     method: 'post',
