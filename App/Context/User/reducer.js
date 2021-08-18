@@ -5,6 +5,7 @@ export default function userReducer(state, action) {
         ...state,
         token: action.data,
       };
+
     default:
       return state;
   }

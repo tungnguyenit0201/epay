@@ -4,8 +4,10 @@ import {Text} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
+import {useAuth} from 'context/Auth/utils';
 
 const User = ({data, style}) => {
+  const {onLogout} = useAuth();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -28,7 +30,9 @@ const User = ({data, style}) => {
             </Text>
           </Text>
         </View>
-        <Text color={Colors.white}>Thoát</Text>
+        <Text color={Colors.white} onPress={onLogout}>
+          Thoát
+        </Text>
       </View>
     </View>
   );
