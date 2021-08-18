@@ -146,11 +146,11 @@ const useRegister = () => {
     }
   };
 
-  const createAccount = async ({phone}) => {
+  const createAccount = async ({phone, newPassword}) => {
     try {
       setLoading(true);
       let passwordEncrypted;
-      passwordEncrypted = await sha256(registerRef.current?.newPassword);
+      passwordEncrypted = await sha256(newPassword);
       const result = await register({
         phone,
         password: passwordEncrypted,
@@ -158,7 +158,7 @@ const useRegister = () => {
       setLoading(false);
       let errorCode = _.get(result, 'ErrorCode', '');
       if (errorCode == ERROR_CODE.SUCCESS)
-        onLogin({phone, password: registerRef.current?.newPassword});
+        onLogin({phone, password: newPassword});
       else setError(result);
       setLoading(false);
     } catch (error) {

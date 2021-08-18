@@ -54,10 +54,6 @@ async function request({
   let root = API.ROOT;
   const requestMethod = axios;
 
-  if (__DEV__) {
-    console.log(method, buildURL(root + url, query), params);
-  }
-
   if (typeof requestMethod[method] === 'function') {
     try {
       let result;
@@ -83,7 +79,9 @@ async function request({
           },
         );
       }
-
+      if (__DEV__) {
+        console.log(method, buildURL(root + url, query), postParams, result);
+      }
       if (
         result.status === 200 ||
         result.status === 201 ||
