@@ -15,16 +15,25 @@ import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import {OTP} from 'components';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 
-const OTPContainer = ({onChange}) => {
+const OTPContainer = ({onChange, onCodeFilled}) => {
   return (
     <>
       <Text style={styles.header}>{`Nhập OTP`}</Text>
       <Text style={styles.textDefault}>
         {`Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`}
       </Text>
-
-      <OTP onChange={onChange} />
+      <OTPInputView
+        style={styles.wrapOtp}
+        pinCount={6}
+        onCodeChanged={onChange}
+        autoFocusOnLoad
+        codeInputFieldStyle={styles.otp}
+        codeInputHighlightStyle={{}}
+        onCodeFilled={onCodeFilled}
+      />
+      {/* <OTP onChange={onChange} /> */}
     </>
   );
 };
@@ -47,9 +56,26 @@ const styles = StyleSheet.create({
     marginTop: Spacing.PADDING * 2,
   },
   textDefault: {
-    color: Colors.GRAY, 
+    color: Colors.GRAY,
     paddingBottom: Spacing.PADDING,
-    fontSize: Fonts.FONT_MEDIUM_LARGE
-  }
+    fontSize: Fonts.FONT_MEDIUM_LARGE,
+  },
+  wrapOtp: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    marginBottom: Spacing.PADDING * 2,
+    width: '90%',
+  },
+  otp: {
+    width: scale(40),
+    backgroundColor: 'transparent',
+    fontSize: Fonts.FONT_LARGE,
+    color: Colors.BLACKTEXT,
+    textAlign: 'center',
+    borderColor: Colors.BLACKTEXT,
+    borderWidth: 1,
+    borderRadius: 0,
+  },
 });
 export default OTPContainer;

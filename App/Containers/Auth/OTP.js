@@ -1,49 +1,31 @@
 import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  View,
-  Pressable,
-  useWindowDimensions,
-} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-
+import {ScrollView, Image, StyleSheet, View, Pressable} from 'react-native';
+import {Text, Header, Button} from 'components';
 import {TEXT} from 'configs/Constants';
 import {Colors, Fonts, Images, Spacing} from 'themes';
-import {User} from 'services';
-
-import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
-import {SCREEN} from 'configs/Constants';
-import Col from 'components/Common/Col';
-import Row from 'components/Common/Row';
 import {useRegister} from 'context/Auth/utils';
-
+import {useTranslation} from 'context/Language';
 const OTP = ({route}) => {
   let {phone, action} = route?.params;
   const {onChange, confrimOTPRegister} = useRegister();
-
-  const register = async () => {
-    confrimOTPRegister({phone});
+  const {sign_up} = useTranslation();
+  const register = async OtpCode => {
+    confrimOTPRegister({phone, OtpCode});
   };
 
   return (
     <>
-      <Header back title="Đăng ký" />
+      <Header back title={sign_up} />
       <ScrollView style={styles.container}>
         <View style={styles.wrap}>
-          <OTPContainer onChange={value => onChange('otp', value)} />
+          <OTPContainer
+            onChange={value => onChange('otp', value)}
+            onCodeFilled={register}
+          />
 
           {action == 'password' && (
             <Password
@@ -56,14 +38,14 @@ const OTP = ({route}) => {
             mb={10}
             // disabled
             color={{color: Colors.BACKGROUNDACCORDION}}
-            bg="#ffffff"
-            label={TEXT.CONFIRM}
+            bg={Colors.white}
+            label={'Gửi lại'}
             label2=" (60s)"
             style={styles.disabled_btn}
             onPress={register}
           />
 
-          <Button mb={10} label="Gửi lại" onPress={register} />
+          {/* <Button mb={10} label="Gửi lại" onPress={register} /> */}
 
           <View style={[styles.box_1, {marginTop: 20}]}>
             <Pressable onPress={register}>

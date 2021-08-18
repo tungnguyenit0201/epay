@@ -139,34 +139,29 @@ const useRegister = () => {
 
   const {setLoading} = useLoading();
 
-  const confrimOTPRegister = async ({phone}) => {
+  const confrimOTPRegister = async ({phone, OtpCode}) => {
     setLoading(true);
     const result = await confirmOTP({
       phone,
-      OtpCode: registerRef.current?.otp,
+      OtpCode,
       functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
     });
     setLoading(false);
-
+    console.log('result :>> ', result);
     switch (_.get(result, 'ErrorCode', '')) {
       case ERROR_CODE.SUCCESS:
         return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
       case ERROR_CODE.OTP_IS_EXPIRED:
-        // this.state.message = ret.ErrorMessage
-        // this.setState(this.state);
-        // setTimeout(() => this.refs.alertExpire.show(), 150)
+        !!result?.ErrorMessage && Alert.alert('', result?.ErrorMessage);
         break;
       case ERROR_CODE.FEATURE_CONFIRM_OTP_WRONG_OVER_TIME:
-        // this.state.message = ret.ErrorMessage
-        // this.setState(this.state);
-        // setTimeout(() => this.refs.alertExceedInputCode.show(), 150)
+        !!result?.ErrorMessage && Alert.alert('', result?.ErrorMessage);
         break;
       case ERROR_CODE.OTP_IS_NOT_CORRECT:
+        !!result?.ErrorMessage && Alert.alert('', result?.ErrorMessage);
         break;
       default:
-        // this.state.message = ret.ErrorMessage
-        // this.setState(this.state)
-        // this.refs.infoModal.show()
+        !!result?.ErrorMessage && Alert.alert('', result?.ErrorMessage);
         break;
     }
   };
