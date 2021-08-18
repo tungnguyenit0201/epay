@@ -1,4 +1,3 @@
-import {useAsyncStorage} from 'context/Common/utils';
 import React, {
   createContext,
   useState,
@@ -12,24 +11,10 @@ const UserContext = createContext({});
 
 const defaultUserInfo = {
   token: '',
-  phone: '',
-  passwordEncrypted: '',
-  touchIdEnabled: false,
 };
 
 export const UserProvider = ({children}) => {
   const [userInfo, dispatch] = React.useReducer(userReducer, defaultUserInfo);
-  const {getUserData} = useAsyncStorage();
-
-  const initUser = async () => {
-    const data = await getUserData();
-    dispatch({type: 'INIT_USER', data});
-  };
-
-  useEffect(() => {
-    initUser();
-    return () => {};
-  }, []);
 
   const value = React.useMemo(
     () => ({

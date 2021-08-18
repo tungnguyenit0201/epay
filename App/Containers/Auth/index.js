@@ -5,13 +5,14 @@ import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import {useAuth} from 'context/Auth/utils';
+import {useAuth, usePhone} from 'context/Auth/utils';
 import {Formik} from 'formik';
 import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 
 const Auth = () => {
   const {onCheckPhoneExist} = useAuth();
+  const {phone} = usePhone();
   const translation = useTranslation();
 
   return (
@@ -35,8 +36,9 @@ const Auth = () => {
         </Pressable>
 
         <Formik
+          key={phone}
           initialValues={{
-            phone: '',
+            phone: phone || '',
           }}
           validationSchema={phoneSchema}
           onSubmit={onCheckPhoneExist}>

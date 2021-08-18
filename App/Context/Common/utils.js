@@ -75,15 +75,41 @@ const useOTP = ({functionType, phone, password}) => {
 };
 
 const useAsyncStorage = () => {
-  const getUserData = async () => {
-    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER_DATA);
+  const getPhone = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.PHONE);
   };
 
-  const setUserData = async value => {
-    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER_DATA, value);
+  const setPhone = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.PHONE, value);
   };
 
-  return {...AsyncStorage, getUserData, setUserData};
+  const getPasswordEncrypted = async () => {
+    return await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.USER.PASSWORD_ENCRYPTED,
+    );
+  };
+
+  const setPasswordEncrypted = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.PHONE, value);
+  };
+
+  const getTouchIdEnabled = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED);
+  };
+
+  const setTouchIdEnabled = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED, value);
+  };
+
+  return {
+    ...AsyncStorage,
+    getPhone,
+    setPhone,
+    getPasswordEncrypted,
+    setPasswordEncrypted,
+    getTouchIdEnabled,
+    setTouchIdEnabled,
+  };
 };
 
 export {useLoading, useOTP, useError, useAsyncStorage};

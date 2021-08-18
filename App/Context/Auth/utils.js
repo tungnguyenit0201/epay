@@ -6,7 +6,7 @@ import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
 import {useTranslation} from 'context/Language';
-import {useLoading, useError} from 'context/Common/utils';
+import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {genOtp, confirmOTP} from 'services/common';
 
@@ -59,11 +59,13 @@ const useAuth = () => {
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
+  const {setPhone} = useAsyncStorage();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
     const result = await checkPhone(phone);
     setLoading(false);
+    phone && setPhone(phone);
 
     switch (_.get(result, 'ErrorCode', '')) {
       // register
@@ -111,7 +113,18 @@ const useAuth = () => {
     }
   };
 
-  return {onCheckPhoneExist, onChangePhone, onForgetPassword, onLogin};
+  const onLogout = () => {
+    dispatch({type: 'UPDATE_TOKEN', data: ''});
+    Navigator.popToTop();
+  };
+
+  return {
+    onCheckPhoneExist,
+    onChangePhone,
+    onForgetPassword,
+    onLogin,
+    onLogout,
+  };
 };
 
 const useRegister = () => {
@@ -171,4 +184,23 @@ const useRegister = () => {
   return {onChange, confrimOTPRegister, createAccount};
 };
 
-export {useTouchID, useAuth, useRegister};
+const usePhone = () => {
+  const [phone, setPhone] = useState('');
+  const {setPhone: setPhoneStorage, getPhone} = useAsyncStorage();
+
+  const loadPhone = async () => {
+    console.log('await getPhone()', await getPhone());
+    setPhone(await getPhone());
+  };
+
+  useEffect(() => {
+    loadPhone();
+    return () => {
+      phone && setPhoneStorage(phone);
+    };
+  }, []);
+
+  return {phone};
+};
+
+export {useTouchID, useAuth, useRegister, usePhone};
