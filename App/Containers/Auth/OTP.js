@@ -32,79 +32,75 @@ const OTP = ({route}) => {
   let {phone, action} = route?.params;
   const {onChange, onConfirmOTP, errorMessage} = useOTP(route?.params);
 
-  const register = async () => {
-    confrimOTPRegister({phone});
+  const onChangePhone = () => {
+    Navigator.goBack();
   };
 
   return (
-    <>
-      <Header back title="Đăng ký" />
-      <ScrollView style={styles.container}>
-        <View style={styles.wrap}>
-          <OTPContainer onChange={onChange} message={errorMessage} />
+    <ScrollView style={styles.container}>
+      <View style={styles.wrap}>
+        <OTPContainer onChange={onChange} message={errorMessage} />
 
-          {/* {action == 'password' && (
+        {/* {action == 'password' && (
             <Password
               onChangePassword={value => onChange('newPassword', value)}
               onChangeConfirm={value => onChange('passwordConfirm', value)}
             />
           )} */}
 
-          <Button
-            mb={10}
-            // disabled
-            color={{color: Colors.BACKGROUNDACCORDION}}
-            bg="#ffffff"
-            label={TEXT.CONFIRM}
-            label2=" (60s)"
-            style={styles.disabled_btn}
-            onPress={onConfirmOTP}
-          />
+        <Button
+          mb={10}
+          // disabled
+          color={{color: Colors.BACKGROUNDACCORDION}}
+          bg="#ffffff"
+          label={TEXT.CONFIRM}
+          label2=" (60s)"
+          style={styles.disabled_btn}
+          onPress={onConfirmOTP}
+        />
 
-          <Button mb={10} label="Gửi lại" onPress={() => {}} />
+        <Button mb={10} label="Gửi lại" onPress={() => {}} />
 
-          <View style={[styles.box_1, {marginTop: 20}]}>
-            <Pressable onPress={register}>
-              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
-            </Pressable>
+        <View style={[styles.box_1, {marginTop: 20}]}>
+          <Pressable onPress={() => {}}>
+            <Text style={[styles.link_text]}>Không nhận được OTP</Text>
+          </Pressable>
 
-            <Pressable onPress={register}>
-              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-            </Pressable>
-          </View>
+          <Pressable onPress={onChangePhone}>
+            <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+          </Pressable>
         </View>
+      </View>
 
-        {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
+      {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
             <Text style={{
               textAlign: 'center',
               color: '#ccc'}}>OTP:</Text> 098909
           </Text> */}
 
-        <Pressable
-          style={[
-            styles.otp_code,
-            {
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: 20,
-            },
-          ]}
-          onPress={register}>
-          <Image
-            source={Images.Register.phone_1}
-            style={{
-              height: scale(12),
-              width: scale(12),
-              marginRight: 10,
-              textAlign: 'center',
-            }}
-          />
-          <Text bold style={[styles.link_text]}>
-            Gọi cho tôi
-          </Text>
-        </Pressable>
-      </ScrollView>
-    </>
+      <Pressable
+        style={[
+          styles.otp_code,
+          {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginTop: 20,
+          },
+        ]}
+        onPress={() => {}}>
+        <Image
+          source={Images.Register.phone_1}
+          style={{
+            height: scale(12),
+            width: scale(12),
+            marginRight: 10,
+          }}
+        />
+        <Text bold style={[styles.link_text]}>
+          Gọi cho tôi
+        </Text>
+      </Pressable>
+    </ScrollView>
   );
 };
 

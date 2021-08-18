@@ -6,6 +6,7 @@ import {confirmOTP, genOtp} from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
+import Navigator from 'navigations/Navigator';
 
 const useLoading = () => {
   const {dispatch} = useCommon();
@@ -18,6 +19,7 @@ const useLoading = () => {
 const useOTP = ({functionType, phone, password}) => {
   const {onLogin} = useAuth();
   const [errorMessage, setErrorMessage] = useState(null);
+  const otpRef = useRef('');
 
   useEffect(() => {
     genOtp({
@@ -28,16 +30,14 @@ const useOTP = ({functionType, phone, password}) => {
 
   const onChange = value => {
     errorMessage && setErrorMessage(null);
-    if (value.length === 6) {
-      onConfirmOtp(value);
-    }
+    otpRef.current = value;
   };
 
-  const onConfirmOtp = async otp => {
+  const onConfirmOTP = async () => {
     const result = await confirmOTP({
       phone,
       functionType,
-      OtpCode: otp,
+      OtpCode: otpRef.current,
       OtpType: OTP_TYPE.EPAY,
     });
 
@@ -49,12 +49,13 @@ const useOTP = ({functionType, phone, password}) => {
     // success
     switch (functionType) {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
-        onLogin({phone, password});
-        break;
+        return onLogin({phone, password});
+      case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
     }
   };
 
-  return {errorMessage, onChange};
+  return {errorMessage, onChange, onConfirmOTP};
 };
 
 export {useLoading, useOTP};
