@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import FWLoading from './FWLoading';
+import Alert from './Alert';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Colors} from 'themes';
 import {useCommon} from 'context/Common';
@@ -17,7 +18,7 @@ const Wrapper = React.memo(
     disableAvoidKeyboard = false,
     avoidStatusBar = true,
   }) => {
-    const {loading} = useCommon();
+    const {loading, error} = useCommon();
     return (
       <View style={styles.flexFill}>
         <KeyboardAvoidingView
@@ -32,6 +33,7 @@ const Wrapper = React.memo(
           {avoidStatusBar && <View style={styles.avoidStatusBar} />}
           <View style={styles.flexFill}>{children}</View>
           {loading && <FWLoading />}
+          {!!error?.ErrorCode && <Alert />}
         </KeyboardAvoidingView>
       </View>
     );
