@@ -1,36 +1,44 @@
-import React from 'react';
-import {Modal, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Spacing, Colors} from 'themes';
-import {Text, Button} from 'components';
-const Alert = () => {
-  const {width, height} = useWindowDimensions();
+import React, {useState} from 'react';
+import {StyleSheet, Text, Pressable, View} from 'react-native';
+import Modal from 'react-native-modal';
+import {useCommon} from 'context/Common';
+import {useError} from 'context/Common/utils';
+import {scale} from 'utils/Functions';
+import {Colors, Spacing} from 'themes';
+const AlertCustom = () => {
+  const {error} = useCommon();
+  const {setError} = useError();
+
   return (
-    <View style={[styles.container, {width: width, height: height}]}>
-      <Modal visible={true} style={{flex: 1, width: width, height: height}}>
-        <Text>Hello World!</Text>
-        <Button onPress={() => true}>
-          <Text>Hide Modal</Text>
-        </Button>
-      </Modal>
-    </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={!!error?.ErrorCode}
+      onBackdropPress={() => setError(null)}>
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>{error?.ErrorMessage}</Text>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setError(null)}>
+            <Text style={styles.textStyle}>Đóng</Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
   );
 };
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'red',
-    opacity: 0.8,
-  },
   centeredView: {
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    justifyContent: 'center',
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: scale(20),
+    paddingHorizontal: Spacing.PADDING * 2,
+    paddingVertical: Spacing.PADDING,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -42,24 +50,24 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: scale(20),
+    paddingVertical: Spacing.PADDING / 2,
+    paddingHorizontal: Spacing.PADDING,
     elevation: 2,
   },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
+
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: Colors.PRIMARY,
   },
   textStyle: {
-    color: 'white',
+    color: Colors.white,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: Spacing.PADDING,
     textAlign: 'center',
   },
 });
-export default Alert;
+
+export default AlertCustom;

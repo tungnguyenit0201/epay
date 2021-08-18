@@ -1,106 +1,96 @@
 import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  View,
-  Pressable,
-  useWindowDimensions,
-} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-
+import {ScrollView, Image, StyleSheet, View, Pressable} from 'react-native';
+import {Text, Header, Button} from 'components';
 import {TEXT} from 'configs/Constants';
 import {Colors, Fonts, Images, Spacing} from 'themes';
-import {User} from 'services';
-
-import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import Password from 'components/Auth/Password';
-import {SCREEN} from 'configs/Constants';
-import {useOTP} from 'context/Common/utils';
+import {useRegister} from 'context/Auth/utils';
+import {useTranslation} from 'context/Language';
+import {useAuth} from 'context/Auth/utils';
 
 const OTP = ({route}) => {
   let {phone, action} = route?.params;
-  const {onChange, onConfirmOTP, errorMessage} = useOTP(route?.params);
-
-  const onChangePhone = () => {
-    Navigator.goBack();
+  const {onChange, confrimOTPRegister} = useRegister();
+  const {onChangePhone} = useAuth();
+  const {sign_up} = useTranslation();
+  const register = async OtpCode => {
+    confrimOTPRegister({phone, OtpCode});
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.wrap}>
-        <OTPContainer onChange={onChange} message={errorMessage} />
+    <>
+      <Header back title={sign_up} />
+      <ScrollView style={styles.container}>
+        <View style={styles.wrap}>
+          <OTPContainer
+            onChange={value => onChange('otp', value)}
+            onCodeFilled={register}
+          />
 
-        {/* {action == 'password' && (
+          {/* {action == 'password' && (
             <Password
               onChangePassword={value => onChange('newPassword', value)}
               onChangeConfirm={value => onChange('passwordConfirm', value)}
             />
           )} */}
 
-        <Button
-          mb={10}
-          // disabled
-          color={{color: Colors.BACKGROUNDACCORDION}}
-          bg="#ffffff"
-          label={TEXT.CONFIRM}
-          label2=" (60s)"
-          style={styles.disabled_btn}
-          onPress={onConfirmOTP}
-        />
+          <Button
+            mb={10}
+            // disabled
+            color={{color: Colors.BACKGROUNDACCORDION}}
+            bg={Colors.white}
+            label={'Gửi lại'}
+            label2=" (60s)"
+            style={styles.disabled_btn}
+            onPress={register}
+          />
 
-        <Button mb={10} label="Gửi lại" onPress={() => {}} />
+          {/* <Button mb={10} label="Gửi lại" onPress={register} /> */}
 
-        <View style={[styles.box_1, {marginTop: 20}]}>
-          <Pressable onPress={() => {}}>
-            <Text style={[styles.link_text]}>Không nhận được OTP</Text>
-          </Pressable>
+          <View style={[styles.box_1, {marginTop: 20}]}>
+            <Pressable onPress={() => {}}>
+              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
+            </Pressable>
 
-          <Pressable onPress={onChangePhone}>
-            <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-          </Pressable>
+            <Pressable onPress={onChangePhone}>
+              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
 
-      {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
+        {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
             <Text style={{
               textAlign: 'center',
               color: '#ccc'}}>OTP:</Text> 098909
           </Text> */}
 
-      <Pressable
-        style={[
-          styles.otp_code,
-          {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: 20,
-          },
-        ]}
-        onPress={() => {}}>
-        <Image
-          source={Images.Register.phone_1}
-          style={{
-            height: scale(12),
-            width: scale(12),
-            marginRight: 10,
-          }}
-        />
-        <Text bold style={[styles.link_text]}>
-          Gọi cho tôi
-        </Text>
-      </Pressable>
-    </ScrollView>
+        <Pressable
+          style={[
+            styles.otp_code,
+            {
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 20,
+            },
+          ]}
+          onPress={() => {}}>
+          <Image
+            source={Images.Register.phone_1}
+            style={{
+              height: scale(12),
+              width: scale(12),
+              marginRight: 10,
+            }}
+          />
+          <Text bold style={[styles.link_text]}>
+            Gọi cho tôi
+          </Text>
+        </Pressable>
+      </ScrollView>
+    </>
   );
 };
 

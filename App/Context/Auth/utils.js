@@ -5,9 +5,8 @@ import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
-import {Alert} from 'react-native';
 import {useTranslation} from 'context/Language';
-import {useLoading} from 'context/Common/utils';
+import {useLoading, useError} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {genOtp, confirmOTP} from 'services/common';
 
@@ -59,6 +58,7 @@ const useAuth = () => {
   const {incorrect_password} = useTranslation();
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
+  const {setError} = useError();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -95,7 +95,7 @@ const useAuth = () => {
 
     switch (_.get(result, 'ErrorCode', '')) {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
-        return Alert.alert(incorrect_password);
+        return setError(result);
 
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
         return Navigator.push(SCREEN.OTP, {
@@ -121,78 +121,50 @@ const useRegister = () => {
     newPassword: null,
     passwordConfirm: null,
   });
+
+  const {setLoading} = useLoading();
+  const {setError} = useError();
+  const {onLogin} = useAuth();
+
   const onChange = (key, val) => {
     registerRef.current[key] = val;
   };
 
-  const {setLoading} = useLoading();
-
-  const confrimOTPRegister = async ({phone}) => {
-    setLoading(true);
-    const result = await confirmOTP({
-      phone,
-      OtpCode: registerRef.current?.otp,
-      functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
-    });
-    setLoading(false);
-
-    switch (_.get(result, 'ErrorCode', '')) {
-      case ERROR_CODE.SUCCESS:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
-      case ERROR_CODE.OTP_IS_EXPIRED:
-        // this.state.message = ret.ErrorMessage
-        // this.setState(this.state);
-        // setTimeout(() => this.refs.alertExpire.show(), 150)
-        break;
-      case ERROR_CODE.FEATURE_CONFIRM_OTP_WRONG_OVER_TIME:
-        // this.state.message = ret.ErrorMessage
-        // this.setState(this.state);
-        // setTimeout(() => this.refs.alertExceedInputCode.show(), 150)
-        break;
-      case ERROR_CODE.OTP_IS_NOT_CORRECT:
-        break;
-      default:
-        // this.state.message = ret.ErrorMessage
-        // this.setState(this.state)
-        // this.refs.infoModal.show()
-        break;
+  const confrimOTPRegister = async ({phone, OtpCode}) => {
+    try {
+      setLoading(true);
+      const result = await confirmOTP({
+        phone,
+        OtpCode,
+        functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
+      });
+      setLoading(false);
+      let errorCode = _.get(result, 'ErrorCode', '');
+      if (errorCode == ERROR_CODE.SUCCESS)
+        Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
+      else setError(result);
+    } catch (error) {
+      setLoading(false);
     }
   };
 
   const createAccount = async ({phone}) => {
-    setLoading(true);
-    console.log(
-      'registerRef.current?.newPassword :>> ',
-      registerRef.current,
-      phone,
-    );
-    let passwordEncrypted;
     try {
+      setLoading(true);
+      let passwordEncrypted;
       passwordEncrypted = await sha256(registerRef.current?.newPassword);
-    } catch (error) {
-      console.log('error :>> ', error);
+      const result = await register({
+        phone,
+        password: passwordEncrypted,
+      });
       setLoading(false);
-    }
-    const result = await register({
-      phone,
-      password: passwordEncrypted,
-    });
-    console.log('result :>> ', result);
-    setLoading(false);
-    switch (_.get(result, 'ErrorCode', '')) {
-      case ERROR_CODE.SUCCESS:
-        // this.setState({...this.state, isShowModal: true})
-        // const userInfo = {phoneNumber: this.state.phoneNumber, isOTPActivated: 0, alreadyLoggedIn: false}
-        // this.props.changeUserInfo(userInfo)
-        return Navigator.push(SCREEN.LOGIN, {phone});
-      case ERROR_CODE.SYSTEM_IS_UPGRADING:
-        // this.refs.upgradeModal.show()
-        return;
-      case ERROR_CODE.PHONE_IS_REGISTERED:
-        // this.refs.errorModal.show()
-        return;
-      default:
-        return;
+      let errorCode = _.get(result, 'ErrorCode', '');
+      if (errorCode == ERROR_CODE.SUCCESS)
+        onLogin({phone, password: registerRef.current?.newPassword});
+      else setError(result);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
   };
 

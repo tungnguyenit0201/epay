@@ -7,7 +7,11 @@ export default function commonReducer(state, action) {
         ...state,
         loading: action?.loading,
       };
-
+    case 'SET_ERROR':
+      return {
+        ...state,
+        error: action?.error,
+      };
     default:
       return state;
   }
