@@ -80,7 +80,7 @@ async function request({
         );
       }
       if (__DEV__) {
-        console.log(method, buildURL(root + url, query), postParams, result);
+        console.log(method, buildURL(root + url, query), params, result);
       }
       if (
         result.status === 200 ||
