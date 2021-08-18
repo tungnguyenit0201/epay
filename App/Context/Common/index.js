@@ -3,11 +3,13 @@ import commonReducer from './reducer';
 
 const CommonContext = createContext({});
 export const CommonProvider = ({children}) => {
-  const [common, dispatch] = React.useReducer(commonReducer);
+  const [common, dispatch] = React.useReducer(commonReducer, {
+    loading: false,
+    error: null,
+  });
 
   const value = {
-    common,
-    loading: common?.loading,
+    ...common,
     dispatch,
   };
 

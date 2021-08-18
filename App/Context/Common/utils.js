@@ -16,6 +16,14 @@ const useLoading = () => {
   return {setLoading};
 };
 
+const useError = () => {
+  const {dispatch} = useCommon();
+  const setError = error => {
+    dispatch({type: 'SET_ERROR', error});
+  };
+  return {setError};
+};
+
 const useOTP = ({functionType, phone, password}) => {
   const {onLogin} = useAuth();
   const [errorMessage, setErrorMessage] = useState(null);
@@ -58,4 +66,4 @@ const useOTP = ({functionType, phone, password}) => {
   return {errorMessage, onChange, onConfirmOTP};
 };
 
-export {useLoading, useOTP};
+export {useLoading, useOTP, useError};
