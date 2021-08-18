@@ -20,6 +20,8 @@ import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
 import RegisterName from 'containers/Auth/RegisterName';
 import OTP from 'containers/Auth/OTP';
+import SmartOTP from 'containers/User/SmartOTP';
+import ActiveOTP from 'containers/User/ActiveOTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
@@ -43,6 +45,7 @@ import Contacts from 'containers/Wallet/Contacts';
 import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
 import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
 import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
+import VerifyEmail from 'containers/User/VerifyInfo/VerifyEmail';
 import RegionSelect from 'containers/User/RegionSelect';
 import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
 import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
@@ -89,6 +92,8 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
+          <Stack.Screen name={SCREEN.SMART_OTP} component={SmartOTP} />
+          <Stack.Screen name={SCREEN.ACTIVE_OTP} component={ActiveOTP} />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
@@ -134,6 +139,7 @@ const AppNavigator = () => {
             name={SCREEN.VERIFY_USER_PORTRAIT}
             component={VerifyUserPortrait}
           />
+          <Stack.Screen name={SCREEN.VERIFY_EMAIL} component={VerifyEmail} />
           <Stack.Screen
             name={SCREEN.CHECKOUT_FAILURE}
             component={CheckoutFailure}

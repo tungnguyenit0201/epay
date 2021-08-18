@@ -14,6 +14,7 @@ const CustomText = ({
   bold,
   children,
   size,
+  fs = 'md',
   lineHeight,
   mt,
   mb,
@@ -40,18 +41,25 @@ const CustomText = ({
   return (
     <Text
       style={[
-        styles.text,
         {
           color,
           fontFamily,
           textAlign: centered ? 'center' : right ? 'right' : 'left',
-          fontSize: size || Fonts.FONT_MEDIUM,
+          fontSize: size || Fonts.MD,
           marginTop: mt || mv,
           marginBottom: mb || mv,
           marginLeft: ml || mh,
           marginRight: mr || mh,
-          //lineHeight,
         },
+        fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 48},
+        fs === 'md' && {fontSize: Fonts.MD, lineHeight: 20},
+        fs === 'h1' && {fontSize: Fonts.H1, lineHeight: 44},
+        fs === 'h2' && {fontSize: Fonts.H2, lineHeight: 40},
+        fs === 'h3' && {fontSize: Fonts.H3, lineHeight: 36},
+        fs === 'h4' && {fontSize: Fonts.H4, lineHeight: 32},
+        fs === 'h5' && {fontSize: Fonts.H5, lineHeight: 28},
+        fs === 'h6' && {fontSize: Fonts.H6, lineHeight: 24},
+
         style,
       ]}
       {...props}>
@@ -59,9 +67,5 @@ const CustomText = ({
     </Text>
   );
 };
-const styles = StyleSheet.create({
-  text: {
-    lineHeight: 20,
-  },
-});
+
 export default CustomText;

@@ -13,7 +13,7 @@ export default ({
   active,
   showErrorLabel = true,
 }) => {
-  const [checked, setChecked] = React.useState(active ? active : 1);
+  const [checked, setChecked] = React.useState();
   const renderRadio = item => {
     //const isSelected = item?.value === value;
     return (
@@ -21,7 +21,7 @@ export default ({
         //onPress={() => onChange?.(item?.value)}
         onPress={() => setChecked(item?.value)}
         key={item?.value}
-        style={styles.radio}>
+        style={[styles.radio, style]}>
         <View style={styles.tickWrap}>
           {checked === item?.value && <View style={styles.tick} />}
         </View>

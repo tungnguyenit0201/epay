@@ -139,7 +139,7 @@ const UserInfo = () => {
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
-                Navigator.push(SCREEN.NOTIFICATION);
+                Navigator.push(SCREEN.VERIFY_EMAIL);
               }}>
               <Text style={styles.link}>Thêm email</Text>
             </TouchableOpacity>
