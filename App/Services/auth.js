@@ -38,3 +38,17 @@ export const login = async (phone, password) => {
   });
   return response;
 };
+
+export const register = async ({phone, password}) => {
+  let response = null;
+  console.log('phone :>> ', phone);
+  await request({
+    url: API.AUTH.REGISTER,
+    method: 'post',
+    params: {PhoneNumber: phone, Password: password},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
