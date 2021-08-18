@@ -29,77 +29,82 @@ import {SCREEN} from 'configs/Constants';
 import {useOTP} from 'context/Common/utils';
 
 const OTP = ({route}) => {
-  const {onChange, errorMessage} = useOTP(route?.params);
+  let {phone, action} = route?.params;
+  const {onChange, onConfirmOTP, errorMessage} = useOTP(route?.params);
 
   const register = async () => {
-    Navigator.navigate(SCREEN.REGISTER_PASSWORD);
+    confrimOTPRegister({phone});
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Header back />
-      <View style={styles.wrap}>
-        <OTPContainer onChange={onChange} message={errorMessage} />
+    <>
+      <Header back title="Đăng ký" />
+      <ScrollView style={styles.container}>
+        <View style={styles.wrap}>
+          <OTPContainer onChange={onChange} message={errorMessage} />
 
-        {/* <Password
+          {/* {action == 'password' && (
+            <Password
               onChangePassword={value => onChange('newPassword', value)}
               onChangeConfirm={value => onChange('passwordConfirm', value)}
-            /> */}
+            />
+          )} */}
 
-        {/* button use to waiting for otp code */}
-        {/* <Button
-              mb={10}
-              disabled
-              color={{color: Colors.BACKGROUNDACCORDION}}
-              bg='#ffffff'
-              label={TEXT.CONFIRM}
-              label2=" (60s)"
-              style={styles.disabled_btn}
-              onPress={register}/> */}
+          <Button
+            mb={10}
+            // disabled
+            color={{color: Colors.BACKGROUNDACCORDION}}
+            bg="#ffffff"
+            label={TEXT.CONFIRM}
+            label2=" (60s)"
+            style={styles.disabled_btn}
+            onPress={onConfirmOTP}
+          />
 
-        <Button mb={10} label="Gửi lại" onPress={register} />
+          <Button mb={10} label="Gửi lại" onPress={() => {}} />
 
-        <View style={[styles.box_1, {marginTop: 20}]}>
-          <Pressable onPress={register}>
-            <Text style={[styles.link_text]}>Không nhận được OTP</Text>
-          </Pressable>
+          <View style={[styles.box_1, {marginTop: 20}]}>
+            <Pressable onPress={register}>
+              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
+            </Pressable>
 
-          <Pressable onPress={register}>
-            <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-          </Pressable>
+            <Pressable onPress={register}>
+              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
 
-      {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
+        {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
             <Text style={{
               textAlign: 'center',
               color: '#ccc'}}>OTP:</Text> 098909
           </Text> */}
 
-      {/* buttom call me */}
-      <Pressable
-        style={[
-          styles.otp_code,
-          {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            marginTop: 20,
-          },
-        ]}
-        onPress={register}>
-        <Image
-          source={Images.Register.phone_1}
-          style={{
-            height: scale(12),
-            width: scale(12),
-            marginRight: 10,
-          }}
-        />
-        <Text bold style={[styles.link_text]}>
-          Gọi cho tôi
-        </Text>
-      </Pressable>
-    </ScrollView>
+        <Pressable
+          style={[
+            styles.otp_code,
+            {
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 20,
+            },
+          ]}
+          onPress={register}>
+          <Image
+            source={Images.Register.phone_1}
+            style={{
+              height: scale(12),
+              width: scale(12),
+              marginRight: 10,
+              textAlign: 'center',
+            }}
+          />
+          <Text bold style={[styles.link_text]}>
+            Gọi cho tôi
+          </Text>
+        </Pressable>
+      </ScrollView>
+    </>
   );
 };
 
