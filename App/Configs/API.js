@@ -14,4 +14,7 @@ export default {
     GEN_OTP: 'common/otp/gen_otp',
     CONFIRM_OTP: 'common/otp/confirm_otp',
   },
+  USER: {
+    UPDATE_PASSWORD: 'account/change_password',
+  },
 };

@@ -9,6 +9,7 @@ import {useTranslation} from 'context/Language';
 import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {genOtp, confirmOTP} from 'services/common';
+import {updatePassword} from 'services/user';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -55,7 +56,6 @@ const useTouchID = () => {
 };
 
 const useAuth = () => {
-  const {incorrect_password} = useTranslation();
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
@@ -86,7 +86,7 @@ const useAuth = () => {
   };
 
   const onForgetPassword = () => {
-    Navigator.replaceLast(SCREEN.FORGET_PASSWORD);
+    Navigator.push(SCREEN.FORGET_PASSWORD);
   };
 
   const onLogin = async ({phone, password}) => {
@@ -183,4 +183,35 @@ const usePhone = () => {
   return {phone};
 };
 
-export {useTouchID, useAuth, useRegister, usePhone};
+const useForgetPassword = () => {
+  const {setError} = useError();
+
+  const onSubmitPhone = async ({phone}) => {
+    const result = await checkPhone(phone);
+    const errorCode = _.get(result, 'ErrorCode', '');
+    if (
+      errorCode === ERROR_CODE.SUCCESS ||
+      errorCode === ERROR_CODE.PHONE_IS_REGISTERED
+    ) {
+      Navigator.push(SCREEN.OTP, {
+        phone,
+        functionType: FUNCTION_TYPE.FORGOT_PASS,
+      });
+      return;
+    }
+    setError(result);
+  };
+
+  const onNewPassword = ({newPassword, phone}) => {
+    const result = updatePassword({password: newPassword, phone});
+    if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
+      return setError(result);
+    }
+    setError(result);
+    Navigator.navigate(SCREEN.TAB_NAVIGATION);
+  };
+
+  return {onSubmitPhone, onNewPassword};
+};
+
+export {useTouchID, useAuth, useRegister, usePhone, useForgetPassword};

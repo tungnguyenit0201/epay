@@ -46,5 +46,6 @@ const SCREEN = {
   TRANSFER_PHONE: 'TransferPhone',
   AUTOPAYMENT: 'AutoPayment',
   TRANSFER_BANK: 'TransferBank',
+  UPDATE_PASSWORD: 'UpdatePassword',
 };
 export default SCREEN;

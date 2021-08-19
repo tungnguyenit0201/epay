@@ -2,16 +2,28 @@ import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Text, InputBlock, Header, Button} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
-import {useRegister} from 'context/Auth/utils';
+import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
-const ForgotPassword = ({route}) => {
-  const {phone} = route?.params;
+import {FUNCTION_TYPE} from 'configs/Constants';
+
+const RegisterPassword = ({route}) => {
+  const {phone, functionType} = route?.params;
   const {createAccount} = useRegister();
+  const {onNewPassword} = useForgetPassword();
   const scrollViewRef = useRef(null);
   const translation = useTranslation();
+
+  const onSubmit = values => {
+    switch (functionType) {
+      case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return createAccount({...values, phone});
+      case FUNCTION_TYPE.FORGOT_PASS:
+        return onNewPassword({...values, phone});
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -23,7 +35,7 @@ const ForgotPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={passwordSchema}
-        onSubmit={values => createAccount({...values, phone})}>
+        onSubmit={onSubmit}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -109,4 +121,4 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
 });
-export default ForgotPassword;
+export default RegisterPassword;

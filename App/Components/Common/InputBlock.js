@@ -55,7 +55,6 @@ const InputBlock = ({
         ? {
             onLayout: event => {
               positionRef.current = event.nativeEvent.layout.y;
-              console.log('positionRef.current', positionRef.current);
             },
           }
         : {})}>
@@ -137,6 +136,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
-
   },
 });
