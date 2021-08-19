@@ -129,7 +129,6 @@ const useAuth = () => {
 
 const useRegister = () => {
   let registerRef = useRef({
-    otp: null,
     phone: null,
     newPassword: null,
     passwordConfirm: null,
@@ -141,24 +140,6 @@ const useRegister = () => {
 
   const onChange = (key, val) => {
     registerRef.current[key] = val;
-  };
-
-  const confrimOTPRegister = async ({phone, OtpCode}) => {
-    try {
-      setLoading(true);
-      const result = await confirmOTP({
-        phone,
-        OtpCode,
-        functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
-      });
-      setLoading(false);
-      let errorCode = _.get(result, 'ErrorCode', '');
-      if (errorCode == ERROR_CODE.SUCCESS)
-        Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
-      else setError(result);
-    } catch (error) {
-      setLoading(false);
-    }
   };
 
   const createAccount = async ({phone, newPassword}) => {
@@ -181,7 +162,7 @@ const useRegister = () => {
     }
   };
 
-  return {onChange, confrimOTPRegister, createAccount};
+  return {onChange, createAccount};
 };
 
 const usePhone = () => {
@@ -189,7 +170,6 @@ const usePhone = () => {
   const {setPhone: setPhoneStorage, getPhone} = useAsyncStorage();
 
   const loadPhone = async () => {
-    console.log('await getPhone()', await getPhone());
     setPhone(await getPhone());
   };
 

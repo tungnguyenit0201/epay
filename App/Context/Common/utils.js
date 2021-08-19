@@ -33,7 +33,7 @@ const useError = () => {
 const useOTP = ({functionType, phone, password}) => {
   const {onLogin} = useAuth();
   const [errorMessage, setErrorMessage] = useState(null);
-  const otpRef = useRef('');
+  const {setLoading} = useLoading();
 
   useEffect(() => {
     genOtp({
@@ -44,15 +44,14 @@ const useOTP = ({functionType, phone, password}) => {
 
   const onChange = value => {
     errorMessage && setErrorMessage(null);
-    otpRef.current = value;
   };
 
-  const onConfirmOTP = async () => {
+  const onConfirmOTP = async otp => {
     setLoading(true);
     const result = await confirmOTP({
       phone,
       functionType,
-      OtpCode: otpRef.current,
+      OtpCode: otp,
       OtpType: OTP_TYPE.EPAY,
     });
     setLoading(false);
