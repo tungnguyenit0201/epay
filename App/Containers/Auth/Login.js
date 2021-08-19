@@ -16,17 +16,17 @@ import _ from 'lodash';
 import {Formik} from 'formik';
 
 const Login = ({route}) => {
-  const {onChangePhone, onForgetPassword, onLogin} = useAuth();
+  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
+    useAuth();
   const translation = useTranslation();
 
   const {biometryType, onTouchID} = useTouchID();
 
-  const onLoginByTouchID = async () => {
+  const _onLoginByTouchID = async () => {
     try {
       const result = await onTouchID();
       if (result) {
-        alert('xác thực xong. Chưa xử lý tiếp');
-        // Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        onLoginByTouchID({phone: _.get(route, 'params.phone', '')});
       }
     } catch (error) {
       alert(error);
@@ -79,7 +79,7 @@ const Login = ({route}) => {
               {!!biometryType && (
                 <Button
                   label={_.startCase(biometryType)}
-                  onPress={onLoginByTouchID}
+                  onPress={_onLoginByTouchID}
                 />
               )}
 

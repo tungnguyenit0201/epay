@@ -12,8 +12,14 @@ import {updatePassword} from 'services/user';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
+  const {getPasswordEncrypted, getTouchIdEnabled} = useAsyncStorage();
 
-  useEffect(() => {
+  const checkBiometry = async () => {
+    const touchIdEnabled = await getTouchIdEnabled();
+    const passwordEncrypted = await getPasswordEncrypted();
+    if (!touchIdEnabled || !passwordEncrypted) {
+      return;
+    }
     TouchID.isSupported({})
       .then(biometryType => {
         setBiometryType(biometryType);
@@ -21,6 +27,10 @@ const useTouchID = () => {
       .catch(error => {
         __DEV__ && console.log('Touch ID is not supported.');
       });
+  };
+
+  useEffect(() => {
+    checkBiometry();
   }, []);
 
   const onTouchID = async () => {
@@ -58,7 +68,8 @@ const useAuth = () => {
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
-  const {setPhone} = useAsyncStorage();
+  const {setPhone, setPasswordEncrypted, getPasswordEncrypted} =
+    useAsyncStorage();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -88,9 +99,9 @@ const useAuth = () => {
     Navigator.push(SCREEN.FORGET_PASSWORD);
   };
 
-  const onLogin = async ({phone, password}) => {
+  const onLogin = async ({phone, password, encrypted = false}) => {
     setLoading(true);
-    const passwordEncrypted = await sha256(password);
+    const passwordEncrypted = encrypted ? password : await sha256(password);
     const result = await login(phone, passwordEncrypted);
     setLoading(false);
 
@@ -106,10 +117,19 @@ const useAuth = () => {
         });
 
       case ERROR_CODE.SUCCESS:
+        setPasswordEncrypted(passwordEncrypted);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
         Navigator.navigate(SCREEN.TAB_NAVIGATION);
         return;
     }
+  };
+
+  const onLoginByTouchID = async ({phone}) => {
+    const passwordEncrypted = await getPasswordEncrypted();
+    if (!passwordEncrypted || !phone) {
+      return;
+    }
+    onLogin({phone, password: passwordEncrypted, encrypted: true});
   };
 
   const onLogout = () => {
@@ -122,6 +142,7 @@ const useAuth = () => {
     onChangePhone,
     onForgetPassword,
     onLogin,
+    onLoginByTouchID,
     onLogout,
   };
 };
@@ -190,6 +211,7 @@ const usePhone = () => {
 
 const useForgetPassword = () => {
   const {setError} = useError();
+  const {setLoading} = useLoading();
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
@@ -207,13 +229,17 @@ const useForgetPassword = () => {
     setError(result);
   };
 
-  const onNewPassword = ({newPassword, phone}) => {
-    const result = updatePassword({password: newPassword, phone});
+  const onNewPassword = async ({newPassword, phone}) => {
+    setLoading(true);
+    const passwordEncrypted = await sha256(newPassword);
+    const result = await updatePassword({password: passwordEncrypted, phone});
+    setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
-      return setError(result);
+      setError(result);
+      return;
     }
-    setError(result);
-    Navigator.navigate(SCREEN.TAB_NAVIGATION);
+    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); //translate
+    Navigator.popToTop();
   };
 
   return {onSubmitPhone, onNewPassword};
