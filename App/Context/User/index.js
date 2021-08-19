@@ -11,6 +11,7 @@ const UserContext = createContext({});
 
 const defaultUserInfo = {
   token: '',
+  firstLogin: false,
 };
 
 export const UserProvider = ({children}) => {
@@ -19,6 +20,7 @@ export const UserProvider = ({children}) => {
   const value = React.useMemo(
     () => ({
       userInfo,
+      ...userInfo,
       dispatch,
     }),
     [userInfo],

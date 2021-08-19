@@ -5,7 +5,11 @@ export default function userReducer(state, action) {
         ...state,
         token: action.data,
       };
-
+    case 'SET_FIRST_LOGIN':
+      return {
+        ...state,
+        firstLogin: action?.firstLogin,
+      };
     default:
       return state;
   }
