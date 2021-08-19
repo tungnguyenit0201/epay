@@ -45,5 +45,6 @@ const SCREEN = {
   MY_WALLET: 'MyWallet',
   TRANSFER_PHONE: 'TransferPhone',
   AUTOPAYMENT: 'AutoPayment',
+  TRANSFER_BANK: 'TransferBank',
 };
 export default SCREEN;
