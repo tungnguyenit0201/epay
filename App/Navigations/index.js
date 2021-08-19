@@ -53,6 +53,7 @@ import LanguageSetting from 'containers/User/LanguageSetting';
 import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
 import AutoPayment from 'containers/User/AutoPayment';
+import TransferBank from 'containers/Wallet/TransferBank';
 
 const AppNavigator = () => {
   const initialRoute = SCREEN.AUTH;
@@ -103,7 +104,6 @@ const AppNavigator = () => {
             component={TransactionSuccess}
           />
           <Stack.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
-
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
           <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
@@ -159,6 +159,7 @@ const AppNavigator = () => {
             component={TransferPhone}
           />
           <Stack.Screen name={SCREEN.AUTOPAYMENT} component={AutoPayment} />
+          <Stack.Screen name={SCREEN.TRANSFER_BANK} component={TransferBank} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
