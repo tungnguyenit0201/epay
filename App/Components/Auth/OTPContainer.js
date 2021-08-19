@@ -21,6 +21,7 @@ const OTPContainer = ({onChange, onCodeFilled, message}) => {
         codeInputFieldStyle={styles.otp}
         codeInputHighlightStyle={{}}
         onCodeFilled={onCodeFilled}
+        clearInputs={message}
       />
       <Text style={styles.message}>{message}</Text>
       {/* <OTP onChange={onChange} message={message} /> */}

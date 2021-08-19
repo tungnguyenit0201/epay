@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, Pressable, View} from 'react-native';
+import {StyleSheet, Pressable, View} from 'react-native';
 import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
 import {scale} from 'utils/Functions';
 import {Colors, Spacing} from 'themes';
+import {Text} from 'components';
 const AlertCustom = () => {
   const {error} = useCommon();
   const {setError} = useError();
@@ -35,12 +36,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalView: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     borderRadius: scale(20),
     paddingHorizontal: Spacing.PADDING * 2,
     paddingVertical: Spacing.PADDING,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,

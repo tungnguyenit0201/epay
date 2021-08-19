@@ -7,6 +7,7 @@ import {
   FUNCTION_TYPE,
   SCREEN,
 } from 'configs/Constants';
+import {Linking} from 'react-native';
 import {confirmOTP, genOtp} from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
@@ -25,22 +26,22 @@ const useLoading = () => {
 const useError = () => {
   const {dispatch} = useCommon();
   const setError = error => {
-    dispatch({type: 'SET_ERROR', error});
+    dispatch({
+      type: 'SET_ERROR',
+      error: {ErrorCode: error?.ErrorCode, ErrorMessage: error?.ErrorMessage},
+    });
   };
   return {setError};
 };
 
 const useOTP = ({functionType, phone, password}) => {
-  const {onLogin} = useAuth();
   const [errorMessage, setErrorMessage] = useState(null);
-  const {setLoading} = useLoading();
+  const [countdown, setCountdown] = useState(60);
+  const [showCall, setshowCall] = useState(false);
 
-  useEffect(() => {
-    genOtp({
-      phone,
-      functionType,
-    });
-  }, [phone, functionType]);
+  const {setLoading} = useLoading();
+  const {setError} = useError();
+  const {onLogin} = useAuth();
 
   const onChange = value => {
     errorMessage && setErrorMessage(null);
@@ -70,7 +71,51 @@ const useOTP = ({functionType, phone, password}) => {
     }
   };
 
-  return {errorMessage, onChange, onConfirmOTP};
+  const resenOTP = () => {
+    try {
+      setLoading(true);
+      let result = genOtp({
+        phone,
+        functionType,
+      });
+      let errorCode = _.get(result, 'ErrorCode', '');
+      if (errorCode == ERROR_CODE.SUCCESS) setCountdown(60);
+      else setError(result);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  const openCallDialog = () => {
+    try {
+      Linking.openURL('tel:0347019930');
+    } catch {}
+  };
+
+  useEffect(() => {
+    genOtp({
+      phone,
+      functionType,
+    });
+  }, [phone, functionType]);
+
+  useEffect(() => {
+    let timer = setInterval(() => setCountdown(countdown - 1), 1000);
+    if (countdown == 0) clearInterval(timer);
+
+    return () => clearInterval(timer);
+  }, [countdown]);
+
+  return {
+    errorMessage,
+    countdown,
+    showCall,
+    onChange,
+    onConfirmOTP,
+    resenOTP,
+    setshowCall,
+    openCallDialog,
+  };
 };
 
 const useAsyncStorage = () => {

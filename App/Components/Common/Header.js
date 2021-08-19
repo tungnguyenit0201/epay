@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, Pressable, Image, StyleSheet, Platform} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Text, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
@@ -16,13 +16,14 @@ const Header = ({
   cart = false,
   onPressBack,
   renderRightComponent,
+  avoidStatusBar = true,
 }) => {
-  const {top} = useSafeAreaInsets();
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
   return (
     <View style={[style, {}]}>
+      {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={{minHeight: scale(24)}}>
         <Text semibold size={Fonts.H6} style={[styles.title, titleStyle]}>
           {title}
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     paddingBottom: scale(10),
     backgroundColor: Colors.BACKGROUNDCOLOR,
   },
+  avoidStatusBar: {height: getStatusBarHeight()},
   shadow: {
     shadowColor: Colors.BLACK,
     shadowOffset: {
