@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
-import {View, Image, TouchableOpacity, ScrollView} from 'react-native';
-import {Text} from 'components';
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
+import {Text, Modal, Button} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import ListItem from 'components/Common/ListItem';
@@ -15,10 +20,16 @@ import HeaderBg from 'components/Common/HeaderBg';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
+import {useHome} from 'context/Home/utils';
+import {useUser} from 'context/User';
+import {useRegister} from 'context/Auth/utils';
 
 const Home = () => {
   const {top} = useSafeAreaInsets();
   const translation = useTranslation();
+  const {goSecurity} = useHome();
+  const {firstLogin} = useUser();
+  const {setFirstLogin} = useRegister();
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
@@ -77,73 +88,102 @@ const Home = () => {
     },
   ];
   return (
-    <ScrollView style={base.wrap}>
-      <HeaderBg style={{marginBottom: 50}}>
-        <View
-          style={[
-            {
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 15,
-            },
-          ]}>
-          <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
-          <Notification data={5} />
-        </View>
-        <User style={{marginBottom: 20}} />
-        <Monney
-          style={[
-            {
-              position: 'absolute',
-              bottom: -20,
-              left: Spacing.PADDING,
-              right: Spacing.PADDING,
-            },
-          ]}
-        />
-      </HeaderBg>
-
-      <View style={base.container}>
-        <View style={{marginBottom: 20}}>
-          <ListItem
-            scroll
-            space={1}
-            col={4}
-            data={dataMenu}
-            styleText={[{fontSize: 14}]}
-            styleWicon={[{backgroundColor: '#437EC0'}]}
-            styleIcon={[{tintColor: '#fff'}]}
+    <>
+      <ScrollView style={base.wrap}>
+        <HeaderBg style={{marginBottom: 50}}>
+          <View
+            style={[
+              {
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginBottom: 15,
+              },
+            ]}>
+            <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
+            <Notification data={5} />
+          </View>
+          <User style={{marginBottom: 20}} />
+          <Monney
+            style={[
+              {
+                position: 'absolute',
+                bottom: -20,
+                left: Spacing.PADDING,
+                right: Spacing.PADDING,
+              },
+            ]}
           />
-        </View>
-        <XacThuc />
+        </HeaderBg>
 
-        <View style={{marginBottom: 20}}>
-          <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
-            {translation.epay_services}
-          </Text>
-          <ListItem scroll space={1} col={4} data={dataEpay} />
-        </View>
-        <View style={{marginBottom: 20}}>
-          <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
-            {translation.traffic_payment_services}
-          </Text>
-          <ListItem space={20} col={4} data={dataGT} />
-        </View>
-        <View style={{marginBottom: 20}}>
-          <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
-            {translation.how_to_use_epay}
-          </Text>
-          <TouchableOpacity onPress={() => {}}>
-            <Image
-              source={Images.Homes.Banner}
-              style={[{height: scale(128), width: scale(335)}]}
+        <View style={base.container}>
+          <View style={{marginBottom: 20}}>
+            <ListItem
+              scroll
+              space={1}
+              col={4}
+              data={dataMenu}
+              styleText={[{fontSize: 14}]}
+              styleWicon={[{backgroundColor: '#437EC0'}]}
+              styleIcon={[{tintColor: '#fff'}]}
             />
-          </TouchableOpacity>
+          </View>
+          <XacThuc />
+
+          <View style={{marginBottom: 20}}>
+            <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
+              {translation.epay_services}
+            </Text>
+            <ListItem scroll space={1} col={4} data={dataEpay} />
+          </View>
+          <View style={{marginBottom: 20}}>
+            <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
+              {translation.traffic_payment_services}
+            </Text>
+            <ListItem space={20} col={4} data={dataGT} />
+          </View>
+          <View style={{marginBottom: 20}}>
+            <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
+              {translation.how_to_use_epay}
+            </Text>
+            <TouchableOpacity onPress={() => {}}>
+              <Image
+                source={Images.Homes.Banner}
+                style={[{height: scale(128), width: scale(335)}]}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      {firstLogin && (
+        <Modal
+          visible={firstLogin}
+          onClose={() => setFirstLogin(false)}
+          title="Đăng nhập vân tay"
+          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ."
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Cài đặt vân tay"
+                onPress={() => {
+                  setFirstLogin(false);
+                  goSecurity();
+                }}
+              />
+              <TouchableOpacity onPress={() => setFirstLogin(false)}>
+                <Text>Để sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+    </>
   );
 };
-
+const styles = StyleSheet.create({
+  buttonGroup: {
+    alignItems: 'center',
+  },
+});
 export default Home;

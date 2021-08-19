@@ -16,7 +16,7 @@ const Wrapper = React.memo(
     barStyle = 'dark-content',
     children,
     disableAvoidKeyboard = false,
-    avoidStatusBar = true,
+    avoidStatusBar = false,
   }) => {
     const {loading, error} = useCommon();
     return (

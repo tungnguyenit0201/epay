@@ -8,7 +8,6 @@ import {sha256} from 'react-native-sha256';
 import {useTranslation} from 'context/Language';
 import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
-import {genOtp, confirmOTP} from 'services/common';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -137,6 +136,11 @@ const useRegister = () => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {onLogin} = useAuth();
+  const {dispatch} = useUser();
+
+  const setFirstLogin = value => {
+    dispatch({type: 'SET_FIRST_LOGIN', firstLogin: value});
+  };
 
   const onChange = (key, val) => {
     registerRef.current[key] = val;
@@ -153,16 +157,17 @@ const useRegister = () => {
       });
       setLoading(false);
       let errorCode = _.get(result, 'ErrorCode', '');
-      if (errorCode == ERROR_CODE.SUCCESS)
+      if (errorCode == ERROR_CODE.SUCCESS) {
+        setFirstLogin(true);
         onLogin({phone, password: newPassword});
-      else setError(result);
+      } else setError(result);
       setLoading(false);
     } catch (error) {
       setLoading(false);
     }
   };
 
-  return {onChange, createAccount};
+  return {onChange, createAccount, setFirstLogin};
 };
 
 const usePhone = () => {
