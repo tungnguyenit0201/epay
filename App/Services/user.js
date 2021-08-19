@@ -1,15 +1,15 @@
 import {API} from 'configs';
-import {useQuery} from 'react-query';
 import {request} from 'utils/Request';
 
-const {USER} = API;
-
-export const login = async ({phoneNumber, password}) => {
-  return await request({
-    path: USER.LOGIN,
-    data: {phoneNumber, password},
+export const updatePassword = async ({phone, password}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_PASSWORD,
+    method: 'post',
+    params: {PhoneNumber: phone, NewPassword: password},
     success: res => {
-      console.log(res);
+      response = res;
     },
   });
+  return response;
 };

@@ -8,11 +8,18 @@ import {sha256} from 'react-native-sha256';
 import {useTranslation} from 'context/Language';
 import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
+import {updatePassword} from 'services/user';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
+  const {getPasswordEncrypted, getTouchIdEnabled} = useAsyncStorage();
 
-  useEffect(() => {
+  const checkBiometry = async () => {
+    const touchIdEnabled = await getTouchIdEnabled();
+    const passwordEncrypted = await getPasswordEncrypted();
+    if (!touchIdEnabled || !passwordEncrypted) {
+      return;
+    }
     TouchID.isSupported({})
       .then(biometryType => {
         setBiometryType(biometryType);
@@ -20,6 +27,10 @@ const useTouchID = () => {
       .catch(error => {
         __DEV__ && console.log('Touch ID is not supported.');
       });
+  };
+
+  useEffect(() => {
+    checkBiometry();
   }, []);
 
   const onTouchID = async () => {
@@ -54,11 +65,11 @@ const useTouchID = () => {
 };
 
 const useAuth = () => {
-  const {incorrect_password} = useTranslation();
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
-  const {setPhone} = useAsyncStorage();
+  const {setPhone, setPasswordEncrypted, getPasswordEncrypted} =
+    useAsyncStorage();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -85,12 +96,12 @@ const useAuth = () => {
   };
 
   const onForgetPassword = () => {
-    Navigator.replaceLast(SCREEN.FORGET_PASSWORD);
+    Navigator.push(SCREEN.FORGET_PASSWORD);
   };
 
-  const onLogin = async ({phone, password}) => {
+  const onLogin = async ({phone, password, encrypted = false}) => {
     setLoading(true);
-    const passwordEncrypted = await sha256(password);
+    const passwordEncrypted = encrypted ? password : await sha256(password);
     const result = await login(phone, passwordEncrypted);
     setLoading(false);
 
@@ -106,10 +117,19 @@ const useAuth = () => {
         });
 
       case ERROR_CODE.SUCCESS:
+        setPasswordEncrypted(passwordEncrypted);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
         Navigator.navigate(SCREEN.TAB_NAVIGATION);
         return;
     }
+  };
+
+  const onLoginByTouchID = async ({phone}) => {
+    const passwordEncrypted = await getPasswordEncrypted();
+    if (!passwordEncrypted || !phone) {
+      return;
+    }
+    onLogin({phone, password: passwordEncrypted, encrypted: true});
   };
 
   const onLogout = () => {
@@ -122,6 +142,7 @@ const useAuth = () => {
     onChangePhone,
     onForgetPassword,
     onLogin,
+    onLoginByTouchID,
     onLogout,
   };
 };
@@ -188,4 +209,40 @@ const usePhone = () => {
   return {phone};
 };
 
-export {useTouchID, useAuth, useRegister, usePhone};
+const useForgetPassword = () => {
+  const {setError} = useError();
+  const {setLoading} = useLoading();
+
+  const onSubmitPhone = async ({phone}) => {
+    const result = await checkPhone(phone);
+    const errorCode = _.get(result, 'ErrorCode', '');
+    if (
+      errorCode === ERROR_CODE.SUCCESS ||
+      errorCode === ERROR_CODE.PHONE_IS_REGISTERED
+    ) {
+      Navigator.push(SCREEN.OTP, {
+        phone,
+        functionType: FUNCTION_TYPE.FORGOT_PASS,
+      });
+      return;
+    }
+    setError(result);
+  };
+
+  const onNewPassword = async ({newPassword, phone}) => {
+    setLoading(true);
+    const passwordEncrypted = await sha256(newPassword);
+    const result = await updatePassword({password: passwordEncrypted, phone});
+    setLoading(false);
+    if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
+      setError(result);
+      return;
+    }
+    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); //translate
+    Navigator.popToTop();
+  };
+
+  return {onSubmitPhone, onNewPassword};
+};
+
+export {useTouchID, useAuth, useRegister, usePhone, useForgetPassword};

@@ -1,42 +1,28 @@
-import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Text, InputBlock, Header, Button, FWLoading, TextInput } from 'components';
-import { Colors, Fonts, Spacing } from 'themes';
+import React, {useRef, useState} from 'react';
+import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
+import {
+  Text,
+  InputBlock,
+  Header,
+  Button,
+  FWLoading,
+  TextInput,
+} from 'components';
+import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
-import { SCREEN } from 'configs/Constants';
-import { scale } from 'utils/Functions';
+import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
+import {Formik} from 'formik';
+import {phoneSchema} from 'utils/ValidationSchemas';
+import _ from 'lodash';
+import {useForgetPassword, usePhone} from 'context/Auth/utils';
+import {useTranslation} from 'context/Language';
 
 const ForgetPassword = () => {
-  let {height} = useWindowDimensions();
-  let [loading, setLoading] = useState(false);
-  let [disable, setDisable] = useState(true);
-  /* const validateInput = (checkingText) => {
-    const regexp = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-    const checkingResult = regexp.exec(checkingText);
-    if (checkingResult !== null) {
-      return {
-        isInputValid: true,
-        errorMessage: 'done'
-      };
-    } else {
-      return {
-        isInputValid: false,
-        errorMessage: 'Số điện thoại không đúng'
-      };
-    }
-  } */
-  const onPress = () => {
-    Navigator.navigate(SCREEN.OTP);
-  };
-  /* const handleChange = async (e) => {
-    const handleText = e.trim();
-    if (validateInput(handleText).isInputValid) {
-      setDisable(false)
-    }
-    else {
-      setDisable(true);
-    }
-  } */
+  const {phone} = usePhone();
+  const {onSubmitPhone} = useForgetPassword();
+  const translation = useTranslation();
+
   return (
     <ScrollView style={styles.container}>
       <Header back title="Quên mật khẩu" />
@@ -45,19 +31,51 @@ const ForgetPassword = () => {
         <Text style={styles.textDescription}>
           {`Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print`}
         </Text>
-        <TextInput
-          /* onChange={handleChange} */
-          style={styles.inputBlock}
-          placeholderTextColor={Colors.BLACK}
-          placeholder='Nhập số điện thoại'
-        />
-        <Button
-          style={styles.buttonBlock}
-          label="Tiếp tục"
-          fs={Fonts.FONT_MEDIUM}
-          onPress={onPress}
-          /* disabled={disable} */
-        />
+        <Formik
+          key={phone}
+          initialValues={{
+            phone: phone || '',
+          }}
+          validationSchema={phoneSchema}
+          onSubmit={onSubmitPhone}>
+          {({
+            handleChange: _handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            values,
+          }) => {
+            const handleChange = field => value => {
+              setFieldValue(field, value);
+              setFieldTouched(field, true, false);
+            };
+
+            return (
+              <View>
+                <TextInput
+                  numeric
+                  onChange={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  error={touched.phone && errors.phone}
+                  value={values.phone}
+                  style={styles.inputBlock}
+                  placeholderTextColor={Colors.BLACK}
+                  placeholder="Nhập số điện thoại"
+                />
+                <Button
+                  label={translation.continue}
+                  style={styles.buttonBlock}
+                  onPress={handleSubmit}
+                  disabled={!_.isEmpty(errors)}
+                  fs={Fonts.FONT_MEDIUM}
+                />
+              </View>
+            );
+          }}
+        </Formik>
         <Text style={styles.textUnderline}>Hoặc vui lòng gọi 1900-0000</Text>
       </View>
     </ScrollView>
@@ -87,19 +105,19 @@ const styles = StyleSheet.create({
     paddingVertical: scale(30),
   },
   inputBlock: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     borderColor: Colors.BLACK,
     fontSize: Fonts.FONT_MEDIUM,
-    marginTop: Spacing.PADDING
+    marginTop: Spacing.PADDING,
   },
   textDescription: {
     color: Colors.GRAY,
-    fontSize: Fonts.FONT_MEDIUM
+    fontSize: Fonts.FONT_MEDIUM,
   },
   buttonBlock: {
     marginTop: Spacing.PADDING,
     paddingVertical: Fonts.H6,
-    backgroundColor: Colors.g9
+    backgroundColor: Colors.g9,
   },
   textLable: {
     fontSize: Fonts.FONT_MEDIUM,
@@ -109,6 +127,6 @@ const styles = StyleSheet.create({
     fontSize: Fonts.FONT_MEDIUM,
     marginTop: Spacing.PADDING + 20,
     textDecorationLine: 'underline',
-  }
+  },
 });
 export default ForgetPassword;

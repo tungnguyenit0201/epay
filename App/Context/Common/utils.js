@@ -67,7 +67,15 @@ const useOTP = ({functionType, phone, password}) => {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
         return onLogin({phone, password});
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
+        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {
+          phone,
+          functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
+        });
+      case FUNCTION_TYPE.FORGOT_PASS:
+        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {
+          phone,
+          functionType: FUNCTION_TYPE.FORGOT_PASS,
+        });
     }
   };
 
