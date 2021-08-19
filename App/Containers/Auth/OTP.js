@@ -6,19 +6,14 @@ import {Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
-import Password from 'components/Auth/Password';
-import {useRegister} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
+import {useOTP} from 'context/Common/utils';
 
 const OTP = ({route}) => {
-  let {phone, action} = route?.params;
-  const {onChange, confrimOTPRegister} = useRegister();
   const {onChangePhone} = useAuth();
+  const {onChange, onConfirmOTP, errorMessage} = useOTP(route?.params);
   const {sign_up} = useTranslation();
-  const register = async OtpCode => {
-    confrimOTPRegister({phone, OtpCode});
-  };
 
   return (
     <>
@@ -26,8 +21,9 @@ const OTP = ({route}) => {
       <ScrollView style={styles.container}>
         <View style={styles.wrap}>
           <OTPContainer
-            onChange={value => onChange('otp', value)}
-            onCodeFilled={register}
+            onChange={onChange}
+            onCodeFilled={onConfirmOTP}
+            message={errorMessage}
           />
 
           {/* {action == 'password' && (
@@ -45,7 +41,7 @@ const OTP = ({route}) => {
             label={'Gửi lại'}
             label2=" (60s)"
             style={styles.disabled_btn}
-            onPress={register}
+            onPress={onConfirmOTP}
           />
 
           {/* <Button mb={10} label="Gửi lại" onPress={register} /> */}
