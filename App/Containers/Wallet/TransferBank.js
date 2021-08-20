@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Button, Header, SelectInput, TextInput} from 'components';
+import {View, Text, ScrollView, 
+  StyleSheet, Image, TouchableOpacity, Pressable,} from 'react-native';
+import {Button, Header, TextInput, Row, Col} from 'components';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {SCREEN} from 'configs/Constants';
@@ -11,6 +12,28 @@ import { Checkbox } from 'react-native-ui-lib';
 
 const BankTransferInfo = () => {
   const translation = useTranslation();
+  const [checkedBank, setChecked] = useState();
+
+  const dataBank = [
+    {
+      id: 1,
+      icon: Images.Transfer.EmptyWallet,
+      name: 'Ví của tôi',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      id: 2,
+      icon: Images.Bank.Eximbank,
+      name: 'Eximbank',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      id: 3,
+      icon: Images.Bank.Vietcombank,
+      name: 'Vietcombank',
+      screen: SCREEN.TOP_UP,
+    },
+  ];
   
   return (
     <ScrollView style={styles.container}>
@@ -56,7 +79,7 @@ const BankTransferInfo = () => {
         </TouchableOpacity>
       </HeaderBg>
 
-      <View style={[styles.wrap,{paddingTop: 10}]}>
+      <View style={[styles.wrap,{paddingVertical: 10}]}>
         <View style={styles.mb_1}>
           <TextInput placeholder={translation.enter_the_recipients_account_number}/>
           <Text style={{color:"red"}}>
@@ -89,6 +112,46 @@ const BankTransferInfo = () => {
             label={translation.save_transfer_information}/>
         </View>
       </View>
+
+      <View style={styles.line_gray}></View>
+
+      <View style={[styles.wrap,{paddingVertical: 20}]}>
+        <Text style={{
+          marginBottom: 20,
+          fontWeight: '600',
+          fontSize: Fonts.H6,
+        }}>{translation.transfer_by_epay_wallet}</Text>
+
+        <Row space="10" style={{marginBottom: 4}}>
+          {dataBank.map((item, index) => (
+            <Col width="33.33%" space="10" key={index}>
+              <Pressable
+                style={[styles.item]}
+                onPress={() => setChecked(index)}>
+                <View style={[styles.wicon]}>
+                  <Image source={item.icon} style={[styles.icon]} />
+                  {checkedBank === index && (
+                    <View style={styles.active}>
+                      <Image source={Images.Down} style={styles.activeImg} />
+                    </View>
+                  )}
+                </View>
+                <Text size={12} mt={5}>{item.name}</Text>
+              </Pressable>
+            </Col>
+          ))}
+        </Row>
+
+        <Text style={{
+          marginBottom: 12,
+          fontWeight: '600',
+          fontSize: Fonts.H6,
+        }}>{translation.transfer_by_bank_account}</Text>
+
+        <Button
+          onPress={() => Navigator.push(SCREEN.TRANSACTION_SUCCESS)}
+          label={translation.continue}/>
+      </View>
     </ScrollView>
   );
 };
@@ -112,6 +175,46 @@ const styles = StyleSheet.create({
   },
   text_white: { color: Colors.white, },
   mb_1: { marginBottom: 8 },
+  line_gray: {
+    backgroundColor: Colors.BORDER,
+    height: 8
+  },
+  item: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  wicon: {
+    width: scale(48),
+    height: scale(48),
+    backgroundColor: Colors.l2,
+    borderRadius: 100,
+    marginBottom: 7,
+  },
+  icon: {
+    width: scale(28),
+    height: scale(28),
+    resizeMode: 'contain',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{translateX: scale(-14)}, {translateY: scale(-14)}],
+  },
+  active: {
+    backgroundColor: '#5786F7',
+    width: 15,
+    height: 15,
+    borderRadius: 99,
+    overflow: 'hidden',
+    padding: 2,
+    position: 'absolute',
+    top: -4,
+    right: -2,
+  },
+  activeImg: {
+    width: 12,
+    height: 12,
+    tintColor: '#fff',
+  },
 });
 
 export default BankTransferInfo;
