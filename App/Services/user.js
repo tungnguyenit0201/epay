@@ -1,25 +1,40 @@
 import {API} from 'configs';
-import {useQuery} from 'react-query';
 import {request} from 'utils/Request';
 
-const {USER} = API;
-
-export const login = async ({phoneNumber, password}) => {
-  return await request({
-    path: USER.LOGIN,
-    data: {phoneNumber, password},
+export const updatePassword = async ({phone, password}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_PASSWORD,
+    method: 'post',
+    params: {PhoneNumber: phone, NewPassword: password},
     success: res => {
-      console.log(res);
+      response = res;
     },
   });
+  return response;
+};
+export const updatePersonalInfo = async ({phone, personalInfo}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_PERSONAL_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone, PersonalInfo: personalInfo},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
 };
 
-export const register = async ({phoneNumber}) => {
-  return await request({
-    path: USER.LOGIN,
-    data: {phoneNumber},
+export const getPersonalInfo = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_PERSONAL_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone},
     success: res => {
-      console.log(res);
+      response = res;
     },
   });
+  return response;
 };

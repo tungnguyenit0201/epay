@@ -26,3 +26,5 @@ export {default as OTP} from './Common/OTP';
 export {default as Row} from './Common/Row';
 export {default as Col} from './Common/Col';
 export {default as SelectInput} from './Common/SelectInput';
+export {default as Wrapper} from './Common/Wrapper';
+export {default as Modal} from './Common/Modal';

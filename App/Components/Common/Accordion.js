@@ -7,9 +7,8 @@ import {
   Pressable,
   Platform,
 } from 'react-native';
-import Text from './Text';
-import Icon from './Icon';
-import {scale} from '../../Utils/Functions';
+import {Text, Icon} from 'components';
+import {scale} from 'utils/Functions';
 import {Colors, Fonts, Images, Spacing} from '../../Themes';
 
 const Accordion = ({

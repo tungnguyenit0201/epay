@@ -7,6 +7,8 @@ const SCREEN = {
   REGISTER_PASSWORD: 'RegisterPassword',
   REGISTER_NAME: 'RegisterName',
   OTP: 'OTP',
+  SMART_OTP: 'SmartOTP',
+  ACTIVE_OTP: 'ActiveOTP',
   BANK_LIST: 'BankList',
   BANK_INFO: 'BankInfo',
   BANK_RESULT: 'BankResult',
@@ -35,6 +37,7 @@ const SCREEN = {
   VERIFY_USER_INFO: 'VerifyUserInfo',
   VERIFY_IDENTITY_CARD: 'VerifyIdentityCard',
   VERIFY_USER_PORTRAIT: 'VerifyUserPortrait',
+  VERIFY_EMAIL: 'VerifyEmail',
   CHECKOUT_SUCCESS: 'CheckoutSuccess',
   CHECKOUT_FAILURE: 'CheckoutFailure',
   REGION_SELECT: 'RegionSelect',
@@ -42,5 +45,7 @@ const SCREEN = {
   MY_WALLET: 'MyWallet',
   TRANSFER_PHONE: 'TransferPhone',
   AUTOPAYMENT: 'AutoPayment',
+  TRANSFER_BANK: 'TransferBank',
+  UPDATE_PASSWORD: 'UpdatePassword',
 };
 export default SCREEN;

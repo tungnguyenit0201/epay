@@ -1,10 +1,14 @@
 const custom = require('../webpack.config.js');
 module.exports = {
-  // stories: ['../App/Components/Common/**/*.stories.[tj]s'],
-  stories: [
-    '../App/Components/Common/Accordion.stories.js',
-    '../App/Components/Common/Button.stories.js',
-  ],
+  stories: ['../App/Components/Common/*.stories.[tj]s'],
+  // stories: [
+  //   '../App/Components/Common/Accordion.stories.js',
+  //   '../App/Components/Common/Button.stories.js',
+  //   '../App/Components/Common/Alert.stories.js',
+  //   '../App/Components/Common/Avatar.stories.js',
+  //   '../App/Components/Common/BottomButton.stories.js',
+  //   '../App/Components/Common/Button_bk.stories.js',
+  // ],
   webpackFinal: (config) => {
     return {
       ...config,

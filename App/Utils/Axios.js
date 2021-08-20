@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { API } from 'configs';
+import {API} from 'configs';
 
-const { TIMEOUT, ROOT } = API;
+const {TIMEOUT, ROOT} = API;
 const instance = axios.create({
   withCredentials: false,
   baseURL: ROOT,

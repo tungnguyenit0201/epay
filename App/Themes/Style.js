@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     position: 'relative',
   },
+  leftAuto: {
+    marginLeft: 'auto',
+  },
+  rightAuto: {
+    marginRight: 'auto',
+  },
   shadow: {
     shadowColor: '#000',
     shadowOffset: {

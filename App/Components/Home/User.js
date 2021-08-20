@@ -4,8 +4,10 @@ import {Text} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
+import {useAuth} from 'context/Auth/utils';
 
 const User = ({data, style}) => {
+  const {onLogout} = useAuth();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -15,16 +17,21 @@ const User = ({data, style}) => {
         style={styles.wicon}>
         <Image style={{width: 40, height: 40}} source={Images.Avatar} />
       </TouchableOpacity>
-      <View>
-        <Text bold size={Fonts.H6} color="#fff" mb={5}>
-          Xin chào Vân
-        </Text>
-
-        <Text color="#fff">
-          *********
-          <Text color="#fff" style={styles.phone}>
-            387
+      <View style={styles.user}>
+        <View>
+          <Text bold size={Fonts.H6} color="#fff" mb={5}>
+            Xin chào Vân
           </Text>
+
+          <Text color="#fff">
+            *********
+            <Text color="#fff" style={styles.phone}>
+              387
+            </Text>
+          </Text>
+        </View>
+        <Text color={Colors.white} onPress={onLogout}>
+          Thoát
         </Text>
       </View>
     </View>
@@ -46,6 +53,11 @@ const styles = StyleSheet.create({
   },
   phone: {
     height: 20,
+  },
+  user: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
   },
 });
 

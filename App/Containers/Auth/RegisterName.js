@@ -1,48 +1,42 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-import {TEXT} from 'configs/Constants';
+import {Text, InputBlock, Header, Button} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-
+import {useTranslation} from 'context/Language';
+import {useUserInfo} from 'context/User/utils';
 const RegisterName = () => {
-  let [loading, setLoading] = useState(false);
   let [disable, setDisable] = useState(true);
-
-  const register = async () => {
-    Navigator.navigate(SCREEN.HOME);
-  };
+  const {sign_up} = useTranslation();
+  const {onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
 
   return (
     <ScrollView style={styles.container}>
-      <Header back shadow={false}/>
+      <Header back shadow={false} title={sign_up} />
 
-      {!loading ? (
-        <View style={styles.wrap}>
-          <Text style={[styles.title]} mb={20}>Nhập tên</Text>
-          <Text style={styles.text} mb={40}>Lorem Ipsum is simply dummy text of 
-            the printing and typesetting industry.</Text>
-          <InputBlock phone style={[styles.input]} 
-            placeholder="Nhập Họ và Tên"
-            onFocus={e => setDisable(false)}/>
-          <Button
-            mt={56}
-            disabled={disable}
-            label="Tiếp tục"
-            style={styles.btn}
-            onPress={register}/>
-        </View>
-      ) : (
-        <FWLoading wrapStyle={[styles.loading, {height: height}]} />
-      )}
+      <View style={styles.wrap}>
+        <Text style={[styles.title]} mb={20}>
+          Nhập tên
+        </Text>
+        <Text style={styles.text} mb={40}>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
+        </Text>
+        <InputBlock
+          style={[styles.input]}
+          placeholder="Nhập Họ và Tên"
+          onFocus={e => setDisable(false)}
+          onChange={val => setPersonalInfo('FullName', val)}
+        />
+        <Button
+          mt={56}
+          disabled={disable}
+          label="Tiếp tục"
+          style={styles.btn}
+          onPress={onUpdatePersonalInfo}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -66,15 +60,15 @@ const styles = StyleSheet.create({
     fontSize: 30,
     // marginBottom: 20,
     fontWeight: 'bold',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   text: {
-    fontSize: 14
+    fontSize: 14,
   },
   input: {
     borderColor: 'black',
     borderRadius: 3,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   btn: {
     paddingTop: 15,

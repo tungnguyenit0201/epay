@@ -11,31 +11,22 @@ import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import {useTouchID} from 'context/Auth/utils';
+import {useAuth, useTouchID} from 'context/Auth/utils';
 import _ from 'lodash';
+import {Formik} from 'formik';
 
-const ForgotPassword = () => {
+const Login = ({route}) => {
+  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
+    useAuth();
   const translation = useTranslation();
-  let {height} = useWindowDimensions();
-  let [disable, setDisable] = useState(true);
-  let forgotRef = useRef({
-    phone: '',
-  });
+
   const {biometryType, onTouchID} = useTouchID();
 
-  const onChange = (key, val) => {
-    forgotRef.current[key] = val;
-  };
-
-  const onPress = async () => {
-    Navigator.navigate(SCREEN.TAB_NAVIGATION);
-  };
-
-  const onLoginByTouchID = async () => {
+  const _onLoginByTouchID = async () => {
     try {
       const result = await onTouchID();
       if (result) {
-        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        onLoginByTouchID({phone: _.get(route, 'params.phone', '')});
       }
     } catch (error) {
       alert(error);
@@ -44,46 +35,69 @@ const ForgotPassword = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* <Header back/> */}
-      <View style={styles.wrap}>
-        <Text style={[styles.title]} mb={20}>
-          Nhập mật khẩu
-        </Text>
-        <Text mb={10}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </Text>
-        <InputBlock
-          onFocus={e => setDisable(false)}
-          password
-          placeholder="Nhập mật khẩu"
-        />
-        <Button
-          mb={10}
-          disabled={disable}
-          label="Đăng nhập"
-          onPress={onPress}
-        />
+      <Formik
+        initialValues={{
+          password: '',
+        }}
+        onSubmit={({password}) =>
+          onLogin({phone: _.get(route, 'params.phone', ''), password})
+        }>
+        {({
+          handleChange: _handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          setFieldTouched,
+          touched,
+          errors,
+          values,
+        }) => {
+          const handleChange = field => value => {
+            setFieldValue(field, value);
+            setFieldTouched(field, true, false);
+          };
 
-        {!!biometryType && (
-          <Button
-            label={_.startCase(biometryType)}
-            onPress={onLoginByTouchID}
-          />
-        )}
+          return (
+            <View style={styles.wrap}>
+              <Text style={[styles.title]} mb={20}>
+                Nhập mật khẩu
+              </Text>
+              <Text mb={10}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry.
+              </Text>
+              <InputBlock
+                password
+                placeholder="Nhập mật khẩu"
+                onChange={handleChange('password')}
+                onBlur={handleBlur('password')}
+                error={touched.password && errors.password}
+                value={values.password}
+              />
+              <Button mb={10} label="Đăng nhập" onPress={handleSubmit} />
 
-        <View style={[styles.box_1, {marginTop: 40}]}>
-          <Pressable onPress={() => Navigator.push(SCREEN.FORGET_PASSWORD)}>
-            <Text style={[styles.link_text]}>
-              {translation.forgot_password}
-            </Text>
-          </Pressable>
+              {!!biometryType && (
+                <Button
+                  label={_.startCase(biometryType)}
+                  onPress={_onLoginByTouchID}
+                />
+              )}
 
-          <Pressable onPress={onPress}>
-            <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-          </Pressable>
-        </View>
-      </View>
+              <View style={[styles.box_1, {marginTop: 40}]}>
+                <Pressable onPress={onForgetPassword}>
+                  <Text style={[styles.link_text]}>
+                    {translation.forgot_password}
+                  </Text>
+                </Pressable>
+
+                <Pressable onPress={onChangePhone}>
+                  <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+                </Pressable>
+              </View>
+            </View>
+          );
+        }}
+      </Formik>
     </ScrollView>
   );
 };
@@ -121,4 +135,4 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
 });
-export default ForgotPassword;
+export default Login;

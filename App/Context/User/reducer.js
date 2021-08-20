@@ -1,20 +1,24 @@
 export default function userReducer(state, action) {
   switch (action.type) {
-    case 'INIT_STATE':
-      return action.data;
-    case 'CHOISED_OPTION_VARIENT':
+    case 'UPDATE_TOKEN':
       return {
         ...state,
-        choisedOptionVarient: action.data,
+        token: action.data,
       };
-    case 'UPDATE_NEW_VARIENT':
+    case 'SET_FIRST_LOGIN':
       return {
         ...state,
-        choisedOptionVarient: action.data,
-        price: action.newPrice,
-        basePrice: action.newBasePrice,
-        currentImage: action.newImage,
-        currentVarient: action.currentProductId,
+        firstLogin: action?.firstLogin,
+      };
+    case 'SET_PERSONAL_INFO':
+      return {
+        ...state,
+        personalInfo: action?.personalInfo,
+      };
+    case 'SET_PHONE':
+      return {
+        ...state,
+        phone: action?.phone,
       };
     default:
       return state;
