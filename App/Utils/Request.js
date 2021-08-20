@@ -61,6 +61,9 @@ async function request({
         result = await requestMethod[method](buildURL(root + url, query), {
           headers,
         });
+        if (__DEV__) {
+          console.log(method, buildURL(root + url, query), params, result);
+        }
       } else {
         let postParams = {...(await getCommonParams(url)), ...params};
         if (form) {
@@ -78,9 +81,9 @@ async function request({
             headers,
           },
         );
-      }
-      if (__DEV__) {
-        console.log(method, buildURL(root + url, query), params, result);
+        if (__DEV__) {
+          console.log(method, buildURL(root + url, query), postParams, result);
+        }
       }
       if (
         result.status === 200 ||

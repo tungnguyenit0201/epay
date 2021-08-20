@@ -16,5 +16,6 @@ export default {
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
+    UPDATE_PERSONAL_INFO: 'account/update_personal_info',
   },
 };
