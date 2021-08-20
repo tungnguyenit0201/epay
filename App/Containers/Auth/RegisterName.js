@@ -5,11 +5,11 @@ import {Colors, Fonts, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import {useUpdateInfo} from 'context/User/utils';
+import {useUserInfo} from 'context/User/utils';
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const {sign_up} = useTranslation();
-  const {onUpdatePersonalInfo, setPersonalInfo} = useUpdateInfo();
+  const {onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
 
   return (
     <ScrollView style={styles.container}>
