@@ -27,7 +27,7 @@ const RegisterPassword = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Header back shadow={false} />
+      <Header back shadow={false} title={translation.sign_up} />
 
       <Formik
         initialValues={{

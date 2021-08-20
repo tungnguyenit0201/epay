@@ -9,6 +9,7 @@ import {useTranslation} from 'context/Language';
 import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {updatePassword} from 'services/user';
+import {setDefaultHeaders} from 'utils/Axios';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -68,7 +69,7 @@ const useAuth = () => {
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
-  const {setPhone, setPasswordEncrypted, getPasswordEncrypted} =
+  const {setPhone, setPasswordEncrypted, getPasswordEncrypted, setToken} =
     useAsyncStorage();
 
   const onCheckPhoneExist = async ({phone}) => {
@@ -99,7 +100,12 @@ const useAuth = () => {
     Navigator.push(SCREEN.FORGET_PASSWORD);
   };
 
-  const onLogin = async ({phone, password, encrypted = false}) => {
+  const onLogin = async ({
+    phone,
+    password,
+    encrypted = false,
+    firstLogin = false,
+  }) => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
     const result = await login(phone, passwordEncrypted);
@@ -118,8 +124,14 @@ const useAuth = () => {
 
       case ERROR_CODE.SUCCESS:
         setPasswordEncrypted(passwordEncrypted);
+        setDefaultHeaders({
+          Authorization: `Bearer ${result?.Token}`,
+        });
+        await setToken(result?.Token);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
-        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        Navigator.navigate(
+          firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
+        );
         return;
     }
   };
@@ -134,6 +146,9 @@ const useAuth = () => {
 
   const onLogout = () => {
     dispatch({type: 'UPDATE_TOKEN', data: ''});
+    setDefaultHeaders({
+      Authorization: ``,
+    });
     Navigator.popToTop();
   };
 
@@ -158,7 +173,7 @@ const useRegister = () => {
   const {setError} = useError();
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
-
+  const {setPhone} = useAsyncStorage();
   const setFirstLogin = value => {
     dispatch({type: 'SET_FIRST_LOGIN', firstLogin: value});
   };
@@ -170,6 +185,8 @@ const useRegister = () => {
   const createAccount = async ({phone, newPassword}) => {
     try {
       setLoading(true);
+
+      await setPhone(phone);
       let passwordEncrypted;
       passwordEncrypted = await sha256(newPassword);
       const result = await register({
@@ -180,7 +197,7 @@ const useRegister = () => {
       let errorCode = _.get(result, 'ErrorCode', '');
       if (errorCode == ERROR_CODE.SUCCESS) {
         setFirstLogin(true);
-        onLogin({phone, password: newPassword});
+        onLogin({phone, password: newPassword, firstLogin: true});
       } else setError(result);
       setLoading(false);
     } catch (error) {

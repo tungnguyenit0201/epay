@@ -142,7 +142,10 @@ const useAsyncStorage = () => {
   };
 
   const setPasswordEncrypted = async value => {
-    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.PHONE, value);
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.USER.PASSWORD_ENCRYPTED,
+      value,
+    );
   };
 
   const getTouchIdEnabled = async () => {
@@ -153,6 +156,14 @@ const useAsyncStorage = () => {
     await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED, value);
   };
 
+  const getToken = async value => {
+    await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN, value);
+  };
+
+  const setToken = async value => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOKEN, value);
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -161,6 +172,8 @@ const useAsyncStorage = () => {
     setPasswordEncrypted,
     getTouchIdEnabled,
     setTouchIdEnabled,
+    getToken,
+    setToken,
   };
 };
 
