@@ -13,7 +13,7 @@ import { Checkbox } from 'react-native-ui-lib';
 
 const BankTransferInfo = () => {
   const translation = useTranslation();
-  const [checkedBank, setChecked] = useState();
+  const [checkedBank, setChecked] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const dataBank = [
@@ -49,12 +49,10 @@ const BankTransferInfo = () => {
     <ScrollView style={styles.container}>
       <HeaderBg>
         <Header back title={translation.connect_bank} />
-        <Text style={[styles.title,{
+        <Text style={[styles.title,styles.text_white, {
           marginTop: 28,
-          marginBottom: 10
-        }]}>
-          {translation.transfer_to}
-        </Text>
+          marginBottom: 10,
+        }]}>{translation.transfer_to}</Text>
 
         <TouchableOpacity
           style={[styles.flex_row,{
@@ -80,10 +78,10 @@ const BankTransferInfo = () => {
           
           <View>
             <Text style={[styles.text_white,{
-              marginBottom: 1,
-              fontWeight: '600',
+              marginBottom: 4,
+              fontWeight: '500',
               fontSize: Fonts.H6
-            }]}>Vietinbank</Text>
+              }]}>Vietinbank</Text>
             <Text style={styles.text_white}>{translation.free}</Text>
           </View>
         </TouchableOpacity>
@@ -126,11 +124,9 @@ const BankTransferInfo = () => {
       <View style={styles.line_gray}></View>
 
       <View style={[styles.wrap,{paddingVertical: 20}]}>
-        <Text style={{
+        <Text style={[styles.title,{
           marginBottom: 20,
-          fontWeight: '600',
-          fontSize: Fonts.H6,
-        }}>{translation.transfer_by_epay_wallet}</Text>
+        }]}>{translation.transfer_by_epay_wallet}</Text>
 
         <Row space="10" style={{marginBottom: 4}}>
           {dataBank.map((item, index) => (
@@ -152,11 +148,9 @@ const BankTransferInfo = () => {
           ))}
         </Row>
 
-        <Text style={{
-          marginBottom: 12,
-          fontWeight: '600',
-          fontSize: Fonts.H6,
-        }}>{translation.transfer_by_bank_account}</Text>
+        <Text style={[styles.title,{ marginBottom: 12 }]}>
+          {translation.transfer_by_bank_account}
+        </Text>
 
         {/* <Button
           onPress={() => Navigator.push(SCREEN.TRANSACTION_SUCCESS)}
@@ -172,7 +166,7 @@ const BankTransferInfo = () => {
         isVisible={showModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"
-        style={{flex: 1,}}
+        style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
@@ -194,7 +188,6 @@ const BankTransferInfo = () => {
               <Image source={Images.Transfer.Lock} 
                 style={styles.icon_lock_img} />
             </View>
-
             <TextInput password placeholder={translation.enter_message}
               style={styles.input_text}/>
           </View>
@@ -220,7 +213,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
   },
   title: {
-    color: Colors.white,
     fontWeight: 'bold',
     fontSize: Fonts.H6
   },
@@ -284,7 +276,7 @@ const styles = StyleSheet.create({
     width: 17,
     height: 17,
   },
-  input_text: {paddingLeft: 53}
+  input_text: { paddingLeft: 53 }
 });
 
 export default BankTransferInfo;
