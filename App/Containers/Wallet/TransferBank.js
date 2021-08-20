@@ -8,11 +8,13 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import HeaderBg from 'components/Common/HeaderBg';
+import Modal from 'react-native-modal';
 import { Checkbox } from 'react-native-ui-lib';
 
 const BankTransferInfo = () => {
   const translation = useTranslation();
   const [checkedBank, setChecked] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   const dataBank = [
     {
@@ -34,6 +36,14 @@ const BankTransferInfo = () => {
       screen: SCREEN.TOP_UP,
     },
   ];
+
+  const onShowModal = () => {
+    setShowModal(true);
+  };
+
+  const onHideModal = () => {
+    setShowModal(false);
+  };
   
   return (
     <ScrollView style={styles.container}>
@@ -148,10 +158,55 @@ const BankTransferInfo = () => {
           fontSize: Fonts.H6,
         }}>{translation.transfer_by_bank_account}</Text>
 
-        <Button
+        {/* <Button
           onPress={() => Navigator.push(SCREEN.TRANSACTION_SUCCESS)}
+          label={translation.continue}/> */}
+        
+        {/*button show modal*/}
+        <Button
+          onPress={onShowModal}
           label={translation.continue}/>
       </View>
+
+      <Modal
+        isVisible={showModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        style={{flex: 1,}}
+        useNativeDriver
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}
+        onBackdropPress={onHideModal}>
+        <View style={{
+          paddingVertical: 24,
+          paddingHorizontal: 16,
+          backgroundColor: Colors.BACKGROUNDCOLOR,
+        }}>
+          <Text style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 22,
+          }}>{translation.password}</Text>
+
+          <View>
+            <View style={styles.icon_lock}>
+              <Image source={Images.Transfer.Lock} 
+                style={styles.icon_lock_img} />
+            </View>
+
+            <TextInput password placeholder={translation.enter_message}
+              style={styles.input_text}/>
+          </View>
+
+          <TouchableOpacity>
+            <Text style={{
+              textAlign: 'center',
+              fontSize: 14,
+            }}>{translation.forgot_password}?</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -215,6 +270,21 @@ const styles = StyleSheet.create({
     height: 12,
     tintColor: '#fff',
   },
+  icon_lock: {
+    position: 'absolute',
+    top: 14,
+    left: 14,
+    paddingRight: 10,
+    borderRightWidth: 0.5,
+    borderStyle: 'solid',
+    borderColor: Colors.GRAY,
+    zIndex: 1,
+  },
+  icon_lock_img: {
+    width: 17,
+    height: 17,
+  },
+  input_text: {paddingLeft: 53}
 });
 
 export default BankTransferInfo;
