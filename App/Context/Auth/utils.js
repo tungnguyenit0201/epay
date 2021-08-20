@@ -8,6 +8,7 @@ import {sha256} from 'react-native-sha256';
 import {useTranslation} from 'context/Language';
 import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
+import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 
@@ -71,6 +72,7 @@ const useAuth = () => {
   const {setError} = useError();
   const {setPhone, setPasswordEncrypted, getPasswordEncrypted, setToken} =
     useAsyncStorage();
+  const {onGetPersonalInfo} = useUserInfo();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -132,6 +134,7 @@ const useAuth = () => {
         Navigator.navigate(
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
+        onGetPersonalInfo();
         return;
     }
   };

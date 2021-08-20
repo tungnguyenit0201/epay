@@ -25,3 +25,16 @@ export const updatePersonalInfo = async ({phone, personalInfo}) => {
   });
   return response;
 };
+
+export const getPersonalInfo = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_PERSONAL_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

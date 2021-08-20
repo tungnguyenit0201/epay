@@ -28,7 +28,11 @@ const useError = () => {
   const setError = error => {
     dispatch({
       type: 'SET_ERROR',
-      error: {ErrorCode: error?.ErrorCode, ErrorMessage: error?.ErrorMessage},
+      error: {
+        errorCode: error?.ErrorCode,
+        errorMessage: error?.ErrorMessage,
+        title: error?.title,
+      },
     });
   };
   return {setError};
@@ -96,7 +100,7 @@ const useOTP = ({functionType, phone, password}) => {
   };
   const openCallDialog = () => {
     try {
-      Linking.openURL('tel:0347019930');
+      Linking.openURL('tel:02432252336');
     } catch {}
   };
 

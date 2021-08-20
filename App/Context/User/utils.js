@@ -3,8 +3,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
 import {getConfigInfo} from 'services/auth';
-import {updatePersonalInfo} from 'services/user';
+import {updatePersonalInfo, getPersonalInfo} from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {useUser} from 'context/User';
 import _ from 'lodash';
 const imagePickerOptions = {
   width: 850,
@@ -47,7 +48,7 @@ const useVerifyInfo = (initialValue = {}) => {
 
   return {data: contentRef.current, onChange, onContinue};
 };
-const useUpdateInfo = () => {
+const useUserInfo = () => {
   let personalInfo = useRef({
     FullName: '',
     DateOfBirth: '',
@@ -55,11 +56,32 @@ const useUpdateInfo = () => {
     Avatar: '',
     Email: '',
   });
+
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
+  const {dispatch} = useUser();
+
   const setPersonalInfo = (key, value) => {
     personalInfo.current[key] = value;
+  };
+
+  const onGetPersonalInfo = async () => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      setLoading(false);
+      let result = await getPersonalInfo({phone});
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        dispatch({
+          type: 'SET_PERSONAL_INFO',
+          personalInfo: result?.PersonalInfo,
+        });
+        dispatch({type: 'SET_PHONE', phone});
+      } else setError(result);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   const onUpdatePersonalInfo = async () => {
@@ -78,11 +100,13 @@ const useUpdateInfo = () => {
       setLoading(false);
     }
   };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
     setPersonalInfo,
+    onGetPersonalInfo,
   };
 };
 
-export {useImagePicker, useVerifyInfo, useUpdateInfo};
+export {useImagePicker, useVerifyInfo, useUserInfo};

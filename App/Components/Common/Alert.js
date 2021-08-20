@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
 import {scale} from 'utils/Functions';
-import {Colors, Spacing} from 'themes';
+import {Colors, Spacing, Fonts} from 'themes';
 import {Text} from 'components';
 const AlertCustom = () => {
   const {error} = useCommon();
@@ -14,11 +14,14 @@ const AlertCustom = () => {
     <Modal
       animationType="slide"
       transparent={true}
-      visible={!!error?.ErrorCode}
+      visible={!!error?.errorCode}
       onBackdropPress={() => setError(null)}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalText}>{error?.ErrorMessage}</Text>
+          {!!error?.title && (
+            <Text style={[styles.modalText, styles.title]}>{error?.title}</Text>
+          )}
+          <Text style={styles.modalText}>{error?.errorMessage}</Text>
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => setError(null)}>
@@ -49,6 +52,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  title: {
+    fontSize: Fonts.H5,
+    fontWeight: 'bold',
   },
   button: {
     borderRadius: scale(20),

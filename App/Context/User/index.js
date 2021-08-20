@@ -12,6 +12,8 @@ const UserContext = createContext({});
 const defaultUserInfo = {
   token: '',
   firstLogin: false,
+  personalInfo: null,
+  phone: null,
 };
 
 export const UserProvider = ({children}) => {
