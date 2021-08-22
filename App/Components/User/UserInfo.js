@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {Text, Button, Icon} from 'components';
-import {Images, Colors, Fonts, base} from 'themes';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Text, Button, Icon } from 'components';
+import { Images, Colors, Fonts, base } from 'themes';
 import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import { SCREEN } from 'configs/Constants';
 
-const User = ({data, style}) => {
+import { useUser } from 'context/User';
+import { usePhone } from 'context/Auth/utils';
+const User = ({ style }) => {
+  const { userInfo } = useUser();
+  const { phone } = usePhone();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -13,16 +17,15 @@ const User = ({data, style}) => {
           Navigator.navigate(SCREEN.USER);
         }}
         style={styles.wicon}>
-        <Image style={{width: 72, height: 72}} source={Images.Avatar} />
+        <Image style={{ width: 72, height: 72 }} source={Images.Avatar} />
       </TouchableOpacity>
       <View>
         <Text bold size={Fonts.H6} mb={5}>
-          Xin chào Vân
+          Xin chào {userInfo?.personalInfo?.FullName}
         </Text>
 
-        <Text style={{marginBottom: 10}}>
-          *********
-          <Text style={styles.phone}>387</Text>
+        <Text style={{ marginBottom: 10 }}>
+          {phone.slice(-3).padStart(phone.length, "*")}
         </Text>
 
         <Button
@@ -30,14 +33,14 @@ const User = ({data, style}) => {
           bg={Colors.Highlight}
           radius={30}
           color="#fff"
-          label="Chưa xác thực"
+          label={userInfo.personalIC?.Active == 1 ? 'Đã xác thực' : 'Chưa xác thực'}
           onPress={() => Navigator.push(SCREEN.VERIFY_USER_INFO)}
         />
       </View>
-      <View style={{marginLeft: 'auto'}}>
+      <View style={{ marginLeft: 'auto' }}>
         <TouchableOpacity
           onPress={() => {
-            Navigator.push(SCREEN.USER_INFO);
+            Navigator.navigate(SCREEN.USER_INFO);
           }}>
           <Icon icon={Images.ArrowRight} size={30} />
         </TouchableOpacity>

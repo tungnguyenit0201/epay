@@ -3,7 +3,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
 import {getConfigInfo} from 'services/auth';
-import {updatePersonalInfo, getPersonalInfo} from 'services/user';
+import {updatePersonalInfo, getPersonalInfo, getAllInfoUser, updateUserAddress} from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
@@ -101,11 +101,50 @@ const useUserInfo = () => {
     }
   };
 
+  const onGetAllInfo = async () => {
+    setLoading(true);
+    let phone = await getPhone();
+    const result = await getAllInfoUser({phone});
+    setLoading(false);
+    switch (_.get(result, 'ErrorCode', '')) {
+      case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
+        return setError(result);
+      case ERROR_CODE.SUCCESS:
+        dispatch({type: 'UPDATE_WALLET', data: result?.WalletInfo?.AvailableBlance});
+        dispatch({type: 'SET_PERSONAL_ADDRESS', data: result?.AddressInfo});
+        dispatch({type: 'SET_PERSONAL_IC', data: result?.ICInfor});
+        return {
+          result
+        }
+      }
+    };
+
+    const onUpdateUserAddress = async ({Address, Ward, County, Provincial}) => {
+      try {
+        setLoading(true);
+        let phone = await getPhone();
+        let result = await updateUserAddress({
+          phone, Address, Ward, County, Provincial
+        });
+        setLoading(false);
+        if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS){
+        dispatch({type: 'SET_PERSONAL_ADDRESS', data: {Address, Ward, County, Provincial}});
+          return {
+            result
+          }
+        }
+        else setError(result);
+      } catch (error) {
+        setLoading(false);
+      }
+    };
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
     setPersonalInfo,
     onGetPersonalInfo,
+    onGetAllInfo,
+    onUpdateUserAddress
   };
 };
 

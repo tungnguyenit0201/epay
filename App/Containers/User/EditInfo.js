@@ -1,50 +1,160 @@
-import React from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {Button, Header, InputBlock, Radio, Checkbox} from 'components';
-import {SCREEN, TEXT} from 'configs/Constants';
+import React, { useRef } from 'react';
+import { StyleSheet, View, ScrollView, useWindowDimensions } from 'react-native';
+import { Colors, Fonts, Images, Spacing, base } from 'themes';
+import { Button, Header, InputBlock, Radio, Checkbox, Text } from 'components';
+import { SCREEN, TEXT } from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 
+// my import
+import { Formik } from 'formik';
+import { addressSchema } from 'utils/ValidationSchemas';
+import { scale } from 'utils/Functions';
+import HeaderBg from 'components/Common/HeaderBg';
+
+import {useUserInfo} from 'context/User/utils';
+import { useUser } from 'context/User';
 const EditInfo = () => {
+  const {onUpdateUserAddress} = useUserInfo();
+  const scrollViewRef = useRef(null);
+  const { userInfo } = useUser();
+  const {personalInfo, personalAddress, personalIC} = userInfo;
+
+  const onUpdateAddress = async ( values) => {
+    const {address, ward, county, provincial} = values;
+    const result = await onUpdateUserAddress({
+      Address: address,
+      Ward: ward,
+      County: county,
+      Provincial: provincial
+    })
+    if(result.result.ErrorCode === 0){
+      Navigator.navigate(SCREEN.USER_INFO)
+    }
+  }
   return (
-    <ScrollView style={{backgroundColor: '#fff'}}>
-      <Header title="Thông tin cá nhân" back />
-      <View style={[base.container, {paddingTop: 20}]}>
-        {/* <Checkbox onPress={() => true} label="sdfsd sdfs"></Checkbox> */}
-        <InputBlock
-          label="Họ và Tên"
-          value="Nguyen Van A"
-          style={{marginBottom: 10}}
-        />
-        <InputBlock
-          label="Ngày sinh"
-          value="09/09/1999"
-          style={{marginBottom: 10}}
-        />
+    <ScrollView style={{ backgroundColor: '#fff' }}>
+      <HeaderBg><Header title="Thông tin cá nhân" back /></HeaderBg>
+      <View style={[base.container, { paddingTop: 20 }]}>
+        <View pointerEvents="none">
+          <InputBlock
+            label="Họ và Tên"
+            value={personalInfo?.FullName}
+            style={{ backgroundColor: Colors.g2, textTransform: 'uppercase' }}
+          />
+        </View>
+        <View pointerEvents="none">
+          <InputBlock
+            label="Ngày sinh"
+            value={personalInfo?.DateOfBirth}
+            style={{ backgroundColor: Colors.g2, textTransform: 'uppercase' }}
+          />
+        </View>
         <Radio
           items={[
-            {label: 'Nữ', value: 1},
-            {label: 'Nam', value: 2},
+            { label: 'Nữ', value: 1 },
+            { label: 'Nam', value: 2 },
           ]}
         />
+        <View pointerEvents="none">
+          <InputBlock
+            label="CMND / CCCD"
+            value={personalIC?.ICNumber ? personalIC?.ICNumber : 'Chưa có'}
+            style={{ backgroundColor: Colors.g2, textTransform: 'uppercase' }}
+          />
+        </View>
+        <View pointerEvents="none">
+          <InputBlock
+            label="Nơi cấp"
+            value={personalIC?.ICIssuedPlace ? personalIC?.ICIssuedPlace : 'Chưa có'}
+            style={{ backgroundColor: Colors.g2, textTransform: 'uppercase' }}
+          />
+        </View>
+        <View pointerEvents="none">
+          <InputBlock
+            label="Ngày cấp"
+            value={personalIC?.ICIssuedDate ? personalIC?.ICIssuedDate : 'Chưa có'}
+            style={{ backgroundColor: Colors.g2, textTransform: 'uppercase' }}
+          />
+        </View>
+        <Formik
+          initialValues={{
+            address: personalAddress?.Address,
+            ward: personalAddress?.Ward,
+            county: personalAddress?.County,
+            provincial: personalAddress?.Provincial,
+          }}
+          validationSchema={addressSchema}
+          onSubmit={onUpdateAddress}>
+          {({
+            handleChange: _handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            values,
+          }) => {
+            const handleChange = field => value => {
+              setFieldValue(field, value);
+              setFieldTouched(field, true, false);
+            };
 
-        <InputBlock
-          label="CMND / CCCD"
-          value="356789099"
-          style={{marginBottom: 10}}
-        />
-        <InputBlock
-          label="Nơi cấp"
-          value="TP. HỒ Chí Minh"
-          style={{marginBottom: 10}}
-        />
-        <InputBlock
-          label="Địa chỉ"
-          value="TP. HỒ Chí Minh"
-          rightIcon={Images.Down}
-          style={{marginBottom: 10}}
-        />
-        <Button label="Save" onPress={() => Navigator.goBack()} />
+            return (
+              <View>
+                <ScrollView
+                  showsVerticalScrollIndicator={false}
+                  keyboardShouldPersistTaps="always"
+                  contentContainerStyle={{ paddingVertical: scale(35) }}
+                  ref={scrollViewRef}>
+                  <InputBlock
+                    label="Tỉnh / Thành phố"
+                    numeric
+                    onChange={handleChange('provincial')}
+                    onBlur={handleBlur('provincial')}
+                    error={touched.provincial && errors.provincial}
+                    value={values.provincial}
+                    scrollViewRef={scrollViewRef}
+                  />
+                  <InputBlock
+                    label="Quận"
+                    onChange={handleChange('county')}
+                    onBlur={handleBlur('county')}
+                    error={touched.county && errors.county}
+                    value={values.county}
+                    scrollViewRef={scrollViewRef}
+                  />
+                  <InputBlock
+                    label="Phường / Xã"
+                    email
+                    required
+                    onChange={handleChange('ward')}
+                    onBlur={handleBlur('ward')}
+                    error={touched.ward && errors.ward}
+                    value={values.ward}
+                    scrollViewRef={scrollViewRef}
+                  />
+                  <InputBlock
+                    label="Địa chỉ"
+                    required
+                    onChange={handleChange('address')}
+                    onBlur={handleBlur('address')}
+                    error={touched.address && errors.address}
+                    value={values.address}
+                    scrollViewRef={scrollViewRef}
+                  />
+
+                </ScrollView>
+                <View style={{ paddingBottom: Spacing.PADDING }}>
+                  <Button
+                    onPress={handleSubmit}
+                    label="Đăng ký"
+                  />
+                </View>
+              </View>
+            );
+          }}
+        </Formik>
       </View>
     </ScrollView>
   );

@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from 'components/User/Login';
-import {Text, Button, Icon, Header} from 'components';
+import { Text, Button, Icon, Header } from 'components';
 import {
   ScrollView,
   View,
@@ -8,19 +8,30 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {SCREEN} from 'configs/Constants';
+import { SCREEN } from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
-import {useTranslation} from 'context/Language';
+import { Colors, Fonts, Images, Spacing, base } from 'themes';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { scale, formatMoney } from 'utils/Functions';
+import { useTranslation } from 'context/Language';
 
 import HeaderBg from 'components/Common/HeaderBg';
 import UserInfo from 'components/User/UserInfo';
 
+import { useUserInfo } from 'context/User/utils'
+import { usePhone } from 'context/Auth/utils';
+import { useUser } from 'context/User';
+import {updateUserAddress} from '../../Services/user'
 const User = () => {
   const translation = useTranslation();
-
+  const [archive, setArchive] = useState({})
+/*   const [numberPhone, setNumberPhone] = useState() */
+  const { userInfo } = useUser();
+  const { phone } = usePhone();
+  const { onGetAllInfo } = useUserInfo();
+  useEffect(async () => {
+    await onGetAllInfo();
+  }, [])
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
@@ -39,8 +50,8 @@ const User = () => {
             tintColor={Colors.cl1}
           />
           <Text size={Fonts.H6}>{translation.my_wallet}</Text>
-          <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
-            12.000.000 vnd
+          <Text size={Fonts.H6} style={{ marginLeft: 'auto' }} bold>
+            {formatMoney(userInfo?.myWallet)}
           </Text>
         </View>
 

@@ -65,3 +65,10 @@ export const passwordSchema = yup.object().shape({
     .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
     .label('Xác nhận mật khẩu'),
 });
+
+export const addressSchema = yup.object().shape({
+  address: yup.string().required(TEXT.REVIEWS),
+  ward: yup.string().required(TEXT.REVIEWS),
+  county: yup.string().required(TEXT.REVIEWS),
+  provincial: yup.string().required(TEXT.REVIEWS),
+});
