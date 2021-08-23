@@ -20,14 +20,6 @@ const EditInfo = () => {
   const { userInfo } = useUser();
   const SexType= {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
   const {personalInfo, personalAddress, personalIC} = userInfo;
-  const onUpdateAddress = async ( values) => {
-    const {Address, Ward, County, Provincial} = values;
-    const params = _.pickBy(
-      {Address, Ward, County, Provincial},
-      x => !!x,
-    );
-    await onUpdateUserAddress(params)
-  }
 
   return (
     <ScrollView style={{ backgroundColor: '#fff' }}>
@@ -80,7 +72,7 @@ const EditInfo = () => {
             Provincial: personalAddress?.Provincial,
           }}
           validationSchema={addressSchema}
-          onSubmit={onUpdateAddress}>
+          onSubmit={(value) => {onUpdateUserAddress(value)}}>
           {({
             handleChange: _handleChange,
             handleBlur,
