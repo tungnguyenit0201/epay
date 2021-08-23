@@ -2,16 +2,16 @@ import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
 
-import Auth from './Auth';
+import Login from './Login';
 
 export default {
-  title: `Containers/Auth/index`,
-  component: Auth,
+  title: `Containers/Auth/Login`,
+  component: Login,
   argTypes: {
   }
 }
 
-const Template = (args) => <Auth {...args}/>
+const Template = (args) => <Login {...args}/>
 
 export const Default = Template.bind({})
 Default.args = {

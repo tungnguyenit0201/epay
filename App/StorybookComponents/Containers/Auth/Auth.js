@@ -26,8 +26,9 @@ const Auth = () => {
             }}
             style={{
               flex: 1,
-              minHeight: 170
+              minHeight: 200
             }}
+            resizeMode="contain"
           />
         </Pressable>
 
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.PADDING * 10,
     alignItems: 'center',
     flex: 1,
-    fontSize: 14
   },
 });
 export default Auth;

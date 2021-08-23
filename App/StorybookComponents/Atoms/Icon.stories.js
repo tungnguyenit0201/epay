@@ -2,17 +2,18 @@ import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
 
-import Auth from './Auth';
+import Icon from './Icon';
+
+const icon = require('images/arrow-right.png');
 
 export default {
-  title: `Containers/Auth/index`,
-  component: Auth,
-  argTypes: {
-  }
+  title: `Atoms/Icon`,
+  component: Icon,
 }
 
-const Template = (args) => <Auth {...args}/>
+const Template = (args) => <Icon {...args} icon={icon}/>
 
 export const Default = Template.bind({})
 Default.args = {
+    icon: icon,
 }

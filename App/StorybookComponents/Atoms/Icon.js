@@ -6,7 +6,7 @@ import {scale} from 'utils/Functions';
 export default ({style, icon, size, tintColor, ml, mr, mb, mt}) => {
   return (
     <Image
-      source={icon}
+      source={{uri: icon?.default}}
       style={[
         {
           width: !!size ? size : scale(24),

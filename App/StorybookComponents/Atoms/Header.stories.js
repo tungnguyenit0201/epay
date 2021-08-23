@@ -2,17 +2,16 @@ import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
 
-import Auth from './Auth';
+import Header from './Header';
 
 export default {
-  title: `Containers/Auth/index`,
-  component: Auth,
-  argTypes: {
-  }
+  title: `Atoms/Header`,
+  component: Header,
 }
 
-const Template = (args) => <Auth {...args}/>
+const Template = (args) => <Header title={'Quên mật khẩu'}/>
 
 export const Default = Template.bind({})
 Default.args = {
+  title: 'Quên mật khẩu',
 }

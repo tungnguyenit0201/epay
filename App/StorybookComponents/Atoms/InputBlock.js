@@ -12,6 +12,10 @@ import {Colors, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import TextInput from './TextInput';
 
+const Eye = require('../../Images/Eye.png');
+const EyeGray = require('../../Images/EyeGray.png')
+console.log(Eye)
+
 const InputBlock = ({
   label,
   password,
@@ -84,6 +88,21 @@ const InputBlock = ({
               {value ? value : props?.defaultValue}
             </Text>
           </TouchableOpacity>
+        )}
+        {!!password && (
+          <Pressable
+            onPress={() => setShowPassword(!showPassword)}
+            style={{
+              position: 'absolute',
+              right: scale(10),
+              top: scale(40),
+            }}>
+            <Image
+              source={{ uri: showPassword ? Eye.default : EyeGray.default}}
+              style={{width: scale(20), height: scale(20)}}
+              resizeMode="contain"
+            />
+          </Pressable>
         )}
     </View>
   );
