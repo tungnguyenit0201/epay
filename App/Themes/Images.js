@@ -11,6 +11,7 @@ export default {
   Down: require('images/Down.png'),
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
+  DefaultUser: require('images/default_user.png'),
   TabBar: {
     Home: require('images/Home.png'),
     Category: require('images/Category.png'),

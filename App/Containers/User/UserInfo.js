@@ -15,16 +15,25 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
 
+import { useUser } from 'context/User';
+import { usePhone } from 'context/Auth/utils';
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
+  const { phone } = usePhone();
+  const { userInfo } = useUser();
+  const PersonalInfo = userInfo.personalInfo;
+  const AddressInfo = userInfo.personalAddress;
+  const ICInfor = userInfo.personalIC;
 
+  const SexType= {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
+  const address = AddressInfo?.Address+", "+AddressInfo?.Ward+", "+AddressInfo?.County+", "+AddressInfo?.Provincial;
   const data = [
-    {name: 'Họ tên', val: 'Nguyen van an'},
-    {name: 'Ngày sinh', val: '09/09/1999'},
-    {name: 'Giới tính', val: 'Nam'},
-    {name: 'CMND', val: 'sss'},
-    {name: 'Nơi cấp', val: 'sss'},
-    {name: 'Địa chỉ', val: 'sss'},
+    {name: 'Họ tên', val: PersonalInfo?.FullName ? PersonalInfo?.FullName : 'Chưa có'},
+    {name: 'Ngày sinh', val: PersonalInfo?.DateOfBirth ? PersonalInfo?.DateOfBirth : 'Chưa có'},
+    {name: 'Giới tính', val: SexType[PersonalInfo?.SexType] ? SexType[PersonalInfo?.SexType] : 'Chưa có'},
+    {name: 'CMND', val: ICInfor?.ICNumber ? ICInfor?.ICNumber : 'Chưa có'},
+    {name: 'Nơi cấp', val: ICInfor?.ICIssuedPlace ? ICInfor?.ICIssuedPlace : 'Chưa có'},
+    {name: 'Địa chỉ', val: AddressInfo?.Provincial ? address : 'Chưa có'},
   ];
   return (
     <>
@@ -50,9 +59,9 @@ const UserInfo = () => {
                   height: 94,
                   with: 94,
                   borderRadius: 99,
-                  backgroundColor: Colors.black,
+                  backgroundColor: Colors.g4,
                 }}>
-                <Image style={{width: 94, height: 94}} source={Images.MoMo} />
+                <Image style={{width: 94, height: 94}} source={Images.DefaultUser} />
               </View>
               <View
                 style={{
@@ -72,16 +81,16 @@ const UserInfo = () => {
             </View>
 
             <Text color="#fff" size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
-              Nguyễn Văn A
+              {PersonalInfo?.FullName}
             </Text>
             <Text color="#fff" mb={10}>
-              0908000000
+              {phone}
             </Text>
             <Button
               bg={Colors.cl4}
               radius={30}
               color={Colors.black}
-              label="Đã xác thực"
+              label={ICInfor?.Active == 1 ? 'Đã xác thực': 'Chưa xác thực'}
               style={{minWidth: 150}}
               onPress={() => Navigator.push(SCREEN.VERIFY_IDENTITY_CARD)}
             />
@@ -93,7 +102,7 @@ const UserInfo = () => {
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
-                Navigator.push(SCREEN.EDIT_INFO);
+                Navigator.navigate(SCREEN.EDIT_INFO);
               }}>
               <Text style={styles.link}>Chỉnh sửa</Text>
             </TouchableOpacity>
@@ -104,7 +113,7 @@ const UserInfo = () => {
             <View style={[base.container, styles.row]} key={index}>
               <View style={styles.item}>
                 <Text>{item.name}</Text>
-                <Text style={styles.itemRight}>{item.val}</Text>
+                <Text style={styles.textRight}>{item.val}</Text>
               </View>
             </View>
           );
@@ -117,13 +126,13 @@ const UserInfo = () => {
         </View>
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
-            <Text>Đã xác thực</Text>
+            <Text>{ICInfor?.Active == 1 ? 'Đã xác thực': 'Chưa xác thực'}</Text>
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
                 Navigator.push(SCREEN.NOTIFICATION);
               }}>
-              <Text style={styles.link}>Chỉnh sửa</Text>
+              <Text style={styles.link}>{ICInfor?.Active == 1 ? '': 'Xác thực tài khoản'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -173,5 +182,10 @@ const styles = StyleSheet.create({
   itemRight: {
     marginLeft: 'auto',
   },
+  textRight: {
+    marginLeft: 'auto',
+    width: scale(180),
+    textAlign: 'right',
+  }
 });
 export default UserInfo;

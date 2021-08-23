@@ -5,15 +5,14 @@ import {Images, Colors, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useAuth} from 'context/Auth/utils';
-
+import { useUserInfo } from 'context/User/utils'
 const User = ({data, style}) => {
   const {onLogout} = useAuth();
+  const { onGetAllInfo } = useUserInfo();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
-        onPress={() => {
-          Navigator.navigate(SCREEN.USER);
-        }}
+        onPress={onGetAllInfo}
         style={styles.wicon}>
         <Image style={{width: 40, height: 40}} source={Images.Avatar} />
       </TouchableOpacity>

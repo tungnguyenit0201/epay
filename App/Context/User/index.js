@@ -13,7 +13,10 @@ const defaultUserInfo = {
   token: '',
   firstLogin: false,
   personalInfo: null,
+  personalAddress: '',
+  personalIC: '',
   phone: null,
+  myWallet: '',
 };
 
 export const UserProvider = ({children}) => {
