@@ -37,7 +37,7 @@ const getCommonParams = async (url, language = 'vi') => {
     IpAddress: '0.0.0.0',
     DeviceInfo:
       (Platform.OS === 'ios' ? 'Iphone iOS ' : 'Android ') + Platform.Version,
-    DeviceID: "b4b757752a146426",
+    DeviceID: uniqueDeviceID,
   };
 };
 
