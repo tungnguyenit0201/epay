@@ -39,7 +39,7 @@ export const getPersonalInfo = async ({phone}) => {
   return response;
 };
 
-export const getAllInfoUser = async ({phone}) => {
+export const getAllInfo = async ({phone}) => {
   let response = null;
   await request({
     url: API.USER.GET_ALL_INFO,

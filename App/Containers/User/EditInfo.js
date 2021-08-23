@@ -21,15 +21,12 @@ const EditInfo = () => {
 
   const onUpdateAddress = async ( values) => {
     const {address, ward, county, provincial} = values;
-    const result = await onUpdateUserAddress({
+    await onUpdateUserAddress({
       Address: address,
       Ward: ward,
       County: county,
       Provincial: provincial
     })
-    if(result.result.ErrorCode === 0){
-      Navigator.navigate(SCREEN.USER_INFO)
-    }
   }
   return (
     <ScrollView style={{ backgroundColor: '#fff' }}>

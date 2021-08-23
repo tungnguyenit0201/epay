@@ -19,19 +19,11 @@ import HeaderBg from 'components/Common/HeaderBg';
 import UserInfo from 'components/User/UserInfo';
 
 import { useUserInfo } from 'context/User/utils'
-import { usePhone } from 'context/Auth/utils';
 import { useUser } from 'context/User';
-import {updateUserAddress} from '../../Services/user'
-const User = () => {
+const User = ({ route }) => {
   const translation = useTranslation();
-  const [archive, setArchive] = useState({})
-/*   const [numberPhone, setNumberPhone] = useState() */
   const { userInfo } = useUser();
-  const { phone } = usePhone();
-  const { onGetAllInfo } = useUserInfo();
-  useEffect(async () => {
-    await onGetAllInfo();
-  }, [])
+
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>

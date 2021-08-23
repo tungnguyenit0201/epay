@@ -16,6 +16,7 @@ const OTP = ({route}) => {
     errorMessage,
     countdown,
     showCall,
+    code,
     onChange,
     onConfirmOTP,
     resenOTP,
@@ -33,6 +34,7 @@ const OTP = ({route}) => {
             onChange={onChange}
             onCodeFilled={onConfirmOTP}
             message={errorMessage}
+            code={code}
           />
 
           {/* {action == 'password' && (
