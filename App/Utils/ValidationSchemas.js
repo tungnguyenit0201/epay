@@ -67,8 +67,8 @@ export const passwordSchema = yup.object().shape({
 });
 
 export const addressSchema = yup.object().shape({
-  address: yup.string().required(TEXT.REVIEWS),
-  ward: yup.string().required(TEXT.REVIEWS),
-  county: yup.string().required(TEXT.REVIEWS),
-  provincial: yup.string().required(TEXT.REVIEWS),
+  Address: yup.string().required("Địa chỉ không được bỏ trống."),
+  Ward: yup.string().required("Phương không được bỏ trống."),
+  County: yup.string().required("Quận không được bỏ trống."),
+  Provincial: yup.string().required("Tỉnh không được bỏ trống."),
 });

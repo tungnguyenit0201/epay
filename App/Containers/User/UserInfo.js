@@ -33,7 +33,7 @@ const UserInfo = () => {
     {name: 'Giới tính', val: SexType[PersonalInfo?.SexType] ? SexType[PersonalInfo?.SexType] : 'Chưa có'},
     {name: 'CMND', val: ICInfor?.ICNumber ? ICInfor?.ICNumber : 'Chưa có'},
     {name: 'Nơi cấp', val: ICInfor?.ICIssuedPlace ? ICInfor?.ICIssuedPlace : 'Chưa có'},
-    {name: 'Địa chỉ', val: address ? address : 'Chưa có'},
+    {name: 'Địa chỉ', val: AddressInfo?.Provincial ? address : 'Chưa có'},
   ];
   return (
     <>

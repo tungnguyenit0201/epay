@@ -13,21 +13,22 @@ import HeaderBg from 'components/Common/HeaderBg';
 
 import {useUserInfo} from 'context/User/utils';
 import { useUser } from 'context/User';
+import _ from 'lodash';
 const EditInfo = () => {
   const {onUpdateUserAddress} = useUserInfo();
   const scrollViewRef = useRef(null);
   const { userInfo } = useUser();
+  const SexType= {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
   const {personalInfo, personalAddress, personalIC} = userInfo;
-
   const onUpdateAddress = async ( values) => {
-    const {address, ward, county, provincial} = values;
-    await onUpdateUserAddress({
-      Address: address,
-      Ward: ward,
-      County: county,
-      Provincial: provincial
-    })
+    const {Address, Ward, County, Provincial} = values;
+    const params = _.pickBy(
+      {Address, Ward, County, Provincial},
+      x => !!x,
+    );
+    await onUpdateUserAddress(params)
   }
+
   return (
     <ScrollView style={{ backgroundColor: '#fff' }}>
       <HeaderBg><Header title="Thông tin cá nhân" back /></HeaderBg>
@@ -46,12 +47,10 @@ const EditInfo = () => {
             style={{ backgroundColor: Colors.g2, textTransform: 'uppercase' }}
           />
         </View>
-        <Radio
-          items={[
-            { label: 'Nữ', value: 1 },
-            { label: 'Nam', value: 2 },
-          ]}
-        />
+        <View style={styles.flexRow}>
+          <Text>Giới tính: </Text>
+          <Text>{SexType[personalInfo?.SexType] ? SexType[personalInfo?.SexType] : 'Chưa có'}</Text>
+        </View>
         <View pointerEvents="none">
           <InputBlock
             label="CMND / CCCD"
@@ -75,10 +74,10 @@ const EditInfo = () => {
         </View>
         <Formik
           initialValues={{
-            address: personalAddress?.Address,
-            ward: personalAddress?.Ward,
-            county: personalAddress?.County,
-            provincial: personalAddress?.Provincial,
+            Address: personalAddress?.Address,
+            Ward: personalAddress?.Ward,
+            County: personalAddress?.County,
+            Provincial: personalAddress?.Provincial,
           }}
           validationSchema={addressSchema}
           onSubmit={onUpdateAddress}>
@@ -107,37 +106,37 @@ const EditInfo = () => {
                   <InputBlock
                     label="Tỉnh / Thành phố"
                     numeric
-                    onChange={handleChange('provincial')}
-                    onBlur={handleBlur('provincial')}
-                    error={touched.provincial && errors.provincial}
-                    value={values.provincial}
+                    onChange={handleChange('Provincial')}
+                    onBlur={handleBlur('Provincial')}
+                    error={touched.Provincial && errors.Provincial}
+                    value={values.Provincial}
                     scrollViewRef={scrollViewRef}
                   />
                   <InputBlock
                     label="Quận"
-                    onChange={handleChange('county')}
-                    onBlur={handleBlur('county')}
-                    error={touched.county && errors.county}
-                    value={values.county}
+                    onChange={handleChange('County')}
+                    onBlur={handleBlur('County')}
+                    error={touched.County && errors.County}
+                    value={values.County}
                     scrollViewRef={scrollViewRef}
                   />
                   <InputBlock
                     label="Phường / Xã"
                     email
                     required
-                    onChange={handleChange('ward')}
-                    onBlur={handleBlur('ward')}
-                    error={touched.ward && errors.ward}
-                    value={values.ward}
+                    onChange={handleChange('Ward')}
+                    onBlur={handleBlur('Ward')}
+                    error={touched.Ward && errors.Ward}
+                    value={values.Ward}
                     scrollViewRef={scrollViewRef}
                   />
                   <InputBlock
                     label="Địa chỉ"
                     required
-                    onChange={handleChange('address')}
-                    onBlur={handleBlur('address')}
-                    error={touched.address && errors.address}
-                    value={values.address}
+                    onChange={handleChange('Address')}
+                    onBlur={handleBlur('Address')}
+                    error={touched.Address && errors.Address}
+                    value={values.Address}
                     scrollViewRef={scrollViewRef}
                   />
 
@@ -159,4 +158,10 @@ const EditInfo = () => {
 
 export default EditInfo;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  flexRow: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingVertical: 10
+  }
+});
