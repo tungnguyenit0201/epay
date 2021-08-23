@@ -4,20 +4,13 @@ import {withKnobs, text, object, select} from '@storybook/addon-knobs';
 
 import Text from './Text';
 
-export default {
-  title: `Atoms/Text`,
-  component: Text,
-  argTypes: {
-    fs: {
-      options: ['sm', 'md', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-      control: { type: 'radio' }
-    }
-  }
-}
-
-const Template = (args) => <Text {...args}>hello</Text>
-
-export const Default = Template.bind({})
-Default.args = {
-    fs: 'sm',
-}
+storiesOf('Atoms/Text', module)
+  .addDecorator(withKnobs)
+  .add('sm', () => <Text fs="sm">hello</Text>)
+  .add('md', () => <Text fs="md">hello</Text>)
+  .add('h1', () => <Text fs="h1">hello</Text>)
+  .add('h2', () => <Text fs="h2">hello</Text>)
+  .add('h3', () => <Text fs="h3">hello</Text>)
+  .add('h4', () => <Text fs="h4">hello</Text>)
+  .add('h5', () => <Text fs="h5">hello</Text>)
+  .add('h6', () => <Text fs="h6">hello</Text>)

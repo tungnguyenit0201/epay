@@ -5,7 +5,7 @@ import {withKnobs, text, object, select} from '@storybook/addon-knobs';
 import Auth from './Auth';
 
 export default {
-  title: `Containers/Auth/index`,
+  title: `Layout/Auth/index`,
   component: Auth,
   argTypes: {
   }
