@@ -42,12 +42,14 @@ const useOTP = ({functionType, phone, password}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(60);
   const [showCall, setshowCall] = useState(false);
+  const [code, setCode] = useState('');
 
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {onLogin} = useAuth();
 
   const onChange = value => {
+    setCode(value);
     errorMessage && setErrorMessage(null);
   };
 
@@ -59,6 +61,7 @@ const useOTP = ({functionType, phone, password}) => {
       OtpCode: otp,
       OtpType: OTP_TYPE.EPAY,
     });
+    setCode('');
     setLoading(false);
 
     // fail
@@ -122,6 +125,7 @@ const useOTP = ({functionType, phone, password}) => {
     errorMessage,
     countdown,
     showCall,
+    code,
     onChange,
     onConfirmOTP,
     resenOTP,
