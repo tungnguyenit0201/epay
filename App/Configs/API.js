@@ -18,5 +18,6 @@ export default {
     UPDATE_PASSWORD: 'account/change_password',
     UPDATE_PERSONAL_INFO: 'account/update_personal_info',
     GET_PERSONAL_INFO: 'account/get_personal_info',
+    GET_ALL_INFO: 'account/get_all_info',
   },
 };
