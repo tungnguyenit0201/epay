@@ -7,6 +7,7 @@ const HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
   inject: 'body',
 })
 
+
 module.exports = {
   entry: path.join(__dirname, 'index.web.js'),
   output: {

@@ -5,9 +5,13 @@ import 'intl';
 import 'intl/locale-data/jsonp/vi';
 
 const _baseWidth = Platform.isTV || Platform.isPad ? 834 : 375;
+// const _screenWidth = Math.min(
+//   Dimensions.get('window').width,
+//   Dimensions.get('window').height,
+// );
 const _screenWidth = Math.min(
-  Dimensions.get('window').width,
-  Dimensions.get('window').height,
+  375,
+  812,
 );
 // const _scaleRatio = Platform.isTV || Platform.isPad ? 0.7 : 1;
 const _scaleRatio = 1;

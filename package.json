@@ -18,7 +18,8 @@
     "start-react": "webpack serve --config ./webpack.config.js --mode development",
     "start-storybook-web": "cross-env ./node_modules/@storybook/react/bin/index.js",
     "build-storybook-web": "cross-env ./node_modules/@storybook/react/bin/build.js",
-    "storybook-web": "yarn run start-storybook-web"
+    "storybook-web": "yarn run start-storybook-web -s ./assets -p 4000",
+    "build-story": "yarn run build-storybook-web -s ./assets"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",

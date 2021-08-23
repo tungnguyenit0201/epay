@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 5,
+    paddingVertical: scale(5),
     paddingHorizontal: scale(20),
-    borderRadius: scale(8),
+    borderRadius: '8px',
     backgroundColor: Colors.cl1,
     height: 48,
   },
@@ -111,3 +111,14 @@ const styles = StyleSheet.create({
   // ...stylesCss,
 });
 
+{
+  /* <Button
+  label="Đăng ký" 
+  border='#fff'
+  color='#f00'
+  bg='#999'
+  radius={50}
+  style={[{marginTop:30}]}
+  onPress={() => Navigator.navigate(SCREEN.REGISTER)}
+/> */
+}

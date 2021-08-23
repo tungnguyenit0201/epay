@@ -1,6 +1,6 @@
 const custom = require('../webpack.config.js');
 module.exports = {
-  stories: ['../App/Components/Common/*.stories.[tj]s'],
+  stories: ['../App/StorybookComponents/Atoms/*.stories.[tj]s', '../App/StorybookComponents/Containers/**/*.stories.[tj]s'],
   // stories: [
   //   '../App/Components/Common/Accordion.stories.js',
   //   '../App/Components/Common/Button.stories.js',
@@ -26,5 +26,17 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/addon-docs',
     '@storybook/addon-viewport',
-  ]
+  ],
+  previewHead: (head) => (`
+    ${head}
+    <style>
+      #main {
+        background-color: yellow;
+      };
+      @font-face {
+        font-family: "SVN-Gilroy";
+        src: url("/fonts/SVN-Gilroy.ttf");
+      }
+    </style>
+  `)
 }
