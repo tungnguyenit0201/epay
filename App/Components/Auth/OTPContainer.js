@@ -6,7 +6,7 @@ import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 
-const OTPContainer = ({onChange, onCodeFilled, message}) => {
+const OTPContainer = ({code, onChange, onCodeFilled, message}) => {
   return (
     <>
       <Text style={styles.header}>{`Nhập OTP`}</Text>
@@ -22,6 +22,7 @@ const OTPContainer = ({onChange, onCodeFilled, message}) => {
         codeInputHighlightStyle={{}}
         onCodeFilled={onCodeFilled}
         clearInputs={message}
+        code={code}
       />
       <Text style={styles.message}>{message}</Text>
       {/* <OTP onChange={onChange} message={message} /> */}

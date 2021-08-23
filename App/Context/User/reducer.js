@@ -20,6 +20,21 @@ export default function userReducer(state, action) {
         ...state,
         phone: action?.phone,
       };
+    case 'UPDATE_WALLET':
+      return {
+        ...state,
+        myWallet: action?.data
+      };
+      case 'SET_PERSONAL_ADDRESS':
+      return {
+        ...state,
+        personalAddress: action?.data
+      }
+      case 'SET_PERSONAL_IC':
+      return {
+        ...state,
+        personalIC: action?.data
+      }
     default:
       return state;
   }

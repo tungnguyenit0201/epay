@@ -32,6 +32,7 @@ const Auth = () => {
             style={{
               flex: 1,
             }}
+            resizeMode="contain"
           />
         </Pressable>
 
