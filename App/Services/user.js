@@ -91,3 +91,16 @@ export const updateIdentify = async ({phone, ICInfor}) => {
   });
   return response;
 };
+
+export const getConnectedBank = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_CONNECTED_BANK,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

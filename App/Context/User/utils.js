@@ -8,6 +8,7 @@ import {
   getPersonalInfo,
   getAllInfo,
   updateUserAddress,
+  getConnectedBank,
   updateIdentify,
 } from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
@@ -180,6 +181,19 @@ const useUserInfo = () => {
     }
   };
 
+  const onGetConnectedBank = async () => {
+    setLoading(true);
+    let phone = await getPhone();
+    const result = await getConnectedBank({phone});
+    setLoading(false);
+    switch (_.get(result, 'ErrorCode', '')) {
+      case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
+        return setError(result);
+      case ERROR_CODE.SUCCESS:
+        Navigator.navigate(SCREEN.MY_WALLET, result);
+    }
+  };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -189,6 +203,7 @@ const useUserInfo = () => {
     onGetAllInfo,
     onUpdateUserAddress,
     onUpdateIdentify,
+    onGetConnectedBank,
   };
 };
 
