@@ -12,7 +12,7 @@ RUN yarn install
 COPY . .
 
 # Build the app
-RUN yarn build-storybook-web
+RUN yarn build-story
 
 # Bundle static assets with nginx
 FROM nginx:1.21.0-alpine as production
