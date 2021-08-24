@@ -13,6 +13,7 @@ export default {
   COMMON: {
     GEN_OTP: 'common/otp/gen_otp',
     CONFIRM_OTP: 'common/otp/confirm_otp',
+    CHECK_SMART_OTP: 'smartotp/get_smartotp_active',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
@@ -20,6 +21,6 @@ export default {
     GET_PERSONAL_INFO: 'account/get_personal_info',
     GET_ALL_INFO: 'account/get_all_info',
     UPDATE_USER_ADDRESS: 'account/update_address_info',
-    GET_CONNECTED_BANK: 'wallet/get_connected_bank'
+    GET_CONNECTED_BANK: 'wallet/get_connected_bank',
   },
 };

@@ -31,3 +31,16 @@ export const confirmOTP = async ({
   });
   return response;
 };
+
+export const checkSmartOTP = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.CHECK_SMART_OTP,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
