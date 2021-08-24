@@ -31,10 +31,6 @@ const useTouchID = () => {
       });
   };
 
-  useEffect(() => {
-    checkBiometry();
-  }, []);
-
   const onTouchID = async () => {
     if (!biometryType) {
       return;
@@ -62,6 +58,10 @@ const useTouchID = () => {
         });
     });
   };
+
+  useEffect(() => {
+    checkBiometry();
+  }, []);
 
   return {biometryType, onTouchID};
 };
