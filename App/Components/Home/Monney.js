@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {Button, Icon, Text} from 'components';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useTranslation} from 'context/Language';
+import { Button, Icon, Text } from 'components';
+import { Colors, Fonts, Images, Spacing, base } from 'themes';
+import { useTranslation } from 'context/Language';
 import Navigator from 'navigations/Navigator';
 
-const Monney = ({style}) => {
+import { useUser } from 'context/User';
+import { formatMoney } from 'utils/Functions';
+const Monney = ({ style }) => {
   const translation = useTranslation();
   const [isMoney, setIsMoney] = useState(false);
   return (
@@ -22,18 +24,18 @@ const Monney = ({style}) => {
         </Text>
       </View>
       <View style={[styles.right]}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {!isMoney ? (
-            <Text size={Fonts.H2} style={[styles.text, {paddingTop: 3}]}>
+            <Text size={Fonts.H2} style={[styles.text, { paddingTop: 3 }]}>
               ******
             </Text>
           ) : (
             <Text bold size={Fonts.H5} style={styles.text}>
-              5555 đ
+              {formatMoney(userInfo?.myWallet)}
             </Text>
           )}
           <TouchableOpacity
-            style={{marginLeft: 10}}
+            style={{ marginLeft: 10 }}
             onPress={() => setIsMoney(!isMoney)}>
             <Icon
               icon={isMoney ? Images.Eye : Images.EyeGray}

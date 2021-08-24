@@ -3,7 +3,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Navigator from 'navigations/Navigator';
 import { ERROR_CODE, SCREEN } from 'configs/Constants';
 import { getConfigInfo } from 'services/auth';
-import { updatePersonalInfo, getPersonalInfo, getAllInfo, updateUserAddress } from 'services/user';
+import { updatePersonalInfo, getPersonalInfo, getAllInfo, updateUserAddress, getConnectedBank } from 'services/user';
 import { useAsyncStorage, useError, useLoading } from 'context/Common/utils';
 import { useUser } from 'context/User';
 import _ from 'lodash';
@@ -134,13 +134,27 @@ const useUserInfo = () => {
       setLoading(false);
     }
   };
+
+  const onGetConnectedBank = async () => {
+    setLoading(true);
+    let phone = await getPhone();
+    const result = await getConnectedBank({ phone });
+    setLoading(false);
+    switch (_.get(result, 'ErrorCode', '')) {
+      case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
+        return setError(result);
+      case ERROR_CODE.SUCCESS:
+        Navigator.navigate(SCREEN.MY_WALLET, result)
+    }
+  };
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
     setPersonalInfo,
     onGetPersonalInfo,
     onGetAllInfo,
-    onUpdateUserAddress
+    onUpdateUserAddress,
+    onGetConnectedBank
   };
 };
 
