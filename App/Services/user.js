@@ -24,7 +24,7 @@ export const updatePersonalInfo = async ({phone, personalInfo}) => {
     },
   });
   return response;
-}
+};
 
 export const getPersonalInfo = async ({phone}) => {
   let response = null;
@@ -52,17 +52,41 @@ export const getAllInfo = async ({phone}) => {
   return response;
 };
 
-export const updateUserAddress = async ({phone, Address, Ward, County, Provincial}) => {
+export const updateUserAddress = async ({
+  phone,
+  Address,
+  Ward,
+  County,
+  Provincial,
+}) => {
   let response = null;
   await request({
     url: API.USER.UPDATE_USER_ADDRESS,
     method: 'post',
-    params: {PhoneNumber: phone, AddressInfo: {
-      Address, Ward, County, Provincial
-    }},
+    params: {
+      PhoneNumber: phone,
+      AddressInfo: {
+        Address,
+        Ward,
+        County,
+        Provincial,
+      },
+    },
     success: res => {
       response = res;
-      console.log("resssssssssssssssssssss", res)
+    },
+  });
+  return response;
+};
+
+export const updateIdentify = async ({phone, ICInfor}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_IDENTIFY,
+    method: 'post',
+    params: {PhoneNumber: phone, ICInfor},
+    success: res => {
+      response = res;
     },
   });
   return response;

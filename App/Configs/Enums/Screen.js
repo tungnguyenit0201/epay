@@ -34,6 +34,7 @@ const SCREEN = {
   EDIT_INFO: 'EditInfo',
   NEW_PASSWORD: 'NewPassword',
   CONTACTS: 'Contacts',
+  CHOOSE_IDENTITY_CARD: 'ChooseIdentityCard',
   VERIFY_USER_INFO: 'VerifyUserInfo',
   VERIFY_IDENTITY_CARD: 'VerifyIdentityCard',
   VERIFY_USER_PORTRAIT: 'VerifyUserPortrait',

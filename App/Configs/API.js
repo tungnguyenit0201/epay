@@ -19,6 +19,7 @@ export default {
     UPDATE_PERSONAL_INFO: 'account/update_personal_info',
     GET_PERSONAL_INFO: 'account/get_personal_info',
     GET_ALL_INFO: 'account/get_all_info',
-    UPDATE_USER_ADDRESS: 'account/update_address_info'
+    UPDATE_USER_ADDRESS: 'account/update_address_info',
+    UPDATE_IDENTIFY: 'account/update_identify_info',
   },
 };

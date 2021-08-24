@@ -13,7 +13,7 @@ const User = ({data, style}) => {
         <View style={[styles.item, style]}>
           <TouchableOpacity
             onPress={() => {
-              Navigator.navigate(SCREEN.VERIFY_USER_INFO);
+              Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
             }}
             style={styles.box}>
             <Text>
