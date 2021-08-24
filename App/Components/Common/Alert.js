@@ -11,29 +11,40 @@ const AlertCustom = () => {
   const {setError} = useError();
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={!!error?.errorCode}
-      onBackdropPress={() => setError(null)}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          {!!error?.title && (
-            <Text style={[styles.modalText, styles.title]}>{error?.title}</Text>
-          )}
-          <Text style={styles.modalText}>{error?.errorMessage}</Text>
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => setError(null)}>
-            <Text style={styles.textStyle}>Đóng</Text>
-          </Pressable>
+    <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={!!error?.errorCode}
+        onBackdropPress={() => setError(null)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {!!error?.title && (
+              <Text style={[styles.modalText, styles.title]}>
+                {error?.title}
+              </Text>
+            )}
+            <Text style={styles.modalText}>{error?.errorMessage}</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setError(null)}>
+              <Text style={styles.textStyle}>Đóng</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    opacity: 0.7,
+    backgroundColor: Colors.black,
+  },
   centeredView: {
     alignItems: 'center',
     justifyContent: 'center',

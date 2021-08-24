@@ -20,7 +20,7 @@ import HeaderBg from 'components/Common/HeaderBg';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-import {useHome} from 'context/Home/utils';
+import {useHome, useModalSmartOTP} from 'context/Home/utils';
 import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
 
@@ -30,6 +30,8 @@ const Home = () => {
   const {goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
+  const modalSmartOTP = useModalSmartOTP();
+
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
@@ -178,12 +180,38 @@ const Home = () => {
           )}
         />
       )}
+      {modalSmartOTP.smartOTP && (
+        <Modal
+          visible={modalSmartOTP.smartOTP}
+          onClose={() => setFirstLogin(false)}
+          title="Nhanh và bảo mật hơn với smart OTP"
+          content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Cài smart OTP ngay"
+                onPress={modalSmartOTP.onGoSmartOTP}
+              />
+              <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
+                <Text style={styles.underline}>Không, cảm ơn</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={modalSmartOTP.onClose}>
+                <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
     </>
   );
 };
 const styles = StyleSheet.create({
   buttonGroup: {
     alignItems: 'center',
+  },
+  underline: {
+    textDecorationLine: 'underline',
   },
 });
 export default Home;

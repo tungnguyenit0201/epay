@@ -12,6 +12,14 @@ export default function commonReducer(state, action) {
         ...state,
         error: action?.error,
       };
+    case 'SHOW_MODAL':
+      return {
+        ...state,
+        showModal: {
+          ...state.showModal,
+          [action?.modal?.type]: action?.modal?.value,
+        },
+      };
     default:
       return state;
   }
