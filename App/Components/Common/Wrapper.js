@@ -33,7 +33,7 @@ const Wrapper = React.memo(
           {avoidStatusBar && <View style={styles.avoidStatusBar} />}
           <View style={styles.flexFill}>{children}</View>
           {loading && <FWLoading />}
-          {!!error?.ErrorCode && <Alert />}
+          {!!error?.errorCode && <Alert />}
         </KeyboardAvoidingView>
       </View>
     );

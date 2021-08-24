@@ -10,10 +10,7 @@
     "lint": "eslint .",
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
-    "prestorybook": "rnstl",
-    "start:storybook": "MODE=storybook react-native start",
-    "android:storybook": "MODE=storybook react-native run-android",
-    "ios:storybook": "MODE=storybook react-native run-ios"
+    "prestorybook": "rnstl"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
