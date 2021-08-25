@@ -44,3 +44,20 @@ export const checkSmartOTP = async ({phone}) => {
   });
   return response;
 };
+
+export const activateSmartOTP = async ({phone, password, active = true}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.ACTIVATE_SMART_OTP,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      SmtOtpPassword: password,
+      Active: active ? 1 : 0,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

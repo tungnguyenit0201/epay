@@ -13,6 +13,7 @@ export const updatePassword = async ({phone, password}) => {
   });
   return response;
 };
+
 export const updatePersonalInfo = async ({phone, personalInfo}) => {
   let response = null;
   await request({
