@@ -6,15 +6,11 @@ import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
-
-import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {useSmartOTP} from 'context/User/utils';
 
 const SmartOtp = () => {
   const translation = useTranslation();
-  const [value1, setValue1] = useState(false);
-  const [value2, setValue2] = useState(false);
-  const [value3, setValue3] = useState(false);
-  const [value4, setValue4] = useState(false);
+  const {phone, isAccepted, onAcceptTermConditions, onGoOTP} = useSmartOTP();
 
   return (
     <>
@@ -35,48 +31,36 @@ const SmartOtp = () => {
           </Text>
           <Text mb={5}>Số điện thoại</Text>
           <Text fs="h5" bold mb={20}>
-            0809000999
+            {phone}
           </Text>
           <View style={[{paddingLeft: 22}]}>
             <Radio
+              onChange={onAcceptTermConditions}
               items={[{label: '', value: 1}]}
               style={[{marginRight: 0, position: 'absolute', let: 0, top: 1}]}
             />
-            <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-              <Text>Tôi đồng ý với</Text>
-              <TouchableOpacity
-                onPress={() => Navigator.push(SCREEN.SMART_OTP)}>
-                <Text ml={5} style={[{textDecorationLine: 'underline'}]}>
-                  điều khoản điều kiện
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <Text>đăng ký dịch vụ của Epay</Text>
+            <Text>
+              Tôi đồng ý với
+              <Text
+                style={[{textDecorationLine: 'underline'}]}
+                onPress={() => alert('Điều khoản điều kiện')}>
+                {' '}
+                điều khoản điều kiện{' '}
+              </Text>
+              đăng ký dịch vụ của Epay
+            </Text>
           </View>
         </View>
       </ScrollView>
       <View style={base.bottom}>
         <Button
-          label="Kích hoạt"
-          onPress={() => Navigator.push(SCREEN.SMART_OTP)}
+          label="Kích hoạt" // translate
+          disabled={!isAccepted}
+          onPress={onGoOTP}
         />
       </View>
     </>
   );
 };
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    paddingVertical: 12,
-    paddingHorizontal: Spacing.PADDING,
-    alignItems: 'center',
-  },
-  text: {
-    marginRight: 80,
-    fontSize: Fonts.H6,
-  },
-});
+const styles = StyleSheet.create({});
 export default SmartOtp;
