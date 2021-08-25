@@ -72,7 +72,7 @@ const useAuth = () => {
   const {setError} = useError();
   const {setPhone, setPasswordEncrypted, getPasswordEncrypted, setToken} =
     useAsyncStorage();
-  const {onGetPersonalInfo} = useUserInfo();
+  const {onGetAllInfo} = useUserInfo();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -134,7 +134,7 @@ const useAuth = () => {
         Navigator.navigate(
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
-        onGetPersonalInfo();
+        onGetAllInfo();
         return;
     }
   };

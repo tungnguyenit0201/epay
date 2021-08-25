@@ -2,17 +2,16 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Text} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
-import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useAuth} from 'context/Auth/utils';
-import { useUserInfo } from 'context/User/utils'
+import Navigator from 'navigations/Navigator';
+
 const User = ({data, style}) => {
   const {onLogout} = useAuth();
-  const { onGetAllInfo } = useUserInfo();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
-        onPress={onGetAllInfo}
+        onPress={() => Navigator.navigate(SCREEN.USER)}
         style={styles.wicon}>
         <Image style={{width: 40, height: 40}} source={Images.Avatar} />
       </TouchableOpacity>

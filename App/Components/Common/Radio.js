@@ -18,7 +18,7 @@ export default ({
     //const isSelected = item?.value === value;
     return (
       <Pressable
-        //onPress={() => onChange?.(item?.value)}
+        onPress={() => onChange?.(item?.value)}
         onPress={() => setChecked(item?.value)}
         key={item?.value}
         style={[styles.radio, style]}>

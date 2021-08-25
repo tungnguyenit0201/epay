@@ -67,8 +67,20 @@ export const passwordSchema = yup.object().shape({
 });
 
 export const addressSchema = yup.object().shape({
-  Address: yup.string().required("Địa chỉ không được bỏ trống."),
-  Ward: yup.string().required("Phương không được bỏ trống."),
-  County: yup.string().required("Quận không được bỏ trống."),
-  Provincial: yup.string().required("Tỉnh không được bỏ trống."),
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'),
+  Ward: yup.string().required('Phương không được bỏ trống.'),
+  County: yup.string().required('Quận không được bỏ trống.'),
+  Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
+});
+
+export const verifyUserSchema = yup.object().shape({
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'),
+  Ward: yup.string().required('Phương không được bỏ trống.'),
+  County: yup.string().required('Quận không được bỏ trống.'),
+  Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
+  ICFullName: yup.string().required('Họ và tên không được bỏ trống.'),
+  ICIssuedDate: yup.string().required('Ngày cấp không được bỏ trống.'),
+  ICIssuedPlace: yup.string().required('Nơi cấp không được bỏ trống.'),
+  ICNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
+  DateOfBirth: yup.string().required('Ngày sinh không được bỏ trống.'),
 });
