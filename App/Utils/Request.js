@@ -1,7 +1,7 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import axios from './Axios';
-import { API } from 'configs';
-import { buildURL } from './Functions';
+import {API} from 'configs';
+import {buildURL} from './Functions';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -23,10 +23,10 @@ const getCommonParams = async (url, language = 'vi') => {
       transactionID !== null && transactionID !== ''
         ? transactionID
         : (
-          new Date().getTime() +
-          '' +
-          Math.floor(Math.random() * 10000)
-        ).toString(),
+            new Date().getTime() +
+            '' +
+            Math.floor(Math.random() * 10000)
+          ).toString(),
     RequestTime: moment().format('DD-MM-YYYY HH:mm:ss'),
     Lang: language,
     Channel: 'App',
@@ -37,7 +37,7 @@ const getCommonParams = async (url, language = 'vi') => {
     IpAddress: '0.0.0.0',
     DeviceInfo:
       (Platform.OS === 'ios' ? 'Iphone iOS ' : 'Android ') + Platform.Version,
-    DeviceID: "b4b757752a146426",
+    DeviceID: uniqueDeviceID,
   };
 };
 
@@ -65,7 +65,7 @@ async function request({
           console.log(method, buildURL(root + url, query), params, result);
         }
       } else {
-        let postParams = { ...(await getCommonParams(url)), ...params };
+        let postParams = {...(await getCommonParams(url)), ...params};
         if (form) {
           postParams = new FormData();
           _.forIn(params, (value, key) => {
@@ -118,7 +118,7 @@ async function request({
             ...err?.response?.data,
           });
         } else {
-          return failure({ message: result?.message });
+          return failure({message: result?.message});
         }
       }
     }
@@ -129,4 +129,4 @@ const defaultFailureHandle = error => {
   console.error(error);
 };
 
-export { request };
+export {request};
