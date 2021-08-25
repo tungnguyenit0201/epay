@@ -70,6 +70,7 @@ export const updateUserAddress = async ({
         Ward,
         County,
         Provincial,
+        Country: 'VIET NAM',
       },
     },
     success: res => {
