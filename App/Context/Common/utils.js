@@ -31,7 +31,7 @@ const useError = () => {
       type: 'SET_ERROR',
       error: {
         errorCode: error?.ErrorCode,
-        errorMessage: error?.ErrorMessage,
+        errorMessage: error?.ErrorMessage, //todo: get translate error mesage text
         title: error?.title,
       },
     });

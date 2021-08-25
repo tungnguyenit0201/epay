@@ -10,7 +10,6 @@ import HeaderBg from 'components/Common/HeaderBg';
 
 const VerifyUserInfo = () => {
   const {onChange, onContinue} = useVerifyInfo();
-  let [domain, setDomain] = useState(0);
 
   return (
     <>
@@ -30,7 +29,7 @@ const VerifyUserInfo = () => {
             onChange={index => onPicker(index)}
             value={domain}
           /> */}
-
+          {/* 
           <InputBlock
             label={'Họ và tên'}
             onChange={value => onChange('name', value)}
@@ -38,21 +37,19 @@ const VerifyUserInfo = () => {
           <InputBlock
             label={'Ngày sinh'}
             onChange={value => onChange('birthday', value)}
-          />
+          /> */}
 
           <SelectImage
             title="Mặt trước"
-            onSelectImage={value => {
-              onChange('frontIDCard', value);
-            }}
+            onSelectImage={value => onChange('ICFrontPhoto', value?.data)}
           />
           <SelectImage
             title="Mặt sau"
-            onSelectImage={value => onChange('backIDCard', value)}
+            onSelectImage={value => onChange('ICBackPhoto', value?.data)}
           />
 
           <Button
-            label={TEXT.CONTINUE}
+            label="Tiếp tục" //todo translate
             onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
           />
         </View>

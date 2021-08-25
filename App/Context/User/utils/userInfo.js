@@ -1,8 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
-import ImagePicker from 'react-native-image-crop-picker';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
-import {getConfigInfo} from 'services/auth';
 import {
   updatePersonalInfo,
   getPersonalInfo,
@@ -18,47 +16,7 @@ import {
 } from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
-const imagePickerOptions = {
-  width: 850,
-  height: 540,
-  cropping: true,
-};
 
-const useImagePicker = onSelectImage => {
-  const [image, setImage] = useState(null);
-
-  const onPhoto = () => {
-    ImagePicker.openPicker(imagePickerOptions).then(image => {
-      setImage(image);
-    });
-  };
-
-  const onCamera = () => {
-    ImagePicker.openCamera(imagePickerOptions).then(image => {
-      setImage(image);
-    });
-  };
-
-  useEffect(() => {
-    onSelectImage && onSelectImage(image);
-  }, [image]);
-
-  return {image, onPhoto, onCamera};
-};
-
-const useVerifyInfo = (initialValue = {}) => {
-  const contentRef = useRef(initialValue);
-
-  const onChange = (key, value) => {
-    contentRef.current[key] = value;
-  };
-
-  const onContinue = screen => {
-    Navigator.navigate(screen, contentRef.current);
-  };
-
-  return {data: contentRef.current, onChange, onContinue};
-};
 const useUserInfo = () => {
   let personalInfo = useRef({
     FullName: '',
@@ -129,7 +87,7 @@ const useUserInfo = () => {
         });
         dispatch({type: 'SET_PERSONAL_ADDRESS', data: result?.AddressInfo});
         dispatch({type: 'SET_PERSONAL_IC', data: result?.ICInfor});
-        Navigator.navigate(SCREEN.USER, result);
+        dispatch({type: 'SET_PERSONAL_INFO', data: result?.PersonalInfo});
     }
   };
 
@@ -169,6 +127,7 @@ const useUserInfo = () => {
         Navigator.navigate(SCREEN.MY_WALLET, result);
     }
   };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -179,5 +138,4 @@ const useUserInfo = () => {
     onGetConnectedBank,
   };
 };
-
-export {useImagePicker, useVerifyInfo, useUserInfo};
+export default useUserInfo;
