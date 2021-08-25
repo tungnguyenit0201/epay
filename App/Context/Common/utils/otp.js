@@ -6,6 +6,8 @@ import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
+import useLoading from './loading';
+import useError from './error';
 
 const useOTP = ({functionType, phone, password}) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -52,6 +54,8 @@ const useOTP = ({functionType, phone, password}) => {
           phone,
           functionType: FUNCTION_TYPE.FORGOT_PASS,
         });
+      case FUNCTION_TYPE.REGISTER_SMART_OTP:
+        return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
     }
   };
 
