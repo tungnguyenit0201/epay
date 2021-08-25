@@ -21,7 +21,7 @@ import RegisterPassword from 'containers/Auth/RegisterPassword';
 import RegisterName from 'containers/Auth/RegisterName';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
-import ActiveOTP from 'containers/User/ActiveOTP';
+import ActiveOTP from 'containers/User/SmartOTP/ActiveOTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
@@ -55,6 +55,8 @@ import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
 import AutoPayment from 'containers/User/AutoPayment';
 import TransferBank from 'containers/Wallet/TransferBank';
+import SmartOTPPassword from 'containers/User/SmartOTP/SmartOTPPassword';
+import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
 
 const AppNavigator = () => {
   const initialRoute = SCREEN.AUTH;
@@ -165,6 +167,14 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.AUTOPAYMENT} component={AutoPayment} />
           <Stack.Screen name={SCREEN.TRANSFER_BANK} component={TransferBank} />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_PASSWORD}
+            component={SmartOTPPassword}
+          />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_RESULT}
+            component={SmartOTPResult}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

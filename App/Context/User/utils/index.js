@@ -1,4 +1,13 @@
 import useVerifyInfo from './verifyUser';
 import useImagePicker from './imagePicker';
 import useUserInfo from './userInfo';
-export {useVerifyInfo, useImagePicker, useUserInfo};
+import useSecuritySettings from './securitySettings';
+import useSmartOTP from './smartOTP';
+
+export {
+  useVerifyInfo,
+  useImagePicker,
+  useUserInfo,
+  useSecuritySettings,
+  useSmartOTP,
+};
