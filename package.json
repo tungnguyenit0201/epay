@@ -83,7 +83,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix --quiet"
+    "*.js": "prettier --write"
   },
   "jest": {
     "preset": "react-native"
