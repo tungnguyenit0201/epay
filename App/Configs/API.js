@@ -1,4 +1,4 @@
-const ROOT = 'https://dev.epayservices.com.vn:9443/api/';
+const ROOT = 'https://test.epayservices.com.vn:9443/api/';
 const TIMEOUT = 10000;
 
 export default {
@@ -30,5 +30,10 @@ export default {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
     GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
+  },
+  ADDRESS: {
+    GET_PROVINCE: 'region/get_province_info',
+    GET_DISTRICT: 'region/get_district_info',
+    GET_WARD: 'region/get_ward_info',
   },
 };

@@ -7,14 +7,13 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {Text, Header, Button, Row, Col, ListItem} from 'components';
+import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 import {useShowModal} from 'context/Common/utils';
 const CheckoutSuccess = () => {

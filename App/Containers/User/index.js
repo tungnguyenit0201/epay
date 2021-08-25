@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, Button, Icon, Header} from 'components';
+import {Text, HeaderBg, Icon, Header} from 'components';
 import {
   ScrollView,
   View,
@@ -14,7 +14,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale, formatMoney} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import UserInfo from 'components/User/UserInfo';
 
 import {useUserInfo} from 'context/User/utils';

@@ -66,6 +66,7 @@ async function request({
         }
       } else {
         let postParams = {...(await getCommonParams(url)), ...params};
+        // console.log('postParams :>> ', postParams);
         if (form) {
           postParams = new FormData();
           _.forIn(params, (value, key) => {

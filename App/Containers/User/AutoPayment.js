@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {View, ScrollView} from 'react-native';
-import {Header, Button} from 'components';
+import {Header, Button, HeaderBg} from 'components';
 import {Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 
@@ -8,8 +8,6 @@ import Monney from 'components/Home/Monney';
 
 import InputMoney from 'components/User/InputMoney';
 import SelectBank from 'components/User/TopUp/SelectBank';
-
-import HeaderBg from 'components/Common/HeaderBg';
 
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';

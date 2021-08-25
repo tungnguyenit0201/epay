@@ -15,6 +15,7 @@ import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from 'context/User';
+import {useTranslation} from 'context/Language';
 
 const useLoading = () => {
   const {dispatch} = useCommon();
@@ -26,13 +27,14 @@ const useLoading = () => {
 
 const useError = () => {
   const {dispatch} = useCommon();
+  const translation = useTranslation();
   const setError = error => {
     dispatch({
       type: 'SET_ERROR',
       error: {
         errorCode: error?.ErrorCode,
         errorMessage: error?.ErrorMessage, //todo: get translate error mesage text
-        title: error?.title,
+        title: error?.title || translation.notification,
       },
     });
   };

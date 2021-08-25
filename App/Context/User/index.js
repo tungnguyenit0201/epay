@@ -11,6 +11,11 @@ const defaultUserInfo = {
   personalIC: '',
   phone: null,
   myWallet: '',
+  region: {
+    Provincial: '',
+    County: '',
+    Ward: '',
+  },
 };
 
 export const UserProvider = ({children}) => {

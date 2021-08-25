@@ -7,11 +7,10 @@ import {
   Pressable,
 } from 'react-native';
 
-import {Text, Button, Icon, Header} from 'components';
+import {Text, Button, Icon, Header, HeaderBg} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line

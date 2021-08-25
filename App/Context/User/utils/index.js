@@ -1,4 +1,5 @@
 import useVerifyInfo from './verifyUser';
 import useImagePicker from './imagePicker';
 import useUserInfo from './userInfo';
-export {useVerifyInfo, useImagePicker, useUserInfo};
+import useSelectRegion from './selectRegion';
+export {useVerifyInfo, useImagePicker, useUserInfo, useSelectRegion};
