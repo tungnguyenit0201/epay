@@ -2,6 +2,7 @@ import {useCommon} from 'context/Common';
 import {checkSmartOTP} from 'services/common';
 import _ from 'lodash';
 import {useUser} from 'context/User';
+import useAsyncStorage from './asyncStorage';
 
 const useShowModal = () => {
   const {token, phone} = useUser();
