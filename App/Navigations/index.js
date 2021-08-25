@@ -55,7 +55,9 @@ import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
 import AutoPayment from 'containers/User/AutoPayment';
 import TransferBank from 'containers/Wallet/TransferBank';
-
+import BankLinked from 'containers/Wallet/Bank/BankLinked';
+import BankDetail from 'containers/Wallet/Bank/BankDetail';
+import LimitSetting from 'containers/Wallet/LimitSetting';
 const AppNavigator = () => {
   const initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
@@ -165,6 +167,9 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.AUTOPAYMENT} component={AutoPayment} />
           <Stack.Screen name={SCREEN.TRANSFER_BANK} component={TransferBank} />
+          <Stack.Screen name={SCREEN.BANK_LINKED} component={BankLinked} />
+          <Stack.Screen name={SCREEN.BANK_DETAIL} component={BankDetail} />
+          <Stack.Screen name={SCREEN.LIMIT_SETTING} component={LimitSetting} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

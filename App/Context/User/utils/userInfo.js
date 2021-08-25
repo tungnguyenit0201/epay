@@ -1,12 +1,14 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
-import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
 import {
   updatePersonalInfo,
   getPersonalInfo,
   getAllInfo,
   updateUserAddress,
   getConnectedBank,
+  confirmPassword,
+  getLimit,
 } from 'services/user';
 import {
   useAsyncStorage,
@@ -16,6 +18,7 @@ import {
 } from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
+import {sha256} from 'react-native-sha256';
 
 const useUserInfo = () => {
   let personalInfo = useRef({
@@ -85,8 +88,13 @@ const useUserInfo = () => {
           type: 'UPDATE_WALLET',
           data: result?.WalletInfo?.AvailableBlance,
         });
+        dispatch({type: 'SET_PHONE', phone});
         dispatch({type: 'SET_PERSONAL_ADDRESS', data: result?.AddressInfo});
         dispatch({type: 'SET_PERSONAL_IC', data: result?.ICInfor});
+        dispatch({
+          type: 'SET_PERSONAL_INFO',
+          personalInfo: result?.PersonalInfo,
+        });
         dispatch({type: 'SET_PERSONAL_INFO', data: result?.PersonalInfo});
         dispatch({type: 'SET_PHONE', phone});
     }
@@ -121,14 +129,44 @@ const useUserInfo = () => {
     let phone = await getPhone();
     const result = await getConnectedBank({phone});
     setLoading(false);
-    switch (_.get(result, 'ErrorCode', '')) {
-      case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
-        return setError(result);
-      case ERROR_CODE.SUCCESS:
-        Navigator.navigate(SCREEN.MY_WALLET, result);
-    }
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      return Navigator.navigate(SCREEN.MY_WALLET, result);
+    } else setError(result);
   };
 
+  const onConfirmPassword = async ({password}) => {
+    const passwordEncrypted = await sha256(password);
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await confirmPassword({
+        phone,
+        password: passwordEncrypted,
+      });
+      setLoading(false);
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        return Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.FORGOT_PASS,
+        });
+      } else setError(result);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  const onGetLimit = async () => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await getLimit({phone});
+      setLoading(false);
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS)
+        Navigator.navigate(SCREEN.LIMIT_SETTING, result);
+      else setError(result);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -137,6 +175,8 @@ const useUserInfo = () => {
     onGetAllInfo,
     onUpdateUserAddress,
     onGetConnectedBank,
+    onConfirmPassword,
+    onGetLimit,
   };
 };
 export default useUserInfo;

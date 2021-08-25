@@ -16,6 +16,21 @@ export default function userReducer(state, action) {
         currentImage: action.newImage,
         currentVarient: action.currentProductId,
       };
+    case 'LIST_CONNECT_BANK':
+      return {
+        ...state,
+        listConnectBank: action?.data,
+      };
+    case 'LIST_DOMESTIC_BANK':
+      return {
+        ...state,
+        listDomesticBank: action?.data,
+      };
+    case 'LIST_INTERNATIONAL_BANK':
+      return {
+        ...state,
+        listInternationalBank: action?.data,
+      };
     default:
       return state;
   }
