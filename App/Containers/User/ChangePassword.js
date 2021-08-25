@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import {Button, Header, InputBlock, Text} from 'components';
+import {Button, Header, InputBlock, Text, HeaderBg} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 import {base} from 'themes';
 const ChangePassword = () => {

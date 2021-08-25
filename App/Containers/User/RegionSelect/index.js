@@ -16,48 +16,7 @@ const escapeRegex = string => string?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const RegionSelect = ({route}) => {
   const {items, type, parentType} = route.params;
-  // const [values, setValues] = useState(items.filter(item => !!item.value));
   const {onSelected} = useSelectRegion({items, type, parentType});
-  // const [search, setSearch] = useState('');
-
-  // const onSelected = item => {
-  //   let field = '';
-  //   if (type === 'cites') {
-  //     field = 'city';
-  //     const _items = region?.districts?.filter(i => i.city_id == item.value);
-  //     Navigator.push('RegionSelect', {
-  //       items: _items,
-  //       type: 'districts',
-  //       parentType,
-  //     });
-  //   } else if (type === 'districts') {
-  //     field = 'district';
-  //     const _items = region?.wards?.filter(i => i.district_id == item.value);
-  //     if (!_items?.length) {
-  //       Navigator.navigate('VerifyUserPortrait');
-  //     } else {
-  //       Navigator.push('RegionSelect', {
-  //         items: _items,
-  //         type: 'wards',
-  //         parentType,
-  //       });
-  //     }
-  //   } else if (type === 'wards') {
-  //     field = 'ward';
-  //     Navigator.navigate('VerifyUserPortrait', {type: parentType});
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setValues(
-  //     items?.filter(item => {
-  //       return (
-  //         !!item.value &&
-  //         RegExp(`${escapeRegex(search)}`, 'i').test(item?.label)
-  //       );
-  //     }),
-  //   );
-  // }, [search]);
   const renderItem = ({item}) => {
     let isSelected = false;
     // if (type === 'cites') {

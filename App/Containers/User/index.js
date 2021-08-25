@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text, Button, Icon, Header } from 'components';
+import React, {useEffect, useState} from 'react';
+import {Text, HeaderBg, Icon, Header} from 'components';
 import {
   ScrollView,
   View,
@@ -7,22 +7,21 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { SCREEN } from 'configs/Constants';
+import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-import { Colors, Fonts, Images, Spacing, base } from 'themes';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { scale, formatMoney } from 'utils/Functions';
-import { useTranslation } from 'context/Language';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {scale, formatMoney} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import UserInfo from 'components/User/UserInfo';
 
-import { useUserInfo } from 'context/User/utils';
-import { useUser } from 'context/User';
-const User = ({ route }) => {
+import {useUserInfo} from 'context/User/utils';
+import {useUser} from 'context/User';
+const User = ({route}) => {
   const translation = useTranslation();
-  const { userInfo } = useUser();
-  const { onGetConnectedBank } = useUserInfo();
+  const {userInfo} = useUser();
+  const {onGetConnectedBank} = useUserInfo();
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
@@ -41,7 +40,7 @@ const User = ({ route }) => {
             tintColor={Colors.cl1}
           />
           <Text size={Fonts.H6}>Ví của tôi</Text>
-          <Text size={Fonts.H6} style={{ marginLeft: 'auto' }} bold>
+          <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
             {formatMoney(userInfo?.myWallet)}
           </Text>
         </TouchableOpacity>

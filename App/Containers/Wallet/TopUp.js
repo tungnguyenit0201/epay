@@ -7,15 +7,7 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import {
-  Text,
-  TextInput,
-  Header,
-  InputBlock,
-  Button,
-  Row,
-  Col,
-} from 'components';
+import {Header, HeaderBg, Button} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -24,8 +16,6 @@ import Monney from 'components/Home/Monney';
 
 import InputMoney from 'components/User/InputMoney';
 import SelectBank from 'components/User/TopUp/SelectBank';
-
-import HeaderBg from 'components/Common/HeaderBg';
 
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';

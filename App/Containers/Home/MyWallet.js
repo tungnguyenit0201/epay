@@ -1,20 +1,24 @@
 import React from 'react';
 import {
-  View, ScrollView, StyleSheet, Text, Image, TouchableOpacity
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
-import { Button, Header, Row, Col, Icon } from 'components';
-import { Colors, Fonts, Spacing, Images } from 'themes';
+import {Button, Header, Row, Col, Icon, HeaderBg} from 'components';
+import {Colors, Fonts, Spacing, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
-import { SCREEN, TEXT } from 'configs/Constants';
-import { useTranslation } from 'context/Language';
-import HeaderBg from 'components/Common/HeaderBg';
+import {SCREEN, TEXT} from 'configs/Constants';
+import {useTranslation} from 'context/Language';
 import Monney from 'components/Home/Monney';
 import ListItem from 'components/Common/ListItem';
-import { scale } from 'utils/Functions';
-import { useUser } from 'context/User';
-const MyWallet = ({ route }) => {
+import {scale} from 'utils/Functions';
+import {useUser} from 'context/User';
+const MyWallet = ({route}) => {
   const listBankConnect = route.params.ListBankConnect;
-  const { userInfo } = useUser();
+  const {userInfo} = useUser();
   const translation = useTranslation();
   const dataMenu = [
     {
@@ -37,7 +41,7 @@ const MyWallet = ({ route }) => {
     <>
       <ScrollView style={styles.container}>
         <HeaderBg>
-          <Header back title="Ví của tôi" style={{ marginBottom: 25 }} />
+          <Header back title="Ví của tôi" style={{marginBottom: 25}} />
           <Monney
             style={[
               {
@@ -45,35 +49,41 @@ const MyWallet = ({ route }) => {
                 bottom: -20,
                 left: Spacing.PADDING,
                 right: Spacing.PADDING,
-                shadowColor: "black",
+                shadowColor: 'black',
               },
-            ]} />
+            ]}
+          />
         </HeaderBg>
 
-        <View style={[styles.wrap, { marginTop: 24, marginBottom: 14 }]}>
+        <View style={[styles.wrap, {marginTop: 24, marginBottom: 14}]}>
           <ListItem
             scroll
             space={10}
             col={4}
             data={dataMenu}
-            styleText={[{ fontSize: 14 }]}
-            styleWicon={[{ backgroundColor: '#437EC0' }]}
-            styleIcon={[{ tintColor: '#fff' }]} />
+            styleText={[{fontSize: 14}]}
+            styleWicon={[{backgroundColor: '#437EC0'}]}
+            styleIcon={[{tintColor: '#fff'}]}
+          />
         </View>
 
-        <View style={{
-          backgroundColor: Colors.BORDER,
-          height: 8
-        }}></View>
+        <View
+          style={{
+            backgroundColor: Colors.BORDER,
+            height: 8,
+          }}></View>
 
         <View style={[styles.wrap, styles.py_1]}>
           {listBankConnect ? (
             <View>
-              <Text style={{
-                marginBottom: 10,
-                fontSize: Fonts.H6,
-                fontWeight: "bold"
-              }}>{translation.connect_cardbank_account}</Text>
+              <Text
+                style={{
+                  marginBottom: 10,
+                  fontSize: Fonts.H6,
+                  fontWeight: 'bold',
+                }}>
+                {translation.connect_cardbank_account}
+              </Text>
               <Text style={styles.text}>
                 {translation.you_have_not_connected_your_cardbank_account_yet}
               </Text>
@@ -81,25 +91,29 @@ const MyWallet = ({ route }) => {
                 {translation.connect_now_to_use_epays_payment_services}
               </Text>
             </View>
-          ) : ''}
+          ) : (
+            ''
+          )}
 
-          <Row justify='space-between'>
-            {listBankConnect ? listBankConnect.map(value => (
-              <Col key={value.id} width="30%" style={styles.mb_15}>
-                <TouchableOpacity style={styles.flexCenter}>
-                  <View style={styles.bankBlock}>
-                    <Image style={styles.bankImage} source={value?.BankLogoUrl} />
-                  </View>
-                  <Text>{value?.BankName}</Text>
-                </TouchableOpacity>
-              </Col>
-            )) : ''}
+          <Row justify="space-between">
+            {listBankConnect
+              ? listBankConnect.map(value => (
+                  <Col key={value.id} width="30%" style={styles.mb_15}>
+                    <TouchableOpacity style={styles.flexCenter}>
+                      <View style={styles.bankBlock}>
+                        <Image
+                          style={styles.bankImage}
+                          source={value?.BankLogoUrl}
+                        />
+                      </View>
+                      <Text>{value?.BankName}</Text>
+                    </TouchableOpacity>
+                  </Col>
+                ))
+              : ''}
             <Col width="30%" style={styles.mb_15}>
               <TouchableOpacity style={styles.addBank}>
-                <Icon
-                  icon={Images.Transfer.UNION}
-                  tintColor={Colors.cl1}
-                />
+                <Icon icon={Images.Transfer.UNION} tintColor={Colors.cl1} />
                 <Text style={styles.fontSmall}>Thêm liên kết NH</Text>
               </TouchableOpacity>
             </Col>
@@ -107,14 +121,20 @@ const MyWallet = ({ route }) => {
         </View>
       </ScrollView>
 
-      <View style={[styles.wrap, {
-        padding: Spacing.PADDING,
-        backgroundColor: Colors.BACKGROUNDCOLOR,
-      }]}>
-        <Button bg={Colors.cl1}
+      <View
+        style={[
+          styles.wrap,
+          {
+            padding: Spacing.PADDING,
+            backgroundColor: Colors.BACKGROUNDCOLOR,
+          },
+        ]}>
+        <Button
+          bg={Colors.cl1}
           color={Colors.white}
           label={translation.add_bank}
-          onPress={() => Navigator.navigate(SCREEN.BANK_LIST)} />
+          onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
+        />
       </View>
     </>
   );
@@ -128,11 +148,11 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  py_1: { paddingVertical: Spacing.PADDING },
+  py_1: {paddingVertical: Spacing.PADDING},
   text: {
     color: Colors.gray,
     lineHeight: 20,
-    marginBottom: 15
+    marginBottom: 15,
   },
   itemAddBank: {
     maxWidth: '33.333%',
@@ -151,12 +171,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   mb_15: {
-    marginBottom: scale(15)
+    marginBottom: scale(15),
   },
   flexCenter: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   bankBlock: {
     width: scale(48),
@@ -166,11 +186,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: scale(8)
+    marginBottom: scale(8),
   },
   bankImage: {
     width: scale(28),
-    height: scale(28)
+    height: scale(28),
   },
   addBank: {
     borderWidth: 1,
@@ -181,11 +201,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5
+    borderRadius: 5,
   },
   fontSmall: {
-    fontSize: Fonts.FONT_SMALL
-  }
+    fontSize: Fonts.FONT_SMALL,
+  },
 });
 
 export default MyWallet;
