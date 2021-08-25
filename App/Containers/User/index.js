@@ -17,11 +17,13 @@ import {useTranslation} from 'context/Language';
 import UserInfo from 'components/User/UserInfo';
 
 import {useUserInfo} from 'context/User/utils';
+import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 const User = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank} = useUserInfo();
+  const {onGetAllBank} = useBankInfo();
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
@@ -45,11 +47,7 @@ const User = ({route}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.BANK_LIST);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onGetAllBank}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.Bank}

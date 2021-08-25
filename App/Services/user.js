@@ -104,3 +104,29 @@ export const getConnectedBank = async ({phone}) => {
   });
   return response;
 };
+
+export const confirmPassword = async ({phone, password}) => {
+  let response = null;
+  await request({
+    url: API.USER.CONFIRM_PASSWORD,
+    method: 'post',
+    params: {PhoneNumber: phone, Password: password},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const getLimit = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_LIMIT,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

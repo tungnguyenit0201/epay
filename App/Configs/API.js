@@ -23,6 +23,13 @@ export default {
     UPDATE_USER_ADDRESS: 'account/update_address_info',
     UPDATE_IDENTIFY: 'account/update_identify_info',
     GET_CONNECTED_BANK: 'wallet/get_connected_bank',
+    CONFIRM_PASSWORD: 'account/confirm_password',
+    GET_LIMIT: 'security/get_limit',
+  },
+  WALLET: {
+    GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
+    GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
+    GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

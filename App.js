@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Navigation from 'navigations';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {UserProvider} from 'App/Context/User';
+import {WalletProvider} from 'App/Context/Wallet';
 import {CommonProvider} from 'App/Context/Common';
 import {LanguageProvider} from 'App/Context/Language';
 import {Wrapper} from 'components';
@@ -16,9 +17,11 @@ const App = () => {
       <LanguageProvider>
         <CommonProvider>
           <UserProvider>
-            <Wrapper>
-              <Navigation />
-            </Wrapper>
+            <WalletProvider>
+              <Wrapper>
+                <Navigation />
+              </Wrapper>
+            </WalletProvider>
           </UserProvider>
         </CommonProvider>
       </LanguageProvider>
