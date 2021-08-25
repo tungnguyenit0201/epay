@@ -48,5 +48,8 @@ const SCREEN = {
   AUTOPAYMENT: 'AutoPayment',
   TRANSFER_BANK: 'TransferBank',
   UPDATE_PASSWORD: 'UpdatePassword',
+  BANK_LINKED: 'BankLinked',
+  BANK_DETAIL: 'BankDetail',
+  LIMIT_SETTING: 'LimitSetting',
 };
 export default SCREEN;

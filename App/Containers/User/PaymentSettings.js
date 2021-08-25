@@ -1,5 +1,11 @@
 import React, {useState, useContext} from 'react';
-import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 
 import {Text, Button, Icon, Header} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
@@ -9,11 +15,11 @@ import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
-
+import {useUserInfo} from 'context/User/utils';
 const PaymentSettings = () => {
   const translation = useTranslation();
   const [xacNhan, isXacNhan] = useState(false);
-
+  const {onGetLimit} = useUserInfo();
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
@@ -59,11 +65,7 @@ const PaymentSettings = () => {
           onValueChange={isXacNhan}
         />
       </View>
-      <View
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
-        }}>
+      <Pressable style={styles.item} onPress={onGetLimit}>
         <Icon
           mr={8}
           icon={Images.Profile.MaThanhToan}
@@ -71,7 +73,7 @@ const PaymentSettings = () => {
           tintColor={Colors.cl1}
         />
         <Text style={styles.text}> Hạn mức trong ngày</Text>
-      </View>
+      </Pressable>
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
