@@ -95,6 +95,8 @@ const useUserInfo = () => {
           type: 'SET_PERSONAL_INFO',
           personalInfo: result?.PersonalInfo,
         });
+        dispatch({type: 'SET_PERSONAL_INFO', data: result?.PersonalInfo});
+        dispatch({type: 'SET_PHONE', phone});
     }
   };
 
