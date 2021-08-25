@@ -5,7 +5,7 @@ import {scale} from 'utils/Functions';
 import Text from './Text';
 
 export default ({
-  items,
+  items, // [{label, value}]
   onChange,
   style,
   marginBottom = 19,
