@@ -6,7 +6,12 @@ import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
 import {useTranslation} from 'context/Language';
-import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
+import {
+  useLoading,
+  useError,
+  useAsyncStorage,
+  useShowModal,
+} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';

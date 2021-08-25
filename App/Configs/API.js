@@ -13,6 +13,7 @@ export default {
   COMMON: {
     GEN_OTP: 'common/otp/gen_otp',
     CONFIRM_OTP: 'common/otp/confirm_otp',
+    CHECK_SMART_OTP: 'smartotp/get_smartotp_active',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',

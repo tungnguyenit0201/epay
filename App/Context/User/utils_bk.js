@@ -12,6 +12,12 @@ import {
   updateIdentify,
 } from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  useShowModal,
+} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 const imagePickerOptions = {
@@ -76,6 +82,7 @@ const useUserInfo = () => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useUser();
+  const {showModalSmartOTP} = useShowModal();
 
   const setICInfor = (key, value) => {
     ICInfor.current[key] = value;
@@ -112,9 +119,10 @@ const useUserInfo = () => {
         personalInfo: personalInfo.current,
       });
       setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS)
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        showModalSmartOTP(true);
         Navigator.navigate(SCREEN.TAB_NAVIGATION);
-      else setError(result);
+      } else setError(result);
     } catch (error) {
       setLoading(false);
     }

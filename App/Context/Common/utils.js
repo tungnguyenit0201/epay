@@ -8,12 +8,13 @@ import {
   SCREEN,
 } from 'configs/Constants';
 import {Linking} from 'react-native';
-import {confirmOTP, genOtp} from 'services/common';
+import {checkSmartOTP, confirmOTP, genOtp} from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useUser} from 'context/User';
 
 const useLoading = () => {
   const {dispatch} = useCommon();
@@ -164,12 +165,26 @@ const useAsyncStorage = () => {
     await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED, value);
   };
 
-  const getToken = async value => {
-    await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN, value);
+  const getToken = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
   };
 
   const setToken = async value => {
     await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOKEN, value);
+  };
+
+  const getModalSmartOTPDisabled = async () => {
+    const value = await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.COMMON.SMART_OTP_DISABLED,
+    );
+    return JSON.parse(value);
+  };
+
+  const setModalSmartOTPDisabled = async value => {
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.COMMON.SMART_OTP_DISABLED,
+      JSON.stringify(value),
+    );
   };
 
   return {
@@ -182,7 +197,29 @@ const useAsyncStorage = () => {
     setTouchIdEnabled,
     getToken,
     setToken,
+    getModalSmartOTPDisabled,
+    setModalSmartOTPDisabled,
   };
 };
 
-export {useLoading, useOTP, useError, useAsyncStorage};
+const useShowModal = () => {
+  const {token, phone} = useUser();
+  const {getModalSmartOTPDisabled} = useAsyncStorage();
+  const {dispatch} = useCommon();
+
+  const showModalSmartOTP = async (value = true) => {
+    let isDisabled = await getModalSmartOTPDisabled();
+    if (token && !isDisabled) {
+      const result = await checkSmartOTP({phone});
+      isDisabled = !!result?.SmartOtpInfo;
+    }
+    if (value && isDisabled) {
+      return;
+    }
+    dispatch({type: 'SHOW_MODAL', modal: {type: 'smartOTP', value}});
+  };
+
+  return {showModalSmartOTP};
+};
+
+export {useLoading, useOTP, useError, useAsyncStorage, useShowModal};
