@@ -160,11 +160,17 @@ const useAsyncStorage = () => {
   };
 
   const getTouchIdEnabled = async () => {
-    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED);
+    const value = await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED,
+    );
+    return JSON.parse(value);
   };
 
   const setTouchIdEnabled = async value => {
-    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED, value);
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.USER.TOUCHID_ENABLED,
+      JSON.stringify(value),
+    );
   };
 
   const getToken = async () => {
