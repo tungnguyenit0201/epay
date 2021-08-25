@@ -11,15 +11,15 @@ const BankInfo = () => {
   let [cardOption, setCardOption] = useState(false);
   let [accountOption, setAccountOption] = useState(false);
 
-  let chooseCard = useCallback(() => {
+  let chooseCard = () => {
     setCardOption(true);
     setAccountOption(false);
-  });
+  };
 
-  let chooseAccount = useCallback(() => {
+  let chooseAccount = () => {
     setCardOption(false);
     setAccountOption(true);
-  });
+  };
 
   useEffect(() => {
     setCardOption(true);
