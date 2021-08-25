@@ -1,11 +1,10 @@
 import React, {useState, useContext} from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-import {Text, Button, Icon, Header, Radio} from 'components';
+import {Text, Button, Icon, Header, Radio, HeaderBg} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 import {useSmartOTP} from 'context/User/utils';
 

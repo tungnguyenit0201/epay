@@ -7,12 +7,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {Button, Header, Icon, InputBlock, Row, Col} from 'components';
+import {HeaderBg, Header, Icon, InputBlock, Row, Col} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import HeaderBg from 'components/Common/HeaderBg';
 import {scale} from 'utils/Functions';
 
 const BankList = () => {

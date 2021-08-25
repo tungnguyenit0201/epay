@@ -50,5 +50,8 @@ const SCREEN = {
   UPDATE_PASSWORD: 'UpdatePassword',
   SMART_OTP_PASSWORD: 'SmartOTPPassword',
   SMART_OTP_RESULT: 'SmartOTPResult',
+  BANK_LINKED: 'BankLinked',
+  BANK_DETAIL: 'BankDetail',
+  LIMIT_SETTING: 'LimitSetting',
 };
 export default SCREEN;

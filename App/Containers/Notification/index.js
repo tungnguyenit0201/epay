@@ -1,13 +1,12 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, Pressable, Image} from 'react-native';
-import {Text, Header, Button, Row, Col} from 'components';
+import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 
 import FooterNotification from 'components/Home/FooterNotification';

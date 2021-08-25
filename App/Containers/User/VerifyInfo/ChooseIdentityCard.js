@@ -1,10 +1,9 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, View, StyleSheet} from 'react-native';
-import {Text, SelectInput, Header, Button} from 'components';
+import {Text, SelectInput, Header, Button, HeaderBg} from 'components';
 import {base, Colors} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {useVerifyInfo} from 'context/User/utils';
-import HeaderBg from 'components/Common/HeaderBg';
 
 const ChooseIdentityCard = () => {
   const {onChange, onContinue} = useVerifyInfo();

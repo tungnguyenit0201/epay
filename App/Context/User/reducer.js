@@ -23,18 +23,23 @@ export default function userReducer(state, action) {
     case 'UPDATE_WALLET':
       return {
         ...state,
-        myWallet: action?.data
+        myWallet: action?.data,
       };
-      case 'SET_PERSONAL_ADDRESS':
+    case 'SET_PERSONAL_ADDRESS':
       return {
         ...state,
-        personalAddress: action?.data
-      }
-      case 'SET_PERSONAL_IC':
+        personalAddress: action?.data,
+      };
+    case 'SET_PERSONAL_IC':
       return {
         ...state,
-        personalIC: action?.data
-      }
+        personalIC: action?.data,
+      };
+    case 'SET_REGION':
+      return {
+        ...state,
+        region: action?.data,
+      };
     default:
       return state;
   }

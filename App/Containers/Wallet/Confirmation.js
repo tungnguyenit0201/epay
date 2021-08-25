@@ -8,14 +8,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
+import {Text, Header, Button, HeaderBg, TextInput} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
@@ -23,7 +16,6 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 const Confirmation = () => {
   const translation = useTranslation();

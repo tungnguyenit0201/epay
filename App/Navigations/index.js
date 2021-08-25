@@ -58,6 +58,9 @@ import TransferBank from 'containers/Wallet/TransferBank';
 import SmartOTPPassword from 'containers/User/SmartOTP/SmartOTPPassword';
 import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
 
+import BankLinked from 'containers/Wallet/Bank/BankLinked';
+import BankDetail from 'containers/Wallet/Bank/BankDetail';
+import LimitSetting from 'containers/Wallet/LimitSetting';
 const AppNavigator = () => {
   const initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
@@ -175,6 +178,9 @@ const AppNavigator = () => {
             name={SCREEN.SMART_OTP_RESULT}
             component={SmartOTPResult}
           />
+          <Stack.Screen name={SCREEN.BANK_LINKED} component={BankLinked} />
+          <Stack.Screen name={SCREEN.BANK_DETAIL} component={BankDetail} />
+          <Stack.Screen name={SCREEN.LIMIT_SETTING} component={LimitSetting} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

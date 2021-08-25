@@ -6,7 +6,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {Text, Modal, Button} from 'components';
+import {Text, Modal, Button, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -15,7 +15,6 @@ import Monney from 'components/Home/Monney';
 import Notification from 'components/Home/Notification';
 import User from 'components/Home/User';
 import XacThuc from 'components/Home/XacThuc';
-import HeaderBg from 'components/Common/HeaderBg';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';

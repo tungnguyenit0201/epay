@@ -22,7 +22,7 @@ const Header = ({
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
   return (
-    <View style={[style, {}]}>
+    <View style={[styles.wrap, style]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={{minHeight: scale(24)}}>
         <Text semibold size={Fonts.H6} style={[styles.title, titleStyle]}>
@@ -59,7 +59,7 @@ const Header = ({
                     left: scale(30),
                   }}>
                   <View style={styles.back}>
-                    <Icon icon={Images.ArrowLeft} tintColor="#fff" />
+                    <Icon icon={Images.ArrowLeft} />
                   </View>
                 </Pressable>
               ) : (
@@ -84,7 +84,7 @@ const Header = ({
 const styles = StyleSheet.create({
   wrap: {
     paddingBottom: scale(10),
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    // backgroundColor: Colors.BACKGROUNDCOLOR,
   },
   avoidStatusBar: {height: getStatusBarHeight()},
   shadow: {
