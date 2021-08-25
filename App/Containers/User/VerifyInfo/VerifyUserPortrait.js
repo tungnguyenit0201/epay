@@ -1,61 +1,21 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, InputBlock, Radio, Header, Button, DatePicker} from 'components';
-
 import {Colors, Fonts, Spacing, Images} from 'themes';
-import Navigator from 'navigations/Navigator';
-import {SCREEN, TEXT} from 'configs/Constants';
-import {useVerifyInfo} from 'context/User/utils';
+import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
 import {base} from 'themes';
-import region from '../RegionSelect/region';
 import {Formik} from 'formik';
 import {useTranslation} from 'context/Language';
 import {verifyUserSchema} from 'utils/ValidationSchemas';
+import {useUser} from 'context/User';
 
 const VerifyUserPortrait = ({route}) => {
   const {onChange, onUpdateAllInfo} = useVerifyInfo(route?.params);
+  const {goRegionSelect} = useSelectRegion({});
   const translation = useTranslation();
-  const {type} = route?.params;
-
-  const pleaseChooseFirst = type => {
-    // Alert.alert('Lỗi', `Vui lòng chọn ${type} trước`);
-  };
-
-  const goRegionSelect = _type => {
-    switch (_type) {
-      case 'cites':
-        Navigator.navigate('RegionSelect', {
-          items: region?.cites,
-          type: _type,
-          parentType: type,
-        });
-        break;
-      case 'districts':
-        if (!region?.city?.value) {
-          pleaseChooseFirst('thành phố / tỉnh');
-        } else {
-          Navigator.navigate('RegionSelect', {
-            items: region?.districts?.[region?.city?.value],
-            type: _type,
-            parentType: type,
-          });
-        }
-        break;
-      case 'wards':
-        if (!region?.city?.value) {
-          pleaseChooseFirst('huyện / xã');
-        } else {
-          Navigator.navigate('RegionSelect', {
-            items: region?.wards?.[region?.district?.value],
-            type: _type,
-            parentType: type,
-          });
-        }
-        break;
-    }
-  };
-
+  const {region} = useUser();
+  console.log('region :>> ', region);
   return (
     <ScrollView style={{backgroundColor: '#fff'}}>
       <Header back title={translation?.account_verification} />
@@ -66,9 +26,9 @@ const VerifyUserPortrait = ({route}) => {
           ICNumber: '',
           ICIssuedDate: '',
           ICIssuedPlace: '',
-          Provincial: '',
-          County: '',
-          Ward: '',
+          Provincial: region?.Provincial ? region?.Provincial : '',
+          County: region?.County ? region?.County : '',
+          Ward: region?.Ward ? region?.Ward : '',
           Address: '',
           SexType: 1,
         }}
@@ -89,13 +49,12 @@ const VerifyUserPortrait = ({route}) => {
             setFieldTouched(field, true, false);
             onChange(field, value);
           };
-          console.log(' touched, :>> ', touched, errors);
 
           return (
             <View style={[base.container, {paddingTop: 20}]}>
               <Progress step={3} />
               <InputBlock
-                label="Họ và Tên"
+                label={translation.enter_your_full_name}
                 style={{marginBottom: 10}}
                 onChange={handleChange('ICFullName')}
                 onBlur={handleBlur('ICFullName')}
@@ -105,7 +64,7 @@ const VerifyUserPortrait = ({route}) => {
               />
 
               <DatePicker
-                label={'Ngày sinh'}
+                label={translation.date_of_birth_ddmmyyyy}
                 onChange={handleChange('DateOfBirth')}
                 error={touched.DateOfBirth && errors.DateOfBirth}
                 onBlur={handleBlur('DateOfBirth')}
@@ -114,15 +73,15 @@ const VerifyUserPortrait = ({route}) => {
               />
               <Radio
                 items={[
-                  {label: 'Nam', value: 1},
-                  {label: 'Nữ', value: 2},
-                  {label: 'Khác', value: 3},
+                  {label: translation.male, value: 1},
+                  {label: translation.female, value: 2},
+                  {label: translation.others, value: 3},
                 ]}
                 onChange={handleChange('SexType')}
               />
 
               <InputBlock
-                label="CMND / CCCD"
+                label={translation.enter_id_code}
                 onChange={handleChange('ICNumber')}
                 onBlur={handleBlur('ICNumber')}
                 error={touched.ICNumber && errors.ICNumber}
@@ -132,7 +91,7 @@ const VerifyUserPortrait = ({route}) => {
               />
 
               <DatePicker
-                label={'Ngày cấp'}
+                label={translation.valid_date}
                 onChange={handleChange('ICIssuedDate')}
                 error={touched.ICIssuedDate && errors.ICIssuedDate}
                 onBlur={handleBlur('ICIssuedDate')}
@@ -140,7 +99,7 @@ const VerifyUserPortrait = ({route}) => {
                 required
               />
               <InputBlock
-                label="Nơi cấp"
+                label="Nơi cấp" //translate
                 onChange={handleChange('ICIssuedPlace')}
                 onBlur={handleBlur('ICIssuedPlace')}
                 error={touched.ICIssuedPlace && errors.ICIssuedPlace}
@@ -149,32 +108,35 @@ const VerifyUserPortrait = ({route}) => {
                 required
               />
               <InputBlock
-                label="Tỉnh / Thành phố"
+                label={translation.provice}
                 rightIcon={Images.Down}
                 error={touched.Provincial && errors.Provincial}
                 isSelect
                 required
+                value={values.Provincial}
                 onPress={() => goRegionSelect('cites')}
               />
 
               <InputBlock
-                label="Quận / Huyện"
+                label={translation.district}
                 rightIcon={Images.Down}
                 error={touched.County && errors.County}
                 isSelect
                 required
+                value={values.County}
                 onPress={() => goRegionSelect('districts')}
               />
               <InputBlock
-                label="Phường / Xã"
+                label={translation.town}
                 rightIcon={Images.Down}
                 error={touched.Ward && errors.Ward}
                 isSelect
                 required
+                value={values.Ward}
                 onPress={() => goRegionSelect('wards')}
               />
               <InputBlock
-                label="Địa chỉ"
+                label={translation.address}
                 onChange={handleChange('Address')}
                 onBlur={handleBlur('Address')}
                 error={touched.Address && errors.Address}
@@ -183,7 +145,7 @@ const VerifyUserPortrait = ({route}) => {
                 required
               />
 
-              <Button label={'Xong'} onPress={handleSubmit} />
+              <Button label={translation.done} onPress={handleSubmit} />
             </View>
           );
         }}

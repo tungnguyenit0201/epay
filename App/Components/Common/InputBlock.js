@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     marginBottom: scale(10),
   },
   select: {
-    paddingHorizontal: Spacing.PADDING,
+    paddingHorizontal: Spacing.PADDING / 2,
     paddingVertical: scale(10),
     marginBottom: scale(10),
     height: scale(48),

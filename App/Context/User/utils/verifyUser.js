@@ -109,12 +109,12 @@ const useVerifyInfo = (initialValue = {}) => {
     }
   };
 
-  const onUpdateAllInfo = async () => {
-    console.log('values :>> ', contentRef.current);
+  const onUpdateAllInfo = async value => {
+    console.log('values :>> ', contentRef.current, value);
 
-    // await onUpdateIdentify(contentRef.current);
-    // await onUpdatePersonalInfo(contentRef.current);
-    // await onUpdateUserAddress(contentRef.current);
+    // await onUpdateIdentify(value);
+    // await onUpdatePersonalInfo(value);
+    // await onUpdateUserAddress(value);
   };
   return {
     verifyInfo: contentRef.current,

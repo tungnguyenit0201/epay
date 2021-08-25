@@ -1,2 +1,4 @@
-export {default as User} from 'services/user';
-export {default as Auth} from 'services/auth';
+export * as User from 'services/user';
+export * as Auth from 'services/auth';
+import * as Region from 'services/region';
+export {Region, Auth, User};
