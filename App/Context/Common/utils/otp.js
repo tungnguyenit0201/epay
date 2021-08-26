@@ -40,6 +40,16 @@ const useOTP = ({functionType, phone, password}) => {
       setErrorMessage(_.get(result, 'ErrorMessage', null));
       return;
     }
+    if (
+      _.get(result, 'ErrorCode', '') ===
+      ERROR_CODE.FEATURE_CONFIRM_OTP_WRONG_OVER_TIME
+    ) {
+      Navigator.navigate(SCREEN.REGISTER_FAILURE, {
+        phone,
+        functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
+      });
+      return;
+    }
     // success
     switch (functionType) {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:

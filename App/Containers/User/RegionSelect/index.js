@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, FlatList, StyleSheet, Pressable} from 'react-native';
-import {Search, Text, Header} from 'components';
+import {Search, Text, Header, HeaderBg} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import region from './region';
@@ -31,12 +31,12 @@ const RegionSelect = ({route}) => {
       <Pressable
         onPress={() => onSelected(item)}
         style={{
-          backgroundColor: isSelected ? Colors.PRIMARY : 'white',
+          backgroundColor: isSelected ? Colors.PRIMARY : Colors.white,
           padding: Spacing.PADDING,
           borderBottomColor: Colors.BORDER,
           borderBottomWidth: 1,
         }}>
-        <Text color={isSelected ? 'white' : Colors.TEXT}>
+        <Text color={isSelected ? Colors.white : Colors.TEXT}>
           {item?.ProvinceName || item?.DistrictName || item?.WardName}
         </Text>
       </Pressable>
@@ -45,7 +45,9 @@ const RegionSelect = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Header title={TITLES[type]} back />
+      <HeaderBg>
+        <Header title={TITLES[type]} back />
+      </HeaderBg>
       <View style={[styles.wrap, {paddingVertical: 12}]}>
         {/* <Search onChange={setSearch} /> */}
       </View>

@@ -66,7 +66,7 @@ const useTouchID = () => {
 
   useEffect(() => {
     checkBiometry();
-  }, []);
+  }, []); // eslint-disable-line
 
   return {biometryType, onTouchID};
 };
@@ -189,7 +189,9 @@ const useRegister = () => {
   const onChange = (key, val) => {
     registerRef.current[key] = val;
   };
-
+  const onNavigate = screen => {
+    !screen ? Navigator.navigate(screen) : Navigator.popToTop();
+  };
   const createAccount = async ({phone, newPassword}) => {
     try {
       setLoading(true);
@@ -213,7 +215,7 @@ const useRegister = () => {
     }
   };
 
-  return {onChange, createAccount, setFirstLogin};
+  return {onChange, createAccount, setFirstLogin, onNavigate};
 };
 
 const usePhone = () => {
@@ -229,7 +231,7 @@ const usePhone = () => {
     return () => {
       phone && setPhoneStorage(phone);
     };
-  }, []);
+  }, []); // eslint-disable-line
 
   return {phone};
 };
