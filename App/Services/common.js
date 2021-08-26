@@ -61,3 +61,56 @@ export const activateSmartOTP = async ({phone, password, active = true}) => {
   });
   return response;
 };
+
+export const checkSmartOTPKey = async ({phone, password}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.CHECK_SMART_OTP_KEY,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      SmtOtpPassword: password,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const changeSmartOTPPassword = async ({
+  phone,
+  oldPassword,
+  newPassword,
+}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.CHANGE_SMART_OTP_PASSWORD,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      OlSmtOtpPassword: oldPassword,
+      NewSmtOtpPassword: newPassword,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const syncSmartOTP = async ({phone, password}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.SYNC_SMART_OTP,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      SmtOtpPassword: password,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

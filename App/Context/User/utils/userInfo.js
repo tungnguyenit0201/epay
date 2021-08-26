@@ -98,7 +98,6 @@ const useUserInfo = type => {
           type: 'SET_PERSONAL_INFO',
           personalInfo: result?.PersonalInfo,
         });
-        dispatch({type: 'SET_PERSONAL_INFO', data: result?.PersonalInfo});
         dispatch({type: 'SET_PHONE', phone});
     }
   };
@@ -172,6 +171,7 @@ const useUserInfo = type => {
       setLoading(false);
     }
   };
+
   const onGetLimit = async () => {
     try {
       setLoading(true);
@@ -185,6 +185,7 @@ const useUserInfo = type => {
       setLoading(false);
     }
   };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {Text, Button, Icon, Header, HeaderBg} from 'components';
@@ -6,28 +6,24 @@ import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
-
-import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {useSmartOTPInfo} from 'context/User/utils';
 
 const SmartOtp = () => {
   const translation = useTranslation();
-  const [value1, setValue1] = useState(false);
-  const [value2, setValue2] = useState(false);
-  const [value3, setValue3] = useState(false);
-  const [value4, setValue4] = useState(false);
+  const {smartOTPInfo, onChangePassword, onForgetPassword, onSyncSmartOTP} =
+    useSmartOTPInfo();
 
   return (
     <>
       <ScrollView style={base.wrap}>
         <HeaderBg>
-          <Header back title={translation.password_and_security} back />
+          <Header back title={translation.password_and_security} />
         </HeaderBg>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.CHANGE_PASSWORD);
-          }}>
+        <Text>Số serial: {smartOTPInfo?.SerialNumber || '...'}</Text>
+        <Text>Smart OTP: Phiên bản {smartOTPInfo?.Version || '...'}</Text>
+
+        <TouchableOpacity style={styles.item} onPress={onChangePassword}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
@@ -42,11 +38,7 @@ const SmartOtp = () => {
             tintColor="#000"
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.CHANGE_PASSWORD);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onForgetPassword}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
@@ -61,11 +53,7 @@ const SmartOtp = () => {
             tintColor="#000"
           />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.CHANGE_PASSWORD);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onSyncSmartOTP}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
