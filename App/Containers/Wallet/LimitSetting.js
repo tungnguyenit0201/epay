@@ -16,88 +16,70 @@ import {useTranslation} from 'context/Language';
 
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {formatMoney} from 'utils/Functions';
+import {useBankInfo} from 'context/Wallet/utils';
 const LimitSetting = ({route}) => {
-  console.log('this is route', route.params.AmountLimit);
+  const {onChangeLimit} = useBankInfo();
   const amountLimit = route.params.AmountLimit;
   const translation = useTranslation();
   const listLimit = [
-    1000000, 2000000, 3000000, 5000000, 10000000, 15000000, 20000000, 30000000,
-    50000000,
+    {
+      id: 1,
+      limit: 1000000,
+    },
+    {
+      id: 2,
+      limit: 2000000,
+    },
+    {
+      id: 3,
+      limit: 3000000,
+    },
+    {
+      id: 4,
+      limit: 5000000,
+    },
+    {
+      id: 5,
+      limit: 10000000,
+    },
+    {
+      id: 6,
+      limit: 15000000,
+    },
+    {
+      id: 7,
+      limit: 20000000,
+    },
+    {
+      id: 8,
+      limit: 30000000,
+    },
+    {
+      id: 9,
+      limit: 50000000,
+    },
   ];
-  const [check, setCheck] = useState('');
-  const handleClick = item => {
-    setCheck(item);
-  };
-  const renderListLimit = ({item}) => {
-    if (item <= amountLimit) {
-      return (
-        <TouchableOpacity onPress={() => handleClick(item)}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderBottomWidth: 1,
-              borderColor: Colors.g2,
-            }}>
-            <Text
-              style={{
-                color: 'black',
-                fontWeight: 'bold',
-                fontSize: Fonts.H6,
-                paddingVertical: 15,
-              }}>
-              {formatMoney(item)}
-            </Text>
-
-            {check === item ? (
-              <Icon
-                style={{height: 20, width: 20}}
-                icon={Images.WidthDraw.Done}
-                tintColor={Colors.black}
-              />
-            ) : (
-              <View></View>
-            )}
-          </View>
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity onPress={() => handleClick(item)}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderBottomWidth: 1,
-              borderColor: Colors.g2,
-            }}>
-            <Text
-              style={{
-                color: 'red',
-                fontWeight: 'bold',
-                fontSize: Fonts.H6,
-                paddingVertical: 15,
-              }}>
-              {formatMoney(item)}
-            </Text>
-            {check === item ? (
-              <Icon
-                style={{height: 20, width: 20}}
-                icon={Images.WidthDraw.Done}
-                tintColor={Colors.black}
-              />
-            ) : (
-              <View></View>
-            )}
-          </View>
-        </TouchableOpacity>
-      );
-    }
-  };
+  const [limit, setLimit] = useState('');
+  const renderListLimit = ({item}) => (
+    <TouchableOpacity
+      disabled={item.limit <= amountLimit ? false : true}
+      onPress={() => setLimit(item.limit)}>
+      <View style={styles.containerItem}>
+        <Text style={item.limit <= amountLimit ? styles.item : styles.disabled}>
+          {formatMoney(item.limit)}
+        </Text>
+        {limit === item.limit ? (
+          <Icon
+            style={{height: 20, width: 20}}
+            icon={Images.WidthDraw.Done}
+            tintColor={Colors.black}
+          />
+        ) : (
+          <View></View>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
   return (
     <View style={styles.container}>
       <HeaderBg>
@@ -131,7 +113,11 @@ const LimitSetting = ({route}) => {
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
         />
-        <Button label="Tiếp tục" style={{marginVertical: 25}} />
+        <Button
+          label="Tiếp tục"
+          style={{marginVertical: 25}}
+          onPress={() => onChangeLimit({limit})}
+        />
       </View>
     </View>
   );
@@ -150,6 +136,25 @@ const styles = StyleSheet.create({
     height: 5,
     width: '100%',
     marginVertical: 17,
+  },
+  containerItem: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: Colors.g2,
+  },
+  item: {
+    fontWeight: 'bold',
+    fontSize: Fonts.H6,
+    paddingVertical: 15,
+  },
+  disabled: {
+    fontWeight: 'bold',
+    fontSize: Fonts.H6,
+    paddingVertical: 15,
+    color: Colors.g4,
   },
 });
 export default LimitSetting;
