@@ -51,5 +51,8 @@ const SCREEN = {
   SMART_OTP_RESULT: 'SmartOTPResult',
   BANK_LINKED: 'BankLinked',
   BANK_DETAIL: 'BankDetail',
+  SMART_OTP_FAILURE: 'SmartOTPFailure',
+  SYNC_SMART_OTP: 'SyncSmartOTP',
+  SYNC_SMART_OTP_RESULT: 'SyncSmartOTPResult',
 };
 export default SCREEN;

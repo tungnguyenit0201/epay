@@ -15,6 +15,9 @@ export default {
     CONFIRM_OTP: 'common/otp/confirm_otp',
     CHECK_SMART_OTP: 'smartotp/get_smartotp_active',
     ACTIVATE_SMART_OTP: 'smartotp/smartotp_active',
+    CHECK_SMART_OTP_KEY: 'smartotp/smartotp_key_check',
+    CHANGE_SMART_OTP_PASSWORD: 'smartotp/smartotp_pass_change',
+    SYNC_SMART_OTP: 'smartotp/smartotp_synchronize',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',

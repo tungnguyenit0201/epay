@@ -42,6 +42,7 @@ const useSecuritySettings = () => {
   const onSmartOTP = async () => {
     // activated
     if (contentRef.current.ActivedSmartOTP) {
+      Navigator.push(SCREEN.SMART_OTP);
       return;
     }
     // not activated
