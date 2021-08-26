@@ -12,6 +12,7 @@ const Stack = createStackNavigator();
 
 import TabNavigation from './TabNavigation';
 
+import Language from 'containers/Language';
 import Home from 'containers/Home';
 import Auth from 'containers/Auth';
 import Login from 'containers/Auth/Login';
@@ -19,6 +20,7 @@ import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
 import RegisterName from 'containers/Auth/RegisterName';
+import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
 import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
@@ -64,17 +66,21 @@ import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
+
 const AppNavigator = () => {
-  const initialRoute = SCREEN.AUTH;
+  let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
 
-  const getCurrentLanguage = async () => {
-    let currentLanguage = await AsyncStorage.getItem('currentLanguage');
-    setLanguage(currentLanguage ? currentLanguage : 'vi');
-  };
   React.useEffect(() => {
+    const getCurrentLanguage = async () => {
+      let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+      console.log('currentLanguage :>> ', currentLanguage);
+      // initialRoute = currentLanguage ? SCREEN.AUTH : SCREEN.LANGUAGE;
+      setLanguage(currentLanguage ? currentLanguage : 'vi');
+    };
+
     getCurrentLanguage();
-  }, []);
+  }, []); // eslint-disable-line
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
@@ -88,6 +94,7 @@ const AppNavigator = () => {
             name={SCREEN.TAB_NAVIGATION}
             component={TabNavigation}
           />
+          <Stack.Screen name={SCREEN.LANGUAGE} component={Language} />
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
@@ -101,6 +108,10 @@ const AppNavigator = () => {
             component={RegisterPassword}
           />
           <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
+          <Stack.Screen
+            name={SCREEN.REGISTER_FAILURE}
+            component={RegisterFailure}
+          />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
           <Stack.Screen name={SCREEN.SMART_OTP} component={SmartOTP} />
           <Stack.Screen

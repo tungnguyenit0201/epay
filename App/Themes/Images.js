@@ -12,6 +12,7 @@ export default {
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
   DefaultUser: require('images/default_user.png'),
+  Splash: require('images/Splash.png'),
   TabBar: {
     Home: require('images/Home.png'),
     Category: require('images/Category.png'),
@@ -32,6 +33,7 @@ export default {
   Edit: require('images/Edit.png'),
   Register: {
     phone_1: require('images/register/phone-1.png'),
+    Info: require('images/Info.png'),
   },
   WidthDraw: {
     Done: require('images/Done.png'),
@@ -55,7 +57,6 @@ export default {
     RutTien: require('images/home/RutTien.png'),
     QAPAY: require('images/home/QAPAY.png'),
     ChuyenTien: require('images/home/ChuyenTien.png'),
-    NapTien: require('images/home/NapTien.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),

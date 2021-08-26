@@ -1,4 +1,5 @@
 const SCREEN = {
+  LANGUAGE: 'Language',
   HOME: 'Home',
   AUTH: 'Auth',
   LOGIN: 'Login',
@@ -6,6 +7,7 @@ const SCREEN = {
   FORGET_PASSWORD: 'ForgetPassword',
   REGISTER_PASSWORD: 'RegisterPassword',
   REGISTER_NAME: 'RegisterName',
+  REGISTER_FAILURE: 'RegisterFailure',
   OTP: 'OTP',
   SMART_OTP: 'SmartOTP',
   ACTIVE_SMART_OTP: 'ActiveSmartOTP',
