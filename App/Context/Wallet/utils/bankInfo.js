@@ -6,6 +6,7 @@ import {
   getInternationalBank,
   getConnectedBank,
   getConnectedBankDetail,
+  changeLimit,
 } from 'services/wallet';
 import {onGetB} from '';
 import {
@@ -83,11 +84,32 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+  const onChangeLimit = async ({limit}) => {
+    try {
+      dispatch({type: 'SET_LIMIT', data: limit});
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await changeLimit({phone, amountLimit: limit});
+      console.log('++++++++++++++++++++', result);
+      setLoading(false);
+      if (
+        _.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS ||
+        _.get(result, 'ErrorCode') == ERROR_CODE.LOGIN_PASSWORD_INCORRECT
+      ) {
+        Navigator.navigate(SCREEN.CHANGE_PASSWORD, 'change_limit_response');
+      } else {
+        setError('result', result);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   return {
     onGetDomesticBanks,
     onGetInternationalBanks,
     onGetAllBank,
     onGetConnectedBankDetail,
+    onChangeLimit,
   };
 };
 export default bankInfo;
