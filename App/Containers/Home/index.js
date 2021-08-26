@@ -156,29 +156,6 @@ const Home = () => {
           </View>
         </View>
       </ScrollView>
-      {firstLogin && (
-        <Modal
-          visible={firstLogin}
-          onClose={() => setFirstLogin(false)}
-          title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ."
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label="Cài đặt vân tay"
-                onPress={() => {
-                  setFirstLogin(false);
-                  goSecurity();
-                }}
-              />
-              <TouchableOpacity onPress={() => setFirstLogin(false)}>
-                <Text>Để sau</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      )}
       {modalSmartOTP.smartOTP && (
         <Modal
           visible={modalSmartOTP.smartOTP}
@@ -197,6 +174,29 @@ const Home = () => {
               </TouchableOpacity>
               <TouchableOpacity onPress={modalSmartOTP.onClose}>
                 <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      {firstLogin && (
+        <Modal
+          visible={firstLogin}
+          onClose={() => setFirstLogin(false)}
+          title="Đăng nhập vân tay"
+          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ."
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Cài đặt vân tay"
+                onPress={() => {
+                  setFirstLogin(false);
+                  goSecurity();
+                }}
+              />
+              <TouchableOpacity onPress={() => setFirstLogin(false)}>
+                <Text>Để sau</Text>
               </TouchableOpacity>
             </View>
           )}

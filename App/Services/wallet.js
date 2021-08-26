@@ -52,3 +52,15 @@ export const getConnectedBankDetail = async ({phone, bankID}) => {
   });
   return response;
 };
+export const changeLimit = async ({phone, amountLimit}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CHANGE_LIMIT,
+    method: 'post',
+    params: {PhoneNumber: phone, AmountLimit: amountLimit},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

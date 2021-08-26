@@ -16,11 +16,13 @@ import {
   useLoading,
   useShowModal,
 } from 'context/Common/utils';
+import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import {sha256} from 'react-native-sha256';
 
-const useUserInfo = () => {
+import {useWallet} from 'context/Wallet';
+const useUserInfo = type => {
   let personalInfo = useRef({
     FullName: '',
     DateOfBirth: '',
@@ -34,7 +36,8 @@ const useUserInfo = () => {
   const {setError} = useError();
   const {dispatch} = useUser();
   const {showModalSmartOTP} = useShowModal();
-
+  const {onChangeLimit} = useBankInfo();
+  const {walletInfo} = useWallet();
   const setPersonalInfo = (key, value) => {
     personalInfo.current[key] = value;
   };
@@ -95,7 +98,6 @@ const useUserInfo = () => {
           type: 'SET_PERSONAL_INFO',
           personalInfo: result?.PersonalInfo,
         });
-        dispatch({type: 'SET_PERSONAL_INFO', data: result?.PersonalInfo});
         dispatch({type: 'SET_PHONE', phone});
     }
   };
@@ -135,6 +137,7 @@ const useUserInfo = () => {
   };
 
   const onConfirmPassword = async ({password}) => {
+    const limitMoney = walletInfo?.limit;
     const passwordEncrypted = await sha256(password);
     try {
       setLoading(true);
@@ -145,15 +148,30 @@ const useUserInfo = () => {
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        return Navigator.push(SCREEN.OTP, {
-          phone,
-          functionType: FUNCTION_TYPE.FORGOT_PASS,
-        });
+        switch (type) {
+          case 'change_limit_response':
+            onChangeLimit({limit: limitMoney});
+            Navigator.navigate(SCREEN.TAB_NAVIGATION);
+            break;
+          case 'confirm_password_response':
+            Navigator.push(SCREEN.OTP, {
+              phone,
+              functionType: FUNCTION_TYPE.FORGOT_PASS,
+            });
+            break;
+          default:
+            Navigator.push(SCREEN.OTP, {
+              phone,
+              functionType: FUNCTION_TYPE.FORGOT_PASS,
+            });
+            break;
+        }
       } else setError(result);
     } catch (error) {
       setLoading(false);
     }
   };
+
   const onGetLimit = async () => {
     try {
       setLoading(true);
@@ -167,6 +185,7 @@ const useUserInfo = () => {
       setLoading(false);
     }
   };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,

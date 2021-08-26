@@ -23,7 +23,7 @@ import RegisterName from 'containers/Auth/RegisterName';
 import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
-import ActiveOTP from 'containers/User/SmartOTP/ActiveOTP';
+import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
@@ -59,6 +59,9 @@ import AutoPayment from 'containers/User/AutoPayment';
 import TransferBank from 'containers/Wallet/TransferBank';
 import SmartOTPPassword from 'containers/User/SmartOTP/SmartOTPPassword';
 import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
+import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
+import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
+import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
@@ -111,7 +114,10 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
           <Stack.Screen name={SCREEN.SMART_OTP} component={SmartOTP} />
-          <Stack.Screen name={SCREEN.ACTIVE_OTP} component={ActiveOTP} />
+          <Stack.Screen
+            name={SCREEN.ACTIVE_SMART_OTP}
+            component={ActiveSmartOTP}
+          />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
@@ -192,6 +198,15 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.BANK_LINKED} component={BankLinked} />
           <Stack.Screen name={SCREEN.BANK_DETAIL} component={BankDetail} />
           <Stack.Screen name={SCREEN.LIMIT_SETTING} component={LimitSetting} />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_FAILURE}
+            component={SmartOTPFailure}
+          />
+          <Stack.Screen name={SCREEN.SYNC_SMART_OTP} component={SyncSmartOTP} />
+          <Stack.Screen
+            name={SCREEN.SYNC_SMART_OTP_RESULT}
+            component={SyncSmartOTPResult}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

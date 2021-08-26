@@ -1,14 +1,11 @@
-import React, {useState, useContext} from 'react';
-import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
-
+import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Text, Button, Icon, Header, Radio, HeaderBg} from 'components';
-import {SCREEN, TEXT} from 'configs/Constants';
-import Navigator from 'navigations/Navigator';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {base} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useSmartOTP} from 'context/User/utils';
 
-const SmartOtp = () => {
+const ActiveSmartOtp = () => {
   const translation = useTranslation();
   const {phone, isAccepted, onAcceptTermConditions, onGoOTP} = useSmartOTP();
 
@@ -16,7 +13,7 @@ const SmartOtp = () => {
     <>
       <ScrollView style={base.wrap}>
         <HeaderBg>
-          <Header back title="Kích hoạt smart OTP" back />
+          <Header back title="Kích hoạt smart OTP" />
         </HeaderBg>
         <View style={base.container}>
           <Text mb={20}>
@@ -63,4 +60,4 @@ const SmartOtp = () => {
   );
 };
 const styles = StyleSheet.create({});
-export default SmartOtp;
+export default ActiveSmartOtp;

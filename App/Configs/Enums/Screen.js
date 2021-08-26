@@ -10,7 +10,7 @@ const SCREEN = {
   REGISTER_FAILURE: 'RegisterFailure',
   OTP: 'OTP',
   SMART_OTP: 'SmartOTP',
-  ACTIVE_OTP: 'ActiveOTP',
+  ACTIVE_SMART_OTP: 'ActiveSmartOTP',
   BANK_LIST: 'BankList',
   BANK_INFO: 'BankInfo',
   BANK_RESULT: 'BankResult',
@@ -53,5 +53,8 @@ const SCREEN = {
   SMART_OTP_RESULT: 'SmartOTPResult',
   BANK_LINKED: 'BankLinked',
   BANK_DETAIL: 'BankDetail',
+  SMART_OTP_FAILURE: 'SmartOTPFailure',
+  SYNC_SMART_OTP: 'SyncSmartOTP',
+  SYNC_SMART_OTP_RESULT: 'SyncSmartOTPResult',
 };
 export default SCREEN;

@@ -132,3 +132,16 @@ export const getLimit = async ({phone}) => {
   });
   return response;
 };
+
+export const getSettingsInfo = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_SETTINGS_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
