@@ -8,11 +8,15 @@ import {
 } from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import _ from 'lodash';
+import {useUser} from '..';
+import {useTranslation} from 'context/Language';
 
 const useVerifyInfo = (initialValue = {}) => {
   const contentRef = useRef(initialValue);
   const {setLoading} = useLoading();
   const {setError} = useError();
+  const {dispatch} = useUser();
+  const translation = useTranslation();
   const {getPhone} = useAsyncStorage();
   console.log('initialValue :>> ', initialValue, contentRef.current);
 
@@ -48,9 +52,14 @@ const useVerifyInfo = (initialValue = {}) => {
         },
       });
       setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS)
-        console.log('result :>> ', result);
-      else setError(result);
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        setError({
+          ErrorCode: -1,
+          ErrorMessage:
+            'Gửi yêu cầu xác thực thành công. BQT Epay Service sẽ thực hiện xác thực thông tin trong {5} phút',
+          title: translation?.notification,
+        });
+      } else setError(result);
     } catch (error) {
       setLoading(false);
     }
@@ -77,9 +86,8 @@ const useVerifyInfo = (initialValue = {}) => {
         },
       });
       setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS)
-        Navigator.navigate(SCREEN.TAB_NAVIGATION);
-      else setError(result);
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      } else setError(result);
     } catch (error) {
       setLoading(false);
     }
@@ -102,7 +110,10 @@ const useVerifyInfo = (initialValue = {}) => {
           type: 'SET_PERSONAL_ADDRESS',
           data: {Address, Ward, County, Provincial},
         });
-        Navigator.navigate(SCREEN.USER_INFO);
+        dispatch({
+          type: 'SET_REGION',
+          data: {Ward: '', County: '', Provincial: ''},
+        });
       } else setError(result);
     } catch (error) {
       setLoading(false);
@@ -110,11 +121,11 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const onUpdateAllInfo = async value => {
-    console.log('values :>> ', contentRef.current, value);
+    console.log('values :>> ', {...contentRef.current, ...value});
 
-    // await onUpdateIdentify(value);
-    // await onUpdatePersonalInfo(value);
-    // await onUpdateUserAddress(value);
+    await onUpdateIdentify({...contentRef.current, ...value});
+    await onUpdatePersonalInfo({...contentRef.current, ...value});
+    await onUpdateUserAddress({...contentRef.current, ...value});
   };
   return {
     verifyInfo: contentRef.current,

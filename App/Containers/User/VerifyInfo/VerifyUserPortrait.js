@@ -1,6 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Text, InputBlock, Radio, Header, Button, DatePicker} from 'components';
+import {
+  HeaderBg,
+  InputBlock,
+  Radio,
+  Header,
+  Button,
+  DatePicker,
+} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
@@ -12,13 +19,16 @@ import {useUser} from 'context/User';
 
 const VerifyUserPortrait = ({route}) => {
   const {onChange, onUpdateAllInfo} = useVerifyInfo(route?.params);
+  const [type, setType] = useState(route?.params?.type);
   const {goRegionSelect} = useSelectRegion({});
   const translation = useTranslation();
   const {region} = useUser();
   console.log('region :>> ', region);
   return (
     <>
-      <Header back title={translation?.account_verification} />
+      <HeaderBg>
+        <Header back title={translation?.account_verification} />
+      </HeaderBg>
       <ScrollView style={{backgroundColor: '#fff'}}>
         <Formik
           initialValues={{
@@ -114,7 +124,7 @@ const VerifyUserPortrait = ({route}) => {
                   error={touched.Provincial && errors.Provincial}
                   isSelect
                   required
-                  value={values.Provincial}
+                  value={region?.Provincial}
                   onPress={() => goRegionSelect('cites')}
                 />
 
@@ -124,7 +134,7 @@ const VerifyUserPortrait = ({route}) => {
                   error={touched.County && errors.County}
                   isSelect
                   required
-                  value={values.County}
+                  value={region?.County}
                   onPress={() => goRegionSelect('districts')}
                 />
                 <InputBlock
@@ -133,7 +143,7 @@ const VerifyUserPortrait = ({route}) => {
                   error={touched.Ward && errors.Ward}
                   isSelect
                   required
-                  value={values.Ward}
+                  value={region?.Ward}
                   onPress={() => goRegionSelect('wards')}
                 />
                 <InputBlock

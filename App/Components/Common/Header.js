@@ -59,7 +59,7 @@ const Header = ({
                     left: scale(30),
                   }}>
                   <View style={styles.back}>
-                    <Icon icon={Images.ArrowLeft} />
+                    <Icon icon={Images.ArrowLeft} tintColor={Colors.white} />
                   </View>
                 </Pressable>
               ) : (
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     alignSelf: 'center',
-    color: '#fff',
+    color: Colors.white,
     paddingTop: 5,
   },
   menuIcon: {
