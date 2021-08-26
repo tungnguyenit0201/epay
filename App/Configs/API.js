@@ -14,7 +14,7 @@ export default {
     GEN_OTP: 'common/otp/gen_otp',
     CONFIRM_OTP: 'common/otp/confirm_otp',
     CHECK_SMART_OTP: 'smartotp/get_smartotp_active',
-    ACTIVATE_SMART_OTP: 'smartotp/smartotp_check_active',
+    ACTIVATE_SMART_OTP: 'smartotp/smartotp_active',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
@@ -26,6 +26,7 @@ export default {
     GET_CONNECTED_BANK: 'wallet/get_connected_bank',
     CONFIRM_PASSWORD: 'account/confirm_password',
     GET_LIMIT: 'security/get_limit',
+    GET_SETTINGS_INFO: 'setting/get_all_info',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',

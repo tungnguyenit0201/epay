@@ -8,7 +8,7 @@ const SCREEN = {
   REGISTER_NAME: 'RegisterName',
   OTP: 'OTP',
   SMART_OTP: 'SmartOTP',
-  ACTIVE_OTP: 'ActiveOTP',
+  ACTIVE_SMART_OTP: 'ActiveSmartOTP',
   BANK_LIST: 'BankList',
   BANK_INFO: 'BankInfo',
   BANK_RESULT: 'BankResult',
@@ -23,7 +23,6 @@ const SCREEN = {
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
   CONFIRMATION: 'Confirmation',
   USER: 'User',
-  HOME: 'Home',
   TRANSACTION: 'Transaction',
   TAB_NAVIGATION: 'TabNavigation',
   CHANGE_PASSWORD: 'ChangePassword',
@@ -52,6 +51,5 @@ const SCREEN = {
   SMART_OTP_RESULT: 'SmartOTPResult',
   BANK_LINKED: 'BankLinked',
   BANK_DETAIL: 'BankDetail',
-  LIMIT_SETTING: 'LimitSetting',
 };
 export default SCREEN;

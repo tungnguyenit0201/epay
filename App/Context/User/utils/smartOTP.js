@@ -57,6 +57,7 @@ const useSmartOTP = params => {
   };
 
   const onBackHome = () => {
+    Navigator.navigate(SCREEN.TAB_NAVIGATION);
     Navigator.navigate(SCREEN.HOME);
   };
 

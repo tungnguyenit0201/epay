@@ -21,7 +21,7 @@ import RegisterPassword from 'containers/Auth/RegisterPassword';
 import RegisterName from 'containers/Auth/RegisterName';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
-import ActiveOTP from 'containers/User/SmartOTP/ActiveOTP';
+import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
@@ -100,7 +100,10 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
           <Stack.Screen name={SCREEN.SMART_OTP} component={SmartOTP} />
-          <Stack.Screen name={SCREEN.ACTIVE_OTP} component={ActiveOTP} />
+          <Stack.Screen
+            name={SCREEN.ACTIVE_SMART_OTP}
+            component={ActiveSmartOTP}
+          />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />

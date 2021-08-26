@@ -5,21 +5,26 @@ import {useAsyncStorage, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
-import {activateSmartOTP, checkSmartOTP} from 'services/common';
+import {getSettingsInfo} from 'services/user';
 
 const useSecuritySettings = () => {
   const {setTouchIdEnabled, getTouchIdEnabled} = useAsyncStorage();
   const {onLogout} = useAuth();
-  const {phone, userInfo} = useUser();
+  const {phone} = useUser();
   const {setLoading} = useLoading();
   const contentRef = useRef({
     touchIdEnabled: false,
+    // data from getSettingsInfo()
   });
 
   const loadSettings = async () => {
     setLoading(true);
     const touchIdEnabled = await getTouchIdEnabled();
-    contentRef.current = {touchIdEnabled};
+    const result = await getSettingsInfo({phone});
+    contentRef.current = {
+      ..._.get(result, 'SettingInfo', {}),
+      touchIdEnabled,
+    };
     setLoading(false);
   };
 
@@ -35,20 +40,12 @@ const useSecuritySettings = () => {
   };
 
   const onSmartOTP = async () => {
-    setLoading(true);
-    const result = await checkSmartOTP({phone});
-    setLoading(false);
     // activated
-    if (_.get(result, 'SmartOtpInfo')) {
-      // activateSmartOTP({
-      //   phone,
-      //   active: false,
-      //   password: ' ',
-      // });
+    if (contentRef.current.ActivedSmartOTP) {
       return;
     }
     // not activated
-    Navigator.push(SCREEN.ACTIVE_OTP);
+    Navigator.push(SCREEN.ACTIVE_SMART_OTP);
   };
 
   return {settings: contentRef.current, onTouchId, onSmartOTP};
