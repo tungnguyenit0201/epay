@@ -2,7 +2,8 @@ module.exports = {
   root: true,
   extends: '@react-native-community',
   rules: {
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
+    'react-hooks/exhaustive-deps': 'error', // Checks effect dependencies
+    'react-native/no-color-literals': 2,
+    'react-native/no-unused-styles': 2,
   },
 };
