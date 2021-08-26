@@ -90,7 +90,6 @@ const bankInfo = () => {
       setLoading(true);
       let phone = await getPhone();
       let result = await changeLimit({phone, amountLimit: limit});
-      console.log('++++++++++++++++++++', result);
       setLoading(false);
       if (
         _.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS ||
