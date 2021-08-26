@@ -7,11 +7,11 @@ import Progress from 'components/User/VerifyInfo/Progress';
 import {useVerifyInfo} from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import {useTranslation} from 'context/Language';
-
-const VerifyUserInfo = () => {
-  const {onChange, onContinue} = useVerifyInfo();
+import _ from 'lodash';
+const VerifyUserInfo = ({route}) => {
+  const {verifyInfo, onChange, onContinue} = useVerifyInfo();
   const translation = useTranslation();
-
+  const identityCard = _.get(route, 'params.identifyCard.value', 1);
   return (
     <>
       <ScrollView style={base.wrap}>
@@ -41,16 +41,21 @@ const VerifyUserInfo = () => {
           /> */}
 
           <SelectImage
-            title="Mặt trước"
-            onSelectImage={value => onChange('ICFrontPhoto', value?.data)}
+            title="Mặt trước" //translate
+            onSelectImage={value => {
+              onChange('ICFrontPhoto', value?.data);
+              // identityCard == 3 && onChange('ICBackPhoto', value?.data);
+            }}
           />
-          <SelectImage
-            title="Mặt sau"
-            onSelectImage={value => onChange('ICBackPhoto', value?.data)}
-          />
+          {identityCard != 3 && (
+            <SelectImage
+              title="Mặt sau" //translate
+              onSelectImage={value => onChange('ICBackPhoto', value?.data)}
+            />
+          )}
 
           <Button
-            label="Tiếp tục" //todo translate
+            label="Tiếp tục" //translate
             onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
           />
         </View>

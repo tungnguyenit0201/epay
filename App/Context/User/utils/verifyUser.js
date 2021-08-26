@@ -18,7 +18,6 @@ const useVerifyInfo = (initialValue = {}) => {
   const {dispatch} = useUser();
   const translation = useTranslation();
   const {getPhone} = useAsyncStorage();
-  console.log('initialValue :>> ', initialValue, contentRef.current);
 
   const onChange = (key, value) => {
     contentRef.current[key] = value;

@@ -29,7 +29,7 @@ const VerifyUserPortrait = ({route}) => {
       <HeaderBg>
         <Header back title={translation?.account_verification} />
       </HeaderBg>
-      <ScrollView style={{backgroundColor: '#fff'}}>
+      <ScrollView style={styles.container}>
         <Formik
           initialValues={{
             ICFullName: '',
@@ -58,7 +58,6 @@ const VerifyUserPortrait = ({route}) => {
             const handleChange = field => value => {
               setFieldValue(field, value);
               setFieldTouched(field, true, false);
-              onChange(field, value);
             };
 
             return (
@@ -99,6 +98,7 @@ const VerifyUserPortrait = ({route}) => {
                   value={values.ICNumber}
                   style={{marginBottom: 10}}
                   required
+                  numeric
                 />
 
                 <DatePicker
@@ -166,9 +166,6 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
+  container: {backgroundColor: Colors.white},
 });
 export default VerifyUserPortrait;
