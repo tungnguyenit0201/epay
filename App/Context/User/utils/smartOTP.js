@@ -195,14 +195,14 @@ const useSmartOTPInfo = () => {
   const {onGoOTP} = useSmartOTP();
   const {phone} = useUser();
   const {setLoading} = useLoading();
-  const infoRef = useRef({});
+  const [smartOTPInfo, setSmartOTPInfo] = useState({});
 
   useEffect(() => {
     const getOTPInfo = async () => {
       setLoading(true);
       const result = await checkSmartOTP({phone});
-      infoRef.current = result?.SmartOtpInfo;
       setLoading(false);
+      setSmartOTPInfo(result?.SmartOtpInfo);
     };
     getOTPInfo();
   }, [phone, setLoading]);
@@ -224,7 +224,7 @@ const useSmartOTPInfo = () => {
   };
 
   return {
-    smartOTPInfo: infoRef.current,
+    smartOTPInfo,
     onChangePassword,
     onForgetPassword,
     onSyncSmartOTP,

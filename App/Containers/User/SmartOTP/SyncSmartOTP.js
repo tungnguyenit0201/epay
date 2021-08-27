@@ -43,7 +43,7 @@ const SyncSmartOTP = ({route}) => {
       </HeaderBg>
       <View style={{flex: 1}}>{renderText()}</View>
       <Button label="Đồng bộ smart OTP" onPress={onGoPasswordSync} />
-      {status !== 'sync' && (
+      {status === 'sync' && (
         <View style={styles.modalContainer}>
           <View style={styles.modalBackground} />
           <Text style={styles.modalText}>Đang đồng bộ smart otp ......</Text>
@@ -51,7 +51,7 @@ const SyncSmartOTP = ({route}) => {
       )}
       {status === 'success' && (
         <View style={styles.completionContainer}>
-          <Text>Đồng bộ smart OTP thành công</Text>
+          <Text>✔️ Đồng bộ smart OTP thành công</Text>
         </View>
       )}
       {status === 'failure' && (
