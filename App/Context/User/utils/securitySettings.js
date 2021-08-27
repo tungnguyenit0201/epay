@@ -12,25 +12,25 @@ const useSecuritySettings = () => {
   const {onLogout} = useAuth();
   const {phone} = useUser();
   const {setLoading} = useLoading();
-  const contentRef = useRef({
+  const [settings, setSettings] = useState({
     touchIdEnabled: false,
     // data from getSettingsInfo()
   });
 
-  const loadSettings = async () => {
-    setLoading(true);
-    const touchIdEnabled = await getTouchIdEnabled();
-    const result = await getSettingsInfo({phone});
-    contentRef.current = {
-      ..._.get(result, 'SettingInfo', {}),
-      touchIdEnabled,
-    };
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const loadSettings = async () => {
+      setLoading(true);
+      const touchIdEnabled = await getTouchIdEnabled();
+      const result = await getSettingsInfo({phone});
+      setSettings({
+        ..._.get(result, 'SettingInfo', {}),
+        touchIdEnabled,
+      });
+      setLoading(false);
+    };
+
     loadSettings();
-  }, []);
+  }, [getTouchIdEnabled, phone, setLoading]);
 
   const onTouchId = value => {
     setTouchIdEnabled(value);
@@ -41,7 +41,7 @@ const useSecuritySettings = () => {
 
   const onSmartOTP = async () => {
     // activated
-    if (contentRef.current.ActivedSmartOTP) {
+    if (settings.ActivedSmartOTP) {
       Navigator.push(SCREEN.SMART_OTP);
       return;
     }
@@ -49,7 +49,7 @@ const useSecuritySettings = () => {
     Navigator.push(SCREEN.ACTIVE_SMART_OTP);
   };
 
-  return {settings: contentRef.current, onTouchId, onSmartOTP};
+  return {settings, onTouchId, onSmartOTP};
 };
 
 export default useSecuritySettings;

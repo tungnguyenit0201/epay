@@ -15,7 +15,7 @@ const SmartOTPPassword = ({route}) => {
       </HeaderBg>
       <Text>{parseTitle()}</Text>
       <SmartOTPInput onFilled={onPassword} message={message} />
-      {type === 'changePassword' && (
+      {['changePassword', 'sync'].includes(type) && (
         <TouchableOpacity>
           <Text>Quên mật khẩu</Text>
         </TouchableOpacity>
