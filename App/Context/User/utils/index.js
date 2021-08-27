@@ -2,7 +2,7 @@ import useVerifyInfo from './verifyUser';
 import useImagePicker from './imagePicker';
 import useUserInfo from './userInfo';
 import useSecuritySettings from './securitySettings';
-import {useSmartOTP, useSmartOTPInfo} from './smartOTP';
+import {useSmartOTP, useSmartOTPInfo, useSyncSmartOTP} from './smartOTP';
 import useSelectRegion from './selectRegion';
 
 export {
@@ -12,5 +12,6 @@ export {
   useSecuritySettings,
   useSmartOTP,
   useSmartOTPInfo,
+  useSyncSmartOTP,
   useSelectRegion,
 };

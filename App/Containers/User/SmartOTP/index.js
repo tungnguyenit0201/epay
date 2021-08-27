@@ -10,8 +10,13 @@ import {useSmartOTPInfo} from 'context/User/utils';
 
 const SmartOtp = () => {
   const translation = useTranslation();
-  const {smartOTPInfo, onChangePassword, onForgetPassword, onSyncSmartOTP} =
-    useSmartOTPInfo();
+  const {
+    smartOTPInfo,
+    onChangePassword,
+    onForgetPassword,
+    onSyncSmartOTP,
+    onDeactivateSmartOTP,
+  } = useSmartOTPInfo();
 
   return (
     <>
@@ -70,18 +75,15 @@ const SmartOtp = () => {
         </TouchableOpacity>
       </ScrollView>
       <View style={base.bottom}>
-        <Button
-          label="Huỷ kích hoạt"
-          //onPress={() => Navigator.push(SCREEN.SMART_OTP)}
-        />
+        <Button label="Huỷ kích hoạt" onPress={onDeactivateSmartOTP} />
       </View>
     </>
   );
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,

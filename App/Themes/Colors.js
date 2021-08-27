@@ -17,7 +17,7 @@ export default {
 
   g1: '#F3F4F6',
   g2: '#E5E7EB',
-  g3: '#FD1D5DB',
+  g3: '#D1D5DB',
   g4: '#9CA3AF',
   g5: '#6B7280',
   g6: '#4B5563',
@@ -26,6 +26,8 @@ export default {
   g9: '#111827',
 
   Highlight: '#E10000',
+
+  moneyItem: '#A3C9ED',
 
   PRIMARY: '#03a5fc',
   TEXT: '#555555',

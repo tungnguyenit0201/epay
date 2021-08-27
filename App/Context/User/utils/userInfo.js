@@ -9,6 +9,7 @@ import {
   getConnectedBank,
   confirmPassword,
   getLimit,
+  getQRCode,
 } from 'services/user';
 import {
   useAsyncStorage,
@@ -185,7 +186,21 @@ const useUserInfo = type => {
       setLoading(false);
     }
   };
-
+  const onGetQRCode = async () => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await getQRCode({phone});
+      console.log('result', result);
+      setLoading(false);
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        dispatch({type: 'SET_QRCODE', data: result?.QRCodeInfo});
+        Navigator.navigate(SCREEN.QRPAY);
+      } else setError(result);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -196,6 +211,7 @@ const useUserInfo = type => {
     onGetConnectedBank,
     onConfirmPassword,
     onGetLimit,
+    onGetQRCode,
   };
 };
 export default useUserInfo;
