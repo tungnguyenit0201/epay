@@ -110,4 +110,5 @@ export default {
     Vietcombank: require('images/bank/Vietcombank.png'),
     Plus: require('images/bank/Plus.png'),
   },
+  logoEpay: require('images/logo-epay.png'),
 };
