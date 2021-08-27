@@ -74,9 +74,8 @@ const AppNavigator = () => {
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
       let currentLanguage = await AsyncStorage.getItem('currentLanguage');
-      console.log('currentLanguage :>> ', currentLanguage);
-      // initialRoute = currentLanguage ? SCREEN.AUTH : SCREEN.LANGUAGE;
-      setLanguage(currentLanguage ? currentLanguage : 'vi');
+      if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
+      else setLanguage(currentLanguage);
     };
 
     getCurrentLanguage();

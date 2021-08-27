@@ -43,6 +43,7 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
     "react-native-sha256": "^1.4.7",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-touch-id": "^4.4.1",
     "react-native-ui-lib": "^5.27.0",
