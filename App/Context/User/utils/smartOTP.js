@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect} from 'react';
+import {useRef, useState, useEffect, useCallback} from 'react';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
@@ -9,6 +9,7 @@ import {
   changeSmartOTPPassword,
   checkSmartOTP,
   checkSmartOTPKey,
+  syncSmartOTP,
 } from 'services/common';
 import {useError, useLoading} from 'context/Common/utils';
 
@@ -54,6 +55,8 @@ const useSmartOTP = params => {
           newPassword,
           confirmPassword: value,
         });
+      case 'sync':
+        return onCheckPasswordSync({password: value});
     }
   };
 
@@ -132,6 +135,7 @@ const useSmartOTP = params => {
       case 'confirmNewPassword':
         return 'Xác nhận mật khẩu smart OTP';
       case 'changePassword':
+      case 'sync':
         return 'Nhập mật khẩu smart OTP hiện tại';
     }
     // translate
@@ -146,10 +150,30 @@ const useSmartOTP = params => {
     Navigator.goBack();
   };
 
-  const onSyncSmartOTP = async () => {
-    setMessage('Đang đồng bộ smart otp ......'); // translate
-    // await
-    setMessage('');
+  const onGoPasswordSync = () => {
+    Navigator.push(SCREEN.SMART_OTP_PASSWORD, {
+      type: 'sync',
+    });
+  };
+
+  const onCheckPasswordSync = async ({password}) => {
+    const passwordEncrypted = await sha256(password);
+    const result = await checkSmartOTPKey({phone, password: passwordEncrypted});
+    switch (_.get(result, 'ErrorCode')) {
+      case ERROR_CODE.SUCCESS:
+        Navigator.goBack();
+        Navigator.replaceLast(SCREEN.SYNC_SMART_OTP, {
+          type: 'sync',
+          passwordEncrypted,
+        });
+        return;
+      case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
+        setError(result);
+        Navigator.goBack();
+        return;
+      default:
+        return setMessage(result?.ErrorMessage);
+    }
   };
 
   return {
@@ -163,7 +187,7 @@ const useSmartOTP = params => {
     parseTitle,
     type: params?.type,
     onBack,
-    onSyncSmartOTP,
+    onGoPasswordSync,
   };
 };
 
@@ -181,7 +205,7 @@ const useSmartOTPInfo = () => {
       setLoading(false);
     };
     getOTPInfo();
-  }, []);
+  }, [phone, setLoading]);
 
   const onChangePassword = () => {
     Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'changePassword'});
@@ -192,8 +216,11 @@ const useSmartOTPInfo = () => {
   };
 
   const onSyncSmartOTP = () => {
-    alert('đang làm'); //
-    // Navigator.push(SCREEN.SYNC_SMART_OTP);
+    Navigator.push(SCREEN.SYNC_SMART_OTP);
+  };
+
+  const onDeactivateSmartOTP = async () => {
+    // const result = await activateSmartOTP({phone, password: '', active: false});
   };
 
   return {
@@ -201,7 +228,27 @@ const useSmartOTPInfo = () => {
     onChangePassword,
     onForgetPassword,
     onSyncSmartOTP,
+    onDeactivateSmartOTP,
   };
 };
 
-export {useSmartOTP, useSmartOTPInfo};
+const useSyncSmartOTP = params => {
+  const {phone} = useUser();
+  const [status, setStatus] = useState(params?.type);
+
+  const onSync = useCallback(async () => {
+    const result = await syncSmartOTP({
+      phone,
+      password: params?.passwordEncrypted,
+    });
+    setStatus(result?.ErrorCode === 0 ? 'success' : 'failure');
+  }, [phone, params?.passwordEncrypted]);
+
+  useEffect(() => {
+    params?.type === 'sync' && onSync();
+  }, [params?.type, onSync]);
+
+  return {status, onSync};
+};
+
+export {useSmartOTP, useSmartOTPInfo, useSyncSmartOTP};
