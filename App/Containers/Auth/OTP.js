@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, Image, StyleSheet, View, Pressable} from 'react-native';
-import {Text, Header, Button, Modal} from 'components';
+import {ScrollView, Image, StyleSheet, 
+  View, Pressable, TouchableOpacity} from 'react-native';
+import {Text, Header, Button, Modal, Icon} from 'components';
 import {TEXT} from 'configs/Constants';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
@@ -27,9 +28,39 @@ const OTP = ({route}) => {
 
   return (
     <>
-      <Header back title={sign_up} />
+      <View>
+        <Header back blackIcon style={{
+          paddingTop: 10,
+          backgroundColor: Colors.white,
+          color: Colors.BLACK
+        }}/>
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: scale(10),
+            right: 20,
+          }}>
+          <Icon icon={Images.Register.Info} 
+            style={{
+              width: scale(24),
+              height: scale(24),
+            }} tintColor={Colors.BLACK}/>
+        </TouchableOpacity>
+      </View>
+      
       <ScrollView style={styles.container}>
-        <View style={styles.wrap}>
+        <View style={[styles.wrap,{
+          paddingTop: Spacing.PADDING
+        }]}>
+          <View style={{
+            marginBottom: Spacing.PADDING+40,
+            alignItems: 'center',
+          }}>
+            <Image
+              source={Images.logoEpay}
+              resizeMode="contain"/>
+          </View>
+
           <OTPContainer
             onChange={onChange}
             onCodeFilled={onConfirmOTP}
@@ -44,7 +75,7 @@ const OTP = ({route}) => {
             />
           )} */}
 
-          {countdown != 0 ? (
+          {/* {countdown != 0 ? (
             <Button
               mb={10}
               disabled
@@ -57,17 +88,7 @@ const OTP = ({route}) => {
             />
           ) : (
             <Button mb={10} label="Gửi lại" onPress={resenOTP} />
-          )}
-
-          <View style={[styles.box_1, {marginTop: 20}]}>
-            <Pressable onPress={() => setshowCall(true)}>
-              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
-            </Pressable>
-
-            <Pressable onPress={onChangePhone}>
-              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-            </Pressable>
-          </View>
+          )} */}
         </View>
 
         {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
@@ -112,7 +133,6 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
   },
   header: {
     fontSize: Fonts.FONT_LARGE,
@@ -127,7 +147,6 @@ const styles = StyleSheet.create({
     marginTop: Spacing.PADDING * 2,
   },
   disabled_btn: {
-    // color: Colors.BLACK,
     backgroundColor: '#fff',
     borderRadius: 3,
     borderWidth: 0.5,
@@ -138,11 +157,6 @@ const styles = StyleSheet.create({
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
     textDecorationLine: 'underline',
-  },
-  box_1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
   },
   otp_code: {
     paddingVertical: Spacing.PADDING,

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, Image, StyleSheet, Pressable, Text, TouchableOpacity} from 'react-native';
-import {Button, InputBlock, TextInput} from 'components';
+import {Button, InputBlock, TextInput, Icon} from 'components';
 import {Colors, Images, Spacing, Fonts} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
@@ -77,13 +77,6 @@ const Auth = () => {
                   error={touched.phone && errors.phone}
                   value={values.phone}
                 /> */}
-                {/* <TextInput 
-                  placeholder={translation.enter_your_phone_number}
-                  numeric
-                  onChange={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  error={touched.phone && errors.phone}
-                  value={values.phone}/> */}
 
                 <View>
                   <TextInput 
@@ -99,8 +92,7 @@ const Auth = () => {
                       right: 15,
                       top: 14
                     }}>
-                    <Image
-                      source={Images.Transfer.CloseCircle}
+                    <Icon icon={Images.Transfer.CloseCircle} 
                       style={{
                         width: scale(17),
                         height: scale(17),
@@ -133,7 +125,6 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: Spacing.PADDING,
-    // paddingVertical: Spacing.PADDING * 10,
     paddingTop: Spacing.PADDING*4+8,
     alignItems: 'center',
     flex: 1,

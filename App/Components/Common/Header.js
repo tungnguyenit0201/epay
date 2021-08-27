@@ -17,6 +17,7 @@ const Header = ({
   onPressBack,
   renderRightComponent,
   avoidStatusBar = true,
+  blackIcon = false
 }) => {
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
@@ -59,7 +60,8 @@ const Header = ({
                     left: scale(30),
                   }}>
                   <View style={styles.back}>
-                    <Icon icon={Images.ArrowLeft} tintColor={Colors.white} />
+                    <Icon icon={Images.ArrowLeft} 
+                      tintColor={blackIcon?Colors.BLACK:Colors.white} />
                   </View>
                 </Pressable>
               ) : (
