@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   item: {
     textAlign: 'center',
     lineHeight: 40,
-    backgroundColor: '#A3C9ED',
+    backgroundColor: Colors.moneyItem,
     borderRadius: 8,
     height: 40,
     overflow: 'hidden',

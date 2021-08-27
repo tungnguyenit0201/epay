@@ -44,7 +44,7 @@ const SelectMoney = () => {
                 width: '45%',
                 borderWidth: 1,
                 borderColor: Colors.cl1,
-                backgroundColor: 'transparent',
+                backgroundColor: Colors.white,
               }}
               labelStyle={{color: Colors.BLACK}}
             />

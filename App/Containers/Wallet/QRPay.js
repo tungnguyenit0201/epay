@@ -78,7 +78,7 @@ const QRPay = ({route}) => {
           <View></View>
         )}
         <Button
-          bg="#fff"
+          bg={Colors.white}
           border={Colors.cl1}
           color={Colors.cl1}
           label={'Nhập số tiền'} //translate
@@ -91,7 +91,7 @@ const QRPay = ({route}) => {
           <Row>
             <Col width="50%">
               <Button
-                bg="#fff"
+                bg={Colors.white}
                 border={Colors.cl1}
                 color={Colors.cl1}
                 label={translation.save_photo}
@@ -109,21 +109,6 @@ const QRPay = ({route}) => {
 export default QRPay;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: 10,
-  },
-  wrap: {
-    paddingHorizontal: 16,
-    backgroundColor: 'white',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   flexCenter: {
     flex: 1,
     justifyContent: 'center',
@@ -132,36 +117,5 @@ const styles = StyleSheet.create({
   buttonSelect: {
     width: '100%',
     marginTop: 20,
-  },
-  titleStyle: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  textStyle: {
-    textAlign: 'center',
-    margin: 10,
-  },
-  textInputStyle: {
-    flexDirection: 'row',
-    height: 40,
-    marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,
-  },
-  buttonStyle: {
-    backgroundColor: Colors.cl1,
-    color: Colors.white,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginTop: 30,
-    padding: 10,
-    height: 60,
-  },
-  buttonTextStyle: {
-    color: '#FFFFFF',
-    paddingVertical: 10,
-    fontSize: 16,
   },
 });

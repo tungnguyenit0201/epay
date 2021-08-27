@@ -173,24 +173,24 @@ const User = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
-  heading: {
-    marginTop: 20,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
-  },
-  title: {
-    textTransform: 'uppercase',
-  },
-  link: {
-    textDecorationLine: 'underline',
-  },
+  // heading: {
+  //   marginTop: 20,
+  //   borderBottomColor: Colors.l4,
+  //   borderBottomWidth: 1,
+  // },
+  // title: {
+  //   textTransform: 'uppercase',
+  // },
+  // link: {
+  //   textDecorationLine: 'underline',
+  // },
   block: {
-    borderBottomColor: '#EEEEEE',
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 8,
   },
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
@@ -201,8 +201,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
-  itemRight: {
-    marginLeft: 'auto',
-  },
+  // itemRight: {
+  //   marginLeft: 'auto',
+  // },
 });
 export default User;

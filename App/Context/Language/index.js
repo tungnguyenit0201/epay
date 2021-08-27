@@ -17,9 +17,7 @@ export const LanguageProvider = ({children}) => {
     try {
       setSelectedLanguage(lang);
       await AsyncStorage.setItem('currentLanguage', lang);
-    } catch (error) {
-      console.log('error :>> ', error);
-    }
+    } catch (error) {}
   };
 
   const value = {
