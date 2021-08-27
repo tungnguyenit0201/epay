@@ -22,7 +22,7 @@ import {useUser} from 'context/User';
 const User = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
-  const {onGetConnectedBank} = useUserInfo();
+  const {onGetConnectedBank, onGetQRCode} = useUserInfo();
   const {onGetAllBank} = useBankInfo();
   return (
     <ScrollView style={base.wrap}>
@@ -60,11 +60,7 @@ const User = ({route}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.NOTIFICATION);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onGetQRCode}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.MaThanhToan}

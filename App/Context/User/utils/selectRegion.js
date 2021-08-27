@@ -15,7 +15,6 @@ const useSelectRegion = ({items, type, parentType}) => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {getPhone} = useAsyncStorage();
-  console.log('region :>> ', region);
   const pleaseChooseFirst = type => {
     setError({ErrorCode: -1, ErrorMessage: `Vui lòng chọn ${type} trước`}); //translate
   };
@@ -67,11 +66,9 @@ const useSelectRegion = ({items, type, parentType}) => {
   };
 
   const goRegionSelect = async (_type, _handleChange) => {
-    console.log('type :>> ', type, _type);
     switch (_type) {
       case 'cites':
         let cities = await onGetProvince();
-        console.log('cities :>> ', cities);
         Navigator.navigate('RegionSelect', {
           items: cities,
           type: _type,

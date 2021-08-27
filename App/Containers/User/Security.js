@@ -22,7 +22,7 @@ const PaymentSettings = () => {
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.CHANGE_PASSWORD);
+          Navigator.push(SCREEN.CHANGE_PASSWORD, 'confirm_password_response');
         }}>
         <Icon
           mr={8}

@@ -30,11 +30,13 @@ export default {
     CONFIRM_PASSWORD: 'account/confirm_password',
     GET_LIMIT: 'security/get_limit',
     GET_SETTINGS_INFO: 'setting/get_all_info',
+    GET_QRCODE: 'account/get_qrcode',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
     GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
+    CHANGE_LIMIT: 'security/change_limit',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',
