@@ -1,7 +1,13 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, Image, StyleSheet, View, Pressable} from 'react-native';
-import {Text, Header, Button, Modal} from 'components';
-import {TEXT} from 'configs/Constants';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
+import {Text, Header, Button, Modal, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
@@ -17,6 +23,8 @@ const OTP = ({route}) => {
     countdown,
     showCall,
     code,
+    showModal,
+    setShowModal,
     onChange,
     onConfirmOTP,
     resenOTP,
@@ -25,9 +33,21 @@ const OTP = ({route}) => {
   } = useOTP(route?.params);
   const {sign_up} = useTranslation();
 
+  const renderRightComponent = () => (
+    <TouchableOpacity
+      onPress={() => setShowModal(true)}
+      style={styles.iconRight}>
+      <Icon icon={Images.Register.Info} />
+    </TouchableOpacity>
+  );
+
   return (
     <>
-      <Header back title={sign_up} />
+      <Header
+        back
+        title={sign_up}
+        renderRightComponent={renderRightComponent}
+      />
       <ScrollView style={styles.container}>
         <View style={styles.wrap}>
           <OTPContainer
@@ -61,7 +81,11 @@ const OTP = ({route}) => {
 
           <View style={[styles.box_1, {marginTop: 20}]}>
             <Pressable onPress={() => setshowCall(true)}>
-              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
+              <Text
+                style={[styles.link_text]} //translate
+              >
+                Không nhận được OTP
+              </Text>
             </Pressable>
 
             <Pressable onPress={onChangePhone}>
@@ -69,12 +93,6 @@ const OTP = ({route}) => {
             </Pressable>
           </View>
         </View>
-
-        {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
-            <Text style={{
-              textAlign: 'center',
-              color: '#ccc'}}>OTP:</Text> 098909
-          </Text> */}
 
         {showCall && (
           <Pressable
@@ -101,6 +119,28 @@ const OTP = ({route}) => {
           </Pressable>
         )}
       </ScrollView>
+      {showModal && (
+        <Modal
+          visible={showModal}
+          onClose={() => setShowModal(false)}
+          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." //translate
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Gọi 024 32252336"
+                onPress={() => {
+                  setShowModal(false);
+                  openCallDialog();
+                }}
+              />
+              <TouchableOpacity onPress={() => setShowModal(false)}>
+                <Text style={styles.link_text}>Không, cám ơn</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
     </>
   );
 };
@@ -114,21 +154,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     paddingTop: Spacing.PADDING * 3,
   },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
+
+  iconRight: {
+    paddingRight: Spacing.PADDING,
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  confirmation: {
-    marginTop: Spacing.PADDING * 2,
-  },
+
   disabled_btn: {
     // color: Colors.BLACK,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     borderRadius: 3,
     borderWidth: 0.5,
     borderColor: Colors.BACKGROUNDACCORDION,
@@ -147,7 +180,10 @@ const styles = StyleSheet.create({
   otp_code: {
     paddingVertical: Spacing.PADDING,
     textAlign: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.l1,
+  },
+  buttonGroup: {
+    alignItems: 'center',
   },
 });
 export default OTP;

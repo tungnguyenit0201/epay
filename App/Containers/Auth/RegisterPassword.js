@@ -50,7 +50,7 @@ const RegisterPassword = ({route}) => {
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
           };
-
+          //translate
           return (
             <View style={{flex: 1}}>
               <Text bold size={35} mb={15} style={styles.title}>
@@ -107,15 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
     paddingHorizontal: Spacing.PADDING,
-  },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   title: {
     textTransform: 'uppercase',
