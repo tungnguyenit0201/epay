@@ -145,3 +145,16 @@ export const getSettingsInfo = async ({phone}) => {
   });
   return response;
 };
+
+export const getQRCode = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_QRCODE,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

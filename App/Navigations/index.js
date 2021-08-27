@@ -66,7 +66,7 @@ import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
-
+import SelectMoney from 'containers/Wallet/SelectMoney';
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
@@ -207,6 +207,7 @@ const AppNavigator = () => {
             name={SCREEN.SYNC_SMART_OTP_RESULT}
             component={SyncSmartOTPResult}
           />
+          <Stack.Screen name={SCREEN.SELECT_MONEY} component={SelectMoney} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
