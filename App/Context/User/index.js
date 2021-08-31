@@ -16,6 +16,7 @@ const defaultUserInfo = {
     County: '',
     Ward: '',
   },
+  qrCode: '',
 };
 
 export const UserProvider = ({children}) => {

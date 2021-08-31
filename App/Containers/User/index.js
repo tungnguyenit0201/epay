@@ -22,7 +22,7 @@ import {useUser} from 'context/User';
 const User = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
-  const {onGetConnectedBank} = useUserInfo();
+  const {onGetConnectedBank, onGetQRCode} = useUserInfo();
   const {onGetAllBank} = useBankInfo();
   return (
     <ScrollView style={base.wrap}>
@@ -60,11 +60,7 @@ const User = ({route}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.NOTIFICATION);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onGetQRCode}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.MaThanhToan}
@@ -177,24 +173,24 @@ const User = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
-  heading: {
-    marginTop: 20,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
-  },
-  title: {
-    textTransform: 'uppercase',
-  },
-  link: {
-    textDecorationLine: 'underline',
-  },
+  // heading: {
+  //   marginTop: 20,
+  //   borderBottomColor: Colors.l4,
+  //   borderBottomWidth: 1,
+  // },
+  // title: {
+  //   textTransform: 'uppercase',
+  // },
+  // link: {
+  //   textDecorationLine: 'underline',
+  // },
   block: {
-    borderBottomColor: '#EEEEEE',
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 8,
   },
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
@@ -205,8 +201,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
-  itemRight: {
-    marginLeft: 'auto',
-  },
+  // itemRight: {
+  //   marginLeft: 'auto',
+  // },
 });
 export default User;

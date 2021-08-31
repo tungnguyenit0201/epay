@@ -27,6 +27,8 @@ const OTP = ({route}) => {
     countdown,
     showCall,
     code,
+    showModal,
+    setShowModal,
     onChange,
     onConfirmOTP,
     resenOTP,
@@ -34,15 +36,23 @@ const OTP = ({route}) => {
     openCallDialog,
   } = useOTP(route?.params);
   const {sign_up} = useTranslation();
-  const [showModal, setShowModal] = useState(false);
+  const [checkShowModal, setShowModalPopup] = useState(false);
 
   const onShowModal = () => {
-    setShowModal(true);
+    setShowModalPopup(true);
   };
 
   const onHideModal = () => {
-    setShowModal(false);
+    setShowModalPopup(false);
   };
+
+  const renderRightComponent = () => (
+    <TouchableOpacity
+      onPress={() => setShowModalPopup(true)}
+      style={styles.iconRight}>
+      <Icon icon={Images.Register.Info} />
+    </TouchableOpacity>
+  );
 
   return (
     <>
@@ -83,7 +93,6 @@ const OTP = ({route}) => {
             }}>
             <Image source={Images.logoEpay} resizeMode="contain" />
           </View>
-
           <OTPContainer
             onChange={onChange}
             onCodeFilled={onConfirmOTP}
@@ -122,7 +131,8 @@ const OTP = ({route}) => {
       </View>
 
       <Modal
-        isVisible={showModal}
+        // isVisible={showModal}
+        isVisible={checkShowModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"
         style={{

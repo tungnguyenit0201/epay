@@ -40,6 +40,11 @@ export default function userReducer(state, action) {
         ...state,
         region: action?.data,
       };
+    case 'SET_QRCODE':
+      return {
+        ...state,
+        qrCode: action?.data,
+      };
     default:
       return state;
   }

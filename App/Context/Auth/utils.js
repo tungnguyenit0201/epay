@@ -152,12 +152,14 @@ const useAuth = () => {
     onLogin({phone, password: passwordEncrypted, encrypted: true});
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     dispatch({type: 'UPDATE_TOKEN', data: ''});
     setDefaultHeaders({
       Authorization: ``,
     });
-    Navigator.popToTop();
+    await setToken('');
+    // Navigator.popToTop();
+    Navigator.navigate(SCREEN.AUTH);
   };
 
   return {

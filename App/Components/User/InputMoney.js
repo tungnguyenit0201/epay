@@ -4,11 +4,10 @@ import {Text, TextInput, Row, Col} from 'components';
 import {Colors} from 'themes';
 import {useTranslation} from 'context/Language';
 
-const InputMoney = style => {
+const InputMoney = ({style, handleValue}) => {
   const translation = useTranslation();
   let [value, setValue] = useState();
   let [error, setError] = useState(false);
-
   const moneyData = [
     {
       id: '1',
@@ -37,9 +36,11 @@ const InputMoney = style => {
   ];
   const handlePress = params => {
     setValue(params);
+    handleValue(params);
   };
   const handleChange = e => {
     setValue(e);
+    handleValue(e);
   };
   // Coppy from Utils/Functions but don't use unit
   const formatMoney = number =>
@@ -49,6 +50,7 @@ const InputMoney = style => {
     <View style={[styles.block, style]}>
       <View style={styles.rowInput}>
         <TextInput
+          numeric
           placeholder="Nhập số tiền nạp"
           style={styles.input}
           placeholderTextColor={Colors.l5}
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   item: {
     textAlign: 'center',
     lineHeight: 40,
-    backgroundColor: '#A3C9ED',
+    backgroundColor: Colors.moneyItem,
     borderRadius: 8,
     height: 40,
     overflow: 'hidden',

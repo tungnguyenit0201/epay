@@ -14,6 +14,7 @@ const useOTP = ({functionType, phone, password}) => {
   const [countdown, setCountdown] = useState(60);
   const [showCall, setshowCall] = useState(false);
   const [code, setCode] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const {setLoading} = useLoading();
   const {setError} = useError();
@@ -109,6 +110,8 @@ const useOTP = ({functionType, phone, password}) => {
     countdown,
     showCall,
     code,
+    showModal,
+    setShowModal,
     onChange,
     onConfirmOTP,
     resenOTP,

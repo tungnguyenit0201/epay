@@ -7,6 +7,8 @@ import KeyboardStateProvider from 'utils/KeyboardStateProvider';
 import {SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
+import SplashScreen from 'react-native-splash-screen';
+import {Platform} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -66,6 +68,7 @@ import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
+import SelectMoney from 'containers/Wallet/SelectMoney';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -74,13 +77,17 @@ const AppNavigator = () => {
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
       let currentLanguage = await AsyncStorage.getItem('currentLanguage');
-      console.log('currentLanguage :>> ', currentLanguage);
-      // initialRoute = currentLanguage ? SCREEN.AUTH : SCREEN.LANGUAGE;
-      setLanguage(currentLanguage ? currentLanguage : 'vi');
+      if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
+      else setLanguage(currentLanguage);
     };
 
     getCurrentLanguage();
   }, []); // eslint-disable-line
+
+  React.useEffect(() => {
+    Platform.OS == 'android' && SplashScreen.hide();
+  }, []); // eslint-disable-line
+
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
@@ -207,6 +214,7 @@ const AppNavigator = () => {
             name={SCREEN.SYNC_SMART_OTP_RESULT}
             component={SyncSmartOTPResult}
           />
+          <Stack.Screen name={SCREEN.SELECT_MONEY} component={SelectMoney} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

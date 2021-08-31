@@ -91,7 +91,7 @@ const RegisterPassword = ({route}) => {
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
           };
-
+          //translate
           return (
             <View style={styles.wrap}>
               <Text bold fs="h5" mb={15} centered>

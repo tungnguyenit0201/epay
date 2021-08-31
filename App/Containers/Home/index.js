@@ -125,8 +125,8 @@ const Home = () => {
               col={4}
               data={dataMenu}
               styleText={[{fontSize: 14}]}
-              styleWicon={[{backgroundColor: '#437EC0'}]}
-              styleIcon={[{tintColor: '#fff'}]}
+              styleWicon={[{backgroundColor: Colors.cl1}]}
+              styleIcon={[{tintColor: Colors.white}]}
             />
           </View>
           <XacThuc />
@@ -184,7 +184,7 @@ const Home = () => {
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
           title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ."
+          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." //translate
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button
