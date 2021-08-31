@@ -1,11 +1,18 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, Image, StyleSheet, 
-  View, Pressable, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  View,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import {Text, Header, Button, Modal, Icon} from 'components';
-import {TEXT} from 'configs/Constants';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
+import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
@@ -29,36 +36,46 @@ const OTP = ({route}) => {
   return (
     <>
       <View>
-        <Header back blackIcon style={{
-          paddingTop: 10,
-          backgroundColor: Colors.white,
-          color: Colors.BLACK
-        }}/>
+        <Header
+          back
+          blackIcon
+          style={{
+            paddingTop: 10,
+            backgroundColor: Colors.white,
+            color: Colors.BLACK,
+          }}
+        />
         <TouchableOpacity
           style={{
             position: 'absolute',
             bottom: scale(10),
             right: 20,
           }}>
-          <Icon icon={Images.Register.Info} 
+          <Icon
+            icon={Images.Register.Info}
             style={{
               width: scale(24),
               height: scale(24),
-            }} tintColor={Colors.BLACK}/>
+            }}
+            tintColor={Colors.BLACK}
+          />
         </TouchableOpacity>
       </View>
-      
-      <ScrollView style={styles.container}>
-        <View style={[styles.wrap,{
-          paddingTop: Spacing.PADDING
-        }]}>
-          <View style={{
-            marginBottom: Spacing.PADDING+40,
-            alignItems: 'center',
-          }}>
-            <Image
-              source={Images.logoEpay}
-              resizeMode="contain"/>
+
+      <View style={styles.container}>
+        <View
+          style={[
+            styles.wrap,
+            {
+              paddingTop: Spacing.PADDING,
+            },
+          ]}>
+          <View
+            style={{
+              marginBottom: Spacing.PADDING + 40,
+              alignItems: 'center',
+            }}>
+            <Image source={Images.logoEpay} resizeMode="contain" />
           </View>
 
           <OTPContainer
@@ -96,32 +113,81 @@ const OTP = ({route}) => {
               textAlign: 'center',
               color: '#ccc'}}>OTP:</Text> 098909
           </Text> */}
+      </View>
 
-        {showCall && (
-          <Pressable
+      {/* button link to layout register failure
+        <Button mb={10} label="Gửi lại"
+        onPress={() => {
+          Navigator.navigate(SCREEN.REGISTER_FAILURE, {functionType:'', phone:'', password:''})
+        }}/> */}
+
+      {showCall && (
+        <Pressable
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            paddingVertical: Spacing.PADDING - 5,
+            backgroundColor: Colors.OtpGray_1,
+          }}
+          onPress={openCallDialog}>
+          <View
             style={[
-              styles.otp_code,
+              styles.line_1,
               {
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: 20,
+                position: 'absolute',
+                top: 15,
+                left: 40,
               },
-            ]}
-            onPress={openCallDialog}>
-            <Image
-              source={Images.Register.phone_1}
-              style={{
-                height: scale(12),
-                width: scale(12),
-                marginRight: 10,
-              }}
-            />
-            <Text bold style={[styles.link_text]}>
-              Gọi cho tôi
-            </Text>
-          </Pressable>
-        )}
-      </ScrollView>
+            ]}></View>
+          <View
+            style={[
+              styles.line_1,
+              {
+                position: 'absolute',
+                top: 15,
+                right: 40,
+              },
+            ]}></View>
+          <Image
+            source={Images.Phone}
+            style={{
+              height: scale(16),
+              width: scale(16),
+              marginRight: 10,
+              top: 1,
+            }}
+          />
+          <Text bold>Gọi cho tôi</Text>
+        </Pressable>
+      )}
+
+      <View
+        style={{
+          paddingVertical: Spacing.PADDING - 5,
+          backgroundColor: Colors.OtpGray_1,
+        }}
+        onPress={openCallDialog}>
+        <View
+          style={[
+            styles.line_1,
+            {
+              position: 'absolute',
+              top: '50%',
+              left: 40,
+            },
+          ]}></View>
+        <View
+          style={[
+            styles.line_1,
+            {
+              position: 'absolute',
+              top: '50%',
+              right: 40,
+            },
+          ]}></View>
+        <Text style={{textAlign: 'center'}}>Từ tin nhắn</Text>
+        <Text style={{textAlign: 'center'}}>328725</Text>
+      </View>
     </>
   );
 };
@@ -134,34 +200,34 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
+  // header: {
+  //   fontSize: Fonts.FONT_LARGE,
+  //   fontWeight: 'bold',
+  //   paddingBottom: Spacing.PADDING,
+  // },
+  // loading: {
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+  // confirmation: {
+  //   marginTop: Spacing.PADDING * 2,
+  // },
+  // disabled_btn: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 3,
+  //   borderWidth: 0.5,
+  //   borderColor: Colors.BACKGROUNDACCORDION,
+  //   borderStyle: 'solid',
+  // },
+  line_1: {
+    width: 1,
+    height: 25,
+    backgroundColor: Colors.OtpGray_2,
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  confirmation: {
-    marginTop: Spacing.PADDING * 2,
-  },
-  disabled_btn: {
-    backgroundColor: '#fff',
-    borderRadius: 3,
-    borderWidth: 0.5,
-    borderColor: Colors.BACKGROUNDACCORDION,
-    borderStyle: 'solid',
-  },
-  link_text: {
-    textDecorationStyle: 'solid',
-    textDecorationColor: Colors.BLACK,
-    textDecorationLine: 'underline',
-  },
-  otp_code: {
-    paddingVertical: Spacing.PADDING,
-    textAlign: 'center',
-    backgroundColor: '#F5F5F5',
-  },
+  // otp_code: {
+  //   paddingVertical: Spacing.PADDING,
+  //   textAlign: 'center',
+  //   backgroundColor: '#F5F5F5',
+  // },
 });
 export default OTP;

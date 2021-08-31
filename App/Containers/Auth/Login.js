@@ -59,7 +59,14 @@ const Login = ({route}) => {
 
           return (
             <View style={styles.wrap}>
-              <Text style={[styles.title]} mb={20}>
+              <Text
+                fs="h4"
+                mb={18}
+                style={{
+                  fontWeight: 'bold',
+                  textTransform: 'uppercase',
+                  lineHeight: 40,
+                }}>
                 Nhập mật khẩu
               </Text>
               <Text mb={10}>
@@ -110,20 +117,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     paddingTop: Spacing.PADDING * 6,
   },
-  header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
+  // header: {
+  //   fontSize: Fonts.FONT_LARGE,
+  //   fontWeight: 'bold',
+  //   paddingBottom: Spacing.PADDING,
+  // },
+  // loading: {
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+  // title: {
+  //   // fontSize: Fonts.H2,
+  //   fontWeight: 'bold',
+  //   textTransform: 'uppercase',
+  // },
   link_text: {
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
