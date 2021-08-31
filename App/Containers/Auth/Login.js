@@ -117,20 +117,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     paddingTop: Spacing.PADDING * 6,
   },
-  // header: {
-  //   fontSize: Fonts.FONT_LARGE,
-  //   fontWeight: 'bold',
-  //   paddingBottom: Spacing.PADDING,
-  // },
-  // loading: {
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  // },
-  // title: {
-  //   // fontSize: Fonts.H2,
-  //   fontWeight: 'bold',
-  //   textTransform: 'uppercase',
-  // },
   link_text: {
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
