@@ -7,8 +7,9 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
-import {Text, Header, Button, Modal, Icon} from 'components';
+import {Text, Header, Button, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
+import Modal from 'react-native-modal';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import Navigator from 'navigations/Navigator';
@@ -17,6 +18,7 @@ import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
 import {useOTP} from 'context/Common/utils';
+import Color from 'components/Common/Color';
 
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
@@ -32,6 +34,15 @@ const OTP = ({route}) => {
     openCallDialog,
   } = useOTP(route?.params);
   const {sign_up} = useTranslation();
+  const [showModal, setShowModal] = useState(false);
+
+  const onShowModal = () => {
+    setShowModal(true);
+  };
+
+  const onHideModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -50,7 +61,8 @@ const OTP = ({route}) => {
             position: 'absolute',
             bottom: scale(10),
             right: 20,
-          }}>
+          }}
+          onPress={onShowModal}>
           <Icon
             icon={Images.Register.Info}
             style={{
@@ -63,13 +75,7 @@ const OTP = ({route}) => {
       </View>
 
       <View style={styles.container}>
-        <View
-          style={[
-            styles.wrap,
-            {
-              paddingTop: Spacing.PADDING,
-            },
-          ]}>
+        <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
           <View
             style={{
               marginBottom: Spacing.PADDING + 40,
@@ -115,11 +121,62 @@ const OTP = ({route}) => {
           </Text> */}
       </View>
 
-      {/* button link to layout register failure
-        <Button mb={10} label="Gửi lại"
-        onPress={() => {
-          Navigator.navigate(SCREEN.REGISTER_FAILURE, {functionType:'', phone:'', password:''})
-        }}/> */}
+      <Modal
+        isVisible={showModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        style={{
+          width: '100%',
+          position: 'absolute',
+          bottom: 0,
+          margin: 0,
+        }}
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}
+        onBackdropPress={onHideModal}>
+        <View
+          style={{
+            backgroundColor: Colors.white,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          }}>
+          <View
+            style={{
+              padding: 16,
+              borderStyle: 'solid',
+              borderBottomColor: Colors.l2,
+              borderBottomWidth: 1,
+            }}>
+            <Text bold fs="h6" centered color={Colors.cl1}>
+              Trợ giúp
+            </Text>
+            <Pressable
+              style={{
+                position: 'absolute',
+                top: 20,
+                right: 15,
+              }}
+              onPress={onHideModal}>
+              <Image
+                source={Images.WidthDraw.Plus}
+                style={{
+                  height: scale(13),
+                  width: scale(13),
+                  transform: [{rotate: '45deg'}],
+                }}
+              />
+            </Pressable>
+          </View>
+
+          <View style={[styles.wrap, {paddingVertical: Spacing.PADDING}]}>
+            <Text centered fs="md" mb={48}>
+              Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để
+              được tư vấn hỗ trợ.
+            </Text>
+            <Button mb={10} label="Gọi 1900-0000" bold />
+          </View>
+        </View>
+      </Modal>
 
       {showCall && (
         <Pressable
@@ -163,7 +220,7 @@ const OTP = ({route}) => {
 
       <View
         style={{
-          paddingVertical: Spacing.PADDING - 5,
+          paddingVertical: Spacing.PADDING - 10,
           backgroundColor: Colors.OtpGray_1,
         }}
         onPress={openCallDialog}>
@@ -185,8 +242,8 @@ const OTP = ({route}) => {
               right: 40,
             },
           ]}></View>
-        <Text style={{textAlign: 'center'}}>Từ tin nhắn</Text>
-        <Text style={{textAlign: 'center'}}>328725</Text>
+        <Text style={styles.text_center}>Từ tin nhắn</Text>
+        <Text style={styles.text_center}>328725</Text>
       </View>
     </>
   );
@@ -200,6 +257,7 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
+  text_center: {textAlign: 'center'},
   // header: {
   //   fontSize: Fonts.FONT_LARGE,
   //   fontWeight: 'bold',
