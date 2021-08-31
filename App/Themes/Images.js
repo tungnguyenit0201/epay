@@ -33,7 +33,6 @@ export default {
   Edit: require('images/Edit.png'),
   Phone: require('images/phone.png'),
   Register: {
-    // phone_1: require('images/register/phone-1.png'),
     Info: require('images/Info.png'),
   },
   WidthDraw: {
