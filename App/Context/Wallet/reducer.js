@@ -31,6 +31,11 @@ export default function userReducer(state, action) {
         ...state,
         listInternationalBank: action?.data,
       };
+      case 'SET_LIMIT': 
+      return {
+        ...state,
+        limit: action?.data,
+      }
     default:
       return state;
   }
