@@ -12,6 +12,10 @@ const VerifyUserInfo = ({route}) => {
   const {verifyInfo, onChange, onContinue} = useVerifyInfo();
   const translation = useTranslation();
   const identityCard = _.get(route, 'params.identifyCard.value', 1);
+  const disabled =
+    identityCard == 3
+      ? !verifyInfo?.ICFrontPhoto
+      : !verifyInfo?.ICFrontPhoto && !verifyInfo?.ICBackPhoto;
   return (
     <>
       <ScrollView style={base.wrap}>
@@ -55,6 +59,7 @@ const VerifyUserInfo = ({route}) => {
           )}
 
           <Button
+            disabled={disabled}
             label="Tiếp tục" //translate
             onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
           />

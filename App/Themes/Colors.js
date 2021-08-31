@@ -29,7 +29,6 @@ export default {
 
   moneyItem: '#A3C9ED',
 
-  PRIMARY: '#03a5fc',
   TEXT: '#555555',
   GRAY: '#696969',
   ICONGRAY: '#AAAAAA',

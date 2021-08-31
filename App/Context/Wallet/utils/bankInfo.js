@@ -21,11 +21,12 @@ import _ from 'lodash';
 import {sha256} from 'react-native-sha256';
 import {cos} from 'react-native-reanimated';
 
-const bankInfo = () => {
+const BankInfo = () => {
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
+
   const onGetConnectedBank = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -50,6 +51,7 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onGetInternationalBanks = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -63,6 +65,7 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onGetAllBank = async () => {
     const listConnectBank = await onGetConnectedBank();
     const listDomesticBanks = await onGetDomesticBanks();
@@ -75,6 +78,7 @@ const bankInfo = () => {
       Navigator.navigate(SCREEN.BANK_LINKED);
     } else setError('Something went wrong');
   };
+
   const onGetConnectedBankDetail = async ({bankID}) => {
     setLoading(true);
     let phone = await getPhone();
@@ -84,6 +88,7 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onChangeLimit = async ({limit}) => {
     try {
       dispatch({type: 'SET_LIMIT', data: limit});
@@ -103,6 +108,7 @@ const bankInfo = () => {
       setLoading(false);
     }
   };
+
   return {
     onGetDomesticBanks,
     onGetInternationalBanks,
@@ -111,4 +117,4 @@ const bankInfo = () => {
     onChangeLimit,
   };
 };
-export default bankInfo;
+export default BankInfo;
