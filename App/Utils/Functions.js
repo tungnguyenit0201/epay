@@ -176,6 +176,22 @@ function shuffle(array) {
   return array;
 }
 const toUpperCaseFirst = str => str[0].toUpperCase() + str.slice(1);
+const getAll = async (...functionList) => {
+  return await new Promise(resolveAll => {
+    let promiseList = [];
+    functionList.forEach(func => {
+      promiseList.push(
+        new Promise(async resolve => {
+          const result = await func();
+          resolve(result);
+        }),
+      );
+    });
+    Promise.all(promiseList).then(results => {
+      resolveAll(results);
+    });
+  });
+};
 export {
   toObjectKeys,
   buildURL,
@@ -194,4 +210,5 @@ export {
   sencondsToTime,
   shuffle,
   toUpperCaseFirst,
+  getAll,
 };

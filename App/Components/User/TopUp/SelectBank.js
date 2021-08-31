@@ -10,11 +10,19 @@ import {Text, Row, Col} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
+import _ from 'lodash';
 
-const SelectBank = ({data, label, style}) => {
+const SelectBank = ({data, label, style, onChange}) => {
   const translation = useTranslation();
-  let [value, setValue] = useState(1);
-  const [checked, setChecked] = useState();
+  const [checked, setChecked] = useState({
+    type: null,
+    index: null,
+  });
+
+  const onChangeBank = value => {
+    setChecked(value);
+    onChange && onChange(value);
+  };
 
   return (
     <View style={[styles.block, style]}>
@@ -22,27 +30,32 @@ const SelectBank = ({data, label, style}) => {
         {label}
       </Text>
 
-      <Row space="10">
-        {data.map((item, index) => (
-          <Col width="33.33%" space="10" key={index}>
-            <Pressable
-              style={[styles.item]}
-              onPress={() => setChecked(item.id)}>
-              <View style={[styles.wicon]}>
-                <Image source={item.icon} style={[styles.icon]} />
-                {checked === item.id && (
-                  <View style={styles.active}>
-                    <Image source={Images.Down} style={styles.activeImg} />
+      {_.map(data, (bankType, type) => (
+        <Row space="10">
+          {bankType.map((item, index) => {
+            const {BankName, BankLogoUrl} = item;
+            return (
+              <Col width="33.33%" space="10" key={index}>
+                <Pressable
+                  style={[styles.item]}
+                  onPress={() => onChangeBank({index, type})}>
+                  <View style={[styles.wicon]}>
+                    <Image source={{uri: BankLogoUrl}} style={[styles.icon]} />
+                    {checked.type === type && checked.index === index && (
+                      <View style={styles.active}>
+                        <Image source={Images.Down} style={styles.activeImg} />
+                      </View>
+                    )}
                   </View>
-                )}
-              </View>
-              <Text centered size={12} mt={5}>
-                {item.name}
-              </Text>
-            </Pressable>
-          </Col>
-        ))}
-      </Row>
+                  <Text centered size={12} mt={5}>
+                    {BankName}
+                  </Text>
+                </Pressable>
+              </Col>
+            );
+          })}
+        </Row>
+      ))}
 
       <View style={styles.itemAddBank}>
         <Image source={Images.Bank.Plus} style={[styles.iconAddBank]} />
@@ -62,7 +75,7 @@ const styles = StyleSheet.create({
   wicon: {
     width: scale(48),
     height: scale(48),
-    backgroundColor: '#DAE9F8',
+    backgroundColor: Colors.moneyItem,
     borderRadius: 16,
     marginBottom: 5,
   },
@@ -93,7 +106,7 @@ const styles = StyleSheet.create({
   },
 
   active: {
-    backgroundColor: '#5786F7',
+    backgroundColor: Colors.cl1,
     width: 15,
     height: 15,
     borderRadius: 99,
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
   activeImg: {
     width: 12,
     height: 12,
-    tintColor: '#fff',
+    tintColor: Colors.white,
   },
 });
 export default SelectBank;
