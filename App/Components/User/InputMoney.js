@@ -50,6 +50,7 @@ const InputMoney = ({style, handleValue}) => {
     <View style={[styles.block, style]}>
       <View style={styles.rowInput}>
         <TextInput
+          numeric
           placeholder="Nhập số tiền nạp"
           style={styles.input}
           placeholderTextColor={Colors.l5}
