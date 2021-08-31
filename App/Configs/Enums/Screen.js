@@ -25,7 +25,7 @@ const SCREEN = {
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
   CONFIRMATION: 'Confirmation',
   USER: 'User',
-  TRANSACTION: 'Transaction',
+  HISTORY: 'History',
   TAB_NAVIGATION: 'TabNavigation',
   CHANGE_PASSWORD: 'ChangePassword',
   SECURITY: 'Security',

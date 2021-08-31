@@ -123,6 +123,7 @@ function timeSince(date) {
   const count = Math.floor(seconds / interval.seconds);
   return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
 }
+
 const converTailwind = str => {
   let res = {};
   let arr = str.split('\n.');
@@ -136,10 +137,10 @@ const converTailwind = str => {
   });
   return res;
 };
-const formatMoney = number =>
-  new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(
-    number,
-  );
+
+const formatMoney = (number, currency) =>
+  new Intl.NumberFormat('vi-VN').format(number) + (currency ? ' VND' : '');
+
 const sencondsToTime = num => {
   var sec_num = parseInt(num, 10);
   var hours = Math.floor(sec_num / 3600);
@@ -157,6 +158,7 @@ const sencondsToTime = num => {
   }
   return hours + ':' + minutes + ':' + seconds;
 };
+
 function shuffle(array) {
   var currentIndex = array.length,
     randomIndex;
