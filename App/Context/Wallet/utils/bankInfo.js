@@ -25,6 +25,7 @@ const useBankInfo = () => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
+
   const onGetConnectedBank = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -49,6 +50,7 @@ const useBankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onGetInternationalBanks = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -62,6 +64,7 @@ const useBankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onGetAllBank = async () => {
     const listConnectBank = await onGetConnectedBank();
     const listDomesticBanks = await onGetDomesticBanks();
@@ -74,6 +77,7 @@ const useBankInfo = () => {
       Navigator.navigate(SCREEN.BANK_LINKED);
     } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
   };
+
   const onGetConnectedBankDetail = async ({bankID}) => {
     setLoading(true);
     let phone = await getPhone();
@@ -83,6 +87,7 @@ const useBankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onChangeLimit = async ({limit}) => {
     try {
       dispatch({type: 'SET_LIMIT', data: limit});
@@ -102,6 +107,7 @@ const useBankInfo = () => {
       setLoading(false);
     }
   };
+
   return {
     onGetConnectedBank,
     onGetDomesticBanks,

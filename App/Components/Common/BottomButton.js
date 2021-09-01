@@ -10,7 +10,7 @@ export default ({
   onPress,
   label,
   icon,
-  backgroundColor = Colors.PRIMARY,
+  backgroundColor = Colors.cl1,
   mt,
   mb,
   ml,
@@ -50,13 +50,13 @@ export default ({
               style={{
                 width: 20,
                 height: 20,
-                tintColor: 'white',
+                tintColor: Colors.white,
                 marginRight: 9,
               }}
               resizeMode={'contain'}
             />
           )}
-          <Text centered semibold color={'white'}>
+          <Text centered semibold color={Colors.white}>
             {label}
           </Text>
         </Pressable>

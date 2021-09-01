@@ -9,12 +9,14 @@ import {
   getVersion,
   getReadableVersion,
 } from 'react-native-device-info';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let transactionID = '';
 
 const getCommonParams = async (url, language = 'vi') => {
   const uniqueDeviceID = getUniqueId();
   let urlPart = url.split('/');
+  let currentLanguage = await AsyncStorage.getItem('currentLanguage');
 
   return {
     MsgID: uniqueDeviceID + moment().format('DD-MM-YYYY HH:mm:ss.SSS'),
@@ -28,7 +30,7 @@ const getCommonParams = async (url, language = 'vi') => {
             Math.floor(Math.random() * 10000)
           ).toString(),
     RequestTime: moment().format('DD-MM-YYYY HH:mm:ss'),
-    Lang: language,
+    Lang: currentLanguage ? currentLanguage : language,
     Channel: 'App',
     AppVersion: getVersion(),
     AppCode: getReadableVersion(),

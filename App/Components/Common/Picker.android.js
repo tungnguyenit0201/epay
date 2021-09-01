@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Image,
   StyleSheet,
   Pressable,
   ScrollView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import Text from './Text';
-import { Colors, Images, Spacing } from 'themes';
-import { View, Dialog, TouchableOpacity } from 'react-native-ui-lib';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {Colors, Images, Spacing} from 'themes';
+import {View, Dialog, TouchableOpacity} from 'react-native-ui-lib';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const { height } = Dimensions.get('window');
+const {height} = Dimensions.get('window');
 
 const Picker = ({
   label,
@@ -23,10 +23,10 @@ const Picker = ({
   value,
   disabled,
   onChange,
-  items
+  items,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const { bottom } = useSafeAreaInsets();
+  const {bottom} = useSafeAreaInsets();
 
   const onShowModal = () => setShowModal(true);
   const onHideModal = () => setShowModal(false);
@@ -46,8 +46,8 @@ const Picker = ({
           paddingH-page
           paddingV-middle
           borderB={borderB}
-          borderColor={'#eee'}>
-          <Text color={isSelected ? Colors.PRIMARY : Colors.TEXT}>
+          borderColor={Colors.l2}>
+          <Text color={isSelected ? Colors.cl1 : Colors.BLACKTEXT}>
             {item?.label}
           </Text>
         </View>
@@ -56,24 +56,24 @@ const Picker = ({
   };
 
   return (
-    <View style={[styles.wrap, style, { flex, marginRight }]}>
+    <View style={[styles.wrap, style, {flex, marginRight}]}>
       {!!label && <Text medium>{label}</Text>}
       <Pressable
         disabled={disabled}
         onPress={onShowModal}
         style={styles.inputWrap}>
         {leftComponent}
-        <View style={{ flex: 1 }}>
+        <View style={{flex: 1}}>
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? '#ccc' : Colors.Text}>
+            color={disabled ? Colors.l4 : Colors.BLACKTEXT}>
             {value?.label || placeholder}
           </Text>
         </View>
         <Image
           source={Images.Down}
-          style={{ width: 10, height: 10 }}
+          style={{width: 10, height: 10}}
           resizeMode={'contain'}
         />
       </Pressable>
@@ -85,7 +85,7 @@ const Picker = ({
         onDismiss={onHideModal}
         width={'100%'}
         background-white>
-        <View backgroundColor={'white'} br20 style={{ paddingBottom: bottom }}>
+        <View backgroundColor={'white'} br20 style={{paddingBottom: bottom}}>
           <View paddingH-page paddingV-page borderB>
             <Text bold>{label}</Text>
           </View>
@@ -100,7 +100,7 @@ const Picker = ({
 
 const styles = StyleSheet.create({
   wrap: {
-    marginTop: Spacing.PADDING
+    marginTop: Spacing.PADDING,
   },
   inputWrap: {
     flexDirection: 'row',
@@ -110,9 +110,9 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
     paddingHorizontal: 8,
     marginTop: 10,
-    borderRadius: 5
+    borderRadius: 5,
   },
-  scroll: { maxHeight: height * 0.7 }
+  scroll: {maxHeight: height * 0.7},
 });
 
 export default Picker;

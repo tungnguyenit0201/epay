@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {View, Image, StyleSheet, Pressable, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Pressable,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {Button, InputBlock, TextInput, Icon} from 'components';
 import {Colors, Images, Spacing, Fonts} from 'themes';
 import Navigator from 'navigations/Navigator';
@@ -22,22 +29,18 @@ const Auth = () => {
         <Pressable
           onPress={() => Navigator.navigate(SCREEN.TAB_NAVIGATION)}
           style={{
-            marginBottom: Spacing.PADDING+28,
+            marginBottom: Spacing.PADDING + 28,
             alignItems: 'center',
           }}>
-          <Image
-            source={Images.logoEpay}
-            resizeMode="contain"/>
+          <Image source={Images.logoEpay} resizeMode="contain" />
         </Pressable>
 
         <View style={styles.wrap}>
-          <Text
-            style={[styles.title,styles.text_center,{marginBottom: 10}]}>
+          <Text style={[styles.title, styles.text_center, {marginBottom: 10}]}>
             {translation.please_enter_your_phone_number}
           </Text>
 
-          <Text
-            style={[styles.text,styles.text_center,{marginBottom: 26}]}>
+          <Text style={[styles.text, styles.text_center, {marginBottom: 26}]}>
             {translation.sign_insign_up_epay}
           </Text>
         </View>
@@ -65,10 +68,11 @@ const Auth = () => {
             };
 
             return (
-              <View style={{
-                width: '100%',
-                flex: 1,
-              }}>
+              <View
+                style={{
+                  width: '100%',
+                  flex: 1,
+                }}>
                 {/* <InputBlock
                   numeric
                   label={translation.sign_insign_up_epay}
@@ -79,24 +83,27 @@ const Auth = () => {
                 /> */}
 
                 <View>
-                  <TextInput 
+                  <TextInput
                     placeholder={translation.enter_your_phone_number}
                     numeric
                     onChange={handleChange('phone')}
                     onBlur={handleBlur('phone')}
                     error={touched.phone && errors.phone}
-                    value={values.phone}/>
+                    value={values.phone}
+                  />
                   <TouchableOpacity
                     style={{
                       position: 'absolute',
                       right: 15,
-                      top: 14
+                      top: 14,
                     }}>
-                    <Icon icon={Images.Transfer.CloseCircle} 
+                    <Icon
+                      icon={Images.Transfer.CloseCircle}
                       style={{
                         width: scale(17),
                         height: scale(17),
-                      }}/>
+                      }}
+                    />
                   </TouchableOpacity>
                 </View>
 
@@ -107,7 +114,7 @@ const Auth = () => {
                   style={{
                     position: 'absolute',
                     bottom: 40,
-                    width: '100%'
+                    width: '100%',
                   }}
                 />
               </View>
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING*4+8,
+    paddingTop: Spacing.PADDING * 4 + 8,
     alignItems: 'center',
     flex: 1,
   },
@@ -134,6 +141,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: Fonts.H5,
   },
-  text: { color: Colors.l6 }
+  text: {color: Colors.l6},
 });
 export default Auth;
