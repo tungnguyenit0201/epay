@@ -175,7 +175,9 @@ function shuffle(array) {
 
   return array;
 }
+
 const toUpperCaseFirst = str => str[0].toUpperCase() + str.slice(1);
+
 const getAll = async (...functionList) => {
   return await new Promise(resolveAll => {
     let promiseList = [];
@@ -192,6 +194,17 @@ const getAll = async (...functionList) => {
     });
   });
 };
+
+const calculateFee = ({cash, feeData, fixedFee, bankFee, minFee, maxFee}) => {
+  const _fixedFee = fixedFee || feeData?.FixedFee;
+  const _bankFee = bankFee || feeData?.BankFee;
+  const _minFee = minFee || feeData?.MinFee;
+  const _maxFee = maxFee || feeData?.MaxFee;
+
+  let total = _fixedFee + cash * _bankFee;
+  return total < _minFee ? _minFee : total > _maxFee ? _maxFee : total;
+};
+
 export {
   toObjectKeys,
   buildURL,
@@ -211,4 +224,5 @@ export {
   shuffle,
   toUpperCaseFirst,
   getAll,
+  calculateFee,
 };

@@ -23,8 +23,16 @@ import {useTopUp} from 'context/Wallet/utils';
 
 const TopUp = () => {
   const translation = useTranslation();
-  const {inputRef, onSuggestMoney, bankData, onProcessTopUp, onSelectBank} =
-    useTopUp();
+  const {
+    inputRef,
+    onSuggestMoney,
+    bankData,
+    bankFeeData,
+    isContinueEnabled,
+    onSelectBank,
+    onChangeCash,
+    onContinue,
+  } = useTopUp();
 
   return (
     <>
@@ -43,16 +51,21 @@ const TopUp = () => {
           />
         </HeaderBg>
         <View style={base.container}>
-          <InputMoney ref={inputRef} />
+          <InputMoney ref={inputRef} onChange={onChangeCash} />
           <SelectBank
             data={bankData}
+            feeData={bankFeeData}
             label={translation.source}
             onChange={onSelectBank}
           />
         </View>
       </ScrollView>
       <View style={base.bottom}>
-        <Button label="Tiếp tục" onPress={onProcessTopUp} />
+        <Button
+          label="Tiếp tục"
+          onPress={onContinue}
+          disabled={!isContinueEnabled}
+        />
       </View>
       <KeyboardSuggestion
         optionList={[100000, 500000, 1000000].map(x => ({

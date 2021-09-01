@@ -2,16 +2,23 @@ import {useRef, useState, useEffect, useCallback} from 'react';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
-import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {
+  COMMON_ENUM,
+  ERROR_CODE,
+  FUNCTION_TYPE,
+  SCREEN,
+} from 'configs/Constants';
 import {sha256} from 'react-native-sha256';
 import {
   activateSmartOTP,
   changeSmartOTPPassword,
   checkSmartOTP,
   checkSmartOTPKey,
+  genOtp,
   syncSmartOTP,
 } from 'services/common';
 import {useError, useLoading} from 'context/Common/utils';
+import totp from 'totp-generator';
 
 const useSmartOTP = params => {
   const {phone} = useUser();
@@ -57,6 +64,8 @@ const useSmartOTP = params => {
         });
       case 'sync':
         return onCheckPasswordSync({password: value});
+      case 'transaction':
+        return onTransaction({password: value});
     }
   };
 
@@ -137,6 +146,8 @@ const useSmartOTP = params => {
       case 'changePassword':
       case 'sync':
         return 'Nhập mật khẩu smart OTP hiện tại';
+      case 'transaction':
+        return 'Nhập mật khẩu smart OTP';
     }
     // translate
   };
@@ -165,6 +176,27 @@ const useSmartOTP = params => {
         Navigator.replaceLast(SCREEN.SYNC_SMART_OTP, {
           type: 'sync',
           passwordEncrypted,
+        });
+        return;
+      case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
+        setError(result);
+        Navigator.goBack();
+        return;
+      default:
+        return setMessage(result?.ErrorMessage);
+    }
+  };
+
+  const onTransaction = async ({password}) => {
+    const passwordEncrypted = await sha256(password);
+    const result = await checkSmartOTPKey({phone, password: passwordEncrypted});
+    switch (_.get(result, 'ErrorCode')) {
+      case ERROR_CODE.SUCCESS:
+        const code = totp(COMMON_ENUM.TOTP_KEY);
+        Navigator.replaceLast(SCREEN.OTP, {
+          functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
+          phone,
+          initialCode: code,
         });
         return;
       case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
