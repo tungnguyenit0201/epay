@@ -5,9 +5,11 @@ import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
+import {useBankLinking} from 'context/Wallet/utils/bankLinking';
 
-const BankInfo = () => {
+const BankInfo = ({route}) => {
   const translation = useTranslation();
+  const {onLinkDomesticBank} = useBankLinking(route?.params);
   let [cardOption, setCardOption] = useState(false);
   let [accountOption, setAccountOption] = useState(false);
 
@@ -46,8 +48,8 @@ const BankInfo = () => {
 
           <View style={styles.flex}>
             <Button
-              bg={cardOption ? '#6FC3EA' : Colors.BORDER}
-              color={!cardOption && '#666'}
+              bg={cardOption ? Colors.cl2 : Colors.BORDER}
+              color={!cardOption && Colors.gray}
               label="Thẻ"
               onPress={chooseCard}
               mr={10}
@@ -55,8 +57,8 @@ const BankInfo = () => {
             />
 
             <Button
-              bg={accountOption ? '#6FC3EA' : Colors.BORDER}
-              color={!accountOption && '#666'}
+              bg={accountOption ? Colors.cl2 : Colors.BORDER}
+              color={!accountOption && Colors.gray}
               label="Tài khoản"
               onPress={chooseAccount}
               style={styles.btn}
@@ -66,7 +68,7 @@ const BankInfo = () => {
 
         <View style={styles.mb_1}>
           <TextInput placeholder={translation.card_number} />
-          <Text style={{color: 'red'}}>
+          <Text style={{color: Colors.Highlight}}>
             {translation.incorrect_card_number}
           </Text>
         </View>
@@ -166,20 +168,16 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     height: 32,
   },
-  input: {
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: '#fff',
-  },
+
   mb_1: {marginBottom: 16},
   dot: {
     width: 3,
     height: 3,
     marginRight: 8,
-    backgroundColor: '#666666',
+    backgroundColor: Colors.gray,
     borderRadius: 100,
   },
-  text_gray: {color: '#666666'},
+  text_gray: {color: Colors.gray},
 });
 
 export default BankInfo;

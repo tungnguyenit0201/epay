@@ -1,16 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Text, HeaderBg, Icon, Header} from 'components';
-import {
-  ScrollView,
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale, formatMoney} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 
@@ -19,12 +12,14 @@ import UserInfo from 'components/User/UserInfo';
 import {useUserInfo} from 'context/User/utils';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
+
 const User = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank, onGetQRCode} = useUserInfo();
-  const {onGetAllBank} = useBankInfo();
+  const {onNavigate, onGetAllBank} = useBankInfo();
   return (
+    //translate
     <ScrollView style={base.wrap}>
       <HeaderBg>
         <Header back title={translation.bank_account} />
@@ -47,7 +42,12 @@ const User = ({route}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item} onPress={onGetAllBank}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            onGetAllBank();
+            onNavigate(SCREEN.BANK_LINKED);
+          }}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.Bank}
@@ -74,9 +74,7 @@ const User = ({route}) => {
       <View style={styles.block}>
         <TouchableOpacity
           style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.PAYMENT_SETTINGS);
-          }}>
+          onPress={() => onNavigate(SCREEN.PAYMENT_SETTINGS)}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.ThanhToan}

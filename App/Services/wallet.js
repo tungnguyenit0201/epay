@@ -64,3 +64,29 @@ export const changeLimit = async ({phone, amountLimit}) => {
   });
   return response;
 };
+
+export const linkDomesticBank = async ({phone, BankId}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.DOMESTIC_LINK,
+    method: 'post',
+    params: {PhoneNumber: phone, BankId},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const linkInternationalBank = async ({phone, BankId}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.INTERNATIONAL_LINK,
+    method: 'post',
+    params: {PhoneNumber: phone, BankId},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

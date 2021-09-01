@@ -37,6 +37,8 @@ export default {
     GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
     CHANGE_LIMIT: 'security/change_limit',
+    DOMESTIC_LINK: 'bank/request_connect_domestic_bank',
+    INTERNATIONAL_LINK: 'bank/request_connect_inter_card',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

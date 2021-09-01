@@ -13,67 +13,17 @@ import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
+import {useBankList} from 'context/Wallet/utils';
 
 const BankList = () => {
+  const {bankList} = useBankList();
+  console.log('walletInfo :>> ', bankList);
   const translation = useTranslation();
-  const dataBlock = [
-    {
-      icon: Images.ConnectBank.logoAgribank,
-      name: 'Agribank',
-      screen: SCREEN.BANK_INFO,
-    },
-    {icon: Images.ConnectBank.logoBidv, name: 'BIDV', screen: SCREEN.BANK_INFO},
-    {
-      icon: Images.ConnectBank.logoVcb,
-      name: 'Vietcombank',
-      screen: SCREEN.BANK_INFO,
-    },
-    {
-      icon: Images.ConnectBank.logoVtb,
-      name: 'Vietinbank',
-      screen: SCREEN.TRANSFER_BANK,
-    },
-    {
-      icon: Images.ConnectBank.logoExb,
-      name: 'Eximbank',
-      screen: SCREEN.BANK_INFO,
-    },
-    {
-      icon: Images.ConnectBank.logoHdb,
-      name: 'HDbank',
-      screen: SCREEN.BANK_INFO,
-    },
-    {
-      icon: Images.ConnectBank.logoMbb,
-      name: 'MBbank',
-      screen: SCREEN.BANK_INFO,
-      iconHeight: 13,
-    },
-    {
-      icon: Images.ConnectBank.logoScob,
-      name: 'Sacombank',
-      screen: SCREEN.BANK_INFO,
-    },
-    {icon: Images.ConnectBank.logoScb, name: 'SCB', screen: SCREEN.BANK_INFO},
-    {
-      icon: Images.ConnectBank.logoVbb,
-      name: 'VPbank',
-      screen: SCREEN.BANK_INFO,
-    },
-    {icon: Images.ConnectBank.logoShb, name: 'SHB', screen: SCREEN.BANK_INFO},
-    {
-      icon: Images.ConnectBank.logoTpb,
-      name: 'TPbank',
-      screen: SCREEN.BANK_INFO,
-    },
-  ];
 
-  const Item = ({title, icon, screen, iconHeight, iconWidth}) => (
+  const Item = ({title, icon, iconHeight, iconWidth, item}) => (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => {
-        Navigator.push(screen);
-      }}>
+      onPress={() => Navigator.push(SCREEN.BANK_INFO, {bank: item})}>
       <View
         style={{
           width: 48,
@@ -84,11 +34,12 @@ const BankList = () => {
           justifyContent: 'center',
         }}>
         <Image
-          source={icon}
+          source={{uri: icon}}
           style={{
             width: iconWidth ? iconWidth : scale(26),
             height: iconHeight ? scale(iconHeight) : scale(26),
           }}
+          resizeMode="contain"
         />
       </View>
       <Text centered style={{marginTop: 10}}>
@@ -128,7 +79,7 @@ const BankList = () => {
           {translation.bank_linking}
         </Text>
         <Row space={10}>
-          {dataBlock.map((item, index) => {
+          {bankList?.map((item, index) => {
             return (
               <Col
                 width={`33.333%`}
@@ -136,10 +87,10 @@ const BankList = () => {
                 key={index}
                 style={{marginBottom: 16}}>
                 <Item
-                  title={item.name}
-                  icon={item.icon}
-                  screen={item.screen}
-                  iconHeight={item.iconHeight}
+                  title={item?.BankName}
+                  icon={item?.BankLogoUrl}
+                  iconHeight={item?.iconHeight}
+                  item={item}
                 />
               </Col>
             );

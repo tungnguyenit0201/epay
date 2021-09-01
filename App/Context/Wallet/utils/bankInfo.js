@@ -8,17 +8,9 @@ import {
   getConnectedBankDetail,
   changeLimit,
 } from 'services/wallet';
-import {
-  useAsyncStorage,
-  useError,
-  useLoading,
-  useShowModal,
-} from 'context/Common/utils';
-import {useUser} from 'context/User';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
 import _ from 'lodash';
-import {sha256} from 'react-native-sha256';
-import {cos} from 'react-native-reanimated';
 
 const useBankInfo = () => {
   const {getPhone} = useAsyncStorage();
@@ -26,6 +18,9 @@ const useBankInfo = () => {
   const {setError} = useError();
   const {dispatch} = useWallet();
 
+  const onNavigate = (screen, params) => {
+    Navigator.navigate(screen, params);
+  };
   const onGetConnectedBank = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -74,7 +69,7 @@ const useBankInfo = () => {
       _.get(listInternationalBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
       _.get(listDomesticBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS
     ) {
-      Navigator.navigate(SCREEN.BANK_LINKED);
+      // Navigator.navigate(SCREEN.BANK_LINKED);
     } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
   };
 
@@ -109,6 +104,7 @@ const useBankInfo = () => {
   };
 
   return {
+    onNavigate,
     onGetConnectedBank,
     onGetDomesticBanks,
     onGetInternationalBanks,
