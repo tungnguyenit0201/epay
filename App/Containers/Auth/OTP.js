@@ -1,20 +1,24 @@
 import React, {useRef, useState} from 'react';
 import {
   ScrollView,
+  Image,
   StyleSheet,
   View,
-  Image,
-  TouchableOpacity,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
-import {Text, Header, Button, Modal, Icon} from 'components';
+import {Text, Header, Button, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
+import Modal from 'react-native-modal';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
+import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
 import {useOTP} from 'context/Common/utils';
+import Color from 'components/Common/Color';
 
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
@@ -32,10 +36,19 @@ const OTP = ({route}) => {
     openCallDialog,
   } = useOTP(route?.params);
   const {sign_up} = useTranslation();
+  const [checkShowModal, setShowModalPopup] = useState(false);
+
+  const onShowModal = () => {
+    setShowModalPopup(true);
+  };
+
+  const onHideModal = () => {
+    setShowModalPopup(false);
+  };
 
   const renderRightComponent = () => (
     <TouchableOpacity
-      onPress={() => setShowModal(true)}
+      onPress={() => setShowModalPopup(true)}
       style={styles.iconRight}>
       <Icon icon={Images.Register.Info} />
     </TouchableOpacity>
@@ -43,13 +56,43 @@ const OTP = ({route}) => {
 
   return (
     <>
-      <Header
-        back
-        title={sign_up}
-        renderRightComponent={renderRightComponent}
-      />
-      <ScrollView style={styles.container}>
-        <View style={styles.wrap}>
+      <View>
+        <Header
+          back
+          blackIcon
+          style={{
+            paddingTop: 10,
+            backgroundColor: Colors.white,
+            color: Colors.BLACK,
+          }}
+        />
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: scale(10),
+            right: 20,
+          }}
+          onPress={onShowModal}>
+          <Icon
+            icon={Images.Register.Info}
+            style={{
+              width: scale(24),
+              height: scale(24),
+            }}
+            tintColor={Colors.BLACK}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.container}>
+        <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
+          <View
+            style={{
+              marginBottom: Spacing.PADDING + 40,
+              alignItems: 'center',
+            }}>
+            <Image source={Images.logoEpay} resizeMode="contain" />
+          </View>
           <OTPContainer
             onChange={onChange}
             onCodeFilled={onConfirmOTP}
@@ -64,7 +107,7 @@ const OTP = ({route}) => {
             />
           )} */}
 
-          {countdown != 0 ? (
+          {/* {countdown != 0 ? (
             <Button
               mb={10}
               disabled
@@ -77,70 +120,141 @@ const OTP = ({route}) => {
             />
           ) : (
             <Button mb={10} label="Gửi lại" onPress={resenOTP} />
-          )}
-
-          <View style={[styles.box_1, {marginTop: 20}]}>
-            <Pressable onPress={() => setshowCall(true)}>
-              <Text
-                style={[styles.link_text]} //translate
-              >
-                Không nhận được OTP
-              </Text>
-            </Pressable>
-
-            <Pressable onPress={onChangePhone}>
-              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-            </Pressable>
-          </View>
+          )} */}
         </View>
 
-        {showCall && (
-          <Pressable
-            style={[
-              styles.otp_code,
-              {
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: 20,
-              },
-            ]}
-            onPress={openCallDialog}>
-            <Image
-              source={Images.Register.phone_1}
-              style={{
-                height: scale(12),
-                width: scale(12),
-                marginRight: 10,
-              }}
-            />
-            <Text bold style={[styles.link_text]}>
-              Gọi cho tôi
+        {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
+            <Text style={{
+              textAlign: 'center',
+              color: '#ccc'}}>OTP:</Text> 098909
+          </Text> */}
+      </View>
+
+      <Modal
+        // isVisible={showModal}
+        isVisible={checkShowModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        style={{
+          width: '100%',
+          position: 'absolute',
+          bottom: 0,
+          margin: 0,
+        }}
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}
+        onBackdropPress={onHideModal}>
+        <View
+          style={{
+            backgroundColor: Colors.white,
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+          }}>
+          <View
+            style={{
+              padding: 16,
+              borderStyle: 'solid',
+              borderBottomColor: Colors.l2,
+              borderBottomWidth: 1,
+            }}>
+            <Text bold fs="h6" centered color={Colors.cl1}>
+              Trợ giúp
             </Text>
-          </Pressable>
-        )}
-      </ScrollView>
-      {showModal && (
-        <Modal
-          visible={showModal}
-          onClose={() => setShowModal(false)}
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." //translate
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label="Gọi 024 32252336"
-                onPress={() => {
-                  setShowModal(false);
-                  openCallDialog();
+            <Pressable
+              style={{
+                position: 'absolute',
+                top: 20,
+                right: 15,
+              }}
+              onPress={onHideModal}>
+              <Image
+                source={Images.WidthDraw.Plus}
+                style={{
+                  height: scale(13),
+                  width: scale(13),
+                  transform: [{rotate: '45deg'}],
                 }}
               />
-              <TouchableOpacity onPress={() => setShowModal(false)}>
-                <Text style={styles.link_text}>Không, cám ơn</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
+            </Pressable>
+          </View>
+
+          <View style={[styles.wrap, {paddingVertical: Spacing.PADDING}]}>
+            <Text centered fs="md" mb={48}>
+              Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để
+              được tư vấn hỗ trợ.
+            </Text>
+            <Button mb={10} label="Gọi 1900-0000" bold />
+          </View>
+        </View>
+      </Modal>
+
+      {showCall && (
+        <Pressable
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            paddingVertical: Spacing.PADDING - 5,
+            backgroundColor: Colors.OtpGray_1,
+          }}
+          onPress={openCallDialog}>
+          <View
+            style={[
+              styles.line_1,
+              {
+                position: 'absolute',
+                top: 15,
+                left: 40,
+              },
+            ]}></View>
+          <View
+            style={[
+              styles.line_1,
+              {
+                position: 'absolute',
+                top: 15,
+                right: 40,
+              },
+            ]}></View>
+          <Image
+            source={Images.Phone}
+            style={{
+              height: scale(16),
+              width: scale(16),
+              marginRight: 10,
+              top: 1,
+            }}
+          />
+          <Text bold>Gọi cho tôi</Text>
+        </Pressable>
       )}
+
+      <View
+        style={{
+          paddingVertical: Spacing.PADDING - 10,
+          backgroundColor: Colors.OtpGray_1,
+        }}
+        onPress={openCallDialog}>
+        <View
+          style={[
+            styles.line_1,
+            {
+              position: 'absolute',
+              top: '50%',
+              left: 40,
+            },
+          ]}></View>
+        <View
+          style={[
+            styles.line_1,
+            {
+              position: 'absolute',
+              top: '50%',
+              right: 40,
+            },
+          ]}></View>
+        <Text style={styles.text_center}>Từ tin nhắn</Text>
+        <Text style={styles.text_center}>328725</Text>
+      </View>
     </>
   );
 };
@@ -152,38 +266,36 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
   },
-
-  iconRight: {
-    paddingRight: Spacing.PADDING,
+  text_center: {textAlign: 'center'},
+  // header: {
+  //   fontSize: Fonts.FONT_LARGE,
+  //   fontWeight: 'bold',
+  //   paddingBottom: Spacing.PADDING,
+  // },
+  // loading: {
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  // },
+  // confirmation: {
+  //   marginTop: Spacing.PADDING * 2,
+  // },
+  // disabled_btn: {
+  //   backgroundColor: '#fff',
+  //   borderRadius: 3,
+  //   borderWidth: 0.5,
+  //   borderColor: Colors.BACKGROUNDACCORDION,
+  //   borderStyle: 'solid',
+  // },
+  line_1: {
+    width: 1,
+    height: 25,
+    backgroundColor: Colors.OtpGray_2,
   },
-
-  disabled_btn: {
-    // color: Colors.BLACK,
-    backgroundColor: Colors.white,
-    borderRadius: 3,
-    borderWidth: 0.5,
-    borderColor: Colors.BACKGROUNDACCORDION,
-    borderStyle: 'solid',
-  },
-  link_text: {
-    textDecorationStyle: 'solid',
-    textDecorationColor: Colors.BLACK,
-    textDecorationLine: 'underline',
-  },
-  box_1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-  otp_code: {
-    paddingVertical: Spacing.PADDING,
-    textAlign: 'center',
-    backgroundColor: Colors.l1,
-  },
-  buttonGroup: {
-    alignItems: 'center',
-  },
+  // otp_code: {
+  //   paddingVertical: Spacing.PADDING,
+  //   textAlign: 'center',
+  //   backgroundColor: '#F5F5F5',
+  // },
 });
 export default OTP;

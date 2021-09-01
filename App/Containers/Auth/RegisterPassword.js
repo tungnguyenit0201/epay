@@ -1,13 +1,21 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {Text, InputBlock, Header, Button} from 'components';
-import {Colors, Fonts, Spacing} from 'themes';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {Text, InputBlock, Header, Button, TextInput, Icon} from 'components';
+import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE} from 'configs/Constants';
+import {Checkbox} from 'react-native-ui-lib';
 
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
@@ -27,7 +35,40 @@ const RegisterPassword = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Header back shadow={false} title={translation.sign_up} />
+      <View>
+        <Header
+          back
+          blackIcon
+          style={{
+            paddingTop: 10,
+            backgroundColor: Colors.white,
+            color: Colors.BLACK,
+          }}
+        />
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            bottom: scale(10),
+            right: 15,
+          }}>
+          <Icon
+            icon={Images.Register.Info}
+            style={{
+              width: scale(24),
+              height: scale(24),
+            }}
+            tintColor={Colors.BLACK}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          marginBottom: Spacing.PADDING + 40,
+          alignItems: 'center',
+        }}>
+        <Image source={Images.logoEpay} resizeMode="contain" />
+      </View>
 
       <Formik
         initialValues={{
@@ -52,33 +93,59 @@ const RegisterPassword = ({route}) => {
           };
           //translate
           return (
-            <View style={{flex: 1}}>
-              <Text bold size={35} mb={15} style={styles.title}>
-                Đặt mật khẩu
+            <View style={styles.wrap}>
+              <Text bold fs="h5" mb={15} centered>
+                Tạo mật khẩu Epay
               </Text>
-              <Text mb={30}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
+              <Text centered fs="md">
+                {
+                  translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                }
               </Text>
 
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                style={{
-                  flex: 1,
-                }}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={{paddingVertical: scale(35)}}
+                contentContainerStyle={{paddingVertical: scale(24)}}
                 ref={scrollViewRef}>
-                <InputBlock
-                  label="Mật khẩu"
+                <TextInput
                   password
                   required
                   onChange={handleChange('newPassword')}
                   onBlur={handleBlur('newPassword')}
-                  error={touched.newPassword && errors.newPassword}
+                  placeholder={translation.enter_your_password}
+                  error={touched.passwordConfirm && errors.incorrect_password}
                   value={values.newPassword}
                   scrollViewRef={scrollViewRef}
                 />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: '500',
+                    paddingRight: 9,
+                  }}>
+                  {
+                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                  }
+                </Text>
+
+                {/* <InputBlock
+                  // label="Mật khẩu"
+                  password
+                  // required
+                  onChange={handleChange('newPassword')}
+                  onBlur={handleBlur('newPassword')}
+                  // error={touched.passwordConfirm && errors.newPassword}
+                  error={touched.passwordConfirm && errors.incorrect_password}
+                  value={values.newPassword}
+                  scrollViewRef={scrollViewRef}
+                />
+                <Text style={{
+                  fontSize: 12,
+                  fontWeight: '500',
+                  paddingRight: 9,
+                }}>
+                  {translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number}</Text>
                 <InputBlock
                   label="Xác nhận mật khẩu"
                   password
@@ -88,13 +155,23 @@ const RegisterPassword = ({route}) => {
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
                   scrollViewRef={scrollViewRef}
+                /> */}
+              </ScrollView>
+
+              <View
+                style={{
+                  paddingBottom: 20,
+                }}>
+                <Checkbox
+                  label={'Tôi đồng ý với điều khoản & điều kiện của Epay'}
+                  label2={() => <Pressable></Pressable>}
                 />
                 <Button
-                  mt={50}
+                  mt={10}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-              </ScrollView>
+              </View>
             </View>
           );
         }}
@@ -106,10 +183,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
-    paddingHorizontal: Spacing.PADDING,
+    // paddingHorizontal: Spacing.PADDING,
   },
-  title: {
-    textTransform: 'uppercase',
+  wrap: {
+    flex: 1,
+    paddingHorizontal: Spacing.PADDING,
   },
 });
 export default RegisterPassword;
