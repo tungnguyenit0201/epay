@@ -17,6 +17,10 @@ import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE} from 'configs/Constants';
 import {Checkbox} from 'react-native-ui-lib';
 
+//remember to delete below packages when no use
+// import Navigator from 'navigations/Navigator';
+// import {SCREEN} from 'configs/Constants';
+
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
   const {createAccount} = useRegister();
@@ -70,6 +74,17 @@ const RegisterPassword = ({route}) => {
         <Image source={Images.logoEpay} resizeMode="contain" />
       </View>
 
+      <View style={{paddingHorizontal: Spacing.PADDING}}>
+        <Text bold fs="h5" mb={15} centered>
+          Tạo mật khẩu Epay
+        </Text>
+        <Text centered fs="md" color={Colors.l6}>
+          {
+            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+          }
+        </Text>
+      </View>
+
       <Formik
         initialValues={{
           newPassword: '',
@@ -94,15 +109,6 @@ const RegisterPassword = ({route}) => {
           //translate
           return (
             <View style={styles.wrap}>
-              <Text bold fs="h5" mb={15} centered>
-                Tạo mật khẩu Epay
-              </Text>
-              <Text centered fs="md">
-                {
-                  translation.password_for_account_security_and_transaction_confirmation_at_checkout
-                }
-              </Text>
-
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
@@ -117,6 +123,7 @@ const RegisterPassword = ({route}) => {
                   error={touched.passwordConfirm && errors.incorrect_password}
                   value={values.newPassword}
                   scrollViewRef={scrollViewRef}
+                  leftIcon={Images.Transfer.Lock}
                 />
                 <Text
                   style={{
@@ -158,19 +165,38 @@ const RegisterPassword = ({route}) => {
                 /> */}
               </ScrollView>
 
-              <View
-                style={{
-                  paddingBottom: 20,
-                }}>
-                <Checkbox
-                  label={'Tôi đồng ý với điều khoản & điều kiện của Epay'}
-                  label2={() => <Pressable></Pressable>}
-                />
+              <View style={{paddingBottom: 20}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                  }}>
+                  <Checkbox style={{marginRight: 6}} />
+                  <Text>
+                    Tôi đồng ý với
+                    <TouchableOpacity style={{marginTop: -3}}>
+                      <Text
+                        style={{
+                          textDecorationLine: 'underline',
+                          marginLeft: 3,
+                        }}>
+                        {'điều khoản & điều kiện'}
+                      </Text>
+                    </TouchableOpacity>{' '}
+                    của Epay
+                  </Text>
+                </View>
                 <Button
                   mt={10}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
+
+                {/*button test, remember to delete when no use
+                 <Button
+                  mt={10}
+                  label={translation?.continue}
+                  onPress={() => Navigator.navigate(SCREEN.REGISTER_NAME)}
+                /> */}
               </View>
             </View>
           );
@@ -183,7 +209,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
-    // paddingHorizontal: Spacing.PADDING,
   },
   wrap: {
     flex: 1,

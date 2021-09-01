@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, TextInput, Pressable, Image} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import Text from './Text';
@@ -25,6 +31,8 @@ export default React.forwardRef(
       placeholderTextColor,
       autoCompleteType = 'off',
       textContentType = 'none',
+      isDeleted,
+      leftIcon,
       ...props
     },
     ref,
@@ -54,17 +62,19 @@ export default React.forwardRef(
         </View>
 
         <View>
-          <View
-            style={[
-              styles.icon_lock,
-              {
-                position: 'absolute',
-                top: 14,
-                left: 14,
-              },
-            ]}>
-            <Image source={Images.Transfer.Lock} style={styles.icon_lock_img} />
-          </View>
+          {Boolean(leftIcon) && (
+            <View
+              style={[
+                styles.icon_lock,
+                {
+                  position: 'absolute',
+                  top: 14,
+                  left: 14,
+                },
+              ]}>
+              <Image source={leftIcon} style={styles.icon_lock_img} />
+            </View>
+          )}
 
           <TextInput
             ref={ref}
@@ -79,7 +89,7 @@ export default React.forwardRef(
               styles.textInput,
               error && styles.error,
               style,
-              password && {paddingLeft: 50},
+              Boolean(leftIcon) && {paddingLeft: 50},
             ]}
             placeholderTextColor={placeholderTextColor || Colors.BOTTOMBORDER}
             onChangeText={onChange}
@@ -100,6 +110,24 @@ export default React.forwardRef(
                 resizeMode="contain"
               />
             </Pressable>
+          )}
+
+          {Boolean(isDeleted) && (
+            <TouchableOpacity
+              onPress={() => onChange('')}
+              style={{
+                position: 'absolute',
+                right: 15,
+                top: 14,
+              }}>
+              <Icon
+                icon={Images.Transfer.CloseCircle}
+                style={{
+                  width: scale(17),
+                  height: scale(17),
+                }}
+              />
+            </TouchableOpacity>
           )}
         </View>
 
