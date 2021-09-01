@@ -1,2 +1,4 @@
 import useBankInfo from './bankInfo';
-export {useBankInfo};
+import useTopUp from './topUp';
+
+export {useBankInfo, useTopUp};

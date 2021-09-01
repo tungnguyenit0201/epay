@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
 
   buttonClose: {
-    backgroundColor: Colors.PRIMARY,
+    backgroundColor: Colors.cl1,
   },
   textStyle: {
     color: Colors.white,

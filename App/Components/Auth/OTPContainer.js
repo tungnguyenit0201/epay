@@ -11,8 +11,8 @@ const OTPContainer = ({code, onChange, onCodeFilled, message}) => {
   const translation = useTranslation();
   return (
     <>
-      <Text style={[styles.header,styles.textCenter]}>{`Nhập OTP`}</Text>
-      <Text style={[styles.textDefault,styles.textCenter]}>
+      <Text style={[styles.header, styles.textCenter]}>{`Nhập OTP`}</Text>
+      <Text style={[styles.textDefault, styles.textCenter]}>
         {`Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`}
       </Text>
       <OTPInputView
@@ -34,18 +34,29 @@ const OTPContainer = ({code, onChange, onCodeFilled, message}) => {
         <Text style={styles.fontSize_1}>
           Gửi lại mã xác thực (OTP) sau:
           <Pressable style={{marginTop: -3}}>
-            <Text style={[styles.fontSize_1,{
-              color: '#437ec0'
-            }]}> 00:51</Text>
+            <Text
+              style={[
+                styles.fontSize_1,
+                {
+                  color: Colors.cl1,
+                },
+              ]}>
+              {' '}
+              00:51
+            </Text>
           </Pressable>
         </Text>
 
         <Pressable>
-          <Text style={styles.fontSize_1}>{translation.change_the_phone_number}</Text>
+          <Text style={styles.fontSize_1}>
+            {translation.change_the_phone_number}
+          </Text>
         </Pressable>
       </View>
 
-      <Text style={styles.message}>{translation.incorrect_verification_code}</Text>
+      <Text style={styles.message}>
+        {translation.incorrect_verification_code}
+      </Text>
     </>
   );
 };
@@ -61,17 +72,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 8,
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  confirmation: {
-    marginTop: Spacing.PADDING * 2,
-  },
+
   textCenter: {textAlign: 'center'},
   textDefault: {
     color: Colors.GRAY,
-    paddingBottom: Spacing.PADDING-4,
+    paddingBottom: Spacing.PADDING - 4,
     fontSize: Fonts.FONT_MEDIUM_LARGE,
   },
   wrapOtp: {
@@ -83,7 +88,7 @@ const styles = StyleSheet.create({
   },
   otp: {
     width: scale(40),
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.white,
     fontSize: Fonts.FONT_LARGE,
     color: Colors.BLACKTEXT,
     textAlign: 'center',

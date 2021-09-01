@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {View, Image, StyleSheet, Pressable, Text} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Pressable,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import {Button, InputBlock, TextInput, Icon} from 'components';
 import {Colors, Images, Spacing, Fonts} from 'themes';
 import Navigator from 'navigations/Navigator';
@@ -83,8 +90,21 @@ const Auth = () => {
                     onBlur={handleBlur('phone')}
                     error={touched.phone && errors.phone}
                     value={values.phone}
-                    isDeleted={values.phone}
                   />
+                  <TouchableOpacity
+                    style={{
+                      position: 'absolute',
+                      right: 15,
+                      top: 14,
+                    }}>
+                    <Icon
+                      icon={Images.Transfer.CloseCircle}
+                      style={{
+                        width: scale(17),
+                        height: scale(17),
+                      }}
+                    />
+                  </TouchableOpacity>
                 </View>
 
                 <Button
