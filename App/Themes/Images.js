@@ -111,4 +111,9 @@ export default {
     Plus: require('images/bank/Plus.png'),
   },
   logoEpay: require('images/logo-epay.png'),
+  Phone_1: require('images/phone-1.png'),
+  SignIn: {
+    FingerPrint: require('images/icons/fingerprint.png'),
+    Face: require('images/icons/face.png'),
+  },
 };

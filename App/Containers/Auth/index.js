@@ -90,6 +90,7 @@ const Auth = () => {
                     onBlur={handleBlur('phone')}
                     error={touched.phone && errors.phone}
                     value={values.phone}
+                    leftIcon={Images.Phone_1}
                   />
                   <TouchableOpacity
                     style={{
