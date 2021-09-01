@@ -10,7 +10,7 @@ import {
 import {Button, Header, InputBlock} from 'components';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import {Colors, Fonts, Spacing, Images} from 'themes';
+import {Colors, Fonts, Spacing, Images, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import HeaderBg from 'components/Common/HeaderBg';
 import {useWallet} from 'context/Wallet';
@@ -67,6 +67,12 @@ const BankLinked = () => {
           </View>
         </View>
       </ScrollView>
+      <View style={base.bottom}>
+        <Button
+          label={translation.connect_bank}
+          onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
+        />
+      </View>
     </>
   );
 };

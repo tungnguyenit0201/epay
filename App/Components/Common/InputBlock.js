@@ -65,7 +65,7 @@ const InputBlock = ({
           textContentType={'oneTimeCode'}
           style={[
             styles.input,
-            {borderColor: isFocused ? Colors.PRIMARY : Colors.BORDER},
+            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
             inputStyle,
           ]}
           password={password && !showPassword}
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     paddingVertical: scale(10),
     marginBottom: scale(10),
     height: scale(48),
-    borderColor: '#CCCCCB',
+    borderColor: Colors.cl4,
     borderWidth: 1,
     borderRadius: 5,
     flexDirection: 'row',

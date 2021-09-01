@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {StyleSheet, Pressable, View} from 'react-native';
+import {StyleSheet, Pressable, View, Platform} from 'react-native';
 import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
 import {scale} from 'utils/Functions';
 import {Colors, Spacing, Fonts} from 'themes';
 import {Text} from 'components';
+import WebView from 'components/WebView/Partial';
+
 const AlertCustom = () => {
   const {error} = useCommon();
   const {setError} = useError();
@@ -24,7 +26,11 @@ const AlertCustom = () => {
                 {error?.title}
               </Text>
             )}
-            <Text style={styles.modalText}>{error?.errorMessage}</Text>
+            <WebView
+              style={{minHeight: 70}}
+              source={{html: ` ${error?.errorMessage}`}}
+            />
+            {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setError(null)}>
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   centeredView: {
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
   modalView: {
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: scale(20),
     paddingHorizontal: Spacing.PADDING * 2,
     paddingVertical: Spacing.PADDING,
-    alignItems: 'center',
+    // alignItems: 'center',
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
   },
 
   buttonClose: {
-    backgroundColor: Colors.PRIMARY,
+    backgroundColor: Colors.cl1,
   },
   textStyle: {
     color: Colors.white,
