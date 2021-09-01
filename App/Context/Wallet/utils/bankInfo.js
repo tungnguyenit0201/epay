@@ -8,7 +8,6 @@ import {
   getConnectedBankDetail,
   changeLimit,
 } from 'services/wallet';
-import {onGetB} from '';
 import {
   useAsyncStorage,
   useError,
@@ -21,7 +20,7 @@ import _ from 'lodash';
 import {sha256} from 'react-native-sha256';
 import {cos} from 'react-native-reanimated';
 
-const BankInfo = () => {
+const useBankInfo = () => {
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
@@ -73,10 +72,10 @@ const BankInfo = () => {
     if (
       _.get(listConnectBank.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
       _.get(listInternationalBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-      _.get(listConnectBank.result, 'ErrorCode') == ERROR_CODE.SUCCESS
+      _.get(listDomesticBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS
     ) {
       Navigator.navigate(SCREEN.BANK_LINKED);
-    } else setError('Something went wrong');
+    } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
   };
 
   const onGetConnectedBankDetail = async ({bankID}) => {
@@ -110,6 +109,7 @@ const BankInfo = () => {
   };
 
   return {
+    onGetConnectedBank,
     onGetDomesticBanks,
     onGetInternationalBanks,
     onGetAllBank,
@@ -117,4 +117,4 @@ const BankInfo = () => {
     onChangeLimit,
   };
 };
-export default BankInfo;
+export default useBankInfo;

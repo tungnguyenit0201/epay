@@ -13,17 +13,17 @@ const Tab = createBottomTabNavigator();
 
 import User from 'containers/User';
 import Home from 'containers/Home';
-import Transaction from 'containers/Wallet/Transaction';
+import History from 'containers/Wallet/History';
 
 const TabIcons = {
   Home: Images.TabBar.Home,
-  Transaction: Images.TabBar.Category,
+  History: Images.TabBar.Category,
   User: Images.TabBar.User,
 };
 
 const TabLabels = {
   Home: TEXT.HOME,
-  Transaction: TEXT.TRANSACTION_HISTORY,
+  History: TEXT.TRANSACTION_HISTORY,
   User: TEXT.PROFILE,
 };
 
@@ -87,7 +87,7 @@ const TabNavigation = () => {
           },
         }}>
         <Tab.Screen name={SCREEN.HOME} component={Home} />
-        <Tab.Screen name={SCREEN.TRANSACTION} component={Transaction} />
+        <Tab.Screen name={SCREEN.HISTORY} component={History} />
         <Tab.Screen name={SCREEN.USER} component={User} />
       </Tab.Navigator>
     </View>

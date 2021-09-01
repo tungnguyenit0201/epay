@@ -31,8 +31,8 @@ export default {
   QRCode: require('images/QRCode.jpeg'),
   Withdraw: require('images/Withdraw.png'),
   Edit: require('images/Edit.png'),
+  Phone: require('images/phone.png'),
   Register: {
-    phone_1: require('images/register/phone-1.png'),
     Info: require('images/Info.png'),
   },
   WidthDraw: {
@@ -110,4 +110,5 @@ export default {
     Vietcombank: require('images/bank/Vietcombank.png'),
     Plus: require('images/bank/Plus.png'),
   },
+  logoEpay: require('images/logo-epay.png'),
 };
