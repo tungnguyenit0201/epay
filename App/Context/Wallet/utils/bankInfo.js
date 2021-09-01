@@ -8,7 +8,6 @@ import {
   getConnectedBankDetail,
   changeLimit,
 } from 'services/wallet';
-import {onGetB} from '';
 import {
   useAsyncStorage,
   useError,
@@ -21,11 +20,12 @@ import _ from 'lodash';
 import {sha256} from 'react-native-sha256';
 import {cos} from 'react-native-reanimated';
 
-const bankInfo = () => {
+const useBankInfo = () => {
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
+
   const onGetConnectedBank = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -50,6 +50,7 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onGetInternationalBanks = async () => {
     setLoading(true);
     let phone = await getPhone();
@@ -63,6 +64,7 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onGetAllBank = async () => {
     const listConnectBank = await onGetConnectedBank();
     const listDomesticBanks = await onGetDomesticBanks();
@@ -70,11 +72,12 @@ const bankInfo = () => {
     if (
       _.get(listConnectBank.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
       _.get(listInternationalBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-      _.get(listConnectBank.result, 'ErrorCode') == ERROR_CODE.SUCCESS
+      _.get(listDomesticBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS
     ) {
       Navigator.navigate(SCREEN.BANK_LINKED);
-    } else setError('Something went wrong');
+    } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
   };
+
   const onGetConnectedBankDetail = async ({bankID}) => {
     setLoading(true);
     let phone = await getPhone();
@@ -84,6 +87,7 @@ const bankInfo = () => {
       return {result};
     } else setError(result);
   };
+
   const onChangeLimit = async ({limit}) => {
     try {
       dispatch({type: 'SET_LIMIT', data: limit});
@@ -100,7 +104,9 @@ const bankInfo = () => {
       setLoading(false);
     }
   };
+
   return {
+    onGetConnectedBank,
     onGetDomesticBanks,
     onGetInternationalBanks,
     onGetAllBank,
@@ -108,4 +114,4 @@ const bankInfo = () => {
     onChangeLimit,
   };
 };
-export default bankInfo;
+export default useBankInfo;

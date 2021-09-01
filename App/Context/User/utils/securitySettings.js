@@ -30,7 +30,7 @@ const useSecuritySettings = () => {
     };
 
     loadSettings();
-  }, [getTouchIdEnabled, phone, setLoading]);
+  }, []); // eslint-disable-line
 
   const onTouchId = value => {
     setTouchIdEnabled(value);

@@ -26,10 +26,11 @@ export default {
   g9: '#111827',
 
   Highlight: '#E10000',
+  OtpGray_1: '#D1D5DB',
+  OtpGray_2: '#BEC2C9',
 
   moneyItem: '#A3C9ED',
 
-  PRIMARY: '#03a5fc',
   TEXT: '#555555',
   GRAY: '#696969',
   ICONGRAY: '#AAAAAA',

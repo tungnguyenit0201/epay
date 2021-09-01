@@ -62,6 +62,7 @@ export const passwordSchema = yup.object().shape({
     .label('Mật khẩu'),
   passwordConfirm: yup
     .string()
+    .required()
     .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
     .label('Xác nhận mật khẩu'),
 });

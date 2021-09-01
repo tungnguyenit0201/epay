@@ -10,11 +10,11 @@ import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import {useTranslation} from 'context/Language';
 
 const VerifyIdentityCard = ({route}) => {
-  const {onChange, onContinue} = useVerifyInfo(route?.params);
+  const {verifyInfo, onChange, onContinue} = useVerifyInfo(route?.params);
   const translation = useTranslation();
 
   return (
-    <ScrollView style={{backgroundColor: '#fff'}}>
+    <ScrollView style={{backgroundColor: Colors.white}}>
       <HeaderBg>
         <Header back title={translation?.account_verification} />
       </HeaderBg>
@@ -27,6 +27,7 @@ const VerifyIdentityCard = ({route}) => {
         />
 
         <Button
+          disabled={!verifyInfo?.Avatar}
           label={'Tiếp tục'} //translate
           onPress={() => onContinue(SCREEN.VERIFY_USER_PORTRAIT)}
         />
@@ -35,9 +36,9 @@ const VerifyIdentityCard = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: Colors.BACKGROUNDCOLOR,
+  // },
 });
 export default VerifyIdentityCard;

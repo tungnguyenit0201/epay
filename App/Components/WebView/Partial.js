@@ -10,7 +10,9 @@ var css = `
     font-size: ${Fonts.FONT_MEDIUM} !important;
     color: ${Colors.TEXT} !important
   }
-  
+  .markRed {
+    color: ${Colors.Highlight}!important
+  }
   body {
     // white-space: pre-wrap; 
    }
@@ -22,7 +24,8 @@ var css = `
     border-collapse: collapse;
   }`;
 
-const preProcess = html => html.replace(/\n/g, '<br/>'); // html?.replace(/width: ?\d+px/gi, '');
+const preProcess = html =>
+  html.replace(/\n/g, '<br/>').replace(/\"markRed\"/g, `"markRed"`); // html?.replace(/width: ?\d+px/gi, '');
 
 const formatHTML = (content, isFormat) => `<html>
   <head>

@@ -31,7 +31,7 @@ const RegionSelect = ({route}) => {
       <Pressable
         onPress={() => onSelected(item)}
         style={{
-          backgroundColor: isSelected ? Colors.PRIMARY : Colors.white,
+          backgroundColor: isSelected ? Colors.cl1 : Colors.white,
           padding: Spacing.PADDING,
           borderBottomColor: Colors.BORDER,
           borderBottomWidth: 1,
