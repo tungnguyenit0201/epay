@@ -1,0 +1,7 @@
+const TRANS_FORM_TYPE = {
+  CONNECTED_BANK: 1,
+  NAPAS_CARD: 2,
+  INTERNATIONAL_CARD: 3,
+  WALLET: 4,
+};
+export default TRANS_FORM_TYPE;

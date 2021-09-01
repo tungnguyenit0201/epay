@@ -12,7 +12,7 @@ import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
 
-const SelectBank = ({data, label, style, onChange}) => {
+const SelectBank = ({data, feeData, label, style, onChange}) => {
   const translation = useTranslation();
   const [checked, setChecked] = useState({
     type: null,
@@ -31,7 +31,7 @@ const SelectBank = ({data, label, style, onChange}) => {
       </Text>
 
       {_.map(data, (bankType, type) => (
-        <Row space="10">
+        <Row space="10" key={type}>
           {bankType.map((item, index) => {
             const {BankName, BankLogoUrl} = item;
             return (

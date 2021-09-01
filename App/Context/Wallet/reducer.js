@@ -31,15 +31,15 @@ export default function userReducer(state, action) {
         ...state,
         listInternationalBank: action?.data,
       };
-      case 'SET_LIMIT': 
+    case 'SET_LIMIT':
       return {
         ...state,
         limit: action?.data,
-      }
+      };
     case 'UPDATE_TRANSACTION_INFO':
       return {
         ...state,
-        transaction: action?.transaction,
+        transaction: action?.data,
       };
     default:
       return state;

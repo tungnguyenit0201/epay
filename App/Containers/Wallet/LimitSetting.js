@@ -83,7 +83,7 @@ const LimitSetting = ({route}) => {
   return (
     <View style={styles.container}>
       <HeaderBg>
-        <Header back title={translation.payment_setting} back />
+        <Header back title={translation.payment_setting} />
       </HeaderBg>
       <View style={styles.wrap}>
         <Text>

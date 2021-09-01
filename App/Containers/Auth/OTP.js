@@ -31,7 +31,7 @@ const OTP = ({route}) => {
     setShowModal,
     onChange,
     onConfirmOTP,
-    resenOTP,
+    resentOTP,
     setshowCall,
     openCallDialog,
   } = useOTP(route?.params);
@@ -116,10 +116,10 @@ const OTP = ({route}) => {
               label={'Gửi lại'}
               label2={` (${countdown}s)`}
               style={styles.disabled_btn}
-              onPress={resenOTP}
+              onPress={resentOTP}
             />
           ) : (
-            <Button mb={10} label="Gửi lại" onPress={resenOTP} />
+            <Button mb={10} label="Gửi lại" onPress={resentOTP} />
           )} */}
         </View>
 

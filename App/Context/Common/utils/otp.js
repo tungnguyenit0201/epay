@@ -9,11 +9,11 @@ import Navigator from 'navigations/Navigator';
 import useLoading from './loading';
 import useError from './error';
 
-const useOTP = ({functionType, phone, password}) => {
+const useOTP = ({functionType, phone, password, initialCode}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(60);
   const [showCall, setshowCall] = useState(false);
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(initialCode || '');
   const [showModal, setShowModal] = useState(false);
 
   const {setLoading} = useLoading();
@@ -70,7 +70,7 @@ const useOTP = ({functionType, phone, password}) => {
     }
   };
 
-  const resenOTP = () => {
+  const resentOTP = () => {
     try {
       setLoading(true);
       let result = genOtp({
@@ -85,6 +85,7 @@ const useOTP = ({functionType, phone, password}) => {
       setLoading(false);
     }
   };
+
   const openCallDialog = () => {
     try {
       Linking.openURL('tel:02432252336');
@@ -92,11 +93,17 @@ const useOTP = ({functionType, phone, password}) => {
   };
 
   useEffect(() => {
-    genOtp({
-      phone,
-      functionType,
-    });
-  }, [phone, functionType]);
+    const generateOTP = async () => {
+      await genOtp({
+        phone,
+        functionType,
+      });
+      if (initialCode) {
+        onConfirmOTP(initialCode);
+      }
+    };
+    generateOTP();
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     let timer = setInterval(() => setCountdown(countdown - 1), 1000);
@@ -114,7 +121,7 @@ const useOTP = ({functionType, phone, password}) => {
     setShowModal,
     onChange,
     onConfirmOTP,
-    resenOTP,
+    resentOTP,
     setshowCall,
     openCallDialog,
   };
