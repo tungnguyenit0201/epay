@@ -7,10 +7,11 @@ import React, {
 } from 'react';
 import walletReducer from './reducer';
 const defaultWalletInfo = {
-  listConnectBank: '',
-  listDomesticBank: '',
-  listInternationalBank: '',
+  listConnectBank: [],
+  listDomesticBank: [],
+  listInternationalBank: [],
   limit: '',
+  transaction: {},
 };
 const WalletContext = createContext({});
 export const WalletProvider = ({children}) => {

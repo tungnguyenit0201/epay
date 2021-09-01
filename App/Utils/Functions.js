@@ -123,6 +123,7 @@ function timeSince(date) {
   const count = Math.floor(seconds / interval.seconds);
   return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
 }
+
 const converTailwind = str => {
   let res = {};
   let arr = str.split('\n.');
@@ -136,10 +137,10 @@ const converTailwind = str => {
   });
   return res;
 };
-const formatMoney = number =>
-  new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(
-    number,
-  );
+
+const formatMoney = (number, currency) =>
+  new Intl.NumberFormat('vi-VN').format(number) + (currency ? ' VND' : '');
+
 const sencondsToTime = num => {
   var sec_num = parseInt(num, 10);
   var hours = Math.floor(sec_num / 3600);
@@ -157,6 +158,7 @@ const sencondsToTime = num => {
   }
   return hours + ':' + minutes + ':' + seconds;
 };
+
 function shuffle(array) {
   var currentIndex = array.length,
     randomIndex;
@@ -174,6 +176,22 @@ function shuffle(array) {
   return array;
 }
 const toUpperCaseFirst = str => str[0].toUpperCase() + str.slice(1);
+const getAll = async (...functionList) => {
+  return await new Promise(resolveAll => {
+    let promiseList = [];
+    functionList.forEach(func => {
+      promiseList.push(
+        new Promise(async resolve => {
+          const result = await func();
+          resolve(result);
+        }),
+      );
+    });
+    Promise.all(promiseList).then(results => {
+      resolveAll(results);
+    });
+  });
+};
 export {
   toObjectKeys,
   buildURL,
@@ -192,4 +210,5 @@ export {
   sencondsToTime,
   shuffle,
   toUpperCaseFirst,
+  getAll,
 };
