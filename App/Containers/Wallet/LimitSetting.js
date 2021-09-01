@@ -87,8 +87,9 @@ const LimitSetting = ({route}) => {
       </HeaderBg>
       <View style={styles.wrap}>
         <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, Lorem ipsum
-          dolor sit amet
+          {`Bạn đang là tài khoản cá nhân, hạn mức thanh toán trong ngày tối đa là ${formatMoney(
+            amountLimit,
+          )}`}
         </Text>
 
         {/* Icon Rectangle */}
