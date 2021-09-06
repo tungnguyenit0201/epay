@@ -184,7 +184,7 @@ const Home = () => {
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
           title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." //translate
+          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button

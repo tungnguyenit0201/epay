@@ -9,20 +9,16 @@ import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import {useTranslation} from 'context/Language';
 import _ from 'lodash';
 const VerifyUserInfo = ({route}) => {
-  const {verifyInfo, onChange, onContinue} = useVerifyInfo();
+  const {disabledIdentify, onChange, onContinue} = useVerifyInfo();
   const translation = useTranslation();
   const identityCard = _.get(route, 'params.identifyCard.value', 1);
-  const disabled =
-    identityCard == 3
-      ? !verifyInfo?.ICFrontPhoto
-      : !verifyInfo?.ICFrontPhoto && !verifyInfo?.ICBackPhoto;
+
   return (
     <>
+      <HeaderBg>
+        <Header back title={translation?.account_verification} />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title={translation?.account_verification} />
-        </HeaderBg>
-
         <View style={[base.container, {paddingTop: 20}]}>
           <Progress step={1} />
 
@@ -45,22 +41,22 @@ const VerifyUserInfo = ({route}) => {
           /> */}
 
           <SelectImage
-            title="Mặt trước" //translate
+            title="Mặt trước" // TODO: translate
             onSelectImage={value => {
               onChange('ICFrontPhoto', value?.data);
-              // identityCard == 3 && onChange('ICBackPhoto', value?.data);
+              identityCard == 3 && onChange('ICBackPhoto', value?.data);
             }}
           />
           {identityCard != 3 && (
             <SelectImage
-              title="Mặt sau" //translate
+              title="Mặt sau" // TODO: translate
               onSelectImage={value => onChange('ICBackPhoto', value?.data)}
             />
           )}
 
           <Button
-            disabled={disabled}
-            label="Tiếp tục" //translate
+            disabled={disabledIdentify}
+            label="Tiếp tục" // TODO: translate
             onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
           />
         </View>

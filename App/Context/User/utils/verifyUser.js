@@ -10,6 +10,7 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
 import {useTranslation} from 'context/Language';
+import {useUserInfo} from 'context/User/utils';
 
 const useVerifyInfo = (initialValue = {}) => {
   const contentRef = useRef(initialValue);
@@ -18,9 +19,18 @@ const useVerifyInfo = (initialValue = {}) => {
   const {dispatch} = useUser();
   const translation = useTranslation();
   const {getPhone} = useAsyncStorage();
+  const {onGetAllInfo} = useUserInfo();
+  let [disabledIdentify, setDisabledIdentify] = useState(false);
+  let [disabledAvatar, setDisabledAvatar] = useState(false);
 
   const onChange = (key, value) => {
     contentRef.current[key] = value;
+    setDisabledIdentify(
+      Boolean(
+        !contentRef.current?.ICFrontPhoto || !contentRef.current?.ICBackPhoto,
+      ),
+    );
+    setDisabledAvatar(!contentRef.current?.Avatar);
   };
 
   const onContinue = screen => {
@@ -52,12 +62,7 @@ const useVerifyInfo = (initialValue = {}) => {
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        setError({
-          ErrorCode: -1,
-          ErrorMessage:
-            'Gửi yêu cầu xác thực thành công. BQT Epay Service sẽ thực hiện xác thực thông tin trong {5} phút',
-          title: translation?.notification,
-        });
+        Navigator.navigate(SCREEN.VERIFY_SUCCESS);
       } else setError(result);
     } catch (error) {
       setLoading(false);
@@ -125,8 +130,11 @@ const useVerifyInfo = (initialValue = {}) => {
     await onUpdateIdentify({...contentRef.current, ...value});
     await onUpdatePersonalInfo({...contentRef.current, ...value});
     await onUpdateUserAddress({...contentRef.current, ...value});
+    await onGetAllInfo();
   };
   return {
+    disabledIdentify,
+    disabledAvatar,
     verifyInfo: contentRef.current,
     onChange,
     onContinue,

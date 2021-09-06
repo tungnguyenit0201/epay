@@ -73,15 +73,6 @@ const Auth = () => {
                   width: '100%',
                   flex: 1,
                 }}>
-                {/* <InputBlock
-                  numeric
-                  label={translation.sign_insign_up_epay}
-                  onChange={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  error={touched.phone && errors.phone}
-                  value={values.phone}
-                /> */}
-
                 <View>
                   <TextInput
                     placeholder={translation.enter_your_phone_number}

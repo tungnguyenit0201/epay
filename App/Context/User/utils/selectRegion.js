@@ -16,7 +16,7 @@ const useSelectRegion = ({items, type, parentType}) => {
   const {setLoading} = useLoading();
   const {getPhone} = useAsyncStorage();
   const pleaseChooseFirst = type => {
-    setError({ErrorCode: -1, ErrorMessage: `Vui lòng chọn ${type} trước`}); //translate
+    setError({ErrorCode: -1, ErrorMessage: `Vui lòng chọn ${type} trước`}); // TODO: translate
   };
 
   const escapeRegex = string => string?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

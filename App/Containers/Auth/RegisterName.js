@@ -11,81 +11,97 @@ import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
 import {scale} from 'utils/Functions';
-import {values} from 'lodash';
-
 import BigLogo from 'components/Auth/BigLogo';
 import Content from 'components/Auth/Content';
+import {Formik} from 'formik';
+
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = useTranslation();
-  const {onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
+  const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
   return (
-    <>
-      <View style={styles.container}>
-        <View>
-          <Header
-            back
-            blackIcon
-            style={styles.header}
-            renderRightComponent={() => (
-              <TouchableOpacity style={styles.pRight}>
-                <Icon
-                  icon={Images.Register.Info}
-                  style={styles.firstIcon}
-                  tintColor={Colors.BLACK}
+    <Formik
+      initialValues={{
+        FullName: '',
+      }}
+      // validationSchema={phoneSchema}
+      onSubmit={onUpdatePersonalInfo}>
+      {({
+        handleChange: _handleChange,
+        handleBlur,
+        handleSubmit,
+        setFieldValue,
+        setFieldTouched,
+        touched,
+        errors,
+        values,
+      }) => {
+        const handleChange = field => value => {
+          setFieldValue(field, value);
+          setFieldTouched(field, true, false);
+          setPersonalInfo(field, value);
+        };
+
+        return (
+          <>
+            <View style={styles.container}>
+              <View>
+                <Header
+                  back
+                  blackIcon
+                  style={styles.header}
+                  renderRightComponent={() => (
+                    <TouchableOpacity style={styles.pRight}>
+                      <Icon
+                        icon={Images.Register.Info}
+                        style={styles.firstIcon}
+                        tintColor={Colors.BLACK}
+                      />
+                    </TouchableOpacity>
+                  )}
                 />
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-        <BigLogo />
-        <Content
-          title="Nhập tên"
-          text={
-            translation.password_for_account_security_and_transaction_confirmation_at_checkout
-          }
-        />
+              </View>
+              <BigLogo />
+              <Content
+                title="Nhập tên"
+                text={
+                  translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                }
+              />
 
-        <View style={[styles.wrap, {marginTop: 48}]}>
-          <TextInput
-            required
-            onFocus={e => setDisable(false)}
-            onChange={val => setPersonalInfo('FullName', val)}
-            // onBlur={handleBlur('newPassword')}
-            placeholder={translation.enter_your_name}
-            // value={values}
-            isDeleted
-            // error={touched.passwordConfirm && errors.incorrect_password}
-            // value={values.newPassword}
-            // scrollViewRef={scrollViewRef}
-            // leftIcon={Images.Transfer.Lock}
-          />
+              <View style={[styles.wrap, {marginTop: 48}]}>
+                <TextInput
+                  required
+                  onFocus={e => setDisable(false)}
+                  placeholder={translation.enter_your_name}
+                  onChange={handleChange('FullName')}
+                  onBlur={handleBlur('FullName')}
+                  // error={touched.FullName && errors.FullName}
+                  value={values.FullName}
+                  isDeleted={values.FullName}
+                />
+              </View>
+            </View>
 
-          {/* <InputBlock
-            style={[styles.input]}
-            placeholder="Nhập Họ và Tên"
-            onFocus={e => setDisable(false)}
-            onChange={val => setPersonalInfo('FullName', val)}
-          /> */}
-        </View>
-      </View>
-
-      <View
-        style={[
-          styles.wrap,
-          {
-            paddingVertical: Spacing.PADDING,
-            backgroundColor: Colors.BACKGROUNDCOLOR,
-          },
-        ]}>
-        <Button
-          disabled={disable}
-          label={translation.done}
-          style={styles.btn}
-          onPress={onUpdatePersonalInfo}
-        />
-      </View>
-    </>
+            <View
+              style={[
+                styles.wrap,
+                {
+                  paddingVertical: Spacing.PADDING,
+                  backgroundColor: Colors.BACKGROUNDCOLOR,
+                },
+              ]}>
+              <Button
+                disabled={disable}
+                label={translation.done}
+                style={styles.btn}
+                onPress={handleSubmit}
+              />
+            </View>
+          </>
+        );
+      }}
+    </Formik>
   );
 };
 

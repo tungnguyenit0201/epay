@@ -6,6 +6,7 @@ import ASYNC_STORAGE_KEY from './Enums/AsyncStorage';
 import TRANS_TYPE from './Enums/TransType';
 import TRANS_FORM_TYPE from './Enums/TransFormType';
 import COMMON_ENUM from './Enums/Common';
+import PERSONAL_IC from './Enums/PersonalIC';
 
 export {
   TEXT,
@@ -16,4 +17,5 @@ export {
   TRANS_TYPE,
   TRANS_FORM_TYPE,
   COMMON_ENUM,
+  PERSONAL_IC,
 };
