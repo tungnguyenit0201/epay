@@ -60,6 +60,19 @@ const useAsyncStorage = () => {
     );
   };
 
+  const getSmartOTPSharedKey = async () => {
+    return await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.COMMON.SMART_OTP_SHARED_KEY,
+    );
+  };
+
+  const setSmartOTPSharedKey = async value => {
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.COMMON.SMART_OTP_SHARED_KEY,
+      value,
+    );
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -72,6 +85,8 @@ const useAsyncStorage = () => {
     setToken,
     getModalSmartOTPDisabled,
     setModalSmartOTPDisabled,
+    getSmartOTPSharedKey,
+    setSmartOTPSharedKey,
   };
 };
 

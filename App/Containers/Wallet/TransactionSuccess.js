@@ -15,7 +15,8 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
-const CheckoutSuccess = () => {
+
+const TransactionResult = () => {
   const translation = useTranslation();
   const data = [
     {
@@ -154,21 +155,12 @@ const styles = StyleSheet.create({
 
   textLeft: {
     fontSize: Fonts.H6,
-    color: '#969696',
+    color: Colors.cl3,
   },
   textRight: {
     fontSize: Fonts.H6,
-    color: '#222222',
+    color: Colors.BLACKTEXT,
     maxWidth: 160,
   },
-
-  total: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 15,
-    backgroundColor: '#C8DFF4',
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
 });
-export default CheckoutSuccess;
+export default TransactionResult;

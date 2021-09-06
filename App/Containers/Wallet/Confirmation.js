@@ -35,7 +35,7 @@ const Confirmation = () => {
   const handleChange = e => {
     if (e === '1') {
       setOpen(false);
-      Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
+      Navigator.navigate(SCREEN.TRANSACTION_SUCCESS);
     }
     if (e === '0') {
       setOpen(!open);
