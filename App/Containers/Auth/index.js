@@ -73,15 +73,6 @@ const Auth = () => {
                   width: '100%',
                   flex: 1,
                 }}>
-                {/* <InputBlock
-                  numeric
-                  label={translation.sign_insign_up_epay}
-                  onChange={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  error={touched.phone && errors.phone}
-                  value={values.phone}
-                /> */}
-
                 <View>
                   <TextInput
                     placeholder={translation.enter_your_phone_number}
@@ -91,22 +82,8 @@ const Auth = () => {
                     error={touched.phone && errors.phone}
                     value={values.phone}
                     leftIcon={Images.Phone_1}
+                    isDeleted={values.phone}
                   />
-                  <TouchableOpacity
-                    onPress={() => setFieldValue('phone', '')}
-                    style={{
-                      position: 'absolute',
-                      right: 15,
-                      top: 14,
-                    }}>
-                    <Icon
-                      icon={Images.Transfer.CloseCircle}
-                      style={{
-                        width: scale(17),
-                        height: scale(17),
-                      }}
-                    />
-                  </TouchableOpacity>
                 </View>
 
                 <Button

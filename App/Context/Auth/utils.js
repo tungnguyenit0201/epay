@@ -184,6 +184,8 @@ const useRegister = () => {
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
   const {setPhone} = useAsyncStorage();
+
+  let [active, setActive] = useState(false);
   const setFirstLogin = value => {
     dispatch({type: 'SET_FIRST_LOGIN', firstLogin: value});
   };
@@ -217,7 +219,14 @@ const useRegister = () => {
     }
   };
 
-  return {onChange, createAccount, setFirstLogin, onNavigate};
+  return {
+    active,
+    setActive,
+    onChange,
+    createAccount,
+    setFirstLogin,
+    onNavigate,
+  };
 };
 
 const usePhone = () => {
