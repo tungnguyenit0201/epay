@@ -25,8 +25,8 @@ import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 import {useForgetPassword, usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
-import BigLogo from 'components/Common/Login/BigLogo';
-import Content from 'components/Common/Login/Content';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 
 const ForgetPassword = () => {
   const {phone} = usePhone();

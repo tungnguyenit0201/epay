@@ -25,8 +25,8 @@ import {useAuth, useTouchID} from 'context/Auth/utils';
 import _, {camelCase} from 'lodash';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
-import BigLogo from 'components/Common/Login/BigLogo';
-import Content from 'components/Common/Login/Content';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =

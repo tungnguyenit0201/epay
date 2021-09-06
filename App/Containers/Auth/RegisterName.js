@@ -13,8 +13,8 @@ import {useUserInfo} from 'context/User/utils';
 import {scale} from 'utils/Functions';
 import {values} from 'lodash';
 
-import BigLogo from 'components/Common/Login/BigLogo';
-import Content from 'components/Common/Login/Content';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = useTranslation();

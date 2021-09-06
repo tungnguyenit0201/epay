@@ -16,8 +16,8 @@ import {passwordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE} from 'configs/Constants';
 import {Checkbox} from 'react-native-ui-lib';
-import BigLogo from 'components/Common/Login/BigLogo';
-import Content from 'components/Common/Login/Content';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 
 //remember to delete below packages when no use
 // import Navigator from 'navigations/Navigator';
