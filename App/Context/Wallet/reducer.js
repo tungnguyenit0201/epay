@@ -39,7 +39,7 @@ export default function userReducer(state, action) {
     case 'UPDATE_TRANSACTION_INFO':
       return {
         ...state,
-        transaction: action?.data,
+        transaction: {...state.transaction, ...action?.data},
       };
     default:
       return state;

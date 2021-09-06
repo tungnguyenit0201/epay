@@ -83,3 +83,28 @@ export const getBankFee = async ({phone, bankID, transType, transFormType}) => {
   });
   return response;
 };
+
+export const payinConnectedBank = async ({
+  phone,
+  bankID,
+  amount,
+  fixedFee,
+  bankFee,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.PAYIN_CONNECTED_BANK,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      BankId: bankID,
+      Amount: amount,
+      FixedFee: fixedFee,
+      BankFee: bankFee,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

@@ -16,6 +16,7 @@ const SCREEN = {
   BANK_RESULT: 'BankResult',
   NOTIFICATION: 'Notification',
   TRANSACTION_SUCCESS: 'TransactionSuccess',
+  TRANSACTION_FAILURE: 'TransactionFailure',
   EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
@@ -58,5 +59,6 @@ const SCREEN = {
   SYNC_SMART_OTP: 'SyncSmartOTP',
   SYNC_SMART_OTP_RESULT: 'SyncSmartOTPResult',
   SELECT_MONEY: 'SelectMoney',
+  OTP_BY_SMART_OTP: 'OTPBySmartOTP',
 };
 export default SCREEN;

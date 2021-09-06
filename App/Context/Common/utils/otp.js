@@ -9,10 +9,10 @@ import Navigator from 'navigations/Navigator';
 import useLoading from './loading';
 import useError from './error';
 
-const useOTP = ({functionType, phone, password, initialCode}) => {
+const useOTP = ({functionType, phone, password}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(60);
-  const [code, setCode] = useState(initialCode || '');
+  const [code, setCode] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const {setLoading} = useLoading();
@@ -84,7 +84,6 @@ const useOTP = ({functionType, phone, password, initialCode}) => {
       setLoading(false);
     }
   };
-
   const openCallDialog = () => {
     try {
       Linking.openURL('tel:02432252336');
@@ -92,17 +91,11 @@ const useOTP = ({functionType, phone, password, initialCode}) => {
   };
 
   useEffect(() => {
-    const generateOTP = async () => {
-      await genOtp({
-        phone,
-        functionType,
-      });
-      if (initialCode) {
-        onConfirmOTP(initialCode);
-      }
-    };
-    generateOTP();
-  }, []); // eslint-disable-line
+    genOtp({
+      phone,
+      functionType,
+    });
+  }, [phone, functionType]);
 
   useEffect(() => {
     let timer = setInterval(() => setCountdown(countdown - 1), 1000);

@@ -30,7 +30,6 @@ import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
 import Notification from 'containers/Notification';
-import TransactionSuccess from 'containers/Notification/TransactionSuccess';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
@@ -53,8 +52,8 @@ import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 import VerifyEmail from 'containers/User/VerifyInfo/VerifyEmail';
 import VerifySuccess from 'containers/User/VerifyInfo/VerifySuccess';
 import RegionSelect from 'containers/User/RegionSelect';
-import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
-import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
+import TransactionFailure from 'containers/Wallet/TransactionFailure';
+import TransactionSuccess from 'containers/Wallet/TransactionSuccess';
 import LanguageSetting from 'containers/User/LanguageSetting';
 import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
@@ -65,7 +64,7 @@ import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
 import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
 import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
 import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
-
+import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
@@ -180,12 +179,8 @@ const AppNavigator = () => {
             component={VerifySuccess}
           />
           <Stack.Screen
-            name={SCREEN.CHECKOUT_FAILURE}
-            component={CheckoutFailure}
-          />
-          <Stack.Screen
-            name={SCREEN.CHECKOUT_SUCCESS}
-            component={CheckoutSuccess}
+            name={SCREEN.TRANSACTION_FAILURE}
+            component={TransactionFailure}
           />
           <Stack.Screen name={SCREEN.REGION_SELECT} component={RegionSelect} />
           <Stack.Screen
@@ -220,6 +215,10 @@ const AppNavigator = () => {
             component={SyncSmartOTPResult}
           />
           <Stack.Screen name={SCREEN.SELECT_MONEY} component={SelectMoney} />
+          <Stack.Screen
+            name={SCREEN.OTP_BY_SMART_OTP}
+            component={OTPBySmartOTP}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
