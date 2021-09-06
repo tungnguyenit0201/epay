@@ -92,7 +92,7 @@ const useConfirmation = () => {
     amount,
   } = transaction;
   const transTypeText =
-    transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // translate
+    transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // TODO: translate
   const feeValue = calculateFee({cash: amount, feeData: fee});
   const total = feeValue + amount;
   const data = [

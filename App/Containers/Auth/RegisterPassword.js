@@ -17,10 +17,6 @@ import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE} from 'configs/Constants';
 import {Checkbox} from 'react-native-ui-lib';
 
-//remember to delete below packages when no use
-// import Navigator from 'navigations/Navigator';
-// import {SCREEN} from 'configs/Constants';
-
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
   const {createAccount} = useRegister();
@@ -106,7 +102,7 @@ const RegisterPassword = ({route}) => {
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
           };
-          //translate
+          // TODO: translate
           return (
             <View style={styles.wrap}>
               <ScrollView
@@ -114,7 +110,7 @@ const RegisterPassword = ({route}) => {
                 keyboardShouldPersistTaps="always"
                 contentContainerStyle={{paddingVertical: scale(24)}}
                 ref={scrollViewRef}>
-                <TextInput
+                {/* <TextInput
                   password
                   required
                   onChange={handleChange('newPassword')}
@@ -124,7 +120,7 @@ const RegisterPassword = ({route}) => {
                   value={values.newPassword}
                   scrollViewRef={scrollViewRef}
                   leftIcon={Images.Transfer.Lock}
-                />
+                /> */}
                 <Text
                   style={{
                     fontSize: 12,
@@ -136,7 +132,7 @@ const RegisterPassword = ({route}) => {
                   }
                 </Text>
 
-                {/* <InputBlock
+                <InputBlock
                   // label="Mật khẩu"
                   password
                   // required
@@ -147,12 +143,16 @@ const RegisterPassword = ({route}) => {
                   value={values.newPassword}
                   scrollViewRef={scrollViewRef}
                 />
-                <Text style={{
-                  fontSize: 12,
-                  fontWeight: '500',
-                  paddingRight: 9,
-                }}>
-                  {translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number}</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontWeight: '500',
+                    paddingRight: 9,
+                  }}>
+                  {
+                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                  }
+                </Text>
                 <InputBlock
                   label="Xác nhận mật khẩu"
                   password
@@ -162,7 +162,7 @@ const RegisterPassword = ({route}) => {
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
                   scrollViewRef={scrollViewRef}
-                /> */}
+                />
               </ScrollView>
 
               <View style={{paddingBottom: 20}}>

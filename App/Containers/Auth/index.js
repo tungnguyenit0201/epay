@@ -93,6 +93,7 @@ const Auth = () => {
                     leftIcon={Images.Phone_1}
                   />
                   <TouchableOpacity
+                    onPress={() => setFieldValue('phone', '')}
                     style={{
                       position: 'absolute',
                       right: 15,

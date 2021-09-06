@@ -75,7 +75,7 @@ export const addressSchema = yup.object().shape({
 });
 
 export const verifyUserSchema = yup.object().shape({
-  Address: yup.string().required('Địa chỉ không được bỏ trống.'), //translate
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'), // TODO: translate
   Ward: yup.string().required('Phương không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),

@@ -19,7 +19,7 @@ const RegisterFailure = ({route}) => {
   const {onNavigate} = useRegister();
 
   return (
-    //translate
+    // TODO: translate
     <>
       <View>
         <Header

@@ -51,7 +51,7 @@ const ActiveSmartOtp = () => {
       </ScrollView>
       <View style={base.bottom}>
         <Button
-          label="Kích hoạt" // translate
+          label="Kích hoạt" // TODO: translate
           disabled={!isAccepted}
           onPress={onGoOTP}
         />

@@ -11,11 +11,11 @@ import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
 import {scale} from 'utils/Functions';
-import {values} from 'lodash';
+
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = useTranslation();
-  const {onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
+  const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
   return (
     <>
       <View style={styles.container}>
@@ -56,7 +56,7 @@ const RegisterName = () => {
 
         <View style={{paddingHorizontal: Spacing.PADDING}}>
           <Text bold fs="h5" mb={15} centered>
-            Nhập tên
+            {translation.enter_name}
           </Text>
           <Text centered fs="md" color={Colors.l6}>
             {
@@ -70,22 +70,9 @@ const RegisterName = () => {
             required
             onFocus={e => setDisable(false)}
             onChange={val => setPersonalInfo('FullName', val)}
-            // onBlur={handleBlur('newPassword')}
             placeholder={translation.enter_your_name}
-            // value={values}
             isDeleted
-            // error={touched.passwordConfirm && errors.incorrect_password}
-            // value={values.newPassword}
-            // scrollViewRef={scrollViewRef}
-            // leftIcon={Images.Transfer.Lock}
           />
-
-          {/* <InputBlock
-            style={[styles.input]}
-            placeholder="Nhập Họ và Tên"
-            onFocus={e => setDisable(false)}
-            onChange={val => setPersonalInfo('FullName', val)}
-          /> */}
         </View>
       </View>
 

@@ -18,7 +18,7 @@ const ChooseIdentityCard = () => {
   const translation = useTranslation();
   const [visible, setVisible] = useState(false);
 
-  //translate
+  // TODO: translate
   let cardList = [
     {label: translation?.id_card, value: 1},
     {label: 'Chứng minh thư quân đội', value: 2},

@@ -3,13 +3,15 @@ import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Text, Button, Icon} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {SCREEN, PERSONAL_IC} from 'configs/Constants';
 
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
+import {useTranslation} from 'context/Language';
 const User = ({style}) => {
   const {userInfo} = useUser();
   const {phone} = usePhone();
+  const translation = useTranslation();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -30,11 +32,16 @@ const User = ({style}) => {
 
         <Button
           size="xs"
+          disabled={!(userInfo.personalIC?.Verified == PERSONAL_IC.INACTIVE)}
           bg={Colors.Highlight}
           radius={30}
-          color="#fff"
+          color={Colors.white}
           label={
-            userInfo.personalIC?.Active == 1 ? 'Đã xác thực' : 'Chưa xác thực'
+            userInfo.personalIC?.Verified == PERSONAL_IC.INACTIVE
+              ? translation.unverified
+              : userInfo.personalIC?.Verified == PERSONAL_IC.VERIFYING
+              ? 'Đang xác thực'
+              : 'Đã xác thực'
           }
           onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
         />
@@ -64,9 +71,6 @@ const styles = StyleSheet.create({
     width: 72,
     borderRadius: 99,
     backgroundColor: Colors.black,
-  },
-  phone: {
-    height: 20,
   },
 });
 

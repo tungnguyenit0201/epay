@@ -12,7 +12,6 @@ import useError from './error';
 const useOTP = ({functionType, phone, password, initialCode}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(60);
-  const [showCall, setshowCall] = useState(false);
   const [code, setCode] = useState(initialCode || '');
   const [showModal, setShowModal] = useState(false);
 
@@ -115,14 +114,12 @@ const useOTP = ({functionType, phone, password, initialCode}) => {
   return {
     errorMessage,
     countdown,
-    showCall,
     code,
     showModal,
     setShowModal,
     onChange,
     onConfirmOTP,
     resentOTP,
-    setshowCall,
     openCallDialog,
   };
 };

@@ -51,6 +51,7 @@ import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
 import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
 import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 import VerifyEmail from 'containers/User/VerifyInfo/VerifyEmail';
+import VerifySuccess from 'containers/User/VerifyInfo/VerifySuccess';
 import RegionSelect from 'containers/User/RegionSelect';
 import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
 import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
@@ -174,6 +175,10 @@ const AppNavigator = () => {
             component={VerifyUserPortrait}
           />
           <Stack.Screen name={SCREEN.VERIFY_EMAIL} component={VerifyEmail} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_SUCCESS}
+            component={VerifySuccess}
+          />
           <Stack.Screen
             name={SCREEN.CHECKOUT_FAILURE}
             component={CheckoutFailure}

@@ -267,7 +267,7 @@ const useForgetPassword = () => {
       setError(result);
       return;
     }
-    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); //translate
+    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
     Navigator.popToTop();
   };
 

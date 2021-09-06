@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   link_text: {
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
-    textDecorationLine: 'underline',
+    // textDecorationLine: 'underline',
   },
   box_1: {
     flexDirection: 'row',

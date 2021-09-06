@@ -71,7 +71,7 @@ const useSmartOTP = params => {
 
   const onConfirmPassword = async ({password, confirmPassword}) => {
     if (password !== confirmPassword) {
-      setMessage('Mật khẩu không trung khớp'); // translate
+      setMessage('Mật khẩu không trung khớp'); // TODO: translate
       return;
     }
     const passwordEncrypted = await sha256(password);
@@ -114,7 +114,7 @@ const useSmartOTP = params => {
     confirmPassword,
   }) => {
     if (newPassword !== confirmPassword) {
-      setMessage('Mật khẩu không trung khớp'); // translate
+      setMessage('Mật khẩu không trung khớp'); // TODO: translate
       return;
     }
     setLoading(true);
@@ -149,7 +149,7 @@ const useSmartOTP = params => {
       case 'transaction':
         return 'Nhập mật khẩu smart OTP';
     }
-    // translate
+    // TODO: translate
   };
 
   const onBackHome = () => {

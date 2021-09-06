@@ -40,6 +40,7 @@ const SCREEN = {
   VERIFY_IDENTITY_CARD: 'VerifyIdentityCard',
   VERIFY_USER_PORTRAIT: 'VerifyUserPortrait',
   VERIFY_EMAIL: 'VerifyEmail',
+  VERIFY_SUCCESS: 'VerifySuccess',
   CHECKOUT_SUCCESS: 'CheckoutSuccess',
   CHECKOUT_FAILURE: 'CheckoutFailure',
   REGION_SELECT: 'RegionSelect',
