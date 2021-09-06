@@ -25,6 +25,8 @@ import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 import {useForgetPassword, usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
+import BigLogo from 'components/Common/Login/BigLogo';
+import Content from 'components/Common/Login/Content';
 
 const ForgetPassword = () => {
   const {phone} = usePhone();
@@ -37,42 +39,33 @@ const ForgetPassword = () => {
         <Header
           back
           blackIcon
-          style={{
-            paddingTop: 10,
-            backgroundColor: Colors.white,
-            color: Colors.BLACK,
-          }}
+          style={styles.header}
+          renderRightComponent={() => (
+            <TouchableOpacity style={styles.pRight}>
+              <Icon
+                icon={Images.Register.Info}
+                style={styles.firstIcon}
+                tintColor={Colors.BLACK}
+              />
+            </TouchableOpacity>
+          )}
         />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            bottom: scale(10),
-            right: 15,
-          }}>
-          <Icon
-            icon={Images.Register.Info}
-            style={{
-              width: scale(24),
-              height: scale(24),
-            }}
-            tintColor={Colors.BLACK}
-          />
-        </TouchableOpacity>
       </View>
-
-      <View
+      <BigLogo />
+      <Content title="Quên mật khẩu" />
+      {/* <View
         style={{
           marginBottom: Spacing.PADDING + 40,
           alignItems: 'center',
         }}>
         <Image source={Images.logoEpay} resizeMode="contain" />
-      </View>
-
+      </View> 
+      
       <View style={{paddingHorizontal: Spacing.PADDING}}>
         <Text bold fs="h5" centered>
           Quên mật khẩu
         </Text>
-      </View>
+      </View>*/}
 
       <Formik
         key={phone}
@@ -118,13 +111,12 @@ const ForgetPassword = () => {
                 /> */}
                 <TextInput
                   placeholder={translation.enter_your_phone_number}
-                  password
                   required
-                  onChange={handleChange('password')}
-                  onBlur={handleBlur('password')}
+                  onChange={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
                   // error={touched.phone && errors.phone}
-                  value={values.password}
-                  leftIcon={Images.Transfer.Lock}
+                  value={values.phone}
+                  leftIcon={Images.Phone_1}
                 />
                 <Text style={styles.message}>
                   {translation.password_does_not_match}
@@ -159,15 +151,23 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  // header: {
-  //   fontSize: Fonts.H2,
-  //   fontWeight: 'bold',
-  //   paddingBottom: Spacing.PADDING,
-  // },
   message: {
     marginTop: 12,
     color: Colors.Highlight,
     textAlign: 'center',
+  },
+  pRight: {
+    position: 'absolute',
+    right: 15,
+  },
+  firstIcon: {
+    width: scale(24),
+    height: scale(24),
+  },
+  header: {
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
   },
   /////////////////////////////
   // content: {
