@@ -16,6 +16,8 @@ import {passwordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE} from 'configs/Constants';
 import {Checkbox} from 'react-native-ui-lib';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 
 //remember to delete below packages when no use
 // import Navigator from 'navigations/Navigator';
@@ -43,38 +45,27 @@ const RegisterPassword = ({route}) => {
         <Header
           back
           blackIcon
-          style={{
-            paddingTop: 10,
-            backgroundColor: Colors.white,
-            color: Colors.BLACK,
-          }}
+          style={styles.header}
+          renderRightComponent={() => (
+            <TouchableOpacity style={styles.pRight}>
+              <Icon
+                icon={Images.Register.Info}
+                style={styles.firstIcon}
+                tintColor={Colors.BLACK}
+              />
+            </TouchableOpacity>
+          )}
         />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            bottom: scale(10),
-            right: 15,
-          }}>
-          <Icon
-            icon={Images.Register.Info}
-            style={{
-              width: scale(24),
-              height: scale(24),
-            }}
-            tintColor={Colors.BLACK}
-          />
-        </TouchableOpacity>
       </View>
+      <BigLogo />
+      <Content
+        title="Tạo mật khẩu Epay"
+        text={
+          translation.password_for_account_security_and_transaction_confirmation_at_checkout
+        }
+      />
 
-      <View
-        style={{
-          marginBottom: Spacing.PADDING + 40,
-          alignItems: 'center',
-        }}>
-        <Image source={Images.logoEpay} resizeMode="contain" />
-      </View>
-
-      <View style={{paddingHorizontal: Spacing.PADDING}}>
+      {/* <View style={{paddingHorizontal: Spacing.PADDING}}>
         <Text bold fs="h5" mb={15} centered>
           Tạo mật khẩu Epay
         </Text>
@@ -83,7 +74,7 @@ const RegisterPassword = ({route}) => {
             translation.password_for_account_security_and_transaction_confirmation_at_checkout
           }
         </Text>
-      </View>
+      </View> */}
 
       <Formik
         initialValues={{
@@ -125,12 +116,7 @@ const RegisterPassword = ({route}) => {
                   scrollViewRef={scrollViewRef}
                   leftIcon={Images.Transfer.Lock}
                 />
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontWeight: '500',
-                    paddingRight: 9,
-                  }}>
+                <Text style={styles.textNote}>
                   {
                     translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
                   }
@@ -166,19 +152,12 @@ const RegisterPassword = ({route}) => {
               </ScrollView>
 
               <View style={{paddingBottom: 20}}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                  }}>
+                <View style={styles.flexRow}>
                   <Checkbox style={{marginRight: 6}} />
                   <Text>
                     Tôi đồng ý với
                     <TouchableOpacity style={{marginTop: -3}}>
-                      <Text
-                        style={{
-                          textDecorationLine: 'underline',
-                          marginLeft: 3,
-                        }}>
+                      <Text style={styles.firstLink}>
                         {'điều khoản & điều kiện'}
                       </Text>
                     </TouchableOpacity>{' '}
@@ -213,6 +192,29 @@ const styles = StyleSheet.create({
   wrap: {
     flex: 1,
     paddingHorizontal: Spacing.PADDING,
+  },
+  pRight: {
+    position: 'absolute',
+    right: 15,
+  },
+  firstIcon: {
+    width: scale(24),
+    height: scale(24),
+  },
+  header: {
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
+  },
+  firstLink: {
+    textDecorationLine: 'underline',
+    marginLeft: 3,
+  },
+  flexRow: {flexDirection: 'row'},
+  textNote: {
+    fontSize: 12,
+    fontWeight: '500',
+    paddingRight: 9,
   },
 });
 export default RegisterPassword;

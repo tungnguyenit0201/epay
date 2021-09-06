@@ -91,21 +91,8 @@ const Auth = () => {
                     error={touched.phone && errors.phone}
                     value={values.phone}
                     leftIcon={Images.Phone_1}
+                    isDeleted={values.phone}
                   />
-                  <TouchableOpacity
-                    style={{
-                      position: 'absolute',
-                      right: 15,
-                      top: 14,
-                    }}>
-                    <Icon
-                      icon={Images.Transfer.CloseCircle}
-                      style={{
-                        width: scale(17),
-                        height: scale(17),
-                      }}
-                    />
-                  </TouchableOpacity>
                 </View>
 
                 <Button

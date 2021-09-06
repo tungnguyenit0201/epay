@@ -12,6 +12,9 @@ import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
 import {scale} from 'utils/Functions';
 import {values} from 'lodash';
+
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = useTranslation();
@@ -23,47 +26,25 @@ const RegisterName = () => {
           <Header
             back
             blackIcon
-            style={{
-              paddingTop: 10,
-              backgroundColor: Colors.white,
-              color: Colors.BLACK,
-            }}
+            style={styles.header}
+            renderRightComponent={() => (
+              <TouchableOpacity style={styles.pRight}>
+                <Icon
+                  icon={Images.Register.Info}
+                  style={styles.firstIcon}
+                  tintColor={Colors.BLACK}
+                />
+              </TouchableOpacity>
+            )}
           />
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              bottom: scale(10),
-              right: 15,
-            }}>
-            <Icon
-              icon={Images.Register.Info}
-              style={{
-                width: scale(24),
-                height: scale(24),
-              }}
-              tintColor={Colors.BLACK}
-            />
-          </TouchableOpacity>
         </View>
-
-        <View
-          style={{
-            marginBottom: Spacing.PADDING + 40,
-            alignItems: 'center',
-          }}>
-          <Image source={Images.logoEpay} resizeMode="contain" />
-        </View>
-
-        <View style={{paddingHorizontal: Spacing.PADDING}}>
-          <Text bold fs="h5" mb={15} centered>
-            Nhập tên
-          </Text>
-          <Text centered fs="md" color={Colors.l6}>
-            {
-              translation.password_for_account_security_and_transaction_confirmation_at_checkout
-            }
-          </Text>
-        </View>
+        <BigLogo />
+        <Content
+          title="Nhập tên"
+          text={
+            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+          }
+        />
 
         <View style={[styles.wrap, {marginTop: 48}]}>
           <TextInput
@@ -119,6 +100,19 @@ const styles = StyleSheet.create({
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
+  },
+  pRight: {
+    position: 'absolute',
+    right: 15,
+  },
+  firstIcon: {
+    width: scale(24),
+    height: scale(24),
+  },
+  header: {
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
   },
 });
 
