@@ -5,6 +5,7 @@ import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
+import {Linking} from 'react-native';
 import {useTranslation} from 'context/Language';
 import {
   useLoading,
@@ -203,6 +204,8 @@ const useRegister = () => {
   const {setPhone} = useAsyncStorage();
 
   let [active, setActive] = useState(false);
+  let [showModal, setShowModal] = useState(false);
+
   const setFirstLogin = value => {
     dispatch({type: 'SET_FIRST_LOGIN', firstLogin: value});
   };
@@ -210,9 +213,17 @@ const useRegister = () => {
   const onChange = (key, val) => {
     registerRef.current[key] = val;
   };
+
   const onNavigate = screen => {
-    !screen ? Navigator.navigate(screen) : Navigator.popToTop();
+    !!screen ? Navigator.navigate(screen) : Navigator.popToTop();
   };
+
+  const openCallDialog = () => {
+    try {
+      Linking.openURL('tel:02432252336');
+    } catch {}
+  };
+
   const createAccount = async ({phone, newPassword}) => {
     try {
       setLoading(true);
@@ -239,6 +250,9 @@ const useRegister = () => {
   return {
     active,
     setActive,
+    showModal,
+    setShowModal,
+    openCallDialog,
     onChange,
     createAccount,
     setFirstLogin,

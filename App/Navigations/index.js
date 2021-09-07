@@ -21,6 +21,8 @@ import Login from 'containers/Auth/Login';
 import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
+import Policy from 'containers/Auth/Policy';
+import Agreement from 'containers/Auth/Agreement';
 import RegisterName from 'containers/Auth/RegisterName';
 import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
@@ -115,6 +117,8 @@ const AppNavigator = () => {
             name={SCREEN.REGISTER_PASSWORD}
             component={RegisterPassword}
           />
+          <Stack.Screen name={SCREEN.POLICY} component={Policy} />
+          <Stack.Screen name={SCREEN.AGREEMENT} component={Agreement} />
           <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
           <Stack.Screen
             name={SCREEN.REGISTER_FAILURE}
