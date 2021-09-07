@@ -8,6 +8,7 @@ import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
 import useLoading from './loading';
 import useError from './error';
+import {useUserInfo} from 'context/User/utils';
 
 const useOTP = ({functionType, phone, password}) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -18,6 +19,7 @@ const useOTP = ({functionType, phone, password}) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {onLogin} = useAuth();
+  const {onGetAllInfo} = useUserInfo();
 
   const onChange = value => {
     setCode(value);
@@ -66,6 +68,10 @@ const useOTP = ({functionType, phone, password}) => {
         });
       case FUNCTION_TYPE.REGISTER_SMART_OTP:
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
+      case FUNCTION_TYPE.AUTH_EMAIL:
+        onGetAllInfo();
+        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        return;
     }
   };
 

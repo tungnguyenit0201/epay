@@ -158,3 +158,29 @@ export const getQRCode = async ({phone}) => {
   });
   return response;
 };
+
+export const verifyEmail = async ({phone, email}) => {
+  let response = null;
+  await request({
+    url: API.USER.VERIFY_EMAIL,
+    method: 'post',
+    params: {PhoneNumber: phone, Email: email},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const changeEmail = async ({phone, oldEmail, newEmail}) => {
+  let response = null;
+  await request({
+    url: API.USER.CHANGE_EMAIL,
+    method: 'post',
+    params: {PhoneNumber: phone, OldEmail: oldEmail, NewEmail: newEmail},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

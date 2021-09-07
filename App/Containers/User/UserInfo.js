@@ -186,14 +186,27 @@ const UserInfo = () => {
         </View>
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
-            <Text>Chưa có</Text>
-            <TouchableOpacity
-              style={styles.itemRight}
-              onPress={() => {
-                Navigator.push(SCREEN.VERIFY_EMAIL);
-              }}>
-              <Text style={styles.link}>Thêm email</Text>
-            </TouchableOpacity>
+            <Text>{userInfo?.personalInfo?.Email}</Text>
+            {userInfo?.personalInfo?.ActiveEmail === 1 ? (
+              <TouchableOpacity
+                style={styles.itemRight}
+                onPress={() => {
+                  Navigator.push(
+                    SCREEN.CHANGE_PASSWORD,
+                    'change_email_response',
+                  );
+                }}>
+                <Text style={styles.link}>Chỉnh sửa</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.itemRight}
+                onPress={() => {
+                  Navigator.push(SCREEN.VERIFY_EMAIL);
+                }}>
+                <Text style={styles.link}>Thêm email</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </ScrollView>

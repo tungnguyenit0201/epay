@@ -32,6 +32,8 @@ export default {
     GET_LIMIT: 'security/get_limit',
     GET_SETTINGS_INFO: 'setting/get_all_info',
     GET_QRCODE: 'account/get_qrcode',
+    VERIFY_EMAIL: 'account/authentication_email',
+    CHANGE_EMAIL: 'account/change_email',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',

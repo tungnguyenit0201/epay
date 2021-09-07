@@ -10,6 +10,8 @@ import {
   confirmPassword,
   getLimit,
   getQRCode,
+  verifyEmail,
+  changeEmail,
 } from 'services/user';
 import {
   useAsyncStorage,
@@ -35,7 +37,7 @@ const useUserInfo = type => {
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
-  const {dispatch} = useUser();
+  const {dispatch, userInfo} = useUser();
   const {showModalSmartOTP} = useShowModal();
   const {onChangeLimit} = useBankInfo();
   const {walletInfo} = useWallet();
@@ -159,6 +161,8 @@ const useUserInfo = type => {
               phone,
               functionType: FUNCTION_TYPE.FORGOT_PASS,
             });
+          case 'change_email_response':
+            Navigator.push(SCREEN.VERIFY_EMAIL);
             break;
           default:
             Navigator.push(SCREEN.OTP, {
@@ -201,6 +205,58 @@ const useUserInfo = type => {
       setLoading(false);
     }
   };
+
+  const onChangeEmail = async ({oldEmail, newEmail}) => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await changeEmail({phone, oldEmail, newEmail});
+      setLoading(false);
+      switch (_.get(result, 'ErrorCode')) {
+        case ERROR_CODE.SUCCESS:
+          Navigator.push(SCREEN.TAB_NAVIGATION);
+          break;
+        case ERROR_CODE.OTP_IS_NOT_CORRECT:
+          Navigator.push(SCREEN.OTP, {
+            phone,
+            functionType: FUNCTION_TYPE.AUTH_EMAIL,
+          });
+          break;
+        default:
+          setError(result);
+          break;
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
+  const onVerifyEmail = async ({email}) => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await verifyEmail({phone, email});
+      setLoading(false);
+      switch (_.get(result, 'ErrorCode')) {
+        case ERROR_CODE.SUCCESS:
+          Navigator.push(SCREEN.OTP, {
+            phone,
+            functionType: FUNCTION_TYPE.AUTH_EMAIL,
+          });
+          break;
+        case ERROR_CODE.EMAIL_IS_AUTHENTICATED:
+          const oldEmail = userInfo?.personalInfo?.Email;
+          onChangeEmail({oldEmail, newEmail: email});
+          break;
+        default:
+          setError(result);
+          break;
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -212,6 +268,8 @@ const useUserInfo = type => {
     onConfirmPassword,
     onGetLimit,
     onGetQRCode,
+    onVerifyEmail,
+    onChangeEmail,
   };
 };
 export default useUserInfo;
