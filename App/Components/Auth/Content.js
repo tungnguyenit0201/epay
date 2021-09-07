@@ -4,10 +4,10 @@ import {Text} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 
-const Content = ({title, text, noWrap}) => {
+const Content = ({title, text, style}) => {
   const translation = useTranslation();
   return (
-    <View style={noWrap || styles.wrap}>
+    <View style={[styles.wrap, style]}>
       {Boolean(title) && (
         <Text bold fs="h5" centered>
           {title}

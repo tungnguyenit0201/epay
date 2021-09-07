@@ -26,7 +26,14 @@ const Header = ({
     <View style={[styles.wrap, style]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={{minHeight: scale(24)}}>
-        <Text semibold size={Fonts.H6} style={[styles.title, titleStyle]}>
+        <Text
+          semibold
+          size={Fonts.H6}
+          style={[
+            styles.title,
+            titleStyle,
+            blackIcon && {color: Colors.black},
+          ]}>
           {title}
         </Text>
         <View

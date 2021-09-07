@@ -6,6 +6,8 @@ const SCREEN = {
   REGISTER: 'Register',
   FORGET_PASSWORD: 'ForgetPassword',
   REGISTER_PASSWORD: 'RegisterPassword',
+  POLICY: 'Policy',
+  AGREEMENT: 'Agreement',
   REGISTER_NAME: 'RegisterName',
   REGISTER_FAILURE: 'RegisterFailure',
   OTP: 'OTP',
