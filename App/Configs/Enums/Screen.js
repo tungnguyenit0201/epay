@@ -50,7 +50,7 @@ const SCREEN = {
   TRANSFER_PHONE: 'TransferPhone',
   AUTOPAYMENT: 'AutoPayment',
   TRANSFER_BANK: 'TransferBank',
-  UPDATE_PASSWORD: 'UpdatePassword',
+  FORGET_NEW_PASSWORD: 'ForgetNewPassword',
   SMART_OTP_PASSWORD: 'SmartOTPPassword',
   SMART_OTP_RESULT: 'SmartOTPResult',
   BANK_LINKED: 'BankLinked',

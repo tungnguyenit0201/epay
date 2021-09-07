@@ -69,6 +69,7 @@ import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
+import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -218,6 +219,10 @@ const AppNavigator = () => {
           <Stack.Screen
             name={SCREEN.OTP_BY_SMART_OTP}
             component={OTPBySmartOTP}
+          />
+          <Stack.Screen
+            name={SCREEN.FORGET_NEW_PASSWORD}
+            component={ForgetNewPassword}
           />
         </Stack.Navigator>
       </KeyboardStateProvider>
