@@ -11,14 +11,15 @@ import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
 import {scale} from 'utils/Functions';
-import BigLogo from 'components/Auth/BigLogo';
-import Content from 'components/Auth/Content';
+import {HelpModal, Content, BigLogo} from 'components/Auth';
 import {Formik} from 'formik';
+import {useRegister} from 'context/Auth/utils';
 
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = useTranslation();
   const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
+  const {showModal, setShowModal, openCallDialog} = useRegister();
   return (
     <Formik
       initialValues={{
@@ -51,7 +52,9 @@ const RegisterName = () => {
                   blackIcon
                   style={styles.header}
                   renderRightComponent={() => (
-                    <TouchableOpacity style={styles.pRight}>
+                    <TouchableOpacity
+                      style={styles.pRight}
+                      onPress={() => setShowModal(true)}>
                       <Icon
                         icon={Images.Register.Info}
                         style={styles.firstIcon}
@@ -69,7 +72,7 @@ const RegisterName = () => {
                 }
               />
 
-              <View style={[styles.wrap, {marginTop: 48}]}>
+              <View style={[styles.wrap, {marginTop: Spacing.PADDING * 3}]}>
                 <TextInput
                   required
                   onFocus={e => setDisable(false)}
@@ -98,6 +101,11 @@ const RegisterName = () => {
                 onPress={handleSubmit}
               />
             </View>
+            <HelpModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              onPress={openCallDialog}
+            />
           </>
         );
       }}

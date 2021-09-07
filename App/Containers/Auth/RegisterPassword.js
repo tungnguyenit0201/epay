@@ -1,12 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useForgetPassword, useRegister} from 'context/Auth/utils';
@@ -14,16 +7,24 @@ import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
-import {FUNCTION_TYPE} from 'configs/Constants';
-import BigLogo from 'components/Auth/BigLogo';
-import Content from 'components/Auth/Content';
+import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {HelpModal, Content, BigLogo} from 'components/Auth';
 
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
-  const {active, setActive, createAccount} = useRegister();
+  const {
+    active,
+    setActive,
+    showModal,
+    setShowModal,
+    openCallDialog,
+    createAccount,
+    onNavigate,
+  } = useRegister();
   const {onNewPassword} = useForgetPassword();
   const scrollViewRef = useRef(null);
   const translation = useTranslation();
+
   const onSubmit = values => {
     switch (functionType) {
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
@@ -34,6 +35,7 @@ const RegisterPassword = ({route}) => {
   };
 
   return (
+    // TODO: translate
     <View style={styles.container}>
       <View>
         <Header
@@ -41,7 +43,9 @@ const RegisterPassword = ({route}) => {
           blackIcon
           style={styles.header}
           renderRightComponent={() => (
-            <TouchableOpacity style={styles.pRight}>
+            <TouchableOpacity
+              style={styles.pRight}
+              onPress={() => setShowModal(true)}>
               <Icon
                 icon={Images.Register.Info}
                 style={styles.firstIcon}
@@ -87,6 +91,7 @@ const RegisterPassword = ({route}) => {
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
+                  style={{paddingBottom: Spacing.PADDING}}
                 />
                 <TextInput
                   password
@@ -121,13 +126,23 @@ const RegisterPassword = ({route}) => {
                 <View style={styles.flexRow}>
                   <Checkbox onPress={setActive} />
                   <Text>
-                    {` Tôi đồng ý với`}
-                    <TouchableOpacity style={{marginTop: -3}}>
+                    {` Tôi đồng ý với các `}
+                    <TouchableOpacity
+                      style={{marginTop: -3}}
+                      onPress={() => onNavigate(SCREEN.AGREEMENT)}>
                       <Text style={styles.firstLink}>
-                        {'điều khoản & điều kiện'}
+                        {'Thoả thuận người dùng '}
                       </Text>
-                    </TouchableOpacity>{' '}
-                    của Epay
+                    </TouchableOpacity>
+                    và
+                    <TouchableOpacity
+                      style={{marginTop: -3}}
+                      onPress={() => onNavigate(SCREEN.POLICY)}>
+                      <Text style={styles.firstLink}>
+                        {'Chính sách quyền riêng tư '}
+                      </Text>
+                    </TouchableOpacity>
+                    của Epay Services
                   </Text>
                 </View>
                 <Button
@@ -141,6 +156,11 @@ const RegisterPassword = ({route}) => {
           );
         }}
       </Formik>
+      <HelpModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPress={openCallDialog}
+      />
     </View>
   );
 };
