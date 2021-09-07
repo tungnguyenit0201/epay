@@ -1,53 +1,16 @@
-import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Pressable,
-  Image,
-  FlatList,
-} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, View, Image} from 'react-native';
 import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import Navigator from 'navigations/Navigator';
 
-import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
+import {useTransactionResult} from 'context/Wallet/utils';
 
 const TransactionResult = () => {
   const translation = useTranslation();
-  const data = [
-    {
-      name: 'Chuyển từ',
-      val: 'Ví Epay',
-    },
-    {
-      name: 'Chuyển đến',
-      val: 'Bảo An Đỗ',
-    },
-    {
-      name: 'Số điện thoại',
-      val: '909000999',
-    },
-    {
-      name: 'Số tiền',
-      val: '100.000.000 vnđ',
-    },
-    {
-      name: 'Lời nhắn',
-      val: 'Nạp tiền điện thoại cho An...',
-    },
-    {
-      name: 'Phí giao dịch',
-      val: '0 vnđ',
-    },
-    {
-      name: 'Tổng số tiền',
-      val: '100.550.000 vnđ',
-    },
-  ];
+  const {data, message, onRetry, onBackHome} = useTransactionResult();
 
   return (
     <>
@@ -64,10 +27,7 @@ const TransactionResult = () => {
             <Text bold size={Fonts.H5} mb={15}>
               {translation.successful_transaction}
             </Text>
-            <Text centered>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </Text>
+            <Text centered>{message}</Text>
           </View>
           <View style={styles.block}>
             <Image
@@ -75,7 +35,6 @@ const TransactionResult = () => {
               style={styles.bgImg}
             />
             {data.map((item, index) => {
-              console.log(item);
               return (
                 <View key={index}>
                   <View
@@ -85,10 +44,10 @@ const TransactionResult = () => {
                         borderBottomWidth: 0,
                       },
                     ]}>
-                    <Text style={styles.textLeft}>{item.name}</Text>
+                    <Text style={styles.textLeft}>{item.label}</Text>
 
                     <Text bold size={Fonts.H6} style={styles.textRight}>
-                      {item.val}
+                      {item.value}
                     </Text>
                   </View>
                 </View>
@@ -102,19 +61,19 @@ const TransactionResult = () => {
           <Col space={10} width="50%">
             <Button
               size="sm"
-              bg="#fff"
+              bg={Colors.white}
               border={Colors.cl1}
               color={Colors.cl1}
               label={translation.save_photo}
               labelStyle={{fontSize: 14}}
-              onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
+              onPress={onRetry}
             />
           </Col>
           <Col space={10} width="50%">
             <Button
               size="sm"
               label={translation.share_photo}
-              onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
+              onPress={onBackHome}
             />
           </Col>
         </Row>

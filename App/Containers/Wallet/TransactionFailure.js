@@ -14,7 +14,7 @@ import {scale} from 'utils/Functions';
 import {useTransactionResult} from 'context/Wallet/utils';
 
 const TransactionFailure = () => {
-  const {data, message} = useTransactionResult();
+  const {data, message, onRetry, onBackHome} = useTransactionResult();
 
   const renderItem = (key, value) => {
     return (
@@ -51,6 +51,13 @@ const TransactionFailure = () => {
               label="Thực hiện lại"
               style={styles.buttonBlock}
               fs={Fonts.FONT_MEDIUM}
+              onPress={onRetry}
+            />
+            <Button
+              label="Về trang chủ"
+              style={styles.buttonBlock}
+              fs={Fonts.FONT_MEDIUM}
+              onPress={onBackHome}
             />
           </View>
         </View>
