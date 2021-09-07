@@ -87,6 +87,7 @@ const useTopUpWithdraw = ({transType}) => {
 const useConfirmation = () => {
   const {transaction} = useWallet();
   const {phone} = useUser();
+  const {setError} = useError();
 
   const {
     transType,
@@ -124,7 +125,7 @@ const useConfirmation = () => {
     if (isSmartOTPActived) {
       Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'transaction'});
     } else {
-      alert('Vui lòng kích hoạt smart otp');
+      setError({ErrorCode: -1, ErrorMessage: 'Vui lòng kích hoạt smart otp.'}); // TODO: transalate
       // Navigator.push(SCREEN.OTP, {functionType: FUNCTION_TYPE.RECHARGE_BY_BANK});
     }
   };
@@ -181,14 +182,6 @@ const useOTPBySmartOTP = () => {
     const {transType, transFormType, amount, bank, fee} = transaction;
     let result = null;
     // TopUp
-
-    console.log(
-      transType == TRANS_TYPE.CashIn,
-      transFormType,
-      TRANS_FORM_TYPE.CONNECTED_BANK,
-      parseInt(transFormType) === TRANS_FORM_TYPE.CONNECTED_BANK,
-    );
-
     if (transType == TRANS_TYPE.CashIn) {
       switch (parseInt(transFormType)) {
         case TRANS_FORM_TYPE.CONNECTED_BANK:
@@ -222,7 +215,7 @@ const useOTPBySmartOTP = () => {
 
 const useTransactionResult = () => {
   const {transaction} = useWallet();
-  const {amount, fee, bank, result} = transaction;
+  const {amount, fee, bank, result, transType} = transaction;
 
   const loadData = () => {
     // TODO: translate
@@ -232,7 +225,22 @@ const useTransactionResult = () => {
     ];
   };
 
-  return {data: loadData(), message: result?.ErrorMessage};
+  const onRetry = () => {
+    let screen = null;
+    switch (transType) {
+      case TRANS_TYPE.CashIn:
+        screen = SCREEN.TOP_UP;
+        break;
+    }
+    Navigator.navigate(screen);
+  };
+
+  const onBackHome = () => {
+    Navigator.navigate(SCREEN.TAB_NAVIGATION);
+    Navigator.navigate(SCREEN.HOME);
+  };
+
+  return {data: loadData(), message: result?.ErrorMessage, onRetry, onBackHome};
 };
 
 export {
