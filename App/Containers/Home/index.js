@@ -15,7 +15,7 @@ import ListItemSimple from 'components/Common/ListItemSimple';
 import MonneySimple from 'components/Home/MonneySimple';
 import Banner from 'components/Home/Banner';
 import User from 'components/Home/User';
-import XacThuc from 'components/Home/XacThuc';
+import DinhDanh from 'components/Home/DinhDanh';
 
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
@@ -73,8 +73,8 @@ const Home = () => {
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: require('images/home/congAn.png'),
-      name: 'Công an',
+      icon: require('images/home/baoHiem.png'),
+      name: 'Bảo hiểm',
       screen: SCREEN.TOP_UP,
     },
     {
@@ -83,8 +83,8 @@ const Home = () => {
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: require('images/home/cangBien.png'),
-      name: 'Cảng biển',
+      icon: require('images/home/sanBay.png'),
+      name: 'Sân bay ',
       screen: SCREEN.TOP_UP,
     },
   ];
@@ -130,14 +130,12 @@ const Home = () => {
   return (
     <>
       <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
+        <HeaderBg>
           <View style={styles.rowHeader}>
             <Image source={Images.Logo} style={[{width: 88, height: 32}]} />
             <User style={{marginBottom: 20}} />
           </View>
-
           <MonneySimple />
-
           <View style={{marginBottom: 20}}>
             <ListItemSimple
               scroll
@@ -152,11 +150,9 @@ const Home = () => {
         </HeaderBg>
 
         <View style={base.container}>
-          <XacThuc />
+          <DinhDanh />
 
           <Banner data={dataBanner} />
-
-          <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} />
 
           {/* <View style={{marginBottom: 20}}>
             <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
@@ -181,6 +177,13 @@ const Home = () => {
               />
             </TouchableOpacity>
           </View> */}
+        </View>
+        <View style={base.container}>
+          <Image
+            style={styles.bgHome}
+            source={require('images/home/wave.jpg')}
+          />
+          <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} />
         </View>
       </ScrollView>
       {modalSmartOTP.smartOTP && (
@@ -246,6 +249,13 @@ const styles = StyleSheet.create({
   },
   underline: {
     textDecorationLine: 'underline',
+  },
+  bgHome: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
 });
 export default Home;

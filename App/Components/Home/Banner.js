@@ -25,6 +25,7 @@ const Banner = ({
 
   const renderItem = ({item, index}) => (
     <View
+      key={index}
       style={[
         index && {marginLeft: scale(space)},
         {

@@ -10,7 +10,9 @@ const User = ({data, style}) => {
   const {onLogout} = useAuth();
   return (
     <View style={[base.shadow, styles.item, style]}>
-      <View style={styles.user}>
+      <TouchableOpacity
+        onPress={() => Navigator.navigate(SCREEN.USER)}
+        style={styles.user}>
         <Text bold fs="h6" style={styles.text}>
           Xin chào Vân
         </Text>
@@ -20,10 +22,10 @@ const User = ({data, style}) => {
             387
           </Text>
         </Text>
-      </View>
+      </TouchableOpacity>
       <View>
         <TouchableOpacity
-          onPress={() => Navigator.navigate(SCREEN.USER)}
+          onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
           style={styles.wicon}>
           <Image style={{width: 40, height: 40}} source={Images.Avatar} />
         </TouchableOpacity>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   noti: {
     width: 16,
     height: 16,
-    backgroundColor: Colors.l4,
+    backgroundColor: Colors.Highlight,
     position: 'absolute',
     top: -5,
     right: -5,
