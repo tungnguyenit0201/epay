@@ -29,7 +29,7 @@ const User = ({style}) => {
         </Text>
 
         <Button
-          size="xs"
+          size="xxs"
           bg={Colors.Highlight}
           radius={30}
           color="#fff"
@@ -64,9 +64,6 @@ const styles = StyleSheet.create({
     width: 72,
     borderRadius: 99,
     backgroundColor: Colors.black,
-  },
-  phone: {
-    height: 20,
   },
 });
 

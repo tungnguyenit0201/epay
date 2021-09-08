@@ -11,8 +11,9 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import ListItem from 'components/Common/ListItem';
-import Monney from 'components/Home/Monney';
-import Notification from 'components/Home/Notification';
+import ListItemSimple from 'components/Common/ListItemSimple';
+import MonneySimple from 'components/Home/MonneySimple';
+import Banner from 'components/Home/Banner';
 import User from 'components/Home/User';
 import XacThuc from 'components/Home/XacThuc';
 
@@ -24,6 +25,7 @@ import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
 
 const Home = () => {
+  // TODO : translation
   const {top} = useSafeAreaInsets();
   const translation = useTranslation();
   const {goSecurity} = useHome();
@@ -42,11 +44,48 @@ const Home = () => {
       name: translation.withdraw,
       screen: SCREEN.WITHDRAW,
     },
-    {icon: Images.Homes.QAPAY, name: translation.pay_qr, screen: SCREEN.QRPAY},
+
     {
       icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
       screen: SCREEN.TRANSFER,
+    },
+    {
+      icon: Images.Homes.LichSuGd,
+      name: 'Lịch sử',
+      screen: SCREEN.HISTORY,
+    },
+  ];
+  const dataBanner = [
+    {
+      img: require('images/home/banner-1.jpg'),
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      img: require('images/home/banner-2.jpg'),
+      screen: SCREEN.TOP_UP,
+    },
+  ];
+  const dataHome = [
+    {
+      icon: require('images/home/giaoThong.png'),
+      name: 'Giao thông',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: require('images/home/congAn.png'),
+      name: 'Công an',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: require('images/home/yTe.png'),
+      name: 'Y tế',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: require('images/home/cangBien.png'),
+      name: 'Cảng biển',
+      screen: SCREEN.TOP_UP,
     },
   ];
   const dataEpay = [
@@ -92,46 +131,34 @@ const Home = () => {
     <>
       <ScrollView style={base.wrap}>
         <HeaderBg style={{marginBottom: 50}}>
-          <View
-            style={[
-              {
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 15,
-              },
-            ]}>
-            <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
-            <Notification data={5} />
+          <View style={styles.rowHeader}>
+            <Image source={Images.Logo} style={[{width: 88, height: 32}]} />
+            <User style={{marginBottom: 20}} />
           </View>
-          <User style={{marginBottom: 20}} />
-          <Monney
-            style={[
-              {
-                position: 'absolute',
-                bottom: -20,
-                left: Spacing.PADDING,
-                right: Spacing.PADDING,
-              },
-            ]}
-          />
-        </HeaderBg>
 
-        <View style={base.container}>
+          <MonneySimple />
+
           <View style={{marginBottom: 20}}>
-            <ListItem
+            <ListItemSimple
               scroll
               space={1}
               col={4}
               data={dataMenu}
-              styleText={[{fontSize: 14}]}
+              styleText={[{fontSize: 14, color: Colors.white}]}
               styleWicon={[{backgroundColor: Colors.cl1}]}
-              styleIcon={[{tintColor: Colors.white}]}
+              //styleIcon={[{tintColor: Colors.white}]}
             />
           </View>
+        </HeaderBg>
+
+        <View style={base.container}>
           <XacThuc />
 
-          <View style={{marginBottom: 20}}>
+          <Banner data={dataBanner} />
+
+          <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} />
+
+          {/* <View style={{marginBottom: 20}}>
             <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
               {translation.epay_services}
             </Text>
@@ -153,7 +180,7 @@ const Home = () => {
                 style={[{height: scale(128), width: scale(335)}]}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
       {modalSmartOTP.smartOTP && (
@@ -206,6 +233,14 @@ const Home = () => {
   );
 };
 const styles = StyleSheet.create({
+  rowHeader: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+
   buttonGroup: {
     alignItems: 'center',
   },

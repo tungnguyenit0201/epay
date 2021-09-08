@@ -14,6 +14,7 @@ import {useUserInfo} from 'context/User/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 const EditInfo = () => {
+  // TODO : translation
   const {onUpdateUserAddress} = useUserInfo();
   const scrollViewRef = useRef(null);
   const {userInfo} = useUser();
@@ -21,7 +22,7 @@ const EditInfo = () => {
   const {personalInfo, personalAddress, personalIC} = userInfo;
 
   return (
-    <ScrollView style={{backgroundColor: '#fff'}}>
+    <ScrollView style={{backgroundColor: Colors.white}}>
       <HeaderBg>
         <Header title="Thông tin cá nhân" back />
       </HeaderBg>
