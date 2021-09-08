@@ -37,7 +37,7 @@ const Notification = () => {
       <HeaderBg>
         <Header title={translation.notification} back />
       </HeaderBg>
-      <View style={[base.container, styles.row, {flexDirection: 'row'}]}>
+      <View style={[base.container, styles.row, styles.flexRow]}>
         <FlatList
           data={dataType}
           keyExtractor={item => item.id}
@@ -86,7 +86,7 @@ const Notification = () => {
                   }}>
                   <Text style={styles.title}>{item?.Title}</Text>
                 </Pressable>
-                <Text>{item?.Content}</Text>
+                <Text style={styles.content}>{item?.Content}</Text>
                 {item?.ContentImgUrl && (
                   <Image
                     source={{uri: `${item?.ContentImgUrl}`}}
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingVertical: scale(5),
     paddingHorizontal: scale(10),
     borderRadius: 99,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     height: 32,
     borderColor: Colors.l2,
     borderWidth: 1,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 8,
     paddingVertical: 15,
   },
-
+  flexRow: {flexDirection: 'row'},
   head: {
     borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
@@ -145,14 +145,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  circle: {
-    width: 24,
-    height: 24,
-    borderRadius: 99,
-    overflow: 'hidden',
-    marginRight: 10,
-    backgroundColor: Colors.l2,
-  },
   type: {fontWeight: '500'},
   title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
   textCenter: {
@@ -167,6 +159,9 @@ const styles = StyleSheet.create({
   imageNotify: {
     width: '100%',
     height: 400,
+  },
+  content: {
+    marginBottom: 30,
   },
 });
 export default Notification;
