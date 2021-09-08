@@ -1,23 +1,7 @@
-import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Pressable,
-  useWindowDimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Icon,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-import {Colors, Fonts, Spacing, Images} from 'themes';
+import React from 'react';
+import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
+import {Text, Header, Icon, Button, TextInput} from 'components';
+import {Colors, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useAuth, useTouchID} from 'context/Auth/utils';
 import _ from 'lodash';
@@ -25,11 +9,14 @@ import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import BigLogo from 'components/Auth/BigLogo';
 import Content from 'components/Auth/Content';
+import {passwordSchema} from 'utils/ValidationSchemas';
+import {useError} from 'context/Common/utils';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
     useAuth();
   const translation = useTranslation();
+  const {setError} = useError();
 
   const {biometryType, onTouchID} = useTouchID();
 
@@ -40,7 +27,7 @@ const Login = ({route}) => {
         onLoginByTouchID({phone: _.get(route, 'params.phone', '')});
       }
     } catch (error) {
-      alert(error);
+      setError({ErrorCode: -1, ErrorMessage: error});
     }
   };
 
@@ -48,20 +35,7 @@ const Login = ({route}) => {
     <>
       <View style={styles.blockHeader}>
         <View>
-          <Header
-            back
-            blackIcon
-            style={styles.header}
-            renderRightComponent={() => (
-              <TouchableOpacity style={styles.pRight}>
-                <Icon
-                  icon={Images.Register.Info}
-                  style={styles.firstIcon}
-                  tintColor={Colors.BLACK}
-                />
-              </TouchableOpacity>
-            )}
-          />
+          <Header back blackIcon style={styles.header} />
         </View>
         <BigLogo />
         <Content
@@ -78,7 +52,8 @@ const Login = ({route}) => {
         }}
         onSubmit={({password}) =>
           onLogin({phone: _.get(route, 'params.phone', ''), password})
-        }>
+        }
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -124,6 +99,7 @@ const Login = ({route}) => {
                   error={touched.password && errors.password}
                   value={values.password}
                   leftIcon={Images.Transfer.Lock}
+                  autoFocus
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
@@ -144,23 +120,20 @@ const Login = ({route}) => {
                   <Button
                     label="Đăng nhập"
                     onPress={handleSubmit}
-                    style={styles.firstBtn}
+                    style={!biometryType ? styles.fullBtn : styles.firstBtn}
+                    disabled={!values.password || !_.isEmpty(errors)}
                   />
-                  <TouchableOpacity onPress={() => {}} style={styles.btn}>
-                    <Icon
-                      icon={Images.SignIn.Face}
-                      style={styles.iconSize}
-                      tintColor={Colors.white}
-                    />
-                  </TouchableOpacity>
-                </View>
 
-                {!!biometryType && (
-                  <Button
-                    label={_.startCase(biometryType)}
-                    onPress={_onLoginByTouchID}
-                  />
-                )}
+                  {!!biometryType && (
+                    <Pressable onPress={_onLoginByTouchID} style={styles.btn}>
+                      <Icon
+                        icon={Images.SignIn.Face}
+                        style={styles.iconSize}
+                        tintColor={Colors.white}
+                      />
+                    </Pressable>
+                  )}
+                </View>
               </View>
             </View>
           );
@@ -220,18 +193,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingBottom: 24,
   },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
-  firstIcon: {
-    width: scale(24),
-    height: scale(24),
-  },
   header: {
     paddingTop: 10,
     backgroundColor: Colors.white,
     color: Colors.BLACK,
+  },
+  fullBtn: {
+    flex: 1,
   },
 });
 export default Login;

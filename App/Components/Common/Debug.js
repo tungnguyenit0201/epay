@@ -50,9 +50,9 @@ export {debugData};
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    right: 0,
+    left: '37%',
     top: 0,
-    width: scale(70),
+    width: scale(100),
     height: scale(70),
   },
   modalContainer: {
