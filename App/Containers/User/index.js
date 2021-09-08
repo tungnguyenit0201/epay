@@ -20,6 +20,7 @@ import {useUserInfo} from 'context/User/utils';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 const User = ({route}) => {
+  // TODO : transation
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank, onGetQRCode} = useUserInfo();
@@ -37,11 +38,11 @@ const User = ({route}) => {
         <TouchableOpacity onPress={onGetConnectedBank} style={styles.item}>
           <Icon
             style={[styles.icon]}
-            icon={Images.Profile.MaThanhToan}
+            icon={Images.Profile.SoDu}
             size={24}
             tintColor={Colors.cl1}
           />
-          <Text size={Fonts.H6}>Ví của tôi</Text>
+          <Text size={Fonts.H6}>Số dư</Text>
           <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
             {formatMoney(userInfo?.myWallet)}
           </Text>

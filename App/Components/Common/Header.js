@@ -25,15 +25,8 @@ const Header = ({
   return (
     <View style={[styles.wrap, style]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
-      <View style={{minHeight: scale(24)}}>
-        <Text
-          semibold
-          size={Fonts.H6}
-          style={[
-            styles.title,
-            titleStyle,
-            blackIcon && {color: Colors.black},
-          ]}>
+      <View style={[{minHeight: scale(24)}]}>
+        <Text semibold fs="h6" style={[styles.title, titleStyle]}>
           {title}
         </Text>
         <View
@@ -95,20 +88,8 @@ const Header = ({
 const styles = StyleSheet.create({
   wrap: {
     paddingBottom: scale(10),
-    // backgroundColor: Colors.BACKGROUNDCOLOR,
   },
-  avoidStatusBar: {height: getStatusBarHeight()},
-  // shadow: {
-  //   shadowColor: Colors.BLACK,
-  //   shadowOffset: {
-  //     width: 0,
-  //     height: 1,
-  //   },
-  //   shadowOpacity: 0.15,
-  //   shadowRadius: 2,
-  //   elevation: 5,
-  //   zIndex: 1,
-  // },
+  //avoidStatusBar: {height: getStatusBarHeight()},
   left: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -117,11 +98,6 @@ const styles = StyleSheet.create({
   back: {
     paddingHorizontal: Spacing.PADDING / 2,
   },
-  // right: {
-  //   flex: 1,
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  // },
   title: {
     fontWeight: 'bold',
     alignSelf: 'center',
