@@ -4,6 +4,7 @@ import useUserInfo from './userInfo';
 import useSecuritySettings from './securitySettings';
 import {useSmartOTP, useSmartOTPInfo, useSyncSmartOTP} from './smartOTP';
 import useSelectRegion from './selectRegion';
+import useNotify from './notification';
 
 export {
   useVerifyInfo,
@@ -14,4 +15,5 @@ export {
   useSmartOTPInfo,
   useSyncSmartOTP,
   useSelectRegion,
+  useNotify,
 };

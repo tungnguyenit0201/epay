@@ -191,7 +191,6 @@ const useUserInfo = type => {
       setLoading(true);
       let phone = await getPhone();
       let result = await getQRCode({phone});
-      console.log('result', result);
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         dispatch({type: 'SET_QRCODE', data: result?.QRCodeInfo});
