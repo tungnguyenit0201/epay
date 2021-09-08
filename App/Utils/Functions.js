@@ -3,6 +3,10 @@ import queryString from 'query-string';
 import dayjs from 'dayjs';
 import 'intl';
 import 'intl/locale-data/jsonp/vi';
+import {COMMON_ENUM} from 'configs/Constants';
+import {getUniqueId} from 'react-native-device-info';
+import base32Encode from 'base32-encode';
+import * as OTPAuth from 'otpauth';
 
 const _baseWidth = Platform.isTV || Platform.isPad ? 834 : 375;
 const _screenWidth = Math.min(
@@ -205,6 +209,29 @@ const calculateFee = ({cash, feeData, fixedFee, bankFee, minFee, maxFee}) => {
   return total < _minFee ? _minFee : total > _maxFee ? _maxFee : total;
 };
 
+const stringToArrayBuffer = str => {
+  if (/[\u0080-\uffff]/.test(str)) {
+    throw new Error('this needs encoding, like UTF-8');
+  }
+  var arr = new Uint8Array(str.length);
+  for (var i = str.length; i--; ) arr[i] = str.charCodeAt(i);
+  return arr.buffer;
+};
+
+const generateTOTP = ({phone, smartOtpSharedKey}) => {
+  const hash = COMMON_ENUM.TOTP_KEY + phone + getUniqueId() + smartOtpSharedKey;
+  const buffer = stringToArrayBuffer(hash);
+  const hashToGenOtp = base32Encode(buffer, 'RFC4648', {padding: false});
+  const totp = new OTPAuth.TOTP({
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 60, // TODO: get config from server
+    secret: hashToGenOtp,
+  });
+  const code = totp.generate({timestamp: new Date().getTime()});
+  return code;
+};
+
 export {
   toObjectKeys,
   buildURL,
@@ -225,4 +252,5 @@ export {
   toUpperCaseFirst,
   getAll,
   calculateFee,
+  generateTOTP,
 };

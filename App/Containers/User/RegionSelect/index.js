@@ -7,7 +7,7 @@ import region from './region';
 import {useSelectRegion} from 'context/User/utils';
 
 const TITLES = {
-  //translate
+  // TODO: translate
   cites: 'Chọn thành phố / tỉnh',
   districts: 'Chọn quận / huyện',
   wards: 'Chọn phường / xã',

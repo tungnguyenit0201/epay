@@ -1,5 +1,6 @@
 import {request} from 'utils/Request';
 import {API} from 'configs';
+import OTP_TYPE from 'configs/Enums/OTPType';
 
 export const genOtp = async ({phone, functionType}) => {
   let response = null;
@@ -18,7 +19,7 @@ export const confirmOTP = async ({
   phone,
   functionType,
   OtpCode,
-  OtpType = 0,
+  OtpType = OTP_TYPE.EPAY,
 }) => {
   let response = null;
   await request({

@@ -9,11 +9,10 @@ import Navigator from 'navigations/Navigator';
 import useLoading from './loading';
 import useError from './error';
 
-const useOTP = ({functionType, phone, password, initialCode}) => {
+const useOTP = ({functionType, phone, password}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(60);
-  const [showCall, setshowCall] = useState(false);
-  const [code, setCode] = useState(initialCode || '');
+  const [code, setCode] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const {setLoading} = useLoading();
@@ -56,15 +55,9 @@ const useOTP = ({functionType, phone, password, initialCode}) => {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
         return onLogin({phone, password});
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {
-          phone,
-          functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
-        });
+        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
       case FUNCTION_TYPE.FORGOT_PASS:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {
-          phone,
-          functionType: FUNCTION_TYPE.FORGOT_PASS,
-        });
+        return Navigator.navigate(SCREEN.FORGET_NEW_PASSWORD, {phone});
       case FUNCTION_TYPE.REGISTER_SMART_OTP:
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
     }
@@ -85,25 +78,27 @@ const useOTP = ({functionType, phone, password, initialCode}) => {
       setLoading(false);
     }
   };
-
   const openCallDialog = () => {
     try {
       Linking.openURL('tel:02432252336');
     } catch {}
   };
 
+  const getLabel = () => {
+    switch (functionType) {
+      case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
+      default:
+        return `Nhập mã OTP xác thực`;
+    }
+  };
+
   useEffect(() => {
-    const generateOTP = async () => {
-      await genOtp({
-        phone,
-        functionType,
-      });
-      if (initialCode) {
-        onConfirmOTP(initialCode);
-      }
-    };
-    generateOTP();
-  }, []); // eslint-disable-line
+    genOtp({
+      phone,
+      functionType,
+    });
+  }, [phone, functionType]);
 
   useEffect(() => {
     let timer = setInterval(() => setCountdown(countdown - 1), 1000);
@@ -115,15 +110,14 @@ const useOTP = ({functionType, phone, password, initialCode}) => {
   return {
     errorMessage,
     countdown,
-    showCall,
     code,
     showModal,
     setShowModal,
     onChange,
     onConfirmOTP,
     resentOTP,
-    setshowCall,
     openCallDialog,
+    label: getLabel(),
   };
 };
 

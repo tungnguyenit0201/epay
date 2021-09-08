@@ -7,7 +7,7 @@ import {scale} from 'utils/Functions';
 import {base, Row, Col} from 'components';
 import {Fonts} from 'themes';
 
-const SelectImage = ({title, onSelectImage}) => {
+const SelectImage = ({title, onSelectImage, chooseImage}) => {
   const {image, onCamera, onPhoto} = useImagePicker(onSelectImage);
 
   return (
@@ -22,7 +22,7 @@ const SelectImage = ({title, onSelectImage}) => {
         />
       )}
 
-      <Row>
+      <Row justify="center">
         <Col width="35%">
           <Button
             onPress={onCamera}
@@ -30,9 +30,11 @@ const SelectImage = ({title, onSelectImage}) => {
             style={{paddingHorizontal: 5}}
           />
         </Col>
-        <Col width="65%">
-          <Button onPress={onPhoto} label={TEXT.SELECT_IMAGE_IN_LIBRARY} />
-        </Col>
+        {!!chooseImage && (
+          <Col width="65%">
+            <Button onPress={onPhoto} label={TEXT.SELECT_IMAGE_IN_LIBRARY} />
+          </Col>
+        )}
       </Row>
     </View>
   );

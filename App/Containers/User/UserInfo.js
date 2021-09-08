@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Button, Text, Icon, Header} from 'components';
-import {SCREEN, TEXT} from 'configs/Constants';
+import {SCREEN, PERSONAL_IC} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -17,10 +17,13 @@ import {scale} from 'utils/Functions';
 
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
+import {useTranslation} from 'context/Language';
+
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
   const {phone} = usePhone();
   const {userInfo} = useUser();
+  const translation = useTranslation();
   const PersonalInfo = userInfo.personalInfo;
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
@@ -104,19 +107,26 @@ const UserInfo = () => {
               </View>
             </View>
 
-            <Text color="#fff" size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
+            <Text color={Colors.white} size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
               {PersonalInfo?.FullName}
             </Text>
-            <Text color="#fff" mb={10}>
+            <Text color={Colors.white} mb={10}>
               {phone}
             </Text>
             <Button
+              disabled={!(ICInfor?.Verified == PERSONAL_IC.INACTIVE)}
               bg={Colors.cl4}
               radius={30}
               color={Colors.black}
-              label={ICInfor?.Active == 1 ? 'Đã xác thực' : 'Chưa xác thực'}
+              label={
+                ICInfor?.Verified == PERSONAL_IC.INACTIVE
+                  ? translation.unverified
+                  : ICInfor?.Verified == PERSONAL_IC.VERIFYING
+                  ? 'Đang xác thực'
+                  : 'Đã xác thực'
+              }
               style={{minWidth: 150}}
-              onPress={() => Navigator.push(SCREEN.VERIFY_IDENTITY_CARD)}
+              onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
             />
           </View>
         </View>
@@ -151,16 +161,20 @@ const UserInfo = () => {
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
             <Text>
-              {ICInfor?.Active == 1 ? 'Đã xác thực' : 'Chưa xác thực'}
+              {ICInfor?.Verified == PERSONAL_IC.INACTIVE
+                ? translation.unverified
+                : ICInfor?.Verified == PERSONAL_IC.VERIFYING
+                ? 'Đang xác thực'
+                : 'Đã xác thực'}
             </Text>
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
                 Navigator.push(SCREEN.NOTIFICATION);
               }}>
-              <Text style={styles.link}>
-                {ICInfor?.Active == 1 ? '' : 'Xác thực tài khoản'}
-              </Text>
+              {ICInfor?.Active == PERSONAL_IC.INACTIVE && (
+                <Text style={styles.link}>{'Xác thực tài khoản'}</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>

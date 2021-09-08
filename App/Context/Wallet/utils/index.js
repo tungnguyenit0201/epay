@@ -1,5 +1,17 @@
 import useBankInfo from './bankInfo';
 import useTopUp from './topUp';
-import {useTopUpWithdraw, useConfirmation} from './topUpWithdraw';
+import {
+  useTopUpWithdraw,
+  useConfirmation,
+  useOTPBySmartOTP,
+  useTransactionResult,
+} from './topUpWithdraw';
 
-export {useBankInfo, useTopUp, useTopUpWithdraw, useConfirmation};
+export {
+  useBankInfo,
+  useTopUp,
+  useTopUpWithdraw,
+  useConfirmation,
+  useOTPBySmartOTP,
+  useTransactionResult,
+};

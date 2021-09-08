@@ -7,14 +7,22 @@ import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 
-const OTPContainer = ({code, onChange, onCodeFilled, message}) => {
+const OTPContainer = ({
+  code,
+  onChange,
+  onCodeFilled,
+  message,
+  countdown,
+  resentOTP,
+  onChangePhone,
+  label,
+}) => {
   const translation = useTranslation();
   return (
+    // TODO: translate
     <>
       <Text style={[styles.header, styles.textCenter]}>{`Nhập OTP`}</Text>
-      <Text style={[styles.textDefault, styles.textCenter]}>
-        {`Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`}
-      </Text>
+      <Text style={[styles.textDefault, styles.textCenter]}>{label}</Text>
       <OTPInputView
         style={styles.wrapOtp}
         pinCount={6}
@@ -26,14 +34,15 @@ const OTPContainer = ({code, onChange, onCodeFilled, message}) => {
         clearInputs={message}
         code={code}
       />
-      {/* <Text style={styles.message}>{message}</Text> */}
       {/* <OTP onChange={onChange} message={message} /> */}
 
-      {/* show message when app send otp code again */}
       <View style={styles.flexRow_1}>
         <Text style={styles.fontSize_1}>
           Gửi lại mã xác thực (OTP) sau:
-          <Pressable style={{marginTop: -3}}>
+          <Pressable
+            style={{marginTop: -3}}
+            disabled={countdown > 0}
+            onPress={resentOTP}>
             <Text
               style={[
                 styles.fontSize_1,
@@ -41,22 +50,19 @@ const OTPContainer = ({code, onChange, onCodeFilled, message}) => {
                   color: Colors.cl1,
                 },
               ]}>
-              {' '}
-              00:51
+              {countdown > 0 ? ` 00:${countdown}` : ` Gửi lại`}
             </Text>
           </Pressable>
         </Text>
 
-        <Pressable>
+        <Pressable onPress={onChangePhone}>
           <Text style={styles.fontSize_1}>
             {translation.change_the_phone_number}
           </Text>
         </Pressable>
       </View>
 
-      <Text style={styles.message}>
-        {translation.incorrect_verification_code}
-      </Text>
+      <Text style={styles.message}>{message}</Text>
     </>
   );
 };

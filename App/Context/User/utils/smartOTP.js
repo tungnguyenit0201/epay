@@ -17,8 +17,8 @@ import {
   genOtp,
   syncSmartOTP,
 } from 'services/common';
-import {useError, useLoading} from 'context/Common/utils';
-import totp from 'totp-generator';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {useWallet} from 'context/Wallet';
 
 const useSmartOTP = params => {
   const {phone} = useUser();
@@ -26,6 +26,8 @@ const useSmartOTP = params => {
   const [message, setMessage] = useState('');
   const {setError} = useError();
   const {setLoading} = useLoading();
+  const {dispatch: dispatchWallet} = useWallet();
+  const {setSmartOTPSharedKey} = useAsyncStorage();
 
   const onAcceptTermConditions = (value = true) => {
     setAccepted(value);
@@ -71,7 +73,7 @@ const useSmartOTP = params => {
 
   const onConfirmPassword = async ({password, confirmPassword}) => {
     if (password !== confirmPassword) {
-      setMessage('Mật khẩu không trung khớp'); // translate
+      setMessage('Mật khẩu không trung khớp'); // TODO: translate
       return;
     }
     const passwordEncrypted = await sha256(password);
@@ -86,6 +88,7 @@ const useSmartOTP = params => {
       return;
     }
     // success
+    result?.SharedKey && setSmartOTPSharedKey(result.SharedKey);
     Navigator.navigate(SCREEN.SMART_OTP_RESULT);
   };
 
@@ -114,7 +117,7 @@ const useSmartOTP = params => {
     confirmPassword,
   }) => {
     if (newPassword !== confirmPassword) {
-      setMessage('Mật khẩu không trung khớp'); // translate
+      setMessage('Mật khẩu không trung khớp'); // TODO: translate
       return;
     }
     setLoading(true);
@@ -149,7 +152,7 @@ const useSmartOTP = params => {
       case 'transaction':
         return 'Nhập mật khẩu smart OTP';
     }
-    // translate
+    // TODO: translate
   };
 
   const onBackHome = () => {
@@ -192,12 +195,13 @@ const useSmartOTP = params => {
     const result = await checkSmartOTPKey({phone, password: passwordEncrypted});
     switch (_.get(result, 'ErrorCode')) {
       case ERROR_CODE.SUCCESS:
-        const code = totp(COMMON_ENUM.TOTP_KEY);
-        Navigator.replaceLast(SCREEN.OTP, {
-          functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
-          phone,
-          initialCode: code,
+        dispatchWallet({
+          type: 'UPDATE_TRANSACTION_INFO',
+          data: {
+            functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
+          },
         });
+        Navigator.replaceLast(SCREEN.OTP_BY_SMART_OTP);
         return;
       case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
         setError(result);
@@ -267,14 +271,16 @@ const useSmartOTPInfo = () => {
 const useSyncSmartOTP = params => {
   const {phone} = useUser();
   const [status, setStatus] = useState(params?.type);
+  const {setSmartOTPSharedKey} = useAsyncStorage();
 
   const onSync = useCallback(async () => {
     const result = await syncSmartOTP({
       phone,
       password: params?.passwordEncrypted,
     });
-    setStatus(result?.ErrorCode === 0 ? 'success' : 'failure');
-  }, [phone, params?.passwordEncrypted]);
+    setStatus(result?.ErrorCode === ERROR_CODE.SUCCESS ? 'success' : 'failure');
+    result?.SharedKey && setSmartOTPSharedKey(result.SharedKey);
+  }, [phone, params?.passwordEncrypted, setSmartOTPSharedKey]);
 
   useEffect(() => {
     params?.type === 'sync' && onSync();

@@ -81,7 +81,7 @@ const QRPay = ({route}) => {
           bg={Colors.white}
           border={Colors.cl1}
           color={Colors.cl1}
-          label={'Nhập số tiền'} //translate
+          label={'Nhập số tiền'} // TODO: translate
           onPress={() => {
             Navigator.navigate(SCREEN.SELECT_MONEY);
           }}

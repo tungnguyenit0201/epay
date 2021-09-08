@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import Navigator from 'navigations/Navigator';
 import {
   ERROR_CODE,
@@ -9,10 +9,11 @@ import {
 } from 'configs/Constants';
 import _ from 'lodash';
 import {useWallet} from '..';
-import {getBankFee} from 'services/wallet';
-import {calculateFee, formatMoney} from 'utils/Functions';
-import {checkSmartOTP} from 'services/common';
+import {getBankFee, payinConnectedBank} from 'services/wallet';
+import {calculateFee, formatMoney, generateTOTP} from 'utils/Functions';
+import {checkSmartOTP, confirmOTP, genOtp, genSmartOTP} from 'services/common';
 import {useUser} from 'context/User';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 
 const useTopUpWithdraw = ({transType}) => {
   const [isContinueEnabled, setContinueEnabled] = useState(false);
@@ -27,6 +28,8 @@ const useTopUpWithdraw = ({transType}) => {
 
   const onSuggestMoney = value => {
     inputRef.current?.setValue && inputRef.current.setValue(`${value}`);
+    contentRef.current.inputValue = value;
+    onCheckContinueEnabled();
   };
 
   const onChangeCash = value => {
@@ -53,7 +56,7 @@ const useTopUpWithdraw = ({transType}) => {
   const onContinue = async () => {
     const {bank, inputValue, transFormType, fee} = contentRef.current;
     //
-    if (transFormType !== TRANS_FORM_TYPE.CONNECTED_BANK) {
+    if (transFormType != TRANS_FORM_TYPE.CONNECTED_BANK) {
       alert('Chưa làm');
       return;
     }
@@ -68,7 +71,7 @@ const useTopUpWithdraw = ({transType}) => {
         fee,
       },
     });
-    Navigator.navigate(SCREEN.CONFIRMATION);
+    Navigator.push(SCREEN.CONFIRMATION);
   };
 
   return {
@@ -84,6 +87,7 @@ const useTopUpWithdraw = ({transType}) => {
 const useConfirmation = () => {
   const {transaction} = useWallet();
   const {phone} = useUser();
+  const {setError} = useError();
 
   const {
     transType,
@@ -92,7 +96,7 @@ const useConfirmation = () => {
     amount,
   } = transaction;
   const transTypeText =
-    transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // translate
+    transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // TODO: translate
   const feeValue = calculateFee({cash: amount, feeData: fee});
   const total = feeValue + amount;
   const data = [
@@ -121,7 +125,7 @@ const useConfirmation = () => {
     if (isSmartOTPActived) {
       Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'transaction'});
     } else {
-      alert('Vui lòng kích hoạt smart otp');
+      setError({ErrorCode: -1, ErrorMessage: 'Vui lòng kích hoạt smart otp.'}); // TODO: transalate
       // Navigator.push(SCREEN.OTP, {functionType: FUNCTION_TYPE.RECHARGE_BY_BANK});
     }
   };
@@ -137,4 +141,111 @@ const useConfirmation = () => {
   };
 };
 
-export {useTopUpWithdraw, useConfirmation};
+const useOTPBySmartOTP = () => {
+  const {transaction, dispatch} = useWallet();
+  const {phone} = useUser();
+  const [code, setCode] = useState('');
+  const {setError} = useError();
+  const {setLoading} = useLoading();
+  const {getSmartOTPSharedKey} = useAsyncStorage();
+
+  const generateOTP = async () => {
+    setLoading(true);
+    const smartOtpSharedKey = await getSmartOTPSharedKey();
+    const otp = generateTOTP({phone, smartOtpSharedKey});
+    await genOtp({
+      phone,
+      functionType: transaction?.functionType,
+    });
+    setLoading(false);
+    setCode(otp);
+  };
+
+  useEffect(() => {
+    generateOTP();
+  }, []); // eslint-disable-line
+
+  const onConfirm = async () => {
+    const result = await confirmOTP({
+      phone,
+      OtpCode: code,
+      functionType: transaction?.functionType,
+    });
+    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+      setError(result);
+      return;
+    }
+    onTransaction();
+  };
+
+  const onTransaction = async () => {
+    const {transType, transFormType, amount, bank, fee} = transaction;
+    let result = null;
+    // TopUp
+    if (transType == TRANS_TYPE.CashIn) {
+      switch (parseInt(transFormType)) {
+        case TRANS_FORM_TYPE.CONNECTED_BANK:
+          result = await payinConnectedBank({
+            phone,
+            amount: parseInt(amount),
+            bankID: bank?.BankId,
+            fixedFee: fee?.FixedFee,
+            bankFee: fee?.BankFee,
+          });
+      }
+    }
+    // Withdraw
+    if (transType == TRANS_TYPE.CashOut) {
+    }
+    dispatch({
+      type: 'UPDATE_TRANSACTION_INFO',
+      data: {
+        result,
+      },
+    });
+    Navigator.replaceLast(
+      result?.ErrorCode === ERROR_CODE.SUCCESS
+        ? SCREEN.TRANSACTION_SUCCESS
+        : SCREEN.TRANSACTION_FAILURE,
+    );
+  };
+
+  return {code, onConfirm};
+};
+
+const useTransactionResult = () => {
+  const {transaction} = useWallet();
+  const {amount, fee, bank, result, transType} = transaction;
+
+  const loadData = () => {
+    // TODO: translate
+    return [
+      {label: 'Mã giao dịch', value: 'Không có'},
+      {label: 'Thời gian', value: result?.ResponseTime},
+    ];
+  };
+
+  const onRetry = () => {
+    let screen = null;
+    switch (transType) {
+      case TRANS_TYPE.CashIn:
+        screen = SCREEN.TOP_UP;
+        break;
+    }
+    Navigator.navigate(screen);
+  };
+
+  const onBackHome = () => {
+    Navigator.navigate(SCREEN.TAB_NAVIGATION);
+    Navigator.navigate(SCREEN.HOME);
+  };
+
+  return {data: loadData(), message: result?.ErrorMessage, onRetry, onBackHome};
+};
+
+export {
+  useTopUpWithdraw,
+  useConfirmation,
+  useOTPBySmartOTP,
+  useTransactionResult,
+};

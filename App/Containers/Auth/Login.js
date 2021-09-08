@@ -1,13 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Pressable,
-  useWindowDimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
 import {
   Text,
   InputBlock,
@@ -25,6 +17,9 @@ import {useAuth, useTouchID} from 'context/Auth/utils';
 import _, {camelCase} from 'lodash';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
+import {passwordSchema} from 'utils/ValidationSchemas';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
@@ -46,56 +41,17 @@ const Login = ({route}) => {
 
   return (
     <>
-      <View
-        style={{
-          backgroundColor: Colors.white,
-          paddingBottom: 24,
-        }}>
+      <View style={styles.blockHeader}>
         <View>
-          <Header
-            back
-            blackIcon
-            style={{
-              paddingTop: 10,
-              backgroundColor: Colors.white,
-              color: Colors.BLACK,
-            }}
-          />
-          <TouchableOpacity
-            style={{
-              position: 'absolute',
-              bottom: scale(10),
-              right: 15,
-            }}>
-            <Icon
-              icon={Images.Register.Info}
-              style={{
-                width: scale(24),
-                height: scale(24),
-              }}
-              tintColor={Colors.BLACK}
-            />
-          </TouchableOpacity>
+          <Header back blackIcon style={styles.header} />
         </View>
-
-        <View
-          style={{
-            marginBottom: Spacing.PADDING + 40,
-            alignItems: 'center',
-          }}>
-          <Image source={Images.logoEpay} resizeMode="contain" />
-        </View>
-
-        <View style={{paddingHorizontal: Spacing.PADDING}}>
-          <Text bold fs="h5" mb={15} centered>
-            {translation.enter_your_password}
-          </Text>
-          <Text centered fs="md" color={Colors.l6}>
-            {
-              translation.password_for_account_security_and_transaction_confirmation_at_checkout
-            }
-          </Text>
-        </View>
+        <BigLogo />
+        <Content
+          title={translation.enter_your_password}
+          text={
+            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+          }
+        />
       </View>
 
       <Formik
@@ -104,7 +60,8 @@ const Login = ({route}) => {
         }}
         onSubmit={({password}) =>
           onLogin({phone: _.get(route, 'params.phone', ''), password})
-        }>
+        }
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -150,9 +107,10 @@ const Login = ({route}) => {
                   error={touched.password && errors.password}
                   value={values.password}
                   leftIcon={Images.Transfer.Lock}
+                  autoFocus
                 />
 
-                <View style={[styles.box_1, {marginTop: 5}]}>
+                <View style={[styles.box, {marginTop: 5}]}>
                   <Pressable onPress={onForgetPassword}>
                     <Text style={[styles.link_text]}>
                       {translation.forgot_password}
@@ -166,60 +124,24 @@ const Login = ({route}) => {
               </View>
 
               <View style={[styles.wrap, styles.py_1]}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                  }}>
+                <View style={styles.flexRow}>
                   <Button
                     label="Đăng nhập"
                     onPress={handleSubmit}
-                    style={{
-                      flex: 1,
-                      marginRight: 50,
-                      borderTopRightRadius: 0,
-                      borderBottomRightRadius: 0,
-                    }}
+                    style={!biometryType ? styles.fullBtn : styles.firstBtn}
+                    disabled={!values.password || !_.isEmpty(errors)}
                   />
-                  <TouchableOpacity
-                    onPress={() => {}}
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      top: 0,
-                      width: 48,
-                      height: '100%',
-                      backgroundColor: Colors.cl2,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderTopRightRadius: 8,
-                      borderBottomRightRadius: 8,
-                    }}>
-                    {/* <Icon
-                      icon={Images.SignIn.FingerPrint}
-                      style={{
-                        width: scale(17),
-                        height: scale(17),
-                      }}
-                      tintColor={Colors.white}
-                    /> */}
-                    <Icon
-                      icon={Images.SignIn.Face}
-                      style={{
-                        width: scale(17),
-                        height: scale(17),
-                      }}
-                      tintColor={Colors.white}
-                    />
-                  </TouchableOpacity>
-                </View>
 
-                {!!biometryType && (
-                  <Button
-                    label={_.startCase(biometryType)}
-                    onPress={_onLoginByTouchID}
-                  />
-                )}
+                  {!!biometryType && (
+                    <Pressable onPress={_onLoginByTouchID} style={styles.btn}>
+                      <Icon
+                        icon={Images.SignIn.Face}
+                        style={styles.iconSize}
+                        tintColor={Colors.white}
+                      />
+                    </Pressable>
+                  )}
+                </View>
               </View>
             </View>
           );
@@ -242,12 +164,50 @@ const styles = StyleSheet.create({
   link_text: {
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
-    textDecorationLine: 'underline',
+    // textDecorationLine: 'underline',
   },
-  box_1: {
+  box: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',
+  },
+  flexRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  btn: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: 48,
+    height: '100%',
+    backgroundColor: Colors.cl2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  firstBtn: {
+    flex: 1,
+    marginRight: 50,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  iconSize: {
+    width: scale(17),
+    height: scale(17),
+  },
+  blockHeader: {
+    backgroundColor: Colors.white,
+    paddingBottom: 24,
+  },
+  header: {
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
+  },
+  fullBtn: {
+    flex: 1,
   },
 });
 export default Login;

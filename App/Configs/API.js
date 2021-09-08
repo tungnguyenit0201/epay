@@ -18,6 +18,7 @@ export default {
     CHECK_SMART_OTP_KEY: 'smartotp/smartotp_key_check',
     CHANGE_SMART_OTP_PASSWORD: 'smartotp/smartotp_pass_change',
     SYNC_SMART_OTP: 'smartotp/smartotp_synchronize',
+    GEN_SMART_OTP: 'smartotp/gen_smart_otp',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
@@ -38,6 +39,7 @@ export default {
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
     CHANGE_LIMIT: 'security/change_limit',
     FEE_CALCULATOR: 'bank/fee_calculator',
+    PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

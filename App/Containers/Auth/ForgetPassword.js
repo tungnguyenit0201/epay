@@ -25,54 +25,25 @@ import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 import {useForgetPassword, usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
 
 const ForgetPassword = () => {
   const {phone} = usePhone();
   const {onSubmitPhone} = useForgetPassword();
   const translation = useTranslation();
 
+  // TODO: translate
   return (
     <View style={styles.container}>
       <View>
-        <Header
-          back
-          blackIcon
-          style={{
-            paddingTop: 10,
-            backgroundColor: Colors.white,
-            color: Colors.BLACK,
-          }}
-        />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            bottom: scale(10),
-            right: 15,
-          }}>
-          <Icon
-            icon={Images.Register.Info}
-            style={{
-              width: scale(24),
-              height: scale(24),
-            }}
-            tintColor={Colors.BLACK}
-          />
-        </TouchableOpacity>
+        <Header back blackIcon style={styles.header} />
       </View>
-
-      <View
-        style={{
-          marginBottom: Spacing.PADDING + 40,
-          alignItems: 'center',
-        }}>
-        <Image source={Images.logoEpay} resizeMode="contain" />
-      </View>
-
-      <View style={{paddingHorizontal: Spacing.PADDING}}>
-        <Text bold fs="h5" centered>
-          Quên mật khẩu
-        </Text>
-      </View>
+      <BigLogo />
+      <Content
+        title="Quên mật khẩu"
+        text="Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới"
+      />
 
       <Formik
         key={phone}
@@ -106,29 +77,17 @@ const ForgetPassword = () => {
                     flex: 1,
                   },
                 ]}>
-                {/* <TextInput
+                <TextInput
                   numeric
+                  autoFocus
+                  placeholder={translation.enter_your_phone_number}
+                  required
                   onChange={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   error={touched.phone && errors.phone}
                   value={values.phone}
-                  style={styles.inputBlock}
-                  placeholderTextColor={Colors.BLACK}
-                  placeholder="Nhập số điện thoại"
-                /> */}
-                <TextInput
-                  placeholder={translation.enter_your_phone_number}
-                  password
-                  required
-                  onChange={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  // error={touched.phone && errors.phone}
-                  value={values.password}
-                  leftIcon={Images.Transfer.Lock}
+                  leftIcon={Images.Phone_1}
                 />
-                <Text style={styles.message}>
-                  {translation.password_does_not_match}
-                </Text>
               </View>
               <View
                 style={[
@@ -159,15 +118,10 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  // header: {
-  //   fontSize: Fonts.H2,
-  //   fontWeight: 'bold',
-  //   paddingBottom: Spacing.PADDING,
-  // },
-  message: {
-    marginTop: 12,
-    color: Colors.Highlight,
-    textAlign: 'center',
+  header: {
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
   },
   /////////////////////////////
   // content: {
