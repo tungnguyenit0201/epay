@@ -31,7 +31,7 @@ const User = ({style}) => {
         </Text>
 
         <Button
-          size="xs"
+          size="xxs"
           disabled={!(userInfo.personalIC?.Verified == PERSONAL_IC.INACTIVE)}
           bg={Colors.Highlight}
           radius={30}

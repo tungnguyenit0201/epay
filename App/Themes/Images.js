@@ -58,6 +58,7 @@ export default {
     RutTien: require('images/home/RutTien.png'),
     QAPAY: require('images/home/QAPAY.png'),
     ChuyenTien: require('images/home/ChuyenTien.png'),
+    LichSuGd: require('images/home/LichSuGd.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),

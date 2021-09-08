@@ -21,6 +21,7 @@ const OTP = ({route}) => {
     onConfirmOTP,
     resentOTP,
     openCallDialog,
+    label,
   } = useOTP(route?.params);
   const translation = useTranslation();
 
@@ -57,6 +58,7 @@ const OTP = ({route}) => {
             countdown={countdown}
             resentOTP={resentOTP}
             onChangePhone={onChangePhone}
+            label={label}
           />
         </View>
       </View>

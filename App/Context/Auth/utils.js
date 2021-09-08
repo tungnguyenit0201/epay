@@ -17,14 +17,25 @@ import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
+import Keychain from 'react-native-keychain';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
-  const {getPasswordEncrypted, getTouchIdEnabled} = useAsyncStorage();
+  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
 
   const checkBiometry = async () => {
     const touchIdEnabled = await getTouchIdEnabled();
-    const passwordEncrypted = await getPasswordEncrypted();
+    let passwordEncrypted = null;
+    try {
+      const credentials = await Keychain.getGenericPassword();
+      passwordEncrypted =
+        credentials?.username == (await getPhone())
+          ? credentials?.password
+          : null;
+    } catch (error) {
+      __DEV__ && console.log("Keychain couldn't be accessed!", error);
+    }
+
     if (!touchIdEnabled || !passwordEncrypted) {
       return;
     }
@@ -76,8 +87,7 @@ const useAuth = () => {
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
-  const {setPhone, setPasswordEncrypted, getPasswordEncrypted, setToken} =
-    useAsyncStorage();
+  const {setPhone, setToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
 
   const onCheckPhoneExist = async ({phone}) => {
@@ -131,7 +141,7 @@ const useAuth = () => {
         });
 
       case ERROR_CODE.SUCCESS:
-        setPasswordEncrypted(passwordEncrypted);
+        Keychain.setGenericPassword(phone, passwordEncrypted);
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
@@ -146,11 +156,18 @@ const useAuth = () => {
   };
 
   const onLoginByTouchID = async ({phone}) => {
-    const passwordEncrypted = await getPasswordEncrypted();
-    if (!passwordEncrypted || !phone) {
-      return;
+    try {
+      setLoading(true);
+      const credentials = await Keychain.getGenericPassword();
+      const passwordEncrypted = credentials?.password;
+      if (!passwordEncrypted || !phone) {
+        return;
+      }
+      onLogin({phone, password: passwordEncrypted, encrypted: true});
+      setLoading(false);
+    } catch (error) {
+      __DEV__ && console.log("Keychain couldn't be accessed!", error);
     }
-    onLogin({phone, password: passwordEncrypted, encrypted: true});
   };
 
   const onLogout = async () => {

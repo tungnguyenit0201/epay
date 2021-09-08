@@ -33,39 +33,17 @@ const ForgetPassword = () => {
   const {onSubmitPhone} = useForgetPassword();
   const translation = useTranslation();
 
+  // TODO: translate
   return (
     <View style={styles.container}>
       <View>
-        <Header
-          back
-          blackIcon
-          style={styles.header}
-          renderRightComponent={() => (
-            <TouchableOpacity style={styles.pRight}>
-              <Icon
-                icon={Images.Register.Info}
-                style={styles.firstIcon}
-                tintColor={Colors.BLACK}
-              />
-            </TouchableOpacity>
-          )}
-        />
+        <Header back blackIcon style={styles.header} />
       </View>
       <BigLogo />
-      <Content title="Quên mật khẩu" />
-      {/* <View
-        style={{
-          marginBottom: Spacing.PADDING + 40,
-          alignItems: 'center',
-        }}>
-        <Image source={Images.logoEpay} resizeMode="contain" />
-      </View> 
-      
-      <View style={{paddingHorizontal: Spacing.PADDING}}>
-        <Text bold fs="h5" centered>
-          Quên mật khẩu
-        </Text>
-      </View>*/}
+      <Content
+        title="Quên mật khẩu"
+        text="Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới"
+      />
 
       <Formik
         key={phone}
@@ -99,28 +77,17 @@ const ForgetPassword = () => {
                     flex: 1,
                   },
                 ]}>
-                {/* <TextInput
-                  numeric
-                  onChange={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  error={touched.phone && errors.phone}
-                  value={values.phone}
-                  style={styles.inputBlock}
-                  placeholderTextColor={Colors.BLACK}
-                  placeholder="Nhập số điện thoại"
-                /> */}
                 <TextInput
+                  numeric
+                  autoFocus
                   placeholder={translation.enter_your_phone_number}
                   required
                   onChange={handleChange('phone')}
                   onBlur={handleBlur('phone')}
-                  // error={touched.phone && errors.phone}
+                  error={touched.phone && errors.phone}
                   value={values.phone}
                   leftIcon={Images.Phone_1}
                 />
-                <Text style={styles.message}>
-                  {translation.password_does_not_match}
-                </Text>
               </View>
               <View
                 style={[
@@ -150,19 +117,6 @@ const styles = StyleSheet.create({
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
-  },
-  message: {
-    marginTop: 12,
-    color: Colors.Highlight,
-    textAlign: 'center',
-  },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
-  firstIcon: {
-    width: scale(24),
-    height: scale(24),
   },
   header: {
     paddingTop: 10,
