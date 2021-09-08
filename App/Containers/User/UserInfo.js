@@ -20,6 +20,7 @@ import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 
 const UserInfo = () => {
+  //translate
   const {top} = useSafeAreaInsets();
   const {phone} = usePhone();
   const {userInfo} = useUser();
