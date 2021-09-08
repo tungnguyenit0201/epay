@@ -45,6 +45,11 @@ export default function userReducer(state, action) {
         ...state,
         qrCode: action?.data,
       };
+    case 'SET_NOTIFY':
+      return {
+        ...state,
+        listNotify: action?.data,
+      };
     default:
       return state;
   }
