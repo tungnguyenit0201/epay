@@ -7,6 +7,7 @@ import TRANS_TYPE from './Enums/TransType';
 import TRANS_FORM_TYPE from './Enums/TransFormType';
 import COMMON_ENUM from './Enums/Common';
 import PERSONAL_IC from './Enums/PersonalIC';
+import NOTIFY from './Enums/Notify';
 
 export {
   TEXT,
@@ -18,4 +19,5 @@ export {
   TRANS_FORM_TYPE,
   COMMON_ENUM,
   PERSONAL_IC,
+  NOTIFY,
 };
