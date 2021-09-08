@@ -18,6 +18,7 @@ export default {
     Category: require('images/Category.png'),
     Search: require('images/Search.png'),
     User: require('images/Signin.png'),
+    BottomTab: require('images/BottomTab.png'),
   },
 
   Check: require('images/Check.png'),
