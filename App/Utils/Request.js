@@ -10,6 +10,7 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {debugData} from 'components/Common/Debug';
 
 let transactionID = '';
 
@@ -86,6 +87,7 @@ async function request({
         );
         if (__DEV__) {
           console.log(method, buildURL(root + url, query), postParams, result);
+          debugData.push(result);
         }
       }
       if (
