@@ -15,15 +15,14 @@ const OTPContainer = ({
   countdown,
   resentOTP,
   onChangePhone,
+  label,
 }) => {
   const translation = useTranslation();
   return (
     // TODO: translate
     <>
       <Text style={[styles.header, styles.textCenter]}>{`Nhập OTP`}</Text>
-      <Text style={[styles.textDefault, styles.textCenter]}>
-        {`Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`}
-      </Text>
+      <Text style={[styles.textDefault, styles.textCenter]}>{label}</Text>
       <OTPInputView
         style={styles.wrapOtp}
         pinCount={6}

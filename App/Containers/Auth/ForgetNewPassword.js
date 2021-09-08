@@ -1,45 +1,43 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {useRegister} from 'context/Auth/utils';
+import {Colors, Spacing, Images} from 'themes';
+import {useForgetPassword} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
-import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
-import {HelpModal, Content, BigLogo} from 'components/Auth';
+import BigLogo from 'components/Auth/BigLogo';
+import Content from 'components/Auth/Content';
+import _ from 'lodash';
 
-const RegisterPassword = ({route}) => {
-  const {phone, functionType} = route?.params;
-  const {
-    active,
-    setActive,
-    showModal,
-    setShowModal,
-    openCallDialog,
-    createAccount,
-    onNavigate,
-  } = useRegister();
+const ForgetNewPassword = ({route}) => {
+  const {phone} = route?.params;
+  const {onNewPassword} = useForgetPassword();
   const scrollViewRef = useRef(null);
   const translation = useTranslation();
-
   const onSubmit = values => {
-    createAccount({...values, phone});
+    onNewPassword({...values, phone});
   };
 
   return (
-    // TODO: translate
     <View style={styles.container}>
       <View>
         <Header
           back
           blackIcon
           style={styles.header}
+          title={translation.reset_your_password}
+          titleStyle={styles.headerTitle}
           renderRightComponent={() => (
-            <TouchableOpacity
-              style={styles.pRight}
-              onPress={() => setShowModal(true)}>
+            <TouchableOpacity style={styles.pRight}>
               <Icon
                 icon={Images.Register.Info}
                 style={styles.firstIcon}
@@ -79,14 +77,14 @@ const RegisterPassword = ({route}) => {
                 keyboardShouldPersistTaps="always"
                 contentContainerStyle={{paddingVertical: scale(24)}}
                 ref={scrollViewRef}>
-                <BigLogo />
+                {/* <BigLogo /> */}
                 <Content
-                  title="Tạo mật khẩu Epay"
+                  // title="Tạo mật khẩu Epay"
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
-                  style={{paddingBottom: Spacing.PADDING}}
                 />
+                <View style={{height: scale(24)}} />
                 <TextInput
                   password
                   required
@@ -117,30 +115,8 @@ const RegisterPassword = ({route}) => {
               </ScrollView>
 
               <View style={{paddingBottom: 20}}>
-                <View style={styles.flexRow}>
-                  <Checkbox onPress={setActive} />
-                  <Text>
-                    {` Tôi đồng ý với các `}
-                    <TouchableOpacity
-                      style={{marginTop: -3}}
-                      onPress={() => onNavigate(SCREEN.AGREEMENT)}>
-                      <Text style={styles.firstLink}>
-                        {'Thoả thuận người dùng '}
-                      </Text>
-                    </TouchableOpacity>
-                    và
-                    <TouchableOpacity
-                      style={{marginTop: -3}}
-                      onPress={() => onNavigate(SCREEN.POLICY)}>
-                      <Text style={styles.firstLink}>
-                        {'Chính sách quyền riêng tư '}
-                      </Text>
-                    </TouchableOpacity>
-                    của Epay Services
-                  </Text>
-                </View>
                 <Button
-                  disabled={!active}
+                  disabled={!_.isEmpty(errors)}
                   mt={10}
                   label={translation?.continue}
                   onPress={handleSubmit}
@@ -150,11 +126,6 @@ const RegisterPassword = ({route}) => {
           );
         }}
       </Formik>
-      <HelpModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        onPress={openCallDialog}
-      />
     </View>
   );
 };
@@ -180,15 +151,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     color: Colors.BLACK,
   },
-  firstLink: {
-    textDecorationLine: 'underline',
-    marginLeft: 3,
-  },
-  flexRow: {flexDirection: 'row'},
-  textNote: {
-    fontSize: 12,
-    fontWeight: '500',
-    paddingRight: 9,
+  headerTitle: {
+    color: Colors.BLACKTEXT,
   },
 });
-export default RegisterPassword;
+export default ForgetNewPassword;

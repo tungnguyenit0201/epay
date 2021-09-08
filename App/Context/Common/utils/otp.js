@@ -57,15 +57,9 @@ const useOTP = ({functionType, phone, password}) => {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
         return onLogin({phone, password});
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {
-          phone,
-          functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
-        });
+        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
       case FUNCTION_TYPE.FORGOT_PASS:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {
-          phone,
-          functionType: FUNCTION_TYPE.FORGOT_PASS,
-        });
+        return Navigator.navigate(SCREEN.FORGET_NEW_PASSWORD, {phone});
       case FUNCTION_TYPE.REGISTER_SMART_OTP:
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
       case FUNCTION_TYPE.AUTH_EMAIL:
@@ -96,6 +90,15 @@ const useOTP = ({functionType, phone, password}) => {
     } catch {}
   };
 
+  const getLabel = () => {
+    switch (functionType) {
+      case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
+      default:
+        return `Nhập mã OTP xác thực`;
+    }
+  };
+
   useEffect(() => {
     genOtp({
       phone,
@@ -120,6 +123,7 @@ const useOTP = ({functionType, phone, password}) => {
     onConfirmOTP,
     resentOTP,
     openCallDialog,
+    label: getLabel(),
   };
 };
 
