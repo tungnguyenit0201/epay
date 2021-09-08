@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
-import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
+import {ERROR_CODE, SCREEN, FUNCTION_TYPE, NOTIFY} from 'configs/Constants';
 import {
   useAsyncStorage,
   useError,
@@ -105,13 +105,13 @@ const useNotify = () => {
   };
   const selectNotify = type => {
     switch (type) {
-      case 1:
+      case NOTIFY.CHARGES:
         onGetChargesNotify();
         break;
-      case 2:
+      case NOTIFY.PROMOTION:
         onGetPromotionNotify();
         break;
-      case 3:
+      case NOTIFY.OTHER:
         onGetOtherNotify();
         break;
       default:
