@@ -21,7 +21,19 @@ const useNotify = () => {
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
-  const {dispatch} = useUser();
+  const {dispatch, userInfo} = useUser();
+
+  let listChargesNotify = [];
+  let listPromotionNotify = [];
+  let listOtherNotify = [];
+  let listAllNotify = [];
+  const addFlag = (dataNotify, flag) => {
+    const listNotify = dataNotify.map(value => {
+      value.flag = flag;
+      return value;
+    });
+    return listNotify;
+  };
   const onGetChargesNotify = async () => {
     try {
       setLoading(true);
@@ -30,8 +42,8 @@ const useNotify = () => {
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
         case ERROR_CODE.SUCCESS:
-          dispatch({type: 'SET_NOTIFY', data: result?.NotifyInfo});
-          return {result};
+          const archive = addFlag(result?.NotifyInfo, NOTIFY.CHARGES);
+          return {archive};
         default:
           setError(result);
           break;
@@ -42,7 +54,6 @@ const useNotify = () => {
   };
 
   const onGetPromotionNotify = async () => {
-    let listPromotionNotify = {};
     try {
       setLoading(true);
       let phone = await getPhone();
@@ -50,8 +61,8 @@ const useNotify = () => {
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
         case ERROR_CODE.SUCCESS:
-          dispatch({type: 'SET_NOTIFY', data: result?.NotifyPromoInfo});
-          return {result};
+          const archive = addFlag(result?.NotifyPromoInfo, NOTIFY.PROMOTION);
+          return {archive};
         default:
           setError(result);
           break;
@@ -69,8 +80,8 @@ const useNotify = () => {
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
         case ERROR_CODE.SUCCESS:
-          dispatch({type: 'SET_NOTIFY', data: result?.NotifyInfo});
-          return {result};
+          const archive = addFlag(result?.NotifyInfo, NOTIFY.OTHER);
+          return {archive};
         default:
           setError(result);
           break;
@@ -81,22 +92,21 @@ const useNotify = () => {
   };
 
   const onGetAllNotify = async () => {
-    let listAllNotify = [];
     try {
       setLoading(true);
-      const listChargesNotify = await onGetChargesNotify();
-      const listPromotionNotify = await onGetPromotionNotify();
-      const listOtherNotify = await onGetOtherNotify();
+      const listCharges = await onGetChargesNotify();
+      const listPromotion = await onGetPromotionNotify();
+      const listOther = await onGetOtherNotify();
       setLoading(false);
-      if (
-        _.get(listChargesNotify.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-        _.get(listPromotionNotify.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-        _.get(listOtherNotify.result, 'ErrorCode') == ERROR_CODE.SUCCESS
-      ) {
-        const listCharges = listChargesNotify?.result?.NotifyInfo;
-        const listPromotion = listPromotionNotify?.result?.NotifyPromoInfo;
-        const listOther = listOtherNotify?.result?.NotifyInfo;
-        listAllNotify = [...listCharges, ...listPromotion, ...listOther];
+      if (listCharges?.archive || listPromotion?.archive || listOther.archive) {
+        listChargesNotify = listCharges?.archive;
+        listPromotionNotify = listPromotion?.archive;
+        listOtherNotify = listOther?.archive;
+        listAllNotify = [
+          ...listChargesNotify,
+          ...listPromotionNotify,
+          ...listOtherNotify,
+        ];
         dispatch({type: 'SET_NOTIFY', data: listAllNotify});
       } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
     } catch (error) {
@@ -105,18 +115,13 @@ const useNotify = () => {
   };
   const selectNotify = type => {
     switch (type) {
-      case NOTIFY.CHARGES:
-        onGetChargesNotify();
-        break;
-      case NOTIFY.PROMOTION:
-        onGetPromotionNotify();
-        break;
-      case NOTIFY.OTHER:
-        onGetOtherNotify();
-        break;
+      case NOTIFY.ALL:
+        return userInfo?.listNotify;
       default:
-        onGetAllNotify();
-        break;
+        const result = userInfo?.listNotify.filter(notify => {
+          return notify?.flag === type;
+        });
+        return result;
     }
   };
   return {
