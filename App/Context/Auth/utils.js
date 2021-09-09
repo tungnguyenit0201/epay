@@ -14,7 +14,7 @@ import {
   useShowModal,
 } from 'context/Common/utils';
 import {useUser} from 'context/User';
-import {useUserInfo, useNotify} from 'context/User/utils';
+import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
@@ -92,7 +92,6 @@ const useAuth = () => {
   const {setError} = useError();
   const {setPhone, setToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
-  const {onGetAllNotify} = useNotify();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -161,7 +160,6 @@ const useAuth = () => {
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
         onGetAllInfo();
-        onGetAllNotify();
         return;
     }
   };

@@ -108,6 +108,7 @@ const useNotify = () => {
           ...listOtherNotify,
         ];
         dispatch({type: 'SET_NOTIFY', data: listAllNotify});
+        Navigator.navigate(SCREEN.NOTIFICATION);
       } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
     } catch (error) {
       setLoading(false);
