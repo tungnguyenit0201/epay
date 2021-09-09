@@ -30,14 +30,8 @@ export const registerSchema = yup.object().shape({
   agreement: yup.boolean().oneOf([true], TEXT.AGREEMENT_NOT_ACCEPTED),
 });
 
-export const reviewsSchema = yup.object().shape({
-  review: yup.string().required(TEXT.REVIEWS),
-  reviewer: yup.string().required(TEXT.USERNAME_NOT_BLANK),
-  reviewer_email: yup
-    .string()
-    .email(TEXT.EMAIL_INVALID)
-    .required(TEXT.EMAIL_NOT_BLANK),
-  rating: yup.number().moreThan(0, TEXT.REVIEWS).required(TEXT.EMAIL_NOT_BLANK),
+export const emailSchema = yup.object().shape({
+  email: yup.string().email(TEXT.EMAIL_INVALID).required(TEXT.EMAIL_NOT_BLANK),
 });
 
 export const phoneSchema = yup.object().shape({

@@ -3,12 +3,12 @@ import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, Header, Button, TextInput, HeaderBg} from 'components';
 import {base, Colors} from 'themes';
 import {SCREEN, TEXT} from 'configs/Constants';
-import Progress from 'components/User/VerifyInfo/Progress';
-import {useVerifyInfo} from 'context/User/utils';
-import SelectImage from 'components/User/VerifyInfo/SelectImage';
+import {useEmail} from 'context/User/utils';
+import {Formik} from 'formik';
+import {emailSchema} from 'utils/ValidationSchemas';
 
 const VerifyEmail = () => {
-  const {onChange, onContinue} = useVerifyInfo();
+  const {onEmailAuth} = useEmail();
 
   return (
     <>
@@ -17,24 +17,55 @@ const VerifyEmail = () => {
           <Header back title="Xác thực Email" />
         </HeaderBg>
 
-        <View style={[base.container, {paddingTop: 20}]}>
-          <Text fs="h5" bold mb={10}>
-            Nhập email
-          </Text>
-          <Text mb={20}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </Text>
+        <Formik
+          initialValues={{
+            email: '',
+          }}
+          validationSchema={emailSchema}
+          onSubmit={onEmailAuth}>
+          {({
+            handleChange: _handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            values,
+          }) => {
+            const handleChange = field => value => {
+              setFieldValue(field, value);
+              setFieldTouched(field, true, false);
+            };
 
-          <TextInput
-            placeholder="Nhập email "
-            placeholderTextColor={Colors.l5}
-          />
-        </View>
+            return (
+              <View>
+                <View style={[base.container, {paddingTop: 20}]}>
+                  <Text fs="h5" bold mb={10}>
+                    Nhập email
+                  </Text>
+                  <Text mb={20}>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry.
+                  </Text>
+
+                  <TextInput
+                    placeholder="Nhập email "
+                    placeholderTextColor={Colors.l5}
+                    onChange={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    error={touched.email && errors.email}
+                  />
+                </View>
+
+                <View style={base.bottom}>
+                  <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
+                </View>
+              </View>
+            );
+          }}
+        </Formik>
       </ScrollView>
-      <View style={base.bottom}>
-        <Button label={TEXT.CONTINUE} onPress={() => onContinue(SCREEN.OTP)} />
-      </View>
     </>
   );
 };
