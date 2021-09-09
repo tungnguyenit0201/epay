@@ -14,7 +14,7 @@ const ChangePassword = ({route}) => {
     <>
       <ScrollView style={base.wrap}>
         <HeaderBg>
-          <Header back title="Đổi mật khẩu" back />
+          <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
         </HeaderBg>
         <View style={base.container}>
           <Formik
@@ -54,7 +54,7 @@ const ChangePassword = ({route}) => {
                     error={touched.password && errors.password}
                     value={values.password}
                   />
-                  <Button mb={10} label="Đăng nhập" onPress={handleSubmit} />
+                  <Button mb={10} label="Xác nhận" onPress={handleSubmit} />
                 </View>
               );
             }}

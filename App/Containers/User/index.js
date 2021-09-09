@@ -20,6 +20,7 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import {useAuth} from 'context/Auth/utils';
 import {useWallet} from 'context/Wallet';
+import {getVersion} from 'react-native-device-info';
 
 const User = () => {
   const translation = useTranslation();
@@ -29,6 +30,7 @@ const User = () => {
   const {onLogout} = useAuth();
   const {listConnectBank} = useWallet();
 
+  // TODO: translate
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
@@ -158,8 +160,20 @@ const User = () => {
             size={24}
             tintColor={Colors.cl1}
           />
-          <Text size={Fonts.H6}>{translation.feedback} </Text>
+          <Text size={Fonts.H6}>{translation.feedback}</Text>
         </TouchableOpacity>
+        <View style={styles.item}>
+          <Icon
+            style={[styles.icon]}
+            icon={null} // TODO: add icon
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text size={Fonts.H6}>{'Thông tin ứng dụng'}</Text>
+          <Text size={Fonts.H6} style={{marginLeft: 'auto'}}>
+            {getVersion()}
+          </Text>
+        </View>
       </View>
       <TouchableOpacity style={styles.item} onPress={onLogout}>
         <Icon

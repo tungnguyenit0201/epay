@@ -113,7 +113,9 @@ const useBankInfo = () => {
       let result = await changeLimit({phone, amountLimit: limit});
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.LOGIN_PASSWORD_INCORRECT) {
-        Navigator.navigate(SCREEN.CHANGE_PASSWORD, 'change_limit_response');
+        Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
+          type: 'change_limit_response',
+        });
       } else {
         setError('result', result);
       }

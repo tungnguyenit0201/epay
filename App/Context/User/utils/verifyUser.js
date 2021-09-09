@@ -134,8 +134,6 @@ const useVerifyInfo = (initialValue = {}) => {
     await onGetAllInfo();
   };
 
-  const onVerifyEmail = () => {};
-
   return {
     disabledIdentify,
     disabledAvatar,
