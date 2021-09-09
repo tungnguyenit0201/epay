@@ -4,10 +4,12 @@ import {Text} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {useAuth} from 'context/Auth/utils';
+import {useNotify} from 'context/User/utils';
 import Navigator from 'navigations/Navigator';
 
 const User = ({data, style}) => {
   const {onLogout} = useAuth();
+  const {onGetAllNotify} = useNotify();
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -24,9 +26,7 @@ const User = ({data, style}) => {
         </Text>
       </TouchableOpacity>
       <View>
-        <TouchableOpacity
-          onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
-          style={styles.wicon}>
+        <TouchableOpacity onPress={() => onGetAllNotify()} style={styles.wicon}>
           <Image style={{width: 40, height: 40}} source={Images.Avatar} />
         </TouchableOpacity>
         <TouchableOpacity

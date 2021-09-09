@@ -1,30 +1,22 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Icon,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {Text, Header, Icon, Button, TextInput} from 'components';
+import {Colors, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useAuth, useTouchID} from 'context/Auth/utils';
-import _, {camelCase} from 'lodash';
+import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import BigLogo from 'components/Auth/BigLogo';
 import Content from 'components/Auth/Content';
 import {passwordSchema} from 'utils/ValidationSchemas';
+import {useError} from 'context/Common/utils';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
     useAuth();
   const translation = useTranslation();
+  const {setError} = useError();
 
   const {biometryType, onTouchID} = useTouchID();
 
@@ -35,7 +27,7 @@ const Login = ({route}) => {
         onLoginByTouchID({phone: _.get(route, 'params.phone', '')});
       }
     } catch (error) {
-      alert(error);
+      setError({ErrorCode: -1, ErrorMessage: error});
     }
   };
 

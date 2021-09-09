@@ -17,6 +17,7 @@ const defaultUserInfo = {
     Ward: '',
   },
   qrCode: '',
+  listNotify: [],
 };
 
 export const UserProvider = ({children}) => {
