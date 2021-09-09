@@ -14,11 +14,27 @@ import {
   useLoading,
   useShowModal,
 } from 'context/Common/utils';
-import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import _ from 'lodash';
-import {sha256} from 'react-native-sha256';
-import {cos} from 'react-native-reanimated';
+
+const bankTest = {
+  // TODO: remove test data
+  BankCode: 'VCB',
+  BankName: 'Ngân hàng test',
+  ConnectTime: '08-09-2021 22:41:32',
+  BankLogoUrl:
+    'https://t3.ftcdn.net/jpg/00/62/78/62/360_F_62786254_cxVz7e28OMBn63qGzDFEBqHv7e1o2HgU.jpg',
+  BankId: 1,
+  BankConnectId: 1594,
+  BankLimit: 2000000,
+  BankNumber: '123456789',
+  CardHolder: 'DAT',
+  CardNumber: '',
+  ConnectionType: 0,
+  IsDefault: false,
+  CardTypeId: 0,
+  IsAvailable: false,
+};
 
 const useBankInfo = () => {
   const {getPhone} = useAsyncStorage();
@@ -34,7 +50,8 @@ const useBankInfo = () => {
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
       dispatch({
         type: 'LIST_CONNECT_BANK',
-        data: result?.ListBankConnect,
+        // data: result?.ListBankConnect,
+        data: [__DEV__ ? bankTest : {}, ...result?.ListBankConnect], // TODO: remove bankTest
       });
       return {result};
     } else setError(result);
