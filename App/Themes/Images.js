@@ -12,6 +12,7 @@ export default {
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
   DefaultUser: require('images/default_user.png'),
+  Splash: require('images/Splash.png'),
   TabBar: {
     Home: require('images/Home.png'),
     Category: require('images/Category.png'),
@@ -30,8 +31,9 @@ export default {
   QRCode: require('images/QRCode.jpeg'),
   Withdraw: require('images/Withdraw.png'),
   Edit: require('images/Edit.png'),
+  Phone: require('images/phone.png'),
   Register: {
-    phone_1: require('images/register/phone-1.png'),
+    Info: require('images/Info.png'),
   },
   WidthDraw: {
     Done: require('images/Done.png'),
@@ -55,7 +57,7 @@ export default {
     RutTien: require('images/home/RutTien.png'),
     QAPAY: require('images/home/QAPAY.png'),
     ChuyenTien: require('images/home/ChuyenTien.png'),
-    NapTien: require('images/home/NapTien.png'),
+    LichSuGd: require('images/home/LichSuGd.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),
@@ -108,5 +110,11 @@ export default {
     Eximbank: require('images/bank/Eximbank.png'),
     Vietcombank: require('images/bank/Vietcombank.png'),
     Plus: require('images/bank/Plus.png'),
+  },
+  logoEpay: require('images/logo-epay.png'),
+  Phone_1: require('images/phone-1.png'),
+  SignIn: {
+    FingerPrint: require('images/icons/fingerprint.png'),
+    Face: require('images/icons/face.png'),
   },
 };

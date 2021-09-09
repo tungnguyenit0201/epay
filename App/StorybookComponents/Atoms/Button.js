@@ -1,9 +1,8 @@
 import React from 'react';
-import {Pressable, Image, StyleSheet, View} from 'react-native';
-import {Colors, Fonts} from 'themes';
+import {Pressable, Image, StyleSheet, View, Text} from 'react-native';
+import {Colors, Fonts} from '../../Themes';
 import {scale} from 'utils/Functions';
-import Text from './Text';
-import {useSelector} from 'react-redux';
+// import Text from './Text';
 
 export default ({
   onPress,
@@ -111,14 +110,3 @@ const styles = StyleSheet.create({
   // ...stylesCss,
 });
 
-{
-  /* <Button
-  label="Đăng ký" 
-  border='#fff'
-  color='#f00'
-  bg='#999'
-  radius={50}
-  style={[{marginTop:30}]}
-  onPress={() => Navigator.navigate(SCREEN.REGISTER)}
-/> */
-}

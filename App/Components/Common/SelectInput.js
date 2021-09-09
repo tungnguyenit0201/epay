@@ -25,6 +25,7 @@ const SelectInput = ({
   style,
   inputStyle,
   onSelect,
+  showInputStyle = true,
 }) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -46,7 +47,8 @@ const SelectInput = ({
   return (
     <Row style={[styles.container, style]}>
       <TouchableOpacity onPress={onShowModal}>
-        <Row style={styles.selectContainer}>
+        <Row
+          style={[styles.selectContainer, !showInputStyle && {width: '80%'}]}>
           <Text>
             {selectedValue?.label ||
               optionList.find(x => x.value === defaultValue)?.label}
@@ -54,8 +56,8 @@ const SelectInput = ({
           <Icon icon={Images.Down} style={{width: 12}} />
         </Row>
       </TouchableOpacity>
-      <View style={styles.seperator} />
-      <TextInput style={[styles.input, inputStyle]} />
+      {showInputStyle && <View style={styles.seperator} />}
+      {showInputStyle && <TextInput style={[styles.input, inputStyle]} />}
       <Modal
         isVisible={showModal}
         animationIn="slideInUp"
@@ -77,7 +79,8 @@ const ModalContent = ({optionList, onselect}) => {
       {optionList.map(item => {
         const {value, label} = item;
         return (
-          <TouchableOpacity key={value} 
+          <TouchableOpacity
+            key={value}
             onPress={() => onselect(item)}
             style={{
               paddingBottom: 10,
@@ -102,13 +105,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   selectContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     width: 113,
     marginRight: 10,
     paddingVertical: Spacing.PADDING / 2,
-    paddingLeft: Spacing.PADDING / 2
+    paddingLeft: Spacing.PADDING / 2,
   },
   seperator: {
     width: 1,

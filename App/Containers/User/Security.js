@@ -1,21 +1,17 @@
 import React, {useState, useContext} from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
-import {Text, Button, Icon, Header} from 'components';
+import {Text, Button, Icon, Header, Switch, HeaderBg} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
-
-import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {useSecuritySettings} from 'context/User/utils';
 
 const PaymentSettings = () => {
   const translation = useTranslation();
-  const [value1, setValue1] = useState(false);
-  const [value2, setValue2] = useState(false);
-  const [value3, setValue3] = useState(false);
-  const [value4, setValue4] = useState(false);
+  const {settings, onTouchId, onSmartOTP} = useSecuritySettings();
+  const {touchIdEnabled} = settings;
 
   return (
     <ScrollView style={base.wrap}>
@@ -26,7 +22,7 @@ const PaymentSettings = () => {
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.CHANGE_PASSWORD);
+          Navigator.push(SCREEN.CHANGE_PASSWORD, 'confirm_password_response');
         }}>
         <Icon
           mr={8}
@@ -42,11 +38,7 @@ const PaymentSettings = () => {
           tintColor="#000"
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.ACTIVE_OTP);
-        }}>
+      <TouchableOpacity style={styles.item} onPress={onSmartOTP}>
         <Icon
           mr={8}
           icon={Images.Profile.MaThanhToan}
@@ -70,11 +62,9 @@ const PaymentSettings = () => {
         />
         <Text style={styles.text}> Cài đặt Touch id / Face id</Text>
         <Switch
-          style={base.leftAuto}
-          onColor={Colors.cl1}
-          offColor={Colors.l3}
-          value={value1}
-          onValueChange={setValue1}
+          key={touchIdEnabled}
+          initialValue={touchIdEnabled}
+          onChange={onTouchId}
         />
       </View>
       <View style={styles.item}>
@@ -85,13 +75,7 @@ const PaymentSettings = () => {
           tintColor={Colors.cl1}
         />
         <Text style={styles.text}>Cảnh báo đăng nhập trên thiết bị khác</Text>
-        <Switch
-          style={base.leftAuto}
-          onColor={Colors.cl1}
-          offColor={Colors.l3}
-          value={value2}
-          onValueChange={setValue2}
-        />
+        <Switch />
       </View>
 
       <View style={styles.item}>
@@ -102,13 +86,7 @@ const PaymentSettings = () => {
           tintColor={Colors.cl1}
         />
         <Text style={styles.text}> Lưu phiên đăng nhập</Text>
-        <Switch
-          style={base.leftAuto}
-          onColor={Colors.cl1}
-          offColor={Colors.l3}
-          value={value4}
-          onValueChange={setValue4}
-        />
+        <Switch />
       </View>
     </ScrollView>
   );

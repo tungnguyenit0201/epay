@@ -5,23 +5,33 @@ import React, {
   useEffect,
   useReducer,
 } from 'react';
-import userReducer from './reducer';
-import {useQuery} from 'react-query';
-import {getProfile} from 'services/user';
-
-const UserContext = createContext({});
-export const UserProvider = ({children}) => {
-  const {data} = useQuery('userInfo', getProfile, {staleTime: 10000});
-  const [userInfo, dispatch] = React.useReducer(userReducer, data);
+import walletReducer from './reducer';
+const defaultWalletInfo = {
+  listConnectBank: [],
+  listDomesticBank: [],
+  listInternationalBank: [],
+  limit: '',
+  transaction: {},
+};
+const WalletContext = createContext({});
+export const WalletProvider = ({children}) => {
+  const [walletInfo, dispatch] = React.useReducer(
+    walletReducer,
+    defaultWalletInfo,
+  );
 
   const value = React.useMemo(
     () => ({
-      userInfo,
+      walletInfo,
+      ...walletInfo,
+      dispatch,
     }),
-    [userInfo],
+    [walletInfo],
   );
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <WalletContext.Provider value={value}>{children}</WalletContext.Provider>
+  );
 };
 
-export const useUser = () => useContext(UserContext);
+export const useWallet = () => useContext(WalletContext);

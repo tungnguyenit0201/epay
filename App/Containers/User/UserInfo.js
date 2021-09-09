@@ -8,33 +8,61 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Button, Text, Icon, Header} from 'components';
-import {SCREEN, TEXT} from 'configs/Constants';
+import {Button, Text, Icon, Header, ActionSheet} from 'components';
+import {SCREEN, PERSONAL_IC} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
 
-import { useUser } from 'context/User';
-import { usePhone } from 'context/Auth/utils';
+import {useUser} from 'context/User';
+import {usePhone} from 'context/Auth/utils';
+import {useTranslation} from 'context/Language';
+import {useUserInfo} from 'context/User/utils';
+
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
-  const { phone } = usePhone();
-  const { userInfo } = useUser();
+  const {phone} = usePhone();
+  const {userInfo} = useUser();
+  const translation = useTranslation();
+  const {onUpdateAvatar, showModal, setShowModal} = useUserInfo();
+
   const PersonalInfo = userInfo.personalInfo;
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
 
-  const SexType= {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
-  const address = AddressInfo?.Address+", "+AddressInfo?.Ward+", "+AddressInfo?.County+", "+AddressInfo?.Provincial;
+  const SexType = {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
+  const address =
+    AddressInfo?.Address +
+    ', ' +
+    AddressInfo?.Ward +
+    ', ' +
+    AddressInfo?.County +
+    ', ' +
+    AddressInfo?.Provincial;
   const data = [
-    {name: 'Họ tên', val: PersonalInfo?.FullName ? PersonalInfo?.FullName : 'Chưa có'},
-    {name: 'Ngày sinh', val: PersonalInfo?.DateOfBirth ? PersonalInfo?.DateOfBirth : 'Chưa có'},
-    {name: 'Giới tính', val: SexType[PersonalInfo?.SexType] ? SexType[PersonalInfo?.SexType] : 'Chưa có'},
+    {
+      name: 'Họ tên',
+      val: PersonalInfo?.FullName ? PersonalInfo?.FullName : 'Chưa có',
+    },
+    {
+      name: 'Ngày sinh',
+      val: PersonalInfo?.DateOfBirth ? PersonalInfo?.DateOfBirth : 'Chưa có',
+    },
+    {
+      name: 'Giới tính',
+      val: SexType[PersonalInfo?.SexType]
+        ? SexType[PersonalInfo?.SexType]
+        : 'Chưa có',
+    },
     {name: 'CMND', val: ICInfor?.ICNumber ? ICInfor?.ICNumber : 'Chưa có'},
-    {name: 'Nơi cấp', val: ICInfor?.ICIssuedPlace ? ICInfor?.ICIssuedPlace : 'Chưa có'},
+    {
+      name: 'Nơi cấp',
+      val: ICInfor?.ICIssuedPlace ? ICInfor?.ICIssuedPlace : 'Chưa có',
+    },
     {name: 'Địa chỉ', val: AddressInfo?.Provincial ? address : 'Chưa có'},
   ];
+
   return (
     <>
       <ScrollView>
@@ -52,7 +80,7 @@ const UserInfo = () => {
           </Pressable>
 
           <View style={{alignItems: 'center'}}>
-            <View style={{position: 'relative', marginBottom: 15}}>
+            <Pressable style={{marginBottom: 15}} onPress={onUpdateAvatar}>
               <View
                 style={{
                   overflow: 'hidden',
@@ -61,7 +89,15 @@ const UserInfo = () => {
                   borderRadius: 99,
                   backgroundColor: Colors.g4,
                 }}>
-                <Image style={{width: 94, height: 94}} source={Images.DefaultUser} />
+                <Image
+                  style={{width: 94, height: 94}}
+                  source={
+                    PersonalInfo?.Avatar
+                      ? {uri: PersonalInfo.Avatar}
+                      : Images.DefaultUser
+                  }
+                  resizeMode="cover"
+                />
               </View>
               <View
                 style={{
@@ -78,21 +114,28 @@ const UserInfo = () => {
                 }}>
                 <Image style={{width: 16, height: 16}} source={Images.Edit} />
               </View>
-            </View>
+            </Pressable>
 
-            <Text color="#fff" size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
+            <Text color={Colors.white} size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
               {PersonalInfo?.FullName}
             </Text>
-            <Text color="#fff" mb={10}>
+            <Text color={Colors.white} mb={10}>
               {phone}
             </Text>
             <Button
+              disabled={!(ICInfor?.Verified == PERSONAL_IC.INACTIVE)}
               bg={Colors.cl4}
               radius={30}
               color={Colors.black}
-              label={ICInfor?.Active == 1 ? 'Đã xác thực': 'Chưa xác thực'}
+              label={
+                ICInfor?.Verified == PERSONAL_IC.INACTIVE
+                  ? translation.unverified
+                  : ICInfor?.Verified == PERSONAL_IC.VERIFYING
+                  ? 'Đang xác thực'
+                  : 'Đã xác thực'
+              }
               style={{minWidth: 150}}
-              onPress={() => Navigator.push(SCREEN.VERIFY_IDENTITY_CARD)}
+              onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
             />
           </View>
         </View>
@@ -126,13 +169,21 @@ const UserInfo = () => {
         </View>
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
-            <Text>{ICInfor?.Active == 1 ? 'Đã xác thực': 'Chưa xác thực'}</Text>
+            <Text>
+              {ICInfor?.Verified == PERSONAL_IC.INACTIVE
+                ? translation.unverified
+                : ICInfor?.Verified == PERSONAL_IC.VERIFYING
+                ? 'Đang xác thực'
+                : 'Đã xác thực'}
+            </Text>
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
                 Navigator.push(SCREEN.NOTIFICATION);
               }}>
-              <Text style={styles.link}>{ICInfor?.Active == 1 ? '': 'Xác thực tài khoản'}</Text>
+              {ICInfor?.Active == PERSONAL_IC.INACTIVE && (
+                <Text style={styles.link}>{'Xác thực tài khoản'}</Text>
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -155,6 +206,14 @@ const UserInfo = () => {
           </View>
         </View>
       </ScrollView>
+      <ActionSheet
+        visible={!!showModal}
+        setVisible={setShowModal}
+        data={[
+          {label: 'Chụp ảnh', onPress: () => onUpdateAvatar('camera')},
+          {label: 'Chọn ảnh sẵn có', onPress: () => onUpdateAvatar('photo')},
+        ]}
+      />
     </>
   );
 };
@@ -186,6 +245,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     width: scale(180),
     textAlign: 'right',
-  }
+  },
 });
 export default UserInfo;

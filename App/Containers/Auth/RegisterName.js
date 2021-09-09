@@ -1,43 +1,115 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {Text, InputBlock, Header, Button} from 'components';
-import {Colors, Fonts, Spacing} from 'themes';
-import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {Text, InputBlock, Header, Button, Icon, TextInput} from 'components';
+import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
+import {scale} from 'utils/Functions';
+import {HelpModal, Content, BigLogo} from 'components/Auth';
+import {Formik} from 'formik';
+import {useRegister} from 'context/Auth/utils';
+
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
-  const {sign_up} = useTranslation();
-  const {onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
-
+  const translation = useTranslation();
+  const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
+  const {showModal, setShowModal, openCallDialog} = useRegister();
   return (
-    <ScrollView style={styles.container}>
-      <Header back shadow={false} title={sign_up} />
+    <Formik
+      initialValues={{
+        FullName: '',
+      }}
+      // validationSchema={phoneSchema}
+      onSubmit={onUpdatePersonalInfo}>
+      {({
+        handleChange: _handleChange,
+        handleBlur,
+        handleSubmit,
+        setFieldValue,
+        setFieldTouched,
+        touched,
+        errors,
+        values,
+      }) => {
+        const handleChange = field => value => {
+          setFieldValue(field, value);
+          setFieldTouched(field, true, false);
+          setPersonalInfo(field, value);
+        };
 
-      <View style={styles.wrap}>
-        <Text style={[styles.title]} mb={20}>
-          Nhập tên
-        </Text>
-        <Text style={styles.text} mb={40}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </Text>
-        <InputBlock
-          style={[styles.input]}
-          placeholder="Nhập Họ và Tên"
-          onFocus={e => setDisable(false)}
-          onChange={val => setPersonalInfo('FullName', val)}
-        />
-        <Button
-          mt={56}
-          disabled={disable}
-          label="Tiếp tục"
-          style={styles.btn}
-          onPress={onUpdatePersonalInfo}
-        />
-      </View>
-    </ScrollView>
+        return (
+          <>
+            <View style={styles.container}>
+              <View>
+                <Header
+                  back
+                  blackIcon
+                  style={styles.header}
+                  renderRightComponent={() => (
+                    <TouchableOpacity
+                      style={styles.pRight}
+                      onPress={() => setShowModal(true)}>
+                      <Icon
+                        icon={Images.Register.Info}
+                        style={styles.firstIcon}
+                        tintColor={Colors.BLACK}
+                      />
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+              <BigLogo />
+              <Content
+                title="Nhập tên"
+                text={
+                  translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                }
+              />
+
+              <View style={[styles.wrap, {marginTop: Spacing.PADDING * 3}]}>
+                <TextInput
+                  required
+                  onFocus={e => setDisable(false)}
+                  placeholder={translation.enter_your_name}
+                  onChange={handleChange('FullName')}
+                  onBlur={handleBlur('FullName')}
+                  // error={touched.FullName && errors.FullName}
+                  value={values.FullName}
+                  isDeleted={values.FullName}
+                />
+              </View>
+            </View>
+
+            <View
+              style={[
+                styles.wrap,
+                {
+                  paddingVertical: Spacing.PADDING,
+                  backgroundColor: Colors.BACKGROUNDCOLOR,
+                },
+              ]}>
+              <Button
+                disabled={disable}
+                label={translation.done}
+                style={styles.btn}
+                onPress={handleSubmit}
+              />
+            </View>
+            <HelpModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              onPress={openCallDialog}
+            />
+          </>
+        );
+      }}
+    </Formik>
   );
 };
 
@@ -47,36 +119,24 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUNDCOLOR,
   },
   wrap: {
-    paddingHorizontal: Spacing.PADDING * 2,
-    paddingTop: Spacing.PADDING * 3,
-  },
-  // header: {
-  //   // fontSize: Fonts.FONT_LARGE,
-  //   // fontWeight: 'bold',
-  //   // paddingBottom: Spacing.PADDING,
-  //   // boxShadow: unset
-  // },
-  title: {
-    fontSize: 30,
-    // marginBottom: 20,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-  text: {
-    fontSize: 14,
-  },
-  input: {
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: '#fff',
+    paddingHorizontal: Spacing.PADDING,
   },
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  pRight: {
+    position: 'absolute',
+    right: 15,
+  },
+  firstIcon: {
+    width: scale(24),
+    height: scale(24),
+  },
+  header: {
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
   },
 });
 

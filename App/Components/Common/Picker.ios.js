@@ -48,7 +48,7 @@ const Picker = ({
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? '#ccc' : Colors.Text}>
+            color={disabled ? Colors.l2 : Colors.Text}>
             {value?.label || placeholder}
           </Text>
         </View>
@@ -76,7 +76,7 @@ const Picker = ({
                 paddingTop: Spacing.PADDING / 2,
               }}
               onPress={onHideModal}>
-              <Text semibold color={Colors.PRIMARY}>
+              <Text semibold color={Colors.cl1}>
                 {TEXT.DONE}
               </Text>
             </TouchableOpacity>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 5,
   },
-  scroll: {maxHeight: height * 0.7},
+  // scroll: {maxHeight: height * 0.7},
 });
 
 export default Picker;

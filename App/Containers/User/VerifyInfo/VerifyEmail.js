@@ -1,16 +1,14 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Text, InputBlock, Header, Button, TextInput} from 'components';
+import {Text, Header, Button, TextInput, HeaderBg} from 'components';
 import {base, Colors} from 'themes';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Progress from 'components/User/VerifyInfo/Progress';
 import {useVerifyInfo} from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
-import HeaderBg from 'components/Common/HeaderBg';
 
-const VerifyUserInfo = () => {
+const VerifyEmail = () => {
   const {onChange, onContinue} = useVerifyInfo();
-  let [domain, setDomain] = useState(0);
 
   return (
     <>
@@ -41,4 +39,4 @@ const VerifyUserInfo = () => {
   );
 };
 
-export default VerifyUserInfo;
+export default VerifyEmail;

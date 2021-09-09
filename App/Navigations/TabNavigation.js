@@ -13,17 +13,17 @@ const Tab = createBottomTabNavigator();
 
 import User from 'containers/User';
 import Home from 'containers/Home';
-import Transaction from 'containers/Wallet/Transaction';
+import History from 'containers/Wallet/History';
 
 const TabIcons = {
   Home: Images.TabBar.Home,
-  Transaction: Images.TabBar.Category,
+  History: Images.TabBar.Category,
   User: Images.TabBar.User,
 };
 
 const TabLabels = {
   Home: TEXT.HOME,
-  Transaction: TEXT.TRANSACTION_HISTORY,
+  History: TEXT.TRANSACTION_HISTORY,
   User: TEXT.PROFILE,
 };
 
@@ -51,7 +51,7 @@ const TabNavigation = () => {
                     marginBottom: scale(2),
                     width: scale(15),
                     height: scale(15),
-                    tintColor: focused ? Colors.PRIMARY : Colors.TEXT,
+                    tintColor: focused ? Colors.cl1 : Colors.TEXT,
                   },
                   Boolean(route.name === 'User' && avatar) && {
                     borderRadius: scale(13),
@@ -70,7 +70,7 @@ const TabNavigation = () => {
         tabBarOptions={{
           adaptive: false,
           showLabel: true,
-          activeTintColor: Colors.PRIMARY,
+          activeTintColor: Colors.cl1,
           inactiveTintColor: Colors.TEXT,
           style: {
             borderTopWidth: 0,
@@ -78,7 +78,7 @@ const TabNavigation = () => {
             borderTopLeftRadius: 10,
             borderTopRightRadius: 10,
             height: scale(40) + bottom,
-            shadowColor: '#aaa',
+            shadowColor: Colors.l5,
             shadowOffset: {width: 0, height: 0},
             shadowOpacity: 0.5,
             shadowRadius: 4,
@@ -87,7 +87,7 @@ const TabNavigation = () => {
           },
         }}>
         <Tab.Screen name={SCREEN.HOME} component={Home} />
-        <Tab.Screen name={SCREEN.TRANSACTION} component={Transaction} />
+        <Tab.Screen name={SCREEN.HISTORY} component={History} />
         <Tab.Screen name={SCREEN.USER} component={User} />
       </Tab.Navigator>
     </View>

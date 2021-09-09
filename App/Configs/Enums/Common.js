@@ -1,0 +1,4 @@
+const COMMON_ENUM = {
+  TOTP_KEY: 'R5MB5FAQNX5UIPWL',
+};
+export default COMMON_ENUM;

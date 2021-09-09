@@ -5,20 +5,37 @@ import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
+import {Linking} from 'react-native';
 import {useTranslation} from 'context/Language';
-import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
+import {
+  useLoading,
+  useError,
+  useAsyncStorage,
+  useShowModal,
+} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
+import Keychain from 'react-native-keychain';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
-  const {getPasswordEncrypted, getTouchIdEnabled} = useAsyncStorage();
+  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
 
   const checkBiometry = async () => {
     const touchIdEnabled = await getTouchIdEnabled();
-    const passwordEncrypted = await getPasswordEncrypted();
+    let passwordEncrypted = null;
+    try {
+      const credentials = await Keychain.getGenericPassword();
+      passwordEncrypted =
+        credentials?.username == (await getPhone())
+          ? credentials?.password
+          : null;
+    } catch (error) {
+      __DEV__ && console.log("Keychain couldn't be accessed!", error);
+    }
+
     if (!touchIdEnabled || !passwordEncrypted) {
       return;
     }
@@ -30,10 +47,6 @@ const useTouchID = () => {
         __DEV__ && console.log('Touch ID is not supported.');
       });
   };
-
-  useEffect(() => {
-    checkBiometry();
-  }, []);
 
   const onTouchID = async () => {
     if (!biometryType) {
@@ -58,10 +71,17 @@ const useTouchID = () => {
           resolve(success);
         })
         .catch(error => {
+          if (error?.name === 'LAErrorUserCancel') {
+            return;
+          }
           reject(error);
         });
     });
   };
+
+  useEffect(() => {
+    checkBiometry();
+  }, []); // eslint-disable-line
 
   return {biometryType, onTouchID};
 };
@@ -70,9 +90,8 @@ const useAuth = () => {
   const {setLoading} = useLoading();
   const {dispatch} = useUser();
   const {setError} = useError();
-  const {setPhone, setPasswordEncrypted, getPasswordEncrypted, setToken} =
-    useAsyncStorage();
-  const {onGetPersonalInfo} = useUserInfo();
+  const {setPhone, setToken} = useAsyncStorage();
+  const {onGetAllInfo} = useUserInfo();
 
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -115,7 +134,13 @@ const useAuth = () => {
 
     switch (_.get(result, 'ErrorCode', '')) {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
+      case ERROR_CODE.FEATURE_LOCK_BY_PASSWORD_WRONG:
         return setError(result);
+
+      case ERROR_CODE.FEATURE_PASSWORD_WRONG_OVER_TIME:
+        setError(result);
+        Navigator.goBack();
+        return;
 
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
         return Navigator.push(SCREEN.OTP, {
@@ -125,7 +150,7 @@ const useAuth = () => {
         });
 
       case ERROR_CODE.SUCCESS:
-        setPasswordEncrypted(passwordEncrypted);
+        Keychain.setGenericPassword(phone, passwordEncrypted);
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
@@ -134,25 +159,34 @@ const useAuth = () => {
         Navigator.navigate(
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
-        onGetPersonalInfo();
+        onGetAllInfo();
         return;
     }
   };
 
   const onLoginByTouchID = async ({phone}) => {
-    const passwordEncrypted = await getPasswordEncrypted();
-    if (!passwordEncrypted || !phone) {
-      return;
+    try {
+      setLoading(true);
+      const credentials = await Keychain.getGenericPassword();
+      const passwordEncrypted = credentials?.password;
+      if (!passwordEncrypted || !phone) {
+        return;
+      }
+      onLogin({phone, password: passwordEncrypted, encrypted: true});
+      setLoading(false);
+    } catch (error) {
+      __DEV__ && console.log("Keychain couldn't be accessed!", error);
     }
-    onLogin({phone, password: passwordEncrypted, encrypted: true});
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     dispatch({type: 'UPDATE_TOKEN', data: ''});
     setDefaultHeaders({
       Authorization: ``,
     });
-    Navigator.popToTop();
+    await setToken('');
+    // Navigator.popToTop();
+    Navigator.navigate(SCREEN.AUTH);
   };
 
   return {
@@ -177,12 +211,26 @@ const useRegister = () => {
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
   const {setPhone} = useAsyncStorage();
+
+  let [active, setActive] = useState(false);
+  let [showModal, setShowModal] = useState(false);
+
   const setFirstLogin = value => {
     dispatch({type: 'SET_FIRST_LOGIN', firstLogin: value});
   };
 
   const onChange = (key, val) => {
     registerRef.current[key] = val;
+  };
+
+  const onNavigate = screen => {
+    !!screen ? Navigator.navigate(screen) : Navigator.popToTop();
+  };
+
+  const openCallDialog = () => {
+    try {
+      Linking.openURL('tel:02432252336');
+    } catch {}
   };
 
   const createAccount = async ({phone, newPassword}) => {
@@ -208,7 +256,17 @@ const useRegister = () => {
     }
   };
 
-  return {onChange, createAccount, setFirstLogin};
+  return {
+    active,
+    setActive,
+    showModal,
+    setShowModal,
+    openCallDialog,
+    onChange,
+    createAccount,
+    setFirstLogin,
+    onNavigate,
+  };
 };
 
 const usePhone = () => {
@@ -224,7 +282,7 @@ const usePhone = () => {
     return () => {
       phone && setPhoneStorage(phone);
     };
-  }, []);
+  }, []); // eslint-disable-line
 
   return {phone};
 };
@@ -258,7 +316,7 @@ const useForgetPassword = () => {
       setError(result);
       return;
     }
-    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); //translate
+    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
     Navigator.popToTop();
   };
 

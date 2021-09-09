@@ -48,7 +48,6 @@ const InputBlock = ({
     setIsFocused(false);
     onBlur && onBlur(event);
   };
-
   return (
     <View
       {...(scrollViewRef
@@ -66,7 +65,7 @@ const InputBlock = ({
           textContentType={'oneTimeCode'}
           style={[
             styles.input,
-            {borderColor: isFocused ? Colors.PRIMARY : Colors.BORDER},
+            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
             inputStyle,
           ]}
           password={password && !showPassword}
@@ -81,11 +80,20 @@ const InputBlock = ({
           {...props}
         />
       ) : (
-        <TouchableOpacity style={styles.select} onPress={onPress}>
-          <Text style={{color: Colors.TEXT}}>
-            {value ? value : props?.defaultValue}
-          </Text>
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            style={[styles.select, !!error && styles.error]}
+            onPress={onPress}>
+            <Text style={{color: Colors.TEXT}}>
+              {value ? value : props?.defaultValue}
+            </Text>
+          </TouchableOpacity>
+          {!!error && (
+            <Text color={Colors.ALERT} mt={3} size={scale(12)}>
+              {error}
+            </Text>
+          )}
+        </>
       )}
       {rightIcon && (
         <TouchableOpacity
@@ -93,7 +101,7 @@ const InputBlock = ({
           style={{
             position: 'absolute',
             right: scale(10),
-            top: scale(38),
+            top: scale(48),
           }}>
           <Icon icon={rightIcon} />
         </TouchableOpacity>
@@ -104,7 +112,7 @@ const InputBlock = ({
           style={{
             position: 'absolute',
             right: scale(10),
-            top: scale(40),
+            top: scale(48),
           }}>
           <Image
             source={showPassword ? Images.Eye : Images.EyeGray}
@@ -129,12 +137,18 @@ const styles = StyleSheet.create({
     marginBottom: scale(10),
   },
   select: {
-    paddingHorizontal: Spacing.PADDING,
+    paddingHorizontal: Spacing.PADDING / 2,
     paddingVertical: scale(10),
-    borderColor: Colors.BORDER,
+    marginBottom: scale(10),
+    height: scale(48),
+    borderColor: Colors.cl4,
     borderWidth: 1,
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  error: {
+    borderColor: Colors.ALERT,
+    borderWidth: 1,
   },
 });

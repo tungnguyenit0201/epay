@@ -25,7 +25,7 @@ const Cart = ({style}) => {
             label={`${qty}`}
             size={'small'}
             absR
-            backgroundColor={Colors.PRIMARY}
+            backgroundColor={Colors.cl1}
           />
         </View>
       )}

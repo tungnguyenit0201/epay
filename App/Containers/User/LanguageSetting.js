@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Text, Icon, Header} from 'components';
+import {Text, Icon, Header, HeaderBg} from 'components';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
 
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line

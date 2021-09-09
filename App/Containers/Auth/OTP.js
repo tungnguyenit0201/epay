@@ -1,106 +1,92 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, Image, StyleSheet, View, Pressable} from 'react-native';
-import {Text, Header, Button, Modal} from 'components';
-import {TEXT} from 'configs/Constants';
+import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Text, Header, Button, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
-import {scale} from 'utils/Functions';
 import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
 import {useOTP} from 'context/Common/utils';
+import {HelpModal} from 'components/Auth';
 
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
   const {
     errorMessage,
     countdown,
-    showCall,
     code,
+    showModal,
+    setShowModal,
     onChange,
     onConfirmOTP,
-    resenOTP,
-    setshowCall,
+    resentOTP,
     openCallDialog,
+    label,
   } = useOTP(route?.params);
-  const {sign_up} = useTranslation();
+  const translation = useTranslation();
+
+  const renderRightComponent = () => (
+    <TouchableOpacity
+      onPress={() => setShowModal(true)}
+      style={styles.iconRight}>
+      <Icon icon={Images.Register.Info} tintColor={Colors.BLACK} />
+    </TouchableOpacity>
+  );
 
   return (
+    // TODO: translate
     <>
-      <Header back title={sign_up} />
-      <ScrollView style={styles.container}>
-        <View style={styles.wrap}>
+      <View>
+        <Header
+          back
+          blackIcon
+          style={styles.header}
+          renderRightComponent={() => renderRightComponent()}
+        />
+      </View>
+
+      <View style={styles.container}>
+        <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
+          <View style={styles.logo}>
+            <Image source={Images.logoEpay} resizeMode="contain" />
+          </View>
           <OTPContainer
             onChange={onChange}
             onCodeFilled={onConfirmOTP}
             message={errorMessage}
             code={code}
+            countdown={countdown}
+            resentOTP={resentOTP}
+            onChangePhone={onChangePhone}
+            label={label}
           />
-
-          {/* {action == 'password' && (
-            <Password
-              onChangePassword={value => onChange('newPassword', value)}
-              onChangeConfirm={value => onChange('passwordConfirm', value)}
-            />
-          )} */}
-
-          {countdown != 0 ? (
-            <Button
-              mb={10}
-              disabled
-              color={{color: Colors.BACKGROUNDACCORDION}}
-              bg={Colors.white}
-              label={'Gửi lại'}
-              label2={` (${countdown}s)`}
-              style={styles.disabled_btn}
-              onPress={resenOTP}
-            />
-          ) : (
-            <Button mb={10} label="Gửi lại" onPress={resenOTP} />
-          )}
-
-          <View style={[styles.box_1, {marginTop: 20}]}>
-            <Pressable onPress={() => setshowCall(true)}>
-              <Text style={[styles.link_text]}>Không nhận được OTP</Text>
-            </Pressable>
-
-            <Pressable onPress={onChangePhone}>
-              <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-            </Pressable>
-          </View>
         </View>
+      </View>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          paddingVertical: Spacing.PADDING - 5,
+          backgroundColor: Colors.OtpGray_1,
+        }}
+        onPress={() => setShowModal(true)}>
+        <Image
+          source={Images.Phone}
+          style={{
+            height: Spacing.PADDING,
+            width: Spacing.PADDING,
+            marginRight: 10,
+            top: 1,
+          }}
+        />
+        <Text bold>Gọi cho tôi</Text>
+      </TouchableOpacity>
 
-        {/* <Text style={[styles.otp_code, {marginTop: 20}]}>
-            <Text style={{
-              textAlign: 'center',
-              color: '#ccc'}}>OTP:</Text> 098909
-          </Text> */}
-
-        {showCall && (
-          <Pressable
-            style={[
-              styles.otp_code,
-              {
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: 20,
-              },
-            ]}
-            onPress={openCallDialog}>
-            <Image
-              source={Images.Register.phone_1}
-              style={{
-                height: scale(12),
-                width: scale(12),
-                marginRight: 10,
-              }}
-            />
-            <Text bold style={[styles.link_text]}>
-              Gọi cho tôi
-            </Text>
-          </Pressable>
-        )}
-      </ScrollView>
+      <HelpModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPress={openCallDialog}
+      />
     </>
   );
 };
@@ -110,44 +96,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
   },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING * 3,
-  },
   header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
   },
-  loading: {
-    justifyContent: 'center',
+  logo: {
+    marginBottom: Spacing.PADDING + 40,
     alignItems: 'center',
   },
-  confirmation: {
-    marginTop: Spacing.PADDING * 2,
+  wrap: {
+    paddingHorizontal: Spacing.PADDING,
   },
-  disabled_btn: {
-    // color: Colors.BLACK,
-    backgroundColor: '#fff',
-    borderRadius: 3,
-    borderWidth: 0.5,
-    borderColor: Colors.BACKGROUNDACCORDION,
-    borderStyle: 'solid',
-  },
-  link_text: {
-    textDecorationStyle: 'solid',
-    textDecorationColor: Colors.BLACK,
-    textDecorationLine: 'underline',
-  },
-  box_1: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-  otp_code: {
-    paddingVertical: Spacing.PADDING,
-    textAlign: 'center',
-    backgroundColor: '#F5F5F5',
+  iconRight: {
+    paddingRight: Spacing.PADDING,
   },
 });
 export default OTP;

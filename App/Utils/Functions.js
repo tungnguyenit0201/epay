@@ -3,6 +3,10 @@ import queryString from 'query-string';
 import dayjs from 'dayjs';
 import 'intl';
 import 'intl/locale-data/jsonp/vi';
+import {COMMON_ENUM} from 'configs/Constants';
+import {getUniqueId} from 'react-native-device-info';
+import base32Encode from 'base32-encode';
+import * as OTPAuth from 'otpauth';
 
 const _baseWidth = Platform.isTV || Platform.isPad ? 834 : 375;
 // const _screenWidth = Math.min(
@@ -127,6 +131,7 @@ function timeSince(date) {
   const count = Math.floor(seconds / interval.seconds);
   return `${count} ${interval.label}${count !== 1 ? 's' : ''} ago`;
 }
+
 const converTailwind = str => {
   let res = {};
   let arr = str.split('\n.');
@@ -140,10 +145,10 @@ const converTailwind = str => {
   });
   return res;
 };
-const formatMoney = number =>
-  new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(
-    number,
-  );
+
+const formatMoney = (number, currency) =>
+  new Intl.NumberFormat('vi-VN').format(number) + (currency ? ' VND' : '');
+
 const sencondsToTime = num => {
   var sec_num = parseInt(num, 10);
   var hours = Math.floor(sec_num / 3600);
@@ -161,6 +166,7 @@ const sencondsToTime = num => {
   }
   return hours + ':' + minutes + ':' + seconds;
 };
+
 function shuffle(array) {
   var currentIndex = array.length,
     randomIndex;
@@ -177,7 +183,59 @@ function shuffle(array) {
 
   return array;
 }
+
 const toUpperCaseFirst = str => str[0].toUpperCase() + str.slice(1);
+
+const getAll = async (...functionList) => {
+  return await new Promise(resolveAll => {
+    let promiseList = [];
+    functionList.forEach(func => {
+      promiseList.push(
+        new Promise(async resolve => {
+          const result = await func();
+          resolve(result);
+        }),
+      );
+    });
+    Promise.all(promiseList).then(results => {
+      resolveAll(results);
+    });
+  });
+};
+
+const calculateFee = ({cash, feeData, fixedFee, bankFee, minFee, maxFee}) => {
+  const _fixedFee = fixedFee || feeData?.FixedFee;
+  const _bankFee = bankFee || feeData?.BankFee;
+  const _minFee = minFee || feeData?.MinFee;
+  const _maxFee = maxFee || feeData?.MaxFee;
+
+  let total = _fixedFee + cash * _bankFee;
+  return total < _minFee ? _minFee : total > _maxFee ? _maxFee : total;
+};
+
+const stringToArrayBuffer = str => {
+  if (/[\u0080-\uffff]/.test(str)) {
+    throw new Error('this needs encoding, like UTF-8');
+  }
+  var arr = new Uint8Array(str.length);
+  for (var i = str.length; i--; ) arr[i] = str.charCodeAt(i);
+  return arr.buffer;
+};
+
+const generateTOTP = ({phone, smartOtpSharedKey}) => {
+  const hash = COMMON_ENUM.TOTP_KEY + phone + getUniqueId() + smartOtpSharedKey;
+  const buffer = stringToArrayBuffer(hash);
+  const hashToGenOtp = base32Encode(buffer, 'RFC4648', {padding: false});
+  const totp = new OTPAuth.TOTP({
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 60, // TODO: get config from server
+    secret: hashToGenOtp,
+  });
+  const code = totp.generate({timestamp: new Date().getTime()});
+  return code;
+};
+
 export {
   toObjectKeys,
   buildURL,
@@ -196,4 +254,7 @@ export {
   sencondsToTime,
   shuffle,
   toUpperCaseFirst,
+  getAll,
+  calculateFee,
+  generateTOTP,
 };

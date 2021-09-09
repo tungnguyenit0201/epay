@@ -4,6 +4,7 @@ import {Colors, Fonts} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 import {useSelector} from 'react-redux';
+import Navigator from 'navigations/Navigator';
 
 export default ({
   onPress,
@@ -43,6 +44,7 @@ export default ({
         mr && {marginRight: mr},
         mv && {marginVertical: mv},
         mh && {marginHorizontal: mh},
+        size == 'xxs' ? styles.xxs : '',
         size == 'xs' ? styles.xs : '',
         size == 'sm' ? styles.sm : '',
         size == 'lg' ? styles.lg : '',
@@ -54,6 +56,7 @@ export default ({
         centered
         size={Fonts.H6}
         style={[
+          size == 'xxs' && {fontSize: scale(10)},
           size == 'xs' && {fontSize: scale(12)},
           size == 'sm' && {fontSize: scale(14)},
           size == 'lg' && {fontSize: scale(18)},
@@ -61,7 +64,7 @@ export default ({
           fs && {fontSize: fs},
           bold && {fontWeight: 'bold'},
           {
-            color: color ? color : '#fff',
+            color: color ? color : Colors.white,
             lineHeight: 20,
           },
           labelStyle,
@@ -93,6 +96,11 @@ const styles = StyleSheet.create({
     borderRadius: scale(8),
     backgroundColor: Colors.cl1,
     height: 48,
+  },
+  xxs: {
+    height: 20,
+    paddingHorizontal: 6,
+    paddingVertical: 0,
   },
   xs: {
     height: 28,

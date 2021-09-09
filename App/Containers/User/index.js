@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Login from 'components/User/Login';
-import { Text, Button, Icon, Header } from 'components';
+import React, {useEffect, useState} from 'react';
+import {Text, HeaderBg, Icon, Header} from 'components';
 import {
   ScrollView,
   View,
@@ -8,21 +7,28 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { SCREEN } from 'configs/Constants';
+import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-import { Colors, Fonts, Images, Spacing, base } from 'themes';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { scale, formatMoney } from 'utils/Functions';
-import { useTranslation } from 'context/Language';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {scale, formatMoney} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import UserInfo from 'components/User/UserInfo';
 
-import { useUserInfo } from 'context/User/utils'
-import { useUser } from 'context/User';
-const User = ({ route }) => {
+import {useUserInfo} from 'context/User/utils';
+import {useBankInfo} from 'context/Wallet/utils';
+import {useUser} from 'context/User';
+import {useWallet} from 'context/Wallet';
+import {useAuth} from 'context/Auth/utils';
+
+const User = ({route}) => {
   const translation = useTranslation();
-  const { userInfo } = useUser();
+  const {userInfo} = useUser();
+  const {onGetConnectedBank, onGetQRCode} = useUserInfo();
+  const {onGetAllBank} = useBankInfo();
+  const {listConnectBank} = useWallet();
+  const {onLogout} = useAuth();
 
   return (
     <ScrollView style={base.wrap}>
@@ -34,24 +40,20 @@ const User = ({ route }) => {
         <UserInfo />
       </View>
       <View style={styles.block}>
-        <View style={styles.item}>
+        <TouchableOpacity onPress={onGetConnectedBank} style={styles.item}>
           <Icon
             style={[styles.icon]}
-            icon={Images.Profile.MaThanhToan}
+            icon={Images.Profile.SoDu}
             size={24}
             tintColor={Colors.cl1}
           />
-          <Text size={Fonts.H6}>{translation.my_wallet}</Text>
-          <Text size={Fonts.H6} style={{ marginLeft: 'auto' }} bold>
-            {formatMoney(userInfo?.myWallet)}
+          <Text size={Fonts.H6}>Số dư</Text>
+          <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
+            {formatMoney(userInfo?.myWallet, true)}
           </Text>
-        </View>
+        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.BANK_LIST);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onGetAllBank}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.Bank}
@@ -60,15 +62,11 @@ const User = ({ route }) => {
           />
           <Text size={Fonts.H6}>
             {translation.bank_linking}
-            <Text> (2)</Text>
+            <Text>({listConnectBank?.length})</Text>
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            Navigator.push(SCREEN.NOTIFICATION);
-          }}>
+        <TouchableOpacity style={styles.item} onPress={onGetQRCode}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.MaThanhToan}
@@ -164,11 +162,7 @@ const User = ({ route }) => {
           <Text size={Fonts.H6}>{translation.feedback} </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
-        }}>
+      <TouchableOpacity style={styles.item} onPress={onLogout}>
         <Icon
           style={[styles.icon]}
           icon={Images.Profile.Logout}
@@ -181,24 +175,24 @@ const User = ({ route }) => {
   );
 };
 const styles = StyleSheet.create({
-  heading: {
-    marginTop: 20,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
-  },
-  title: {
-    textTransform: 'uppercase',
-  },
-  link: {
-    textDecorationLine: 'underline',
-  },
+  // heading: {
+  //   marginTop: 20,
+  //   borderBottomColor: Colors.l4,
+  //   borderBottomWidth: 1,
+  // },
+  // title: {
+  //   textTransform: 'uppercase',
+  // },
+  // link: {
+  //   textDecorationLine: 'underline',
+  // },
   block: {
-    borderBottomColor: '#EEEEEE',
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 8,
   },
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
@@ -209,8 +203,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
-  itemRight: {
-    marginLeft: 'auto',
-  },
+  // itemRight: {
+  //   marginLeft: 'auto',
+  // },
 });
 export default User;

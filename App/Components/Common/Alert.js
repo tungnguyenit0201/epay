@@ -1,41 +1,58 @@
 import React, {useState} from 'react';
-import {StyleSheet, Pressable, View} from 'react-native';
+import {StyleSheet, Pressable, View, Platform} from 'react-native';
 import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
 import {scale} from 'utils/Functions';
 import {Colors, Spacing, Fonts} from 'themes';
 import {Text} from 'components';
+import WebView from 'components/WebView/Partial';
+
 const AlertCustom = () => {
   const {error} = useCommon();
   const {setError} = useError();
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={!!error?.errorCode}
-      onBackdropPress={() => setError(null)}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          {!!error?.title && (
-            <Text style={[styles.modalText, styles.title]}>{error?.title}</Text>
-          )}
-          <Text style={styles.modalText}>{error?.errorMessage}</Text>
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => setError(null)}>
-            <Text style={styles.textStyle}>Đóng</Text>
-          </Pressable>
+    <View style={styles.container}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={!!error?.errorCode}
+        onBackdropPress={() => setError(null)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            {!!error?.title && (
+              <Text style={[styles.modalText, styles.title]}>
+                {error?.title}
+              </Text>
+            )}
+            <WebView
+              style={{minHeight: 70}}
+              source={{html: ` ${error?.errorMessage}`}}
+            />
+            {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setError(null)}>
+              <Text style={styles.textStyle}>Đóng</Text>
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    opacity: 0.7,
+    backgroundColor: Colors.black,
+  },
   centeredView: {
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
   },
   modalView: {
@@ -43,7 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: scale(20),
     paddingHorizontal: Spacing.PADDING * 2,
     paddingVertical: Spacing.PADDING,
-    alignItems: 'center',
+    // alignItems: 'center',
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
@@ -65,7 +82,7 @@ const styles = StyleSheet.create({
   },
 
   buttonClose: {
-    backgroundColor: Colors.PRIMARY,
+    backgroundColor: Colors.cl1,
   },
   textStyle: {
     color: Colors.white,

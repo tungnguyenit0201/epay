@@ -1,40 +1,61 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {Text, InputBlock, Header, Button} from 'components';
-import {Colors, Fonts, Spacing} from 'themes';
-import {useForgetPassword, useRegister} from 'context/Auth/utils';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
+import {Colors, Fonts, Spacing, Images} from 'themes';
+import {useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
-import {passwordSchema} from 'utils/ValidationSchemas';
+import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
-import {FUNCTION_TYPE} from 'configs/Constants';
+import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {HelpModal, Content, BigLogo} from 'components/Auth';
 
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
-  const {createAccount} = useRegister();
-  const {onNewPassword} = useForgetPassword();
+  const {
+    active,
+    setActive,
+    showModal,
+    setShowModal,
+    openCallDialog,
+    createAccount,
+    onNavigate,
+  } = useRegister();
   const scrollViewRef = useRef(null);
   const translation = useTranslation();
 
   const onSubmit = values => {
-    switch (functionType) {
-      case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return createAccount({...values, phone});
-      case FUNCTION_TYPE.FORGOT_PASS:
-        return onNewPassword({...values, phone});
-    }
+    createAccount({...values, phone});
   };
 
   return (
+    // TODO: translate
     <View style={styles.container}>
-      <Header back shadow={false} title={translation.sign_up} />
+      <View>
+        <Header
+          back
+          blackIcon
+          style={styles.header}
+          renderRightComponent={() => (
+            <TouchableOpacity
+              style={styles.pRight}
+              onPress={() => setShowModal(true)}>
+              <Icon
+                icon={Images.Register.Info}
+                style={styles.firstIcon}
+                tintColor={Colors.BLACK}
+              />
+            </TouchableOpacity>
+          )}
+        />
+      </View>
 
       <Formik
         initialValues={{
           newPassword: '',
           passwordConfirm: '',
         }}
-        validationSchema={passwordSchema}
+        validationSchema={newPasswordSchema}
         onSubmit={onSubmit}>
         {({
           handleChange: _handleChange,
@@ -50,55 +71,90 @@ const RegisterPassword = ({route}) => {
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
           };
-
+          // TODO: translate
           return (
-            <View style={{flex: 1}}>
-              <Text bold size={35} mb={15} style={styles.title}>
-                Đặt mật khẩu
-              </Text>
-              <Text mb={30}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
-              </Text>
-
+            <View style={styles.wrap}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
-                style={{
-                  flex: 1,
-                }}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={{paddingVertical: scale(35)}}
+                contentContainerStyle={{paddingVertical: scale(24)}}
                 ref={scrollViewRef}>
-                <InputBlock
-                  label="Mật khẩu"
+                <BigLogo />
+                <Content
+                  title="Tạo mật khẩu Epay"
+                  text={
+                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                  }
+                  style={{paddingBottom: Spacing.PADDING}}
+                />
+                <TextInput
                   password
                   required
                   onChange={handleChange('newPassword')}
                   onBlur={handleBlur('newPassword')}
+                  placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
                   scrollViewRef={scrollViewRef}
+                  leftIcon={Images.Transfer.Lock}
                 />
-                <InputBlock
-                  label="Xác nhận mật khẩu"
+                <TextInput
                   password
                   required
                   onChange={handleChange('passwordConfirm')}
                   onBlur={handleBlur('passwordConfirm')}
+                  placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
                   scrollViewRef={scrollViewRef}
+                  leftIcon={Images.Transfer.Lock}
                 />
+                <Text style={styles.textNote}>
+                  {
+                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                  }
+                </Text>
+              </ScrollView>
+
+              <View style={{paddingBottom: 20}}>
+                <View style={styles.flexRow}>
+                  <Checkbox onPress={setActive} />
+                  <Text>
+                    {` Tôi đồng ý với các `}
+                    <TouchableOpacity
+                      style={{marginTop: -3}}
+                      onPress={() => onNavigate(SCREEN.AGREEMENT)}>
+                      <Text style={styles.firstLink}>
+                        {'Thoả thuận người dùng '}
+                      </Text>
+                    </TouchableOpacity>
+                    và
+                    <TouchableOpacity
+                      style={{marginTop: -3}}
+                      onPress={() => onNavigate(SCREEN.POLICY)}>
+                      <Text style={styles.firstLink}>
+                        {'Chính sách quyền riêng tư '}
+                      </Text>
+                    </TouchableOpacity>
+                    của Epay Services
+                  </Text>
+                </View>
                 <Button
-                  mt={50}
+                  disabled={!active}
+                  mt={10}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-              </ScrollView>
+              </View>
             </View>
           );
         }}
       </Formik>
+      <HelpModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPress={openCallDialog}
+      />
     </View>
   );
 };
@@ -106,19 +162,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
+  },
+  wrap: {
+    flex: 1,
     paddingHorizontal: Spacing.PADDING,
   },
+  pRight: {
+    position: 'absolute',
+    right: 15,
+  },
+  firstIcon: {
+    width: scale(24),
+    height: scale(24),
+  },
   header: {
-    fontSize: Fonts.FONT_LARGE,
-    fontWeight: 'bold',
-    paddingBottom: Spacing.PADDING,
+    paddingTop: 10,
+    backgroundColor: Colors.white,
+    color: Colors.BLACK,
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  firstLink: {
+    textDecorationLine: 'underline',
+    marginLeft: 3,
   },
-  title: {
-    textTransform: 'uppercase',
+  flexRow: {flexDirection: 'row'},
+  textNote: {
+    fontSize: 12,
+    fontWeight: '500',
+    paddingRight: 9,
   },
 });
 export default RegisterPassword;

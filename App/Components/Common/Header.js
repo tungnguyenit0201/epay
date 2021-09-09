@@ -17,15 +17,16 @@ const Header = ({
   onPressBack,
   renderRightComponent,
   avoidStatusBar = true,
+  blackIcon = false,
 }) => {
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
   return (
-    <View style={[style, {}]}>
+    <View style={[styles.wrap, style]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
-      <View style={{minHeight: scale(24)}}>
-        <Text semibold size={Fonts.H6} style={[styles.title, titleStyle]}>
+      <View style={[{minHeight: scale(24)}]}>
+        <Text semibold fs="h6" style={[styles.title, titleStyle]}>
           {title}
         </Text>
         <View
@@ -59,7 +60,10 @@ const Header = ({
                     left: scale(30),
                   }}>
                   <View style={styles.back}>
-                    <Icon icon={Images.ArrowLeft} tintColor="#fff" />
+                    <Icon
+                      icon={Images.ArrowLeft}
+                      tintColor={blackIcon ? Colors.BLACK : Colors.white}
+                    />
                   </View>
                 </Pressable>
               ) : (
@@ -84,20 +88,8 @@ const Header = ({
 const styles = StyleSheet.create({
   wrap: {
     paddingBottom: scale(10),
-    backgroundColor: Colors.BACKGROUNDCOLOR,
   },
-  avoidStatusBar: {height: getStatusBarHeight()},
-  shadow: {
-    shadowColor: Colors.BLACK,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 2,
-    elevation: 5,
-    zIndex: 1,
-  },
+  //avoidStatusBar: {height: getStatusBarHeight()},
   left: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -106,15 +98,10 @@ const styles = StyleSheet.create({
   back: {
     paddingHorizontal: Spacing.PADDING / 2,
   },
-  right: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   title: {
     fontWeight: 'bold',
     alignSelf: 'center',
-    color: '#fff',
+    color: Colors.white,
     paddingTop: 5,
   },
   menuIcon: {

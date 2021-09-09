@@ -5,7 +5,7 @@ import {scale} from 'utils/Functions';
 import Text from './Text';
 
 export default ({
-  items,
+  items, // [{label, value}]
   onChange,
   style,
   marginBottom = 19,
@@ -14,12 +14,17 @@ export default ({
   showErrorLabel = true,
 }) => {
   const [checked, setChecked] = React.useState();
+
+  const onPress = item => {
+    setChecked(item?.value);
+    onChange?.(item?.value);
+  };
+
   const renderRadio = item => {
     //const isSelected = item?.value === value;
     return (
       <Pressable
-        //onPress={() => onChange?.(item?.value)}
-        onPress={() => setChecked(item?.value)}
+        onPress={() => onPress(item)}
         key={item?.value}
         style={[styles.radio, style]}>
         <View style={styles.tickWrap}>

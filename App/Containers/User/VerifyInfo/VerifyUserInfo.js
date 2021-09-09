@@ -1,24 +1,24 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Text, InputBlock, Header, Button, FWLoading, Picker} from 'components';
+import {Text, InputBlock, Header, Button, HeaderBg} from 'components';
 import {base} from 'themes';
-import {SCREEN, TEXT} from 'configs/Constants';
+import {SCREEN} from 'configs/Constants';
 import Progress from 'components/User/VerifyInfo/Progress';
 import {useVerifyInfo} from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
-import HeaderBg from 'components/Common/HeaderBg';
-
-const VerifyUserInfo = () => {
-  const {onChange, onContinue} = useVerifyInfo();
-  let [domain, setDomain] = useState(0);
+import {useTranslation} from 'context/Language';
+import _ from 'lodash';
+const VerifyUserInfo = ({route}) => {
+  const {disabledIdentify, onChange, onContinue} = useVerifyInfo();
+  const translation = useTranslation();
+  const identityCard = _.get(route, 'params.identifyCard.value', 1);
 
   return (
     <>
+      <HeaderBg>
+        <Header back title={translation?.account_verification} />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title={TEXT.VERIFY_ACCOUNT} />
-        </HeaderBg>
-
         <View style={[base.container, {paddingTop: 20}]}>
           <Progress step={1} />
 
@@ -30,7 +30,7 @@ const VerifyUserInfo = () => {
             onChange={index => onPicker(index)}
             value={domain}
           /> */}
-
+          {/* 
           <InputBlock
             label={'Họ và tên'}
             onChange={value => onChange('name', value)}
@@ -38,21 +38,25 @@ const VerifyUserInfo = () => {
           <InputBlock
             label={'Ngày sinh'}
             onChange={value => onChange('birthday', value)}
-          />
+          /> */}
 
           <SelectImage
-            title="Mặt trước"
+            title="Mặt trước" // TODO: translate
             onSelectImage={value => {
-              onChange('frontIDCard', value);
+              onChange('ICFrontPhoto', value?.data);
+              identityCard == 3 && onChange('ICBackPhoto', value?.data);
             }}
           />
-          <SelectImage
-            title="Mặt sau"
-            onSelectImage={value => onChange('backIDCard', value)}
-          />
+          {identityCard != 3 && (
+            <SelectImage
+              title="Mặt sau" // TODO: translate
+              onSelectImage={value => onChange('ICBackPhoto', value?.data)}
+            />
+          )}
 
           <Button
-            label={TEXT.CONTINUE}
+            disabled={disabledIdentify}
+            label="Tiếp tục" // TODO: translate
             onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
           />
         </View>
