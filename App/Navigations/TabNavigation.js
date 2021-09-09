@@ -105,7 +105,9 @@ const TabNavigation = () => {
             style={[{width: width}, styles.tabImage]}
           />
         </View>
-        <TouchableOpacity style={[styles.wrapQR, {width: width}]}>
+        <TouchableOpacity
+          style={[styles.wrapQR, {width: width}]}
+          onPress={() => navigation.navigate(SCREEN.QRPAY)}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>

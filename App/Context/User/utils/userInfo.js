@@ -190,21 +190,6 @@ const useUserInfo = type => {
     }
   };
 
-  const onGetQRCode = async () => {
-    try {
-      setLoading(true);
-      let phone = await getPhone();
-      let result = await getQRCode({phone});
-      setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        dispatch({type: 'SET_QRCODE', data: result?.QRCodeInfo});
-        Navigator.navigate(SCREEN.QRPAY);
-      } else setError(result);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
-
   const onUpdateAvatar = type => {
     switch (type) {
       case 'photo':
@@ -231,7 +216,6 @@ const useUserInfo = type => {
     onGetConnectedBank,
     onConfirmPassword,
     onGetLimit,
-    onGetQRCode,
     onUpdateAvatar,
     showModal,
     setShowModal,

@@ -61,6 +61,9 @@ export default {
     QAPAY: require('images/home/QAPAY.png'),
     ChuyenTien: require('images/home/ChuyenTien.png'),
     LichSuGd: require('images/home/LichSuGd.png'),
+    Wave: require('images/home/wave.jpg'),
+    Avatar: require('images/home/avatar.png'),
+    Arrow: require('images/home/CircleRight.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),

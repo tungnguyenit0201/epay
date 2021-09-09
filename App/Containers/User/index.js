@@ -25,7 +25,7 @@ import {useAuth} from 'context/Auth/utils';
 const User = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
-  const {onGetConnectedBank, onGetQRCode} = useUserInfo();
+  const {onGetConnectedBank} = useUserInfo();
   const {onGetAllBank} = useBankInfo();
   const {listConnectBank} = useWallet();
   const {onLogout} = useAuth();
@@ -66,7 +66,9 @@ const User = ({route}) => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.item} onPress={onGetQRCode}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => Navigator.navigate(SCREEN.QRPAY)}>
           <Icon
             style={[styles.icon]}
             icon={Images.Profile.MaThanhToan}
