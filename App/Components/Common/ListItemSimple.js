@@ -11,6 +11,7 @@ import {Spacing} from 'themes';
 import {View} from 'react-native-ui-lib';
 import {scale} from 'utils/Functions';
 import Navigator from 'navigations/Navigator';
+import {useCheckSmartOTP} from 'context/Home/utils';
 
 const ListItem = ({
   data,
@@ -24,16 +25,16 @@ const ListItem = ({
   styleIcon,
   styleText,
 }) => {
-  const _screenWidth = Math.min(
-    Dimensions.get('window').width,
-    //Dimensions.get('window').height,
-  );
+  const _screenWidth = Math.min(Dimensions.get('window').width);
   const screenContent = _screenWidth - (Spacing.PADDING * 2 + 15);
+  const {checkSmartOTP} = useCheckSmartOTP();
   const Item = ({item}) => (
     <TouchableOpacity
       style={[styles.item, styleItem]}
       onPress={() => {
-        Navigator.push(item.screen);
+        !!item?.checkSmartOTP
+          ? checkSmartOTP(item.screen)
+          : Navigator.navigate(item.screen);
       }}>
       <Image
         source={item.icon}

@@ -106,7 +106,7 @@ const TabNavigation = () => {
           />
         </View>
         <TouchableOpacity
-          style={[styles.wrapQR, {width: width}]}
+          style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
           onPress={() => navigation.navigate(SCREEN.QRPAY)}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
@@ -135,6 +135,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 6,
   },
+  wrapTab: {
+    flexDirection: 'row',
+    zIndex: 1,
+  },
   wrapTabImg: {
     position: 'absolute',
     height: scale(80),
@@ -143,12 +147,6 @@ const styles = StyleSheet.create({
     height: scale(80),
     zIndex: 1,
   },
-  wrapTab: {
-    flexDirection: 'row',
-    zIndex: 100,
-    position: 'absolute',
-  },
-
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -162,9 +160,8 @@ const styles = StyleSheet.create({
   },
   wrapQR: {
     position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
     top: -scale(56 / 2 + 5),
+    width: scale(56),
   },
   qrImg: {
     width: scale(56),
