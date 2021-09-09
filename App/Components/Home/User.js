@@ -3,12 +3,15 @@ import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Text} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
+import {useAuth} from 'context/Auth/utils';
+import {useNotify} from 'context/User/utils';
 import Navigator from 'navigations/Navigator';
 import {useUser} from 'context/User';
 
 const User = ({data, style}) => {
   const {personalInfo, phone} = useUser();
 
+  const {onGetAllNotify} = useNotify();
   return (
     // TODO: translate
     <View style={[base.shadow, styles.item, style]}>
@@ -27,9 +30,7 @@ const User = ({data, style}) => {
         </Text>
       </TouchableOpacity>
       <View>
-        <TouchableOpacity
-          onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
-          style={styles.wicon}>
+        <TouchableOpacity onPress={() => onGetAllNotify()} style={styles.wicon}>
           {personalInfo?.Avatar ? (
             <Image
               style={{width: 40, height: 40}}

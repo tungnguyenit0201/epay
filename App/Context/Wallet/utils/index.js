@@ -7,6 +7,7 @@ import {
   useTransactionResult,
 } from './topUpWithdraw';
 import {useWalletInfo, useMoney} from './walletInfo';
+import useContacts from './contacts';
 
 export {
   useBankInfo,
@@ -17,4 +18,5 @@ export {
   useTransactionResult,
   useWalletInfo,
   useMoney,
+  useContacts,
 };

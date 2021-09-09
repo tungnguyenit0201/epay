@@ -12,26 +12,25 @@ import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
 
-import {SCREEN} from 'configs/Constants';
+import {SCREEN, NOTIFY} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
 import FooterNotification from 'components/Home/FooterNotification';
-import {useUser} from 'context/User';
 import {useNotify} from 'context/User/utils';
 const Notification = () => {
   const translation = useTranslation();
-  let [type, setType] = useState(0);
+  const [type, setType] = useState(NOTIFY.ALL);
   const [refreshing, setRefreshing] = useState(false);
-  const {userInfo} = useUser();
-  const {selectNotify} = useNotify();
+  const {selectNotify, onGetAllNotify} = useNotify();
   const dataType = [
-    {id: 0, title: 'Tất cả'},
-    {id: 1, title: 'Nhắc cước'},
-    {id: 2, title: 'Khuyến mãi'},
-    {id: 3, title: 'Khác'},
+    {id: 0, title: NOTIFY.ALL},
+    {id: 1, title: NOTIFY.CHARGES},
+    {id: 2, title: NOTIFY.PROMOTION},
+    {id: 3, title: NOTIFY.OTHER},
   ];
+
   return (
     <>
       <HeaderBg>
@@ -40,17 +39,16 @@ const Notification = () => {
       <View style={[base.container, styles.row, styles.flexRow]}>
         <FlatList
           data={dataType}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.title}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
             <Pressable
-              style={[styles.tag, type === item.id && styles.tagActive]}
+              style={[styles.tag, type === item.title && styles.tagActive]}
               onPress={() => {
-                setType(item.id);
-                selectNotify(item.id);
+                setType(item.title);
               }}>
-              <Text style={[type === item.id && {color: Colors.white}]}>
+              <Text style={[type === item.title && styles.textWhite]}>
                 {item.title}
               </Text>
             </Pressable>
@@ -63,13 +61,13 @@ const Notification = () => {
             refreshing={refreshing}
             onRefresh={() => {
               setRefreshing(true);
-              selectNotify();
+              onGetAllNotify();
               setRefreshing(false);
             }}
           />
         }>
-        {userInfo?.listNotify.length !== 0 ? (
-          userInfo?.listNotify.map((item, index) => {
+        {selectNotify(type).length !== 0 ? (
+          selectNotify(type).map((item, index) => {
             return (
               <View style={[base.container, styles.row]} key={index}>
                 <View style={styles.head}>
@@ -77,7 +75,6 @@ const Notification = () => {
                     source={require('images/favicon.png')}
                     style={styles.icon}
                   />
-                  <Text style={styles.type}>{item.labelType}</Text>
                   <Text style={styles.date}>{item?.Time}</Text>
                 </View>
                 <Pressable
@@ -145,7 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  type: {fontWeight: '500'},
   title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
   textCenter: {
     flex: 1,
@@ -162,6 +158,9 @@ const styles = StyleSheet.create({
   },
   content: {
     marginBottom: 30,
+  },
+  textWhite: {
+    color: Colors.white,
   },
 });
 export default Notification;
