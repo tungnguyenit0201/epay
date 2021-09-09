@@ -10,7 +10,6 @@ import {
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale, formatMoney} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 
@@ -19,16 +18,16 @@ import UserInfo from 'components/User/UserInfo';
 import {useUserInfo} from 'context/User/utils';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
-import {useWallet} from 'context/Wallet';
 import {useAuth} from 'context/Auth/utils';
+import {useWallet} from 'context/Wallet';
 
-const User = ({route}) => {
+const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank, onGetQRCode} = useUserInfo();
   const {onGetAllBank} = useBankInfo();
-  const {listConnectBank} = useWallet();
   const {onLogout} = useAuth();
+  const {listConnectBank} = useWallet();
 
   return (
     <ScrollView style={base.wrap}>

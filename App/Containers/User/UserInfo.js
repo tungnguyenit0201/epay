@@ -18,7 +18,7 @@ import {scale} from 'utils/Functions';
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
-import {useUserInfo} from 'context/User/utils';
+import {useUserStatus, useUserInfo} from 'context/User/utils';
 
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
@@ -26,6 +26,7 @@ const UserInfo = () => {
   const {userInfo} = useUser();
   const translation = useTranslation();
   const {onUpdateAvatar, showModal, setShowModal} = useUserInfo();
+  const {statusVerified, onVerify, getStatusVerifiedText} = useUserStatus();
 
   const PersonalInfo = userInfo.personalInfo;
   const AddressInfo = userInfo.personalAddress;
@@ -123,19 +124,13 @@ const UserInfo = () => {
               {phone}
             </Text>
             <Button
-              disabled={!(ICInfor?.Verified == PERSONAL_IC.INACTIVE)}
+              disabled={statusVerified != PERSONAL_IC.INACTIVE}
               bg={Colors.cl4}
               radius={30}
               color={Colors.black}
-              label={
-                ICInfor?.Verified == PERSONAL_IC.INACTIVE
-                  ? translation.unverified
-                  : ICInfor?.Verified == PERSONAL_IC.VERIFYING
-                  ? 'Đang xác thực'
-                  : 'Đã xác thực'
-              }
+              label={getStatusVerifiedText()}
               style={{minWidth: 150}}
-              onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
+              onPress={onVerify}
             />
           </View>
         </View>
