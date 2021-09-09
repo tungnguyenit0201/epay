@@ -18,6 +18,7 @@ import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
+import {useWalletInfo} from 'context/Wallet/utils';
 
 const useTouchID = () => {
   const [biometryType, setBiometryType] = useState(null);
@@ -92,7 +93,7 @@ const useAuth = () => {
   const {setError} = useError();
   const {setPhone, setToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
-
+  const {onGetWalletInfo} = useWalletInfo();
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
     const result = await checkPhone(phone);
@@ -160,6 +161,7 @@ const useAuth = () => {
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
         onGetAllInfo();
+        onGetWalletInfo();
         return;
     }
   };

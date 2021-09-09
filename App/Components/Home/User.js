@@ -3,26 +3,26 @@ import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Text} from 'components';
 import {Images, Colors, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
-import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
 import {useUser} from 'context/User';
 
 const User = ({data, style}) => {
-  const {onLogout} = useAuth();
-  const {userInfo} = useUser();
-  console.log('userInfo :>> ', userInfo);
+  const {personalInfo, phone} = useUser();
+
   return (
+    // TODO: translate
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
         style={styles.user}>
         <Text bold fs="h6" style={styles.text}>
-          Xin chào Vân
+          Xin chào {personalInfo?.FullName}
         </Text>
         <Text style={styles.text}>
-          *********
+          {phone?.slice(0, 3)}
+          ****
           <Text color={Colors.white} style={styles.phone}>
-            387
+            {phone?.slice(phone?.length - 3, phone?.length)}
           </Text>
         </Text>
       </TouchableOpacity>
@@ -30,7 +30,19 @@ const User = ({data, style}) => {
         <TouchableOpacity
           onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
           style={styles.wicon}>
-          <Image style={{width: 40, height: 40}} source={Images.Avatar} />
+          {personalInfo?.Avatar ? (
+            <Image
+              style={{width: 40, height: 40}}
+              source={{uri: personalInfo?.Avatar}}
+              resizeMode="cover"
+            />
+          ) : (
+            <Image
+              style={{width: 40, height: 40}}
+              source={Images.User}
+              resizeMode="cover"
+            />
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.noti}

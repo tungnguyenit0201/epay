@@ -23,14 +23,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
     alignItems: 'center',
     justifyContent: 'center',
-    opacity: 0.1,
+    opacity: 0.5,
   },
   background: {
     backgroundColor: Colors.white,
     borderRadius: scale(5),
     width: scale(72),
     height: scale(64),
-    opacity: 0.8,
   },
 });
 
