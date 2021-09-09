@@ -164,13 +164,7 @@ const UserInfo = () => {
         </View>
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
-            <Text>
-              {ICInfor?.Verified == PERSONAL_IC.INACTIVE
-                ? translation.unverified
-                : ICInfor?.Verified == PERSONAL_IC.VERIFYING
-                ? 'Đang xác thực'
-                : 'Đã xác thực'}
-            </Text>
+            <Text>{getStatusVerifiedText()}</Text>
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
