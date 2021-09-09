@@ -46,4 +46,9 @@ export default {
     GET_DISTRICT: 'region/get_district_info',
     GET_WARD: 'region/get_ward_info',
   },
+  NOTIFY: {
+    CHARGES_NOTIFY: 'notify/charges_notify',
+    PROMOTION_NOTIFY: 'notify/promotion_notify',
+    OTHER_NOTIFY: 'notify/other_notify',
+  },
 };
