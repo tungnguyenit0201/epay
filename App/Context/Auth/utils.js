@@ -71,6 +71,9 @@ const useTouchID = () => {
           resolve(success);
         })
         .catch(error => {
+          if (error?.name === 'LAErrorUserCancel') {
+            return;
+          }
           reject(error);
         });
     });
@@ -131,7 +134,13 @@ const useAuth = () => {
 
     switch (_.get(result, 'ErrorCode', '')) {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
+      case ERROR_CODE.FEATURE_LOCK_BY_PASSWORD_WRONG:
         return setError(result);
+
+      case ERROR_CODE.FEATURE_PASSWORD_WRONG_OVER_TIME:
+        setError(result);
+        Navigator.goBack();
+        return;
 
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
         return Navigator.push(SCREEN.OTP, {

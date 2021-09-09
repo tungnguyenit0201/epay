@@ -7,9 +7,8 @@ import Progress from 'components/User/VerifyInfo/Progress';
 import {useVerifyInfo} from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
 
-const VerifyUserInfo = () => {
+const VerifyEmail = () => {
   const {onChange, onContinue} = useVerifyInfo();
-  let [domain, setDomain] = useState(0);
 
   return (
     <>
@@ -40,4 +39,4 @@ const VerifyUserInfo = () => {
   );
 };
 
-export default VerifyUserInfo;
+export default VerifyEmail;

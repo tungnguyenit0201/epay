@@ -68,6 +68,7 @@ const useVerifyInfo = (initialValue = {}) => {
       setLoading(false);
     }
   };
+
   const onUpdatePersonalInfo = async ({
     ICFullName,
     Avatar,
@@ -132,6 +133,9 @@ const useVerifyInfo = (initialValue = {}) => {
     await onUpdateUserAddress({...contentRef.current, ...value});
     await onGetAllInfo();
   };
+
+  const onVerifyEmail = () => {};
+
   return {
     disabledIdentify,
     disabledAvatar,

@@ -20,6 +20,7 @@ import {useUserInfo} from 'context/User/utils';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
+import {useAuth} from 'context/Auth/utils';
 
 const User = ({route}) => {
   const translation = useTranslation();
@@ -27,6 +28,7 @@ const User = ({route}) => {
   const {onGetConnectedBank, onGetQRCode} = useUserInfo();
   const {onGetAllBank} = useBankInfo();
   const {listConnectBank} = useWallet();
+  const {onLogout} = useAuth();
 
   return (
     <ScrollView style={base.wrap}>
@@ -160,11 +162,7 @@ const User = ({route}) => {
           <Text size={Fonts.H6}>{translation.feedback} </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
-        }}>
+      <TouchableOpacity style={styles.item} onPress={onLogout}>
         <Icon
           style={[styles.icon]}
           icon={Images.Profile.Logout}
