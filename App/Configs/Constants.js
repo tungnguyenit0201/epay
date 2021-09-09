@@ -9,6 +9,7 @@ import COMMON_ENUM from './Enums/Common';
 import PERSONAL_IC from './Enums/PersonalIC';
 import NOTIFY from './Enums/Notify';
 import USER_STATUS from './Enums/UserStatus';
+import SMART_OTP from './Enums/SmartOTP';
 
 export {
   TEXT,
@@ -22,4 +23,5 @@ export {
   PERSONAL_IC,
   NOTIFY,
   USER_STATUS,
+  SMART_OTP,
 };

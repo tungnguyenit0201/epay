@@ -126,8 +126,6 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const onUpdateAllInfo = async value => {
-    console.log('values :>> ', {...contentRef.current, ...value});
-
     await onUpdateIdentify({...contentRef.current, ...value});
     await onUpdatePersonalInfo({...contentRef.current, ...value});
     await onUpdateUserAddress({...contentRef.current, ...value});

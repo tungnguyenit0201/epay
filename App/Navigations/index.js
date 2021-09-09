@@ -72,6 +72,7 @@ import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
 import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
+import History from 'containers/Wallet/History';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -228,6 +229,7 @@ const AppNavigator = () => {
             name={SCREEN.FORGET_NEW_PASSWORD}
             component={ForgetNewPassword}
           />
+          <Stack.Screen name={SCREEN.HISTORY} component={History} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

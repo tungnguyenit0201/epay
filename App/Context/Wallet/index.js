@@ -12,6 +12,7 @@ const defaultWalletInfo = {
   listInternationalBank: [],
   limit: '',
   transaction: {},
+  wallet: {},
 };
 const WalletContext = createContext({});
 export const WalletProvider = ({children}) => {

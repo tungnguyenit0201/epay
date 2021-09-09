@@ -41,6 +41,7 @@ export default {
     CHANGE_LIMIT: 'security/change_limit',
     FEE_CALCULATOR: 'bank/fee_calculator',
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
+    GET_WALLET_INFO: 'account/get_wallet_info',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

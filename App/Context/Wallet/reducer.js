@@ -41,6 +41,11 @@ export default function userReducer(state, action) {
         ...state,
         transaction: {...state.transaction, ...action?.data},
       };
+    case 'SET_WALLET_INFO':
+      return {
+        ...state,
+        wallet: action?.WalletInfo,
+      };
     default:
       return state;
   }

@@ -38,17 +38,20 @@ const Home = () => {
       icon: Images.Homes.NapTien,
       name: translation.top_up,
       screen: SCREEN.TOP_UP,
+      checkSmartOTP: true,
     },
     {
       icon: Images.Homes.RutTien,
       name: translation.withdraw,
       screen: SCREEN.WITHDRAW,
+      checkSmartOTP: true,
     },
 
     {
       icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
       screen: SCREEN.TRANSFER,
+      checkSmartOTP: true,
     },
     {
       icon: Images.Homes.LichSuGd,
@@ -179,12 +182,10 @@ const Home = () => {
           </View> */}
         </View>
         <View style={base.container}>
-          <Image
-            style={styles.bgHome}
-            source={require('images/home/wave.jpg')}
-          />
+          <Image style={styles.bgHome} source={Images.Homes.Wave} />
           <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} />
         </View>
+        <View style={styles.bottom}></View>
       </ScrollView>
       {modalSmartOTP.smartOTP && (
         <Modal
@@ -256,6 +257,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+  },
+  bottom: {
+    height: scale(80),
   },
 });
 export default Home;
