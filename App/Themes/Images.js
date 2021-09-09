@@ -119,5 +119,7 @@ export default {
   },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),
+    camera: require('images/icons/camera.png'),
+    wave: require('images/icons/wave.png'),
   },
 };
