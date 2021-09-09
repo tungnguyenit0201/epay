@@ -6,6 +6,7 @@ import {
   useOTPBySmartOTP,
   useTransactionResult,
 } from './topUpWithdraw';
+import useContacts from './contacts';
 
 export {
   useBankInfo,
@@ -14,4 +15,5 @@ export {
   useConfirmation,
   useOTPBySmartOTP,
   useTransactionResult,
+  useContacts,
 };
