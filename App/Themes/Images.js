@@ -14,11 +14,13 @@ export default {
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   TabBar: {
-    Home: require('images/Home.png'),
+    Home: require('images/tabBar/home.png'),
     Category: require('images/Category.png'),
     Search: require('images/Search.png'),
-    User: require('images/Signin.png'),
-    BottomTab: require('images/BottomTab.png'),
+    User: require('images/tabBar/user.png'),
+    BottomTab: require('images/tabBar/BottomTab.png'),
+    QR: require('images/tabBar/QR.png'),
+    test: require('images/tabBar/test.gif'),
   },
 
   Check: require('images/Check.png'),

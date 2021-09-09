@@ -74,7 +74,7 @@ import SelectMoney from 'containers/Wallet/SelectMoney';
 import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 
 const AppNavigator = () => {
-  let initialRoute = SCREEN.AUTH;
+  let initialRoute = SCREEN.TAB_NAVIGATION;
   const {setLanguage} = useTranslation();
 
   React.useEffect(() => {

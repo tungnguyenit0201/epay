@@ -5,9 +5,12 @@ import {Images, Colors, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
+import {useUser} from 'context/User';
 
 const User = ({data, style}) => {
   const {onLogout} = useAuth();
+  const {userInfo} = useUser();
+  console.log('userInfo :>> ', userInfo);
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
