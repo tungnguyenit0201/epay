@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Button, Text, Icon, Header} from 'components';
+import {Button, Text, Icon, Header, ActionSheet} from 'components';
 import {SCREEN, PERSONAL_IC} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
@@ -18,12 +18,15 @@ import {scale} from 'utils/Functions';
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
+import {useUserInfo} from 'context/User/utils';
 
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
   const {phone} = usePhone();
   const {userInfo} = useUser();
   const translation = useTranslation();
+  const {onUpdateAvatar, showModal, setShowModal} = useUserInfo();
+
   const PersonalInfo = userInfo.personalInfo;
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
@@ -59,6 +62,7 @@ const UserInfo = () => {
     },
     {name: 'Địa chỉ', val: AddressInfo?.Provincial ? address : 'Chưa có'},
   ];
+
   return (
     <>
       <ScrollView>
@@ -76,7 +80,7 @@ const UserInfo = () => {
           </Pressable>
 
           <View style={{alignItems: 'center'}}>
-            <View style={{position: 'relative', marginBottom: 15}}>
+            <Pressable style={{marginBottom: 15}} onPress={onUpdateAvatar}>
               <View
                 style={{
                   overflow: 'hidden',
@@ -87,7 +91,12 @@ const UserInfo = () => {
                 }}>
                 <Image
                   style={{width: 94, height: 94}}
-                  source={Images.DefaultUser}
+                  source={
+                    PersonalInfo?.Avatar
+                      ? {uri: PersonalInfo.Avatar}
+                      : Images.DefaultUser
+                  }
+                  resizeMode="cover"
                 />
               </View>
               <View
@@ -105,7 +114,7 @@ const UserInfo = () => {
                 }}>
                 <Image style={{width: 16, height: 16}} source={Images.Edit} />
               </View>
-            </View>
+            </Pressable>
 
             <Text color={Colors.white} size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
               {PersonalInfo?.FullName}
@@ -197,6 +206,14 @@ const UserInfo = () => {
           </View>
         </View>
       </ScrollView>
+      <ActionSheet
+        visible={!!showModal}
+        setVisible={setShowModal}
+        data={[
+          {label: 'Chụp ảnh', onPress: () => onUpdateAvatar('camera')},
+          {label: 'Chọn ảnh sẵn có', onPress: () => onUpdateAvatar('photo')},
+        ]}
+      />
     </>
   );
 };
