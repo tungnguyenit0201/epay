@@ -159,6 +159,19 @@ export const getQRCode = async ({phone}) => {
   return response;
 };
 
+export const updateAvatar = async ({phone, AvatarPhoto}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_AVATAR,
+    method: 'post',
+    params: {PhoneNumber: phone, AvatarPhoto},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const getChargesNotify = async ({phone}) => {
   let response = null;
   await request({
