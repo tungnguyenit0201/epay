@@ -1,4 +1,5 @@
-import {SCREEN, USER_STATUS} from 'configs/Constants';
+import {PERSONAL_IC, SCREEN, USER_STATUS} from 'configs/Constants';
+import {useTranslation} from 'context/Language';
 import {useWallet} from 'context/Wallet';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
@@ -7,6 +8,7 @@ import {useUser} from '..';
 const useUserStatus = () => {
   const {personalIC} = useUser();
   const {listConnectBank} = useWallet();
+  const translation = useTranslation();
   const statusVerified = personalIC?.Verified;
 
   const getStatus = () => {
@@ -38,10 +40,22 @@ const useUserStatus = () => {
     Navigator.push(SCREEN.BANK_LIST);
   };
 
+  const getStatusVerifiedText = () => {
+    // TODO: translate
+    switch (statusVerified) {
+      case PERSONAL_IC.INACTIVE:
+        return translation.unverified;
+      case PERSONAL_IC.VERIFYING:
+        return 'Đang xác thực';
+      default:
+        return 'Đã xác thực';
+    }
+  };
+
   return {
     status: getStatus(),
     statusVerified,
-    listConnectBank,
+    getStatusVerifiedText,
     onCheck,
     onVerify,
     onLinkBank,

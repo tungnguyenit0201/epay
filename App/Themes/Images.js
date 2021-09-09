@@ -123,4 +123,9 @@ export default {
     FingerPrint: require('images/icons/fingerprint.png'),
     Face: require('images/icons/face.png'),
   },
+  VerifyUserInfo: {
+    iconDown: require('images/icons/down.png'),
+    camera: require('images/icons/camera.png'),
+    wave: require('images/icons/wave.png'),
+  },
 };

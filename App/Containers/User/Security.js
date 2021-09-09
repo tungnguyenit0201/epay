@@ -16,13 +16,16 @@ const PaymentSettings = () => {
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
-        <Header back title={translation.password_and_security} back />
+        <Header back title={translation.password_and_security} />
       </HeaderBg>
 
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.CHANGE_PASSWORD, 'confirm_password_response');
+          Navigator.push(SCREEN.CHANGE_PASSWORD, {
+            type: 'confirm_password_response',
+            headerLabel: 'Đổi mật khẩu',
+          });
         }}>
         <Icon
           mr={8}
@@ -93,8 +96,8 @@ const PaymentSettings = () => {
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
