@@ -8,6 +8,7 @@ import TRANS_FORM_TYPE from './Enums/TransFormType';
 import COMMON_ENUM from './Enums/Common';
 import PERSONAL_IC from './Enums/PersonalIC';
 import NOTIFY from './Enums/Notify';
+import USER_STATUS from './Enums/UserStatus';
 
 export {
   TEXT,
@@ -20,4 +21,5 @@ export {
   COMMON_ENUM,
   PERSONAL_IC,
   NOTIFY,
+  USER_STATUS,
 };
