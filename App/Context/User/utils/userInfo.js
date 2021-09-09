@@ -21,8 +21,9 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import {sha256} from 'react-native-sha256';
-
 import {useWallet} from 'context/Wallet';
+import ImagePicker from 'react-native-image-crop-picker';
+
 const useUserInfo = type => {
   let personalInfo = useRef({
     FullName: '',
@@ -39,6 +40,8 @@ const useUserInfo = type => {
   const {showModalSmartOTP} = useShowModal();
   const {onChangeLimit} = useBankInfo();
   const {walletInfo} = useWallet();
+  const [showModal, setShowModal] = useState(null);
+
   const setPersonalInfo = (key, value) => {
     personalInfo.current[key] = value;
   };
@@ -186,6 +189,7 @@ const useUserInfo = type => {
       setLoading(false);
     }
   };
+
   const onGetQRCode = async () => {
     try {
       setLoading(true);
@@ -200,6 +204,23 @@ const useUserInfo = type => {
       setLoading(false);
     }
   };
+
+  const onUpdateAvatar = type => {
+    switch (type) {
+      case 'photo':
+        return ImagePicker.openPicker({
+          cropping: false,
+          includeBase64: true,
+        }).then(image => {
+          // đang làm dở thì làm cái khác
+        });
+      case 'camera':
+        return;
+      default:
+        return setShowModal('selectAvatar');
+    }
+  };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -211,6 +232,9 @@ const useUserInfo = type => {
     onConfirmPassword,
     onGetLimit,
     onGetQRCode,
+    onUpdateAvatar,
+    showModal,
+    setShowModal,
   };
 };
 export default useUserInfo;

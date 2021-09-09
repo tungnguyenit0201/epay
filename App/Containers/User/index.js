@@ -19,12 +19,17 @@ import UserInfo from 'components/User/UserInfo';
 import {useUserInfo} from 'context/User/utils';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
+import {useWallet} from 'context/Wallet';
+import {useAuth} from 'context/Auth/utils';
+
 const User = ({route}) => {
-  // TODO : transation
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank, onGetQRCode} = useUserInfo();
   const {onGetAllBank} = useBankInfo();
+  const {listConnectBank} = useWallet();
+  const {onLogout} = useAuth();
+
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
@@ -44,7 +49,7 @@ const User = ({route}) => {
           />
           <Text size={Fonts.H6}>Số dư</Text>
           <Text size={Fonts.H6} style={{marginLeft: 'auto'}} bold>
-            {formatMoney(userInfo?.myWallet)}
+            {formatMoney(userInfo?.myWallet, true)}
           </Text>
         </TouchableOpacity>
 
@@ -57,7 +62,7 @@ const User = ({route}) => {
           />
           <Text size={Fonts.H6}>
             {translation.bank_linking}
-            <Text> (2)</Text>
+            <Text>({listConnectBank?.length})</Text>
           </Text>
         </TouchableOpacity>
 
@@ -157,11 +162,7 @@ const User = ({route}) => {
           <Text size={Fonts.H6}>{translation.feedback} </Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
-        }}>
+      <TouchableOpacity style={styles.item} onPress={onLogout}>
         <Icon
           style={[styles.icon]}
           icon={Images.Profile.Logout}
