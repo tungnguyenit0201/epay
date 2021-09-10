@@ -39,7 +39,7 @@ const Confirmation = () => {
     }
     if (e === '0') {
       setOpen(!open);
-      //Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
+      //Navigator.navigate(SCREEN.TRANSACTION_FAILURE);
     }
   };
   const toggleModal = () => {

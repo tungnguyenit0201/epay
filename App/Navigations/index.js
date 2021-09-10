@@ -73,6 +73,7 @@ import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
 import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
+import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -230,6 +231,10 @@ const AppNavigator = () => {
             component={ForgetNewPassword}
           />
           <Stack.Screen name={SCREEN.HISTORY} component={History} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_EMAIL_RESULT}
+            component={VerifyEmailResult}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

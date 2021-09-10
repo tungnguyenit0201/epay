@@ -165,12 +165,8 @@ const UserInfo = () => {
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
             <Text>{getStatusVerifiedText()}</Text>
-            <TouchableOpacity
-              style={styles.itemRight}
-              onPress={() => {
-                Navigator.push(SCREEN.NOTIFICATION);
-              }}>
-              {ICInfor?.Active == PERSONAL_IC.INACTIVE && (
+            <TouchableOpacity style={styles.itemRight} onPress={onVerify}>
+              {statusVerified == PERSONAL_IC.INACTIVE && (
                 <Text style={styles.link}>{'Xác thực tài khoản'}</Text>
               )}
             </TouchableOpacity>
