@@ -13,6 +13,8 @@ export default {
   EyeGray: require('images/EyeGray.png'),
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
+  Bell: require('images/bell.png'),
+  Success: require('images/successfully.png'),
   TabBar: {
     Home: require('images/Home.png'),
     Category: require('images/Category.png'),
