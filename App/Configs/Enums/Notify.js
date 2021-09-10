@@ -1,6 +1,7 @@
 const NOTIFY = {
-  CHARGES: 1,
-  PROMOTION: 2,
-  OTHER: 3,
+  ALL: 'Tất cả',
+  CHARGES: 'Nhắc cước',
+  PROMOTION: 'Khuyến mãi',
+  OTHER: 'Khác',
 };
 export default NOTIFY;
