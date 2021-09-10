@@ -62,5 +62,6 @@ const SCREEN = {
   SYNC_SMART_OTP_RESULT: 'SyncSmartOTPResult',
   SELECT_MONEY: 'SelectMoney',
   OTP_BY_SMART_OTP: 'OTPBySmartOTP',
+  DETAIL_HISTORY: 'DetailHistory',
 };
 export default SCREEN;

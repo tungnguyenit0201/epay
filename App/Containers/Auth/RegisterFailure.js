@@ -22,16 +22,7 @@ const RegisterFailure = ({route}) => {
     // TODO: translate
     <>
       <View>
-        <Header
-          back
-          blackIcon
-          style={{
-            paddingTop: 10,
-            paddingBottom: 10,
-            backgroundColor: Colors.white,
-            color: Colors.BLACK,
-          }}
-        />
+        <Header back blackIcon avoidStatusBar />
         <TouchableOpacity
           style={{
             position: 'absolute',

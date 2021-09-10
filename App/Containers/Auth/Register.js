@@ -31,7 +31,7 @@ const Register = () => {
   return (
     // TODO: translate
     <ScrollView style={styles.container}>
-      <Header back shadow={false} />
+      <Header back shadow={false} avoidStatusBar />
 
       {!loading ? (
         <View style={styles.wrap}>
