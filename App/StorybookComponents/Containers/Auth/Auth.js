@@ -1,44 +1,51 @@
 import React, {useEffect} from 'react';
-import {View, Image, StyleSheet, Pressable} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  Pressable,
+  Text,
+} from 'react-native';
 import Button from '../../Atoms/Button';
-import InputBlock from '../../Atoms/InputBlock';
-import {Colors, Images, Spacing} from 'themes';
+import TextInput from '../../Atoms/TextInput';
+import {Colors, Images, Spacing, Fonts} from 'themes';
 import {Formik} from 'formik';
+import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 
 const Auth = () => {
-  // const {onCheckPhoneExist} = useAuth();
-  const phone = null;
-
+  const phone = '0903899495';
+  const translation = require('../../../Context/Language/vi.json');
+  console.log(Images.logoEpay)
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Pressable
-          onPress={() => console.log('ffff')}
+          onPress={() => console.log('press')}
           style={{
-            width: '100%',
-            height: '50%',
-            marginBottom: Spacing.PADDING,
+            marginBottom: Spacing.PADDING + 28,
+            alignItems: 'center',
           }}>
-          <Image
-            source={{
-              uri: 'https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/6c/ee/02/6cee02e7-2fcc-9702-912b-1e9a8d251292/source/512x512bb.jpg',
-            }}
-            style={{
-              flex: 1,
-              minHeight: 200
-            }}
-            resizeMode="contain"
-          />
+          <Image style={{ width: 120, height: 72 }} source={Images.logoEpay.default} resizeMode="contain" />
         </Pressable>
+
+        <View style={styles.wrap}>
+          <Text style={[styles.title, styles.text_center, {marginBottom: 10}]}>
+            {translation.please_enter_your_phone_number}
+          </Text>
+
+          <Text style={[styles.text, styles.text_center, {marginBottom: 26}]}>
+            {translation.sign_insign_up_epay}
+          </Text>
+        </View>
 
         <Formik
           key={phone}
           initialValues={{
             phone: phone || '',
           }}
-          // validationSchema={phoneSchema}
-          >
+          validationSchema={phoneSchema}
+          onSubmit={()=> console.log('submit')}>
           {({
             handleChange: _handleChange,
             handleBlur,
@@ -55,19 +62,33 @@ const Auth = () => {
             };
 
             return (
-              <View>
-                <InputBlock
-                  numeric
-                  label={'Vui lòng nhập số điện thoại '}
-                  onChange={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  error={touched.phone && errors.phone}
-                  value={values.phone}
-                />
+              <View
+                style={{
+                  width: '100%',
+                  flex: 1,
+                }}>
+                <View>
+                  <TextInput
+                    placeholder={translation.enter_your_phone_number}
+                    numeric
+                    onChange={handleChange('phone')}
+                    onBlur={handleBlur('phone')}
+                    error={touched.phone && errors.phone}
+                    value={values.phone}
+                    leftIcon={Images.Phone_1}
+                    isDeleted={values.phone}
+                  />
+                </View>
+
                 <Button
-                  label={'Tiếp tục'}
+                  label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
+                  style={{
+                    position: 'absolute',
+                    top: 400,
+                    width: '100%',
+                  }}
                 />
               </View>
             );
@@ -84,9 +105,15 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: Spacing.PADDING,
-    paddingVertical: Spacing.PADDING * 10,
+    paddingTop: Spacing.PADDING * 4 + 8,
     alignItems: 'center',
     flex: 1,
   },
+  text_center: {textAlign: 'center'},
+  title: {
+    fontWeight: 'bold',
+    fontSize: Fonts.H5,
+  },
+  text: {color: Colors.l6},
 });
 export default Auth;

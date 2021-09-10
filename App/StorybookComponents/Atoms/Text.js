@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {Fonts, Colors, Spacing} from 'themes';
-import {scale} from 'utils/Functions';
 
 const CustomText = ({
   style: _style,

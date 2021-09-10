@@ -106,11 +106,6 @@
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.1.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.js": [
       "prettier --write",
@@ -129,5 +124,18 @@
       "pattern": "**/*.stories.js",
       "outputFile": "./storybook/storyLoader.js"
     }
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/mangoads/epay-wallet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/mangoads/epay-wallet/issues"
+  },
+  "homepage": "https://gitlab.com/mangoads/epay-wallet#readme"
 }

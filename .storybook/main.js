@@ -2,9 +2,9 @@ const custom = require('../webpack.config.js');
 module.exports = {
   stories: [
     '../App/StorybookComponents/Atoms/*.stories.[tj]s',
-    // '../App/StorybookComponents/Groups/*.stories.[tj]s',
-    // '../App/StorybookComponents/Groups/**/*.stories.[tj]s',
-    // '../App/StorybookComponents/Containers/**/*.stories.[tj]s'
+    '../App/StorybookComponents/Groups/*.stories.[tj]s',
+    '../App/StorybookComponents/Groups/**/*.stories.[tj]s',
+    '../App/StorybookComponents/Containers/**/*.stories.[tj]s'
   ],
   webpackFinal: (config) => {
     return {
