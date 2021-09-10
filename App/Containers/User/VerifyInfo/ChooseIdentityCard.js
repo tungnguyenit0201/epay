@@ -87,7 +87,7 @@ const ChooseIdentityCard = () => {
             </View>
           )}
           // title={'Trợ giúp'}
-          message={'dssd'}
+          // message={'dssd'}
           containerStyle={[
             styles.bgWhite,
             {

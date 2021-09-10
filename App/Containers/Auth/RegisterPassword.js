@@ -21,7 +21,6 @@ const RegisterPassword = ({route}) => {
     createAccount,
     onNavigate,
   } = useRegister();
-  const scrollViewRef = useRef(null);
   const translation = useTranslation();
 
   const onSubmit = values => {
@@ -77,8 +76,7 @@ const RegisterPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={{paddingVertical: scale(24)}}
-                ref={scrollViewRef}>
+                contentContainerStyle={{paddingVertical: scale(24)}}>
                 <BigLogo />
                 <Content
                   title="Tạo mật khẩu Epay"
@@ -95,7 +93,6 @@ const RegisterPassword = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
-                  scrollViewRef={scrollViewRef}
                   leftIcon={Images.Transfer.Lock}
                 />
                 <TextInput
@@ -106,7 +103,6 @@ const RegisterPassword = ({route}) => {
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
-                  scrollViewRef={scrollViewRef}
                   leftIcon={Images.Transfer.Lock}
                 />
                 <Text style={styles.textNote}>

@@ -22,6 +22,7 @@ const useVerifyInfo = (initialValue = {}) => {
   const {onGetAllInfo} = useUserInfo();
   let [disabledIdentify, setDisabledIdentify] = useState(false);
   let [disabledAvatar, setDisabledAvatar] = useState(false);
+  const [showModalReVerify, setShowModalReVerify] = useState(false);
 
   const onChange = (key, value) => {
     contentRef.current[key] = value;
@@ -132,13 +133,27 @@ const useVerifyInfo = (initialValue = {}) => {
     await onGetAllInfo();
   };
 
+  const onReVerify = action => {
+    switch (action) {
+      case 'showModal':
+        return setShowModalReVerify(true);
+      case 'hideModal':
+        return setShowModalReVerify(false);
+      default:
+        setShowModalReVerify(false);
+        Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+    }
+  };
+
   return {
     disabledIdentify,
     disabledAvatar,
     verifyInfo: contentRef.current,
+    showModalReVerify,
     onChange,
     onContinue,
     onUpdateAllInfo,
+    onReVerify,
   };
 };
 

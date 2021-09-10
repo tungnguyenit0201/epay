@@ -16,7 +16,6 @@ import _ from 'lodash';
 const EditInfo = () => {
   // TODO : translation
   const {onUpdateUserAddress} = useUserInfo();
-  const scrollViewRef = useRef(null);
   const {userInfo} = useUser();
   const SexType = {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
   const {personalInfo, personalAddress, personalIC} = userInfo;
@@ -105,16 +104,13 @@ const EditInfo = () => {
                 <ScrollView
                   showsVerticalScrollIndicator={false}
                   keyboardShouldPersistTaps="always"
-                  contentContainerStyle={{paddingVertical: scale(35)}}
-                  ref={scrollViewRef}>
+                  contentContainerStyle={{paddingVertical: scale(35)}}>
                   <InputBlock
                     label="Tỉnh / Thành phố"
-                    numeric
                     onChange={handleChange('Provincial')}
                     onBlur={handleBlur('Provincial')}
                     error={touched.Provincial && errors.Provincial}
                     value={values.Provincial}
-                    scrollViewRef={scrollViewRef}
                   />
                   <InputBlock
                     label="Quận"
@@ -122,7 +118,6 @@ const EditInfo = () => {
                     onBlur={handleBlur('County')}
                     error={touched.County && errors.County}
                     value={values.County}
-                    scrollViewRef={scrollViewRef}
                   />
                   <InputBlock
                     label="Phường / Xã"
@@ -132,7 +127,6 @@ const EditInfo = () => {
                     onBlur={handleBlur('Ward')}
                     error={touched.Ward && errors.Ward}
                     value={values.Ward}
-                    scrollViewRef={scrollViewRef}
                   />
                   <InputBlock
                     label="Địa chỉ"
@@ -141,7 +135,6 @@ const EditInfo = () => {
                     onBlur={handleBlur('Address')}
                     error={touched.Address && errors.Address}
                     value={values.Address}
-                    scrollViewRef={scrollViewRef}
                   />
                 </ScrollView>
                 <View style={{paddingBottom: Spacing.PADDING}}>
