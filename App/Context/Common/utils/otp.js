@@ -8,6 +8,7 @@ import {useAuth} from 'context/Auth/utils';
 import Navigator from 'navigations/Navigator';
 import useLoading from './loading';
 import useError from './error';
+import {useUserInfo} from 'context/User/utils';
 
 const useOTP = ({functionType, phone, password}) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -18,6 +19,7 @@ const useOTP = ({functionType, phone, password}) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {onLogin} = useAuth();
+  const {onGetPersonalInfo} = useUserInfo();
 
   const onChange = value => {
     setCode(value);
@@ -44,11 +46,18 @@ const useOTP = ({functionType, phone, password}) => {
       _.get(result, 'ErrorCode', '') ===
       ERROR_CODE.FEATURE_CONFIRM_OTP_WRONG_OVER_TIME
     ) {
-      Navigator.navigate(SCREEN.REGISTER_FAILURE, {
-        phone,
-        functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
-      });
-      return;
+      switch (functionType) {
+        case FUNCTION_TYPE.REGISTER_ACCOUNT:
+          return Navigator.navigate(SCREEN.REGISTER_FAILURE, {
+            phone,
+            functionType,
+          });
+        case FUNCTION_TYPE.AUTH_EMAIL:
+          return Navigator.navigate(SCREEN.VERIFY_EMAIL_RESULT, {
+            type: 'failure',
+            message: _.get(result, 'ErrorMessage', ''),
+          });
+      }
     }
     // success
     switch (functionType) {
@@ -60,6 +69,10 @@ const useOTP = ({functionType, phone, password}) => {
         return Navigator.navigate(SCREEN.FORGET_NEW_PASSWORD, {phone});
       case FUNCTION_TYPE.REGISTER_SMART_OTP:
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
+      case FUNCTION_TYPE.AUTH_EMAIL:
+        onGetPersonalInfo();
+        Navigator.push(SCREEN.VERIFY_EMAIL_RESULT, {type: 'success'});
+        return;
     }
   };
 

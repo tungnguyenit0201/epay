@@ -24,7 +24,6 @@ const InputBlock = ({
   rightIcon,
   isSelect,
   onPress,
-  scrollViewRef,
   inputStyle,
   ...props
 }) => {
@@ -34,13 +33,6 @@ const InputBlock = ({
 
   const _onFocus = event => {
     setIsFocused(true);
-    scrollViewRef &&
-      scrollViewRef.current &&
-      scrollViewRef.current.scrollTo({
-        x: 0,
-        y: positionRef.current - scale(100),
-        animated: true,
-      });
     onFocus && onFocus(event);
   };
 
@@ -48,15 +40,9 @@ const InputBlock = ({
     setIsFocused(false);
     onBlur && onBlur(event);
   };
+
   return (
-    <View
-      {...(scrollViewRef
-        ? {
-            onLayout: event => {
-              positionRef.current = event.nativeEvent.layout.y;
-            },
-          }
-        : {})}>
+    <View>
       <Text style={styles.inputLabel}>
         {label} {required && <Text color={'red'}>* </Text>}
       </Text>
