@@ -37,7 +37,7 @@ const ForgetPassword = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Header back blackIcon style={styles.header} />
+        <Header back blackIcon avoidStatusBar />
       </View>
       <BigLogo />
       <Content
@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
-  },
+  // header: {
+  //   paddingTop: 10,
+  //   backgroundColor: Colors.white,
+  //   color: Colors.BLACK,
+  // },
   /////////////////////////////
   // content: {
   //   paddingHorizontal: Spacing.PADDING,

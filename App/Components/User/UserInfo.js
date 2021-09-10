@@ -8,10 +8,14 @@ import {SCREEN, PERSONAL_IC} from 'configs/Constants';
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
+import {useUserStatus} from 'context/User/utils';
+
 const User = ({style}) => {
+  const {onVerify, statusVerified, getStatusVerifiedText} = useUserStatus();
   const {userInfo} = useUser();
   const {phone} = usePhone();
   const translation = useTranslation();
+
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -32,17 +36,11 @@ const User = ({style}) => {
 
         <Button
           size="xxs"
-          disabled={!(userInfo.personalIC?.Verified == PERSONAL_IC.INACTIVE)}
+          disabled={statusVerified != PERSONAL_IC.INACTIVE}
           bg={Colors.Highlight}
           radius={30}
           color={Colors.white}
-          label={
-            userInfo.personalIC?.Verified == PERSONAL_IC.INACTIVE
-              ? translation.unverified
-              : userInfo.personalIC?.Verified == PERSONAL_IC.VERIFYING
-              ? 'Đang xác thực'
-              : 'Đã xác thực'
-          }
+          label={getStatusVerifiedText()}
           onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
         />
       </View>

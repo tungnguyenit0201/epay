@@ -23,6 +23,7 @@ export const LanguageProvider = ({children}) => {
   const value = {
     ...languageObj[selectedLanguage],
     setLanguage,
+    selectedLanguage,
   };
   return (
     <LanguageContext.Provider value={value}>

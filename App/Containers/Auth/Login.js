@@ -35,7 +35,7 @@ const Login = ({route}) => {
     <>
       <View style={styles.blockHeader}>
         <View>
-          <Header back blackIcon style={styles.header} />
+          <Header back blackIcon avoidStatusBar />
         </View>
         <BigLogo />
         <Content
@@ -193,11 +193,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     paddingBottom: 24,
   },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
-  },
+  // header: {
+  //   backgroundColor: Colors.white,
+  //   color: Colors.BLACK,
+  // },
   fullBtn: {
     flex: 1,
   },

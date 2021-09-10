@@ -32,6 +32,7 @@ export default {
     GET_LIMIT: 'security/get_limit',
     GET_SETTINGS_INFO: 'setting/get_all_info',
     GET_QRCODE: 'account/get_qrcode',
+    VERIFY_EMAIL: 'account/authentication_email',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
@@ -40,6 +41,7 @@ export default {
     CHANGE_LIMIT: 'security/change_limit',
     FEE_CALCULATOR: 'bank/fee_calculator',
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
+    GET_WALLET_INFO: 'account/get_wallet_info',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

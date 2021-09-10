@@ -6,6 +6,8 @@ import {useSmartOTP, useSmartOTPInfo, useSyncSmartOTP} from './smartOTP';
 import useSelectRegion from './selectRegion';
 import useNotify from './notification';
 import useUserStatus from './userStatus';
+import useQRCode from './useQRCode';
+import useEmail from './email';
 
 export {
   useVerifyInfo,
@@ -18,4 +20,6 @@ export {
   useSelectRegion,
   useNotify,
   useUserStatus,
+  useQRCode,
+  useEmail,
 };

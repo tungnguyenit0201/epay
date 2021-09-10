@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {View, Image, StyleSheet, Text} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import {Colors, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
-
+import StatusBar from './StatusBar';
 //import {getStatusBarHeight} from 'react-native-status-bar-height';
 //getStatusBarHeight()
 
@@ -14,6 +14,11 @@ const Header = ({children, bgimg, style}) => {
   return (
     <View
       style={[base.container, styles.header, {paddingTop: top + 10}, style]}>
+      <StatusBar
+        barStyle={'light-content'}
+        translucent
+        backgroundColor={'transparent'}
+      />
       <View style={styles.bg}>
         <Image source={bgimg ? bgimg : bgheader} style={styles.img} />
       </View>

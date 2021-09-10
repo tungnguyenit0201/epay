@@ -16,17 +16,29 @@ const Header = ({
   cart = false,
   onPressBack,
   renderRightComponent,
-  avoidStatusBar = true,
+  avoidStatusBar = false,
   blackIcon = false,
 }) => {
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
   return (
-    <View style={[styles.wrap, style]}>
+    <View
+      style={[
+        styles.wrap,
+        blackIcon && {backgroundColor: Colors.white},
+        style,
+      ]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={[{minHeight: scale(24)}]}>
-        <Text semibold fs="h6" style={[styles.title, titleStyle]}>
+        <Text
+          semibold
+          fs="h6"
+          style={[
+            styles.title,
+            titleStyle,
+            blackIcon && {color: Colors.black},
+          ]}>
           {title}
         </Text>
         <View
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
   wrap: {
     paddingBottom: scale(10),
   },
-  //avoidStatusBar: {height: getStatusBarHeight()},
+  avoidStatusBar: {height: getStatusBarHeight()},
   left: {
     flexDirection: 'row',
     alignItems: 'center',

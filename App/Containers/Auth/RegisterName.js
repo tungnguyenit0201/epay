@@ -50,7 +50,8 @@ const RegisterName = () => {
                 <Header
                   back
                   blackIcon
-                  style={styles.header}
+                  avoidStatusBar
+                  // style={styles.header}
                   renderRightComponent={() => (
                     <TouchableOpacity
                       style={styles.pRight}
@@ -133,11 +134,11 @@ const styles = StyleSheet.create({
     width: scale(24),
     height: scale(24),
   },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
-  },
+  // header: {
+  //   paddingTop: 10,
+  //   backgroundColor: Colors.white,
+  //   color: Colors.BLACK,
+  // },
 });
 
 export default RegisterName;

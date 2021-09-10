@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, View, StyleSheet} from 'react-native';
+import {ScrollView, View, StyleSheet, Pressable, Image} from 'react-native';
 import {
   Text,
   Header,
@@ -29,29 +29,38 @@ const ChooseIdentityCard = () => {
   });
   return (
     <>
-      <ScrollView style={base.wrap}>
+      <View style={styles.bgWhite}>
         <HeaderBg>
           <Header back title={translation?.verify_your_account} />
         </HeaderBg>
+      </View>
 
-        <View style={[base.container, {paddingTop: 20}]}>
-          <Text fs="h5" bold mb={10}>
-            Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn
-          </Text>
+      <View
+        style={[
+          base.container,
+          styles.bgWhite,
+          {
+            // paddingTop: 20,
+            flex: 1,
+          },
+        ]}>
+        <Text fs="h6" bold mb={24}>
+          Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn
+        </Text>
 
-          <InputBlock
-            label="Chọn giấy tờ tuỳ thân"
-            isSelect
-            onPress={() => setVisible(true)}
-            rightIcon={Images.Down}
-            value={
-              verifyInfo?.identifyCard
-                ? verifyInfo?.identifyCard?.label
-                : cardList[0].label
-            }
-          />
-        </View>
-      </ScrollView>
+        <InputBlock
+          label="Chọn giấy tờ tuỳ thân"
+          isSelect
+          onPress={() => setVisible(true)}
+          rightIcon={Images.Down}
+          value={
+            verifyInfo?.identifyCard
+              ? verifyInfo?.identifyCard?.label
+              : cardList[0].label
+          }
+        />
+      </View>
+
       <View style={base.bottom}>
         <Button
           label={translation?.continue}
@@ -61,11 +70,55 @@ const ChooseIdentityCard = () => {
           visible={visible}
           setVisible={setVisible}
           data={cardList}
+          // cancelButtonIndex={0}
+          useNativeIOS={true}
+          showCancelButton={false}
+          renderTitle={() => (
+            <View style={styles.childModal}>
+              <Text bold fs="h6" centered color={Colors.cl1}>
+                Trợ giúp
+              </Text>
+              <Pressable style={styles.btn}>
+                <Image
+                  source={Images.WidthDraw.Plus}
+                  style={styles.iconClose}
+                />
+              </Pressable>
+            </View>
+          )}
+          // title={'Trợ giúp'}
+          message={'dssd'}
+          containerStyle={[
+            styles.bgWhite,
+            {
+              borderTopLeftRadius: 16,
+              borderTopRightRadius: 16,
+            },
+          ]}
+          // dialogStyle={[{
+          //   color: 'red',
+          //   backgroundColor: 'red'
+          // }]}
         />
       </View>
     </>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  bgWhite: {
+    backgroundColor: Colors.white,
+  },
+  iconClose: {
+    height: 13,
+    width: 13,
+    transform: [{rotate: '45deg'}],
+  },
+  childModal: {
+    padding: 16,
+    borderStyle: 'solid',
+    borderBottomColor: Colors.l2,
+    borderBottomWidth: 1,
+  },
+});
 export default ChooseIdentityCard;

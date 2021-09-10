@@ -14,10 +14,13 @@ export default {
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   TabBar: {
-    Home: require('images/Home.png'),
+    Home: require('images/tabBar/home.png'),
     Category: require('images/Category.png'),
     Search: require('images/Search.png'),
-    User: require('images/Signin.png'),
+    User: require('images/tabBar/user.png'),
+    BottomTab: require('images/tabBar/BottomTab.png'),
+    QR: require('images/tabBar/QR.png'),
+    test: require('images/tabBar/test.gif'),
   },
 
   Check: require('images/Check.png'),
@@ -58,6 +61,9 @@ export default {
     QAPAY: require('images/home/QAPAY.png'),
     ChuyenTien: require('images/home/ChuyenTien.png'),
     LichSuGd: require('images/home/LichSuGd.png'),
+    Wave: require('images/home/wave.jpg'),
+    Avatar: require('images/home/avatar.png'),
+    Arrow: require('images/home/CircleRight.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),
@@ -116,5 +122,10 @@ export default {
   SignIn: {
     FingerPrint: require('images/icons/fingerprint.png'),
     Face: require('images/icons/face.png'),
+  },
+  VerifyUserInfo: {
+    iconDown: require('images/icons/down.png'),
+    camera: require('images/icons/camera.png'),
+    wave: require('images/icons/wave.png'),
   },
 };
