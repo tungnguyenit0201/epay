@@ -1,3 +1,3 @@
 import {useHome, useModalSmartOTP} from './useHome';
-import useCheckSmartOTP from './checkSmartOTP';
-export {useHome, useModalSmartOTP, useCheckSmartOTP};
+import useCheckInfo from './checkInfo';
+export {useHome, useModalSmartOTP, useCheckInfo};

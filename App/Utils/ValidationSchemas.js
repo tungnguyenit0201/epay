@@ -90,3 +90,6 @@ export const verifyUserSchema = yup.object().shape({
   ICNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
   DateOfBirth: yup.string().required('Ngày sinh không được bỏ trống.'),
 });
+export const nameSchema = yup.object().shape({
+  FullName: yup.string().required('Tên không được bỏ trống.').max(100),
+});

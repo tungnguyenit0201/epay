@@ -44,7 +44,7 @@ const useOTP = ({functionType, phone, password}) => {
       _.get(result, 'ErrorCode', '') ===
       ERROR_CODE.FEATURE_CONFIRM_OTP_WRONG_OVER_TIME
     ) {
-      Navigator.navigate(SCREEN.REGISTER_FAILURE, {
+      Navigator.reset(SCREEN.REGISTER_FAILURE, {
         phone,
         functionType: FUNCTION_TYPE.REGISTER_ACCOUNT,
       });

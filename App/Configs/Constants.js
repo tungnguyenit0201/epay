@@ -10,6 +10,7 @@ import PERSONAL_IC from './Enums/PersonalIC';
 import NOTIFY from './Enums/Notify';
 import USER_STATUS from './Enums/UserStatus';
 import SMART_OTP from './Enums/SmartOTP';
+import MENU from './Enums/Menu';
 
 export {
   TEXT,
@@ -24,4 +25,5 @@ export {
   NOTIFY,
   USER_STATUS,
   SMART_OTP,
+  MENU,
 };

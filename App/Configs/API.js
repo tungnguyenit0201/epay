@@ -5,7 +5,6 @@ export default {
   ROOT,
   TIMEOUT,
   AUTH: {
-    GET_CONFIG_INFO: 'config/get_config_info',
     CHECK_PHONE: 'account/check_exist',
     LOGIN: 'v2/account/login_account',
     REGISTER: 'account/create_account',
@@ -19,6 +18,7 @@ export default {
     CHANGE_SMART_OTP_PASSWORD: 'smartotp/smartotp_pass_change',
     SYNC_SMART_OTP: 'smartotp/smartotp_synchronize',
     GEN_SMART_OTP: 'smartotp/gen_smart_otp',
+    GET_CONFIG_INFO: 'config/get_config_info',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
