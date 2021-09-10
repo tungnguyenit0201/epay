@@ -40,7 +40,8 @@ const OTP = ({route}) => {
         <Header
           back
           blackIcon
-          style={styles.header}
+          avoidStatusBar
+          // style={styles.header}
           renderRightComponent={() => renderRightComponent()}
         />
       </View>
@@ -96,11 +97,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
   },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
-  },
+  // header: {
+  //   paddingTop: 10,
+  //   backgroundColor: Colors.white,
+  //   color: Colors.BLACK,
+  // },
   logo: {
     marginBottom: Spacing.PADDING + 40,
     alignItems: 'center',

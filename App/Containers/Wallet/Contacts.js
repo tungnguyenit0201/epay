@@ -6,7 +6,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {useContacts} from 'context/Wallet/utils';
+//import {useContacts} from 'context/Wallet/utils';
 import {Text, HeaderBg, TextInput, Icon} from 'components';
 import {Colors, Fonts, Spacing, Images, base} from 'themes';
 import Navigator from 'navigations/Navigator';
@@ -16,7 +16,7 @@ import {useTranslation} from 'context/Language';
 const Contacts = () => {
   const translation = useTranslation();
   const [show, setShow] = useState(false);
-  const {data, onSearch} = useContacts();
+  //const {data, onSearch} = useContacts();
   const listUsers = [
     {
       id: 1,
@@ -152,10 +152,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.PADDING,
     flex: 1,
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   blockHorizontal: {
     marginRight: scale(14),
     flex: 1,
@@ -194,12 +191,7 @@ const styles = StyleSheet.create({
     marginTop: scale(20),
     marginBottom: scale(16),
   },
-  inputBlock: {
-    fontSize: Fonts.H6,
-    marginTop: scale(6),
-    backgroundColor: 'transparent',
-    borderColor: Colors.g4,
-  },
+
   inputIcon: {
     flexWrap: 'wrap',
     flexDirection: 'row',
@@ -215,9 +207,9 @@ const styles = StyleSheet.create({
   },
   inputSearch: {
     flex: 1,
-    backgroundColor: 'transparent',
+    //backgroundColor: 'transparent',
     fontSize: Fonts.H6,
-    borderColor: 'transparent',
+    //borderColor: 'transparent',
   },
   closeCircle: {
     width: scale(20),

@@ -32,9 +32,9 @@ const ForgetNewPassword = ({route}) => {
         <Header
           back
           blackIcon
-          style={styles.header}
+          avoidStatusBar
           title={translation.reset_your_password}
-          titleStyle={styles.headerTitle}
+          // titleStyle={styles.headerTitle}
           renderRightComponent={() => (
             <TouchableOpacity style={styles.pRight}>
               <Icon
@@ -142,13 +142,9 @@ const styles = StyleSheet.create({
     width: scale(24),
     height: scale(24),
   },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
-  },
-  headerTitle: {
-    color: Colors.BLACKTEXT,
-  },
+
+  // headerTitle: {
+  //   color: Colors.BLACKTEXT,
+  // },
 });
 export default ForgetNewPassword;

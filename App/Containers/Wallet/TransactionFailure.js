@@ -31,6 +31,7 @@ const TransactionFailure = () => {
       <Header
         style={styles.blackColor}
         titleStyle={styles.textWhite}
+        avoidStatusBar
         back
         title="Chi tiết giao dịch"
       />

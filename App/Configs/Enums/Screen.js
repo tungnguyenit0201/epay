@@ -61,5 +61,6 @@ const SCREEN = {
   SELECT_MONEY: 'SelectMoney',
   OTP_BY_SMART_OTP: 'OTPBySmartOTP',
   VERIFY_EMAIL_RESULT: 'VerifyEmailResult',
+  DETAIL_HISTORY: 'DetailHistory',
 };
 export default SCREEN;

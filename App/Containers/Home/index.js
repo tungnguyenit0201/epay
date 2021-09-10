@@ -58,6 +58,11 @@ const Home = () => {
       name: 'Lịch sử',
       screen: SCREEN.HISTORY,
     },
+    {
+      icon: Images.Homes.LichSuGd,
+      name: 'QRPAY',
+      screen: SCREEN.QRPAY,
+    },
   ];
   const dataBanner = [
     {
