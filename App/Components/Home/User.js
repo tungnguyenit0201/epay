@@ -7,6 +7,7 @@ import {useAuth} from 'context/Auth/utils';
 import {useNotify} from 'context/User/utils';
 import Navigator from 'navigations/Navigator';
 import {useUser} from 'context/User';
+import {hidePhone} from 'utils/Functions';
 
 const User = ({data, style}) => {
   const {personalInfo, phone} = useUser();
@@ -21,13 +22,7 @@ const User = ({data, style}) => {
         <Text bold fs="h6" style={styles.text}>
           Xin chào {personalInfo?.FullName}
         </Text>
-        <Text style={styles.text}>
-          {phone?.slice(0, 3)}
-          ****
-          <Text color={Colors.white} style={styles.phone}>
-            {phone?.slice(phone?.length - 3, phone?.length)}
-          </Text>
-        </Text>
+        <Text style={styles.text}>{hidePhone(phone)}</Text>
       </TouchableOpacity>
       <View>
         <TouchableOpacity onPress={() => onGetAllNotify()} style={styles.wicon}>
@@ -69,9 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
     borderWidth: 1,
     borderColor: Colors.white,
-  },
-  phone: {
-    height: 20,
   },
   user: {
     marginRight: 10,

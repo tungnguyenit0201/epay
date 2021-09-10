@@ -232,6 +232,9 @@ const generateTOTP = ({phone, smartOtpSharedKey}) => {
   return code;
 };
 
+const hidePhone = phone =>
+  phone?.slice(0, 3) + '****' + phone?.slice(phone?.length - 3, phone?.length);
+
 export {
   toObjectKeys,
   buildURL,
@@ -253,4 +256,5 @@ export {
   getAll,
   calculateFee,
   generateTOTP,
+  hidePhone,
 };

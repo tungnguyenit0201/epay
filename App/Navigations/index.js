@@ -74,6 +74,7 @@ import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
 import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
+import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
 
 const AppNavigator = () => {
@@ -236,6 +237,10 @@ const AppNavigator = () => {
             component={ForgetNewPassword}
           />
           <Stack.Screen name={SCREEN.HISTORY} component={History} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_EMAIL_RESULT}
+            component={VerifyEmailResult}
+          />
           <Stack.Screen
             name={SCREEN.DETAIL_HISTORY}
             component={DetailHistory}
