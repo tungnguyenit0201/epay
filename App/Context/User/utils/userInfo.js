@@ -75,7 +75,7 @@ const useUserInfo = type => {
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         showModalSmartOTP(true);
-        Navigator.navigate(SCREEN.TAB_NAVIGATION);
+        Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else setError(result);
     } catch (error) {
       setLoading(false);

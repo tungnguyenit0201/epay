@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Row, Col, Text} from 'components';
+import {Row, Col, Text, Modal, Button} from 'components';
 import {Spacing} from 'themes';
 import {View} from 'react-native-ui-lib';
 import {scale} from 'utils/Functions';
 import Navigator from 'navigations/Navigator';
-import {useCheckSmartOTP} from 'context/Home/utils';
+import {useCheckInfo} from 'context/Home/utils';
+import {useTranslation} from 'context/Language';
 
 const ListItem = ({
   data,
@@ -27,13 +28,14 @@ const ListItem = ({
 }) => {
   const _screenWidth = Math.min(Dimensions.get('window').width);
   const screenContent = _screenWidth - (Spacing.PADDING * 2 + 15);
-  const {checkSmartOTP} = useCheckSmartOTP();
+  const {checkInfo} = useCheckInfo();
+  const translation = useTranslation();
   const Item = ({item}) => (
     <TouchableOpacity
       style={[styles.item, styleItem]}
       onPress={() => {
         !!item?.checkSmartOTP
-          ? checkSmartOTP(item.screen)
+          ? checkInfo({screen: item.screen})
           : Navigator.navigate(item.screen);
       }}>
       <Image

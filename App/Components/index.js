@@ -32,3 +32,4 @@ export {default as Switch} from './Common/Switch';
 export {default as HeaderBg} from './Common/HeaderBg';
 export {default as ActionSheet} from './Common/ActionSheet';
 export {default as KeyboardSuggestion} from './Common/KeyboardSuggestion';
+export {default as ListItemSimple} from './Common/ListItemSimple';

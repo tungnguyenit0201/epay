@@ -64,6 +64,10 @@ export default {
     Wave: require('images/home/wave.jpg'),
     Avatar: require('images/home/avatar.png'),
     Arrow: require('images/home/CircleRight.png'),
+    SanBay: require('images/home/sanBay.png'),
+    YTe: require('images/home/yTe.png'),
+    BaoHiem: require('images/home/baoHiem.png'),
+    GiaoThong: require('images/home/giaoThong.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),

@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
+import {useConfig} from 'context/Common/utils';
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,7 @@ import DetailHistory from 'containers/Wallet/History/Detail';
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
+  const {onGetConfig} = useConfig();
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
@@ -86,7 +88,10 @@ const AppNavigator = () => {
       if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
-
+    const getConfig = async () => {
+      await onGetConfig();
+    };
+    getConfig();
     getCurrentLanguage();
   }, []); // eslint-disable-line
 

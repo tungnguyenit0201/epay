@@ -48,7 +48,7 @@ const useOTP = ({functionType, phone, password}) => {
     ) {
       switch (functionType) {
         case FUNCTION_TYPE.REGISTER_ACCOUNT:
-          return Navigator.navigate(SCREEN.REGISTER_FAILURE, {
+          return Navigator.reset(SCREEN.REGISTER_FAILURE, {
             phone,
             functionType,
           });
