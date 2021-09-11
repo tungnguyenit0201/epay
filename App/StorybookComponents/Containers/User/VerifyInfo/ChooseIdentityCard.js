@@ -14,7 +14,6 @@ import HeaderBg from '../../../Atoms/HeaderBg';
 import InputBlock from '../../../Atoms/InputBlock';
 import Button from '../../../Atoms/Button';
 import {base, Colors, Images} from 'themes';
-import {useVerifyInfo} from 'context/User/utils';
 
 const ChooseIdentityCard = () => {
   // const {verifyInfo, onChange, onContinue} = useVerifyInfo();
@@ -42,8 +41,8 @@ const ChooseIdentityCard = () => {
         style={[
           base.container,
           styles.bgWhite,
+          // eslint-disable-next-line react-native/no-inline-styles
           {
-            // paddingTop: 20,
             flex: 1,
           },
         ]}>

@@ -7,20 +7,14 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
+import Text from '../../../Atoms/Text';
+import Header from '../../../Atoms/Header';
+import HeaderBg from '../../../Atoms/HeaderBg';
+import Button from '../../../Atoms/Button';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import Navigator from 'navigations/Navigator';
-
-import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
-import {useTranslation} from 'context/Language';
-import {useEmail} from 'context/User/utils';
-
-const VerifyEmailResult = ({route}) => {
-  const translation = useTranslation();
-  const {onAction} = useEmail();
-  const success = route?.params?.type === 'success';
+const VerifyEmailResult = ({route, success}) => {
 
   return (
     <>
@@ -34,7 +28,7 @@ const VerifyEmailResult = ({route}) => {
           </Text>
           <View style={styles.block}>
             <Image
-              source={require('images/bgXacNhan.png')}
+              source={require('images/bgXacNhan.png').default}
               style={styles.bgImg}
             />
             <Text>
@@ -48,7 +42,7 @@ const VerifyEmailResult = ({route}) => {
       <View style={base.bottom}>
         <Button
           label={success ? 'Trang chủ' : 'Đóng'}
-          onPress={() => onAction(success)}
+          onPress={() => console.log('press')}
         />
       </View>
     </>

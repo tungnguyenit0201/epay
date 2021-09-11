@@ -1,12 +1,10 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
-import {scale} from 'utils/Functions'
-import {Colors, Fonts} from 'themes'
+import SelectImage from './SelectImage';
+import {Spacing} from 'themes'
 
-import BigLogo from './BigLogo';
 
-storiesOf('Atoms', module)
+storiesOf('Groups/SelectImage', module)
   .addDecorator(withKnobs)
-  .add('BigLogo', () => <BigLogo />)
-
+  .add('Default', () => <SelectImage />);

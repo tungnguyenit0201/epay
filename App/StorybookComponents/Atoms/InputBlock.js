@@ -6,15 +6,11 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import Text from './Text'
-// import TextInput from 'components/Common/TextInput';
+import Icon from './Icon';
+import Text from './Text';
+import TextInput from './TextInput';
 import {Colors, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
-import TextInput from './TextInput';
-
-const Eye = require('../../Images/Eye.png');
-const EyeGray = require('../../Images/EyeGray.png')
-console.log(Eye)
 
 const InputBlock = ({
   label,
@@ -30,7 +26,6 @@ const InputBlock = ({
   rightIcon,
   isSelect,
   onPress,
-  scrollViewRef,
   inputStyle,
   ...props
 }) => {
@@ -40,70 +35,80 @@ const InputBlock = ({
 
   const _onFocus = event => {
     setIsFocused(true);
-    // scrollViewRef &&
-    //   scrollViewRef.current &&
-    //   scrollViewRef.current.scrollTo({
-    //     x: 0,
-    //     y: positionRef.current - scale(100),
-    //     animated: true,
-    //   });
     onFocus && onFocus(event);
   };
 
   const _onBlur = event => {
-    setIsFocused(true);
+    setIsFocused(false);
     onBlur && onBlur(event);
   };
 
   return (
     <View>
-      <Text style={{color: Colors.GRAY, marginTop: scale(5), marginBottom: scale(10)}}>
-        {label} {required && <span style={{color: "red"}}>* </span>}
+      <Text style={styles.inputLabel}>
+        {label} {required && <Text color={'red'}>* </Text>}
       </Text>
       {!isSelect ? (
         <TextInput
           textContentType={'oneTimeCode'}
-          style={
-            {
-              backgroundColor: Colors.BACKGROUNDCOLOR,
-              outlineColor: isFocused ? Colors.PRIMARY : Colors.BORDER,
-              borderColor: isFocused ? Colors.PRIMARY : Colors.BORDER,
-              inputStyle
-            }
-          }
-            password={password && !showPassword}
-            email={email}
-            numeric={numeric}
-            error={error}
-            value={value}
-            required={required}
-            onChange={onChange}
-            onFocus={() => _onFocus()}
-            onPress={_onBlur}
-            {...props}
-          />
-        ) : (
-          <TouchableOpacity style={styles.select} onPress={onPress}>
+          style={[
+            styles.input,
+            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
+            inputStyle,
+          ]}
+          password={password && !showPassword}
+          email={email}
+          numeric={numeric}
+          error={error}
+          value={value}
+          required={required}
+          onChange={onChange}
+          onFocus={_onFocus}
+          onBlur={_onBlur}
+          {...props}
+        />
+      ) : (
+        <>
+          <TouchableOpacity
+            style={[styles.select, !!error && styles.error]}
+            onPress={onPress}>
             <Text style={{color: Colors.TEXT}}>
               {value ? value : props?.defaultValue}
             </Text>
           </TouchableOpacity>
-        )}
-        {!!password && (
-          <Pressable
-            onPress={() => setShowPassword(!showPassword)}
-            style={{
-              position: 'absolute',
-              right: scale(10),
-              top: scale(40),
-            }}>
-            <Image
-              source={{ uri: showPassword ? Eye.default : EyeGray.default}}
-              style={{width: scale(20), height: scale(20)}}
-              resizeMode="contain"
-            />
-          </Pressable>
-        )}
+          {!!error && (
+            <Text color={Colors.ALERT} mt={3} size={scale(12)}>
+              {error}
+            </Text>
+          )}
+        </>
+      )}
+      {rightIcon && (
+        <TouchableOpacity
+          onPress={onPress}
+          style={{
+            position: 'absolute',
+            right: scale(10),
+            top: scale(30),
+          }}>
+          <Icon icon={rightIcon} />
+        </TouchableOpacity>
+      )}
+      {!!password && (
+        <Pressable
+          onPress={() => setShowPassword(!showPassword)}
+          style={{
+            position: 'absolute',
+            right: scale(10),
+            top: scale(48),
+          }}>
+          <Image
+            source={showPassword ? Images.Eye : Images.EyeGray}
+            style={{width: scale(20), height: scale(20)}}
+            resizeMode="contain"
+          />
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -113,7 +118,6 @@ export default InputBlock;
 const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.BACKGROUNDCOLOR,
-    borderColor: Colors.BORDER
   },
   inputLabel: {
     color: Colors.GRAY,
@@ -121,12 +125,18 @@ const styles = StyleSheet.create({
     marginBottom: scale(10),
   },
   select: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingVertical: 3,
-    borderColor: Colors.BORDER,
+    paddingHorizontal: Spacing.PADDING / 2,
+    paddingVertical: scale(10),
+    marginBottom: scale(10),
+    height: scale(48),
+    borderColor: Colors.cl4,
     borderWidth: 1,
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  error: {
+    borderColor: Colors.ALERT,
+    borderWidth: 1,
   },
 });

@@ -5,7 +5,12 @@ import {Colors, Fonts} from 'themes'
 
 import Content from './Content';
 
-storiesOf('Atoms/Content', module)
+import DatePicker from './DatePicker';
+
+storiesOf('Atoms', module)
   .addDecorator(withKnobs)
-  .add('Default', () => <Content title='tiêu đề content' text='Nội dung content' />)
+  .add('Content', () => (
+    <Content title="tiêu đề content" text="Nội dung content" />
+  ))
+  .add('DatePicker', () => <DatePicker label={'Ngày sinh (dd/mm/yyyy)'} />)
 
