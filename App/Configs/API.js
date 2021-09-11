@@ -5,7 +5,6 @@ export default {
   ROOT,
   TIMEOUT,
   AUTH: {
-    GET_CONFIG_INFO: 'config/get_config_info',
     CHECK_PHONE: 'account/check_exist',
     LOGIN: 'v2/account/login_account',
     REGISTER: 'account/create_account',
@@ -19,6 +18,7 @@ export default {
     CHANGE_SMART_OTP_PASSWORD: 'smartotp/smartotp_pass_change',
     SYNC_SMART_OTP: 'smartotp/smartotp_synchronize',
     GEN_SMART_OTP: 'smartotp/gen_smart_otp',
+    GET_CONFIG_INFO: 'config/get_config_info',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
@@ -32,6 +32,7 @@ export default {
     GET_LIMIT: 'security/get_limit',
     GET_SETTINGS_INFO: 'setting/get_all_info',
     GET_QRCODE: 'account/get_qrcode',
+    VERIFY_EMAIL: 'account/authentication_email',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
@@ -40,6 +41,7 @@ export default {
     CHANGE_LIMIT: 'security/change_limit',
     FEE_CALCULATOR: 'bank/fee_calculator',
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
+    GET_WALLET_INFO: 'account/get_wallet_info',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

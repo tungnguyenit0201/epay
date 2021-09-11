@@ -13,7 +13,12 @@ import {getBankFee, payinConnectedBank} from 'services/wallet';
 import {calculateFee, formatMoney, generateTOTP} from 'utils/Functions';
 import {checkSmartOTP, confirmOTP, genOtp, genSmartOTP} from 'services/common';
 import {useUser} from 'context/User';
-import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  useShowModal,
+} from 'context/Common/utils';
 
 const useTopUpWithdraw = ({transType}) => {
   const [isContinueEnabled, setContinueEnabled] = useState(false);
@@ -216,6 +221,7 @@ const useOTPBySmartOTP = () => {
 const useTransactionResult = () => {
   const {transaction} = useWallet();
   const {amount, fee, bank, result, transType} = transaction;
+  const {showModalSmartOTP} = useShowModal();
 
   const loadData = () => {
     // TODO: translate
@@ -236,6 +242,7 @@ const useTransactionResult = () => {
   };
 
   const onBackHome = () => {
+    showModalSmartOTP(true);
     Navigator.navigate(SCREEN.TAB_NAVIGATION);
     Navigator.navigate(SCREEN.HOME);
   };

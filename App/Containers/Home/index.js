@@ -16,11 +16,11 @@ import MonneySimple from 'components/Home/MonneySimple';
 import Banner from 'components/Home/Banner';
 import User from 'components/Home/User';
 import DinhDanh from 'components/Home/DinhDanh';
-
+import SlideIcon from 'components/Home/SlideIcon';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-import {useHome, useModalSmartOTP} from 'context/Home/utils';
+import {useCheckInfo, useHome, useModalSmartOTP} from 'context/Home/utils';
 import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
 
@@ -32,28 +32,37 @@ const Home = () => {
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
   const modalSmartOTP = useModalSmartOTP();
+  const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
 
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
       name: translation.top_up,
       screen: SCREEN.TOP_UP,
+      checkSmartOTP: true,
     },
     {
       icon: Images.Homes.RutTien,
       name: translation.withdraw,
       screen: SCREEN.WITHDRAW,
+      checkSmartOTP: true,
     },
 
     {
       icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
       screen: SCREEN.TRANSFER,
+      checkSmartOTP: true,
     },
     {
       icon: Images.Homes.LichSuGd,
       name: 'Lịch sử',
       screen: SCREEN.HISTORY,
+    },
+    {
+      icon: Images.Homes.LichSuGd,
+      name: 'QRPAY',
+      screen: SCREEN.QRPAY,
     },
   ];
   const dataBanner = [
@@ -68,22 +77,32 @@ const Home = () => {
   ];
   const dataHome = [
     {
-      icon: require('images/home/giaoThong.png'),
+      icon: Images.Homes.GiaoThong,
+      name: 'Vi phạm giao thông',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.BaoHiem,
+      name: 'Vaccine',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.GiaoThong,
       name: 'Giao thông',
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: require('images/home/baoHiem.png'),
+      icon: Images.Homes.BaoHiem,
       name: 'Bảo hiểm',
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: require('images/home/yTe.png'),
+      icon: Images.Homes.YTe,
       name: 'Y tế',
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: require('images/home/sanBay.png'),
+      icon: Images.Homes.SanBay,
       name: 'Sân bay ',
       screen: SCREEN.TOP_UP,
     },
@@ -179,12 +198,11 @@ const Home = () => {
           </View> */}
         </View>
         <View style={base.container}>
-          <Image
-            style={styles.bgHome}
-            source={require('images/home/wave.jpg')}
-          />
-          <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} />
+          <Image style={styles.bgHome} source={Images.Homes.Wave} />
+          {/* <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} /> */}
+          <SlideIcon data={dataHome} />
         </View>
+        <View style={styles.bottom}></View>
       </ScrollView>
       {modalSmartOTP.smartOTP && (
         <Modal
@@ -203,6 +221,46 @@ const Home = () => {
                 <Text style={styles.underline}>Không, cảm ơn</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={modalSmartOTP.onClose}>
+                <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      {KYC && (
+        <Modal
+          visible={KYC}
+          onClose={() => checkInfo({value: false})}
+          title={translation.notification}
+          content="Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn."
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Định danh"
+                onPress={() => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD)}
+              />
+              <TouchableOpacity onPress={() => checkInfo({value: false})}>
+                <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      {connectBank && (
+        <Modal
+          visible={connectBank}
+          onClose={() => checkInfo({value: false})}
+          title={translation.notification}
+          content="Liên kết ngân hàng để thực hiện giao dịch."
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label={translation.connect_now}
+                onPress={() => onNavigate(SCREEN.BANK_LINKED)}
+              />
+              <TouchableOpacity onPress={() => checkInfo({value: false})}>
                 <Text style={styles.underline}>Nhắc tôi sau</Text>
               </TouchableOpacity>
             </View>
@@ -256,6 +314,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+  },
+  bottom: {
+    height: scale(80),
   },
 });
 export default Home;

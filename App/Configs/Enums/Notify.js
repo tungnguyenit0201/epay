@@ -1,7 +1,7 @@
 const NOTIFY = {
   ALL: 'Tất cả',
-  CHARGES: 'Nhắc cước',
+  CHARGES: 'Hệ thống',
   PROMOTION: 'Khuyến mãi',
-  OTHER: 'Khác',
+  OTHER: 'Giao dịch',
 };
 export default NOTIFY;

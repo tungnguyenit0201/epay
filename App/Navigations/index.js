@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
+import {useConfig} from 'context/Common/utils';
 
 const Stack = createStackNavigator();
 
@@ -72,10 +73,14 @@ import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
 import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
+import History from 'containers/Wallet/History';
+import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
+import DetailHistory from 'containers/Wallet/History/Detail';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
+  const {onGetConfig} = useConfig();
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
@@ -83,7 +88,10 @@ const AppNavigator = () => {
       if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
-
+    const getConfig = async () => {
+      await onGetConfig();
+    };
+    getConfig();
     getCurrentLanguage();
   }, []); // eslint-disable-line
 
@@ -227,6 +235,15 @@ const AppNavigator = () => {
           <Stack.Screen
             name={SCREEN.FORGET_NEW_PASSWORD}
             component={ForgetNewPassword}
+          />
+          <Stack.Screen name={SCREEN.HISTORY} component={History} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_EMAIL_RESULT}
+            component={VerifyEmailResult}
+          />
+          <Stack.Screen
+            name={SCREEN.DETAIL_HISTORY}
+            component={DetailHistory}
           />
         </Stack.Navigator>
       </KeyboardStateProvider>

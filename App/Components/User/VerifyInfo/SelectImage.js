@@ -1,18 +1,18 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Text, Button} from 'components';
 import {useImagePicker} from 'context/User/utils';
 import {TEXT} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {base, Row, Col} from 'components';
-import {Fonts} from 'themes';
+import {Fonts, Colors, Images} from 'themes';
 
-const SelectImage = ({title, onSelectImage, chooseImage}) => {
+const SelectImage = ({title, onSelectImage, chooseImage, css}) => {
   const {image, onCamera, onPhoto} = useImagePicker(onSelectImage);
 
   return (
-    <View style={{marginBottom: 20}}>
-      <Text size={Fonts.H6} mb={10}>
+    <View style={[styles.container, css && css]}>
+      <Text size={Fonts.H6} mb={10} centered bold style={styles.textUppercase}>
         {title}
       </Text>
       {image?.path && (
@@ -22,22 +22,47 @@ const SelectImage = ({title, onSelectImage, chooseImage}) => {
         />
       )}
 
-      <Row justify="center">
-        <Col width="35%">
-          <Button
-            onPress={onCamera}
-            label={TEXT.TAKE_PHOTO}
-            style={{paddingHorizontal: 5}}
-          />
-        </Col>
+      <View style={{alignItems: 'center'}}>
+        <Button
+          onPress={onCamera}
+          label={TEXT.TAKE_PHOTO}
+          style={styles.btn}
+          leftIcon={Images.VerifyUserInfo.camera}
+        />
         {!!chooseImage && (
-          <Col width="65%">
-            <Button onPress={onPhoto} label={TEXT.SELECT_IMAGE_IN_LIBRARY} />
-          </Col>
+          <Button
+            onPress={onPhoto}
+            label={TEXT.SELECT_IMAGE_IN_LIBRARY}
+            style={styles.w1}
+          />
         )}
-      </Row>
+      </View>
+      <Image
+        style={styles.bgImg}
+        source={Images.VerifyUserInfo.wave}
+        resizeMode="contain"
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 54,
+    backgroundColor: Colors.l2,
+    borderRadius: 8,
+  },
+  textUppercase: {textTransform: 'uppercase'},
+  bgImg: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+  btn: {
+    width: 128,
+    paddingHorizontal: 5,
+  },
+  w1: {width: 200},
+});
 
 export default SelectImage;

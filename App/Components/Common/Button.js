@@ -11,6 +11,7 @@ export default ({
   label,
   label2,
   icon,
+  leftIcon,
   border,
   color,
   bold,
@@ -52,6 +53,13 @@ export default ({
         style,
         disabled && {backgroundColor: Colors.g4},
       ]}>
+      {!!leftIcon && (
+        <Image
+          source={leftIcon}
+          style={[styles.leftIcon]}
+          resizeMode={'contain'}
+        />
+      )}
       <Text
         centered
         size={Fonts.H6}
@@ -115,6 +123,10 @@ const styles = StyleSheet.create({
     width: scale(15),
     height: scale(15),
     marginRight: scale(9),
+  },
+  leftIcon: {
+    width: 24,
+    marginRight: 8,
   },
   // ...stylesCss,
 });

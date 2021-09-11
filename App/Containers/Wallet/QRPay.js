@@ -1,13 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {
-  ScrollView,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Share,
-  ToastAndroid,
-} from 'react-native';
+import {ScrollView, Text, View, StyleSheet, Share} from 'react-native';
 
 import QRCode from 'react-native-qrcode-svg';
 import {Colors, Fonts, Spacing, base} from 'themes';
@@ -16,20 +8,12 @@ import {SCREEN} from 'configs/Constants';
 import {Header, HeaderBg, Button, Col, Row} from 'components';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
+import {useQRCode} from 'context/User/utils';
+
 const QRPay = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
-  let myQRCode = useRef();
-  const shareQRCode = () => {
-    myQRCode.toDataURL(dataURL => {
-      let shareImageBase64 = {
-        title: 'Epay',
-        url: `data:image/png;base64,${dataURL}`,
-        subject: 'QR Code',
-      };
-      Share.share(shareImageBase64).catch(error => console.log(error));
-    });
-  };
+  const {myQRCode, shareQRCode} = useQRCode();
 
   /* const saveQrToDisk = () => {
     RNQRGenerator.generate({
@@ -47,6 +31,7 @@ const QRPay = ({route}) => {
       .catch(error => console.log('Cannot create QR code', error));
   }; */
   return (
+    // TODO: translate
     <ScrollView style={base.wrap}>
       <HeaderBg>
         <Header title={translation.payment_code} back />
@@ -64,8 +49,8 @@ const QRPay = ({route}) => {
           Nhận tiền từ bạn bè nhanh hơn bằng mã QR của bạn
         </Text>
         <QRCode
-          getRef={ref => (myQRCode = ref)}
-          value={userInfo?.qrCode}
+          getRef={myQRCode}
+          value={userInfo?.qrCode ? userInfo?.qrCode : 'epay'}
           size={250}
           color="black"
           backgroundColor="white"

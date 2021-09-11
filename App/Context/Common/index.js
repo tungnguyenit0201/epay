@@ -8,6 +8,8 @@ export const CommonProvider = ({children}) => {
     error: null,
     showModal: {
       smartOTP: false,
+      KYC: false,
+      connectBank: false,
     },
   });
 

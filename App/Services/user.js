@@ -184,6 +184,7 @@ export const getChargesNotify = async ({phone}) => {
   });
   return response;
 };
+
 export const getPromotionNotify = async ({phone}) => {
   let response = null;
   await request({
@@ -196,12 +197,26 @@ export const getPromotionNotify = async ({phone}) => {
   });
   return response;
 };
+
 export const getOtherNotify = async ({phone}) => {
   let response = null;
   await request({
     url: API.NOTIFY.OTHER_NOTIFY,
     method: 'post',
     params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const verifyEmail = async ({phone, email}) => {
+  let response = null;
+  await request({
+    url: API.USER.VERIFY_EMAIL,
+    method: 'post',
+    params: {PhoneNumber: phone, Email: email},
     success: res => {
       response = res;
     },

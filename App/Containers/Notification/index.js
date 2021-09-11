@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  type: {fontWeight: '500'},
   title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
   textCenter: {
     flex: 1,

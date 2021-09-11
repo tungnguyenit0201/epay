@@ -108,3 +108,16 @@ export const payinConnectedBank = async ({
   });
   return response;
 };
+
+export const getWalletInfo = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_WALLET_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

@@ -95,11 +95,15 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   rowInput: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    position: 'relative',
   },
   input: {width: '100%', paddingRight: 50},
-  subText: {marginLeft: 'auto', marginRight: 10, fontWeight: '700'},
+  subText: {
+    fontWeight: '700',
+    position: 'absolute',
+    right: 10,
+    top: 12,
+  },
   item: {
     textAlign: 'center',
     lineHeight: 40,

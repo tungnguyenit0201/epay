@@ -44,8 +44,6 @@ const SCREEN = {
   VERIFY_USER_PORTRAIT: 'VerifyUserPortrait',
   VERIFY_EMAIL: 'VerifyEmail',
   VERIFY_SUCCESS: 'VerifySuccess',
-  CHECKOUT_SUCCESS: 'CheckoutSuccess',
-  CHECKOUT_FAILURE: 'CheckoutFailure',
   REGION_SELECT: 'RegionSelect',
   LANGUAGE_SETTING: 'LanguageSetting',
   MY_WALLET: 'MyWallet',
@@ -62,5 +60,7 @@ const SCREEN = {
   SYNC_SMART_OTP_RESULT: 'SyncSmartOTPResult',
   SELECT_MONEY: 'SelectMoney',
   OTP_BY_SMART_OTP: 'OTPBySmartOTP',
+  VERIFY_EMAIL_RESULT: 'VerifyEmailResult',
+  DETAIL_HISTORY: 'DetailHistory',
 };
 export default SCREEN;

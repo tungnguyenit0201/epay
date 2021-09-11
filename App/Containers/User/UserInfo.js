@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Button, Text, Icon, Header, ActionSheet} from 'components';
+import {Button, Text, Icon, Header, ActionSheet, Modal} from 'components';
 import {SCREEN, PERSONAL_IC} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
@@ -18,7 +18,7 @@ import {scale} from 'utils/Functions';
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
-import {useUserInfo} from 'context/User/utils';
+import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 
 const UserInfo = () => {
   const {top} = useSafeAreaInsets();
@@ -26,6 +26,8 @@ const UserInfo = () => {
   const {userInfo} = useUser();
   const translation = useTranslation();
   const {onUpdateAvatar, showModal, setShowModal} = useUserInfo();
+  const {statusVerified, onVerify, getStatusVerifiedText} = useUserStatus();
+  const {showModalReVerify, onReVerify} = useVerifyInfo();
 
   const PersonalInfo = userInfo.personalInfo;
   const AddressInfo = userInfo.personalAddress;
@@ -123,19 +125,13 @@ const UserInfo = () => {
               {phone}
             </Text>
             <Button
-              disabled={!(ICInfor?.Verified == PERSONAL_IC.INACTIVE)}
+              disabled={statusVerified != PERSONAL_IC.INACTIVE}
               bg={Colors.cl4}
               radius={30}
               color={Colors.black}
-              label={
-                ICInfor?.Verified == PERSONAL_IC.INACTIVE
-                  ? translation.unverified
-                  : ICInfor?.Verified == PERSONAL_IC.VERIFYING
-                  ? 'Đang xác thực'
-                  : 'Đã xác thực'
-              }
+              label={getStatusVerifiedText()}
               style={{minWidth: 150}}
-              onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
+              onPress={onVerify}
             />
           </View>
         </View>
@@ -169,22 +165,22 @@ const UserInfo = () => {
         </View>
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
-            <Text>
-              {ICInfor?.Verified == PERSONAL_IC.INACTIVE
-                ? translation.unverified
-                : ICInfor?.Verified == PERSONAL_IC.VERIFYING
-                ? 'Đang xác thực'
-                : 'Đã xác thực'}
-            </Text>
-            <TouchableOpacity
-              style={styles.itemRight}
-              onPress={() => {
-                Navigator.push(SCREEN.NOTIFICATION);
-              }}>
-              {ICInfor?.Active == PERSONAL_IC.INACTIVE && (
-                <Text style={styles.link}>{'Xác thực tài khoản'}</Text>
-              )}
-            </TouchableOpacity>
+            <Text>{getStatusVerifiedText()}</Text>
+            {statusVerified != PERSONAL_IC.VERIFYING && (
+              <TouchableOpacity
+                style={styles.itemRight}
+                onPress={
+                  statusVerified == PERSONAL_IC.INACTIVE
+                    ? onVerify
+                    : () => onReVerify('showModal')
+                }>
+                <Text style={styles.link}>
+                  {statusVerified == PERSONAL_IC.INACTIVE
+                    ? 'Xác thực tài khoản'
+                    : 'Đổi giấy tờ tùy thân'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
@@ -194,16 +190,29 @@ const UserInfo = () => {
           </View>
         </View>
         <View style={[base.container, styles.row]}>
-          <View style={styles.item}>
-            <Text>Chưa có</Text>
-            <TouchableOpacity
-              style={styles.itemRight}
-              onPress={() => {
-                Navigator.push(SCREEN.VERIFY_EMAIL);
-              }}>
-              <Text style={styles.link}>Thêm email</Text>
-            </TouchableOpacity>
-          </View>
+          {PersonalInfo?.Email ? (
+            <View style={styles.item}>
+              <Text>{PersonalInfo.Email}</Text>
+              <TouchableOpacity
+                style={styles.itemRight}
+                onPress={() => {
+                  Navigator.push(SCREEN.VERIFY_EMAIL);
+                }}>
+                <Text style={styles.link}>Chỉnh sửa</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.item}>
+              <Text>Chưa có</Text>
+              <TouchableOpacity
+                style={styles.itemRight}
+                onPress={() => {
+                  Navigator.push(SCREEN.VERIFY_EMAIL);
+                }}>
+                <Text style={styles.link}>Thêm email</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </ScrollView>
       <ActionSheet
@@ -214,6 +223,24 @@ const UserInfo = () => {
           {label: 'Chọn ảnh sẵn có', onPress: () => onUpdateAvatar('photo')},
         ]}
       />
+      {showModalReVerify && (
+        <Modal
+          visible={showModalReVerify}
+          onClose={() => onReVerify('hideModal')}
+          title="Xác nhận đổi giấy tờ tùy thân"
+          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
+        GTTT cũ. Bạn có chắc chắn muốn 
+        đổi không?" // TODO: translate
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button mb={10} label="Có" onPress={onReVerify} />
+              <TouchableOpacity onPress={() => onReVerify('hideModal')}>
+                <Text>Không, cảm ơn</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
     </>
   );
 };

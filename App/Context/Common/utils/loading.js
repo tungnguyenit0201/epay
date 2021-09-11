@@ -4,11 +4,12 @@ import _ from 'lodash';
 
 const useLoading = () => {
   const {dispatch} = useCommon();
-  const setLoading = useCallback(() => {
+  const setLoading = useCallback(
     loading => {
       dispatch({type: 'SET_LOADING', loading});
-    };
-  }, [dispatch]);
+    },
+    [dispatch],
+  );
   return {setLoading};
 };
 

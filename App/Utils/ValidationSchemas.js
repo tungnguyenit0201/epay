@@ -30,14 +30,8 @@ export const registerSchema = yup.object().shape({
   agreement: yup.boolean().oneOf([true], TEXT.AGREEMENT_NOT_ACCEPTED),
 });
 
-export const reviewsSchema = yup.object().shape({
-  review: yup.string().required(TEXT.REVIEWS),
-  reviewer: yup.string().required(TEXT.USERNAME_NOT_BLANK),
-  reviewer_email: yup
-    .string()
-    .email(TEXT.EMAIL_INVALID)
-    .required(TEXT.EMAIL_NOT_BLANK),
-  rating: yup.number().moreThan(0, TEXT.REVIEWS).required(TEXT.EMAIL_NOT_BLANK),
+export const emailSchema = yup.object().shape({
+  email: yup.string().email(TEXT.EMAIL_INVALID).required(TEXT.EMAIL_NOT_BLANK),
 });
 
 export const phoneSchema = yup.object().shape({
@@ -95,4 +89,7 @@ export const verifyUserSchema = yup.object().shape({
   ICIssuedPlace: yup.string().required('Nơi cấp không được bỏ trống.'),
   ICNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
   DateOfBirth: yup.string().required('Ngày sinh không được bỏ trống.'),
+});
+export const nameSchema = yup.object().shape({
+  FullName: yup.string().required('Tên không được bỏ trống.').max(100),
 });

@@ -2,26 +2,32 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Text} from 'components';
 import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {SCREEN, USER_STATUS} from 'configs/Constants';
 import {scale} from 'utils/Functions';
+import {Images} from 'themes';
+import {useUserStatus} from 'context/User/utils';
 
-const avatar = require('images/home/avatar.png');
-const arrow = require('images/home/CircleRight.png');
+const User = () => {
+  const {status} = useUserStatus();
 
-const User = ({data, style}) => {
-  return (
+  return status != USER_STATUS.DONE && status != USER_STATUS.VERIFYING_KYC ? (
     <TouchableOpacity
       onPress={() => {
-        Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+        status == USER_STATUS.INACTIVE_KYC &&
+          Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+        status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK &&
+          Navigator.navigate(SCREEN.BANK_LINKED);
       }}
-      style={[styles.item, style]}>
-      <Image style={styles.img} source={avatar} />
+      style={[styles.item]}>
+      <Image style={styles.img} source={Images.Homes.Avatar} />
       <Text style={styles.text}>
-        Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.
+        {status == USER_STATUS.INACTIVE_KYC
+          ? `Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.`
+          : 'Liên kết ngân hàng để thực hiện giao dịch'}
       </Text>
-      <Image style={styles.arrow} source={arrow} />
+      <Image style={styles.arrow} source={Images.Homes.Arrow} />
     </TouchableOpacity>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
