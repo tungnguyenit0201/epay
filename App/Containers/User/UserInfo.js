@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Button, Text, Icon, Header, ActionSheet, Modal} from 'components';
-import {SCREEN, PERSONAL_IC} from 'configs/Constants';
+import {SCREEN, PERSONAL_IC, GENDER} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -33,7 +33,6 @@ const UserInfo = () => {
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
 
-  const SexType = {1: 'Nam', 2: 'Nữ', 3: 'Khác'};
   const address =
     AddressInfo?.Address +
     ', ' +
@@ -45,22 +44,20 @@ const UserInfo = () => {
   const data = [
     {
       name: 'Họ tên',
-      val: PersonalInfo?.FullName ? PersonalInfo?.FullName : 'Chưa có',
+      val: PersonalInfo?.FullName || 'Chưa có',
     },
     {
       name: 'Ngày sinh',
-      val: PersonalInfo?.DateOfBirth ? PersonalInfo?.DateOfBirth : 'Chưa có',
+      val: PersonalInfo?.DateOfBirth || 'Chưa có',
     },
     {
       name: 'Giới tính',
-      val: SexType[PersonalInfo?.SexType]
-        ? SexType[PersonalInfo?.SexType]
-        : 'Chưa có',
+      val: GENDER[PersonalInfo?.SexType] || 'Chưa có',
     },
-    {name: 'CMND', val: ICInfor?.ICNumber ? ICInfor?.ICNumber : 'Chưa có'},
+    {name: 'CMND', val: ICInfor?.ICNumber || 'Chưa có'},
     {
       name: 'Nơi cấp',
-      val: ICInfor?.ICIssuedPlace ? ICInfor?.ICIssuedPlace : 'Chưa có',
+      val: ICInfor?.ICIssuedPlace || 'Chưa có',
     },
     {name: 'Địa chỉ', val: AddressInfo?.Provincial ? address : 'Chưa có'},
   ];
@@ -138,13 +135,15 @@ const UserInfo = () => {
         <View style={[base.container, styles.heading]}>
           <View style={styles.item}>
             <Text style={styles.title}>Thông tin cá nhân</Text>
-            <TouchableOpacity
-              style={styles.itemRight}
-              onPress={() => {
-                Navigator.push(SCREEN.EDIT_INFO);
-              }}>
-              <Text style={styles.link}>Chỉnh sửa</Text>
-            </TouchableOpacity>
+            {statusVerified == PERSONAL_IC.ACTIVED && (
+              <TouchableOpacity
+                style={styles.itemRight}
+                onPress={() => {
+                  Navigator.push(SCREEN.EDIT_INFO);
+                }}>
+                <Text style={styles.link}>Chỉnh sửa</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
         {data.map((item, index) => {
@@ -196,7 +195,10 @@ const UserInfo = () => {
               <TouchableOpacity
                 style={styles.itemRight}
                 onPress={() => {
-                  Navigator.push(SCREEN.VERIFY_EMAIL);
+                  Navigator.push(SCREEN.CHANGE_PASSWORD, {
+                    type: 'update_email',
+                    headerLabel: 'Nhập mật khẩu',
+                  });
                 }}>
                 <Text style={styles.link}>Chỉnh sửa</Text>
               </TouchableOpacity>

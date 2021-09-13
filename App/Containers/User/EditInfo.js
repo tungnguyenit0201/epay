@@ -14,7 +14,7 @@ import _ from 'lodash';
 
 const EditInfo = () => {
   // TODO : translation
-  const {onUpdateUserAddress} = useUserInfo();
+  const {onUpdateUserInfo} = useUserInfo();
   const {userInfo, region} = useUser();
   const {personalInfo, personalAddress, personalIC} = userInfo;
   const {goRegionSelect, onClearRegionData} = useSelectRegion({
@@ -37,9 +37,10 @@ const EditInfo = () => {
             Ward: personalAddress?.Ward,
             County: personalAddress?.County,
             Provincial: personalAddress?.Provincial,
+            SexType: personalInfo?.SexType,
           }}
           validationSchema={addressSchema}
-          onSubmit={onUpdateUserAddress}>
+          onSubmit={onUpdateUserInfo}>
           <FormikContent
             region={region}
             goRegionSelect={goRegionSelect}
@@ -63,6 +64,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     errors,
     values,
   } = useFormikContext();
+
   useEffect(() => {
     if (region?.Provincial && region?.County)
       for (const [key, value] of Object.entries(region)) {
@@ -93,11 +95,16 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
       </View>
       <View style={styles.flexRow}>
         <Text>Giới tính: </Text>
-        <Text>
-          {GENDER[personalInfo?.SexType]
-            ? GENDER[personalInfo?.SexType]
-            : 'Chưa có'}
-        </Text>
+        <Radio
+          items={Object.entries(GENDER)
+            .filter(x => x[0] !== '3')
+            .map(([key, value]) => ({
+              label: value,
+              value: parseInt(key),
+            }))}
+          onChange={handleChange('SexType')}
+          selectedValue={values.SexType}
+        />
       </View>
       <View pointerEvents="none">
         <InputBlock
