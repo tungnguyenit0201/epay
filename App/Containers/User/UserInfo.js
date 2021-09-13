@@ -141,7 +141,7 @@ const UserInfo = () => {
             <TouchableOpacity
               style={styles.itemRight}
               onPress={() => {
-                Navigator.navigate(SCREEN.EDIT_INFO);
+                Navigator.push(SCREEN.EDIT_INFO);
               }}>
               <Text style={styles.link}>Chỉnh sửa</Text>
             </TouchableOpacity>
