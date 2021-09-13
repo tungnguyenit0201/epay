@@ -15,8 +15,13 @@ const TITLES = {
 const escapeRegex = string => string?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const RegionSelect = ({route}) => {
-  const {items, type, parentType} = route.params;
-  const {onSelected} = useSelectRegion({items, type, parentType});
+  const {items, type, parentType, callbackScreen} = route.params;
+  const {onSelected} = useSelectRegion({
+    items,
+    type,
+    parentType,
+    callbackScreen,
+  });
   const renderItem = ({item}) => {
     let isSelected = false;
     // if (type === 'cites') {
