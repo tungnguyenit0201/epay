@@ -7,7 +7,7 @@ import {useEmail} from 'context/User/utils';
 import {Formik} from 'formik';
 import {emailSchema} from 'utils/ValidationSchemas';
 
-const VerifyEmail = () => {
+const VerifyEmail = ({route}) => {
   const {onEmailAuth} = useEmail();
 
   return (

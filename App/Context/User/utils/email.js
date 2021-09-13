@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
-import {verifyEmail} from 'services/user';
+import {verifyEmail, updateEmail} from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
@@ -11,9 +11,10 @@ const useEmail = () => {
   const {phone} = useUser();
   const {setError} = useError();
 
-  const onEmailAuth = async ({email}) => {
+  const onEmailAuth = async ({email, update}) => {
     setLoading(true);
-    const result = await verifyEmail({phone, email});
+    const emailFunction = update ? updateEmail : verifyEmail;
+    const result = await emailFunction({phone, email});
     setLoading(false);
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
       setError(result);

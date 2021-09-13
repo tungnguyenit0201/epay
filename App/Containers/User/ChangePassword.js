@@ -9,7 +9,7 @@ import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
-  const {onConfirmPassword} = useUserInfo(route?.params);
+  const {onConfirmPassword} = useUserInfo(route?.params?.type);
   return (
     <>
       <ScrollView style={base.wrap}>

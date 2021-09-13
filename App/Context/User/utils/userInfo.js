@@ -163,6 +163,9 @@ const useUserInfo = type => {
               functionType: FUNCTION_TYPE.FORGOT_PASS,
             });
             break;
+          case 'update_email':
+            Navigator.push(SCREEN.VERIFY_EMAIL);
+            break;
           default:
             Navigator.push(SCREEN.OTP, {
               phone,
@@ -206,6 +209,22 @@ const useUserInfo = type => {
     }
   };
 
+  const onUpdateUserInfo = async data => {
+    const {Address, Ward, County, Provincial, SexType} = data;
+    // update address
+    onUpdateUserAddress({Address, Ward, County, Provincial});
+    // update gender
+    if (!SexType) {
+      return;
+    }
+    const phone = await getPhone();
+    const result = await updatePersonalInfo({
+      phone,
+      personalInfo: {SexType},
+    });
+    result?.ErrorCode && setError(result);
+  };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -217,6 +236,7 @@ const useUserInfo = type => {
     onConfirmPassword,
     onGetLimit,
     onUpdateAvatar,
+    onUpdateUserInfo,
     showModal,
     setShowModal,
   };

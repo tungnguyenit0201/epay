@@ -11,6 +11,7 @@ import NOTIFY from './Enums/Notify';
 import USER_STATUS from './Enums/UserStatus';
 import SMART_OTP from './Enums/SmartOTP';
 import MENU from './Enums/Menu';
+import GENDER from './Enums/Gender';
 
 export {
   TEXT,
@@ -26,4 +27,5 @@ export {
   USER_STATUS,
   SMART_OTP,
   MENU,
+  GENDER,
 };

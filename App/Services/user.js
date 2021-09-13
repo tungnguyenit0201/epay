@@ -223,3 +223,16 @@ export const verifyEmail = async ({phone, email}) => {
   });
   return response;
 };
+
+export const updateEmail = async ({phone, email}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_EMAIL,
+    method: 'post',
+    params: {PhoneNumber: phone, Email: email},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

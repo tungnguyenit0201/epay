@@ -17,9 +17,12 @@ import {useTranslation} from 'context/Language';
 import {verifyUserSchema} from 'utils/ValidationSchemas';
 import {useUser} from 'context/User';
 import {useFocusEffect} from '@react-navigation/native';
+import {SCREEN} from 'configs/Constants';
 
 const FormikCustom = () => {
-  const {goRegionSelect} = useSelectRegion({});
+  const {goRegionSelect} = useSelectRegion({
+    callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
+  });
   const translation = useTranslation();
   const {region} = useUser();
   const {
