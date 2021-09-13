@@ -58,35 +58,26 @@ const SlideIcon = ({data}) => {
 
   return (
     <>
-      <FlatList
-        data={[...Array(Math.ceil(data?.length / 4))]}
-        renderItem={renderItem}
-        keyExtractor={item => Math.random(1, 100)}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        ref={flatlistRef}
-        onViewableItemsChanged={onViewRef.current}
-        viewabilityConfig={viewConfigRef.current}
-        pagingEnabled
-      />
-      <View
-        style={[
-          styles.wrapSwitch,
-          {width: scale(64), left: width / 2 - scale(32)},
-        ]}>
-        <TouchableOpacity
-          style={[
-            styles.wrapSwitch,
-            indexTab == 0 && {backgroundColor: Colors.cl1},
-          ]}
-          onPress={() => onPressSwitch(0)}></TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.wrapSwitch,
-            indexTab == 1 && {backgroundColor: Colors.cl1},
-            {left: scale(32)},
-          ]}
-          onPress={() => onPressSwitch(1)}></TouchableOpacity>
+      <View style={styles.slideIcon}>
+        <FlatList
+          data={[...Array(Math.ceil(data?.length / 4))]}
+          renderItem={renderItem}
+          keyExtractor={item => Math.random(1, 100)}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          ref={flatlistRef}
+          onViewableItemsChanged={onViewRef.current}
+          viewabilityConfig={viewConfigRef.current}
+          pagingEnabled
+        />
+        <View style={[styles.controls]}>
+          <TouchableOpacity
+            style={[styles.dot, indexTab == 0 && {backgroundColor: Colors.cl1}]}
+            onPress={() => onPressSwitch(0)}></TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.dot, indexTab == 1 && {backgroundColor: Colors.cl1}]}
+            onPress={() => onPressSwitch(1)}></TouchableOpacity>
+        </View>
       </View>
     </>
   );
@@ -104,11 +95,26 @@ const styles = StyleSheet.create({
     width: scale(80),
     height: scale(80),
   },
-  wrapSwitch: {
-    height: scale(6),
-    width: scale(32),
+
+  slideIcon: {
+    position: 'relative',
+    paddingBottom: 40,
+    marginBottom: 50,
+  },
+  controls: {
     position: 'absolute',
+    bottom: 0,
+    marginLeft: -scale(32),
+    left: '50%',
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 15,
+    overflow: 'hidden',
+  },
+
+  dot: {
+    height: 6,
+    width: scale(32),
     backgroundColor: Colors.cl3,
   },
 });
