@@ -1,10 +1,10 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
-import SelectImage from './SelectImage';
+import OTPBySmartOTPInput from './OTPBySmartOTPInput';
 import {Spacing} from 'themes'
 
 
-storiesOf('Groups/SelectImage', module)
+storiesOf('Groups/OTPBySmartOTPInput', module)
   .addDecorator(withKnobs)
-  .add('SelectImage', () => <SelectImage />);
+  .add('OTPBySmartOTPInput', () => <OTPBySmartOTPInput code={'123456'} />)

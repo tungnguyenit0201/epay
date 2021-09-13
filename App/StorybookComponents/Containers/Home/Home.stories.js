@@ -1,18 +1,13 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
+import {scale} from 'utils/Functions'
+import {Colors, Fonts} from 'themes'
 
 import Home from './Home';
+import MyWallet from './MyWallet'
 
-export default {
-  title: `Layout/Home`,
-  component: Home,
-  argTypes: {
-  }
-}
-
-const Template = (args) => <Home {...args}/>
-
-export const Default = Template.bind({})
-Default.args = {
-}
+storiesOf('Layout/Home', module)
+  .addDecorator(withKnobs)
+  .add('HomePage', () => <Home />)
+  .add('MyWallet', () => <MyWallet />)

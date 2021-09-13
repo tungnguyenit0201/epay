@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import Text from './Text';
-
 import {scale} from 'utils/Functions';
 
 const Item = ({item, styleItem, styleWicon, styleIcon, styleText}) => {
@@ -9,7 +8,7 @@ const Item = ({item, styleItem, styleWicon, styleIcon, styleText}) => {
     <TouchableOpacity
       style={[styles.item, styleItem]}
       onPress={() => {
-        console.log('press')
+        console.log('hello')
       }}>
       <View style={[styles.wicon, styleWicon]}>
         <Image source={item.icon.default} style={[styles.icon, styleIcon]} />
