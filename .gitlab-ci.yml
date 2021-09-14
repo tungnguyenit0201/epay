@@ -10,7 +10,7 @@ docker-build:
   stage: build
   only:
     - master
-    - feature/datpm/storybook
+    - hung-storybook
   variables:
     DOCKER_HOST: unix:///var/run/docker.sock
     DOCKER_TLS_CERTDIR: ""
@@ -29,7 +29,7 @@ deploy:
   stage: deploy
   only:
     - master
-    - feature/datpm/storybook
+    - hung-storybook
   before_script:
     - source active_env
     - source active_machine
