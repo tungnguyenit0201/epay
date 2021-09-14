@@ -11,12 +11,10 @@ docker-build:
   only:
     - master
     - feature/datpm/storybook
-  services:
-    - docker:dind
   variables:
-    DOCKER_HOST: tcp://docker:2375
+    DOCKER_HOST: unix:///var/run/docker.sock
     DOCKER_TLS_CERTDIR: ""
-    DOCKER_BUILDKIT: 1
+    DOCKER_DRIVER: overlay2
   before_script:
     - source active_env
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
