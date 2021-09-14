@@ -6,31 +6,44 @@ import {
   FlatList,
   useWindowDimensions,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {ListItemSimple, Row, Col, Text} from 'components';
 import {scale} from 'utils/Functions';
 import Navigator from 'navigations/Navigator';
-import {Images, Colors} from 'themes';
+import {Images, Colors, Spacing} from 'themes';
 import _ from 'lodash';
+import {useIconConfig} from 'context/Home/utils';
 
-const Item = ({item}) => (
-  <TouchableOpacity
-    style={[styles.item]}
-    onPress={() => Navigator.navigate(item.screen)}>
-    <Image source={item.icon} style={styles.icon} />
+const Item = ({item}) => {
+  const {width} = useWindowDimensions();
 
-    <Text centered bold mt={5}>
-      {item.name}
-    </Text>
-  </TouchableOpacity>
-);
+  return (
+    <TouchableOpacity
+      style={[
+        styles.item,
+        {
+          width: width / 2 - Spacing.PADDING,
+          borderColor: Colors.black,
+          borderWidth: 1,
+        },
+      ]}
+      onPress={() => Alert.alert('', 'Coming soon')}>
+      <Image source={item.icon} style={styles.icon} />
 
-const SlideIcon = ({data}) => {
+      <Text centered bold mt={5}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const SlideIcon = () => {
   let [indexTab, setIndexTab] = useState(0);
   const {width} = useWindowDimensions();
   const flatlistRef = useRef();
   const viewConfigRef = useRef({viewAreaCoveragePercentThreshold: 50});
-
+  const {iconHome} = useIconConfig();
   const onViewRef = useRef(({viewableItems}) => {
     viewableItems && setIndexTab(_.get(viewableItems, '[0].index', 0));
   });
@@ -41,17 +54,29 @@ const SlideIcon = ({data}) => {
   };
 
   const renderItem = ({index, item}) => {
+    console.log('item :>> ', item);
     return (
       <View style={{width: width}}>
-        <Row>
-          {data.slice(index * 4, index * 4 + 4)?.map((item, index) => {
+        {/* <Row>
+          {iconHome.slice(index * 4, index * 4 + 4)?.map((item, index) => {
             return (
               <Col width={width / 2} key={index} style={[{marginBottom: 10}]}>
                 <Item item={item} />
               </Col>
             );
           })}
-        </Row>
+        </Row> */}
+        <View style={{flexDirection: 'row'}}>
+          {iconHome.slice(index * 4, index * 4 + 2)?.map((item, index) => {
+            return <Item item={item} />;
+          })}
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          {iconHome.slice(index * 4 + 2, index * 4 + 4)?.map((item, index) => {
+            return <Item item={item} />;
+          })}
+        </View>
+        {/* <Image source={item.uri} style={{width: width}} /> */}
       </View>
     );
   };
@@ -59,7 +84,8 @@ const SlideIcon = ({data}) => {
   return (
     <>
       <FlatList
-        data={[...Array(Math.ceil(data?.length / 4))]}
+        data={[...Array(Math.ceil(iconHome?.length / 4))]}
+        // data={iconHome}
         renderItem={renderItem}
         keyExtractor={item => Math.random(1, 100)}
         showsHorizontalScrollIndicator={false}
@@ -67,27 +93,29 @@ const SlideIcon = ({data}) => {
         ref={flatlistRef}
         onViewableItemsChanged={onViewRef.current}
         viewabilityConfig={viewConfigRef.current}
-        pagingEnabled
+        // pagingEnabled
       />
-      <View
-        style={[
-          styles.wrapSwitch,
-          {width: scale(64), left: width / 2 - scale(32)},
-        ]}>
-        <TouchableOpacity
+      {iconHome?.length > 4 && (
+        <View
           style={[
             styles.wrapSwitch,
-            indexTab == 0 && {backgroundColor: Colors.cl1},
-          ]}
-          onPress={() => onPressSwitch(0)}></TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.wrapSwitch,
-            indexTab == 1 && {backgroundColor: Colors.cl1},
-            {left: scale(32)},
-          ]}
-          onPress={() => onPressSwitch(1)}></TouchableOpacity>
-      </View>
+            {width: scale(64), left: width / 2 - scale(32)},
+          ]}>
+          <TouchableOpacity
+            style={[
+              styles.wrapSwitch,
+              indexTab == 0 && {backgroundColor: Colors.cl1},
+            ]}
+            onPress={() => onPressSwitch(0)}></TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.wrapSwitch,
+              indexTab == 1 && {backgroundColor: Colors.cl1},
+              {left: scale(32)},
+            ]}
+            onPress={() => onPressSwitch(1)}></TouchableOpacity>
+        </View>
+      )}
     </>
   );
 };

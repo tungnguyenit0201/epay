@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react';
 import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {MENU, SCREEN} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import {useAsyncStorage, useShowModal} from 'context/Common/utils';
+import {Images} from 'themes';
 
 const useHome = () => {
   const goSecurity = () => {
@@ -33,5 +34,53 @@ const useModalSmartOTP = () => {
 
   return {smartOTP, onGoSmartOTP, onPressNever, onClose};
 };
+const useIconConfig = () => {
+  let iconHome = [
+    {
+      icon: Images.Homes.GiaoThong,
+      name: 'Giao thông',
+      screen: SCREEN.TOP_UP,
+      uri: require('images/home/banner-1.jpg'),
+    },
+    {
+      icon: Images.Homes.BaoHiem,
+      name: 'Bảo hiểm',
+      screen: SCREEN.TOP_UP,
+      uri: require('images/home/banner-1.jpg'),
+    },
+    {
+      icon: Images.Homes.YTe,
+      name: 'Y tế',
+      screen: SCREEN.TOP_UP,
+      uri: require('images/home/banner-1.jpg'),
+    },
+    {
+      icon: Images.Homes.SanBay,
+      name: 'Sân bay ',
+      screen: SCREEN.TOP_UP,
+      uri: require('images/home/banner-1.jpg'),
+    },
+  ];
+  const {config} = useCommon();
 
-export {useHome, useModalSmartOTP};
+  if (config?.EnabledMenu?.search(MENU.C08) != -1)
+    iconHome = [
+      {
+        icon: Images.Homes.GiaoThong,
+        name: 'Vi phạm giao thông',
+        screen: SCREEN.TOP_UP,
+        uri: require('images/home/banner-1.jpg'),
+      },
+    ].concat(iconHome);
+  if (config?.EnabledMenu?.search(MENU.VDMS) != -1)
+    iconHome = [
+      {
+        icon: Images.Homes.BaoHiem,
+        name: 'Vaccine',
+        screen: SCREEN.TOP_UP,
+        uri: require('images/home/banner-1.jpg'),
+      },
+    ].concat(iconHome);
+  return {iconHome};
+};
+export {useHome, useModalSmartOTP, useIconConfig};
