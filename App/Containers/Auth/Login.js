@@ -11,7 +11,7 @@ import BigLogo from 'components/Auth/BigLogo';
 import Content from 'components/Auth/Content';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+// import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
