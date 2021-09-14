@@ -115,23 +115,17 @@ const VerifyUserInfo = ({route}) => {
         isVisible={showModal}
         animationIn="slideInUp"
         animationOut="slideOutDown"
-        style={{
-          width: '100%',
-          marginLeft: 0,
-          marginBottom: 0,
-        }}
+        style={[styles.widthFull, styles.mlZero, styles.mbZero]}
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
         onBackdropPress={onHideModal}>
         <View
           style={[
             styles.modalContainer,
-            {
-              position: 'absolute',
-              width: '100%',
-              padding: 0,
-              bottom: 0,
-            },
+            styles.absolute,
+            styles.widthFull,
+            styles.ptbZero,
+            styles.botZero,
           ]}>
           <ScrollView style={[styles.wrap, styles.pt2]}>
             <View style={[styles.mb1, styles.alignCenter]}>
@@ -140,7 +134,7 @@ const VerifyUserInfo = ({route}) => {
                 fs="h4"
                 centered
                 color={Colors.cl1}
-                style={{maxWidth: 270}}>
+                style={[styles.height1, styles.maxWidth1]}>
                 Hướng dẫn chụp hình 2 mặt chứng từ
               </Text>
             </View>
@@ -153,14 +147,15 @@ const VerifyUserInfo = ({route}) => {
               <View
                 key={index}
                 style={[
+                  styles.flexRow,
+                  styles.mb3,
                   // index<(ruleTexts.length-1)&& {marginBottom: 10},
-                  {flexDirection: 'row', marginBottom: 10},
                 ]}>
                 <Image
                   source={Images.VerifyUserInfo.tick}
-                  style={[styles.tickIcon, {marginRight: 9}]}
+                  style={[styles.tickIcon, styles.mr1]}
                 />
-                <Text bold fs="h6" color={Colors.gray} style={{flex: 1}}>
+                <Text bold fs="h6" color={Colors.gray} style={styles.flex1}>
                   {e}
                 </Text>
               </View>
@@ -171,18 +166,11 @@ const VerifyUserInfo = ({route}) => {
 
             <Row space={16}>
               {listFailedIndetityCard.map((e, index) => (
-                <Col
-                  width="33.3333%"
-                  space={16}
-                  key={index}
-                  style={{marginBottom: 16}}>
-                  <View style={{padding: 4}}>
+                <Col width="33.3333%" space={16} key={index} style={styles.mb2}>
+                  <View style={styles.ptb1}>
                     <Image
                       source={e.img}
-                      style={{
-                        width: '100%',
-                        height: 65,
-                      }}
+                      style={[styles.widthFull, styles.height1]}
                       resizeMode="contain"
                     />
 
@@ -236,24 +224,7 @@ const VerifyUserInfo = ({route}) => {
           </ScrollView>
 
           <View
-            style={[
-              styles.wrap,
-              styles.py1,
-              styles.bgWhite,
-              {
-                backgroundColor: Colors.white,
-                borderTopLeftRadius: Spacing.PADDING,
-                borderTopRightRadius: Spacing.PADDING,
-                shadowColor: Colors.black,
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.16,
-                shadowRadius: 8,
-                elevation: 24,
-              },
-            ]}>
+            style={[styles.wrap, styles.py1, styles.bgWhite, styles.blockBtn]}>
             <Button label="Đã hiểu" bold />
           </View>
         </View>
@@ -264,10 +235,27 @@ const VerifyUserInfo = ({route}) => {
 
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
+  flexRow: {flexDirection: 'row'},
+  flex1: {flex: 1},
+  absolute: {position: 'absolute'},
+  topZero: {top: 0},
+  leftZero: {left: 0},
+  rightZero: {right: 0},
+  botZero: {bottom: 0},
+  widthFull: {width: '100%'},
+  maxWidth1: {maxWidth: 270},
+  height1: {height: 65},
+  mlZero: {marginLeft: 0},
+  mr1: {marginRight: 9},
+  mbZero: {marginBottom: 0},
+  mb1: {marginBottom: 32},
+  mb2: {marginBottom: 16},
+  mb3: {marginBottom: 10},
   py1: {paddingVertical: Spacing.PADDING},
   pt1: {paddingTop: 48},
   pt2: {paddingTop: 37},
-  mb1: {marginBottom: 32},
+  ptbZero: {padding: 0},
+  ptb1: {padding: 4},
   bgWhite: {backgroundColor: Colors.white},
   headerContainer: {
     position: 'relative',
@@ -303,11 +291,18 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
   },
-  absolute: {position: 'absolute'},
-  topZero: {top: 0},
-  leftZero: {left: 0},
-  rightZero: {right: 0},
-  botZero: {bottom: 0},
+  blockBtn: {
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
+  },
 });
 
 export default VerifyUserInfo;
