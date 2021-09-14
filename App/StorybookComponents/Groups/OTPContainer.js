@@ -4,7 +4,7 @@ import Text from '../Atoms/Text';
 import {Colors, Fonts, Spacing} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
-// import OTPInputView from '@twotalltotems/react-native-otp-input';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 
 const OTPContainer = ({
   code,
@@ -22,7 +22,7 @@ const OTPContainer = ({
     <>
       <Text style={[styles.header, styles.textCenter]}>{`Nhập OTP`}</Text>
       <Text style={[styles.textDefault, styles.textCenter]}>{label}</Text>
-      {/* <OTPInputView
+      <OTPInputView
         style={styles.wrapOtp}
         pinCount={6}
         onCodeChanged={onChange}
@@ -32,7 +32,7 @@ const OTPContainer = ({
         onCodeFilled={onCodeFilled}
         clearInputs={message}
         code={code}
-      /> */}
+      />
       {/* <OTP onChange={onChange} message={message} /> */}
 
       <View style={styles.flexRow_1}>
