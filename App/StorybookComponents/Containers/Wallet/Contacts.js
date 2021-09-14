@@ -87,7 +87,11 @@ const Contacts = () => {
         {/* Input with Icon */}
         <View style={styles.inputIcon}>
           <TouchableOpacity style={styles.iconSearch}>
-            <Icon icon={Images.Search} tintColor={Colors.g4} />
+            <Icon
+              icon={Images.Search}
+              tintColor={Colors.g4}
+              style={styles.closeCircle}
+            />
           </TouchableOpacity>
           <TextInput
             style={styles.inputSearch}

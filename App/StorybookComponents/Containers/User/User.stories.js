@@ -27,6 +27,7 @@ import SmartOTPPassword from './SmartOTP/SmartOTPPassword';
 import SmartOTPResult from './SmartOTP/SmartOTPResult';
 import SyncSmartOTP from './SmartOTP/SyncSmartOTP';
 import SyncSmartOTPResult from './SmartOTP/SyncSmartOTPResult';
+import RegionSelect from './RegionSelect/region';
 
 storiesOf('Layout/User/VerifyInfo', module)
   .addDecorator(withKnobs)
@@ -59,3 +60,7 @@ storiesOf('Layout/User/SmartOtp', module)
   .add('SmartOTPResult', () => <SmartOTPResult />)
   .add('SyncSmartOTP', () => <SyncSmartOTP />)
   .add('SyncSmartOTPResult', () => <SyncSmartOTPResult />);
+
+storiesOf('Layout/User/RegionSelect', module)
+  .addDecorator(withKnobs)
+  .add('Region', () => <RegionSelect />);

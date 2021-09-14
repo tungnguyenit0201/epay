@@ -5,7 +5,7 @@ import Button from '../../../Atoms/Button';
 import Header from '../../../Atoms/Header';
 import HeaderBg from '../../../Atoms/HeaderBg';
 import {Spacing, Colors} from 'themes';
-import {Modal} from 'components';
+/* import {Modal} from 'components'; */
 
 const SyncSmartOTP = ({route}) => {
   const status = 'success';
@@ -55,7 +55,7 @@ const SyncSmartOTP = ({route}) => {
           <Text>✔️ Đồng bộ smart OTP thành công</Text>
         </View>
       )}
-      {status === 'failure' && (
+      {/* {status === 'failure' && (
         <Modal
           visible
           onClose={() => console.log('press')}
@@ -64,7 +64,7 @@ const SyncSmartOTP = ({route}) => {
             <Button label="Thử lại" onPress={() => console.log('press')} />
           )}
         />
-      )}
+      )} */}
     </View>
   );
 };

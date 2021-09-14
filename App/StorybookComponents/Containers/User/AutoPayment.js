@@ -1,18 +1,15 @@
 import React, {useRef, useState} from 'react';
 import {View, ScrollView} from 'react-native';
+import {Images, Spacing, base} from 'themes';
+
+import {SCREEN} from 'configs/Constants';
+import {useTranslation} from 'context/Language';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import HeaderBg from '../../Atoms/HeaderBg';
-import {Images, Spacing, base} from 'themes';
-import Navigator from 'navigations/Navigator';
-
-import Monney from '../../Groups/Money';
-
-import InputMoney from '../../Groups/InputMoney';
 import SelectBank from '../../Groups/SelectBank';
-
-import {SCREEN} from 'configs/Constants';
-
+import InputMoney from '../../Groups/InputMoney';
+import Money from '../../Groups/Money';
 const TopUp = () => {
   const translation = require('../../../Context/Language/vi.json');
   const dataBank = [
@@ -20,7 +17,7 @@ const TopUp = () => {
       id: 1,
       icon: Images.Bank.Vietinbank.default,
       name: 'Vietinbank',
-      screen: 'Hello',
+      screen: SCREEN.TOP_UP,
     },
     {
       id: 2,
@@ -35,13 +32,12 @@ const TopUp = () => {
       screen: SCREEN.TOP_UP,
     },
   ];
-
   return (
     <>
       <ScrollView style={base.wrap}>
         <HeaderBg style={{marginBottom: 50}}>
           <Header title="Nạp tiền tự động" back style={{marginBottom: 20}} />
-          <Monney
+          <Money
             style={[
               {
                 position: 'absolute',
@@ -58,7 +54,7 @@ const TopUp = () => {
         </View>
       </ScrollView>
       <View style={base.bottom}>
-        <Button label="Nạp" onPress={() => console.log('Nạp')} />
+        <Button label="Nạp" onPress={() => console.log('onPress')} />
       </View>
     </>
   );

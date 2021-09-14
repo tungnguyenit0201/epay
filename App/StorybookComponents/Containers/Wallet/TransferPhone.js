@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,26 +15,26 @@ import Row from '../../Atoms/Row';
 import TextInput from '../../Atoms/TextInput';
 import HeaderBg from '../../Atoms/HeaderBg';
 import Col from '../../Atoms/Col';
-
-import { Colors, Fonts, Spacing, Images } from 'themes';
-import { scale } from 'utils/Functions';
+import SelectBank from '../../Groups/SelectBank';
+import {Colors, Fonts, Spacing, Images} from 'themes';
+import {scale} from 'utils/Functions';
 const TransactionDetails = () => {
   const translation = require('../../../Context/Language/vi.json');
   const listBanks = [
     {
       id: 1,
-      bank: 'Viettinbank',
-      image: Images.Transfer.VIETTINBANK,
+      BankName: 'Viettinbank',
+      icon: Images.Transfer.VIETTINBANK.default,
     },
     {
       id: 2,
-      bank: 'Vietcombank',
-      image: Images.Transfer.VIETCOMBANK,
+      BankName: 'Vietcombank',
+      icon: Images.Transfer.VIETCOMBANK.default,
     },
     {
       id: 3,
-      bank: 'Eximbank',
-      image: Images.Transfer.EXIMBANK,
+      BankName: 'Eximbank',
+      icon: Images.Transfer.EXIMBANK.default,
     },
   ];
   return (
@@ -48,7 +48,10 @@ const TransactionDetails = () => {
             {translation.transfer_to}:
           </Text>
           <View style={styles.blockUser}>
-            <Image source={Images.Transfer.User_1.default} style={styles.avatar} />
+            <Image
+              source={Images.Transfer.User_1.default}
+              style={styles.avatar}
+            />
             <View style={styles.ml_20}>
               <Text bold style={[styles.nameUser]}>
                 Nguyen Van An
@@ -88,28 +91,32 @@ const TransactionDetails = () => {
             {translation.transfer_by_epay}
           </Text>
 
-          <View style={{ marginBottom: scale(20) }}>
-            <View style={styles.emptyWallet}>
+          <View style={{marginBottom: scale(20)}}>
+            <View style={[styles.emptyWallet]}>
               <Image
-                style={styles.iconWallet}
+                style={[styles.iconWallet]}
                 source={Images.Transfer.EmptyWallet.default}
               />
               <Image
-                style={styles.iconCheck}
+                style={[styles.iconCheck]}
                 source={Images.Transfer.ArrowCircleDown.default}
               />
             </View>
-            <Text style={styles.myWallet}>Ví của tôi</Text>
+            <Text style={[styles.myWallet]}>Ví của tôi</Text>
           </View>
-          <Text bold style={styles.sendBank}>
+          {/* <Text bold style={styles.sendBank}>
             Chuyển tiền bằng TK Ngân hàng
-          </Text>
-          <Row justify="space-between">
+          </Text> */}
+
+          {/* <Row justify="space-between">
             {listBanks.map(value => (
               <Col key={value.id} width="30%" style={styles.mb_15}>
                 <TouchableOpacity style={styles.flexCenter}>
                   <View style={styles.bankBlock}>
-                    <Image style={styles.bankImage} source={value.image.default} />
+                    <Image
+                      style={styles.bankImage}
+                      source={value.image.default}
+                    />
                   </View>
                   <Text>{value.bank}</Text>
                 </TouchableOpacity>
@@ -121,12 +128,12 @@ const TransactionDetails = () => {
                 <Text style={[styles.fontSmall]}>Thêm liên kết NH</Text>
               </TouchableOpacity>
             </Col>
-          </Row>
-
-          <Button
-            label="Tiếp tục"
-            onPress={() => console.log('hello')}
+          </Row> */}
+          <SelectBank
+            data={listBanks}
+            label={'Chuyển tiền bằng TK Ngân hàng'}
           />
+          <Button label="Tiếp tục" onPress={() => console.log('hello')} />
         </View>
       </View>
     </ScrollView>
@@ -271,7 +278,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    padding: 5
+    padding: 5,
   },
   fontSmall: {
     fontSize: Fonts.FONT_SMALL,

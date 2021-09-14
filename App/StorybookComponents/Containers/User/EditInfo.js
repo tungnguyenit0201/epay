@@ -100,6 +100,7 @@ const EditInfo = () => {
                     onBlur={handleBlur('Provincial')}
                     error={touched.Provincial && errors.Provincial}
                     value={values.Provincial}
+                    rightIcon={Images.Down}
                   />
                   <InputBlock
                     label="Quận"
@@ -107,6 +108,7 @@ const EditInfo = () => {
                     onBlur={handleBlur('County')}
                     error={touched.County && errors.County}
                     value={values.County}
+                    rightIcon={Images.Down}
                   />
                   <InputBlock
                     label="Phường / Xã"
@@ -116,6 +118,7 @@ const EditInfo = () => {
                     onBlur={handleBlur('Ward')}
                     error={touched.Ward && errors.Ward}
                     value={values.Ward}
+                    rightIcon={Images.Down}
                   />
                   <InputBlock
                     label="Địa chỉ"
