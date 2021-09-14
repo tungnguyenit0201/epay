@@ -12,13 +12,12 @@ const useUserStatus = () => {
   const statusVerified = personalIC?.Verified;
 
   const getStatus = () => {
-    if (statusVerified < USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK) {
-      return statusVerified;
-    } else {
+    if (statusVerified == PERSONAL_IC.ACTIVED) {
       return listConnectBank?.length
         ? USER_STATUS.DONE
         : USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK;
     }
+    return statusVerified;
   };
 
   const status = getStatus();
@@ -47,6 +46,12 @@ const useUserStatus = () => {
         return translation.unverified;
       case PERSONAL_IC.VERIFYING:
         return 'Đang xác thực';
+      case PERSONAL_IC.RE_VERIFYING:
+        return 'Đang xác thực lại';
+      case PERSONAL_IC.EXPIRED:
+        return 'Xác thực hết hạn';
+      case PERSONAL_IC.REJECTED:
+        return 'Xác thực bị từ chối';
       default:
         return 'Đã xác thực';
     }

@@ -165,21 +165,22 @@ const UserInfo = () => {
         <View style={[base.container, styles.row]}>
           <View style={styles.item}>
             <Text>{getStatusVerifiedText()}</Text>
-            {statusVerified != PERSONAL_IC.VERIFYING && (
-              <TouchableOpacity
-                style={styles.itemRight}
-                onPress={
-                  statusVerified == PERSONAL_IC.INACTIVE
-                    ? onVerify
-                    : () => onReVerify('showModal')
-                }>
-                <Text style={styles.link}>
-                  {statusVerified == PERSONAL_IC.INACTIVE
-                    ? 'Xác thực tài khoản'
-                    : 'Đổi giấy tờ tùy thân'}
-                </Text>
-              </TouchableOpacity>
-            )}
+            {statusVerified != PERSONAL_IC.VERIFYING &&
+              statusVerified != PERSONAL_IC.RE_VERIFYING && (
+                <TouchableOpacity
+                  style={styles.itemRight}
+                  onPress={
+                    statusVerified == PERSONAL_IC.INACTIVE
+                      ? onVerify
+                      : () => onReVerify('showModal')
+                  }>
+                  <Text style={styles.link}>
+                    {statusVerified == PERSONAL_IC.INACTIVE
+                      ? 'Xác thực tài khoản'
+                      : 'Đổi giấy tờ tùy thân'}
+                  </Text>
+                </TouchableOpacity>
+              )}
           </View>
         </View>
 
