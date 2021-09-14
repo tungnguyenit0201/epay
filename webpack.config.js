@@ -31,10 +31,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        // include: /src/,
-        loaders: ['babel-loader'],
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015']
+      }
       },{
         test: /\.css$/,
         loader: 'style-loader!css-loader',
