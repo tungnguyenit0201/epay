@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  web:
+    image: registry.gitlab.com/mangoads/epay-wallet:latest
+    deploy:
+      labels:
+        - traefik.enable=true
+        # Connect container with traefik network
+        - traefik.docker.network=traefik
+        # Set Domain
+        - traefik.http.routers.epay-wallet.rule=Host(`epay-storybook.internal.mangoads.com.vn`)
+        - traefik.http.routers.epay-wallet-tls.rule=Host(`epay-storybook.internal.mangoads.com.vn`)
+        - traefik.http.routers.epay-wallet-tls.tls=true
+        - traefik.http.routers.epay-wallet-tls.tls.certresolver=myresolver
+        # Forward Traffic to Port 80 of nginx
+        - traefik.http.services.epay-wallet-service.loadbalancer.server.port=80
+        - traefik.http.middlewares.epay-wallet-redirect.redirectscheme.scheme=https
+        - traefik.http.routers.epay-wallet.middlewares=epay-wallet-redirect
+    networks:
+      - traefik
+networks:
+  traefik:
+    external: true

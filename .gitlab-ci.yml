@@ -1,0 +1,43 @@
+# This file is a template, and might need editing before it works on your project.
+# Build a Docker image with CI/CD and push to the GitLab registry.
+# Docker-in-Docker documentation: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
+#
+# This template uses one generic job with conditional builds
+# for the default branch and all other (MR) branches.
+docker-build:
+  # Use the official docker image.
+  image: registry.gitlab.com/mangoads/swarm-deploy-dind:v1.0
+  stage: build
+  only:
+    - master
+    - feature/datpm/storybook
+  variables:
+    DOCKER_HOST: unix:///var/run/docker.sock
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
+  before_script:
+    - source active_env
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - echo "$CI_COMMIT_SHA" > version
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $CI_REGISTRY_IMAGE:latest -t $IMAGE_URI .
+    - docker push $IMAGE_URI
+
+deploy:
+  # Use the official docker image.
+  image: registry.gitlab.com/mangoads/swarm-deploy-dind:v1.0
+  stage: deploy
+  only:
+    - master
+    - feature/datpm/storybook
+  before_script:
+    - source active_env
+    - source active_machine
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  artifacts:
+    paths:
+      - docker-compose.prod.yml
+  script:
+    - sed -ibk 's/:latest/'"$TAG_NAME"'/' docker-compose.prod.yml
+    - docker pull $IMAGE_URI
+    - docker stack deploy -c docker-compose.prod.yml --with-registry-auth epay-wallet-storybook

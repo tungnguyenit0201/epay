@@ -60,3 +60,5 @@ buck-out/
 /ios/Pods/
 ios/Podfile.lock
 .eslintcache
+
+storybook-static/

@@ -1,0 +1,7 @@
+.vscode/
+.git/
+
+ios/Pods/
+node_modules/
+thunder-tests/
+storybook-static/
