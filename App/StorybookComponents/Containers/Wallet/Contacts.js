@@ -201,6 +201,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.g2,
     borderWidth: 1,
     borderRadius: scale(5),
+    paddingVertical: 8,
+    width: scale(330),
   },
   iconSearch: {
     paddingHorizontal: scale(10),
@@ -211,7 +213,9 @@ const styles = StyleSheet.create({
     flex: 1,
     //backgroundColor: 'transparent',
     fontSize: Fonts.H6,
-    //borderColor: 'transparent',
+    borderColor: 'transparent',
+    outlineColor: 'transparent',
+    width: scale(250),
   },
   closeCircle: {
     width: scale(20),

@@ -1,8 +1,8 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
-import {scale} from 'utils/Functions'
-import {Colors, Fonts} from 'themes'
+import {scale} from 'utils/Functions';
+import {Colors, Fonts} from 'themes';
 
 import ChooseIdentityCard from './VerifyInfo/ChooseIdentityCard';
 import VerifyEmail from './VerifyInfo/VerifyEmail';
@@ -26,8 +26,8 @@ import SmartOTPFailure from './SmartOTP/SmartOTPFailure';
 import SmartOTPPassword from './SmartOTP/SmartOTPPassword';
 import SmartOTPResult from './SmartOTP/SmartOTPResult';
 import SyncSmartOTP from './SmartOTP/SyncSmartOTP';
-import SyncSmartOTPResult from './SmartOTP/SyncSmartOTPResult'
-
+import SyncSmartOTPResult from './SmartOTP/SyncSmartOTPResult';
+import RegionSelect from './RegionSelect/region';
 
 storiesOf('Layout/User/VerifyInfo', module)
   .addDecorator(withKnobs)
@@ -59,4 +59,8 @@ storiesOf('Layout/User/SmartOtp', module)
   .add('SmartOTPPassword', () => <SmartOTPPassword />)
   .add('SmartOTPResult', () => <SmartOTPResult />)
   .add('SyncSmartOTP', () => <SyncSmartOTP />)
-  .add('SyncSmartOTPResult', () => <SyncSmartOTPResult />)
+  .add('SyncSmartOTPResult', () => <SyncSmartOTPResult />);
+
+storiesOf('Layout/User/RegionSelect', module)
+  .addDecorator(withKnobs)
+  .add('Region', () => <RegionSelect />);

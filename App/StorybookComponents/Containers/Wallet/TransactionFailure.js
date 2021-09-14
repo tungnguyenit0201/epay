@@ -1,12 +1,12 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, Text} from 'react-native';
+import { ScrollView, StyleSheet, View, Text } from 'react-native';
 // import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import Icon from '../../Atoms/Icon';
 
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {scale, formatMoney} from 'utils/Functions';
+import { Colors, Fonts, Spacing, Images } from 'themes';
+import { scale, formatMoney } from 'utils/Functions';
 const data = [
   {
     name: 'Nguồn tiền',
@@ -59,7 +59,7 @@ const TransactionFailure = () => {
         </View>
         <View style={styles.flexBox}>
           <View style={styles.wrap}>
-            {data.map(item => renderItem(item.label, item.value))}
+            {data.map(item => renderItem(item.name, item.value))}
             <Button
               label="Thực hiện lại"
               style={styles.buttonBlock}

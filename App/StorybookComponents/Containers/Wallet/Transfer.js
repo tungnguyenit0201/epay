@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
 // import {Text, Button, HeaderBg, TextInput, Icon} from 'components';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
@@ -8,8 +8,8 @@ import Icon from '../../Atoms/Icon';
 import TextInput from '../../Atoms/TextInput';
 import HeaderBg from '../../Atoms/HeaderBg';
 
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {scale} from 'utils/Functions';
+import { Colors, Fonts, Spacing, Images } from 'themes';
+import { scale } from 'utils/Functions';
 import Modal from 'react-native-modal';
 const Transfer = () => {
   const [open, setOpen] = useState(false);
@@ -30,7 +30,7 @@ const Transfer = () => {
             {/* Input with Icon */}
             <View style={styles.inputIcon}>
               <TouchableOpacity style={styles.iconSearch}>
-                <Icon icon={Images.Search} tintColor={Colors.g4} />
+                <Icon icon={Images.Search} tintColor={Colors.g4} style={styles.icon} />
               </TouchableOpacity>
               <TextInput
                 style={styles.inputSearch}
@@ -98,7 +98,7 @@ const Transfer = () => {
         isVisible={open}
         animationIn="fadeIn"
         animationOut="fadeOut"
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         useNativeDriver
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}>
@@ -158,6 +158,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.g2,
     borderWidth: 1,
     borderRadius: scale(5),
+    paddingVertical: 8,
+    width: scale(300)
   },
   iconNav: {
     width: scale(18),
@@ -176,6 +178,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontSize: Fonts.H6,
     borderColor: 'transparent',
+    outlineColor: 'transparent',
   },
   iconRectangle: {
     height: scale(8),

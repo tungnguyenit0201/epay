@@ -1,14 +1,14 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, Image} from 'react-native';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import Row from '../../Atoms/Row';
 import Col from '../../Atoms/Col';
 import HeaderBg from '../../Atoms/HeaderBg';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import { Colors, Fonts, Images, Spacing, base } from 'themes';
 
-import {scale, formatMoney} from 'utils/Functions';
+import { scale, formatMoney } from 'utils/Functions';
 const data = [
   {
     name: 'Nguồn tiền',
@@ -64,7 +64,7 @@ const TransactionResult = () => {
                         borderBottomWidth: 0,
                       },
                     ]}>
-                    <Text style={styles.textLeft}>{item.label}</Text>
+                    <Text style={styles.textLeft}>{item.name}</Text>
 
                     <Text bold size={Fonts.H6} style={styles.textRight}>
                       {item.value}
@@ -85,7 +85,7 @@ const TransactionResult = () => {
               border={Colors.cl1}
               color={Colors.cl1}
               label={translation.save_photo}
-              labelStyle={{fontSize: 14}}
+              labelStyle={{ fontSize: 14 }}
               onPress={console.log('hello')}
             />
           </Col>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 20,
     left: '50%',
-    transform: [{translateX: scale(-64)}, {translateY: 0}],
+    transform: [{ translateX: scale(-64) }, { translateY: 0 }],
   },
   row: {
     flexDirection: 'row',

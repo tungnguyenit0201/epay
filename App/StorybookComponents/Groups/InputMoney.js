@@ -1,13 +1,13 @@
-import React, {useState, forwardRef, useImperativeHandle} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Text from '../Atoms/Text';
 import TextInput from '../Atoms/TextInput';
 import Row from '../Atoms/Row';
 import Col from '../Atoms/Col';
-import {Colors, Fonts, Spacing} from 'themes';
-import {formatMoney} from 'utils/Functions';
+import { Colors, Fonts, Spacing } from 'themes';
+import { formatMoney } from 'utils/Functions';
 
-const InputMoney = forwardRef(({style, onChange}, ref) => {
+const InputMoney = forwardRef(({ style, onChange }, ref) => {
   const translation = require('../../Context/Language/vi.json');
   const moneyData = [
     {
@@ -48,7 +48,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
             <TouchableOpacity onPress={() => onPress(item.money)}>
-              <Text style={styles.item}>{formatMoney(item.money)}</Text>
+              <Text style={[styles.item]}>{formatMoney(item.money)}</Text>
             </TouchableOpacity>
           </Col>
         ))}
@@ -57,7 +57,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
   );
 });
 
-const Input = forwardRef(({onChange}, ref) => {
+const Input = forwardRef(({ onChange }, ref) => {
   const [value, setValue] = useState('');
 
   useImperativeHandle(ref, () => ({
@@ -80,12 +80,12 @@ const Input = forwardRef(({onChange}, ref) => {
           placeholderTextColor={Colors.l5}
           value={value}
           onChange={_onChange}
-          // showErrorLabel={error}
-          // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
+        // showErrorLabel={error}
+        // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
         />
-        <Text style={styles.subText}>vnđ</Text>
+        <Text style={[styles.subText]}>vnđ</Text>
       </View>
-      <Text style={styles.warningText}>
+      <Text style={[styles.warningText]}>
         *Số tiền nạp tối thiểu là 10.000 vnđ
       </Text>
     </View>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   rowInput: {
     position: 'relative',
   },
-  input: {width: '100%', paddingRight: 50},
+  input: { width: '100%', paddingRight: 50 },
   subText: {
     fontWeight: '700',
     position: 'absolute',

@@ -13,7 +13,6 @@ import Button from '../../Atoms/Button';
 
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
-
 import InputMoney from '../../Groups/InputMoney';
 import SelectBank from '../../Groups/SelectBank';
 

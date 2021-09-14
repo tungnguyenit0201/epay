@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,8 +16,8 @@ import TextInput from '../../Atoms/TextInput';
 import HeaderBg from '../../Atoms/HeaderBg';
 import Col from '../../Atoms/Col';
 
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {scale} from 'utils/Functions';
+import { Colors, Fonts, Spacing, Images } from 'themes';
+import { scale } from 'utils/Functions';
 const TransactionDetails = () => {
   const translation = require('../../../Context/Language/vi.json');
   const listBanks = [
@@ -44,16 +44,16 @@ const TransactionDetails = () => {
           {translation.transfer_to_phone_number}
         </Text>
         <View>
-          <Text bold style={styles.textHeader}>
+          <Text bold style={[styles.textHeader]}>
             {translation.transfer_to}:
           </Text>
           <View style={styles.blockUser}>
             <Image source={Images.Transfer.User_1.default} style={styles.avatar} />
             <View style={styles.ml_20}>
-              <Text bold style={styles.nameUser}>
+              <Text bold style={[styles.nameUser]}>
                 Nguyen Van An
               </Text>
-              <Text style={styles.textBlack}>0989000000</Text>
+              <Text style={[styles.textBlack]}>0989000000</Text>
             </View>
           </View>
         </View>
@@ -67,7 +67,7 @@ const TransactionDetails = () => {
               style={styles.inputCurrent}
               placeholderTextColor={Colors.BLACK}
             />
-            <Text bold style={styles.textCurrent}>
+            <Text bold style={[styles.textCurrent]}>
               vnđ
             </Text>
           </View>
@@ -88,7 +88,7 @@ const TransactionDetails = () => {
             {translation.transfer_by_epay}
           </Text>
 
-          <View style={{marginBottom: scale(20)}}>
+          <View style={{ marginBottom: scale(20) }}>
             <View style={styles.emptyWallet}>
               <Image
                 style={styles.iconWallet}
@@ -116,9 +116,9 @@ const TransactionDetails = () => {
               </Col>
             ))}
             <Col width="30%" style={styles.mb_15}>
-              <TouchableOpacity style={styles.addBank}>
+              <TouchableOpacity style={[styles.addBank]}>
                 <Icon icon={Images.Transfer.UNION} tintColor={Colors.cl1} />
-                <Text style={styles.fontSmall}>Thêm liên kết NH</Text>
+                <Text style={[styles.fontSmall]}>Thêm liên kết NH</Text>
               </TouchableOpacity>
             </Col>
           </Row>
@@ -271,6 +271,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
+    padding: 5
   },
   fontSmall: {
     fontSize: Fonts.FONT_SMALL,

@@ -14,8 +14,8 @@ import HeaderBg from '../../../Atoms/HeaderBg';
 import Row from '../../../Atoms/Row';
 import Col from '../../../Atoms/Col';
 
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {scale} from 'utils/Functions';
+import { Colors, Fonts, Spacing, Images } from 'themes';
+import { scale } from 'utils/Functions';
 import Icon from 'App/StorybookComponents/Atoms/Icon';
 
 const BankList = () => {
@@ -26,7 +26,7 @@ const BankList = () => {
       name: 'Agribank',
       screen: 'SCREEN.BANK_INFO',
     },
-    {icon: Images.ConnectBank.logoBidv, name: 'BIDV', screen: 'SCREEN.BANK_INFO'},
+    { icon: Images.ConnectBank.logoBidv, name: 'BIDV', screen: 'SCREEN.BANK_INFO' },
     {
       icon: Images.ConnectBank.logoVcb,
       name: 'Vietcombank',
@@ -58,13 +58,13 @@ const BankList = () => {
       name: 'Sacombank',
       screen: 'SCREEN.BANK_INFO',
     },
-    {icon: Images.ConnectBank.logoScb, name: 'SCB', screen: 'SCREEN.BANK_INFO'},
+    { icon: Images.ConnectBank.logoScb, name: 'SCB', screen: 'SCREEN.BANK_INFO' },
     {
       icon: Images.ConnectBank.logoVbb,
       name: 'VPbank',
       screen: 'SCREEN.BANK_INFO',
     },
-    {icon: Images.ConnectBank.logoShb, name: 'SHB', screen: 'SCREEN.BANK_INFO'},
+    { icon: Images.ConnectBank.logoShb, name: 'SHB', screen: 'SCREEN.BANK_INFO' },
     {
       icon: Images.ConnectBank.logoTpb,
       name: 'TPbank',
@@ -72,7 +72,7 @@ const BankList = () => {
     },
   ];
 
-  const Item = ({title, icon, screen, iconHeight, iconWidth}) => (
+  const Item = ({ title, icon, screen, iconHeight, iconWidth }) => (
     <TouchableOpacity
       style={styles.item}
       onPress={() => {
@@ -95,7 +95,7 @@ const BankList = () => {
           }}
         />
       </View>
-      <Text centered style={{marginTop: 10}}>
+      <Text centered style={{ marginTop: 10 }}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -107,10 +107,10 @@ const BankList = () => {
         <Header back title={translation.connect_bank} />
       </HeaderBg>
 
-      <View style={[styles.wrap, styles.mb_1, {marginTop: -16}]}>
+      <View style={[styles.wrap, styles.mb_1, { marginTop: -16 }]}>
         <View>
           <View style={styles.icon}>
-            {/* <Image source={Images.TabBar.Search.default} style={styles.image} /> */}
+            <Image source={Images.TabBar.Search.default} style={styles.image} />
           </View>
 
           <InputBlock
@@ -128,7 +128,7 @@ const BankList = () => {
         }}></View>
 
       <View style={[styles.wrap, styles.py_1]}>
-        <Text size={Fonts.h6} style={{fontWeight: 'bold', marginBottom: 16}}>
+        <Text size={Fonts.h6} style={{ fontWeight: 'bold', marginBottom: 16 }}>
           {translation.bank_linking}
         </Text>
         <Row space={10}>
@@ -138,7 +138,7 @@ const BankList = () => {
                 width={`33.333%`}
                 space={10}
                 key={index}
-                style={{marginBottom: 16}}>
+                style={{ marginBottom: 16 }}>
                 <Item
                   title={item.name}
                   icon={item.icon}
@@ -162,15 +162,15 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  mb_1: {marginBottom: 24},
-  py_1: {paddingVertical: 25},
+  mb_1: { marginBottom: 24 },
+  py_1: { paddingVertical: 25 },
   image: {
     width: 20,
     height: 20,
   },
   icon: {
     position: 'absolute',
-    top: 48,
+    top: 35,
     left: 10,
     paddingRight: 10,
     borderRightWidth: 1,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.l4,
     backgroundColor: Colors.white,
   },
-  item: {alignItems: 'center'},
+  item: { alignItems: 'center' },
 });
 
 export default BankList;

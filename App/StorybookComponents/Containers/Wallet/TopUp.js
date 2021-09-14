@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -12,14 +12,14 @@ import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import KeyboardSuggestion from '../../Groups/KeyboardSuggestion';
 
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import { Colors, Fonts, Images, Spacing, base } from 'themes';
 
 import Monney from '../../Groups/Money';
 
 import InputMoney from '../../Groups/InputMoney';
 import SelectBank from '../../Groups/SelectBank';
 
-import {formatMoney} from 'utils/Functions';
+import { formatMoney } from 'utils/Functions';
 const TRANS_FORM_TYPE = {
   CONNECTED_BANK: 1,
   NAPAS_CARD: 2,
@@ -27,15 +27,20 @@ const TRANS_FORM_TYPE = {
   WALLET: 4,
 };
 
-const bankData = {
+/* const bankData = {
   [TRANS_FORM_TYPE.CONNECTED_BANK]: [],
   [TRANS_FORM_TYPE.NAPAS_CARD]: [],
   [TRANS_FORM_TYPE.INTERNATIONAL_CARD]: [],
-};
+}; */
 
+const bankData = [
+  { id: 1, icon: Images.Bank.Vietinbank.default, BankName: 'Vietinbank' },
+  { id: 2, icon: Images.Bank.Eximbank.default, BankName: 'Eximbank' },
+  { id: 3, icon: Images.Bank.Vietcombank.default, BankName: 'Vietcombank' },
+];
 const TopUp = () => {
   const translation = require('../../../Context/Language/vi.json');
-  
+
 
   const [bankFeeData, setBankFeeData] = useState({
     [TRANS_FORM_TYPE.CONNECTED_BANK]: null,
@@ -46,8 +51,8 @@ const TopUp = () => {
   return (
     <>
       <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
-          <Header title={translation.top_up} back style={{marginBottom: 20}} />
+        <HeaderBg style={{ marginBottom: 50 }}>
+          <Header title={translation.top_up} back style={{ marginBottom: 20 }} />
           <Monney
             style={[
               {
@@ -61,12 +66,12 @@ const TopUp = () => {
         </HeaderBg>
         <View style={base.container}>
           <InputMoney onChange={console.log('hello')} />
-          {/* <SelectBank
+          <SelectBank
             data={bankData}
             feeData={bankFeeData}
             label={translation.source}
             onChange={console.log('hello')}
-          /> */}
+          />
         </View>
       </ScrollView>
       <View style={base.bottom}>

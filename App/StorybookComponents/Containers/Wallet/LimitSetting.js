@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -14,10 +14,10 @@ import HeaderBg from '../../Atoms/HeaderBg';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import { Colors, Fonts, Images, Spacing, base } from 'themes';
 
-import {formatMoney} from 'utils/Functions';
-const LimitSetting = ({route}) => {
+import { formatMoney } from 'utils/Functions';
+const LimitSetting = ({ route }) => {
   const amountLimit = 3000000;
   const translation = require('../../../Context/Language/vi.json');
   const listLimit = [
@@ -59,17 +59,17 @@ const LimitSetting = ({route}) => {
     },
   ];
   const [limit, setLimit] = useState('');
-  const renderListLimit = ({item}) => (
+  const renderListLimit = ({ item }) => (
     <TouchableOpacity
       disabled={item.limit <= amountLimit ? false : true}
       onPress={() => setLimit(item.limit)}>
       <View style={styles.containerItem}>
-        <Text style={item.limit <= amountLimit ? styles.item : styles.disabled}>
+        <Text style={[item.limit <= amountLimit ? styles.item : styles.disabled]}>
           {formatMoney(item.limit)}
         </Text>
         {limit === item.limit ? (
           <Icon
-            style={{height: 20, width: 20}}
+            style={{ height: 20, width: 20 }}
             icon={Images.WidthDraw.Done}
             tintColor={Colors.black}
           />
@@ -115,7 +115,7 @@ const LimitSetting = ({route}) => {
         />
         <Button
           label="Tiếp tục"
-          style={{marginVertical: 25}}
+          style={{ marginVertical: 25 }}
           onPress={() => console.log('hello')}
         />
       </View>
