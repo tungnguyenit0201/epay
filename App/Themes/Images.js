@@ -140,4 +140,8 @@ export default {
     cmndDark: require('images/identity-card/cmnd-dark.png'),
     cmndFail: require('images/identity-card/cmnd-fail.png'),
   },
+  TransactionHistory: {
+    filter: require('images/icons/filter.png'),
+    cardTick: require('images/icons/card-tick.png'),
+  },
 };
