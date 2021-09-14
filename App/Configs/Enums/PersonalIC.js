@@ -2,5 +2,8 @@ const PERSONAL_IC = {
   INACTIVE: 1,
   VERIFYING: 2,
   ACTIVED: 3,
+  EXPIRED: 4,
+  REJECTED: 5,
+  RE_VERIFYING: 6,
 };
 export default PERSONAL_IC;
