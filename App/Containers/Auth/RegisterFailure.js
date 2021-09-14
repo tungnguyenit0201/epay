@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -12,6 +12,7 @@ import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {useOTP} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
+import {SCREEN} from 'configs/Constants';
 
 const RegisterFailure = ({route}) => {
   const translation = useTranslation();
@@ -22,7 +23,12 @@ const RegisterFailure = ({route}) => {
     // TODO: translate
     <>
       <View>
-        <Header back blackIcon avoidStatusBar />
+        <Header
+          back
+          blackIcon
+          avoidStatusBar
+          onPressBack={() => onNavigate(SCREEN.AUTH)}
+        />
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -80,7 +86,7 @@ const RegisterFailure = ({route}) => {
           bg={Colors.white}
           color={Colors.black}
           border={Colors.cl4}
-          onPress={onNavigate}
+          onPress={() => onNavigate(SCREEN.AUTH)}
           bold
         />
       </View>

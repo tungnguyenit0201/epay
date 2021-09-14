@@ -13,7 +13,7 @@ const useQRCode = () => {
   const myQRCode = useRef();
 
   const shareQRCode = () => {
-    myQRCode.toDataURL(dataURL => {
+    myQRCode.current.toDataURL(dataURL => {
       let shareImageBase64 = {
         title: 'Epay',
         url: `data:image/png;base64,${dataURL}`,

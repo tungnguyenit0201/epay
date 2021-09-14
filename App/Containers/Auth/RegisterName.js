@@ -14,6 +14,7 @@ import {scale} from 'utils/Functions';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
 import {Formik} from 'formik';
 import {useRegister} from 'context/Auth/utils';
+import {nameSchema} from 'utils/ValidationSchemas';
 
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
@@ -25,7 +26,7 @@ const RegisterName = () => {
       initialValues={{
         FullName: '',
       }}
-      // validationSchema={phoneSchema}
+      validationSchema={nameSchema}
       onSubmit={onUpdatePersonalInfo}>
       {({
         handleChange: _handleChange,
@@ -68,9 +69,7 @@ const RegisterName = () => {
               <BigLogo />
               <Content
                 title="Nhập tên"
-                text={
-                  translation.password_for_account_security_and_transaction_confirmation_at_checkout
-                }
+                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
               />
 
               <View style={[styles.wrap, {marginTop: Spacing.PADDING * 3}]}>
@@ -80,7 +79,7 @@ const RegisterName = () => {
                   placeholder={translation.enter_your_name}
                   onChange={handleChange('FullName')}
                   onBlur={handleBlur('FullName')}
-                  // error={touched.FullName && errors.FullName}
+                  error={touched.FullName && errors.FullName}
                   value={values.FullName}
                   isDeleted={values.FullName}
                 />

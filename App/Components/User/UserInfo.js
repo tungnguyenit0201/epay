@@ -9,6 +9,7 @@ import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 import {useUserStatus} from 'context/User/utils';
+import {hidePhone} from 'utils/Functions';
 
 const User = ({style}) => {
   const {onVerify, statusVerified, getStatusVerifiedText} = useUserStatus();
@@ -18,21 +19,22 @@ const User = ({style}) => {
 
   return (
     <View style={[base.shadow, styles.item, style]}>
-      <TouchableOpacity
-        onPress={() => {
-          Navigator.navigate(SCREEN.USER);
-        }}
-        style={styles.wicon}>
-        <Image style={{width: 72, height: 72}} source={Images.Avatar} />
+      <TouchableOpacity style={styles.wicon}>
+        <Image
+          style={{width: 72, height: 72}}
+          source={
+            userInfo?.personalInfo?.avatar
+              ? {uri: userInfo.personalInfo.avatar}
+              : Images.User
+          }
+        />
       </TouchableOpacity>
       <View>
         <Text bold size={Fonts.H6} mb={5}>
           Xin chào {userInfo?.personalInfo?.FullName}
         </Text>
 
-        <Text style={{marginBottom: 10}}>
-          {phone.slice(-3).padStart(phone.length, '*')}
-        </Text>
+        <Text style={{marginBottom: 10}}>{hidePhone(phone)}</Text>
 
         <Button
           size="xxs"

@@ -115,3 +115,15 @@ export const syncSmartOTP = async ({phone, password}) => {
   });
   return response;
 };
+
+export const getConfigInfo = async () => {
+  let response = null;
+  await request({
+    url: API.COMMON.GET_CONFIG_INFO,
+    method: 'post',
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
