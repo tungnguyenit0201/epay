@@ -15,11 +15,11 @@
 		27D9FB82868A4DA082FA7772 /* SVN-GilroyMediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 870F382ECA514CC39577A74B /* SVN-GilroyMediumItalic.ttf */; };
 		2AF2E17C41984CB0A7FFFF2D /* SVN-GilroyBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 638FEAC0D789439A9FC9680E /* SVN-GilroyBold.ttf */; };
 		367081BB7CB54A389822987A /* SVN-GilroyMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFE8F7761D5D486CBE4AF2B9 /* SVN-GilroyMedium.ttf */; };
-		5269594B387D00BB8AE34193 /* libPods-epay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 569AA957178D80D151F282B9 /* libPods-epay.a */; };
+		52F316C393BC32B16E37B5EB /* libPods-epay-epayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4D8E0480CA6AB0FA0B0ACB0 /* libPods-epay-epayTests.a */; };
 		7BDEE2B23D7742E89959EB18 /* SVN-GilroyBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8F35B907E8E46D29BBC3E09 /* SVN-GilroyBoldItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C68748811D524D428CCD0F3E /* SVN-Gilroy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B455C50395A54478816A5A85 /* SVN-Gilroy.ttf */; };
-		EDBDB4A4E4F202439ACA612C /* libPods-epay-epayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20935DC58E2A7C16F2277F79 /* libPods-epay-epayTests.a */; };
+		C9554D508DFF1AE8CFAA9D58 /* libPods-epay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 661AC4C182A805D4A2A6AF30 /* libPods-epay.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,19 +42,19 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = epay/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = epay/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = epay/main.m; sourceTree = "<group>"; };
-		13B283FBE9B9E22046D9C4C0 /* Pods-epay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay.debug.xcconfig"; path = "Target Support Files/Pods-epay/Pods-epay.debug.xcconfig"; sourceTree = "<group>"; };
-		20935DC58E2A7C16F2277F79 /* libPods-epay-epayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-epay-epayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		430B18004788CFF841AF74EF /* Pods-epay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay.release.xcconfig"; path = "Target Support Files/Pods-epay/Pods-epay.release.xcconfig"; sourceTree = "<group>"; };
-		557CAFA11390C1DBDB9D8F73 /* Pods-epay-epayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay-epayTests.release.xcconfig"; path = "Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests.release.xcconfig"; sourceTree = "<group>"; };
-		569AA957178D80D151F282B9 /* libPods-epay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-epay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		39634C37ADBA25087A46590C /* Pods-epay-epayTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay-epayTests.release.xcconfig"; path = "Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests.release.xcconfig"; sourceTree = "<group>"; };
 		638FEAC0D789439A9FC9680E /* SVN-GilroyBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyBold.ttf"; path = "../assets/fonts/SVN-GilroyBold.ttf"; sourceTree = "<group>"; };
+		661AC4C182A805D4A2A6AF30 /* libPods-epay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-epay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = epay/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		870F382ECA514CC39577A74B /* SVN-GilroyMediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyMediumItalic.ttf"; path = "../assets/fonts/SVN-GilroyMediumItalic.ttf"; sourceTree = "<group>"; };
 		A8F35B907E8E46D29BBC3E09 /* SVN-GilroyBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyBoldItalic.ttf"; path = "../assets/fonts/SVN-GilroyBoldItalic.ttf"; sourceTree = "<group>"; };
 		B455C50395A54478816A5A85 /* SVN-Gilroy.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Gilroy.ttf"; path = "../assets/fonts/SVN-Gilroy.ttf"; sourceTree = "<group>"; };
+		B4D8E0480CA6AB0FA0B0ACB0 /* libPods-epay-epayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-epay-epayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B556193C57D34B95B5FEFBE3 /* SVN-GilroyItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyItalic.ttf"; path = "../assets/fonts/SVN-GilroyItalic.ttf"; sourceTree = "<group>"; };
-		D0F286AC8128AC5600D4EB8C /* Pods-epay-epayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay-epayTests.debug.xcconfig"; path = "Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DE0DBE3B620635F12E60837F /* Pods-epay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay.debug.xcconfig"; path = "Target Support Files/Pods-epay/Pods-epay.debug.xcconfig"; sourceTree = "<group>"; };
+		E34CF77607F4E24EA76219CB /* Pods-epay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay.release.xcconfig"; path = "Target Support Files/Pods-epay/Pods-epay.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F6FCCCD97B2E0C4B3CF9A973 /* Pods-epay-epayTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-epay-epayTests.debug.xcconfig"; path = "Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FFE8F7761D5D486CBE4AF2B9 /* SVN-GilroyMedium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyMedium.ttf"; path = "../assets/fonts/SVN-GilroyMedium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDBDB4A4E4F202439ACA612C /* libPods-epay-epayTests.a in Frameworks */,
+				52F316C393BC32B16E37B5EB /* libPods-epay-epayTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5269594B387D00BB8AE34193 /* libPods-epay.a in Frameworks */,
+				C9554D508DFF1AE8CFAA9D58 /* libPods-epay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,10 +98,10 @@
 		053A2E7F8B829F93BF18190A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				13B283FBE9B9E22046D9C4C0 /* Pods-epay.debug.xcconfig */,
-				430B18004788CFF841AF74EF /* Pods-epay.release.xcconfig */,
-				D0F286AC8128AC5600D4EB8C /* Pods-epay-epayTests.debug.xcconfig */,
-				557CAFA11390C1DBDB9D8F73 /* Pods-epay-epayTests.release.xcconfig */,
+				DE0DBE3B620635F12E60837F /* Pods-epay.debug.xcconfig */,
+				E34CF77607F4E24EA76219CB /* Pods-epay.release.xcconfig */,
+				F6FCCCD97B2E0C4B3CF9A973 /* Pods-epay-epayTests.debug.xcconfig */,
+				39634C37ADBA25087A46590C /* Pods-epay-epayTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -136,8 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				569AA957178D80D151F282B9 /* libPods-epay.a */,
-				20935DC58E2A7C16F2277F79 /* libPods-epay-epayTests.a */,
+				661AC4C182A805D4A2A6AF30 /* libPods-epay.a */,
+				B4D8E0480CA6AB0FA0B0ACB0 /* libPods-epay-epayTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,12 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "epayTests" */;
 			buildPhases = (
-				BD813B92C023C9AB4035923F /* [CP] Check Pods Manifest.lock */,
+				782569AB754B2119D2DE75B3 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				B473D213D528C07BB832B7C1 /* [CP] Embed Pods Frameworks */,
-				12434900C82F187F3E72DAA4 /* [CP] Copy Pods Resources */,
+				29D9606689F9DD20DB700698 /* [CP] Embed Pods Frameworks */,
+				EDC19E62832141CF6A8A1D4F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -202,14 +202,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "epay" */;
 			buildPhases = (
-				169E99520A471A87547FD508 /* [CP] Check Pods Manifest.lock */,
+				2F71099DCA433F440040D724 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				CCE5D60CE029A16765F8E203 /* [CP] Embed Pods Frameworks */,
-				61CBDCACCB9E6BEC6D202B61 /* [CP] Copy Pods Resources */,
+				D4C1513B610C4F2110E8DF19 /* [CP] Embed Pods Frameworks */,
+				7F860A529FAC8C5A2B7481DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -296,24 +296,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		12434900C82F187F3E72DAA4 /* [CP] Copy Pods Resources */ = {
+		29D9606689F9DD20DB700698 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		169E99520A471A87547FD508 /* [CP] Check Pods Manifest.lock */ = {
+		2F71099DCA433F440040D724 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -335,41 +335,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		61CBDCACCB9E6BEC6D202B61 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B473D213D528C07BB832B7C1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BD813B92C023C9AB4035923F /* [CP] Check Pods Manifest.lock */ = {
+		782569AB754B2119D2DE75B3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -391,7 +357,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CCE5D60CE029A16765F8E203 /* [CP] Embed Pods Frameworks */ = {
+		7F860A529FAC8C5A2B7481DB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D4C1513B610C4F2110E8DF19 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -406,6 +389,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay/Pods-epay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EDC19E62832141CF6A8A1D4F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-epay-epayTests/Pods-epay-epayTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -460,7 +460,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0F286AC8128AC5600D4EB8C /* Pods-epay-epayTests.debug.xcconfig */;
+			baseConfigurationReference = F6FCCCD97B2E0C4B3CF9A973 /* Pods-epay-epayTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -487,7 +487,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 557CAFA11390C1DBDB9D8F73 /* Pods-epay-epayTests.release.xcconfig */;
+			baseConfigurationReference = 39634C37ADBA25087A46590C /* Pods-epay-epayTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -511,13 +511,13 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13B283FBE9B9E22046D9C4C0 /* Pods-epay.debug.xcconfig */;
+			baseConfigurationReference = DE0DBE3B620635F12E60837F /* Pods-epay.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21091001;
+				CURRENT_PROJECT_VERSION = 21091501;
 				DEVELOPMENT_TEAM = 5G3223L7MC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = epay/Info.plist;
@@ -541,13 +541,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 430B18004788CFF841AF74EF /* Pods-epay.release.xcconfig */;
+			baseConfigurationReference = E34CF77607F4E24EA76219CB /* Pods-epay.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21091001;
+				CURRENT_PROJECT_VERSION = 21091501;
 				DEVELOPMENT_TEAM = 5G3223L7MC;
 				INFOPLIST_FILE = epay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

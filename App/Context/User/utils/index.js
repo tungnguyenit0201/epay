@@ -8,7 +8,7 @@ import useNotify from './notification';
 import useUserStatus from './userStatus';
 import useQRCode from './useQRCode';
 import useEmail from './email';
-
+import useDropImage from './dropImage';
 export {
   useVerifyInfo,
   useImagePicker,
@@ -22,4 +22,5 @@ export {
   useUserStatus,
   useQRCode,
   useEmail,
+  useDropImage,
 };

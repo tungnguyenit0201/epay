@@ -9,18 +9,19 @@ import {
 } from 'react-native';
 import {Text, InputBlock, Header, Button, HeaderBg} from 'components';
 import {base, Images, Colors, Spacing} from 'themes';
-import {SCREEN} from 'configs/Constants';
+import {IC_TPYE, SCREEN} from 'configs/Constants';
 import Progress from 'components/User/VerifyInfo/Progress';
 import {useVerifyInfo} from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
+import DropImage from 'components/User/VerifyInfo/DropImage';
 import {useTranslation} from 'context/Language';
 import _ from 'lodash';
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const VerifyUserInfo = ({route}) => {
-  const {disabledIdentify, onChange, onContinue} = useVerifyInfo();
+  const {disabledIdentify, onChange, onContinue} = useVerifyInfo(route?.params);
   const translation = useTranslation();
-  const identityCard = _.get(route, 'params.identifyCard.value', 1);
+  const identityCard = _.get(route, 'params.identifyCard.ICType', IC_TPYE.CMND);
 
   return (
     //TODO: translate
@@ -63,19 +64,28 @@ const VerifyUserInfo = ({route}) => {
             onChange={value => onChange('birthday', value)}
           /> */}
 
-          <SelectImage
+          {/* <SelectImage
             title="Mặt trước" // TODO: translate
             onSelectImage={value => {
               onChange('ICFrontPhoto', value?.data);
               identityCard == 3 && onChange('ICBackPhoto', value?.data);
             }}
             css={styles.mb1}
+          /> */}
+          <DropImage
+            title="Ảnh mặt trước" // TODO: translate
+            onDropImage={value => {
+              onChange('ICFrontPhoto', value?.data);
+              identityCard == IC_TPYE.PASSPORT &&
+                onChange('ICBackPhoto', value?.data);
+            }}
+            style={styles.mb1}
           />
-          {identityCard != 3 && (
-            <SelectImage
-              title="Mặt sau" // TODO: translate
-              onSelectImage={value => onChange('ICBackPhoto', value?.data)}
-              css={styles.mb1}
+          {identityCard != IC_TPYE.PASSPORT && (
+            <DropImage
+              title="Ảnh mặt sau" // TODO: translate
+              onDropImage={value => onChange('ICBackPhoto', value?.data)}
+              style={styles.mb1}
             />
           )}
         </View>
