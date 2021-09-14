@@ -1,33 +1,29 @@
-import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, useWindowDimensions, TouchableOpacity, Image } from 'react-native';
-import { Text, InputBlock, Header, Button, FWLoading, TextInput, Icon } from 'components';
-import { Colors, Fonts, Spacing, Images } from 'themes';
+import React, {useRef, useState} from 'react';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Text, Button, HeaderBg, TextInput, Icon} from 'components';
+import {Colors, Fonts, Spacing, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
-import Password from 'components/Auth/Password';
-import { SCREEN } from 'configs/Constants';
-import { scale } from 'utils/Functions';
+import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
 import {useTranslation} from 'context/Language';
-import HeaderBg from 'components/Common/HeaderBg';
 const Transfer = () => {
   const [open, setOpen] = useState(false);
   const translation = useTranslation();
   return (
     <ScrollView style={styles.container}>
       <HeaderBg>
-        <Text bold style={styles.headerTitle}>{translation.transaction_details}</Text>
+        <Text bold style={styles.headerTitle}>
+          {translation.transaction_details}
+        </Text>
       </HeaderBg>
       <View style={styles.mt_30}>
         <View style={styles.flexBox}>
           <View style={styles.wrap}>
             {/* Input with Icon */}
             <View style={styles.inputIcon}>
-              <TouchableOpacity
-                style={styles.iconSearch}>
-                <Icon
-                  icon={Images.Search}
-                  tintColor={Colors.g4}
-                />
+              <TouchableOpacity style={styles.iconSearch}>
+                <Icon icon={Images.Search} tintColor={Colors.g4} />
               </TouchableOpacity>
               <TextInput
                 style={styles.inputSearch}
@@ -44,7 +40,9 @@ const Transfer = () => {
             />
             {/* Icon Rectangle */}
             {/* Text with Icon */}
-            <TouchableOpacity onPress={() => setOpen(true)} style={styles.inputNavigate} >
+            <TouchableOpacity
+              onPress={() => setOpen(true)}
+              style={styles.inputNavigate}>
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Mobile}
@@ -64,7 +62,11 @@ const Transfer = () => {
             {/* Text with Icon */}
 
             {/* Text with Icon */}
-            <TouchableOpacity onPress={() => {Navigator.navigate(SCREEN.BANK_LIST)}} style={styles.inputNavigate}>
+            <TouchableOpacity
+              onPress={() => {
+                Navigator.navigate(SCREEN.BANK_LIST);
+              }}
+              style={styles.inputNavigate}>
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Bank}
@@ -86,33 +88,41 @@ const Transfer = () => {
         </View>
       </View>
       <Modal
-          isVisible={open}
-          animationIn="fadeIn"
-          animationOut="fadeOut"
-          style={{flex: 1}}
-          useNativeDriver
-          hideModalContentWhileAnimating
-          backdropTransitionOutTiming={0}>
-          <View style={styles.modal}>
-              <Text bold style={styles.textTitle}>{translation.allow_access_to_contact_book}</Text>
-              <Text style={styles.textDescription}>{translation.to_use_the_money_transfer_function_epay_needs_access_to_your_contact_book}</Text>
-              <View style={styles.blockButton}>
-                <Button
-                  label="Không"
-                  style={styles.buttonCancle}
-                  color={Colors.cl1}
-                  fs={Fonts.H6}
-                  onPress={() => setOpen(false)}
-                />
-                <Button
-                  label="Đồng ý"
-                  style={styles.buttonAcp}
-                  fs={Fonts.H6}
-                  onPress={() => setOpen(false) & Navigator.navigate(SCREEN.CONTACTS)}
-                />
-              </View>
+        isVisible={open}
+        animationIn="fadeIn"
+        animationOut="fadeOut"
+        style={{flex: 1}}
+        useNativeDriver
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}>
+        <View style={styles.modal}>
+          <Text bold style={styles.textTitle}>
+            {translation.allow_access_to_contact_book}
+          </Text>
+          <Text style={styles.textDescription}>
+            {
+              translation.to_use_the_money_transfer_function_epay_needs_access_to_your_contact_book
+            }
+          </Text>
+          <View style={styles.blockButton}>
+            <Button
+              label="Không"
+              style={styles.buttonCancle}
+              color={Colors.cl1}
+              fs={Fonts.H6}
+              onPress={() => setOpen(false)}
+            />
+            <Button
+              label="Đồng ý"
+              style={styles.buttonAcp}
+              fs={Fonts.H6}
+              onPress={() =>
+                setOpen(false) & Navigator.navigate(SCREEN.CONTACTS)
+              }
+            />
           </View>
-        </Modal>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -130,69 +140,69 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerTitle: {
-    color: Colors.white, 
+    color: Colors.white,
     fontSize: Fonts.H6,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   inputIcon: {
-    flex: 1, 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    borderColor: Colors.g2, 
-    borderWidth: 1, 
-    borderRadius: scale(5)
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: Colors.g2,
+    borderWidth: 1,
+    borderRadius: scale(5),
   },
   iconNav: {
-    width: scale(18), 
-    height: scale(22), 
-    position: 'relative', 
-    top: scale(2), 
-    marginRight: scale(20)
+    width: scale(18),
+    height: scale(22),
+    position: 'relative',
+    top: scale(2),
+    marginRight: scale(20),
   },
   iconSearch: {
-    paddingHorizontal: scale(10), 
-    borderRightWidth: 1, 
+    paddingHorizontal: scale(10),
+    borderRightWidth: 1,
     borderColor: Colors.g2,
   },
   inputSearch: {
-    flex: 1, 
-    backgroundColor: 'transparent', 
+    flex: 1,
+    backgroundColor: 'transparent',
     fontSize: Fonts.H6,
     borderColor: 'transparent',
   },
   iconRectangle: {
-    height: scale(8), 
-    width:'100%', 
-    marginVertical: scale(24)
+    height: scale(8),
+    width: '100%',
+    marginVertical: scale(24),
   },
   textTitle: {
-    fontSize: Fonts.H6, 
-    textAlign: 'center', 
+    fontSize: Fonts.H6,
+    textAlign: 'center',
   },
   textDescription: {
-    fontSize: Fonts.FONT_MEDIUM, 
-    marginTop: scale(8), 
-    textAlign: 'center'
+    fontSize: Fonts.FONT_MEDIUM,
+    marginTop: scale(8),
+    textAlign: 'center',
   },
   buttonCancle: {
-    width: scale(120), 
-    height: scale(42), 
-    backgroundColor: 'transparent', 
-    borderColor: Colors.cl1, 
-    borderWidth: 1
+    width: scale(120),
+    height: scale(42),
+    backgroundColor: 'transparent',
+    borderColor: Colors.cl1,
+    borderWidth: 1,
   },
   blockButton: {
-    flex: 1, 
-    flexDirection: 'row', 
-    justifyContent:'space-between',
-    marginTop: scale(16)
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: scale(16),
   },
   buttonAcp: {
-    width: scale(120), 
-    height: scale(42) 
+    width: scale(120),
+    height: scale(42),
   },
   mt_30: {
-    marginBottom: scale(30)
+    marginBottom: scale(30),
   },
   flexBox: {
     flex: 3,
@@ -204,30 +214,30 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: scale(20),
-    height: scale(20)
+    height: scale(20),
   },
   inputNavigate: {
-    backgroundColor: "#DAE9F8",
+    backgroundColor: '#DAE9F8',
     padding: Spacing.PADDING,
     marginBottom: scale(10),
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   arrowIcon: {
     color: Colors.black,
-    fontSize: Fonts.H6
+    fontSize: Fonts.H6,
   },
   modal: {
     height: scale(180),
-    backgroundColor: Colors.white, 
+    backgroundColor: Colors.white,
     paddingVertical: Spacing.PADDING,
     paddingHorizontal: Spacing.PADDING + scale(20),
-    borderRadius: scale(5)
+    borderRadius: scale(5),
   },
   arrowRight: {
     position: 'relative',
-    top: scale(4)
-  }
+    top: scale(4),
+  },
 });
 export default Transfer;

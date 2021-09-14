@@ -11,6 +11,8 @@ import Alert from './Alert';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Colors} from 'themes';
 import {useCommon} from 'context/Common';
+import Debug from './Debug';
+
 const Wrapper = React.memo(
   ({
     barStyle = 'dark-content',
@@ -33,7 +35,8 @@ const Wrapper = React.memo(
           {avoidStatusBar && <View style={styles.avoidStatusBar} />}
           <View style={styles.flexFill}>{children}</View>
           {loading && <FWLoading />}
-          {!!error?.ErrorCode && <Alert />}
+          {!!error?.errorCode && <Alert />}
+          {__DEV__ && <Debug />}
         </KeyboardAvoidingView>
       </View>
     );

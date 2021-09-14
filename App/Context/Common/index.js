@@ -6,6 +6,11 @@ export const CommonProvider = ({children}) => {
   const [common, dispatch] = React.useReducer(commonReducer, {
     loading: false,
     error: null,
+    showModal: {
+      smartOTP: false,
+      KYC: false,
+      connectBank: false,
+    },
   });
 
   const value = {

@@ -1,21 +1,9 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
-import {TEXT} from 'configs/Constants';
+import {Text, InputBlock, Header, Button, FWLoading} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
-import {User} from 'services';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
-import {scale} from 'utils/Functions';
-import OTPContainer from 'components/Auth/OTPContainer';
-import Password from 'components/Auth/Password';
 import {SCREEN} from 'configs/Constants';
 
 const Register = () => {
@@ -39,26 +27,35 @@ const Register = () => {
   const pressOTP = () => {
     Navigator.navigate(SCREEN.OTP);
   };
-  
+
   return (
+    // TODO: translate
     <ScrollView style={styles.container}>
-      <Header back shadow={false}/>
+      <Header back shadow={false} avoidStatusBar />
 
       {!loading ? (
         <View style={styles.wrap}>
-          <Text style={[styles.title]} mb={20}>Nhập số điện thoại</Text>
-          <Text style={styles.text} mb={40}>Lorem Ipsum is simply dummy text of 
-            the printing and typesetting industry.</Text>
-          <InputBlock phone style={[styles.input]} 
+          <Text style={[styles.title]} mb={20}>
+            Nhập số điện thoại
+          </Text>
+          <Text style={styles.text} mb={40}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </Text>
+          <InputBlock
+            phone
+            style={[styles.input]}
             placeholder="Nhập số điện thoại"
-            onFocus={e => setDisable(false)}/>
+            onFocus={e => setDisable(false)}
+          />
           <Text style={styles.text}>Số điện thoại không đúng</Text>
           <Button
             mt={56}
             disabled={disable}
             label="Tiếp tục"
             style={styles.btn}
-            onPress={pressOTP}/>
+            onPress={pressOTP}
+          />
         </View>
       ) : (
         <FWLoading wrapStyle={[styles.loading, {height: height}]} />
@@ -86,30 +83,26 @@ const styles = StyleSheet.create({
     fontSize: 30,
     // marginBottom: 20,
     fontWeight: 'bold',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   text: {
-    fontSize: 14
+    fontSize: 14,
   },
   input: {
     // marginBottom: 56,
-    borderColor: 'black',
+    borderColor: Colors.black,
     borderRadius: 3,
-    backgroundColor: '#fff'
+    backgroundColor: Colors.white,
   },
   btn: {
     // color: Colors.BLACK,
     // fontSize: 30,
     paddingTop: 15,
     paddingBottom: 15,
-    // backgroundColor: '#CCCCCC'
   },
   loading: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  confirmation: {
-    marginTop: Spacing.PADDING * 2,
   },
 });
 export default Register;

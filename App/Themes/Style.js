@@ -4,12 +4,16 @@ import {Colors, Spacing, Fonts} from 'themes';
 
 const styles = StyleSheet.create({
   wrap: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
     paddingBottom: 50,
   },
   container: {
     paddingHorizontal: Spacing.PADDING,
     position: 'relative',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   leftAuto: {
     marginLeft: 'auto',
@@ -18,7 +22,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -42,7 +46,7 @@ const styles = StyleSheet.create({
   close: {
     width: 20,
     height: 20,
-    backgroundColor: '#D70000',
+    backgroundColor: Colors.l4,
     position: 'absolute',
     top: -8,
     right: -8,
@@ -52,14 +56,14 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
     marginTop: -1,
-    color: '#fff',
+    color: Colors.white,
   },
   bottom: {
     paddingHorizontal: Spacing.PADDING,
     paddingBottom: Spacing.PADDING,
     paddingTop: 10,
     position: 'relative',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.white,
   },
 });
 export default styles;

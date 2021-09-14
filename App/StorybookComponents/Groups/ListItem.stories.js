@@ -1,35 +1,52 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
-import {Images} from 'themes';
-import ListItem from './ListItem';
+import {Images, Colors} from 'themes';
+import ListItemSimple from './ListItemSimple';
+import {scale} from 'utils/Functions';
 
-const dataEpay = [
+const dataMenu = [
   {
-    icon: Images.Homes.NapViTuDong,
-    name: 'Danh sách xe',
-    screen: 'transfer',
+    icon: Images.Homes.NapTien,
+    name: 'Nạp tiền',
+    screen: 'hello',
+    checkSmartOTP: true,
   },
   {
-    icon: Images.Homes.ThanhToanGt,
-    name: 'Thanh toán vi phạm giao thông',
-    screen: 'Withdraw',
+    icon: Images.Homes.RutTien,
+    name: 'Rút tiền',
+    screen: 'hello',
+    checkSmartOTP: true,
+  },
+
+  {
+    icon: Images.Homes.ChuyenTien,
+    name: 'Chuyển ti',
+    screen: 'hello',
+    checkSmartOTP: true,
   },
   {
-    icon: Images.Homes.DichVuGt,
-    name: 'Dịch vụ phi giao thông',
-    screen: 'QRPay',
+    icon: Images.Homes.LichSuGd,
+    name: 'Lịch sử',
+    screen: 'hello',
+  },
+  {
+    icon: Images.Homes.LichSuGd,
+    name: 'QRPAY',
+    screen: 'hello',
   },
 ];
 
-storiesOf('Groups/ListItem', module)
+storiesOf('Groups/ListItemSimple', module)
   .addDecorator(withKnobs)
-  .add('Default', () => <ListItem scroll space={1} col={4} data={dataEpay} />)
-  .add('Blue', () => <ListItem
-                        scroll
-                        space={10}
-                        col={4}
-                        data={dataEpay}
-                        styleText={[{fontSize: 14}]}
-                        styleWicon={[{backgroundColor: '#437EC0'}]}
-                        styleIcon={[{tintColor: '#fff'}]}/>)
+  .add('ListItemSimple', () => (
+    <ListItemSimple
+      scroll
+      space={1}
+      col={4}
+      data={dataMenu}
+      styleText={[{fontSize: 14, color: Colors.black}]}
+      styleWicon={[{backgroundColor: Colors.cl2}]}
+      styleIcon={[{}]}
+    />
+  ));

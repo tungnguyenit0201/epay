@@ -3,13 +3,24 @@ import {View, Image, StyleSheet} from 'react-native';
 import {Colors, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
+import StatusBar from './StatusBar';
+//import {getStatusBarHeight} from 'react-native-status-bar-height';
+//getStatusBarHeight()
 
-const Header = ({children, style}) => {
+const bgheader = require('images/home/homeHeader.jpg');
+
+const Header = ({children, bgimg, style}) => {
   const {top} = useSafeAreaInsets();
   return (
-    <View style={[base.container, styles.header, {paddingTop: top + 5}, style]}>
+    <View
+      style={[base.container, styles.header, {paddingTop: top + 10}, style]}>
+      <StatusBar
+        barStyle={'light-content'}
+        translucent
+        backgroundColor={'transparent'}
+      />
       <View style={styles.bg}>
-        <Image source={Images.Homes.BgHeader} style={styles.img} />
+        <Image source={bgimg ? bgimg : bgheader} style={styles.img} />
       </View>
       {children}
     </View>
@@ -18,7 +29,7 @@ const Header = ({children, style}) => {
 
 const styles = StyleSheet.create({
   header: {
-    paddingBottom: 20,
+    paddingBottom: 10,
     marginBottom: 20,
   },
   bg: {

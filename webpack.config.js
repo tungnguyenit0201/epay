@@ -16,13 +16,14 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'react-native': 'react-native-web',
+      'react-native$': 'react-native-web',
       '@storybook/react-native': '@storybook/react',
       components: path.resolve(__dirname, 'App/Components/index'),
-      utils: path.resolve(__dirname, 'App/Utils/index'),
+      utils: path.resolve(__dirname, 'App/StorybookComponents'),
       themes: path.resolve(__dirname, 'App/Themes/index'),
       navigations: path.resolve(__dirname, 'App/Navigations'),
-      'utils/Functions': path.resolve(__dirname, 'App/Utils/Functions'),
+      'utils/Functions': path.resolve(__dirname, 'App/StorybookComponents/Utils/Functions'),
+      'utils/ValidationSchemas': path.resolve(__dirname, 'App/StorybookComponents/Utils/ValidationSchemas'),
       'navigations/Navigator': path.resolve(__dirname, 'App/Navigations/Navigator'),
       'images': path.resolve(__dirname, 'App/Images')
     },

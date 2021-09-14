@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {
   View,
   Image,
@@ -7,51 +7,32 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import {
-  Text,
-  TextInput,
-  Header,
-  InputBlock,
-  Button,
-  Row,
-  Col,
-} from 'components';
+import {Header, HeaderBg, Button, KeyboardSuggestion} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Monney from 'components/Home/Monney';
 
 import InputMoney from 'components/User/InputMoney';
 import SelectBank from 'components/User/TopUp/SelectBank';
 
-import HeaderBg from 'components/Common/HeaderBg';
-
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
+import {formatMoney} from 'utils/Functions';
+import {useTopUp} from 'context/Wallet/utils';
 
 const TopUp = () => {
   const translation = useTranslation();
-  const dataBank = [
-    {
-      id: 1,
-      icon: Images.Bank.Vietinbank,
-      name: 'Vietinbank',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      id: 2,
-      icon: Images.Bank.Eximbank,
-      name: 'Eximbank',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      id: 3,
-      icon: Images.Bank.Vietcombank,
-      name: 'Vietcombank',
-      screen: SCREEN.TOP_UP,
-    },
-  ];
+  const {
+    inputRef,
+    onSuggestMoney,
+    bankData,
+    bankFeeData,
+    isContinueEnabled,
+    onSelectBank,
+    onChangeCash,
+    onContinue,
+  } = useTopUp();
 
   return (
     <>
@@ -70,16 +51,29 @@ const TopUp = () => {
           />
         </HeaderBg>
         <View style={base.container}>
-          <InputMoney />
-          <SelectBank data={dataBank} label={translation.source} />
+          <InputMoney ref={inputRef} onChange={onChangeCash} />
+          <SelectBank
+            data={bankData}
+            feeData={bankFeeData}
+            label={translation.source}
+            onChange={onSelectBank}
+          />
         </View>
       </ScrollView>
       <View style={base.bottom}>
         <Button
-          label="Nạp"
-          onPress={() => Navigator.navigate(SCREEN.CONFIRMATION)}
+          label="Tiếp tục"
+          onPress={onContinue}
+          disabled={!isContinueEnabled}
         />
       </View>
+      <KeyboardSuggestion
+        optionList={[100000, 500000, 1000000].map(x => ({
+          value: x,
+          label: formatMoney(x),
+        }))}
+        onPress={onSuggestMoney}
+      />
     </>
   );
 };

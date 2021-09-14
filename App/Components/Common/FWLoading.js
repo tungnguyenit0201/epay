@@ -6,7 +6,7 @@ import {scale} from 'utils/Functions';
 
 const FWLoading = ({
   wrapStyle,
-  color = Colors.PRIMARY,
+  color = Colors.cl1,
   size = scale(20),
   loadingStyle,
 }) => (
@@ -20,12 +20,13 @@ const FWLoading = ({
 const styles = StyleSheet.create({
   wrap: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: Colors.black,
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: 0.5,
   },
   background: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: Colors.white,
     borderRadius: scale(5),
     width: scale(72),
     height: scale(64),

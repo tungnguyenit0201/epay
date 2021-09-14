@@ -8,14 +8,7 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-} from 'components';
+import {Text, Header, Button, HeaderBg, TextInput} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import Password from 'components/Auth/Password';
@@ -23,13 +16,14 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
 
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
+import {useConfirmation} from 'context/Wallet/utils';
 const Confirmation = () => {
   const translation = useTranslation();
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(false);
+  const {transTypeText, data, onContinue} = useConfirmation();
 
   let forgotRef = useRef({
     phone: '',
@@ -37,33 +31,15 @@ const Confirmation = () => {
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
-  const data = [
-    {
-      name: 'Nguồn tiền',
-      val: 'Vietcombank',
-    },
-    {
-      name: 'Số tiền',
-      val: '550.000 vnđ',
-    },
-    {
-      name: 'Phí giao dịch',
-      val: '0 vnđ',
-    },
-    {
-      name: 'Tổng số tiền',
-      val: '550.000 vnđ',
-    },
-  ];
 
   const handleChange = e => {
     if (e === '1') {
       setOpen(false);
-      Navigator.navigate(SCREEN.CHECKOUT_SUCCESS);
+      Navigator.navigate(SCREEN.TRANSACTION_SUCCESS);
     }
     if (e === '0') {
       setOpen(!open);
-      //Navigator.navigate(SCREEN.CHECKOUT_FAILURE);
+      //Navigator.navigate(SCREEN.TRANSACTION_FAILURE);
     }
   };
   const toggleModal = () => {
@@ -74,11 +50,11 @@ const Confirmation = () => {
     <>
       <ScrollView style={base.wrap}>
         <HeaderBg style={{marginBottom: 50}}>
-          <Header title={translation.confirm_withdraw} back />
+          <Header title={'Xác nhận ' + transTypeText} back />
         </HeaderBg>
         <View style={base.container}>
           <Text bold size={Fonts.H5} mb={20}>
-            Thông tin nạp tiền
+            Thông tin {transTypeText}
           </Text>
           <View style={styles.block}>
             <Image
@@ -87,7 +63,6 @@ const Confirmation = () => {
             />
 
             {data.map((item, index) => {
-              console.log(item);
               return (
                 <View key={index}>
                   <View
@@ -98,16 +73,12 @@ const Confirmation = () => {
                       },
                     ]}>
                     <Text style={styles.textLeft}>{item.name}</Text>
-
-                    {index + 1 === data.length ? (
-                      <Text bold size={Fonts.H6} style={styles.textRight}>
-                        {item.val}
-                      </Text>
-                    ) : (
-                      <Text size={Fonts.H6} style={styles.textRight}>
-                        {item.val}
-                      </Text>
-                    )}
+                    <Text
+                      bold={item.bold}
+                      size={Fonts.H6}
+                      style={styles.textRight}>
+                      {item.value}
+                    </Text>
                   </View>
                 </View>
               );
@@ -116,7 +87,7 @@ const Confirmation = () => {
         </View>
       </ScrollView>
       <View style={base.bottom}>
-        <Button label="Tiếp tục" onPress={toggleModal} />
+        <Button label="Tiếp tục" onPress={onContinue} />
       </View>
       <Modal
         isVisible={open}
@@ -131,7 +102,6 @@ const Confirmation = () => {
           <TextInput
             placeholder="1 -> next , 0 -> error"
             password
-            placeholderTextColor="black"
             placeholderTextColor={Colors.l5}
             onChange={handleChange}
           />
@@ -171,17 +141,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
-  title: {
-    fontSize: scale(50),
-  },
-
   textLeft: {
     fontSize: Fonts.H6,
-    color: '#969696',
+    color: Colors.cl3,
   },
   textRight: {
     fontSize: Fonts.H6,
-    color: '#222222',
+    color: Colors.black,
   },
 });
 export default Confirmation;

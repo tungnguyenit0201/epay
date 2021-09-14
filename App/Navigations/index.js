@@ -7,26 +7,32 @@ import KeyboardStateProvider from 'utils/KeyboardStateProvider';
 import {SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
+import SplashScreen from 'react-native-splash-screen';
+import {Platform} from 'react-native';
+import {useConfig} from 'context/Common/utils';
 
 const Stack = createStackNavigator();
 
 import TabNavigation from './TabNavigation';
 
+import Language from 'containers/Language';
 import Home from 'containers/Home';
 import Auth from 'containers/Auth';
 import Login from 'containers/Auth/Login';
 import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
+import Policy from 'containers/Auth/Policy';
+import Agreement from 'containers/Auth/Agreement';
 import RegisterName from 'containers/Auth/RegisterName';
+import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
-import ActiveOTP from 'containers/User/ActiveOTP';
+import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
 import BankList from 'containers/Wallet/Bank/BankList';
 import BankInfo from 'containers/Wallet/Bank/BankInfo';
 import BankResult from 'containers/Wallet/Bank/BankResult';
 import Notification from 'containers/Notification';
-import TransactionSuccess from 'containers/Notification/TransactionSuccess';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
@@ -42,30 +48,57 @@ import PaymentSettings from 'containers/User/PaymentSettings';
 import EditInfo from 'containers/User/EditInfo';
 import NewPassword from 'containers/User/NewPassword';
 import Contacts from 'containers/Wallet/Contacts';
+import ChooseIdentityCard from 'containers/User/VerifyInfo/ChooseIdentityCard';
 import VerifyUserInfo from 'containers/User/VerifyInfo/VerifyUserInfo';
 import VerifyIdentityCard from 'containers/User/VerifyInfo/VerifyIdentityCard';
 import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 import VerifyEmail from 'containers/User/VerifyInfo/VerifyEmail';
+import VerifySuccess from 'containers/User/VerifyInfo/VerifySuccess';
 import RegionSelect from 'containers/User/RegionSelect';
-import CheckoutFailure from 'containers/Wallet/CheckoutFailure';
-import CheckoutSuccess from 'containers/Wallet/CheckoutSuccess';
+import TransactionFailure from 'containers/Wallet/TransactionFailure';
+import TransactionSuccess from 'containers/Wallet/TransactionSuccess';
 import LanguageSetting from 'containers/User/LanguageSetting';
 import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
 import AutoPayment from 'containers/User/AutoPayment';
 import TransferBank from 'containers/Wallet/TransferBank';
+import SmartOTPPassword from 'containers/User/SmartOTP/SmartOTPPassword';
+import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
+import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
+import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
+import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
+import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
+import BankLinked from 'containers/Wallet/Bank/BankLinked';
+import BankDetail from 'containers/Wallet/Bank/BankDetail';
+import LimitSetting from 'containers/Wallet/LimitSetting';
+import SelectMoney from 'containers/Wallet/SelectMoney';
+import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
+import History from 'containers/Wallet/History';
+import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
+import DetailHistory from 'containers/Wallet/History/Detail';
 
 const AppNavigator = () => {
-  const initialRoute = SCREEN.AUTH;
+  let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
+  const {onGetConfig} = useConfig();
 
-  const getCurrentLanguage = async () => {
-    let currentLanguage = await AsyncStorage.getItem('currentLanguage');
-    setLanguage(currentLanguage ? currentLanguage : 'vi');
-  };
   React.useEffect(() => {
+    const getCurrentLanguage = async () => {
+      let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+      if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
+      else setLanguage(currentLanguage);
+    };
+    const getConfig = async () => {
+      await onGetConfig();
+    };
+    getConfig();
     getCurrentLanguage();
-  }, []);
+  }, []); // eslint-disable-line
+
+  React.useEffect(() => {
+    Platform.OS == 'android' && SplashScreen.hide();
+  }, []); // eslint-disable-line
+
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
@@ -79,6 +112,7 @@ const AppNavigator = () => {
             name={SCREEN.TAB_NAVIGATION}
             component={TabNavigation}
           />
+          <Stack.Screen name={SCREEN.LANGUAGE} component={Language} />
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
@@ -91,10 +125,19 @@ const AppNavigator = () => {
             name={SCREEN.REGISTER_PASSWORD}
             component={RegisterPassword}
           />
+          <Stack.Screen name={SCREEN.POLICY} component={Policy} />
+          <Stack.Screen name={SCREEN.AGREEMENT} component={Agreement} />
           <Stack.Screen name={SCREEN.REGISTER_NAME} component={RegisterName} />
+          <Stack.Screen
+            name={SCREEN.REGISTER_FAILURE}
+            component={RegisterFailure}
+          />
           <Stack.Screen name={SCREEN.OTP} component={OTP} />
           <Stack.Screen name={SCREEN.SMART_OTP} component={SmartOTP} />
-          <Stack.Screen name={SCREEN.ACTIVE_OTP} component={ActiveOTP} />
+          <Stack.Screen
+            name={SCREEN.ACTIVE_SMART_OTP}
+            component={ActiveSmartOTP}
+          />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
@@ -128,6 +171,10 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.CONTACTS} component={Contacts} />
           <Stack.Screen
+            name={SCREEN.CHOOSE_IDENTITY_CARD}
+            component={ChooseIdentityCard}
+          />
+          <Stack.Screen
             name={SCREEN.VERIFY_USER_INFO}
             component={VerifyUserInfo}
           />
@@ -141,12 +188,12 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.VERIFY_EMAIL} component={VerifyEmail} />
           <Stack.Screen
-            name={SCREEN.CHECKOUT_FAILURE}
-            component={CheckoutFailure}
+            name={SCREEN.VERIFY_SUCCESS}
+            component={VerifySuccess}
           />
           <Stack.Screen
-            name={SCREEN.CHECKOUT_SUCCESS}
-            component={CheckoutSuccess}
+            name={SCREEN.TRANSACTION_FAILURE}
+            component={TransactionFailure}
           />
           <Stack.Screen name={SCREEN.REGION_SELECT} component={RegionSelect} />
           <Stack.Screen
@@ -160,6 +207,44 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.AUTOPAYMENT} component={AutoPayment} />
           <Stack.Screen name={SCREEN.TRANSFER_BANK} component={TransferBank} />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_PASSWORD}
+            component={SmartOTPPassword}
+          />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_RESULT}
+            component={SmartOTPResult}
+          />
+          <Stack.Screen name={SCREEN.BANK_LINKED} component={BankLinked} />
+          <Stack.Screen name={SCREEN.BANK_DETAIL} component={BankDetail} />
+          <Stack.Screen name={SCREEN.LIMIT_SETTING} component={LimitSetting} />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_FAILURE}
+            component={SmartOTPFailure}
+          />
+          <Stack.Screen name={SCREEN.SYNC_SMART_OTP} component={SyncSmartOTP} />
+          <Stack.Screen
+            name={SCREEN.SYNC_SMART_OTP_RESULT}
+            component={SyncSmartOTPResult}
+          />
+          <Stack.Screen name={SCREEN.SELECT_MONEY} component={SelectMoney} />
+          <Stack.Screen
+            name={SCREEN.OTP_BY_SMART_OTP}
+            component={OTPBySmartOTP}
+          />
+          <Stack.Screen
+            name={SCREEN.FORGET_NEW_PASSWORD}
+            component={ForgetNewPassword}
+          />
+          <Stack.Screen name={SCREEN.HISTORY} component={History} />
+          <Stack.Screen
+            name={SCREEN.VERIFY_EMAIL_RESULT}
+            component={VerifyEmailResult}
+          />
+          <Stack.Screen
+            name={SCREEN.DETAIL_HISTORY}
+            component={DetailHistory}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

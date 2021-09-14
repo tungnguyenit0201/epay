@@ -30,14 +30,8 @@ export const registerSchema = yup.object().shape({
   agreement: yup.boolean().oneOf([true], TEXT.AGREEMENT_NOT_ACCEPTED),
 });
 
-export const reviewsSchema = yup.object().shape({
-  review: yup.string().required(TEXT.REVIEWS),
-  reviewer: yup.string().required(TEXT.USERNAME_NOT_BLANK),
-  reviewer_email: yup
-    .string()
-    .email(TEXT.EMAIL_INVALID)
-    .required(TEXT.EMAIL_NOT_BLANK),
-  rating: yup.number().moreThan(0, TEXT.REVIEWS).required(TEXT.EMAIL_NOT_BLANK),
+export const emailSchema = yup.object().shape({
+  email: yup.string().email(TEXT.EMAIL_INVALID).required(TEXT.EMAIL_NOT_BLANK),
 });
 
 export const phoneSchema = yup.object().shape({
@@ -52,6 +46,17 @@ export const phoneSchema = yup.object().shape({
 });
 
 export const passwordSchema = yup.object().shape({
+  password: yup
+    .string()
+    .required()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+      'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
+    )
+    .label('Mật khẩu'),
+});
+
+export const newPasswordSchema = yup.object().shape({
   newPassword: yup
     .string()
     .required()
@@ -62,13 +67,29 @@ export const passwordSchema = yup.object().shape({
     .label('Mật khẩu'),
   passwordConfirm: yup
     .string()
+    .required()
     .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
     .label('Xác nhận mật khẩu'),
 });
 
 export const addressSchema = yup.object().shape({
-  Address: yup.string().required("Địa chỉ không được bỏ trống."),
-  Ward: yup.string().required("Phương không được bỏ trống."),
-  County: yup.string().required("Quận không được bỏ trống."),
-  Provincial: yup.string().required("Tỉnh không được bỏ trống."),
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'),
+  Ward: yup.string().required('Phương không được bỏ trống.'),
+  County: yup.string().required('Quận không được bỏ trống.'),
+  Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
+});
+
+export const verifyUserSchema = yup.object().shape({
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'), // TODO: translate
+  Ward: yup.string().required('Phương không được bỏ trống.'),
+  County: yup.string().required('Quận không được bỏ trống.'),
+  Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
+  ICFullName: yup.string().required('Họ và tên không được bỏ trống.'),
+  ICIssuedDate: yup.string().required('Ngày cấp không được bỏ trống.'),
+  ICIssuedPlace: yup.string().required('Nơi cấp không được bỏ trống.'),
+  ICNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
+  DateOfBirth: yup.string().required('Ngày sinh không được bỏ trống.'),
+});
+export const nameSchema = yup.object().shape({
+  FullName: yup.string().required('Tên không được bỏ trống.').max(100),
 });

@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  useReducer,
-} from 'react';
+import React, {createContext, useContext} from 'react';
 import userReducer from './reducer';
 
 const UserContext = createContext({});
@@ -17,6 +11,13 @@ const defaultUserInfo = {
   personalIC: '',
   phone: null,
   myWallet: '',
+  region: {
+    Provincial: '',
+    County: '',
+    Ward: '',
+  },
+  qrCode: '',
+  listNotify: [],
 };
 
 export const UserProvider = ({children}) => {

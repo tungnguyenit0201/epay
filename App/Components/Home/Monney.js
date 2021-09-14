@@ -11,7 +11,10 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 
+import {useUser} from 'context/User';
+import {formatMoney} from 'utils/Functions';
 const Monney = ({style}) => {
+  const {userInfo} = useUser();
   const translation = useTranslation();
   const [isMoney, setIsMoney] = useState(false);
   return (
@@ -29,7 +32,7 @@ const Monney = ({style}) => {
             </Text>
           ) : (
             <Text bold size={Fonts.H5} style={styles.text}>
-              5555 đ
+              {formatMoney(userInfo?.myWallet)}
             </Text>
           )}
           <TouchableOpacity

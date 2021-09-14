@@ -6,46 +6,105 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {Text, Modal, Button} from 'components';
+import {Text, Modal, Button, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import ListItem from 'components/Common/ListItem';
-import Monney from 'components/Home/Monney';
-import Notification from 'components/Home/Notification';
+import ListItemSimple from 'components/Common/ListItemSimple';
+import MonneySimple from 'components/Home/MonneySimple';
+import Banner from 'components/Home/Banner';
 import User from 'components/Home/User';
-import XacThuc from 'components/Home/XacThuc';
-import HeaderBg from 'components/Common/HeaderBg';
-
+import DinhDanh from 'components/Home/DinhDanh';
+import SlideIcon from 'components/Home/SlideIcon';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-import {useHome} from 'context/Home/utils';
+import {useCheckInfo, useHome, useModalSmartOTP} from 'context/Home/utils';
 import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
 
 const Home = () => {
+  // TODO : translation
   const {top} = useSafeAreaInsets();
   const translation = useTranslation();
   const {goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
+  const modalSmartOTP = useModalSmartOTP();
+  const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
+
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
       name: translation.top_up,
       screen: SCREEN.TOP_UP,
+      checkSmartOTP: true,
     },
     {
       icon: Images.Homes.RutTien,
       name: translation.withdraw,
       screen: SCREEN.WITHDRAW,
+      checkSmartOTP: true,
     },
-    {icon: Images.Homes.QAPAY, name: translation.pay_qr, screen: SCREEN.QRPAY},
+
     {
       icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
       screen: SCREEN.TRANSFER,
+      checkSmartOTP: true,
+    },
+    {
+      icon: Images.Homes.LichSuGd,
+      name: 'Lịch sử',
+      screen: SCREEN.HISTORY,
+    },
+    {
+      icon: Images.Homes.LichSuGd,
+      name: 'QRPAY',
+      screen: SCREEN.QRPAY,
+    },
+  ];
+  const dataBanner = [
+    {
+      img: require('images/home/banner-1.jpg'),
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      img: require('images/home/banner-2.jpg'),
+      screen: SCREEN.TOP_UP,
+    },
+  ];
+  const dataHome = [
+    {
+      icon: Images.Homes.GiaoThong,
+      name: 'Vi phạm giao thông',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.BaoHiem,
+      name: 'Vaccine',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.GiaoThong,
+      name: 'Giao thông',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.BaoHiem,
+      name: 'Bảo hiểm',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.YTe,
+      name: 'Y tế',
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.Homes.SanBay,
+      name: 'Sân bay ',
+      screen: SCREEN.TOP_UP,
     },
   ];
   const dataEpay = [
@@ -90,47 +149,31 @@ const Home = () => {
   return (
     <>
       <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
-          <View
-            style={[
-              {
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 15,
-              },
-            ]}>
-            <Image source={Images.Logo} style={[{width: 80, height: 29.63}]} />
-            <Notification data={5} />
+        <HeaderBg>
+          <View style={styles.rowHeader}>
+            <Image source={Images.Logo} style={[{width: 88, height: 32}]} />
+            <User style={{marginBottom: 20}} />
           </View>
-          <User style={{marginBottom: 20}} />
-          <Monney
-            style={[
-              {
-                position: 'absolute',
-                bottom: -20,
-                left: Spacing.PADDING,
-                right: Spacing.PADDING,
-              },
-            ]}
-          />
-        </HeaderBg>
-
-        <View style={base.container}>
+          <MonneySimple />
           <View style={{marginBottom: 20}}>
-            <ListItem
+            <ListItemSimple
               scroll
               space={1}
               col={4}
               data={dataMenu}
-              styleText={[{fontSize: 14}]}
-              styleWicon={[{backgroundColor: '#437EC0'}]}
-              styleIcon={[{tintColor: '#fff'}]}
+              styleText={[{fontSize: 14, color: Colors.white}]}
+              styleWicon={[{backgroundColor: Colors.cl1}]}
+              //styleIcon={[{tintColor: Colors.white}]}
             />
           </View>
-          <XacThuc />
+        </HeaderBg>
 
-          <View style={{marginBottom: 20}}>
+        <View style={base.container}>
+          <DinhDanh />
+
+          <Banner data={dataBanner} />
+
+          {/* <View style={{marginBottom: 20}}>
             <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
               {translation.epay_services}
             </Text>
@@ -152,15 +195,84 @@ const Home = () => {
                 style={[{height: scale(128), width: scale(335)}]}
               />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
+        <View style={base.container}>
+          <Image style={styles.bgHome} source={Images.Homes.Wave} />
+          {/* <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} /> */}
+          <SlideIcon data={dataHome} />
+        </View>
+        <View style={styles.bottom}></View>
       </ScrollView>
+      {modalSmartOTP.smartOTP && (
+        <Modal
+          visible={modalSmartOTP.smartOTP}
+          onClose={() => setFirstLogin(false)}
+          title="Nhanh và bảo mật hơn với smart OTP"
+          content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Cài smart OTP ngay"
+                onPress={modalSmartOTP.onGoSmartOTP}
+              />
+              <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
+                <Text style={styles.underline}>Không, cảm ơn</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={modalSmartOTP.onClose}>
+                <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      {KYC && (
+        <Modal
+          visible={KYC}
+          onClose={() => checkInfo({value: false})}
+          title={translation.notification}
+          content="Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn."
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label="Định danh"
+                onPress={() => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD)}
+              />
+              <TouchableOpacity onPress={() => checkInfo({value: false})}>
+                <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
+      {connectBank && (
+        <Modal
+          visible={connectBank}
+          onClose={() => checkInfo({value: false})}
+          title={translation.notification}
+          content="Liên kết ngân hàng để thực hiện giao dịch."
+          buttonGroup={() => (
+            <View style={styles.buttonGroup}>
+              <Button
+                mb={10}
+                label={translation.connect_now}
+                onPress={() => onNavigate(SCREEN.BANK_LINKED)}
+              />
+              <TouchableOpacity onPress={() => checkInfo({value: false})}>
+                <Text style={styles.underline}>Nhắc tôi sau</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+      )}
       {firstLogin && (
         <Modal
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
           title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ."
+          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button
@@ -182,8 +294,29 @@ const Home = () => {
   );
 };
 const styles = StyleSheet.create({
+  rowHeader: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+
   buttonGroup: {
     alignItems: 'center',
+  },
+  underline: {
+    textDecorationLine: 'underline',
+  },
+  bgHome: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  bottom: {
+    height: scale(80),
   },
 });
 export default Home;

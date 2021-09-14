@@ -1,52 +1,43 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Text, Icon, Header} from 'components';
+import {Text, Icon, Header, HeaderBg, Button} from 'components';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import HeaderBg from 'components/Common/HeaderBg';
 import {useTranslation} from 'context/Language';
-
-import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
+import {useLanguage} from 'context/Language/utils';
 
 const PaymentSettings = () => {
   const translation = useTranslation();
-  const [xacNhan, isXacNhan] = useState(false);
+  const {chooseLanguage} = useLanguage();
 
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
-        <Header back title={translation.language_setting} back />
+        <Header back title={translation.language_setting} />
       </HeaderBg>
-
-      <View style={styles.item}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text size={Fonts.H6}> Cho phép định vị vị trí</Text>
-        <Switch
-          style={base.leftAuto}
-          onColor={Colors.cl1}
-          offColor={Colors.l3}
-          value={xacNhan}
-          onValueChange={isXacNhan}
-        />
-      </View>
+      {[
+        {label: 'English', value: 'en'},
+        {label: 'Việt Nam', value: 'vi'},
+      ].map(item => {
+        return (
+          <Button
+            key={item.value}
+            label={item.label}
+            size="lg"
+            {...(item.value !== translation.selectedLanguage && {
+              bold: true,
+              bg: Colors.white,
+              color: Colors.cl1,
+              border: Colors.cl1,
+            })}
+            mb={Spacing.PADDING}
+            onPress={() => chooseLanguage(item.value)}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    paddingVertical: 12,
-    paddingHorizontal: Spacing.PADDING,
-    alignItems: 'center',
-  },
-});
+const styles = StyleSheet.create({});
 export default PaymentSettings;
