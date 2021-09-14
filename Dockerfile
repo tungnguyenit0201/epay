@@ -1,11 +1,11 @@
-FROM node:14-alpine AS builder
+FROM node:16-alpine3.11 AS builder
 
 # Add a work directory
 WORKDIR /app
 
 # Cache and Install dependencies
 COPY package.json .
-COPY yarn.lock .
+# COPY yarn.lock .
 RUN yarn install
 
 # Copy app files
