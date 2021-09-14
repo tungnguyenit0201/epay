@@ -33,6 +33,8 @@ export default {
     GET_SETTINGS_INFO: 'setting/get_all_info',
     GET_QRCODE: 'account/get_qrcode',
     VERIFY_EMAIL: 'account/authentication_email',
+    UPDATE_EMAIL: 'account/change_email',
+    UPDATE_AVATAR: 'account/update_avatar',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',

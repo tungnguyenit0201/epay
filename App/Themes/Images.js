@@ -132,6 +132,18 @@ export default {
     iconDown: require('images/icons/down.png'),
     camera: require('images/icons/camera.png'),
     wave: require('images/icons/wave.png'),
+    tick: require('images/icons/tick.png'),
+    topLeftAngle: require('images/icons/angle-1.png'),
+    topRightAngle: require('images/icons/angle-2.png'),
+    botLeftAngle: require('images/icons/angle-3.png'),
+    botRightAngle: require('images/icons/angle-4.png'),
+    cmndBlur: require('images/identity-card/cmnd-blur.png'),
+    cmndDark: require('images/identity-card/cmnd-dark.png'),
+    cmndFail: require('images/identity-card/cmnd-fail.png'),
+  },
+  TransactionHistory: {
+    filter: require('images/icons/filter.png'),
+    cardTick: require('images/icons/card-tick.png'),
   },
   Capture: require('images/Capture.png'),
   Camera: {

@@ -10,7 +10,7 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
 import {useTranslation} from 'context/Language';
-import {useUserInfo} from 'context/User/utils';
+import {useSelectRegion, useUserInfo} from 'context/User/utils';
 
 const useVerifyInfo = (initialValue = {}) => {
   const contentRef = useRef(initialValue);
@@ -23,6 +23,7 @@ const useVerifyInfo = (initialValue = {}) => {
   let [disabledIdentify, setDisabledIdentify] = useState(false);
   let [disabledAvatar, setDisabledAvatar] = useState(false);
   const [showModalReVerify, setShowModalReVerify] = useState(false);
+  const {onClearRegionData} = useSelectRegion();
 
   const onChange = (key, value) => {
     contentRef.current[key] = value;
@@ -133,6 +134,7 @@ const useVerifyInfo = (initialValue = {}) => {
     await onUpdatePersonalInfo({...contentRef.current, ...value});
     await onUpdateUserAddress({...contentRef.current, ...value});
     await onGetAllInfo();
+    onClearRegionData();
   };
 
   const onReVerify = action => {

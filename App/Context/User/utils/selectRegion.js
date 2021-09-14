@@ -6,9 +6,9 @@ import {ERROR_CODE, SCREEN} from 'configs/Constants';
 import {getProvince, getDistrict, getWard} from 'services/region';
 import {useUser} from 'context/User';
 
-const useSelectRegion = ({items, type, parentType}) => {
-  const [values, setValues] = useState();
-  const [search, setSearch] = useState('');
+const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
+  // const [values, setValues] = useState();
+  // const [search, setSearch] = useState('');
   const translation = useTranslation();
   const {region, dispatch} = useUser();
 
@@ -73,6 +73,7 @@ const useSelectRegion = ({items, type, parentType}) => {
           items: cities,
           type: _type,
           parentType: type,
+          callbackScreen,
         });
         break;
       case 'districts':
@@ -83,6 +84,7 @@ const useSelectRegion = ({items, type, parentType}) => {
             items,
             type: _type,
             parentType: type,
+            callbackScreen,
           });
         }
         break;
@@ -94,6 +96,7 @@ const useSelectRegion = ({items, type, parentType}) => {
             items,
             type: _type,
             parentType: type,
+            callbackScreen,
           });
         }
         break;
@@ -113,6 +116,7 @@ const useSelectRegion = ({items, type, parentType}) => {
         items: _items,
         type: 'districts',
         parentType,
+        callbackScreen,
       });
     } else if (type === 'districts') {
       dispatch({
@@ -121,7 +125,7 @@ const useSelectRegion = ({items, type, parentType}) => {
       });
       const _items = await onGetWard({DistrictID: item?.DistrictID});
       if (!_items?.length) {
-        Navigator.navigate('VerifyUserPortrait', {
+        Navigator.navigate(callbackScreen, {
           type: parentType,
         });
       } else {
@@ -129,14 +133,27 @@ const useSelectRegion = ({items, type, parentType}) => {
           items: _items,
           type: 'wards',
           parentType,
+          callbackScreen,
         });
       }
     } else if (type === 'wards') {
+      console.log('callbackScreen', callbackScreen);
       dispatch({type: 'SET_REGION', data: {...region, Ward: item?.WardName}});
-      Navigator.navigate('VerifyUserPortrait', {
+      Navigator.navigate(callbackScreen, {
         type: parentType,
       });
     }
+  };
+
+  const onClearRegionData = () => {
+    dispatch({
+      type: 'SET_REGION',
+      data: {
+        Provincial: '',
+        County: '',
+        Ward: '',
+      },
+    });
   };
 
   // useEffect(() => {
@@ -150,6 +167,6 @@ const useSelectRegion = ({items, type, parentType}) => {
   //   );
   // }, [search]);
 
-  return {goRegionSelect, onSelected};
+  return {goRegionSelect, onSelected, onClearRegionData};
 };
 export default useSelectRegion;

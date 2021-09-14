@@ -10,6 +10,7 @@ import {
   confirmPassword,
   getLimit,
   getQRCode,
+  updateAvatar,
 } from 'services/user';
 import {
   useAsyncStorage,
@@ -163,6 +164,9 @@ const useUserInfo = type => {
               functionType: FUNCTION_TYPE.FORGOT_PASS,
             });
             break;
+          case 'update_email':
+            Navigator.push(SCREEN.VERIFY_EMAIL);
+            break;
           default:
             Navigator.push(SCREEN.OTP, {
               phone,
@@ -190,20 +194,44 @@ const useUserInfo = type => {
     }
   };
 
-  const onUpdateAvatar = type => {
+  const onUpdateAvatar = async type => {
+    const phone = await getPhone();
+    const options = {cropping: false, includeBase64: true};
+    const onUpdateResult = async image => {
+      setLoading(true);
+      const result = await updateAvatar({phone, AvatarPhoto: image?.data});
+      setLoading(false);
+      if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+        setError(result);
+        return;
+      }
+      await onGetPersonalInfo();
+    };
+
     switch (type) {
       case 'photo':
-        return ImagePicker.openPicker({
-          cropping: false,
-          includeBase64: true,
-        }).then(image => {
-          // đang làm dở thì làm cái khác
-        });
+        return ImagePicker.openPicker(options).then(onUpdateResult);
       case 'camera':
-        return;
+        return ImagePicker.openCamera(options).then(onUpdateResult);
       default:
         return setShowModal('selectAvatar');
     }
+  };
+
+  const onUpdateUserInfo = async data => {
+    const {Address, Ward, County, Provincial, SexType} = data;
+    // update address
+    onUpdateUserAddress({Address, Ward, County, Provincial});
+    // update gender
+    if (!SexType) {
+      return;
+    }
+    const phone = await getPhone();
+    const result = await updatePersonalInfo({
+      phone,
+      personalInfo: {SexType},
+    });
+    result?.ErrorCode && setError(result);
   };
 
   return {
@@ -217,6 +245,7 @@ const useUserInfo = type => {
     onConfirmPassword,
     onGetLimit,
     onUpdateAvatar,
+    onUpdateUserInfo,
     showModal,
     setShowModal,
   };

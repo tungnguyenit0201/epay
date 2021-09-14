@@ -50,7 +50,7 @@ const Banner = ({
 
 const styles = StyleSheet.create({
   list: {
-    marginBottom: 20,
+    // marginBottom: 20,
     marginRight: -Spacing.PADDING,
   },
   item: {},

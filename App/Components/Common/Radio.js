@@ -10,10 +10,10 @@ export default ({
   style,
   marginBottom = 19,
   error,
-  active,
+  selectedValue,
   showErrorLabel = true,
 }) => {
-  const [checked, setChecked] = React.useState();
+  const [checked, setChecked] = React.useState(selectedValue);
 
   const onPress = item => {
     setChecked(item?.value);
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   tickWrap: {
     width: 15,
     height: 15,
-    borderColor: '#999',
+    borderColor: Colors.l6,
     borderWidth: 1,
     borderRadius: 8,
     alignItems: 'center',

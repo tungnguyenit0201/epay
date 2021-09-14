@@ -16,7 +16,6 @@ import MonneySimple from 'components/Home/MonneySimple';
 import Banner from 'components/Home/Banner';
 import User from 'components/Home/User';
 import DinhDanh from 'components/Home/DinhDanh';
-import SlideIcon from 'components/Home/SlideIcon';
 import IconList from 'components/Home/IconList';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';

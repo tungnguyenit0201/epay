@@ -26,21 +26,9 @@ const IconList = ({data}) => {
     viewAreaCoveragePercentThreshold: 50,
   });
   const onViewRef = useRef(({viewableItems}) => {
-    console.log('viewableItems :>> ', viewableItems);
     viewableItems && setIndexTab(_.get(viewableItems, '[0].index', 0));
   });
-  //   const onViewableItemsChanged = ({viewableItems}) => {
-  //     console.log('viewableItems :>> ', viewableItems);
-  //     viewableItems && setIndexTab(_.get(viewableItems, '[0].index', 0));
-  //   };
-  //   const viewabilityConfig = {viewAreaCoveragePercentThreshold: 50};
-  //   const viewabilityConfigCallbackPairs = useRef([
-  //     {viewabilityConfig, onViewableItemsChanged},
-  //   ]);
 
-  const isFullWidth = true;
-  const imageWidth = isFullWidth ? width : width - Spacing.PADDING * 2;
-  const imageHeight = imageWidth / 3;
   const onPressSwitch = index => {
     flatlistRef.current.scrollToIndex({animate: true, index});
     setIndexTab(index);
@@ -80,8 +68,6 @@ const IconList = ({data}) => {
                   styles.item,
                   {
                     width: width / 2 - Spacing.PADDING,
-                    // borderColor: Colors.black,
-                    // borderWidth: 1,
                   },
                 ]}
                 onPress={() => Alert.alert('', 'Coming soon')}>
@@ -104,8 +90,6 @@ const IconList = ({data}) => {
                   styles.item,
                   {
                     width: width / 2 - Spacing.PADDING,
-                    // borderColor: Colors.black,
-                    // borderWidth: 1,
                   },
                 ]}
                 onPress={() => Alert.alert('', 'Coming soon')}>
@@ -127,7 +111,6 @@ const IconList = ({data}) => {
       <FlatList
         ref={flatlistRef}
         onViewableItemsChanged={onViewRef.current}
-        // viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
         data={[...Array(Math.ceil(iconHome?.length / 4))]}
         renderItem={renderItem}
         viewabilityConfig={viewConfigRef.current}
@@ -137,20 +120,15 @@ const IconList = ({data}) => {
         pagingEnabled
       />
       {iconHome?.length > 4 && (
-        <View
-          style={[
-            styles.wrapSwitch,
-            {width: scale(64), left: width / 2 - scale(32)},
-          ]}>
+        <View style={[styles.controls]}>
           {[...Array(Math.ceil(iconHome?.length / 4))]?.map((item, index) => (
             <TouchableOpacity
               key={`${Math.random(0, 100)}-switch`}
               style={[
-                styles.wrapSwitch,
+                styles.dot,
                 indexTab == index && {
                   backgroundColor: Colors.cl1,
                 },
-                {left: index * scale(32)},
               ]}
               onPress={() => onPressSwitch(index)}></TouchableOpacity>
           ))}
@@ -164,22 +142,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   item: {
-    padding: Spacing.PADDING,
+    paddingTop: Spacing.PADDING,
+    paddingHorizontal: Spacing.PADDING,
     alignItems: 'center',
-  },
-
-  wrapSwitch: {
-    height: scale(6),
-    width: scale(32),
-    position: 'absolute',
-    borderRadius: 15,
-    backgroundColor: Colors.cl3,
   },
   icon: {
     resizeMode: 'contain',
-    marginBottom: 5,
     width: scale(80),
     height: scale(80),
+  },
+  controls: {
+    width: scale(64),
+    height: scale(6),
+    backgroundColor: Colors.cl3,
+    marginTop: Spacing.PADDING / 2,
+    marginLeft: -scale(32) - Spacing.PADDING / 2,
+    flexDirection: 'row',
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
+
+  dot: {
+    height: 6,
+    width: scale(32),
+    backgroundColor: Colors.cl3,
   },
 });
 export default IconList;
