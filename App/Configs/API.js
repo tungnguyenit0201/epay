@@ -44,6 +44,7 @@ export default {
     FEE_CALCULATOR: 'bank/fee_calculator',
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
     GET_WALLET_INFO: 'account/get_wallet_info',
+    GET_HISTORY: 'history/get_history',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

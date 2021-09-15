@@ -8,6 +8,7 @@ import {
 } from './topUpWithdraw';
 import {useWalletInfo, useMoney} from './walletInfo';
 import useContacts from './contacts';
+import useHistory from './history';
 
 export {
   useBankInfo,
@@ -19,4 +20,5 @@ export {
   useWalletInfo,
   useMoney,
   useContacts,
+  useHistory,
 };
