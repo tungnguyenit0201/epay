@@ -176,6 +176,7 @@ const useAuth = () => {
       const credentials = await Keychain.getGenericPassword();
       const passwordEncrypted = credentials?.password;
       if (!passwordEncrypted || !phone) {
+        setLoading(false);
         return;
       }
       onLogin({phone, password: passwordEncrypted, encrypted: true});
