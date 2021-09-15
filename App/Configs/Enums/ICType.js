@@ -3,7 +3,7 @@ const IC_TPYE = {
   //   PASSPORT: 'PP',
   //   CMNDQD: 'SC',
   CMND: 1,
-  CMNDQD: 2,
-  PASSPORT: 3,
+  PASSPORT: 2,
+  CMNDQD: 3,
 };
 export default IC_TPYE;
