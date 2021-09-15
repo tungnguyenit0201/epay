@@ -16,7 +16,7 @@ import MonneySimple from 'components/Home/MonneySimple';
 import Banner from 'components/Home/Banner';
 import User from 'components/Home/User';
 import DinhDanh from 'components/Home/DinhDanh';
-import SlideIcon from 'components/Home/SlideIcon';
+import IconList from 'components/Home/IconList';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
@@ -75,38 +75,7 @@ const Home = () => {
       screen: SCREEN.TOP_UP,
     },
   ];
-  const dataHome = [
-    {
-      icon: Images.Homes.GiaoThong,
-      name: 'Vi phạm giao thông',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      icon: Images.Homes.BaoHiem,
-      name: 'Vaccine',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      icon: Images.Homes.GiaoThong,
-      name: 'Giao thông',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      icon: Images.Homes.BaoHiem,
-      name: 'Bảo hiểm',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      icon: Images.Homes.YTe,
-      name: 'Y tế',
-      screen: SCREEN.TOP_UP,
-    },
-    {
-      icon: Images.Homes.SanBay,
-      name: 'Sân bay ',
-      screen: SCREEN.TOP_UP,
-    },
-  ];
+
   const dataEpay = [
     {
       icon: Images.Homes.NapViTuDong,
@@ -200,7 +169,7 @@ const Home = () => {
         <View style={base.container}>
           <Image style={styles.bgHome} source={Images.Homes.Wave} />
           {/* <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} /> */}
-          <SlideIcon data={dataHome} />
+          <IconList />
         </View>
         <View style={styles.bottom}></View>
       </ScrollView>

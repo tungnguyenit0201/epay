@@ -11,6 +11,7 @@ export const CommonProvider = ({children}) => {
       KYC: false,
       connectBank: false,
     },
+    config: {},
   });
 
   const value = {

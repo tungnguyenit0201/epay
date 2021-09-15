@@ -6,6 +6,7 @@ import {SCREEN} from 'configs/Constants';
 import {useVerifyInfo} from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
+import DropImage from 'components/User/VerifyInfo/DropImage';
 import {useTranslation} from 'context/Language';
 
 const VerifyIdentityCard = ({route}) => {
@@ -20,9 +21,9 @@ const VerifyIdentityCard = ({route}) => {
       <View style={[base.container, {paddingTop: 20}]}>
         <Progress space={1} step={2} />
 
-        <SelectImage
+        <DropImage
           title="Hình minh họa" // TODO: translate
-          onSelectImage={value => onChange('Avatar', value?.data)}
+          onDropImage={value => onChange('Avatar', value?.data)}
         />
 
         <Button
