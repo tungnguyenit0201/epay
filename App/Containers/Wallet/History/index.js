@@ -60,7 +60,8 @@ const History = () => {
           styles.flexRow,
           styles.alignCenter,
           styles.blockTransaction,
-        ]}>
+        ]}
+        onPress={() => Navigator.navigate(SCREEN.DETAIL_HISTORY)}>
         <View style={styles.blockCardTick}>
           <Image
             source={Images.TransactionHistory.cardTick}
