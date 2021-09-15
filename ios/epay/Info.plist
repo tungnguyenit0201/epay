@@ -38,17 +38,17 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>Cho phép EPAY kết nối camera của bạn?</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Cho phép ePay kết nối danh bạ của bạn?</string>
+	<string>Cho phép EPAY kết nối danh bạ của bạn?</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Cho phép ePay sử dụng Face ID trên thiết bị của bạn?</string>
+	<string>Cho phép EPAY sử dụng Face ID trên thiết bị của bạn?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Cho phép ePay kết nối thư viện của bạn?</string>
+	<string>Cho phép EPAY kết nối microphone của bạn?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Cho phép ePay kết nối thư viện của bạn?</string>
+	<string>Cho phép EPAY kết nối thư viện của bạn?</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SVN-Gilroy.ttf</string>

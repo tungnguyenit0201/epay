@@ -95,12 +95,14 @@ const styles = StyleSheet.create({
   otp: {
     width: scale(40),
     backgroundColor: Colors.white,
-    fontSize: Fonts.FONT_LARGE,
+    fontSize: Fonts.H4,
     color: Colors.BLACKTEXT,
     textAlign: 'center',
-    borderColor: Colors.cl4,
-    borderWidth: 1,
+    borderBottomColor: Colors.cl4,
+    borderWidth: 0,
+    borderBottomWidth: 1,
     borderRadius: 2,
+    height: scale(28),
   },
   message: {
     marginTop: 16,
