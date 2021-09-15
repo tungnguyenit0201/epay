@@ -45,6 +45,8 @@
 	<string>Cho phép ePay sử dụng Face ID trên thiết bị của bạn?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Cho phép ePay kết nối thư viện của bạn?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Cho phép ePay kết nối thư viện của bạn?</string>
 	<key>UIAppFonts</key>
