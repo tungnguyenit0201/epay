@@ -24,6 +24,7 @@ const VerifyIdentityCard = ({route}) => {
         <DropImage
           title="Hình minh họa" // TODO: translate
           onDropImage={value => onChange('Avatar', value?.data)}
+          cameraType="front"
         />
 
         <Button

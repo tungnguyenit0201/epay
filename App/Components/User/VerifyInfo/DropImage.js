@@ -15,7 +15,7 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropPicture = ({onDropImage, title, style}) => {
+const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
@@ -75,7 +75,11 @@ const DropPicture = ({onDropImage, title, style}) => {
             <RNCamera
               ref={camera}
               style={styles.preview}
-              type={RNCamera.Constants.Type.back}
+              type={
+                cameraType == 'back'
+                  ? RNCamera.Constants.Type.back
+                  : RNCamera.Constants.Type.front
+              }
               androidCameraPermissionOptions={{
                 title: 'Permission to use camera',
                 message: 'We need your permission to use your camera',

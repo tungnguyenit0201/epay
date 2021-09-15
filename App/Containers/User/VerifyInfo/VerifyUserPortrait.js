@@ -19,7 +19,7 @@ import {useUser} from 'context/User';
 import {useFocusEffect} from '@react-navigation/native';
 import {SCREEN} from 'configs/Constants';
 
-const FormikCustom = () => {
+const FormikCustom = ({identifyCard}) => {
   const {goRegionSelect} = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
@@ -78,7 +78,7 @@ const FormikCustom = () => {
       />
 
       <InputBlock
-        label={translation.enter_id_code}
+        label={identifyCard?.label || translation.enter_id_code}
         onChange={handleChange('ICNumber')}
         onBlur={handleBlur('ICNumber')}
         error={touched.ICNumber && errors.ICNumber}
@@ -150,6 +150,7 @@ const FormikCustom = () => {
 
 const VerifyUserPortrait = ({route}) => {
   const {onUpdateAllInfo} = useVerifyInfo(route?.params);
+  console.log('route?.params :>> ', route?.params);
   const translation = useTranslation();
 
   return (
@@ -173,7 +174,7 @@ const VerifyUserPortrait = ({route}) => {
           }}
           validationSchema={verifyUserSchema}
           onSubmit={onUpdateAllInfo}>
-          <FormikCustom />
+          <FormikCustom identifyCard={route?.params?.identifyCard} />
         </Formik>
       </ScrollView>
     </>
