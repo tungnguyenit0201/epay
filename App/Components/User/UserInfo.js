@@ -19,9 +19,13 @@ const User = ({style}) => {
 
   return (
     <View style={[base.shadow, styles.item, style]}>
-      <TouchableOpacity style={styles.wicon}>
+      <TouchableOpacity
+        style={styles.wicon}
+        onPress={() => {
+          Navigator.navigate(SCREEN.USER_INFO);
+        }}>
         <Image
-          style={{width: 72, height: 72}}
+          style={{width: 56, height: 56}}
           source={
             userInfo?.personalInfo?.Avatar
               ? {uri: userInfo.personalInfo.Avatar}
@@ -31,11 +35,11 @@ const User = ({style}) => {
       </TouchableOpacity>
       <View>
         <Text bold size={Fonts.H6} mb={5}>
-          Xin chào {userInfo?.personalInfo?.FullName}
+          {userInfo?.personalInfo?.FullName}
         </Text>
-
-        <Text style={{marginBottom: 10}}>{hidePhone(phone)}</Text>
-
+        <Text>{hidePhone(phone)}</Text>
+      </View>
+      <View style={{marginLeft: 'auto'}}>
         <Button
           size="xxs"
           disabled={statusVerified != PERSONAL_IC.INACTIVE}
@@ -45,14 +49,6 @@ const User = ({style}) => {
           label={getStatusVerifiedText()}
           onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
         />
-      </View>
-      <View style={{marginLeft: 'auto'}}>
-        <TouchableOpacity
-          onPress={() => {
-            Navigator.navigate(SCREEN.USER_INFO);
-          }}>
-          <Icon icon={Images.ArrowRight} size={30} />
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -67,8 +63,8 @@ const styles = StyleSheet.create({
   wicon: {
     overflow: 'hidden',
     marginRight: 15,
-    height: 72,
-    width: 72,
+    height: 56,
+    width: 56,
     borderRadius: 99,
     backgroundColor: Colors.black,
   },

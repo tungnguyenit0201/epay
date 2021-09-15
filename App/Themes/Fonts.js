@@ -4,6 +4,7 @@ export const FONT_NAME = 'SVN-Gilroy';
 
 export const FONT_REGULAR = FONT_NAME;
 export const FONT_ITALIC = FONT_NAME + 'Italic';
+export const FONT_500 = FONT_NAME + 'Medium';
 export const FONT_BOLD_ITALIC = FONT_NAME + 'BoldItalic';
 export const FONT_BOLD = FONT_NAME + 'Bold';
 
@@ -24,6 +25,7 @@ export default {
   FONT_BOLD_ITALIC,
   FONT_ITALIC,
   FONT_BOLD,
+  FONT_500,
   FONT_SMALL,
   FONT_MEDIUM,
   SM,

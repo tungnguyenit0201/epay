@@ -5,7 +5,7 @@ import {Colors, Spacing, Fonts} from 'themes';
 const styles = StyleSheet.create({
   wrap: {
     backgroundColor: Colors.white,
-    paddingBottom: 50,
+    paddingBottom: 150,
   },
   container: {
     paddingHorizontal: Spacing.PADDING,
@@ -22,6 +22,16 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   shadow: {
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  boxShadow: {
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,
@@ -64,6 +74,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     position: 'relative',
     backgroundColor: Colors.white,
+  },
+  footer: {
+    height: 100,
   },
 });
 export default styles;
