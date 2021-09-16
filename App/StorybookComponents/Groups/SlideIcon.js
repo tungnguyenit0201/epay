@@ -56,7 +56,7 @@ const SlideIcon = ({data}) => {
   };
 
   return (
-    <>
+    <View style={{position: 'relative'}}>
       <FlatList
         data={[...Array(Math.ceil(data?.length / 4))]}
         renderItem={renderItem}
@@ -71,7 +71,12 @@ const SlideIcon = ({data}) => {
       <View
         style={[
           styles.wrapSwitch,
-          {width: scale(64), left: width / 2 - scale(32)},
+          {
+            width: scale(64),
+            left: width / 2 - scale(32),
+            position: 'absolute',
+            bottom: 0,
+          },
         ]}>
         <TouchableOpacity
           style={[
@@ -87,7 +92,7 @@ const SlideIcon = ({data}) => {
           ]}
           onPress={() => onPressSwitch(1)}></TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 };
 

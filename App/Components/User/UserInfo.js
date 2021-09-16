@@ -23,8 +23,8 @@ const User = ({style}) => {
         <Image
           style={{width: 72, height: 72}}
           source={
-            userInfo?.personalInfo?.avatar
-              ? {uri: userInfo.personalInfo.avatar}
+            userInfo?.personalInfo?.Avatar
+              ? {uri: userInfo.personalInfo.Avatar}
               : Images.User
           }
         />

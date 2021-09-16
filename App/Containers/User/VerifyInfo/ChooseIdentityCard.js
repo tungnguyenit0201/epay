@@ -9,7 +9,7 @@ import {
   InputBlock,
 } from 'components';
 import {base, Colors, Images} from 'themes';
-import {SCREEN} from 'configs/Constants';
+import {IC_TPYE, SCREEN} from 'configs/Constants';
 import {useVerifyInfo} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 
@@ -20,9 +20,9 @@ const ChooseIdentityCard = () => {
 
   // TODO: translate
   let cardList = [
-    {label: translation?.id_card, value: 1},
-    {label: 'Chứng minh thư quân đội', value: 2},
-    {label: translation?.passport, value: 3},
+    {label: translation?.id_card, ICType: IC_TPYE.CMND},
+    {label: 'Chứng minh thư quân đội', ICType: IC_TPYE.CMNDQD},
+    {label: translation?.passport, ICType: IC_TPYE.PASSPORT},
   ];
   cardList?.map((item, index) => {
     cardList[index] = {...item, onPress: () => onChange('identifyCard', item)};

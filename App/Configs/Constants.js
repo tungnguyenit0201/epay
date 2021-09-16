@@ -11,6 +11,7 @@ import NOTIFY from './Enums/Notify';
 import USER_STATUS from './Enums/UserStatus';
 import SMART_OTP from './Enums/SmartOTP';
 import MENU from './Enums/Menu';
+import IC_TPYE from './Enums/ICType';
 import GENDER from './Enums/Gender';
 
 export {
@@ -27,5 +28,6 @@ export {
   USER_STATUS,
   SMART_OTP,
   MENU,
+  IC_TPYE,
   GENDER,
 };

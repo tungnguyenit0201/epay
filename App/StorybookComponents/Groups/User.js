@@ -10,17 +10,19 @@ const User = ({data, style}) => {
 
   return (
     // TODO: translate
-    <View style={[base.shadow, styles.item, style]}>
+    <View style={[styles.item, style]}>
       <TouchableOpacity
         onPress={() => console.log('hello')}
-        style={styles.user}>
-        <Text bold fs="h6" style={styles.text}>
-          Xin chào
+        style={[styles.user]}>
+        <Text bold fs="h6" style={[styles.text]}>
+          Xin chào Epay
         </Text>
-        <Text style={styles.text}>{hidePhone(phone)}</Text>
+        <Text style={[styles.text]}>{hidePhone(phone)}</Text>
       </TouchableOpacity>
       <View>
-        <TouchableOpacity onPress={() => console.log('hello')} style={styles.wicon}>
+        <TouchableOpacity
+          onPress={() => console.log('hello')}
+          style={[styles.wicon]}>
           <Image
             style={{width: 40, height: 40}}
             source={Images.User.default}
@@ -28,11 +30,11 @@ const User = ({data, style}) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.noti}
+          style={[styles.noti]}
           onPress={() => {
-            console.log('hello')
+            console.log('hello');
           }}>
-          <Text style={styles.notiText}>10</Text>
+          <Text style={[styles.notiText]}>10</Text>
         </TouchableOpacity>
       </View>
     </View>

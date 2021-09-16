@@ -1,5 +1,11 @@
 import React from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, Image, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  View,
+} from 'react-native';
 import {scale} from 'utils/Functions';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
@@ -15,7 +21,7 @@ const Banner = ({
     <TouchableOpacity
       style={[styles.item, styleItem]}
       onPress={() => {
-        console.log('hello')
+        console.log('hello');
       }}>
       <Image source={item.img.default} style={[styles.img, styleImg]} />
     </TouchableOpacity>

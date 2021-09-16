@@ -5,19 +5,19 @@ import {scale} from 'utils/Functions';
 import {Images} from 'themes';
 
 const User = () => {
-
   return (
     <TouchableOpacity
       onPress={() => {
-      console.log('hello')
-    }}
+        console.log('hello');
+      }}
       style={[styles.item]}>
-    <Image style={styles.img} source={Images.Homes.Avatar.default} />
-    <Text style={styles.text}>
-      Liên kết ngân hàng để thực hiện giao dịch.
-    </Text>
-    <Image style={styles.arrow} source={Images.Homes.Arrow.default} />
-  </TouchableOpacity>)
+      <Image style={styles.img} source={Images.Homes.Avatar.default} />
+      <Text style={[styles.text]}>
+        Liên kết ngân hàng để thực hiện giao dịch.
+      </Text>
+      <Image style={styles.arrow} source={Images.Homes.Arrow.default} />
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     //flexWrap: 'wrap',
   },
   text: {
-    paddingHorizontal: scale(40),
+    paddingLeft: scale(15),
   },
   img: {
     width: scale(40),

@@ -46,10 +46,10 @@ const useVerifyInfo = (initialValue = {}) => {
     ICIssuedDate,
     ICIssuedPlace,
     ICNumber,
+    identifyCard,
   }) => {
     try {
       setLoading(true);
-
       let phone = await getPhone();
       let result = await updateIdentify({
         phone,
@@ -60,6 +60,7 @@ const useVerifyInfo = (initialValue = {}) => {
           ICIssuedDate,
           ICIssuedPlace,
           ICNumber,
+          ICType: identifyCard?.ICType,
         },
       });
       setLoading(false);
@@ -128,6 +129,7 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const onUpdateAllInfo = async value => {
+    // console.log('data :>> ', {...contentRef.current, ...value});
     await onUpdateIdentify({...contentRef.current, ...value});
     await onUpdatePersonalInfo({...contentRef.current, ...value});
     await onUpdateUserAddress({...contentRef.current, ...value});

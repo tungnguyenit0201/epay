@@ -40,7 +40,7 @@ const Banner = ({
     <FlatList
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item, index) => item.name}
+      keyExtractor={(item, index) => `${item.name}-${Math.random(0, 100)}`}
       //showsHorizontalScrollIndicator={true}
       horizontal={true}
       style={[styles.list, style]}
@@ -50,7 +50,7 @@ const Banner = ({
 
 const styles = StyleSheet.create({
   list: {
-    marginBottom: 20,
+    // marginBottom: 20,
     marginRight: -Spacing.PADDING,
   },
   item: {},

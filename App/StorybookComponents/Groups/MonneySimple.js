@@ -11,9 +11,9 @@ const Monney = ({style}) => {
   const [showMoney, setShowMoney] = useState(false);
 
   return (
-    <View style={[styles.item, base.shadow, style]}>
+    <View style={[styles.item, style]}>
       <View style={[]}>
-        <Text fs="h6" style={styles.title}>
+        <Text fs="h6" style={[styles.title]}>
           {translation.my_wallet} :
         </Text>
       </View>
@@ -24,7 +24,7 @@ const Monney = ({style}) => {
               ******
             </Text>
           ) : (
-            <Text bold fs="h5" style={styles.text}>
+            <Text bold fs="h5" style={[styles.text]}>
               {formatMoney('100000')}đ
             </Text>
           )}

@@ -5,15 +5,25 @@ import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
 import {Colors} from 'themes';
 import {FlatList} from 'react-native-gesture-handler';
+import Navigator from 'navigations/Navigator';
+import {useAuth} from 'context/Auth/utils';
+import {useAsyncStorage} from 'context/Common/utils';
 
 let debugData = [];
 
 const Debug = () => {
   const [show, setShow] = useState(false);
+  const {onLoginByTouchID} = useAuth();
+  const {getPhone} = useAsyncStorage();
+
   return (
     <>
       <Pressable
         style={styles.container}
+        onPress={async () => {
+          Navigator.getCurrentRoute().name === 'Auth' &&
+            onLoginByTouchID({phone: await getPhone()});
+        }}
         onLongPress={() => {
           setShow(true);
         }}

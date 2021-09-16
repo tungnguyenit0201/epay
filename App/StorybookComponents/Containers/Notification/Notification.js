@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -8,14 +8,13 @@ import {
   RefreshControl,
   FlatList,
 } from 'react-native';
-import Text from '../../Atoms/Text'
-import Header from '../../Atoms/Header'
-import HeaderBg from '../../Atoms/HeaderBg'
+import Text from '../../Atoms/Text';
+import Header from '../../Atoms/Header';
+import HeaderBg from '../../Atoms/HeaderBg';
 
-import { Colors, Fonts, base, Images } from 'themes';
+import {Colors, Fonts, base, Images} from 'themes';
 
-import { scale } from 'utils/Functions';
-
+import {scale} from 'utils/Functions';
 
 // import FooterNotification from 'components/Home/FooterNotification';
 // import {useNotify} from 'context/User/utils';
@@ -32,25 +31,29 @@ const Notification = () => {
   const [refreshing, setRefreshing] = useState(false);
   // const {selectNotify, onGetAllNotify} = useNotify();
   const dataType = [
-    { id: 0, title: NOTIFY.ALL },
-    { id: 1, title: NOTIFY.CHARGES },
-    { id: 2, title: NOTIFY.PROMOTION },
-    { id: 3, title: NOTIFY.OTHER },
+    {id: 0, title: NOTIFY.ALL},
+    {id: 1, title: NOTIFY.CHARGES},
+    {id: 2, title: NOTIFY.PROMOTION},
+    {id: 3, title: NOTIFY.OTHER},
   ];
   const data = [
     {
-      "Content": "Hãy thể hiện tình yêu của bạn với công nghệ bằng cách trải nghiệm thanh toán ăn vặt hiện đại trên EPAY ngay hôm nay. Bạn sẽ được thử cảm giác “ E-xèng rơi vỡ đầu “, thanh toán siêu tốc độ và ăn không giới hạn. Tầng 10 vào lúc 14H30 đến 15H30 EPAY rất vui lòng được phục vụ bạn.",
-      "ContentImgUrl": "https://portal.epayservices.com.vn/images/promo/promo-11-08-2020.jpg",
-      "Time": "10-08-2020 20:47:04",
-      "Title": "Ăn vặt thời 4.0, bạn đã thử chưa",
+      Content:
+        'Hãy thể hiện tình yêu của bạn với công nghệ bằng cách trải nghiệm thanh toán ăn vặt hiện đại trên EPAY ngay hôm nay. Bạn sẽ được thử cảm giác “ E-xèng rơi vỡ đầu “, thanh toán siêu tốc độ và ăn không giới hạn. Tầng 10 vào lúc 14H30 đến 15H30 EPAY rất vui lòng được phục vụ bạn.',
+      ContentImgUrl:
+        'https://portal.epayservices.com.vn/images/promo/promo-11-08-2020.jpg',
+      Time: '10-08-2020 20:47:04',
+      Title: 'Ăn vặt thời 4.0, bạn đã thử chưa',
     },
     {
-      "Content": "Nhận ngay ưu đãi lên đến 498K khi thanh toán cùng chúng tôi: \n-Hội viên mới đăng ký 2 tháng: chỉ 699K (miễn phí Hội viên) \n-Hội viên cũ gia hạn 1 tháng: Chỉ 300K (COUPON CODE: EPAY99)",
-      "ContentImgUrl": "https://portal.epayservices.com.vn/images/promo/TNG-17-09-2020.jpg",
-      "Time": "16-09-2020 08:51:02",
-      "Title": "Thanh toán EPAY - Giảm ngay 99K",
-    }
-  ]
+      Content:
+        'Nhận ngay ưu đãi lên đến 498K khi thanh toán cùng chúng tôi: \n-Hội viên mới đăng ký 2 tháng: chỉ 699K (miễn phí Hội viên) \n-Hội viên cũ gia hạn 1 tháng: Chỉ 300K (COUPON CODE: EPAY99)',
+      ContentImgUrl:
+        'https://portal.epayservices.com.vn/images/promo/TNG-17-09-2020.jpg',
+      Time: '16-09-2020 08:51:02',
+      Title: 'Thanh toán EPAY - Giảm ngay 99K',
+    },
+  ];
   return (
     <>
       <HeaderBg>
@@ -62,7 +65,7 @@ const Notification = () => {
           keyExtractor={item => item.title}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <Pressable
               style={[styles.tag, type === item.title && styles.tagActive]}
               onPress={() => {
@@ -106,7 +109,7 @@ const Notification = () => {
                 <Text style={[styles.content]}>{item?.Content}</Text>
                 {item?.ContentImgUrl && (
                   <Image
-                    source={{ uri: `${item?.ContentImgUrl}` }}
+                    source={{uri: `${item?.ContentImgUrl}`}}
                     style={styles.imageNotify}
                   />
                 )}
@@ -147,7 +150,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 8,
     paddingVertical: 15,
   },
-  flexRow: { flexDirection: 'row' },
+  flexRow: {flexDirection: 'row'},
   head: {
     borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
@@ -162,7 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  title: { fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10 },
+  title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
   textCenter: {
     flex: 1,
     justifyContent: 'center',

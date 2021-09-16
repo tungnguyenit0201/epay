@@ -13,6 +13,7 @@ import VerifyUserInfo from './VerifyInfo/VerifyUserInfo';
 import VerifyUserPortrait from './VerifyInfo/VerifyUserPortrait';
 import AutoPayment from './AutoPayment';
 import ChangePassword from './ChangePassword';
+import UserInfo from './UserInfo';
 import EditInfo from './EditInfo';
 import User from './User';
 import LanguageSetting from './LanguageSetting';
@@ -44,6 +45,7 @@ storiesOf('Layout/User/Default', module)
   .addDecorator(withKnobs)
   .add('AutoPayment', () => <AutoPayment />)
   .add('ChangePassword', () => <ChangePassword />)
+  .add('UserInfo', () => <UserInfo />)
   .add('EditInfo', () => <EditInfo />)
   .add('User', () => <User />)
   .add('LanguageSetting', () => <LanguageSetting />)

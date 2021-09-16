@@ -147,7 +147,8 @@ const converTailwind = str => {
 };
 
 const formatMoney = (number, currency) =>
-  new Intl.NumberFormat('vi-VN').format(number) + (currency ? ' VND' : '');
+  new Intl.NumberFormat('vi-VN').format(number) +
+  (currency ? (typeof currency === 'string' ? currency : ' VND') : '');
 
 const sencondsToTime = num => {
   var sec_num = parseInt(num, 10);

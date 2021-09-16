@@ -1,8 +1,8 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react-native';
 import {withKnobs, text, object, select} from '@storybook/addon-knobs';
-import {scale} from 'utils/Functions'
-import {Colors, Fonts} from 'themes'
+import {scale} from 'utils/Functions';
+import {Colors, Fonts} from 'themes';
 import Confirmation from './Confirmation';
 import Contacts from './Contacts';
 import LimitSetting from './LimitSetting';
@@ -21,7 +21,7 @@ import BankInfo from './Bank/BankInfo';
 import BankLinked from './Bank/BankLinked';
 import BankList from './Bank/BankList';
 import BankResult from './Bank/BankResult';
-
+import TransactionHistory from './History';
 storiesOf('Layout/Wallet/Default', module)
   .addDecorator(withKnobs)
   .add('Confirmation', () => <Confirmation />)
@@ -44,4 +44,8 @@ storiesOf('Layout/Wallet/Bank', module)
   .add('BankInfo', () => <BankInfo />)
   .add('BankLinked', () => <BankLinked />)
   .add('BankList', () => <BankList />)
-  .add('BankResult', () => <BankResult />)
+  .add('BankResult', () => <BankResult />);
+
+storiesOf('Layout/Wallet/History', module)
+  .addDecorator(withKnobs)
+  .add('TransactionHistory', () => <TransactionHistory />);

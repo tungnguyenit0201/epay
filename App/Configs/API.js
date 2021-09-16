@@ -34,6 +34,7 @@ export default {
     GET_QRCODE: 'account/get_qrcode',
     VERIFY_EMAIL: 'account/authentication_email',
     UPDATE_EMAIL: 'account/change_email',
+    UPDATE_AVATAR: 'account/update_avatar',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
@@ -43,6 +44,7 @@ export default {
     FEE_CALCULATOR: 'bank/fee_calculator',
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
     GET_WALLET_INFO: 'account/get_wallet_info',
+    GET_HISTORY: 'history/get_history',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

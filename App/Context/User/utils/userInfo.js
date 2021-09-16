@@ -10,6 +10,7 @@ import {
   confirmPassword,
   getLimit,
   getQRCode,
+  updateAvatar,
 } from 'services/user';
 import {
   useAsyncStorage,
@@ -193,17 +194,25 @@ const useUserInfo = type => {
     }
   };
 
-  const onUpdateAvatar = type => {
+  const onUpdateAvatar = async type => {
+    const phone = await getPhone();
+    const options = {cropping: false, includeBase64: true};
+    const onUpdateResult = async image => {
+      setLoading(true);
+      const result = await updateAvatar({phone, AvatarPhoto: image?.data});
+      setLoading(false);
+      if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+        setError(result);
+        return;
+      }
+      await onGetPersonalInfo();
+    };
+
     switch (type) {
       case 'photo':
-        return ImagePicker.openPicker({
-          cropping: false,
-          includeBase64: true,
-        }).then(image => {
-          // đang làm dở thì làm cái khác
-        });
+        return ImagePicker.openPicker(options).then(onUpdateResult);
       case 'camera':
-        return;
+        return ImagePicker.openCamera(options).then(onUpdateResult);
       default:
         return setShowModal('selectAvatar');
     }

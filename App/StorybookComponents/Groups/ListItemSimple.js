@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   View,
+  Pressable,
 } from 'react-native';
 import Row from '../Atoms/Row';
 import Col from '../Atoms/Col';
@@ -28,10 +29,10 @@ const ListItem = ({
   const _screenWidth = Math.min(375);
   const screenContent = _screenWidth - (Spacing.PADDING * 2 + 15);
   const Item = ({item}) => (
-    <TouchableOpacity
+    <Pressable
       style={[styles.item, styleItem]}
       onPress={() => {
-        console.log('hello')
+        console.log('hello');
       }}>
       <Image
         source={item.icon.default}
@@ -45,7 +46,7 @@ const ListItem = ({
       <Text centered bold mt={5} style={styleText}>
         {item.name}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   const renderItem = ({item, index}) => (
@@ -72,7 +73,7 @@ const ListItem = ({
           data={data}
           renderItem={renderItem}
           keyExtractor={(item, index) => item.name}
-          //showsHorizontalScrollIndicator={true}
+          showsHorizontalScrollIndicator={false}
           horizontal={true}
           style={style}
         />
