@@ -46,7 +46,7 @@ const TabNavigation = () => {
         <View style={styles.wrapTabImg}>
           <Image
             source={Images.TabBar.BottomTab.default}
-            style={[{width: width - 8}, styles.tabImage]}
+            style={[{width: width - 25}, styles.tabImage]}
           />
         </View>
         <TouchableOpacity

@@ -141,6 +141,7 @@ const Home = () => {
         <View style={{position: 'absolute', bottom: -120}}>
           <FooterNavigation />
         </View>
+        {/* <FooterNavigation /> */}
       </View>
     </>
   );
