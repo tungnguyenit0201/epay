@@ -30,7 +30,6 @@ const RegisterPassword = ({route}) => {
 
   return (
     // TODO: translate
-    // <View style={styles.container}>
     <BlueHeader>
       <Header
         back
@@ -78,7 +77,6 @@ const RegisterPassword = ({route}) => {
                   {paddingVertical: scale(24)},
                   styles.wrap,
                 ]}>
-                {/* <BigLogo /> */}
                 <Content
                   title="Tạo mật khẩu"
                   text={
@@ -159,16 +157,12 @@ const RegisterPassword = ({route}) => {
         onPress={openCallDialog}
       />
     </BlueHeader>
-    // </View>
   );
 };
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: Colors.BACKGROUNDCOLOR,
-  // },
   wrap: {paddingHorizontal: Spacing.PADDING},
   flex1: {flex: 1},
+  flexRow: {flexDirection: 'row'},
   //-----------------------
   mtMinus1: {marginTop: -3},
   //-----------------------
@@ -184,7 +178,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     marginLeft: 3,
   },
-  flexRow: {flexDirection: 'row'},
   textNote: {
     fontSize: 12,
     fontWeight: '500',

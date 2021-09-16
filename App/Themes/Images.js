@@ -130,6 +130,9 @@ export default {
   },
   SignUp: {
     BgBlue: require('images/bg-blue.png'),
+    BigPhone: require('images/icons/big-phone.png'),
+    BlueWave: require('images/bg/blue-wave.png'),
+    TouchId: require('images/icons/touch-id.png'),
   },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),

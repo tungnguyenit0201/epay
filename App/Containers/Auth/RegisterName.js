@@ -1,11 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
 import {Text, Header, Button, Icon, TextInput} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
@@ -47,36 +41,33 @@ const RegisterName = () => {
 
         return (
           //TODO: translate
-          <>
-            <BlueHeader>
-              <BigLogo style={{marginBottom: 30}} />
-              <Content
-                style={styles.wrap}
-                title="Nhập tên"
-                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-              />
+          <BlueHeader>
+            <BigLogo style={{marginBottom: 30}} />
+            <Content
+              style={styles.wrap}
+              title="Nhập tên"
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            />
 
-              <View style={[styles.wrap]}>
-                <TextInput
-                  required
-                  onFocus={e => setDisable(false)}
-                  placeholder={translation.enter_your_name}
-                  onChange={handleChange('FullName')}
-                  onBlur={handleBlur('FullName')}
-                  error={touched.FullName && errors.FullName}
-                  value={values.FullName}
-                  isDeleted={values.FullName}
-                />
-              </View>
-            </BlueHeader>
+            <View style={[styles.wrap, styles.flex1]}>
+              <TextInput
+                required
+                onFocus={e => setDisable(false)}
+                placeholder={translation.enter_your_name}
+                onChange={handleChange('FullName')}
+                onBlur={handleBlur('FullName')}
+                error={touched.FullName && errors.FullName}
+                value={values.FullName}
+                isDeleted={values.FullName}
+              />
+            </View>
 
             <View
               style={[
                 styles.wrap,
-                {
-                  paddingVertical: Spacing.PADDING,
-                  backgroundColor: Colors.BACKGROUNDCOLOR,
-                },
+                styles.py1,
+                styles.bgWhite,
+                styles.blockBtn,
               ]}>
               <Button
                 disabled={disable}
@@ -90,7 +81,7 @@ const RegisterName = () => {
               setShowModal={setShowModal}
               onPress={openCallDialog}
             />
-          </>
+          </BlueHeader>
         );
       }}
     </Formik>
@@ -98,30 +89,29 @@ const RegisterName = () => {
 };
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: Colors.BACKGROUNDCOLOR,
-  // },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  flex1: {flex: 1},
+  //-----------------------
+  py1: {paddingVertical: Spacing.PADDING},
+  //-----------------------
+  bgWhite: {backgroundColor: Colors.white},
+  //-----------------------
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
   },
-  // pRight: {
-  //   position: 'absolute',
-  //   right: 15,
-  // },
-  // firstIcon: {
-  //   width: scale(24),
-  //   height: scale(24),
-  // },
-  // header: {
-  //   paddingTop: 10,
-  //   backgroundColor: Colors.white,
-  //   color: Colors.BLACK,
-  // },
+  blockBtn: {
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
+  },
 });
 
 export default RegisterName;

@@ -13,66 +13,46 @@ import {scale} from 'utils/Functions';
 import {useOTP} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
 import {SCREEN} from 'configs/Constants';
+import BlueHeader from 'components/Auth/BlueHeader';
+import {Content} from 'components/Auth';
 
 const RegisterFailure = ({route}) => {
   const translation = useTranslation();
   const {openCallDialog} = useOTP(route?.params);
   const {onNavigate} = useRegister();
 
+  const renderRightComponent = () => (
+    <TouchableOpacity
+      // onPress={() => setShowModal(true)}
+      style={styles.iconRight}>
+      <Icon
+        icon={Images.Register.Info}
+        tintColor={Colors.white}
+        style={styles.iconSize}
+      />
+    </TouchableOpacity>
+  );
   return (
     // TODO: translate
-    <>
-      <View>
-        <Header
-          back
-          blackIcon
-          avoidStatusBar
-          onPressBack={() => onNavigate(SCREEN.AUTH)}
-        />
-        <TouchableOpacity
-          style={{
-            position: 'absolute',
-            bottom: scale(10),
-            right: 20,
-          }}>
-          <Icon
-            icon={Images.Register.Info}
-            style={{
-              width: scale(24),
-              height: scale(24),
-            }}
-            tintColor={Colors.BLACK}
-          />
-        </TouchableOpacity>
-      </View>
+    <BlueHeader heightBg="100%">
+      <Header
+        back
+        // blackIcon
+        // avoidStatusBar
+        logo={Images.logoEpay}
+        onPressBack={() => onNavigate(SCREEN.AUTH)}
+        renderRightComponent={() => renderRightComponent()}
+      />
 
-      <ScrollView style={styles.container}>
-        <View
-          style={{
-            marginBottom: Spacing.PADDING + 30,
-            alignItems: 'center',
-          }}>
-          <Image source={Images.logoEpay} resizeMode="contain" />
-        </View>
+      <Content
+        title={'Đăng ký \nkhông thành công!'}
+        text="Bạn đã nhập sai OTP quá 5 lần, 
+          vui lòng quay lại sau ít phút."
+        styleText={{color: Colors.white}}
+        style={[styles.wrap, styles.flex1, styles.mt1]}
+      />
 
-        <View style={styles.wrap}>
-          <Text style={[styles.text_center]} mb={20} fs="h5" bold>
-            Đăng ký không thành công!
-          </Text>
-          <Text style={[styles.text_center, styles.text_error]} mb={10}>
-            Bạn đã nhập sai OTP quá 5 lần, vui lòng quay lại sau ít phút.
-          </Text>
-        </View>
-      </ScrollView>
-
-      <View
-        style={[
-          styles.wrap_1,
-          styles.bg_white,
-          {
-            paddingBottom: 40,
-          },
-        ]}>
+      <View style={[styles.wrap, styles.py1, styles.blockBtn, styles.bgWhite]}>
         <Button
           label="Gọi 024 32252336"
           style={styles.btn}
@@ -90,33 +70,39 @@ const RegisterFailure = ({route}) => {
           bold
         />
       </View>
-    </>
+    </BlueHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  flex1: {flex: 1},
+  //--------------------
+  mt1: {marginTop: 56},
+  //--------------------
+  py1: {
+    paddingTop: Spacing.PADDING,
+    paddingBottom: Spacing.PADDING * 2,
   },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING * 2,
-    // paddingTop: Spacing.PADDING * 3,
-  },
-  wrap_1: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  bg_white: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  text_center: {textAlign: 'center'},
-  text_error: {
-    fontSize: 14,
-    color: Colors.Highlight,
-  },
+  //--------------------
+  bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  //--------------------
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
+  },
+  iconRight: {paddingRight: Spacing.PADDING},
+  blockBtn: {
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
   },
 });
 

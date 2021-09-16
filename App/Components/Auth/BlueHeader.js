@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, Image, StyleSheet, useWindowDimensions} from 'react-native';
 import {Colors, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
+// import {useSafeAreaInsets} from 'react-native-safe-area-context';
+// import {scale} from 'utils/Functions';
 //import {getStatusBarHeight} from 'react-native-status-bar-height';
 //getStatusBarHeight()
 

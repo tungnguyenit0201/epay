@@ -4,7 +4,7 @@ import {Text} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 
-const Content = ({title, text, style, titleMb, textMb}) => {
+const Content = ({title, text, style, titleMb, textMb, styleText}) => {
   const translation = useTranslation();
   return (
     <View style={style}>
@@ -25,6 +25,7 @@ const Content = ({title, text, style, titleMb, textMb}) => {
           style={[
             styles.textGray,
             textMb ? {marginBottom: textMb} : styles.mb2,
+            styleText,
           ]}>
           {text}
         </Text>

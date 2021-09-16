@@ -16,7 +16,7 @@ import {Formik} from 'formik';
 import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 // import {scale} from 'utils/Functions';
-import {Content} from 'components/Auth';
+import {Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
 
 const Auth = () => {
@@ -27,23 +27,10 @@ const Auth = () => {
   return (
     //TODO: translate
     <BlueHeader style={styles.wrap}>
-      <Pressable
-        onPress={() => Navigator.navigate(SCREEN.REGISTER_NAME)}
-        style={[styles.alignCenter, styles.mb1]}>
-        <Image
-          source={Images.logoEpay}
-          resizeMode="contain"
-          style={styles.logo}
-        />
-      </Pressable>
-
-      {/* <Text fs="h3" bold style={[styles.textWhite, styles.mb2]}>
-        Nhập số điện thoại
-      </Text>
-
-      <Text fs="h6" style={[styles.textGray, styles.mb3]}>
-        {translation.sign_insign_up_epay}
-      </Text> */}
+      {/* test layout
+        onPress={() => Navigator.navigate(SCREEN.REGISTER_FAILURE, 
+        {functionType:'', phone:'', password:''})} */}
+      <BigLogo style={{marginBottom: 30}} />
 
       <Content
         title="Nhập số điện thoại"
@@ -111,21 +98,13 @@ const Auth = () => {
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //-----------------------
-  alignCenter: {alignItems: 'center'},
-  //-----------------------
   absolute: {position: 'absolute'},
   botZero: {bottom: 0},
-  //-----------------------
-  mb1: {marginBottom: 30},
   //-----------------------
   py1: {paddingVertical: Spacing.PADDING},
   //-----------------------
   bgWhite: {backgroundColor: Colors.white},
   //-----------------------
-  logo: {
-    width: 110,
-    height: 40,
-  },
   blockBtn: {
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
