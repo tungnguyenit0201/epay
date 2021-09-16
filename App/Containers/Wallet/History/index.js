@@ -79,7 +79,8 @@ const History = () => {
             styles.flexRow,
             styles.alignCenter,
             styles.blockTransaction,
-          ]}>
+          ]}
+          onPress={() => onDetail(item)}>
           <View style={styles.blockCardTick}>
             <Image
               source={Images.TransactionHistory.cardTick}

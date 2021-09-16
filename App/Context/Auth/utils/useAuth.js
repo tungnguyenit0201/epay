@@ -152,6 +152,7 @@ const useAuth = () => {
           phone,
           functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
           password,
+          encrypted,
         });
 
       case ERROR_CODE.SUCCESS:
