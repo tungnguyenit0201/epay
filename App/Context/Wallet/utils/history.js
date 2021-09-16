@@ -3,7 +3,7 @@ import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import {useEffect, useState, useRef, useCallback} from 'react';
-import {getHistory} from 'services/wallet';
+import {getHistory, getHistoryDetail} from 'services/wallet';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -107,8 +107,18 @@ const useHistory = () => {
 
   const onSearchDebounce = useCallback(_.debounce(onGetHistory, 1000), []); // eslint-disable-line
 
-  const onDetail = () => {
-    Navigator.push(SCREEN.DETAIL_HISTORY);
+  const onDetail = async item => {
+    setLoading(true);
+    const result = await getHistoryDetail({phone, TransCode: item?.TransCode});
+    setLoading(false);
+
+    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+      setError(result);
+    }
+
+    Navigator.push(SCREEN.DETAIL_HISTORY, {
+      data: _.get(result, 'TransDetail', {}),
+    });
   };
 
   return {historyData, onFilter, onSearch, onDetail};
