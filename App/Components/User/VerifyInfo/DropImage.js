@@ -15,7 +15,13 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
+const DropImage = ({
+  onDropImage,
+  title,
+  style,
+  cameraType = 'back',
+  isDrop,
+}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
@@ -113,6 +119,12 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
                         width: width,
                         height: height,
                       }}>
+                      {/* {!isDrop && (
+                        <Image
+                          source={Images.Camera.Oval}
+                          style={{width: width, height: height}}
+                        />
+                      )} */}
                       <View
                         style={[
                           styles.bgCamera,
@@ -150,6 +162,9 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
                             style={styles.iconCorner}
                           />
                         </View>
+                      </View>
+                      {loading && <FWLoading />}
+                      <View style={styles.wrapText}>
                         <Text
                           color={Colors.white}
                           fs="h6"
@@ -161,11 +176,11 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
                           chụp đủ sáng và rõ nét
                         </Text>
                       </View>
-                      {loading && <FWLoading />}
+
                       <Pressable
                         disabled={loading}
                         style={styles.wrapBtn}
-                        onPress={() => capturePicture(onDropImage)}>
+                        onPress={() => capturePicture(onDropImage, isDrop)}>
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}
@@ -260,5 +275,10 @@ const styles = StyleSheet.create({
     top: -12,
     position: 'absolute',
   },
+  wrapText: {
+    position: 'absolute',
+    top: scale(400),
+    alignSelf: 'center',
+  },
 });
-export default DropPicture;
+export default DropImage;

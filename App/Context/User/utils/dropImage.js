@@ -11,13 +11,14 @@ const useDropImage = () => {
   const diemsion = useWindowDimensions();
   let [loading, setLoading] = useState(false);
 
-  const capturePicture = async onDropImage => {
+  const capturePicture = async (onDropImage, isDrop) => {
     setLoading(true);
     if (camera.current) {
       camera.current
         .takePictureAsync({base64: true})
         .then(async capturedImg => {
           const {uri, width, height} = capturedImg;
+          console.log('capturedImg :>> ', capturedImg);
           // tỉ lệ màn hình so với tỉ lệ image
           let scaleWidth = width / diemsion.width;
           let scaleHeight = height / diemsion.height;

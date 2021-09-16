@@ -10,6 +10,7 @@ import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import {useConfig} from 'context/Common/utils';
+import messaging from '@react-native-firebase/messaging';
 
 const Stack = createStackNavigator();
 
@@ -97,6 +98,26 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     Platform.OS == 'android' && SplashScreen.hide();
+  }, []); // eslint-disable-line
+
+  React.useEffect(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+        }
+      });
   }, []); // eslint-disable-line
 
   return (

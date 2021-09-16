@@ -151,5 +151,6 @@ export default {
     TopRight: require('images/camera/TopRight.png'),
     BottomLeft: require('images/camera/BottomLeft.png'),
     BottomRight: require('images/camera/BottomRight.png'),
+    Oval: require('images/camera/oval.png'),
   },
 };
