@@ -1,9 +1,9 @@
 import {COMMON_ENUM, ERROR_CODE, SCREEN, TRANS_TYPE} from 'configs/Constants';
-import {useError} from 'context/Common/utils';
+import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import {useEffect, useState, useRef, useCallback} from 'react';
-import {getHistory} from 'services/wallet';
+import {getHistory, getHistoryDetail} from 'services/wallet';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -20,6 +20,7 @@ const useHistory = () => {
   const {phone} = useUser();
   const [historyData, setHistoryData] = useState([]);
   const {setError} = useError();
+  const {setLoading} = useLoading();
   const contentRef = useRef({
     search: '',
     startDate: moment()
@@ -74,6 +75,7 @@ const useHistory = () => {
 
   const onGetHistory = async () => {
     const {search, startDate, endDate, serviceID, stateID} = contentRef.current;
+    setLoading(true);
     const result = await getHistory({
       phone,
       StartDate: startDate,
@@ -82,6 +84,7 @@ const useHistory = () => {
       ServiceId: serviceID,
       StateId: stateID,
     });
+    setLoading(false);
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
       setError(result);
       return;
@@ -104,8 +107,18 @@ const useHistory = () => {
 
   const onSearchDebounce = useCallback(_.debounce(onGetHistory, 1000), []); // eslint-disable-line
 
-  const onDetail = () => {
-    Navigator.push(SCREEN.DETAIL_HISTORY);
+  const onDetail = async item => {
+    setLoading(true);
+    const result = await getHistoryDetail({phone, TransCode: item?.TransCode});
+    setLoading(false);
+
+    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+      setError(result);
+    }
+
+    Navigator.push(SCREEN.DETAIL_HISTORY, {
+      data: _.get(result, 'TransDetail', {}),
+    });
   };
 
   return {historyData, onFilter, onSearch, onDetail};
