@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Text, InputBlock, Header, Button, Icon, TextInput} from 'components';
+import {Text, Header, Button, Icon, TextInput} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
@@ -15,6 +15,7 @@ import {HelpModal, Content, BigLogo} from 'components/Auth';
 import {Formik} from 'formik';
 import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
+import BlueHeader from 'components/Auth/BlueHeader';
 
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
@@ -45,34 +46,17 @@ const RegisterName = () => {
         };
 
         return (
+          //TODO: translate
           <>
-            <View style={styles.container}>
-              <View>
-                <Header
-                  back
-                  blackIcon
-                  avoidStatusBar
-                  // style={styles.header}
-                  renderRightComponent={() => (
-                    <TouchableOpacity
-                      style={styles.pRight}
-                      onPress={() => setShowModal(true)}>
-                      <Icon
-                        icon={Images.Register.Info}
-                        style={styles.firstIcon}
-                        tintColor={Colors.BLACK}
-                      />
-                    </TouchableOpacity>
-                  )}
-                />
-              </View>
-              <BigLogo />
+            <BlueHeader>
+              <BigLogo style={{marginBottom: 30}} />
               <Content
+                style={styles.wrap}
                 title="Nhập tên"
                 text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
               />
 
-              <View style={[styles.wrap, {marginTop: Spacing.PADDING * 3}]}>
+              <View style={[styles.wrap]}>
                 <TextInput
                   required
                   onFocus={e => setDisable(false)}
@@ -84,7 +68,7 @@ const RegisterName = () => {
                   isDeleted={values.FullName}
                 />
               </View>
-            </View>
+            </BlueHeader>
 
             <View
               style={[
@@ -114,10 +98,10 @@ const RegisterName = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: Colors.BACKGROUNDCOLOR,
+  // },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
@@ -125,14 +109,14 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
   },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
-  firstIcon: {
-    width: scale(24),
-    height: scale(24),
-  },
+  // pRight: {
+  //   position: 'absolute',
+  //   right: 15,
+  // },
+  // firstIcon: {
+  //   width: scale(24),
+  //   height: scale(24),
+  // },
   // header: {
   //   paddingTop: 10,
   //   backgroundColor: Colors.white,

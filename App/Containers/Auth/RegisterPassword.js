@@ -9,6 +9,7 @@ import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
+import BlueHeader from 'components/Auth/BlueHeader';
 
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
@@ -29,27 +30,23 @@ const RegisterPassword = ({route}) => {
 
   return (
     // TODO: translate
-    <View style={styles.container}>
-      <View>
-        <Header
-          back
-          avoidStatusBar
-          blackIcon
-          // style={styles.header}
-          renderRightComponent={() => (
-            <TouchableOpacity
-              style={styles.pRight}
-              onPress={() => setShowModal(true)}>
-              <Icon
-                icon={Images.Register.Info}
-                style={styles.firstIcon}
-                tintColor={Colors.BLACK}
-              />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-
+    // <View style={styles.container}>
+    <BlueHeader>
+      <Header
+        back
+        renderRightComponent={() => (
+          <TouchableOpacity
+            style={{paddingRight: Spacing.PADDING}}
+            onPress={() => setShowModal(true)}>
+            <Icon
+              icon={Images.Register.Info}
+              style={styles.iconSize}
+              tintColor={Colors.white}
+            />
+          </TouchableOpacity>
+        )}
+        logo={Images.logoEpay}
+      />
       <Formik
         initialValues={{
           newPassword: '',
@@ -73,18 +70,20 @@ const RegisterPassword = ({route}) => {
           };
           // TODO: translate
           return (
-            <View style={styles.wrap}>
+            <View style={[styles.flex1]}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={{paddingVertical: scale(24)}}>
-                <BigLogo />
+                contentContainerStyle={[
+                  {paddingVertical: scale(24)},
+                  styles.wrap,
+                ]}>
+                {/* <BigLogo /> */}
                 <Content
-                  title="Tạo mật khẩu Epay"
+                  title="Tạo mật khẩu"
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
-                  style={{paddingBottom: Spacing.PADDING}}
                 />
                 <TextInput
                   password
@@ -113,13 +112,19 @@ const RegisterPassword = ({route}) => {
                 </Text>
               </ScrollView>
 
-              <View style={{paddingBottom: 20}}>
+              <View
+                style={[
+                  styles.wrap,
+                  styles.py1,
+                  styles.blockBtn,
+                  styles.bgWhite,
+                ]}>
                 <View style={styles.flexRow}>
                   <Checkbox onPress={setActive} />
-                  <Text>
+                  <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
-                      style={{marginTop: -3}}
+                      style={styles.mtMinus1}
                       onPress={() => onNavigate(SCREEN.AGREEMENT)}>
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
@@ -127,7 +132,7 @@ const RegisterPassword = ({route}) => {
                     </TouchableOpacity>
                     và
                     <TouchableOpacity
-                      style={{marginTop: -3}}
+                      style={styles.mtMinus1}
                       onPress={() => onNavigate(SCREEN.POLICY)}>
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
@@ -136,6 +141,7 @@ const RegisterPassword = ({route}) => {
                     của Epay Services
                   </Text>
                 </View>
+
                 <Button
                   disabled={!active}
                   mt={10}
@@ -152,31 +158,28 @@ const RegisterPassword = ({route}) => {
         setShowModal={setShowModal}
         onPress={openCallDialog}
       />
-    </View>
+    </BlueHeader>
+    // </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
-    flex: 1,
-    paddingHorizontal: Spacing.PADDING,
-  },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
-  firstIcon: {
-    width: scale(24),
-    height: scale(24),
-  },
-  // header: {
-  //   paddingTop: 10,
-  //   backgroundColor: Colors.white,
-  //   color: Colors.BLACK,
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: Colors.BACKGROUNDCOLOR,
   // },
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  flex1: {flex: 1},
+  //-----------------------
+  mtMinus1: {marginTop: -3},
+  //-----------------------
+  py1: {paddingVertical: Spacing.PADDING},
+  //-----------------------
+  bgWhite: {backgroundColor: Colors.white},
+  //-----------------------
+  iconSize: {
+    width: scale(20),
+    height: scale(20),
+  },
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
@@ -186,6 +189,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     paddingRight: 9,
+  },
+  blockBtn: {
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
   },
 });
 export default RegisterPassword;

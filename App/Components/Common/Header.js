@@ -46,7 +46,8 @@ const Header = ({
             {title}
           </Text>
         )}
-        <View style={styles.flexRowBetween}>
+        <View
+          style={[styles.flexRow, styles.alignCenter, styles.justifybetween]}>
           {Platform.isPad || Platform.OS == 'macos' ? (
             <Pressable
               style={styles.menuIcon}
@@ -82,22 +83,18 @@ const Header = ({
 
           {/* Please do not move logo go anywhere.Because:
             *logo is aligning between icon left and icon right
+            *you must to declare both icon left and right when you use
+              logo.
             *I used to use absolute, but logo will overlap 
               icon left and right@@.
-            *I also used to set width for logo button, but logo 
-              will align left instead center.
             *caution use [cart], because logo will 
-              align a bit to left if cart exist. */}
+              align a bit to left if cart is existed. */}
           {!!logo && (
             <Pressable
               onPress={() => {
                 Navigator.navigate(SCREEN.TAB_NAVIGATION);
               }}>
-              <Image
-                source={logo}
-                resizeMode="contain"
-                style={[styles.logo, styles.topCenter, styles.leftCenter]}
-              />
+              <Image source={logo} resizeMode="contain" style={[styles.logo]} />
             </Pressable>
           )}
 
@@ -123,18 +120,18 @@ const styles = StyleSheet.create({
   // rightZero: {right: 0},
   // botZero: {bottom: 0},
   //-----------------------------
-  // justifyCenter: {justifyContent: 'center'},
-  // alignCenter: {alignItems: 'center'},
+  flexRow: {flexDirection: 'row'},
+  justifybetween: {justifyContent: 'space-between'},
+  alignCenter: {alignItems: 'center'},
   //-----------------------------
   avoidStatusBar: {height: getStatusBarHeight()},
-  flexRowBetween: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
+  // flexRowBetween: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  // },
   back: {paddingHorizontal: Spacing.PADDING / 2},
   title: {
-    // alignSelf: 'center',
     textAlign: 'center',
     color: Colors.white,
     paddingTop: 5,
