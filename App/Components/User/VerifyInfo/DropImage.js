@@ -15,7 +15,7 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
+const DropImage = ({onDropImage, title, style, cameraType = 'back'}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
@@ -34,9 +34,9 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
           {image?.path ? (
             <View style={{paddingBottom: Spacing.PADDING}}>
               <Image
-                style={styles.img}
+                style={[styles.img, {width: width - Spacing.PADDING * 2}]}
                 source={{uri: image?.path}}
-                resizeMode="contain"
+                resizeMode={cameraType == 'back' ? 'contain' : 'cover'}
               />
             </View>
           ) : (
@@ -113,43 +113,16 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
                         width: width,
                         height: height,
                       }}>
-                      <View
-                        style={[
-                          styles.bgCamera,
-                          styles.bgCameraTop,
-                          {width: width},
-                        ]}></View>
-                      <View style={styles.bgWrapCameraLR}>
-                        <View style={[styles.bgCamera, styles.bgCameraLR]}>
-                          <View style={styles.iconTL}>
-                            <Image
-                              source={Images.Camera.TopLeft}
-                              style={styles.iconCorner}
-                            />
-                          </View>
-                        </View>
-                        <View style={[styles.bgCamera, styles.bgCameraLR]}>
-                          <View style={styles.iconTR}>
-                            <Image
-                              source={Images.Camera.TopRight}
-                              style={styles.iconCorner}
-                            />
-                          </View>
-                        </View>
-                      </View>
-                      <View style={[styles.bgCamera, {height: height}]}>
-                        <View style={styles.iconBL}>
-                          <Image
-                            source={Images.Camera.BottomLeft}
-                            style={styles.iconCorner}
-                          />
-                        </View>
-                        <View style={styles.iconBR}>
-                          <Image
-                            source={Images.Camera.BottomRight}
-                            style={styles.iconCorner}
-                          />
-                        </View>
+                      <Image
+                        source={
+                          cameraType == 'back'
+                            ? Images.Camera.CameraSquare
+                            : Images.Camera.Oval
+                        }
+                        style={{width: width, height: height}}
+                      />
+                      {loading && <FWLoading />}
+                      <View style={styles.wrapText}>
                         <Text
                           color={Colors.white}
                           fs="h6"
@@ -161,11 +134,13 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
                           chụp đủ sáng và rõ nét
                         </Text>
                       </View>
-                      {loading && <FWLoading />}
+
                       <Pressable
                         disabled={loading}
                         style={styles.wrapBtn}
-                        onPress={() => capturePicture(onDropImage)}>
+                        onPress={() =>
+                          capturePicture(onDropImage, cameraType == 'back')
+                        }>
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}
@@ -177,14 +152,12 @@ const DropPicture = ({onDropImage, title, style, cameraType = 'back'}) => {
               }}
             </RNCamera>
           )}
-          {showCamera == 2 && (
-            <PreviewImage
-              visible={showCamera == 2}
-              setShowCamera={setShowCamera}
-              image={image}
-              title={title}
-            />
-          )}
+          <PreviewImage
+            visible={showCamera == 2}
+            setShowCamera={setShowCamera}
+            image={image}
+            title={title}
+          />
         </Modal>
       )}
     </>
@@ -221,44 +194,17 @@ const styles = StyleSheet.create({
     width: 128,
     paddingHorizontal: 5,
   },
-  bgCamera: {
-    backgroundColor: Colors.black,
-    opacity: 0.5,
-  },
-  bgCameraTop: {left: 0, top: 0, height: scale(170)},
-  bgWrapCameraLR: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  bgCameraLR: {width: scale(37), height: scale(178)},
+
   wrapBtn: {
     position: 'absolute',
     bottom: Spacing.PADDING * 2,
     alignSelf: 'center',
   },
-  iconCorner: {
-    width: 24,
-    height: 24,
-  },
-  iconTL: {
-    right: -12,
-    top: -12,
+
+  wrapText: {
     position: 'absolute',
-  },
-  iconBL: {
-    left: scale(37) - 12,
-    top: -12,
-    position: 'absolute',
-  },
-  iconTR: {
-    left: -12,
-    top: -12,
-    position: 'absolute',
-  },
-  iconBR: {
-    right: scale(37) - 12,
-    top: -12,
-    position: 'absolute',
+    top: scale(420),
+    alignSelf: 'center',
   },
 });
-export default DropPicture;
+export default DropImage;
