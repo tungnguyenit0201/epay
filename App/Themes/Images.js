@@ -128,6 +128,12 @@ export default {
     FingerPrint: require('images/icons/fingerprint.png'),
     Face: require('images/icons/face.png'),
   },
+  SignUp: {
+    BgBlue: require('images/bg-blue.png'),
+    BigPhone: require('images/icons/big-phone.png'),
+    BlueWave: require('images/bg/blue-wave.png'),
+    TouchId: require('images/icons/touch-id.png'),
+  },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),
     camera: require('images/icons/camera.png'),

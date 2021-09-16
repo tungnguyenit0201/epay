@@ -9,11 +9,19 @@ import StatusBar from './StatusBar';
 
 const bgheader = require('images/home/homeHeader.jpg');
 
-const Header = ({children, bgimg, style}) => {
+const Header = ({children, bgimg, mb = 20, style}) => {
   const {top} = useSafeAreaInsets();
   return (
     <View
-      style={[base.container, styles.header, {paddingTop: top + 10}, style]}>
+      style={[
+        base.container,
+        styles.header,
+        {
+          paddingTop: top + 10,
+          marginBottom: mb,
+        },
+        style,
+      ]}>
       <StatusBar
         barStyle={'light-content'}
         translucent
@@ -30,7 +38,6 @@ const Header = ({children, bgimg, style}) => {
 const styles = StyleSheet.create({
   header: {
     paddingBottom: 10,
-    marginBottom: 20,
   },
   bg: {
     position: 'absolute',

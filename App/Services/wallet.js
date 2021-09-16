@@ -148,3 +148,19 @@ export const getHistory = async ({
   });
   return response;
 };
+
+export const getHistoryDetail = async ({phone, TransCode}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_HISTORY_DETAIL,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      TransCode,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

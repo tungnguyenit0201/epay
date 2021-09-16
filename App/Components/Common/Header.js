@@ -6,6 +6,7 @@ import {Colors, Fonts, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
+import {SCREEN} from 'configs/Constants';
 
 const Header = ({
   title,
@@ -18,6 +19,8 @@ const Header = ({
   renderRightComponent,
   avoidStatusBar = false,
   blackIcon = false,
+  logo,
+  onPressLogo,
 }) => {
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
@@ -31,25 +34,21 @@ const Header = ({
       ]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={[{minHeight: scale(24)}]}>
-        <Text
-          semibold
-          fs="h6"
-          style={[
-            styles.title,
-            titleStyle,
-            blackIcon && {color: Colors.black},
-          ]}>
-          {title}
-        </Text>
+        {!!title && (
+          <Text
+            semibold
+            fs="h6"
+            style={[
+              styles.title,
+              titleStyle,
+              blackIcon && {color: Colors.black},
+            ]}
+            mb={10}>
+            {title}
+          </Text>
+        )}
         <View
-          style={{
-            flexDirection: 'row',
-            position: 'absolute',
-            justifyContent: 'space-between',
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}>
+          style={[styles.flexRow, styles.alignCenter, styles.justifybetween]}>
           {Platform.isPad || Platform.OS == 'macos' ? (
             <Pressable
               style={styles.menuIcon}
@@ -63,7 +62,6 @@ const Header = ({
             <>
               {back ? (
                 <Pressable
-                  style={styles.left}
                   onPress={() => goBack()}
                   hitSlop={{
                     right: scale(30),
@@ -84,6 +82,20 @@ const Header = ({
             </>
           )}
 
+          {/* Please do not move logo go anywhere.Because:
+            *logo is aligning between icon left and icon right
+            *you must to declare both icon left and right when you use
+              logo.
+            *I used to use absolute, but logo will overlap 
+              icon left and right@@.
+            *caution use [cart], because logo will 
+              align a bit to left if cart is existed. */}
+          {!!logo && (
+            <Pressable onPress={onPressLogo}>
+              <Image source={logo} resizeMode="contain" style={[styles.logo]} />
+            </Pressable>
+          )}
+
           {cart && (
             <View
               style={{
@@ -98,21 +110,27 @@ const Header = ({
 };
 
 const styles = StyleSheet.create({
-  wrap: {
-    paddingBottom: scale(10),
-  },
+  wrap: {paddingBottom: scale(10)},
+  //-----------------------------
+  // absolute: {position: 'absolute'},
+  // topZero: {top: 0},
+  // leftZero: {left: 0},
+  // rightZero: {right: 0},
+  // botZero: {bottom: 0},
+  //-----------------------------
+  flexRow: {flexDirection: 'row'},
+  justifybetween: {justifyContent: 'space-between'},
+  alignCenter: {alignItems: 'center'},
+  //-----------------------------
   avoidStatusBar: {height: getStatusBarHeight()},
-  left: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  back: {
-    paddingHorizontal: Spacing.PADDING / 2,
-  },
+  // flexRowBetween: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  // },
+  back: {paddingHorizontal: Spacing.PADDING / 2},
   title: {
-    fontWeight: 'bold',
-    alignSelf: 'center',
+    textAlign: 'center',
     color: Colors.white,
     paddingTop: 5,
   },
@@ -120,6 +138,10 @@ const styles = StyleSheet.create({
     paddingLeft: Spacing.PADDING,
     paddingVertical: scale(8),
     paddingRight: Spacing.PADDING * 10,
+  },
+  logo: {
+    width: 110,
+    height: 40,
   },
 });
 

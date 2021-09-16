@@ -20,9 +20,10 @@ import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useWalletInfo} from 'context/Wallet/utils';
 
-const useTouchID = () => {
+const useTouchID = ({onSuccess}) => {
   const [biometryType, setBiometryType] = useState(null);
   const {getTouchIdEnabled, getPhone} = useAsyncStorage();
+  const {setError} = useError();
 
   const checkBiometry = async () => {
     const touchIdEnabled = await getTouchIdEnabled();
@@ -43,14 +44,15 @@ const useTouchID = () => {
     TouchID.isSupported({})
       .then(biometryType => {
         setBiometryType(biometryType);
+        onTouchID(biometryType);
       })
       .catch(error => {
         __DEV__ && console.log('Touch ID is not supported.');
       });
   };
 
-  const onTouchID = async () => {
-    if (!biometryType) {
+  const onTouchID = _biometryType => {
+    if (!_biometryType && !biometryType) {
       return;
     }
 
@@ -66,18 +68,20 @@ const useTouchID = () => {
       passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     };
 
-    return await new Promise((resolve, reject) => {
-      TouchID.authenticate('Đăng nhập bằng Touch ID', options)
-        .then(success => {
-          resolve(success);
-        })
-        .catch(error => {
-          if (error?.name === 'LAErrorUserCancel') {
-            return;
-          }
-          reject(error);
-        });
-    });
+    TouchID.authenticate('Đăng nhập bằng Touch ID', options)
+      .then(success => {
+        onSuccess && onSuccess(success);
+      })
+      .catch(error => {
+        if (error?.name === 'LAErrorUserCancel') {
+          return;
+        }
+        if (error?.name === 'LAErrorTouchIDNotEnrolled') {
+          setBiometryType(null);
+          return;
+        }
+        setError({ErrorCode: -1, ErrorMessage: error});
+      });
   };
 
   useEffect(() => {
@@ -148,6 +152,7 @@ const useAuth = () => {
           phone,
           functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
           password,
+          encrypted,
         });
 
       case ERROR_CODE.SUCCESS:
@@ -172,6 +177,7 @@ const useAuth = () => {
       const credentials = await Keychain.getGenericPassword();
       const passwordEncrypted = credentials?.password;
       if (!passwordEncrypted || !phone) {
+        setLoading(false);
         return;
       }
       onLogin({phone, password: passwordEncrypted, encrypted: true});

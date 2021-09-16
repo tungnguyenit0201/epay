@@ -1,90 +1,111 @@
 import React from 'react';
 import {
   View,
-  ScrollView,
   StyleSheet,
   Image,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {Header, HeaderBg, Text} from 'components';
-import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
-import {SCREEN} from 'configs/Constants';
-import {scale} from 'utils/Functions';
+import {formatMoney, scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
+import {COMMON_ENUM, TRANS_TYPE} from 'configs/Constants';
+import {useHistory} from 'context/Wallet/utils';
+import moment from 'moment';
+
+const filterData = {
+  service: [
+    {value: 0, label: 'all'},
+    {value: TRANS_TYPE.CashIn, label: 'top_up'},
+    {value: TRANS_TYPE.CashOut, label: 'withdraw'},
+    {
+      value: TRANS_TYPE.CashTransfer,
+      label: 'transfer',
+    },
+    {
+      value: TRANS_TYPE.AutoCashIn,
+      label: 'automatically_top_up',
+    },
+    {
+      value: TRANS_TYPE.CashReceive,
+      label: 'receive',
+    },
+    {
+      value: `${TRANS_TYPE.PaymentToll},${TRANS_TYPE.PaymentMerchant}`,
+      label: 'bill_pay',
+    },
+  ],
+  status: [
+    {
+      value: 0,
+      label: 'all',
+    },
+    {
+      value: 1,
+      label: 'successful',
+    },
+    {
+      value: 3,
+      label: 'processing',
+    },
+    {
+      value: 2,
+      label: 'failed',
+    },
+  ],
+};
+
 const History = () => {
   const translation = useTranslation();
   const bgBlue = '#F2F8FF';
   const gray = '#848181';
   const red = '#D80000';
-  const listTransactionSection = [
-    {
-      title: 'Nạp tiền vào ví từ Vietcombank',
-      time: '03:30',
-      date: '23/07/2021',
-      money: '+1.200.000đ',
-    },
-    {
-      title: 'Nạp tiền vào ví từ Vietcombank',
-      time: '03:30',
-      date: '23/07/2021',
-      money: '+1.200.000đ',
-    },
-    {
-      title: 'Nạp tiền vào ví từ Vietcombank',
-      time: '03:30',
-      date: '23/07/2021',
-      money: '+1.200.000đ',
-    },
-    {
-      title: 'Nạp tiền vào ví từ Vietcombank',
-      time: '03:30',
-      date: '23/07/2021',
-      money: '+1.200.000đ',
-    },
-    {
-      title: 'Nạp tiền vào ví từ Vietcombank',
-      time: '03:30',
-      date: '23/07/2021',
-      money: '+1.200.000đ',
-    },
-  ];
+  const {historyData, onDetail, onFilter, onSearch} = useHistory();
 
-  const renderTransactionSections = () =>
-    listTransactionSection.map((e, index) => (
-      <TouchableOpacity
-        key={index}
-        style={[
-          styles.wrap,
-          styles.flexRow,
-          styles.alignCenter,
-          styles.blockTransaction,
-        ]}>
-        <View style={styles.blockCardTick}>
-          <Image
-            source={Images.TransactionHistory.cardTick}
-            style={styles.iconCardTick}
-          />
-        </View>
-        <View style={[styles.flex1, styles.pl2]}>
-          <Text style={[styles.textSize2, styles.mb1]}>{e.title}</Text>
-          <View style={[styles.flexRow, styles.justifyBetween, styles.flex1]}>
-            <View style={styles.flexRow}>
-              <Text style={[styles.textSize1, styles.pr1, {color: gray}]}>
-                {e.time}
-              </Text>
-              <Text style={[styles.textSize1, {color: gray}]}>{e.date}</Text>
-            </View>
-            <Text fs="md" bold>
-              {e.money}
-            </Text>
+  const renderTransactionSections = data =>
+    data.map(item => {
+      let title = item?.Description;
+      if (!title) {
+        title = filterData.service.find(x => x.value === item?.TransType).label;
+        title = translation[title] || title;
+      }
+      return (
+        <TouchableOpacity
+          key={item?.TransCode}
+          style={[
+            styles.wrap,
+            styles.flexRow,
+            styles.alignCenter,
+            styles.blockTransaction,
+          ]}
+          onPress={() => onDetail(item)}>
+          <View style={styles.blockCardTick}>
+            <Image
+              source={Images.TransactionHistory.cardTick}
+              style={styles.iconCardTick}
+            />
           </View>
-        </View>
-      </TouchableOpacity>
-    ));
+          <View style={[styles.flex1, styles.pl2]}>
+            <Text style={[styles.textSize2, styles.mb1]}>{title}</Text>
+            <View style={[styles.flexRow, styles.justifyBetween, styles.flex1]}>
+              <Text style={[styles.textSize1, {color: gray}]}>
+                {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT).format(
+                  'hh:mm   DD/MM/YYYY',
+                )}
+              </Text>
+              <Text fs="md" bold>
+                {(item?.isIncome ? '+' : '-') +
+                  formatMoney(item?.TransAmount, 'đ')}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    });
 
-  const renderNotifyComponent = () => (
+  const renderNotifyComponent = ({label, income, expense}) => (
     <View
       style={[
         styles.wrap,
@@ -96,20 +117,30 @@ const History = () => {
         {backgroundColor: bgBlue},
       ]}>
       <Text bold fs="h6">
-        Tháng 7/2021
+        {label}
       </Text>
       <View style={styles.blockSumIncome}>
         <View style={[styles.flexRow, styles.justifyBetween, styles.minWidth1]}>
           <Text style={[styles.textSize1, styles.pr1]}>Thu:</Text>
-          <Text style={styles.textSize1}>8.000.000đ</Text>
+          <Text style={styles.textSize1}>{formatMoney(income, 'đ')}</Text>
         </View>
         <View style={[styles.flexRow, styles.justifyBetween, styles.minWidth1]}>
           <Text style={[styles.textSize1, styles.pr1]}>Chi:</Text>
-          <Text style={styles.textSize1}>1.200.000đ</Text>
+          <Text style={styles.textSize1}>{formatMoney(expense, 'đ')}</Text>
         </View>
       </View>
     </View>
   );
+
+  const renderMonth = ({item}) => {
+    const {key, list, income, expense} = item;
+    return (
+      <View>
+        {renderNotifyComponent({label: `Tháng ${key}`, income, expense})}
+        {renderTransactionSections(list)}
+      </View>
+    );
+  };
 
   return (
     <>
@@ -141,8 +172,7 @@ const History = () => {
                 autoFocus={false}
                 importantForAutofill={'yes'}
                 placeholder={translation.search_a_transaction}
-                // onChange={handleChange('phone')}
-                // onBlur={handleBlur('phone')}
+                onChangeText={onSearch}
                 style={[styles.textInput, styles.pl1]}
               />
             </View>
@@ -180,14 +210,7 @@ const History = () => {
         </View>
       </View>
 
-      <ScrollView style={styles.bgWhite}>
-        {renderNotifyComponent()}
-        {renderTransactionSections()}
-        {renderNotifyComponent()}
-        {renderTransactionSections()}
-        {renderNotifyComponent()}
-        {renderTransactionSections()}
-      </ScrollView>
+      <FlatList data={historyData} renderItem={renderMonth} />
     </>
   );
 };
@@ -273,76 +296,3 @@ const styles = StyleSheet.create({
   },
 });
 export default History;
-
-/*
-import {Header} from 'components';
-import React from 'react';
-import {View, Text, Pressable} from 'react-native';
-import Navigator from 'navigations/Navigator';
-import {SCREEN, TRANS_TYPE} from 'configs/Constants';
-// import {useTranslation} from 'context/Language';
-// import {useHistory} from 'context/Wallet/utils';
-
-const filterData = {
-  service: [
-    {value: 0, label: 'all'},
-    {value: TRANS_TYPE.CashIn, label: 'top_up'},
-    {value: TRANS_TYPE.CashOut, label: 'withdraw'},
-    {
-      value: TRANS_TYPE.CashTransfer,
-      label: 'transfer',
-    },
-    {
-      value: TRANS_TYPE.AutoCashIn,
-      label: 'automatically_top_up',
-    },
-    {
-      value: TRANS_TYPE.CashReceive,
-      label: 'receive',
-    },
-    {
-      value: `${TRANS_TYPE.PaymentToll},${TRANS_TYPE.PaymentMerchant}`,
-      label: 'bill_pay',
-    },
-  ],
-  status: [
-    {
-      value: 0,
-      label: 'all',
-    },
-    {
-      value: 1,
-      label: 'successful',
-    },
-    {
-      value: 3,
-      label: 'processing',
-    },
-    {
-      value: 2,
-      label: 'failed',
-    },
-  ],
-};
-
-const History = () => {
-  // const translation = useTranslation();
-  // const {historyData, onFilter, onSearch, onDetail} = useHistory();
-
-  return (
-    <View>
-      <Header
-        back
-        // title={translation.transaction_history}
-        avoidStatusBar
-        blackIcon
-      />
-      <Pressable onPress={() => Navigator.navigate(SCREEN.DETAIL_HISTORY)}>
-        <Text>Chi tiết</Text>
-      </Pressable>
-    </View>
-  );
-};
-
-export default History;
-*/

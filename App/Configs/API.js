@@ -45,6 +45,7 @@ export default {
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
     GET_WALLET_INFO: 'account/get_wallet_info',
     GET_HISTORY: 'history/get_history',
+    GET_HISTORY_DETAIL: 'history/get_detail',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',
