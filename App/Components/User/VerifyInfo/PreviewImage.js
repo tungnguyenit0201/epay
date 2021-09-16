@@ -13,13 +13,13 @@ import {useTranslation} from 'context/Language';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {scale} from 'utils/Functions';
 
-const PreviewImage = ({image, setShowCamera, title}) => {
+const PreviewImage = ({visible, image, setShowCamera, title}) => {
   const translation = useTranslation();
   const {width, height} = useWindowDimensions();
   const top = getStatusBarHeight();
   return (
     // TODO: translate
-    <>
+    <View style={{display: visible ? 'flex' : 'none'}}>
       <View
         style={{
           width: width,
@@ -69,7 +69,7 @@ const PreviewImage = ({image, setShowCamera, title}) => {
           />
         </View>
       </View>
-    </>
+    </View>
   );
 };
 const styles = StyleSheet.create({

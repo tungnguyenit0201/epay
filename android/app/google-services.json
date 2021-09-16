@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:586847441521:android:376dcc2c99ea399a06c1d0",
+        "mobilesdk_app_id": "1:586847441521:android:bdaade45b6bfcbbc06c1d0",
         "android_client_info": {
-          "package_name": "com.ebay"
+          "package_name": "com.mangoads.epay"
         }
       },
       "oauth_client": [

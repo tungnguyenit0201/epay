@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface epayTests : XCTestCase
+@interface EPAYTests : XCTestCase
 
 @end
 
-@implementation epayTests
+@implementation EPAYTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

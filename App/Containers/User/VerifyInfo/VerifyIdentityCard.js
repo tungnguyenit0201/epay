@@ -25,6 +25,7 @@ const VerifyIdentityCard = ({route}) => {
           title="Hình minh họa" // TODO: translate
           onDropImage={value => onChange('Avatar', value?.data)}
           cameraType="front"
+          style={styles.drop}
         />
 
         <Button
@@ -41,5 +42,8 @@ const styles = StyleSheet.create({
   //   flex: 1,
   //   backgroundColor: Colors.BACKGROUNDCOLOR,
   // },
+  drop: {
+    marginBottom: Spacing.PADDING,
+  },
 });
 export default VerifyIdentityCard;
