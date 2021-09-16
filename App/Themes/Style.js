@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   boxShadow: {
+    position: 'relative',
+    marginBottom: 20,
+    padding: 15,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
     shadowColor: Colors.black,
     shadowOffset: {
       width: 0,

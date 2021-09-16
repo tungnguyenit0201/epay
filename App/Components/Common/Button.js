@@ -54,7 +54,7 @@ export default ({
         style,
         disabled && {backgroundColor: Colors.g4},
       ]}>
-      {type == 'img' && (
+      {type && (
         <Image source={require('images/BgHeader.jpg')} style={styles.bgImg} />
       )}
 

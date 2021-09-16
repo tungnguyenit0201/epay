@@ -24,7 +24,7 @@ const Account = () => {
 
   // TODO: translate
   return (
-    <View style={[styles.box]}>
+    <View style={base.boxShadow}>
       <View style={styles.wbg}>
         <Image style={styles.bg} source={require('images/profile/wave.png')} />
       </View>
@@ -85,22 +85,6 @@ const Account = () => {
   );
 };
 const styles = StyleSheet.create({
-  box: {
-    position: 'relative',
-    //overflow: 'hidden',
-    marginBottom: 20,
-    padding: 15,
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
   wbg: {
     position: 'absolute',
     right: 0,

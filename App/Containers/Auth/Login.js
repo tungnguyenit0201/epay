@@ -16,20 +16,11 @@ const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
     useAuth();
   const translation = useTranslation();
-  const {setError} = useError();
 
-  const {biometryType, onTouchID} = useTouchID();
-
-  const _onLoginByTouchID = async () => {
-    try {
-      const result = await onTouchID();
-      if (result) {
-        onLoginByTouchID({phone: _.get(route, 'params.phone', '')});
-      }
-    } catch (error) {
-      setError({ErrorCode: -1, ErrorMessage: error});
-    }
-  };
+  const {biometryType, onTouchID} = useTouchID({
+    onSuccess: () =>
+      onLoginByTouchID({phone: _.get(route, 'params.phone', '')}),
+  });
 
   return (
     <>
@@ -125,9 +116,13 @@ const Login = ({route}) => {
                   />
 
                   {!!biometryType && (
-                    <Pressable onPress={_onLoginByTouchID} style={styles.btn}>
+                    <Pressable onPress={onTouchID} style={styles.btn}>
                       <Icon
-                        icon={Images.SignIn.Face}
+                        icon={
+                          biometryType === 'FaceID'
+                            ? Images.SignIn.Face
+                            : Images.SignIn.FingerPrint
+                        }
                         style={styles.iconSize}
                         tintColor={Colors.white}
                       />

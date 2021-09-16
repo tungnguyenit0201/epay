@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, HeaderBg, Icon, Header, Row, Col} from 'components';
+import {Text, HeaderBg, Icon, Header, Row, Col, Button} from 'components';
 import {
   ScrollView,
   View,
@@ -34,20 +34,16 @@ const User = () => {
 
   // TODO: translate
   return (
-    <View style={styles.container}>
-      <HeaderBg>
+    <View>
+      <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={base.wrap}>
+      <ScrollView style={{paddingTop: 20}}>
         <View style={[base.container]}>
-          <UserInfo />
-        </View>
-
-        <View style={[base.container]}>
+          <UserInfo style={[{marginBottom: 20}]} />
           <DinhDanh />
           <Account />
-
-          <Row space={10}>
+          <Row space={10} style={[{marginBottom: 30}]}>
             <Col space={10}>
               <TouchableOpacity
                 style={styles.item}
@@ -140,53 +136,56 @@ const User = () => {
               </TouchableOpacity> */}
             </Col>
           </Row>
-        </View>
-
-        <View style={styles.block}>
-          <View style={styles.item}>
-            <Icon
-              style={[styles.icon]}
-              icon={null} // TODO: add icon
-              size={24}
-              tintColor={Colors.cl1}
-            />
-            <Text size={Fonts.H6}>{'Thông tin ứng dụng'}</Text>
-            <Text size={Fonts.H6} style={{marginLeft: 'auto'}}>
-              {getVersion()}
-            </Text>
-          </View>
 
           <TouchableOpacity
-            style={styles.item}
+            style={[base.row, styles.itemMenu]}
             onPress={() => {
               Navigator.push(SCREEN.NOTIFICATION);
             }}>
-            <Icon
-              style={[styles.icon]}
-              icon={Images.Profile.Help}
-              size={24}
-              tintColor={Colors.cl1}
+            <Image
+              style={[styles.iconMenu]}
+              source={require('images/profile/Info.png')}
             />
-            <Text fs="h6">Trung tâm trợ giúp</Text>
+            <Text fs="h6" semibold ml={10}>
+              {'Thông tin ứng dụng'}
+            </Text>
+
+            <Icon
+              style={[base.leftAuto]}
+              size={24}
+              icon={Images.ArrowRight}
+              tintColor={Colors.g3}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[base.row, styles.itemMenu]}
+            onPress={() => {
+              Navigator.push(SCREEN.NOTIFICATION);
+            }}>
+            <Image
+              style={[styles.iconMenu]}
+              source={require('images/profile/Support.png')}
+            />
+            <Text fs="h6" semibold ml={10}>
+              Trung tâm trợ giúp
+            </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={base.bottom}>
-          <TouchableOpacity style={styles.item} onPress={onLogout}>
-            <Text size={Fonts.H6}>{translation.log_out} </Text>
-          </TouchableOpacity>
+        <View style={styles.boxLogout}>
+          <Button
+            onPress={onLogout}
+            type={1}
+            label={translation.log_out}
+            bold
+          />
         </View>
       </ScrollView>
-      <View style={base.footer}></View>
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.white,
-    flex: 1,
-  },
-
   item: {
     padding: 10,
     backgroundColor: Colors.white,
@@ -205,6 +204,34 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     width: 32,
     height: 32,
+  },
+
+  itemMenu: {
+    borderTopColor: Colors.g2,
+    borderTopWidth: 1,
+    paddingVertical: 10,
+  },
+  iconMenu: {
+    width: 32,
+    height: 32,
+  },
+
+  boxLogout: {
+    marginTop: 30,
+    paddingTop: scale(20),
+    paddingHorizontal: scale(20),
+    paddingBottom: scale(260),
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 export default User;

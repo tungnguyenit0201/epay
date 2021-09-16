@@ -11,6 +11,8 @@ import {useTranslation} from 'context/Language';
 import {useUserStatus} from 'context/User/utils';
 import {hidePhone} from 'utils/Functions';
 
+import StatusUser from 'components/Common/StatusUser';
+
 const User = ({style}) => {
   const {onVerify, statusVerified, getStatusVerifiedText} = useUserStatus();
   const {userInfo} = useUser();
@@ -40,15 +42,7 @@ const User = ({style}) => {
         <Text>{hidePhone(phone)}</Text>
       </View>
       <View style={{marginLeft: 'auto'}}>
-        <Button
-          size="xxs"
-          disabled={statusVerified != PERSONAL_IC.INACTIVE}
-          bg={Colors.Highlight}
-          radius={30}
-          color={Colors.white}
-          label={getStatusVerifiedText()}
-          onPress={() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD)}
-        />
+        <StatusUser size="xxs" />
       </View>
     </View>
   );

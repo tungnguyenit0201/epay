@@ -11,6 +11,7 @@ import {
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {debugData} from 'components/Common/Debug';
+import {COMMON_ENUM} from 'configs/Constants';
 
 let transactionID = '';
 
@@ -30,7 +31,7 @@ const getCommonParams = async (url, language = 'vi') => {
             '' +
             Math.floor(Math.random() * 10000)
           ).toString(),
-    RequestTime: moment().format('DD-MM-YYYY HH:mm:ss'),
+    RequestTime: moment().format(COMMON_ENUM.DATETIME_FORMAT),
     Lang: currentLanguage ? currentLanguage : language,
     Channel: 'App',
     AppVersion: getVersion(),

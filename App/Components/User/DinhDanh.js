@@ -1,13 +1,13 @@
 import React from 'react';
 import {Text, Button} from 'components';
 import {View, Image, StyleSheet} from 'react-native';
-import {Colors} from 'themes';
+import {Colors, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 const DinhDanh = () => {
   //TODO : translation
   return (
-    <View style={[styles.box]}>
+    <View style={base.boxShadow}>
       <View style={styles.ico}>
         <Image
           style={[{width: 40, height: 40}]}
@@ -33,21 +33,6 @@ const DinhDanh = () => {
   );
 };
 const styles = StyleSheet.create({
-  box: {
-    position: 'relative',
-    marginBottom: 20,
-    padding: 15,
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
   ico: {
     flexDirection: 'row',
     justifyContent: 'center',
