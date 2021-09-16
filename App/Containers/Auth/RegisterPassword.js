@@ -10,6 +10,7 @@ import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
@@ -110,13 +111,7 @@ const RegisterPassword = ({route}) => {
                 </Text>
               </ScrollView>
 
-              <View
-                style={[
-                  styles.wrap,
-                  styles.py1,
-                  styles.blockBtn,
-                  styles.bgWhite,
-                ]}>
+              <FooterContainer>
                 <View style={styles.flexRow}>
                   <Checkbox onPress={setActive} />
                   <Text style={{marginLeft: 5}}>
@@ -146,7 +141,7 @@ const RegisterPassword = ({route}) => {
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-              </View>
+              </FooterContainer>
             </View>
           );
         }}
@@ -166,10 +161,6 @@ const styles = StyleSheet.create({
   //-----------------------
   mtMinus1: {marginTop: -3},
   //-----------------------
-  py1: {paddingVertical: Spacing.PADDING},
-  //-----------------------
-  bgWhite: {backgroundColor: Colors.white},
-  //-----------------------
   iconSize: {
     width: scale(20),
     height: scale(20),
@@ -182,18 +173,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
     paddingRight: 9,
-  },
-  blockBtn: {
-    borderTopLeftRadius: Spacing.PADDING,
-    borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 8,
-    elevation: 24,
   },
 });
 export default RegisterPassword;

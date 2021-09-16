@@ -15,6 +15,7 @@ import {useRegister} from 'context/Auth/utils';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {Content} from 'components/Auth';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterFailure = ({route}) => {
   const translation = useTranslation();
@@ -52,7 +53,7 @@ const RegisterFailure = ({route}) => {
         style={[styles.wrap, styles.flex1, styles.mt1]}
       />
 
-      <View style={[styles.wrap, styles.py1, styles.blockBtn, styles.bgWhite]}>
+      <FooterContainer>
         <Button
           label="Gọi 024 32252336"
           style={styles.btn}
@@ -69,7 +70,7 @@ const RegisterFailure = ({route}) => {
           onPress={() => onNavigate(SCREEN.AUTH)}
           bold
         />
-      </View>
+      </FooterContainer>
     </BlueHeader>
   );
 };
@@ -80,30 +81,11 @@ const styles = StyleSheet.create({
   //--------------------
   mt1: {marginTop: 56},
   //--------------------
-  py1: {
-    paddingTop: Spacing.PADDING,
-    paddingBottom: Spacing.PADDING * 2,
-  },
-  //--------------------
-  bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
-  //--------------------
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
   },
   iconRight: {paddingRight: Spacing.PADDING},
-  blockBtn: {
-    borderTopLeftRadius: Spacing.PADDING,
-    borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 8,
-    elevation: 24,
-  },
 });
 
 export default RegisterFailure;

@@ -20,6 +20,7 @@ const Header = ({
   avoidStatusBar = false,
   blackIcon = false,
   logo,
+  onPressLogo,
 }) => {
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
@@ -90,10 +91,7 @@ const Header = ({
             *caution use [cart], because logo will 
               align a bit to left if cart is existed. */}
           {!!logo && (
-            <Pressable
-              onPress={() => {
-                Navigator.navigate(SCREEN.TAB_NAVIGATION);
-              }}>
+            <Pressable onPress={onPressLogo}>
               <Image source={logo} resizeMode="contain" style={[styles.logo]} />
             </Pressable>
           )}
