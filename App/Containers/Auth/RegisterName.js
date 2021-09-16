@@ -10,6 +10,7 @@ import {Formik} from 'formik';
 import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
 import BlueHeader from 'components/Auth/BlueHeader';
+import FooterContainer from 'components/Auth/footerContainer';
 
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
@@ -62,20 +63,15 @@ const RegisterName = () => {
               />
             </View>
 
-            <View
-              style={[
-                styles.wrap,
-                styles.py1,
-                styles.bgWhite,
-                styles.blockBtn,
-              ]}>
+            <FooterContainer>
               <Button
                 disabled={disable}
                 label={translation.done}
                 style={styles.btn}
                 onPress={handleSubmit}
               />
-            </View>
+            </FooterContainer>
+
             <HelpModal
               showModal={showModal}
               setShowModal={setShowModal}
@@ -92,25 +88,9 @@ const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   flex1: {flex: 1},
   //-----------------------
-  py1: {paddingVertical: Spacing.PADDING},
-  //-----------------------
-  bgWhite: {backgroundColor: Colors.white},
-  //-----------------------
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
-  },
-  blockBtn: {
-    borderTopLeftRadius: Spacing.PADDING,
-    borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 8,
-    elevation: 24,
   },
 });
 

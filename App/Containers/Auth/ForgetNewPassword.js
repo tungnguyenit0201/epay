@@ -14,38 +14,37 @@ import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
-import BigLogo from 'components/Auth/BigLogo';
 import Content from 'components/Auth/Content';
 import _ from 'lodash';
+import {SCREEN} from 'configs/Constants';
+import BlueHeader from 'components/Auth/BlueHeader';
+import FooterContainer from 'components/Auth/footerContainer';
 
 const ForgetNewPassword = ({route}) => {
   const {phone} = route?.params;
-  const {onNewPassword} = useForgetPassword();
+  const {onNewPassword, active, setActive} = useForgetPassword();
   const translation = useTranslation();
   const onSubmit = values => {
     onNewPassword({...values, phone});
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Header
-          back
-          blackIcon
-          avoidStatusBar
-          title={translation.reset_your_password}
-          // titleStyle={styles.headerTitle}
-          renderRightComponent={() => (
-            <TouchableOpacity style={styles.pRight}>
-              <Icon
-                icon={Images.Register.Info}
-                style={styles.firstIcon}
-                tintColor={Colors.BLACK}
-              />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+    <BlueHeader>
+      <Header
+        back
+        // blackIcon
+        // avoidStatusBar
+        renderRightComponent={() => (
+          <TouchableOpacity style={styles.pr1}>
+            <Icon
+              icon={Images.Register.Info}
+              style={styles.firstIcon}
+              tintColor={Colors.white}
+            />
+          </TouchableOpacity>
+        )}
+        logo={Images.logoEpay}
+      />
 
       <Formik
         initialValues={{
@@ -70,19 +69,17 @@ const ForgetNewPassword = ({route}) => {
           };
           // TODO: translate
           return (
-            <View style={styles.wrap}>
+            <View style={styles.flex1}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={{paddingVertical: scale(24)}}>
-                {/* <BigLogo /> */}
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
-                  // title="Tạo mật khẩu Epay"
+                  title="Đặt lại mật khẩu"
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
                 />
-                <View style={{height: scale(24)}} />
                 <TextInput
                   password
                   required
@@ -103,48 +100,74 @@ const ForgetNewPassword = ({route}) => {
                   value={values.passwordConfirm}
                   leftIcon={Images.Transfer.Lock}
                 />
-                <Text style={styles.textNote}>
+                <Text style={styles.note}>
                   {
                     translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
                   }
                 </Text>
               </ScrollView>
 
-              <View style={{paddingBottom: 20}}>
+              <FooterContainer>
+                <View style={styles.flexRow}>
+                  <Checkbox onPress={setActive} />
+                  <Text style={{marginLeft: 5}}>
+                    {` Tôi đồng ý với các `}
+                    <TouchableOpacity
+                      style={styles.mtMinus1}
+                      onPress={() => {}}>
+                      <Text style={styles.firstLink}>
+                        {'Thoả thuận người dùng '}
+                      </Text>
+                    </TouchableOpacity>
+                    và
+                    <TouchableOpacity
+                      style={styles.mtMinus1}
+                      onPress={() => {}}>
+                      <Text style={styles.firstLink}>
+                        {'Chính sách quyền riêng tư '}
+                      </Text>
+                    </TouchableOpacity>
+                    của Epay Services
+                  </Text>
+                </View>
+
                 <Button
-                  disabled={!_.isEmpty(errors)}
                   mt={10}
+                  disabled={!_.isEmpty(errors)}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-              </View>
+              </FooterContainer>
             </View>
           );
         }}
       </Formik>
-    </View>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
   wrap: {
-    flex: 1,
     paddingHorizontal: Spacing.PADDING,
   },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
+  flex1: {flex: 1},
+  flexRow: {flexDirection: 'row'},
+  //-----------------------
+  mtMinus1: {marginTop: -3},
+  //------------------
+  py1: {paddingVertical: scale(24)},
+  pr1: {paddingRight: Spacing.PADDING},
+  //------------------
   firstIcon: {
     width: scale(24),
     height: scale(24),
   },
-
-  // headerTitle: {
-  //   color: Colors.BLACKTEXT,
-  // },
+  note: {
+    paddingRight: 10,
+    fontSize: 12,
+  },
+  firstLink: {
+    textDecorationLine: 'underline',
+    marginLeft: 3,
+  },
 });
 export default ForgetNewPassword;

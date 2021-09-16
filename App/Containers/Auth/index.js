@@ -18,6 +18,7 @@ import _ from 'lodash';
 // import {scale} from 'utils/Functions';
 import {Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
+import FooterContainer from 'components/Auth/footerContainer';
 
 const Auth = () => {
   const {onCheckPhoneExist} = useAuth();
@@ -30,7 +31,16 @@ const Auth = () => {
       {/* test layout
         onPress={() => Navigator.navigate(SCREEN.REGISTER_FAILURE, 
         {functionType:'', phone:'', password:''})} */}
-      <BigLogo style={{marginBottom: 30}} />
+      <BigLogo
+        style={{marginBottom: 30}}
+        onPress={() =>
+          Navigator.navigate(SCREEN.REGISTER_FAILURE, {
+            functionType: '',
+            phone: '',
+            password: '',
+          })
+        }
+      />
 
       <Content
         title="Nhập số điện thoại"
@@ -72,22 +82,14 @@ const Auth = () => {
                 isDeleted={values.phone}
               />
 
-              <View
-                style={[
-                  styles.wrap,
-                  styles.py1,
-                  styles.absolute,
-                  styles.botZero,
-                  styles.blockBtn,
-                  styles.bgWhite,
-                  {width: width},
-                ]}>
+              <FooterContainer
+                style={[styles.absolute, styles.botZero, {width: width}]}>
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
                 />
-              </View>
+              </FooterContainer>
             </>
           );
         }}
@@ -100,22 +102,5 @@ const styles = StyleSheet.create({
   //-----------------------
   absolute: {position: 'absolute'},
   botZero: {bottom: 0},
-  //-----------------------
-  py1: {paddingVertical: Spacing.PADDING},
-  //-----------------------
-  bgWhite: {backgroundColor: Colors.white},
-  //-----------------------
-  blockBtn: {
-    borderTopLeftRadius: Spacing.PADDING,
-    borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 8,
-    elevation: 24,
-  },
 });
 export default Auth;
