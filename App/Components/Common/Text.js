@@ -34,6 +34,8 @@ const CustomText = ({
   let fontFamily = Fonts.FONT_REGULAR;
   if (italic) {
     fontFamily = Fonts.FONT_ITALIC;
+  } else if (semibold) {
+    fontFamily = Fonts.FONT_500;
   } else if (bold) {
     fontFamily = Fonts.FONT_BOLD;
   }
