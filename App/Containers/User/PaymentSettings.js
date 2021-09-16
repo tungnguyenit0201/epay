@@ -22,13 +22,13 @@ const PaymentSettings = () => {
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
-        <Header back title={translation.payment_setting} back />
+        <Header back title={translation.payment_setting} />
       </HeaderBg>
 
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.AUTOPAYMENT);
+          Navigator.navigate(SCREEN.AUTOPAYMENT);
         }}>
         <Icon
           mr={8}
@@ -47,7 +47,7 @@ const PaymentSettings = () => {
       <View
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
+          Navigator.navigate(SCREEN.NOTIFICATION);
         }}>
         <Icon
           mr={8}
@@ -76,7 +76,7 @@ const PaymentSettings = () => {
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
+          Navigator.navigate(SCREEN.NOTIFICATION);
         }}>
         <Icon
           mr={8}
@@ -101,8 +101,8 @@ const PaymentSettings = () => {
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,

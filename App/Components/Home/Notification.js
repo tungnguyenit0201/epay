@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Icon, Text} from 'components';
-import {Images} from 'themes';
+import {Colors, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 
@@ -10,12 +10,12 @@ const Notification = ({data, style}) => {
     <TouchableOpacity
       style={[{marginLeft: 'auto', position: 'relative'}]}
       onPress={() => {
-        Navigator.push(SCREEN.NOTIFICATION);
+        Navigator.navigate(SCREEN.NOTIFICATION);
       }}>
-      <Icon icon={Images.Noti} tintColor="#fff" />
+      <Icon icon={Images.Noti} tintColor={Colors.white} />
       <View style={styles.number}>
         <Text
-          color="#fff"
+          color={Colors.white}
           size={10}
           style={{
             lineHeight: 16,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   number: {
     width: 16,
     height: 16,
-    backgroundColor: '#D70000',
+    backgroundColor: Colors.Highlight,
     position: 'absolute',
     top: -5,
     right: -5,
