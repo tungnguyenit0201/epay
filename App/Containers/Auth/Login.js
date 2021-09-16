@@ -12,7 +12,7 @@ import Content from 'components/Auth/Content';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/footerContainer';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =

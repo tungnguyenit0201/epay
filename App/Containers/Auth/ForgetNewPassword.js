@@ -18,7 +18,7 @@ import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/footerContainer';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const ForgetNewPassword = ({route}) => {
   const {phone} = route?.params;

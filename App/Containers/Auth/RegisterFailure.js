@@ -15,7 +15,7 @@ import {useRegister} from 'context/Auth/utils';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {Content} from 'components/Auth';
-import FooterContainer from 'components/Auth/footerContainer';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterFailure = ({route}) => {
   const translation = useTranslation();

@@ -28,7 +28,7 @@ import {useTranslation} from 'context/Language';
 import BigLogo from 'components/Auth/BigLogo';
 import BlueHeader from 'components/Auth/BlueHeader';
 import Content from 'components/Auth/Content';
-import FooterContainer from 'components/Auth/footerContainer';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const ForgetPassword = () => {
   const {phone} = usePhone();

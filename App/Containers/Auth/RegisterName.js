@@ -10,7 +10,7 @@ import {Formik} from 'formik';
 import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/footerContainer';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);

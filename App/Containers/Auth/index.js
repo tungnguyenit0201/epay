@@ -18,7 +18,7 @@ import _ from 'lodash';
 // import {scale} from 'utils/Functions';
 import {Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/footerContainer';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const Auth = () => {
   const {onCheckPhoneExist} = useAuth();
@@ -28,19 +28,10 @@ const Auth = () => {
   return (
     //TODO: translate
     <BlueHeader style={styles.wrap}>
-      {/* test layout
+      {/* test layout,add onPress to BigLogo
         onPress={() => Navigator.navigate(SCREEN.REGISTER_FAILURE, 
         {functionType:'', phone:'', password:''})} */}
-      <BigLogo
-        style={{marginBottom: 30}}
-        onPress={() =>
-          Navigator.navigate(SCREEN.REGISTER_FAILURE, {
-            functionType: '',
-            phone: '',
-            password: '',
-          })
-        }
-      />
+      <BigLogo style={{marginBottom: 30}} />
 
       <Content
         title="Nhập số điện thoại"
