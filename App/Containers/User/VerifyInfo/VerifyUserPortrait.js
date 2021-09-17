@@ -7,6 +7,7 @@ import {
   Header,
   Button,
   DatePicker,
+  Text,
 } from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
@@ -19,7 +20,7 @@ import {useUser} from 'context/User';
 import {useFocusEffect} from '@react-navigation/native';
 import {SCREEN} from 'configs/Constants';
 
-const FormikCustom = ({identifyCard}) => {
+const FormikCustom = ({identifyCard, onContinue}) => {
   const {goRegionSelect} = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
@@ -142,14 +143,16 @@ const FormikCustom = ({identifyCard}) => {
         style={{marginBottom: 10}}
         required
       />
-
+      <Text onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}>
+        Xác thực lại
+      </Text>
       <Button label={translation.done} onPress={handleSubmit} />
     </View>
   );
 };
 
 const VerifyUserPortrait = ({route}) => {
-  const {onUpdateAllInfo} = useVerifyInfo(route?.params);
+  const {onUpdateAllInfo, onContinue} = useVerifyInfo(route?.params);
   const translation = useTranslation();
 
   return (
@@ -173,7 +176,10 @@ const VerifyUserPortrait = ({route}) => {
           }}
           validationSchema={verifyUserSchema}
           onSubmit={onUpdateAllInfo}>
-          <FormikCustom identifyCard={route?.params?.identifyCard} />
+          <FormikCustom
+            identifyCard={route?.params?.identifyCard}
+            onContinue={onContinue}
+          />
         </Formik>
       </ScrollView>
     </>

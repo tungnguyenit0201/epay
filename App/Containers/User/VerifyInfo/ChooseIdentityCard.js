@@ -14,8 +14,8 @@ import {useVerifyInfo} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {DropDown} from 'components';
 
-const ChooseIdentityCard = () => {
-  const {verifyInfo, onChange, onContinue} = useVerifyInfo();
+const ChooseIdentityCard = ({route}) => {
+  const {verifyInfo, onChange, onContinue} = useVerifyInfo(route?.params);
   const translation = useTranslation();
   const [visible, setVisible] = useState(false);
 

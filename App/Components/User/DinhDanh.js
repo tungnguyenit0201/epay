@@ -26,7 +26,7 @@ const DinhDanh = () => {
         label="Định danh ngay"
         bold
         onPress={() => {
-          Navigator.push(SCREEN.VERIFY_USER_INFO);
+          Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         }}
       />
     </View>

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 import {Text} from 'components';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -109,7 +110,7 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={() => navigation.navigate(SCREEN.QRPAY)}>
+          onPress={() => Alert.alert('', 'Coming soon')}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>
