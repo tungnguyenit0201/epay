@@ -11,7 +11,7 @@ import {
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {debugData} from 'components/Common/Debug';
-import {COMMON_ENUM} from 'configs/Constants';
+import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
 
 let transactionID = '';
 
@@ -19,7 +19,6 @@ const getCommonParams = async (url, language = 'vi') => {
   const uniqueDeviceID = getUniqueId();
   let urlPart = url.split('/');
   let currentLanguage = await AsyncStorage.getItem('currentLanguage');
-
   return {
     MsgID: uniqueDeviceID + moment().format('DD-MM-YYYY HH:mm:ss.SSS'),
     MsgType: urlPart[urlPart.length - 1],
@@ -57,6 +56,8 @@ async function request({
 }) {
   let root = API.ROOT;
   const requestMethod = axios;
+  const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
+  if (token) headers = {...headers, Authorization: `Bearer ${token}`};
 
   if (typeof requestMethod[method] === 'function') {
     try {

@@ -18,6 +18,7 @@ const OTPContainer = ({
   label,
 }) => {
   const translation = useTranslation();
+  console.log('countdown > 0 :>> ', countdown > 0);
   return (
     // TODO: translate
     <>
@@ -55,7 +56,9 @@ const OTPContainer = ({
                   color: Colors.cl1,
                 },
               ]}>
-              {countdown > 0 ? ` 00:${countdown}` : ` Gửi lại`}
+              {countdown > 0
+                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                : ` Gửi lại`}
             </Text>
           </Pressable>
         </Text>
