@@ -11,15 +11,15 @@ import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 const StatusUser = ({size = 'sm', radius = 30, style}) => {
   const {statusVerified, onVerify, getStatusVerifiedText} = useUserStatus();
   const setColors = {
-    ACTIVED: '#D80000',
+    INACTIVE: '#D80000',
     EXPIRED: '#FFC908',
-    INACTIVE: '#1EC84E',
+    ACTIVED: '#1EC84E',
     REJECTED: Colors.Highlight,
     RE_VERIFYING: '#D80000',
-    VERIFYING: '#1EC84E',
+    VERIFYING: '#FFC908',
   };
 
-  let setBg = setColors.VERIFYING;
+  let setBg = setColors.INACTIVE;
 
   if (statusVerified == PERSONAL_IC.ACTIVED) {
     setBg = setColors.ACTIVED;
@@ -31,19 +31,22 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
     setBg = setColors.REJECTED;
   } else if (statusVerified == PERSONAL_IC.RE_VERIFYING) {
     setBg = setColors.RE_VERIFYING;
+  } else if (statusVerified == PERSONAL_IC.VERIFYING) {
+    setBg = setColors.VERIFYING;
   }
 
   return (
     <>
       <Button
-        disabled={statusVerified != PERSONAL_IC.INACTIVE}
         radius={radius}
         bg={setBg}
         size={size}
         color={Colors.white}
         label={getStatusVerifiedText()}
         style={[{minWidth: 120}, style]}
-        onPress={onVerify}
+        onPress={() => {
+          onVerify();
+        }}
       />
     </>
   );

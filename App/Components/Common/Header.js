@@ -14,7 +14,6 @@ const Header = ({
   style,
   titleStyle,
   back = false,
-  cart = false,
   onPressBack,
   renderRightComponent,
   avoidStatusBar = false,
@@ -33,115 +32,77 @@ const Header = ({
         style,
       ]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
-      <View style={[{minHeight: scale(24)}]}>
-        {!!title && (
-          <Text
-            semibold
-            fs="h6"
-            style={[
-              styles.title,
-              titleStyle,
-              blackIcon && {color: Colors.black},
-            ]}
-            mb={10}>
-            {title}
-          </Text>
-        )}
-        <View
-          style={[styles.flexRow, styles.alignCenter, styles.justifybetween]}>
-          {Platform.isPad || Platform.OS == 'macos' ? (
-            <Pressable
-              style={styles.menuIcon}
-              onPress={() => Navigator.openDrawer()}>
-              <Image
-                source={Images.MenuIcon}
-                style={{height: scale(12), width: scale(12)}}
+      <View style={styles.header}>
+        {back ? (
+          <Pressable
+            onPress={() => goBack()}
+            hitSlop={{
+              right: scale(30),
+              top: scale(20),
+              bottom: scale(20),
+              left: scale(30),
+            }}>
+            <View style={styles.back}>
+              <Icon
+                icon={Images.ArrowLeft}
+                tintColor={blackIcon ? Colors.BLACK : Colors.white}
               />
-            </Pressable>
-          ) : (
-            <>
-              {back ? (
-                <Pressable
-                  onPress={() => goBack()}
-                  hitSlop={{
-                    right: scale(30),
-                    top: scale(20),
-                    bottom: scale(20),
-                    left: scale(30),
-                  }}>
-                  <View style={styles.back}>
-                    <Icon
-                      icon={Images.ArrowLeft}
-                      tintColor={blackIcon ? Colors.BLACK : Colors.white}
-                    />
-                  </View>
-                </Pressable>
-              ) : (
-                <View />
-              )}
-            </>
+            </View>
+          </Pressable>
+        ) : (
+          <View />
+        )}
+        <View style={styles.wrapCenter}>
+          {!!title && (
+            <Text
+              semibold
+              fs="h6"
+              color={Colors.white}
+              centered
+              style={[titleStyle, blackIcon && {color: Colors.black}]}>
+              {title}
+            </Text>
           )}
-
-          {/* Please do not move logo go anywhere.Because:
-            *logo is aligning between icon left and icon right
-            *you must to declare both icon left and right when you use
-              logo.
-            *I used to use absolute, but logo will overlap 
-              icon left and right@@.
-            *caution use [cart], because logo will 
-              align a bit to left if cart is existed. */}
           {!!logo && (
             <Pressable onPress={onPressLogo}>
               <Image source={logo} resizeMode="contain" style={[styles.logo]} />
             </Pressable>
           )}
-
-          {cart && (
-            <View
-              style={{
-                marginHorizontal: Spacing.PADDING,
-              }}></View>
-          )}
-          {!!renderRightComponent && renderRightComponent()}
         </View>
+
+        {!!renderRightComponent ? (
+          renderRightComponent()
+        ) : (
+          <View style={styles.rightIcon} />
+        )}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  wrap: {paddingBottom: scale(10)},
-  //-----------------------------
-  // absolute: {position: 'absolute'},
-  // topZero: {top: 0},
-  // leftZero: {left: 0},
-  // rightZero: {right: 0},
-  // botZero: {bottom: 0},
-  //-----------------------------
-  flexRow: {flexDirection: 'row'},
-  justifybetween: {justifyContent: 'space-between'},
-  alignCenter: {alignItems: 'center'},
-  //-----------------------------
+  wrap: {paddingVertical: scale(10)},
+
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    minHeight: scale(24),
+  },
+
   avoidStatusBar: {height: getStatusBarHeight()},
-  // flexRowBetween: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  // },
+
   back: {paddingHorizontal: Spacing.PADDING / 2},
-  title: {
-    textAlign: 'center',
-    color: Colors.white,
-    paddingTop: 5,
+  wrapCenter: {
+    alignItems: 'center',
+    flex: 1,
   },
-  menuIcon: {
-    paddingLeft: Spacing.PADDING,
-    paddingVertical: scale(8),
-    paddingRight: Spacing.PADDING * 10,
-  },
+
   logo: {
     width: 110,
     height: 40,
+  },
+  rightIcon: {
+    width: Spacing.PADDING * 2.5,
   },
 });
 
