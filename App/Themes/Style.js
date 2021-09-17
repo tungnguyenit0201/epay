@@ -8,8 +8,7 @@ const styles = StyleSheet.create({
   },
   wrap: {
     backgroundColor: Colors.white,
-    paddingTop: 20,
-    paddingBottom: 150,
+    paddingVertical: 20,
   },
   container: {
     paddingHorizontal: Spacing.PADDING,

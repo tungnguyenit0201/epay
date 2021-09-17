@@ -40,7 +40,7 @@ const Notification = () => {
           style={styles.TickCircle}
         />
       </HeaderBg>
-      <View style={base.wrap}>
+      <View style={styles.wrap}>
         <View style={[base.container, styles.flexRow]}>
           <FlatList
             data={dataType}
@@ -108,26 +108,61 @@ const Notification = () => {
               })
             ) : (
               // TODO: translate
-              <View style={styles.textCenter}>
-                <Text>Không có thông báo nào</Text>
-              </View>
+              <>
+                <View style={styles.emtyNoti}>
+                  <Image
+                    source={require('images/noti/Noti.png')}
+                    style={styles.imgSuccess}
+                  />
+                  <Text>Không có thông báo nào</Text>
+                </View>
+              </>
             )}
           </View>
           <View style={{height: 120}}></View>
         </ScrollView>
       </View>
-
+      {selectNotify(type).length !== 0 ? (
+        selectNotify(type).map((item, index) => {})
+      ) : (
+        <Image source={require('images/wave.png')} style={styles.bgImg} />
+      )}
       {/* <FooterNotification /> */}
     </>
   );
 };
 const styles = StyleSheet.create({
+  wrap: {
+    paddingTop: 20,
+    paddingBottom: 150,
+  },
+
+  emtyNoti: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+
+  imgSuccess: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
+  },
+
   TickCircle: {
     width: 24,
     height: 24,
     position: 'absolute',
     right: Spacing.PADDING,
     bottom: 20,
+  },
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
   isRead: {
     backgroundColor: Colors.l2,
@@ -164,11 +199,7 @@ const styles = StyleSheet.create({
   },
 
   title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
-  textCenter: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   icon: {
     width: 20,
     height: 20,
