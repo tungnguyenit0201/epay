@@ -55,7 +55,7 @@ const Header = ({
         <View style={styles.wrapCenter}>
           {!!title && (
             <Text
-              semibold
+              fw="700"
               fs="h6"
               color={Colors.white}
               centered

@@ -20,8 +20,8 @@ const useVerifyInfo = (initialValue = {}) => {
   const translation = useTranslation();
   const {getPhone} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
-  let [disabledIdentify, setDisabledIdentify] = useState(false);
-  let [disabledAvatar, setDisabledAvatar] = useState(false);
+  let [disabledIdentify, setDisabledIdentify] = useState(true);
+  let [disabledAvatar, setDisabledAvatar] = useState(true);
   const [showModalReVerify, setShowModalReVerify] = useState(false);
   const {onClearRegionData} = useSelectRegion();
 
@@ -32,7 +32,7 @@ const useVerifyInfo = (initialValue = {}) => {
         !contentRef.current?.ICFrontPhoto || !contentRef.current?.ICBackPhoto,
       ),
     );
-    setDisabledAvatar(!contentRef.current?.Avatar);
+    if (key == 'Avatar') setDisabledAvatar(Boolean(!value));
   };
 
   const onContinue = screen => {

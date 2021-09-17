@@ -15,6 +15,7 @@ const CustomText = ({
   children,
   size,
   fs = 'md',
+  fw,
   lineHeight,
   mt,
   mb,
@@ -61,6 +62,7 @@ const CustomText = ({
         fs === 'h4' && {fontSize: Fonts.H4, lineHeight: 32},
         fs === 'h5' && {fontSize: Fonts.H5, lineHeight: 28},
         fs === 'h6' && {fontSize: Fonts.H6, lineHeight: 24},
+        !!fw && {fontWeight: fw},
 
         style,
       ]}
