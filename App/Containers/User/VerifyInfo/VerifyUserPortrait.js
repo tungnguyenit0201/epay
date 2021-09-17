@@ -150,7 +150,6 @@ const FormikCustom = ({identifyCard}) => {
 
 const VerifyUserPortrait = ({route}) => {
   const {onUpdateAllInfo} = useVerifyInfo(route?.params);
-  console.log('route?.params :>> ', route?.params);
   const translation = useTranslation();
 
   return (

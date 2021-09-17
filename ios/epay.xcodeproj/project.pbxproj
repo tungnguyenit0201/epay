@@ -16,7 +16,7 @@
 		2AF2E17C41984CB0A7FFFF2D /* SVN-GilroyBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 638FEAC0D789439A9FC9680E /* SVN-GilroyBold.ttf */; };
 		367081BB7CB54A389822987A /* SVN-GilroyMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFE8F7761D5D486CBE4AF2B9 /* SVN-GilroyMedium.ttf */; };
 		406CE53C773E0CDFF0AE83D6 /* libPods-EPAY.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 067234CC868FA76736F1028C /* libPods-EPAY.a */; };
-		72E79D7626F302DE00B8CCBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72E79D7526F302DE00B8CCBD /* GoogleService-Info.plist */; };
+		72B1556E26F44BB700116C71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72B1556D26F44BB700116C71 /* GoogleService-Info.plist */; };
 		7BDEE2B23D7742E89959EB18 /* SVN-GilroyBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8F35B907E8E46D29BBC3E09 /* SVN-GilroyBoldItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C68748811D524D428CCD0F3E /* SVN-Gilroy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B455C50395A54478816A5A85 /* SVN-Gilroy.ttf */; };
@@ -47,7 +47,7 @@
 		2D944497400361842AC19284 /* Pods-EPAY-EPAYTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EPAY-EPAYTests.release.xcconfig"; path = "Target Support Files/Pods-EPAY-EPAYTests/Pods-EPAY-EPAYTests.release.xcconfig"; sourceTree = "<group>"; };
 		638FEAC0D789439A9FC9680E /* SVN-GilroyBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyBold.ttf"; path = "../assets/fonts/SVN-GilroyBold.ttf"; sourceTree = "<group>"; };
 		725089D126F1DC1600CC79F4 /* EPAYRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = EPAYRelease.entitlements; path = EPAY/EPAYRelease.entitlements; sourceTree = "<group>"; };
-		72E79D7526F302DE00B8CCBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/EPAY/cer/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		72B1556D26F44BB700116C71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72E79D7726F30F8100B8CCBD /* EPAY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = EPAY.entitlements; path = EPAY/EPAY.entitlements; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EPAY/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		870F382ECA514CC39577A74B /* SVN-GilroyMediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyMediumItalic.ttf"; path = "../assets/fonts/SVN-GilroyMediumItalic.ttf"; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				72E79D7526F302DE00B8CCBD /* GoogleService-Info.plist */,
+				72B1556D26F44BB700116C71 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* EPAY */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* EPAYTests */,
@@ -245,7 +245,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "epay" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "EPAY" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -278,7 +278,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				72E79D7626F302DE00B8CCBD /* GoogleService-Info.plist in Resources */,
+				72B1556E26F44BB700116C71 /* GoogleService-Info.plist in Resources */,
 				C68748811D524D428CCD0F3E /* SVN-Gilroy.ttf in Resources */,
 				2AF2E17C41984CB0A7FFFF2D /* SVN-GilroyBold.ttf in Resources */,
 				7BDEE2B23D7742E89959EB18 /* SVN-GilroyBoldItalic.ttf in Resources */,
@@ -735,7 +735,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "epay" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "EPAY" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
