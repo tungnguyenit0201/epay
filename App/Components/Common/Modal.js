@@ -1,24 +1,63 @@
 import React, {useState} from 'react';
-import {StyleSheet, Pressable, View} from 'react-native';
+import {
+  StyleSheet,
+  Pressable,
+  Image,
+  View,
+  ImageBackground,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import {scale} from 'utils/Functions';
-import {Colors, Spacing, base, Fonts} from 'themes';
+import {Colors, Spacing, Images, Fonts} from 'themes';
 import {Text} from 'components';
 
-const ModalCustom = ({visible, title, content, buttonGroup, onClose}) => {
+const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
   return (
-    <View style={[styles.container]}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={visible}
-        onBackdropPress={onClose}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            {title && (
-              <Text style={[styles.modalText, styles.title]}>{title}</Text>
-            )}
-            {content && <Text style={styles.modalText}>{content}</Text>}
+    //TODO: Translate
+    <Modal
+      animationType="slide"
+      transparent={true}
+      isVisible={visible}
+      onBackdropPress={onClose}
+      style={styles.alignCenter}>
+      <View
+        style={[
+          styles.bgWhite,
+          styles.maxWidth1,
+          styles.w1,
+          styles.borderRadius1,
+          styles.pb1,
+        ]}>
+        <ImageBackground
+          source={Images.SignUp.BlueWave}
+          style={[
+            styles.fullWidth,
+            styles.alignCenter,
+            styles.justifyCenter,
+            styles.h1,
+          ]}
+          resizeMode="contain">
+          {!!icon && (
+            <Image
+              source={icon}
+              style={[styles.iconBigSize, styles.topMinus1]}
+              resizeMode="contain"
+            />
+          )}
+        </ImageBackground>
+
+        {title && (
+          <Text bold fs="h6" centered mb={8}>
+            {title}
+          </Text>
+        )}
+
+        {content && (
+          <View style={[styles.px1]}>
+            <Text centered fs="md" mb={42}>
+              {content}
+            </Text>
+
             {!buttonGroup ? (
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -29,61 +68,47 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose}) => {
               buttonGroup()
             )}
           </View>
-        </View>
-      </Modal>
-    </View>
+        )}
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    opacity: 0.7,
-    backgroundColor: Colors.black,
-  },
-  centeredView: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalView: {
-    backgroundColor: Colors.white,
-    borderRadius: scale(20),
-    paddingHorizontal: Spacing.PADDING * 2,
-    paddingVertical: Spacing.PADDING,
-    alignItems: 'center',
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   button: {
     borderRadius: scale(20),
     paddingVertical: Spacing.PADDING / 2,
     paddingHorizontal: Spacing.PADDING,
     elevation: 2,
   },
-
-  buttonClose: {
-    backgroundColor: Colors.cl1,
-  },
+  buttonClose: {backgroundColor: Colors.cl1},
   textStyle: {
     color: Colors.white,
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  modalText: {
-    marginBottom: Spacing.PADDING,
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: Fonts.H5,
-    fontWeight: 'bold',
+  //------------------
+  topMinus1: {top: -22},
+  //------------------
+  alignCenter: {alignItems: 'center'},
+  justifyCenter: {justifyContent: 'center'},
+  //------------------
+  fullWidth: {width: '100%'},
+  w1: {width: '90%'},
+  maxWidth1: {maxWidth: 311},
+  //------------------
+  h1: {height: 195},
+  //------------------
+  px1: {paddingHorizontal: 32},
+  pb1: {paddingBottom: 15},
+  //------------------
+  bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  //------------------
+  borderRadius1: {borderRadius: Spacing.PADDING},
+  //------------------
+  iconBigSize: {
+    width: 64,
+    height: 64,
   },
 });
 
