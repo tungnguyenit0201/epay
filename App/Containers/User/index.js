@@ -57,7 +57,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.PAYMENT_SETTINGS);
+                  Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -68,7 +68,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.SECURITY);
+                  Navigator.navigate(SCREEN.SECURITY);
                 }}>
                 <Image style={[styles.icon]} source={Images.Profile.BaoMat} />
                 <Text semibold>{translation.password_and_security} </Text>
@@ -78,7 +78,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.LANGUAGE_SETTING);
+                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -89,7 +89,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.LANGUAGE_SETTING);
+                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -101,7 +101,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.LANGUAGE_SETTING);
+                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -112,7 +112,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.NOTIFICATION);
+                  Navigator.navigate(SCREEN.NOTIFICATION);
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -124,7 +124,7 @@ const User = () => {
               {/* <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.push(SCREEN.LANGUAGE_SETTING);
+                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                 }}>
                 <Icon
                   style={[styles.icon]}
@@ -140,7 +140,7 @@ const User = () => {
           <TouchableOpacity
             style={[base.row, styles.itemMenu]}
             onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
+              Navigator.navigate(SCREEN.NOTIFICATION);
             }}>
             <Image
               style={[styles.iconMenu]}
@@ -161,7 +161,7 @@ const User = () => {
           <TouchableOpacity
             style={[base.row, styles.itemMenu]}
             onPress={() => {
-              Navigator.push(SCREEN.NOTIFICATION);
+              Navigator.navigate(SCREEN.NOTIFICATION);
             }}>
             <Image
               style={[styles.iconMenu]}

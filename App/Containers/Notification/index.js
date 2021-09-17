@@ -100,7 +100,7 @@ const Notification = () => {
           </View>
         )}
       </ScrollView>
-      <FooterNotification />
+      {/* <FooterNotification /> */}
     </>
   );
 };
