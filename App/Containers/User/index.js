@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {SCREEN} from 'configs/Constants';
+import {PERSONAL_IC, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {scale, formatMoney} from 'utils/Functions';
@@ -41,7 +41,9 @@ const User = () => {
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
           <UserInfo style={[{marginBottom: 20}]} />
-          <DinhDanh />
+          {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
+            <DinhDanh />
+          )}
           <Account />
           <Row space={10} style={[{marginBottom: 30}]}>
             <Col space={10}>

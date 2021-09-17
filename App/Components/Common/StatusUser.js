@@ -45,7 +45,7 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
         label={getStatusVerifiedText()}
         style={[{minWidth: 120}, style]}
         onPress={() => {
-          onVerify();
+          statusVerified == PERSONAL_IC.INACTIVE && onVerify();
         }}
       />
     </>

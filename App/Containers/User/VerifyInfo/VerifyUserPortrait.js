@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
+import {ScrollView, StyleSheet, View, Image} from 'react-native';
 import {
   HeaderBg,
   InputBlock,
@@ -50,7 +50,6 @@ const FormikCustom = ({identifyCard, onContinue}) => {
   );
   return (
     <View style={[base.container, {paddingTop: 20}]}>
-      <Progress step={3} />
       <InputBlock
         label={translation.enter_your_full_name}
         style={{marginBottom: 10}}
@@ -159,6 +158,12 @@ const VerifyUserPortrait = ({route}) => {
     <>
       <HeaderBg>
         <Header back title={translation?.account_verification} />
+        <Progress step={3} />
+        <Image
+          source={Images.VerifyUserInfo.iconDown}
+          style={[styles.triangleDown]}
+          resizeMode="contain"
+        />
       </HeaderBg>
       <ScrollView style={styles.container}>
         <Formik
@@ -187,5 +192,12 @@ const VerifyUserPortrait = ({route}) => {
 };
 const styles = StyleSheet.create({
   container: {backgroundColor: Colors.white},
+  triangleDown: {
+    position: 'absolute',
+    right: Spacing.PADDING * 2 + 10 / 2,
+    bottom: -9,
+    width: 20,
+    height: 10,
+  },
 });
 export default VerifyUserPortrait;

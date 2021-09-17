@@ -68,34 +68,6 @@ const VerifyUserInfo = ({route}) => {
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container, styles.pt1]}>
-          {/* <Progress step={1} /> */}
-
-          {/* <Picker
-            items={[
-              {label: 'Nữ', value: 1},
-              {label: 'Nam', value: 2},
-            ]}
-            onChange={index => onPicker(index)}
-            value={domain}
-          /> */}
-          {/* 
-          <InputBlock
-            label={'Họ và tên'}
-            onChange={value => onChange('name', value)}
-          />
-          <InputBlock
-            label={'Ngày sinh'}
-            onChange={value => onChange('birthday', value)}
-          /> */}
-
-          {/* <SelectImage
-            title="Mặt trước" // TODO: translate
-            onSelectImage={value => {
-              onChange('ICFrontPhoto', value?.data);
-              identityCard == 3 && onChange('ICBackPhoto', value?.data);
-            }}
-            css={styles.mb1}
-          /> */}
           <DropImage
             title="Ảnh mặt trước" // TODO: translate
             onDropImage={value => {
@@ -121,7 +93,7 @@ const VerifyUserInfo = ({route}) => {
 
       <View style={[styles.wrap, styles.bgWhite, styles.py1]}>
         <Button
-          disabled={disabledIdentify}
+          disabled={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
           label="Tiếp tục" // TODO: translate
           onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
         />
@@ -287,7 +259,7 @@ const styles = StyleSheet.create({
   alignCenter: {alignItems: 'center'},
   triangleDown: {
     position: 'absolute',
-    left: 30,
+    left: Spacing.PADDING * 2 + 10 / 2,
     bottom: -9,
   },
   triangleDownImg: {
