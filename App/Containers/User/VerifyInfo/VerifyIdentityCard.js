@@ -10,7 +10,9 @@ import DropImage from 'components/User/VerifyInfo/DropImage';
 import {useTranslation} from 'context/Language';
 
 const VerifyIdentityCard = ({route}) => {
-  const {disabledAvatar, onChange, onContinue} = useVerifyInfo(route?.params);
+  const {disabledAvatar, onChange, onContinue, verifyInfo} = useVerifyInfo(
+    route?.params,
+  );
   const translation = useTranslation();
 
   return (
@@ -23,9 +25,10 @@ const VerifyIdentityCard = ({route}) => {
 
         <DropImage
           title="Hình minh họa" // TODO: translate
-          onDropImage={value => onChange('Avatar', value?.data)}
+          onDropImage={value => onChange('Avatar', value)}
           cameraType="front"
           style={styles.drop}
+          draft={verifyInfo?.Avatar}
         />
 
         <Button

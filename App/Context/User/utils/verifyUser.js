@@ -54,8 +54,8 @@ const useVerifyInfo = (initialValue = {}) => {
       let result = await updateIdentify({
         phone,
         ICInfor: {
-          ICBackPhoto,
-          ICFrontPhoto,
+          ICBackPhoto: ICBackPhoto?.data,
+          ICFrontPhoto: ICFrontPhoto?.data,
           ICFullName,
           ICIssuedDate,
           ICIssuedPlace,
@@ -87,7 +87,7 @@ const useVerifyInfo = (initialValue = {}) => {
         phone,
         personalInfo: {
           FullName: ICFullName,
-          Avatar,
+          Avatar: Avatar?.data,
           DateOfBirth,
           Email,
           SexType,
