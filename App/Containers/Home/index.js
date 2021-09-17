@@ -109,34 +109,28 @@ const Home = () => {
       name: translation.history_of_passed_stations,
       screen: SCREEN.QRPAY,
     },
-    {
-      icon: Images.Homes.TramDichvVu,
-      name: translation.stationservice,
-      screen: SCREEN.QRPAY,
-    },
   ];
   return (
     <>
+      <HeaderBg>
+        <View style={styles.rowHeader}>
+          <Image source={Images.Logo} style={[{width: 88, height: 32}]} />
+          <User style={{marginBottom: 20}} />
+        </View>
+        <MonneySimple />
+        <View style={{marginBottom: 20}}>
+          <ListItemSimple
+            scroll
+            space={1}
+            col={4}
+            data={dataMenu}
+            styleText={[{fontSize: 14, color: Colors.white}]}
+            styleWicon={[{backgroundColor: Colors.cl1}]}
+            //styleIcon={[{tintColor: Colors.white}]}
+          />
+        </View>
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <View style={styles.rowHeader}>
-            <Image source={Images.Logo} style={[{width: 88, height: 32}]} />
-            <User style={{marginBottom: 20}} />
-          </View>
-          <MonneySimple />
-          <View style={{marginBottom: 20}}>
-            <ListItemSimple
-              scroll
-              space={1}
-              col={4}
-              data={dataMenu}
-              styleText={[{fontSize: 14, color: Colors.white}]}
-              styleWicon={[{backgroundColor: Colors.cl1}]}
-              //styleIcon={[{tintColor: Colors.white}]}
-            />
-          </View>
-        </HeaderBg>
-
         <View style={base.container}>
           <DinhDanh />
 
@@ -167,12 +161,13 @@ const Home = () => {
           </View> */}
         </View>
         <View style={base.container}>
-          <Image style={styles.bgHome} source={Images.Homes.Wave} />
           {/* <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} /> */}
           <IconList />
         </View>
+
         <View style={styles.bottom}></View>
       </ScrollView>
+      <Image source={require('images/wave.png')} style={styles.bgImg} />
       {modalSmartOTP.smartOTP && (
         <Modal
           visible={modalSmartOTP.smartOTP}
@@ -277,13 +272,14 @@ const styles = StyleSheet.create({
   underline: {
     textDecorationLine: 'underline',
   },
-  bgHome: {
+  bgImg: {
     width: scale(375),
     height: scale(375),
     position: 'absolute',
-    top: 0,
-    left: 0,
+    bottom: 0,
+    right: 0,
   },
+
   bottom: {
     height: scale(80),
   },

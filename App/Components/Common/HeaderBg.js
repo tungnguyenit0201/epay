@@ -9,7 +9,7 @@ import StatusBar from './StatusBar';
 
 const bgheader = require('images/home/homeHeader.jpg');
 
-const Header = ({children, bgimg, mb = 20, style}) => {
+const Header = ({children, bgimg, bgColor = Colors.white, mb = 0, style}) => {
   const {top} = useSafeAreaInsets();
   return (
     <View
@@ -19,6 +19,7 @@ const Header = ({children, bgimg, mb = 20, style}) => {
         {
           paddingTop: top + 10,
           marginBottom: mb,
+          backgroundColor: bgColor,
         },
         style,
       ]}>

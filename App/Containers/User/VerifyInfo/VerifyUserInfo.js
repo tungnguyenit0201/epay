@@ -24,7 +24,9 @@ import Col from 'components/Common/Col';
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const VerifyUserInfo = ({route}) => {
-  const {disabledIdentify, onChange, onContinue} = useVerifyInfo(route?.params);
+  const {disabledIdentify, onChange, onContinue, verifyInfo} = useVerifyInfo(
+    route?.params,
+  );
   const translation = useTranslation();
   const identityCard = _.get(route, 'params.identifyCard.ICType', IC_TPYE.CMND);
   const [showModal, setShowModal] = useState(false);
@@ -97,16 +99,20 @@ const VerifyUserInfo = ({route}) => {
           <DropImage
             title="Ảnh mặt trước" // TODO: translate
             onDropImage={value => {
-              onChange('ICFrontPhoto', value?.data);
+              onChange('ICFrontPhoto', value);
               identityCard == IC_TPYE.PASSPORT &&
                 onChange('ICBackPhoto', value?.data);
             }}
+            draft={verifyInfo?.ICFrontPhoto}
             style={styles.mb1}
           />
           {identityCard != IC_TPYE.PASSPORT && (
             <DropImage
               title="Ảnh mặt sau" // TODO: translate
-              onDropImage={value => onChange('ICBackPhoto', value?.data)}
+              onDropImage={value => {
+                onChange('ICBackPhoto', value);
+              }}
+              draft={verifyInfo?.ICBackPhoto}
               style={styles.mb1}
             />
           )}

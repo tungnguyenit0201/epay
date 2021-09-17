@@ -76,7 +76,7 @@ const UserInfo = () => {
       <HeaderBg mb={0}>
         <Header back title="Trang cá nhân" />
       </HeaderBg>
-      <ScrollView style={[{paddingTop: 20}]}>
+      <ScrollView style={base.wrap}>
         <View style={[base.container]}>
           <View style={{alignItems: 'center', marginBottom: 20}}>
             <Pressable style={{marginBottom: 15}} onPress={onUpdateAvatar}>

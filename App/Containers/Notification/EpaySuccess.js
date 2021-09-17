@@ -51,13 +51,9 @@ const CheckoutSuccess = () => {
   return (
     <>
       <HeaderBg>
-        <Header
-          style={{marginBottom: 0}}
-          title={translation.transaction_details}
-          back
-        />
+        <Header title={translation.transaction_details} back />
       </HeaderBg>
-      <ScrollView style={(base.wrap, styles.wrap)}>
+      <ScrollView style={base.wrap}>
         <View style={base.container}>
           <View style={styles.success}>
             <Image
@@ -77,20 +73,17 @@ const CheckoutSuccess = () => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              nisi ut aliquip ex ea commodo consequat aliqua.
             </Text>
           </View>
         </View>
-        <Image source={require('images/wave.png')} style={styles.bgImg} />
       </ScrollView>
-      <View style={base.bottom}>
+      <Image source={require('images/wave.png')} style={styles.bgImg} />
+      <View style={base.boxBottom}>
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              size="sm"
-              bg="#fff"
+              bg={Colors.white}
               border={Colors.cl1}
               color={Colors.cl1}
               label={translation.save_photo}
@@ -100,21 +93,25 @@ const CheckoutSuccess = () => {
           </Col>
           <Col space={10} width="50%">
             <Button
-              size="sm"
+              type={1}
               label={translation.share_photo}
               onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
             />
           </Col>
         </Row>
+        <Pressable
+          onPress={() => {
+            Navigator.push(SCREEN.HOME);
+          }}>
+          <Text centered mt={10} style={styles.linkHome}>
+            Về trang chủ
+          </Text>
+        </Pressable>
       </View>
     </>
   );
 };
 const styles = StyleSheet.create({
-  wrap: {
-    position: 'relative',
-    height: '100%',
-  },
   bgImg: {
     width: scale(375),
     height: scale(375),
@@ -137,6 +134,10 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginBottom: 10,
+  },
+
+  linkHome: {
+    textDecorationLine: 'underline',
   },
 });
 export default CheckoutSuccess;

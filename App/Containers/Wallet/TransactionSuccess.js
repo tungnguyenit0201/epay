@@ -1,7 +1,10 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, Image} from 'react-native';
+import {ScrollView, StyleSheet, View, Image, Pressable} from 'react-native';
 import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
+
+import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 
 import {scale} from 'utils/Functions';
 
@@ -14,21 +17,23 @@ const TransactionResult = () => {
 
   return (
     <>
+      <HeaderBg>
+        <Header title={translation.transaction_details} back />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header title={translation.transaction_details} back />
-        </HeaderBg>
         <View style={base.container}>
           <View style={styles.success}>
             <Image
-              source={require('images/Success.png')}
+              //source={require('images/noti/Error.png')}
+              source={require('images/noti/Success.png')}
               style={styles.imgSuccess}
             />
-            <Text bold size={Fonts.H5} mb={15}>
+            <Text bold fs="h5" mb={15}>
               {translation.successful_transaction}
             </Text>
             <Text centered>{message}</Text>
           </View>
+
           <View style={styles.block}>
             <Image
               source={require('images/bgXacNhan.png')}
@@ -46,37 +51,52 @@ const TransactionResult = () => {
                     ]}>
                     <Text style={styles.textLeft}>{item.label}</Text>
 
-                    <Text bold size={Fonts.H6} style={styles.textRight}>
+                    <Text bold style={styles.textRight}>
                       {item.value}
                     </Text>
                   </View>
                 </View>
               );
             })}
+
+            <View style={[styles.total]}>
+              <Text style={styles.textLeft}>Hỗ trợ khiếu nại</Text>
+
+              <Text bold style={styles.textRight}>
+                Gọi 1900-0000
+              </Text>
+            </View>
           </View>
         </View>
       </ScrollView>
-      <View style={base.bottom}>
+      <View style={base.boxBottom}>
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              size="sm"
               bg={Colors.white}
               border={Colors.cl1}
               color={Colors.cl1}
               label={translation.save_photo}
               labelStyle={{fontSize: 14}}
-              onPress={onRetry}
+              onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
             />
           </Col>
           <Col space={10} width="50%">
             <Button
-              size="sm"
+              type={1}
               label={translation.share_photo}
-              onPress={onBackHome}
+              onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
             />
           </Col>
         </Row>
+        <Pressable
+          onPress={() => {
+            Navigator.push(SCREEN.HOME);
+          }}>
+          <Text centered mt={10} style={styles.linkHome}>
+            Về trang chủ
+          </Text>
+        </Pressable>
       </View>
     </>
   );
@@ -111,15 +131,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
-
+  total: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: Colors.l3,
+    borderWidth: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+  },
   textLeft: {
-    fontSize: Fonts.H6,
     color: Colors.cl3,
   },
   textRight: {
-    fontSize: Fonts.H6,
     color: Colors.BLACKTEXT,
-    maxWidth: 160,
+    maxWidth: scale(160),
   },
 });
 export default TransactionResult;

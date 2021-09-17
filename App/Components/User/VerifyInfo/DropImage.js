@@ -15,7 +15,7 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropImage = ({onDropImage, title, style, cameraType = 'back'}) => {
+const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
@@ -31,11 +31,11 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back'}) => {
             image?.path && {paddingVertical: Spacing.PADDING},
             style && style,
           ]}>
-          {image?.path ? (
+          {image?.path || draft ? (
             <View style={{paddingBottom: Spacing.PADDING}}>
               <Image
                 style={[styles.img, {width: width - Spacing.PADDING * 2}]}
-                source={{uri: image?.path}}
+                source={{uri: image?.path ? image?.path : draft?.path}}
                 resizeMode={cameraType == 'back' ? 'contain' : 'cover'}
               />
             </View>
