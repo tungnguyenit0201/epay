@@ -36,7 +36,7 @@ const Notification = () => {
       <HeaderBg>
         <Header title={translation.notification} back />
       </HeaderBg>
-      <View style={[base.container, styles.row, styles.flexRow]}>
+      <View style={[base.container, styles.flexRow]}>
         <FlatList
           data={dataType}
           keyExtractor={item => item.title}
@@ -66,45 +66,59 @@ const Notification = () => {
             }}
           />
         }>
-        {selectNotify(type).length !== 0 ? (
-          selectNotify(type).map((item, index) => {
-            return (
-              <View style={[base.container, styles.row]} key={index}>
-                <View style={styles.head}>
-                  <Image
-                    source={require('images/favicon.png')}
-                    style={styles.icon}
-                  />
-                  <Text style={styles.date}>{item?.Time}</Text>
+        <View style={[base.container]}>
+          {selectNotify(type).length !== 0 ? (
+            selectNotify(type).map((item, index) => {
+              console.log(item);
+              return (
+                <View
+                  style={[base.boxShadow, index % 2 ? styles.isRead : '']}
+                  key={index}>
+                  <View style={styles.head}>
+                    <Image
+                      source={require('images/favicon.png')}
+                      style={styles.icon}
+                    />
+                    <Text style={styles.date}>{item?.Time}</Text>
+                  </View>
+                  <Pressable
+                    onPress={() => {
+                      Navigator.push(
+                        index % 2
+                          ? SCREEN.TRANSACTION_SUCCESS
+                          : SCREEN.EPAY_SUCCESS,
+                      );
+                    }}>
+                    <Text style={styles.title}>{item?.Title}</Text>
+                  </Pressable>
+                  <Text style={styles.content}>{item?.Content}</Text>
+                  {item?.ContentImgUrl && (
+                    <Image
+                      source={{uri: `${item?.ContentImgUrl}`}}
+                      style={styles.imageNotify}
+                    />
+                  )}
                 </View>
-                <Pressable
-                  onPress={() => {
-                    Navigator.push(SCREEN.EPAY_SUCCESS);
-                  }}>
-                  <Text style={styles.title}>{item?.Title}</Text>
-                </Pressable>
-                <Text style={styles.content}>{item?.Content}</Text>
-                {item?.ContentImgUrl && (
-                  <Image
-                    source={{uri: `${item?.ContentImgUrl}`}}
-                    style={styles.imageNotify}
-                  />
-                )}
-              </View>
-            );
-          })
-        ) : (
-          // TODO: translate
-          <View style={styles.textCenter}>
-            <Text>Không có thông báo nào</Text>
-          </View>
-        )}
+              );
+            })
+          ) : (
+            // TODO: translate
+            <View style={styles.textCenter}>
+              <Text>Không có thông báo nào</Text>
+            </View>
+          )}
+        </View>
+        <View style={{height: 120}}></View>
       </ScrollView>
+
       {/* <FooterNotification /> */}
     </>
   );
 };
 const styles = StyleSheet.create({
+  isRead: {
+    backgroundColor: Colors.l2,
+  },
   tag: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -122,17 +136,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cl1,
     borderColor: Colors.cl1,
   },
-  row: {
-    borderBottomColor: Colors.l2,
-    borderBottomWidth: 8,
-    paddingVertical: 15,
-  },
-  flexRow: {flexDirection: 'row'},
+
+  flexRow: {flexDirection: 'row', paddingBottom: 15},
   head: {
-    borderBottomColor: Colors.l2,
-    borderBottomWidth: 1,
     paddingBottom: 10,
-    marginBottom: 15,
+    //marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -155,10 +163,9 @@ const styles = StyleSheet.create({
   imageNotify: {
     width: '100%',
     height: 400,
+    marginTop: 30,
   },
-  content: {
-    marginBottom: 30,
-  },
+
   textWhite: {
     color: Colors.white,
   },

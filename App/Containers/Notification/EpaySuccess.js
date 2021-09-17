@@ -50,17 +50,21 @@ const CheckoutSuccess = () => {
 
   return (
     <>
-      <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header title={translation.transaction_details} back />
-        </HeaderBg>
+      <HeaderBg>
+        <Header
+          style={{marginBottom: 0}}
+          title={translation.transaction_details}
+          back
+        />
+      </HeaderBg>
+      <ScrollView style={(base.wrap, styles.wrap)}>
         <View style={base.container}>
           <View style={styles.success}>
             <Image
-              source={require('images/Success.png')}
+              source={require('images/noti/Noti.png')}
               style={styles.imgSuccess}
             />
-            <Text bold size={Fonts.H5} mb={15}>
+            <Text bold fs="h5" mb={15}>
               {translation.epay_notification}
             </Text>
             <Text centered>
@@ -69,10 +73,6 @@ const CheckoutSuccess = () => {
             </Text>
           </View>
           <View style={styles.block}>
-            <Image
-              source={require('images/bgXacNhan.png')}
-              style={styles.bgImg}
-            />
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -83,6 +83,7 @@ const CheckoutSuccess = () => {
             </Text>
           </View>
         </View>
+        <Image source={require('images/wave.png')} style={styles.bgImg} />
       </ScrollView>
       <View style={base.bottom}>
         <Row space={10}>
@@ -110,6 +111,18 @@ const CheckoutSuccess = () => {
   );
 };
 const styles = StyleSheet.create({
+  wrap: {
+    position: 'relative',
+    height: '100%',
+  },
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+
   block: {
     marginBottom: 20,
     marginTop: 20,
@@ -124,14 +137,6 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginBottom: 10,
-  },
-  bgImg: {
-    width: 128,
-    height: 128,
-    position: 'absolute',
-    top: 0,
-    left: '50%',
-    transform: [{translateX: scale(-64)}, {translateY: 0}],
   },
 });
 export default CheckoutSuccess;
