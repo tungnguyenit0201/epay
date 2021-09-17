@@ -20,7 +20,6 @@ import Language from 'containers/Language';
 import Home from 'containers/Home';
 import Auth from 'containers/Auth';
 import Login from 'containers/Auth/Login';
-import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
 import Policy from 'containers/Auth/Policy';
@@ -137,7 +136,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
-          <Stack.Screen name={SCREEN.REGISTER} component={Register} />
           <Stack.Screen
             name={SCREEN.FORGET_PASSWORD}
             component={ForgetPassword}
