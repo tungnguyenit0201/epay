@@ -3,9 +3,12 @@ import {scale} from 'utils/Functions';
 import {Colors, Spacing, Fonts} from 'themes';
 
 const styles = StyleSheet.create({
+  bgWhite: {
+    backgroundColor: Colors.white,
+  },
   wrap: {
     backgroundColor: Colors.white,
-    paddingBottom: 150,
+    paddingVertical: 20,
   },
   container: {
     paddingHorizontal: Spacing.PADDING,
@@ -79,6 +82,21 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     position: 'relative',
     backgroundColor: Colors.white,
+  },
+  boxBottom: {
+    padding: scale(20),
+    paddingBottom: 30,
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   footer: {
     height: 100,

@@ -9,7 +9,7 @@ import {
   FlatList,
 } from 'react-native';
 import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
-import {Colors, Fonts, base, Images} from 'themes';
+import {Colors, Fonts, base, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 
 import {SCREEN, NOTIFY} from 'configs/Constants';
@@ -35,76 +35,138 @@ const Notification = () => {
     <>
       <HeaderBg>
         <Header title={translation.notification} back />
-      </HeaderBg>
-      <View style={[base.container, styles.row, styles.flexRow]}>
-        <FlatList
-          data={dataType}
-          keyExtractor={item => item.title}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            <Pressable
-              style={[styles.tag, type === item.title && styles.tagActive]}
-              onPress={() => {
-                setType(item.title);
-              }}>
-              <Text style={[type === item.title && styles.textWhite]}>
-                {item.title}
-              </Text>
-            </Pressable>
-          )}
+        <Image
+          source={require('images/noti/TickCircle.png')}
+          style={styles.TickCircle}
         />
-      </View>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => {
-              setRefreshing(true);
-              onGetAllNotify();
-              setRefreshing(false);
-            }}
+      </HeaderBg>
+      <View style={styles.wrap}>
+        <View style={[base.container, styles.flexRow]}>
+          <FlatList
+            data={dataType}
+            keyExtractor={item => item.title}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => (
+              <Pressable
+                style={[styles.tag, type === item.title && styles.tagActive]}
+                onPress={() => {
+                  setType(item.title);
+                }}>
+                <Text style={[type === item.title && styles.textWhite]}>
+                  {item.title}
+                </Text>
+              </Pressable>
+            )}
           />
-        }>
-        {selectNotify(type).length !== 0 ? (
-          selectNotify(type).map((item, index) => {
-            return (
-              <View style={[base.container, styles.row]} key={index}>
-                <View style={styles.head}>
+        </View>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {
+                setRefreshing(true);
+                onGetAllNotify();
+                setRefreshing(false);
+              }}
+            />
+          }>
+          <View style={[base.container]}>
+            {selectNotify(type).length !== 0 ? (
+              selectNotify(type).map((item, index) => {
+                console.log(item);
+                return (
+                  <Pressable
+                    style={[base.boxShadow, index % 2 ? styles.isRead : '']}
+                    key={index}
+                    onPress={() => {
+                      Navigator.push(
+                        index % 2
+                          ? SCREEN.TRANSACTION_SUCCESS
+                          : SCREEN.EPAY_SUCCESS,
+                      );
+                    }}>
+                    <View style={styles.head}>
+                      <Image
+                        source={require('images/favicon.png')}
+                        style={styles.icon}
+                      />
+                      <Text style={styles.date}>{item?.Time}</Text>
+                    </View>
+
+                    <Text style={styles.title}>{item?.Title}</Text>
+
+                    <Text style={styles.content}>{item?.Content}</Text>
+                    {item?.ContentImgUrl && (
+                      <Image
+                        source={{uri: `${item?.ContentImgUrl}`}}
+                        style={styles.imageNotify}
+                      />
+                    )}
+                  </Pressable>
+                );
+              })
+            ) : (
+              // TODO: translate
+              <>
+                <View style={styles.emtyNoti}>
                   <Image
-                    source={require('images/favicon.png')}
-                    style={styles.icon}
+                    source={require('images/noti/Noti.png')}
+                    style={styles.imgSuccess}
                   />
-                  <Text style={styles.date}>{item?.Time}</Text>
+                  <Text>Không có thông báo nào</Text>
                 </View>
-                <Pressable
-                  onPress={() => {
-                    Navigator.push(SCREEN.EPAY_SUCCESS);
-                  }}>
-                  <Text style={styles.title}>{item?.Title}</Text>
-                </Pressable>
-                <Text style={styles.content}>{item?.Content}</Text>
-                {item?.ContentImgUrl && (
-                  <Image
-                    source={{uri: `${item?.ContentImgUrl}`}}
-                    style={styles.imageNotify}
-                  />
-                )}
-              </View>
-            );
-          })
-        ) : (
-          // TODO: translate
-          <View style={styles.textCenter}>
-            <Text>Không có thông báo nào</Text>
+              </>
+            )}
           </View>
-        )}
-      </ScrollView>
+          <View style={{height: 120}}></View>
+        </ScrollView>
+      </View>
+      {selectNotify(type).length !== 0 ? (
+        selectNotify(type).map((item, index) => {})
+      ) : (
+        <Image source={require('images/wave.png')} style={styles.bgImg} />
+      )}
       {/* <FooterNotification /> */}
     </>
   );
 };
 const styles = StyleSheet.create({
+  wrap: {
+    paddingTop: 20,
+    paddingBottom: 150,
+  },
+
+  emtyNoti: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+
+  imgSuccess: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
+  },
+
+  TickCircle: {
+    width: 24,
+    height: 24,
+    position: 'absolute',
+    right: Spacing.PADDING,
+    bottom: 20,
+  },
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+  isRead: {
+    backgroundColor: Colors.l2,
+  },
   tag: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -122,17 +184,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cl1,
     borderColor: Colors.cl1,
   },
-  row: {
-    borderBottomColor: Colors.l2,
-    borderBottomWidth: 8,
-    paddingVertical: 15,
-  },
-  flexRow: {flexDirection: 'row'},
+
+  flexRow: {flexDirection: 'row', paddingBottom: 15},
   head: {
-    borderBottomColor: Colors.l2,
-    borderBottomWidth: 1,
     paddingBottom: 10,
-    marginBottom: 15,
+    //marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -143,11 +199,7 @@ const styles = StyleSheet.create({
   },
 
   title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
-  textCenter: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   icon: {
     width: 20,
     height: 20,
@@ -155,10 +207,9 @@ const styles = StyleSheet.create({
   imageNotify: {
     width: '100%',
     height: 400,
+    marginTop: 30,
   },
-  content: {
-    marginBottom: 30,
-  },
+
   textWhite: {
     color: Colors.white,
   },
