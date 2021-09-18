@@ -70,7 +70,7 @@ class VnptEkycOption {
   static func  getDocumentOneSideOption(_ config: [String:Any]) -> OneSideOption {
     let option = OneSideOption()
     option.title = config.string(key: "title", defaultValue: "Chụp ảnh giấy tờ")
-//    option.textGuideImage = config.string(key: "titleFront", defaultValue: "MẶT TRƯỚC")
+    option.textGuideImage = config.string(key: "titleFront", defaultValue: "MẶT TRƯỚC")
     option.titleButtonRetake = config.string(key: "retakeButtonText", defaultValue: "Chụp lại")
     option.titleButtonNext = config.string(key: "useImageButtonText", defaultValue: "Hoàn thành")
     option.btnFinishTitle = config.string(key: "btnFinishTitle", defaultValue: "Hoàn thành")

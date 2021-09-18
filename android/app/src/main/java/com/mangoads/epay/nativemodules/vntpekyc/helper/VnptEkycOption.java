@@ -14,7 +14,7 @@ public class VnptEkycOption {
         OneSideOption option = new OneSideOption();
 
         option.title = configMap.getString("title", "Chụp ảnh giấy tờ");
-//        option.textGuideImage = configMap.getString("titleFront","MẶT TRƯỚC");// Chụp mặt  trước
+        option.textGuideImage = configMap.getString("titleFront","MẶT TRƯỚC");// Chụp mặt  trước
         option.recaptureButtonText = configMap.getString("retakeButtonText", "Chụp lại");
         option.doneButtonText = configMap.getString("useImageButtonText", "Hoàn thành");
         option.textGuideButtonString = configMap.getString("viewTutorialButtonText", "Xem hướng dẫn");
