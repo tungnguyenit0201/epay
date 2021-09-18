@@ -510,5 +510,7 @@
         "523": "Gọi sang C08 bị lỗi",
         "524": "Mã lỗi mới của hệ thống",
         "-1": "Lỗi không được định nghĩa"
-    }
+    },
+    "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
+    "selectPersonalDocument": "Chọn giấy tờ tuỳ thân"
 }

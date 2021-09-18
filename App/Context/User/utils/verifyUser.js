@@ -1,29 +1,29 @@
-import {useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Navigator from 'navigations/Navigator';
-import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import { ERROR_CODE, SCREEN } from 'configs/Constants';
 import {
   updatePersonalInfo,
   updateUserAddress,
   updateIdentify,
 } from 'services/user';
-import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import { useAsyncStorage, useError, useLoading } from 'context/Common/utils';
 import _ from 'lodash';
-import {useUser} from '..';
-import {useTranslation} from 'context/Language';
-import {useSelectRegion, useUserInfo} from 'context/User/utils';
+import { useUser } from '..';
+import { useTranslation } from 'context/Language';
+import { useSelectRegion, useUserInfo } from 'context/User/utils';
 
 const useVerifyInfo = (initialValue = {}) => {
   const contentRef = useRef(initialValue);
-  const {setLoading} = useLoading();
-  const {setError} = useError();
-  const {dispatch} = useUser();
+  const { setLoading } = useLoading();
+  const { setError } = useError();
+  const { dispatch } = useUser();
   const translation = useTranslation();
-  const {getPhone} = useAsyncStorage();
-  const {onGetAllInfo} = useUserInfo();
+  const { getPhone } = useAsyncStorage();
+  const { onGetAllInfo } = useUserInfo();
   let [disabledIdentify, setDisabledIdentify] = useState(true);
   let [disabledAvatar, setDisabledAvatar] = useState(true);
   const [showModalReVerify, setShowModalReVerify] = useState(false);
-  const {onClearRegionData} = useSelectRegion();
+  const { onClearRegionData } = useSelectRegion();
 
   const onChange = (key, value) => {
     contentRef.current[key] = value;
@@ -101,7 +101,7 @@ const useVerifyInfo = (initialValue = {}) => {
     }
   };
 
-  const onUpdateUserAddress = async ({Address, Ward, County, Provincial}) => {
+  const onUpdateUserAddress = async ({ Address, Ward, County, Provincial }) => {
     try {
       setLoading(true);
       let phone = await getPhone();
@@ -116,11 +116,11 @@ const useVerifyInfo = (initialValue = {}) => {
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         dispatch({
           type: 'SET_PERSONAL_ADDRESS',
-          data: {Address, Ward, County, Provincial},
+          data: { Address, Ward, County, Provincial },
         });
         dispatch({
           type: 'SET_REGION',
-          data: {Ward: '', County: '', Provincial: ''},
+          data: { Ward: '', County: '', Provincial: '' },
         });
       } else setError(result);
     } catch (error) {
@@ -130,9 +130,9 @@ const useVerifyInfo = (initialValue = {}) => {
 
   const onUpdateAllInfo = async value => {
     // console.log('data :>> ', {...contentRef.current, ...value});
-    await onUpdateIdentify({...contentRef.current, ...value});
-    await onUpdatePersonalInfo({...contentRef.current, ...value});
-    await onUpdateUserAddress({...contentRef.current, ...value});
+    await onUpdateIdentify({ ...contentRef.current, ...value });
+    await onUpdatePersonalInfo({ ...contentRef.current, ...value });
+    await onUpdateUserAddress({ ...contentRef.current, ...value });
     await onGetAllInfo();
     onClearRegionData();
   };

@@ -1,4 +1,4 @@
-import React, {PureComponent, useRef, useState} from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -7,19 +7,45 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import {Button, Text, FWLoading, Header} from 'components';
-import {RNCamera} from 'react-native-camera';
-import {Colors, Fonts, Images, Spacing} from 'themes';
-import {scale} from 'utils/Functions';
-import {useDropImage} from 'context/User/utils';
-import {useIsFocused} from '@react-navigation/native';
+import { Button, Text, FWLoading, Header } from 'components';
+import { RNCamera } from 'react-native-camera';
+import { Colors, Fonts, Images, Spacing } from 'themes';
+import { scale } from 'utils/Functions';
+import { useDropImage } from 'context/User/utils';
+import { useIsFocused } from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
+import useKYC from 'context/User/utils/useKYC';
+import KYCType from 'configs/Enums/KYCType';
 
-const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
-  const {width, height} = useWindowDimensions();
-  const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
-    useDropImage();
+const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type, documentType }) => {
+  const { width, height } = useWindowDimensions();
+  const { image, camera, showCamera, loading, setShowCamera, capturePicture } = useDropImage();
   const isFocused = useIsFocused();
+  const [
+    kycType,
+    captureFrontImage,
+    captureBackImage,
+    captureFaceImage,
+    SDKImage,
+  ] = useKYC(documentType);
+
+  useEffect(() => {
+    if (kycType === KYCType.EKYC && SDKImage) {
+      onDropImage(SDKImage);
+    }
+  }, [SDKImage, kycType]);
+
+  const KYCFunction = useMemo(() => {
+    if (kycType === KYCType.EKYC) {
+      if (cameraType === 'front') {
+        return () => captureFaceImage();
+      }
+      return () => type === 'back'
+        ? captureBackImage()
+        : captureFrontImage();
+    }
+    return () => setShowCamera(1);
+  }, [kycType]);
 
   return (
     // TODO: translate
@@ -28,15 +54,15 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
         <View
           style={[
             styles.wrap,
-            image?.path && {paddingVertical: Spacing.PADDING},
+            image?.path && { paddingVertical: Spacing.PADDING },
             style && style,
           ]}>
           {image?.path || draft ? (
-            <View style={{paddingBottom: Spacing.PADDING}}>
+            <View style={{ paddingBottom: Spacing.PADDING }}>
               <Image
-                style={[styles.img, {width: width - Spacing.PADDING * 2}]}
-                source={{uri: image?.path ? image?.path : draft?.path}}
-                resizeMode={cameraType == 'back' ? 'contain' : 'cover'}
+                style={[styles.img, { width: width - Spacing.PADDING * 2 }]}
+                source={{ uri: image?.path ? image?.path : draft?.path }}
+                resizeMode={cameraType === 'back' ? 'contain' : 'cover'}
               />
             </View>
           ) : (
@@ -57,11 +83,9 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
               />
             </>
           )}
-          <View style={{alignItems: 'center'}}>
+          <View style={styles.button}>
             <Button
-              onPress={() => {
-                setShowCamera(1);
-              }}
+              onPress={KYCFunction}
               label={'Chụp ảnh'}
               style={styles.btn}
               leftIcon={Images.VerifyUserInfo.camera}
@@ -71,12 +95,12 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
       )}
       {showCamera && (
         <Modal isVisible={showCamera} transparent={true}>
-          {showCamera == 1 && isFocused && (
+          {showCamera === 1 && isFocused && (
             <RNCamera
               ref={camera}
               style={styles.preview}
               type={
-                cameraType == 'back'
+                cameraType === 'back'
                   ? RNCamera.Constants.Type.back
                   : RNCamera.Constants.Type.front
               }
@@ -92,8 +116,8 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}>
-              {({camera, status, recordAudioPermissionStatus}) => {
-                if (status !== 'READY') return <FWLoading />;
+              {({ camera, status, recordAudioPermissionStatus }) => {
+                if (status !== 'READY') { return <FWLoading />; }
                 return (
                   <View
                     style={{
@@ -105,7 +129,7 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
                       avoidStatusBar
                       title={title}
                       onPressBack={() => setShowCamera(false)}
-                      style={{zIndex: 10}}
+                      style={{ zIndex: 10 }}
                     />
                     <View
                       style={{
@@ -115,11 +139,11 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
                       }}>
                       <Image
                         source={
-                          cameraType == 'back'
+                          cameraType === 'back'
                             ? Images.Camera.CameraSquare
                             : Images.Camera.Oval
                         }
-                        style={{width: width, height: height}}
+                        style={{ width: width, height: height }}
                       />
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>
@@ -139,7 +163,7 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
                         disabled={loading}
                         style={styles.wrapBtn}
                         onPress={() =>
-                          capturePicture(onDropImage, cameraType == 'back')
+                          capturePicture(onDropImage, cameraType === 'back')
                         }>
                         <Image
                           source={Images.Capture}
@@ -153,7 +177,7 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
             </RNCamera>
           )}
           <PreviewImage
-            visible={showCamera == 2}
+            visible={showCamera === 2}
             setShowCamera={setShowCamera}
             image={image}
             title={title}
@@ -184,7 +208,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.l2,
     borderRadius: 8,
   },
-  textUppercase: {textTransform: 'uppercase'},
+  textUppercase: { textTransform: 'uppercase' },
   bgImg: {
     position: 'absolute',
     bottom: 0,
@@ -205,6 +229,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: scale(420),
     alignSelf: 'center',
+  },
+  button: {
+    alignItems: 'center'
   },
 });
 export default DropImage;

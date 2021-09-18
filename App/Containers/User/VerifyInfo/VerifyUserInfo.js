@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -8,23 +8,23 @@ import {
   TouchableOpacity,
   Pressable,
 } from 'react-native';
-import {Text, InputBlock, Header, Button, HeaderBg} from 'components';
-import {base, Images, Colors, Spacing} from 'themes';
-import {IC_TPYE, SCREEN} from 'configs/Constants';
+import { Text, InputBlock, Header, Button, HeaderBg } from 'components';
+import { base, Images, Colors, Spacing } from 'themes';
+import { IC_TPYE, SCREEN } from 'configs/Constants';
 import Progress from 'components/User/VerifyInfo/Progress';
-import {useVerifyInfo} from 'context/User/utils';
+import { useVerifyInfo } from 'context/User/utils';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import DropImage from 'components/User/VerifyInfo/DropImage';
-import {useTranslation} from 'context/Language';
-import {scale} from 'utils/Functions';
+import { useTranslation } from 'context/Language';
+import { scale } from 'utils/Functions';
 import Modal from 'react-native-modal';
 import _ from 'lodash';
 import Row from 'components/Common/Row';
 import Col from 'components/Common/Col';
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const VerifyUserInfo = ({route}) => {
-  const {disabledIdentify, onChange, onContinue, verifyInfo} = useVerifyInfo(
+const VerifyUserInfo = ({ route }) => {
+  const { disabledIdentify, onChange, onContinue, verifyInfo } = useVerifyInfo(
     route?.params,
   );
   const translation = useTranslation();
@@ -35,11 +35,11 @@ const VerifyUserInfo = ({route}) => {
     'Chứng từ phải nguyên vẹn, không mất góc.',
     'Chứng từ là bản gốc, còn hạn sử dụng.',
   ];
-
+  const documentType = verifyInfo?.identifyCard?.ICType;
   const listFailedIndetityCard = [
-    {img: Images.VerifyUserInfo.cmndBlur, title: 'Chụp bị mờ'},
-    {img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng'},
-    {img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc'},
+    { img: Images.VerifyUserInfo.cmndBlur, title: 'Chụp bị mờ' },
+    { img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng' },
+    { img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc' },
   ];
 
   const onShowModal = () => {
@@ -77,6 +77,7 @@ const VerifyUserInfo = ({route}) => {
             }}
             draft={verifyInfo?.ICFrontPhoto}
             style={styles.mb1}
+            documentType={documentType}
           />
           {identityCard != IC_TPYE.PASSPORT && (
             <DropImage
@@ -86,6 +87,8 @@ const VerifyUserInfo = ({route}) => {
               }}
               draft={verifyInfo?.ICBackPhoto}
               style={styles.mb1}
+              type={'back'}
+              documentType={documentType}
             />
           )}
         </View>
@@ -213,7 +216,7 @@ const VerifyUserInfo = ({route}) => {
 
           <View
             style={[styles.wrap, styles.py1, styles.bgWhite, styles.blockBtn]}>
-            <Button label="Đã hiểu" bold />
+            <Button label="Đã hiểu" bold onPress={onHideModal} />
           </View>
         </View>
       </Modal>
@@ -222,29 +225,29 @@ const VerifyUserInfo = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  wrap: {paddingHorizontal: Spacing.PADDING},
-  flexRow: {flexDirection: 'row'},
-  flex1: {flex: 1},
-  absolute: {position: 'absolute'},
-  topZero: {top: 0},
-  leftZero: {left: 0},
-  rightZero: {right: 0},
-  botZero: {bottom: 0},
-  widthFull: {width: '100%'},
-  maxWidth1: {maxWidth: 270},
-  height1: {height: 65},
-  mlZero: {marginLeft: 0},
-  mr1: {marginRight: 9},
-  mbZero: {marginBottom: 0},
-  mb1: {marginBottom: 32},
-  mb2: {marginBottom: 16},
-  mb3: {marginBottom: 10},
-  py1: {paddingVertical: Spacing.PADDING},
-  pt1: {paddingTop: 48},
-  pt2: {paddingTop: 37},
-  ptbZero: {padding: 0},
-  ptb1: {padding: 4},
-  bgWhite: {backgroundColor: Colors.white},
+  wrap: { paddingHorizontal: Spacing.PADDING },
+  flexRow: { flexDirection: 'row' },
+  flex1: { flex: 1 },
+  absolute: { position: 'absolute' },
+  topZero: { top: 0 },
+  leftZero: { left: 0 },
+  rightZero: { right: 0 },
+  botZero: { bottom: 0 },
+  widthFull: { width: '100%' },
+  maxWidth1: { maxWidth: 270 },
+  height1: { height: 65 },
+  mlZero: { marginLeft: 0 },
+  mr1: { marginRight: 9 },
+  mbZero: { marginBottom: 0 },
+  mb1: { marginBottom: 32 },
+  mb2: { marginBottom: 16 },
+  mb3: { marginBottom: 10 },
+  py1: { paddingVertical: Spacing.PADDING },
+  pt1: { paddingTop: 48 },
+  pt2: { paddingTop: 37 },
+  ptbZero: { padding: 0 },
+  ptb1: { padding: 4 },
+  bgWhite: { backgroundColor: Colors.white },
   headerContainer: {
     position: 'relative',
     paddingBottom: 0,
@@ -256,7 +259,7 @@ const styles = StyleSheet.create({
     right: 15,
     top: 65,
   },
-  alignCenter: {alignItems: 'center'},
+  alignCenter: { alignItems: 'center' },
   triangleDown: {
     position: 'absolute',
     left: Spacing.PADDING * 2 + 10 / 2,
