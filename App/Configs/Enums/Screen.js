@@ -65,5 +65,6 @@ const SCREEN = {
   MODAL_NAVIGATION: 'ModalNavigation',
   BOTTOM_MODAL: 'BottomModal',
   POPUP_MODAL: 'PopupModal',
+  ALERT_MODAL: 'AlerModal',
 };
 export default SCREEN;

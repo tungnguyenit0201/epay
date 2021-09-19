@@ -78,6 +78,7 @@ import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
 import BottomModal from 'containers/Modal/BottomModal';
 import PopupModal from 'containers/Modal/PopupModal';
+import AlertModal from 'containers/Modal/AlertModal';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -314,9 +315,13 @@ const ModalNavigation = () => {
         headerShown: false,
         cardStyle: {
           backgroundColor: 'transparent',
-          opacity: 0.99
-        }
+          opacity: 0.99,
+        },
       }}>
+      <Stack.Screen
+        name={SCREEN.ALERT_MODAL}
+        component={AlertModal}
+      />
       <Stack.Screen
         name={SCREEN.POPUP_MODAL}
         component={PopupModal}

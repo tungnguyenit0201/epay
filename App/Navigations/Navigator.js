@@ -51,6 +51,18 @@ function navigate(name, params, key) {
   }
 }
 
+function showAlert(params, key) {
+  if (_container) {
+    _container.dispatch(
+      CommonActions.navigate(SCREEN.MODAL_NAVIGATION, {
+        screen: SCREEN.ALERT_MODAL,
+        params,
+        key,
+      }),
+    );
+  }
+}
+
 function showPopup(params, key) {
   if (_container) {
     _container.dispatch(
@@ -197,6 +209,7 @@ const Navigator = {
   toggleDrawer,
   showBottom,
   showPopup,
+  showAlert,
 };
 
 if (__DEV__) {
