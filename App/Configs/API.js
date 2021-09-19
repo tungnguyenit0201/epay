@@ -57,4 +57,12 @@ export default {
     PROMOTION_NOTIFY: 'notify/promotion_notify',
     OTHER_NOTIFY: 'notify/other_notify',
   },
+  EKYC: {
+    EXTRACT_IDENTITY_CARD_INFO: 'v2/account/extract_identity_card_info',
+    COMPARE_FACE: 'v2/account/compare_face',
+    IDENTITY_CARD_VERIFY: 'v2/account/identity_card_verify',
+    BANK_EXTRACT_IDENTITY_CARD_INFO: 'v2/bank/extract_identity_card_info',
+    BANK_COMPARE_FACE: 'v2/bank/compare_face',
+    BANK_IDENTITY_CARD_VERIFY: 'v2/bank/identity_card_verify',
+  },
 };

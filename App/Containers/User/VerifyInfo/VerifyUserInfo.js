@@ -21,7 +21,8 @@ import Modal from 'react-native-modal';
 import _ from 'lodash';
 import Row from 'components/Common/Row';
 import Col from 'components/Common/Col';
-// import { Colors } from 'react-native/Libraries/NewAppScreen';
+import useKYC from 'context/User/utils/useKYC';
+import KYCType from 'configs/Enums/KYCType';
 
 const VerifyUserInfo = ({ route }) => {
   const { disabledIdentify, onChange, onContinue, verifyInfo } = useVerifyInfo(
@@ -41,6 +42,7 @@ const VerifyUserInfo = ({ route }) => {
     { img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng' },
     { img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc' },
   ];
+  const { kycType, extractCardInfo } = useKYC(documentType);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -49,6 +51,15 @@ const VerifyUserInfo = ({ route }) => {
   const onHideModal = () => {
     setShowModal(false);
   };
+
+  const onPressContinue = async () => {
+    if (kycType === KYCType.EKYC) {
+      const extractData = await extractCardInfo(verifyInfo);
+    } else {
+      onContinue(SCREEN.VERIFY_IDENTITY_CARD);
+    }
+  };
+
   return (
     //TODO: translate
     <>
@@ -98,7 +109,7 @@ const VerifyUserInfo = ({ route }) => {
         <Button
           disabled={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
           label="Tiếp tục" // TODO: translate
-          onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
+          onPress={onPressContinue}
         />
       </View>
 

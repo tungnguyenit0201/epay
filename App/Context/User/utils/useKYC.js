@@ -5,6 +5,13 @@ import { PERMISSIONS, RESULTS, checkMultiple, requestMultiple } from 'react-nati
 import Ekyc from 'utils/Ekyc';
 import EKYC_ERROR from 'configs/Enums/EkycError';
 import KYCType from 'configs/Enums/KYCType';
+import {
+    extractIdentityCardInfo,
+    compareFace,
+    identityCardVerify,
+} from 'services/ekyc';
+import Navigator from 'navigations/Navigator';
+import { useTranslation } from 'context/Language';
 
 const { SDK_SCREEN: { EKYC_ORC, EKYC_FACE } } = KYCType;
 
@@ -12,6 +19,7 @@ const useKYC = (documentType) => {
     const { dispatch, userInfo } = useUser();
     const { kycType } = userInfo;
     const [SDKImage, setSDKImage] = useState();
+    const strings = useTranslation();
 
     useEffect(() => {
         const getKYCConfig = async () => {
@@ -26,10 +34,10 @@ const useKYC = (documentType) => {
         const openSDK = () => {
             switch (screen) {
                 case EKYC_ORC:
-                    Ekyc.captureDocument(ekycSDKConfig(side), onSDKOrcResult);
+                    Ekyc.captureDocument(ekycSDKConfig(), onSDKOrcResult);
                     break;
                 case EKYC_FACE:
-                    Ekyc.captureFace(ekycSDKConfig(side), onSDKOrcResult);
+                    Ekyc.captureFace(ekycSDKConfig(), onSDKOrcResult);
                     break;
             }
         };
@@ -114,13 +122,76 @@ const useKYC = (documentType) => {
         onOpenEkycSDK(EKYC_FACE);
     };
 
-    return [
+    const extractCardInfo = async (data = {}, bank) => {
+        const { identifyCard, ICBackPhoto, ICFrontPhoto } = data;
+        if (identifyCard
+            && ICBackPhoto
+            && ICFrontPhoto) {
+            try {
+                const extractData = await extractIdentityCardInfo({
+                    IdentityCardType: identifyCard.ICType,
+                    FrontPhoto: ICFrontPhoto,
+                    BackPhoto: ICBackPhoto,
+                    bank,
+                });
+                console.log('[extractCardInfo]', JSON.stringify(extractData));
+                return extractData;
+            } catch (e) {
+                console.log('ERROR [extractCardInfo]', e);
+                const { ErrorMessage = strings?.unknownError } = e || {};
+            }
+        } else {
+            console.warn('[extractCardInfo] Missing Data!');
+        }
+    };
+
+    const compareUserFace = async (data = {}, bank) => {
+        const { CardId, Avatar } = data;
+        if (CardId && Avatar) {
+            try {
+                const extractData = await compareFace({
+                    CardId,
+                    FacePhoto: Avatar,
+                    bank,
+                });
+                console.log('[compareUserFace]', JSON.stringify(extractData));
+            } catch (e) {
+                console.log('ERROR [compareUserFace]', e);
+                const { ErrorMessage = strings?.unknownError } = e || {};
+            }
+        } else {
+            console.warn('[compareUserFace] Missing Data!');
+        }
+    };
+
+    const verifyIdentityCard = async (data = {}, bank) => {
+        const { IdentityCardInfor } = data;
+        if (IdentityCardInfor) {
+            try {
+                const extractData = await identityCardVerify({
+                    IdentityCardInfor,
+                    bank,
+                });
+                console.log('[verifyIdentityCard]', JSON.stringify(extractData));
+            } catch (e) {
+                console.log('ERROR [verifyIdentityCard]', e);
+                const { ErrorMessage = strings?.unknownError } = e || {};
+            }
+        } else {
+            console.warn('[verifyIdentityCard] Missing Data!');
+        }
+    };
+
+    return {
         kycType,
         captureFrontImage,
         captureBackImage,
         captureFaceImage,
         SDKImage,
-    ];
+        extractCardInfo,
+        compareUserFace,
+        verifyIdentityCard,
+    };
 };
 
 export default useKYC;

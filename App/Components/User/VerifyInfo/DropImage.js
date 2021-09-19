@@ -21,22 +21,23 @@ const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type
   const { width, height } = useWindowDimensions();
   const { image, camera, showCamera, loading, setShowCamera, capturePicture } = useDropImage();
   const isFocused = useIsFocused();
-  const [
+  const {
     kycType,
     captureFrontImage,
     captureBackImage,
     captureFaceImage,
     SDKImage,
-  ] = useKYC(documentType);
+  } = useKYC(documentType);
+  const eKYC = kycType === KYCType.EKYC;
 
   useEffect(() => {
-    if (kycType === KYCType.EKYC && SDKImage) {
+    if (eKYC && SDKImage) {
       onDropImage(SDKImage);
     }
-  }, [SDKImage, kycType]);
+  }, [SDKImage, eKYC]);
 
   const KYCFunction = useMemo(() => {
-    if (kycType === KYCType.EKYC) {
+    if (eKYC) {
       if (cameraType === 'front') {
         return () => captureFaceImage();
       }
@@ -45,7 +46,11 @@ const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type
         : captureFrontImage();
     }
     return () => setShowCamera(1);
-  }, [kycType]);
+  }, [eKYC, cameraType, type]);
+
+  const imagePath = useMemo(() => {
+    return eKYC ? SDKImage?.path : image?.path;
+  }, [SDKImage, image]);
 
   return (
     // TODO: translate
@@ -54,15 +59,16 @@ const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type
         <View
           style={[
             styles.wrap,
-            image?.path && { paddingVertical: Spacing.PADDING },
+            imagePath && { paddingVertical: Spacing.PADDING },
             style && style,
           ]}>
-          {image?.path || draft ? (
+          {imagePath || draft ? (
             <View style={{ paddingBottom: Spacing.PADDING }}>
               <Image
                 style={[styles.img, { width: width - Spacing.PADDING * 2 }]}
-                source={{ uri: image?.path ? image?.path : draft?.path }}
-                resizeMode={cameraType === 'back' ? 'contain' : 'cover'}
+                source={{ uri: imagePath ? imagePath : draft?.path }}
+                // resizeMode={cameraType === 'back' ? 'contain' : 'cover'}
+                resizeMode="contain"
               />
             </View>
           ) : (
