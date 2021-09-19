@@ -513,5 +513,6 @@
     },
     "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
     "selectPersonalDocument": "Chọn giấy tờ tuỳ thân",
-    "unknownError": "Đã có lỗi trong quá trình xử lý. Vui lòng thử lại sau."
+    "unknownError": "Đã có lỗi trong quá trình xử lý. Vui lòng thử lại sau.",
+    "error": "Lỗi"
 }

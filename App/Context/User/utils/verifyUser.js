@@ -11,6 +11,8 @@ import _ from 'lodash';
 import { useUser } from '..';
 import { useTranslation } from 'context/Language';
 import { useSelectRegion, useUserInfo } from 'context/User/utils';
+import useKYC from 'context/User/utils/useKYC';
+import KYCType from 'configs/Enums/KYCType';
 
 const useVerifyInfo = (initialValue = {}) => {
   const contentRef = useRef(initialValue);
@@ -24,6 +26,10 @@ const useVerifyInfo = (initialValue = {}) => {
   let [disabledAvatar, setDisabledAvatar] = useState(true);
   const [showModalReVerify, setShowModalReVerify] = useState(false);
   const { onClearRegionData } = useSelectRegion();
+
+  const documentType = contentRef.current?.identifyCard?.ICType;
+  const { kycType, extractCardInfo, compareUserFace, verifyIdentityCard } = useKYC(documentType);
+  const eKYC = kycType === KYCType.EKYC;
 
   const onChange = (key, value) => {
     contentRef.current[key] = value;
@@ -129,12 +135,39 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const onUpdateAllInfo = async value => {
-    // console.log('data :>> ', {...contentRef.current, ...value});
-    await onUpdateIdentify({ ...contentRef.current, ...value });
-    await onUpdatePersonalInfo({ ...contentRef.current, ...value });
-    await onUpdateUserAddress({ ...contentRef.current, ...value });
-    await onGetAllInfo();
-    onClearRegionData();
+    // console.log('data :>> ', { ...contentRef.current, ...value });
+    try {
+      if (eKYC) {
+        const { CardID, CardNumber, Step, ICType, ValidDate, Verified } = extractCardInfo || {};
+        await verifyIdentityCard({
+          IdentityCardInfor: {
+            Address: value.Address,
+            BirthDay: value.DateOfBirth,
+            CardID,
+            CardNumber,
+            District: value.County,
+            Step,
+            FullName: value.ICFullName,
+            Gender: value.SexType,
+            ICType,
+            IssueDate: value.ICIssuedDate,
+            IssuePlace: value.ICIssuedPlace,
+            Province: value.Provincial,
+            ValidDate,
+            Verified,
+            Ward: value.Ward,
+          },
+        });
+      } else {
+        await onUpdateIdentify({ ...contentRef.current, ...value });
+      }
+      await onUpdatePersonalInfo({ ...contentRef.current, ...value });
+      await onUpdateUserAddress({ ...contentRef.current, ...value });
+      await onGetAllInfo();
+      onClearRegionData();
+    } catch (e) {
+      //console.log(e)
+    }
   };
 
   const onReVerify = action => {
@@ -149,6 +182,33 @@ const useVerifyInfo = (initialValue = {}) => {
     }
   };
 
+  const onDoneIdentityCard = async () => {
+    if (eKYC) {
+      const result = await extractCardInfo(contentRef.current);
+      if (result) {
+        onChange('extractCardInfo', { ...result });
+        onContinue(SCREEN.VERIFY_IDENTITY_CARD);
+      }
+    } else {
+      onContinue(SCREEN.VERIFY_IDENTITY_CARD);
+    }
+  };
+
+  const onDoneCaptureFace = async () => {
+    if (eKYC) {
+      const { extractCardInfo: cardInfo, Avatar } = contentRef.current;
+      const result = await compareUserFace({
+        Avatar,
+        CardId: cardInfo?.CardID,
+      });
+      if (result) {
+        onContinue(SCREEN.VERIFY_USER_PORTRAIT);
+      }
+    } else {
+      onContinue(SCREEN.VERIFY_USER_PORTRAIT);
+    }
+  };
+
   return {
     disabledIdentify,
     disabledAvatar,
@@ -158,6 +218,8 @@ const useVerifyInfo = (initialValue = {}) => {
     onContinue,
     onUpdateAllInfo,
     onReVerify,
+    onDoneIdentityCard,
+    onDoneCaptureFace,
   };
 };
 

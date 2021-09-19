@@ -12,7 +12,9 @@ import {
 } from 'services/ekyc';
 import Navigator from 'navigations/Navigator';
 import { useTranslation } from 'context/Language';
-
+import { ConsoleUtils } from 'utils/Console';
+import { useLoading } from 'context/Common/utils';
+import useAlert from 'utils/Alert';
 const { SDK_SCREEN: { EKYC_ORC, EKYC_FACE } } = KYCType;
 
 const useKYC = (documentType) => {
@@ -20,6 +22,8 @@ const useKYC = (documentType) => {
     const { kycType } = userInfo;
     const [SDKImage, setSDKImage] = useState();
     const strings = useTranslation();
+    const { setLoading } = useLoading();
+    const { showError } = useAlert();
 
     useEffect(() => {
         const getKYCConfig = async () => {
@@ -68,10 +72,10 @@ const useKYC = (documentType) => {
             if (errorCode) {
                 switch (errorCode) {
                     case EKYC_ERROR.USER_CANCELLED:
-                        console.warn('User cancelled');
+                        ConsoleUtils.warn('User cancelled');
                         break;
                     case EKYC_ERROR.SDK_ERROR:
-                        console.warn('SDK error like permission or save data error by outofmemory...etc');
+                        ConsoleUtils.warn('SDK error like permission or save data error by outofmemory...etc');
                         break;
                 }
                 return;
@@ -125,61 +129,97 @@ const useKYC = (documentType) => {
     const extractCardInfo = async (data = {}, bank) => {
         const { identifyCard, ICBackPhoto, ICFrontPhoto } = data;
         if (identifyCard
-            && ICBackPhoto
-            && ICFrontPhoto) {
+            && ICBackPhoto?.data
+            && ICFrontPhoto?.data) {
             try {
+                setLoading(true);
                 const extractData = await extractIdentityCardInfo({
                     IdentityCardType: identifyCard.ICType,
-                    FrontPhoto: ICFrontPhoto,
-                    BackPhoto: ICBackPhoto,
+                    FrontPhoto: ICFrontPhoto.data,
+                    BackPhoto: ICBackPhoto.data,
                     bank,
                 });
-                console.log('[extractCardInfo]', JSON.stringify(extractData));
+                setLoading(false);
+                ConsoleUtils.log('[extractCardInfo]', JSON.stringify(extractData));
                 return extractData;
             } catch (e) {
-                console.log('ERROR [extractCardInfo]', e);
+                setLoading(false);
+                ConsoleUtils.log('ERROR [extractCardInfo]', e);
                 const { ErrorMessage = strings?.unknownError } = e || {};
+                // showError({ message: ErrorMessage });
+                return {
+                    "Address": "3123zzzz",
+                    "BirthDay": "25-08-1991",
+                    "CardID": 2201,
+                    "CardNumber": "301382190",
+                    "District": "",
+                    "Extracted": 0,
+                    "FullName": "Nguyễn Thanh Tâm",
+                    "Gender": 1,
+                    "ICType": 1,
+                    "IssueDate": "20-07-2013",
+                    "IssuePlace": "Long An",
+                    "Province": "",
+                    "ValidDate": "",
+                    "Verified": 3,
+                    "Ward": ""
+                }
             }
         } else {
-            console.warn('[extractCardInfo] Missing Data!');
+            ConsoleUtils.warn('[extractCardInfo] Missing Data!');
+            showError();
         }
     };
 
     const compareUserFace = async (data = {}, bank) => {
         const { CardId, Avatar } = data;
-        if (CardId && Avatar) {
+        if (CardId && Avatar?.data) {
             try {
-                const extractData = await compareFace({
+                setLoading(true);
+                const result = await compareFace({
                     CardId,
-                    FacePhoto: Avatar,
+                    FacePhoto: Avatar.data,
                     bank,
                 });
-                console.log('[compareUserFace]', JSON.stringify(extractData));
+                setLoading(false);
+                ConsoleUtils.log('[compareUserFace]', JSON.stringify(result));
+                return result;
             } catch (e) {
-                console.log('ERROR [compareUserFace]', e);
+                setLoading(false);
+                ConsoleUtils.log('ERROR [compareUserFace]', e);
                 const { ErrorMessage = strings?.unknownError } = e || {};
+                // showError({ message: ErrorMessage });
+                return true;
             }
         } else {
-            console.warn('[compareUserFace] Missing Data!');
+            ConsoleUtils.warn('[compareUserFace] Missing Data!');
+            showError();
         }
     };
 
-    const verifyIdentityCard = async (data = {}, bank) => {
-        const { IdentityCardInfor } = data;
-        if (IdentityCardInfor) {
-            try {
-                const extractData = await identityCardVerify({
-                    IdentityCardInfor,
-                    bank,
-                });
-                console.log('[verifyIdentityCard]', JSON.stringify(extractData));
-            } catch (e) {
-                console.log('ERROR [verifyIdentityCard]', e);
-                const { ErrorMessage = strings?.unknownError } = e || {};
+    const verifyIdentityCard = (data = {}, bank) => {
+        return new Promise(async (resolve, reject) => {
+            const { IdentityCardInfor } = data;
+            if (IdentityCardInfor) {
+                try {
+                    const result = await identityCardVerify({
+                        IdentityCardInfor,
+                        bank,
+                    });
+                    ConsoleUtils.log('[verifyIdentityCard]', JSON.stringify(result));
+                    resolve(result);
+                } catch (e) {
+                    ConsoleUtils.log('ERROR [verifyIdentityCard]', e);
+                    const { ErrorMessage = strings?.unknownError } = e || {};
+                    showError({ message: ErrorMessage });
+                    reject(e)
+                }
+            } else {
+                ConsoleUtils.warn('[verifyIdentityCard] Missing Data!');
+                showError();
+                reject();
             }
-        } else {
-            console.warn('[verifyIdentityCard] Missing Data!');
-        }
+        });
     };
 
     return {

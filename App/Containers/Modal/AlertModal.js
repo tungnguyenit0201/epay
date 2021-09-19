@@ -13,7 +13,7 @@ import { useTranslation } from 'context/Language';
 
 const AlertModal = (props = {}) => {
     const { navigation, route = {} } = props;
-    const { onClose, title, message, positiveButton, negativeButton, style, icon } = route.params || {};
+    const { onClose, title, message, positiveButton, negativeButton, style, icon, iconColor } = route.params || {};
     const strings = useTranslation();
     const { width, height } = useWindowDimensions();
     const popupHeight = height * 450 / 812;
@@ -25,7 +25,11 @@ const AlertModal = (props = {}) => {
     const headerStyle = {
         width: modalStyle.width,
         minHeight: popupHeight * 0.43,
-    }
+    };
+
+    const iconStyle = {
+        tintColor: iconColor,
+    };
 
     const onPressPositive = () => {
         positiveButton?.onPress?.();
@@ -51,7 +55,7 @@ const AlertModal = (props = {}) => {
                             <View style={styles.iconContainer}>
                                 <Image
                                     source={icon}
-                                    style={styles.icon}
+                                    style={[styles.icon, iconStyle]}
                                     resizeMode="contain"
                                 />
                             </View>

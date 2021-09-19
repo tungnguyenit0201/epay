@@ -21,9 +21,9 @@ const extractIdentityCardInfo = async ({
                 BackPhoto,
             },
             success: (res = {}) => {
-                const { ErrorCode } = res;
-                if (ErrorCode === ERROR_CODE.SUCCESS) {
-                    resolve(res);
+                const { ErrorCode, IdentityCardInfor } = res;
+                if (ErrorCode === ERROR_CODE.SUCCESS && IdentityCardInfor) {
+                    resolve(IdentityCardInfor);
                 }
                 reject(res);
             },

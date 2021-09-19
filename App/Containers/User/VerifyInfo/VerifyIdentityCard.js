@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,49 +6,50 @@ import {
   Image,
   useWindowDimensions,
 } from 'react-native';
-import {Text, InputBlock, Header, Button, HeaderBg} from 'components';
-import {Colors, Fonts, Spacing, base, Images} from 'themes';
-import {SCREEN} from 'configs/Constants';
-import {useVerifyInfo} from 'context/User/utils';
+import { Header, Button, HeaderBg } from 'components';
+import { Colors, Spacing, base, Images } from 'themes';
+import { useVerifyInfo } from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
-import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import DropImage from 'components/User/VerifyInfo/DropImage';
-import {useTranslation} from 'context/Language';
+import { useTranslation } from 'context/Language';
 
-const VerifyIdentityCard = ({route}) => {
-  const {disabledAvatar, onChange, onContinue, verifyInfo} = useVerifyInfo(
+const VerifyIdentityCard = ({ route }) => {
+  const { onDoneCaptureFace, onChange, verifyInfo } = useVerifyInfo(
     route?.params,
   );
   const translation = useTranslation();
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
-    <ScrollView style={{backgroundColor: Colors.white}}>
+    <View>
       <HeaderBg>
         <Header back title={translation?.account_verification} />
         <Progress space={1} step={2} />
         <Image
           source={Images.VerifyUserInfo.iconDown}
-          style={[styles.triangleDown, {left: width / 2 - 10}]}
+          style={[styles.triangleDown, { left: width / 2 - 10 }]}
           resizeMode="contain"
         />
       </HeaderBg>
-      <View style={[base.container, {paddingTop: 20}]}>
-        <DropImage
-          title="Hình minh họa" // TODO: translate
-          onDropImage={value => onChange('Avatar', value)}
-          cameraType="front"
-          style={styles.drop}
-          draft={verifyInfo?.Avatar}
-        />
-
+      <ScrollView style={{ backgroundColor: Colors.white }}>
+        <View style={[base.container, styles.main]}>
+          <DropImage
+            title="Hình minh họa" // TODO: translate
+            onDropImage={value => onChange('Avatar', value)}
+            cameraType="front"
+            style={styles.drop}
+            draft={verifyInfo?.Avatar}
+          />
+        </View>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
         <Button
           disabled={!verifyInfo?.Avatar}
           label={'Tiếp tục'} // TODO: translate
-          onPress={() => onContinue(SCREEN.VERIFY_USER_PORTRAIT)}
+          onPress={onDoneCaptureFace}
         />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -59,9 +60,16 @@ const styles = StyleSheet.create({
     width: 20,
     height: 10,
   },
-
   drop: {
     marginBottom: Spacing.PADDING,
+  },
+  buttonContainer: {
+    padding: Spacing.PADDING,
+    backgroundColor: Colors.white,
+  },
+  main: {
+    paddingTop: 20,
+    flex: 1,
   },
 });
 export default VerifyIdentityCard;

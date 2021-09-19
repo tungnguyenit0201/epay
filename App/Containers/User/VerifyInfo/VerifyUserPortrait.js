@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import {ScrollView, StyleSheet, View, Image} from 'react-native';
+import React, { useCallback } from 'react';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import {
   HeaderBg,
   InputBlock,
@@ -9,23 +9,23 @@ import {
   DatePicker,
   Text,
 } from 'components';
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
+import { Colors, Fonts, Spacing, Images } from 'themes';
+import { useVerifyInfo, useSelectRegion } from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
-import {base} from 'themes';
-import {Formik, useFormikContext, Form} from 'formik';
-import {useTranslation} from 'context/Language';
-import {verifyUserSchema} from 'utils/ValidationSchemas';
-import {useUser} from 'context/User';
-import {useFocusEffect} from '@react-navigation/native';
-import {SCREEN} from 'configs/Constants';
+import { base } from 'themes';
+import { Formik, useFormikContext, Form } from 'formik';
+import { useTranslation } from 'context/Language';
+import { verifyUserSchema } from 'utils/ValidationSchemas';
+import { useUser } from 'context/User';
+import { useFocusEffect } from '@react-navigation/native';
+import { SCREEN } from 'configs/Constants';
 
-const FormikCustom = ({identifyCard, onContinue}) => {
-  const {goRegionSelect} = useSelectRegion({
+const FormikCustom = ({ identifyCard, onContinue }) => {
+  const { goRegionSelect } = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
   const translation = useTranslation();
-  const {region} = useUser();
+  const { region } = useUser();
   const {
     handleChange: _handleChange,
     handleBlur,
@@ -36,6 +36,7 @@ const FormikCustom = ({identifyCard, onContinue}) => {
     errors,
     values,
   } = useFormikContext();
+
   const handleChange = field => value => {
     setFieldValue(field, value);
     setFieldTouched(field, true, false);
@@ -48,11 +49,18 @@ const FormikCustom = ({identifyCard, onContinue}) => {
         }
     }, [region]), // eslint-disable-line
   );
+
+  const GENDERS = [
+    { label: translation.male, value: 1 },
+    { label: translation.female, value: 2 },
+    { label: translation.others, value: 3 },
+  ];
+
   return (
-    <View style={[base.container, {paddingTop: 20}]}>
+    <View style={[base.container, { paddingTop: 20 }]}>
       <InputBlock
         label={translation.enter_your_full_name}
-        style={{marginBottom: 10}}
+        style={{ marginBottom: 10 }}
         onChange={handleChange('ICFullName')}
         onBlur={handleBlur('ICFullName')}
         error={touched.ICFullName && errors.ICFullName}
@@ -69,12 +77,9 @@ const FormikCustom = ({identifyCard, onContinue}) => {
         required
       />
       <Radio
-        items={[
-          {label: translation.male, value: 1},
-          {label: translation.female, value: 2},
-          {label: translation.others, value: 3},
-        ]}
+        items={GENDERS}
         onChange={handleChange('SexType')}
+        selectedValue={values.SexType}
       />
 
       <InputBlock
@@ -83,7 +88,7 @@ const FormikCustom = ({identifyCard, onContinue}) => {
         onBlur={handleBlur('ICNumber')}
         error={touched.ICNumber && errors.ICNumber}
         value={values.ICNumber}
-        style={{marginBottom: 10}}
+        style={{ marginBottom: 10 }}
         required
         numeric
       />
@@ -102,7 +107,7 @@ const FormikCustom = ({identifyCard, onContinue}) => {
         onBlur={handleBlur('ICIssuedPlace')}
         error={touched.ICIssuedPlace && errors.ICIssuedPlace}
         value={values.ICIssuedPlace}
-        style={{marginBottom: 10}}
+        style={{ marginBottom: 10 }}
         required
       />
       <InputBlock
@@ -139,20 +144,33 @@ const FormikCustom = ({identifyCard, onContinue}) => {
         onBlur={handleBlur('Address')}
         error={touched.Address && errors.Address}
         value={values.Address}
-        style={{marginBottom: 10}}
+        style={{ marginBottom: 10 }}
         required
       />
       <Text onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}>
         Xác thực lại
       </Text>
-      <Button label={translation.done} onPress={handleSubmit} />
+      <Button style={styles.button} label={translation.done} onPress={handleSubmit} />
     </View>
   );
 };
 
-const VerifyUserPortrait = ({route}) => {
-  const {onUpdateAllInfo, onContinue} = useVerifyInfo(route?.params);
+const VerifyUserPortrait = ({ route }) => {
+  const { onUpdateAllInfo, onContinue, verifyInfo } = useVerifyInfo(route?.params);
+  const { extractCardInfo = {} } = verifyInfo || {};
   const translation = useTranslation();
+  const initialValues = {
+    ICFullName: extractCardInfo.FullName,
+    DateOfBirth: extractCardInfo.BirthDay,
+    ICNumber: extractCardInfo.CardNumber,
+    ICIssuedDate: extractCardInfo.IssueDate,
+    ICIssuedPlace: extractCardInfo.IssuePlace,
+    Provincial: extractCardInfo.Province,
+    County: extractCardInfo.District,
+    Ward: extractCardInfo.Ward,
+    Address: extractCardInfo.Address,
+    SexType: extractCardInfo.Gender ?? 1,
+  };
 
   return (
     <>
@@ -167,18 +185,7 @@ const VerifyUserPortrait = ({route}) => {
       </HeaderBg>
       <ScrollView style={styles.container}>
         <Formik
-          initialValues={{
-            ICFullName: '',
-            DateOfBirth: '',
-            ICNumber: '',
-            ICIssuedDate: '',
-            ICIssuedPlace: '',
-            Provincial: '',
-            County: '',
-            Ward: '',
-            Address: '',
-            SexType: 1,
-          }}
+          initialValues={initialValues}
           validationSchema={verifyUserSchema}
           onSubmit={onUpdateAllInfo}>
           <FormikCustom
@@ -191,13 +198,16 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {backgroundColor: Colors.white},
+  container: { backgroundColor: Colors.white },
   triangleDown: {
     position: 'absolute',
     right: Spacing.PADDING * 2 + 10 / 2,
     bottom: -9,
     width: 20,
     height: 10,
+  },
+  button: {
+    marginVertical: 16,
   },
 });
 export default VerifyUserPortrait;

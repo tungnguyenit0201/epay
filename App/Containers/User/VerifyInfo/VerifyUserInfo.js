@@ -1,19 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
   Image,
   View,
-  useWindowDimensions,
   TouchableOpacity,
-  Pressable,
 } from 'react-native';
-import { Text, InputBlock, Header, Button, HeaderBg } from 'components';
+import { Text, Header, Button, HeaderBg } from 'components';
 import { base, Images, Colors, Spacing } from 'themes';
-import { IC_TPYE, SCREEN } from 'configs/Constants';
+import { IC_TPYE } from 'configs/Constants';
 import Progress from 'components/User/VerifyInfo/Progress';
 import { useVerifyInfo } from 'context/User/utils';
-import SelectImage from 'components/User/VerifyInfo/SelectImage';
 import DropImage from 'components/User/VerifyInfo/DropImage';
 import { useTranslation } from 'context/Language';
 import { scale } from 'utils/Functions';
@@ -21,11 +18,9 @@ import Modal from 'react-native-modal';
 import _ from 'lodash';
 import Row from 'components/Common/Row';
 import Col from 'components/Common/Col';
-import useKYC from 'context/User/utils/useKYC';
-import KYCType from 'configs/Enums/KYCType';
 
 const VerifyUserInfo = ({ route }) => {
-  const { disabledIdentify, onChange, onContinue, verifyInfo } = useVerifyInfo(
+  const { onDoneIdentityCard, onChange, verifyInfo } = useVerifyInfo(
     route?.params,
   );
   const translation = useTranslation();
@@ -42,7 +37,6 @@ const VerifyUserInfo = ({ route }) => {
     { img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng' },
     { img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc' },
   ];
-  const { kycType, extractCardInfo } = useKYC(documentType);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -50,14 +44,6 @@ const VerifyUserInfo = ({ route }) => {
 
   const onHideModal = () => {
     setShowModal(false);
-  };
-
-  const onPressContinue = async () => {
-    if (kycType === KYCType.EKYC) {
-      const extractData = await extractCardInfo(verifyInfo);
-    } else {
-      onContinue(SCREEN.VERIFY_IDENTITY_CARD);
-    }
   };
 
   return (
@@ -83,14 +69,14 @@ const VerifyUserInfo = ({ route }) => {
             title="Ảnh mặt trước" // TODO: translate
             onDropImage={value => {
               onChange('ICFrontPhoto', value);
-              identityCard == IC_TPYE.PASSPORT &&
+              identityCard === IC_TPYE.PASSPORT &&
                 onChange('ICBackPhoto', value?.data);
             }}
             draft={verifyInfo?.ICFrontPhoto}
             style={styles.mb1}
             documentType={documentType}
           />
-          {identityCard != IC_TPYE.PASSPORT && (
+          {identityCard !== IC_TPYE.PASSPORT && (
             <DropImage
               title="Ảnh mặt sau" // TODO: translate
               onDropImage={value => {
@@ -109,7 +95,7 @@ const VerifyUserInfo = ({ route }) => {
         <Button
           disabled={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
           label="Tiếp tục" // TODO: translate
-          onPress={onPressContinue}
+          onPress={onDoneIdentityCard}
         />
       </View>
 
