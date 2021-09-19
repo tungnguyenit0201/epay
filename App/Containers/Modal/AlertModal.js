@@ -16,10 +16,16 @@ const AlertModal = (props = {}) => {
     const { onClose, title, message, positiveButton, negativeButton, style, icon } = route.params || {};
     const strings = useTranslation();
     const { width, height } = useWindowDimensions();
+    const popupHeight = height * 450 / 812;
     const modalStyle = {
         width: width * 0.8,
-        minHeight: height * 0.2,
+        minHeight: height * 0.48,
     };
+
+    const headerStyle = {
+        width: modalStyle.width,
+        minHeight: popupHeight * 0.43,
+    }
 
     const onPressPositive = () => {
         positiveButton?.onPress?.();
@@ -36,10 +42,10 @@ const AlertModal = (props = {}) => {
     return (
         <View style={styles.container}>
             <View style={[styles.modal, modalStyle, style]}>
-                <View style={styles.header}>
+                <View style={[styles.header, headerStyle]}>
                     <ImageBackground
                         source={Images.SignUp.BlueWave}
-                        style={styles.headerBackground}
+                        style={[styles.headerBackground]}
                         resizeMode="contain">
                         {!!icon && (
                             <View style={styles.iconContainer}>
@@ -99,12 +105,12 @@ const styles = StyleSheet.create({
     header: {
         width: '100%',
         height: 195,
-        marginTop: -10,
         alignItems: 'center',
     },
     headerBackground: {
         width: '100%',
-        height: 195,
+        height: '100%',
+        marginTop: -8,
     },
     main: {
         paddingVertical: 16,
@@ -117,6 +123,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         marginBottom: 8,
+        marginTop: -8,
     },
     message: {
         textAlign: 'center',
