@@ -28,6 +28,8 @@ export default {
   Highlight: '#E10000',
   OtpGray_1: '#D1D5DB',
   OtpGray_2: '#BEC2C9',
+  barLeft: '#A389FF',
+  barRight: '#3AD3E8',
 
   moneyItem: '#A3C9ED',
 

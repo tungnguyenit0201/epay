@@ -9,6 +9,8 @@ import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
+import BlueHeader from 'components/Auth/BlueHeader';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
@@ -19,7 +21,7 @@ const RegisterPassword = ({route}) => {
     setShowModal,
     openCallDialog,
     createAccount,
-    onNavigate,
+    onGoTerm,
   } = useRegister();
   const translation = useTranslation();
 
@@ -29,27 +31,22 @@ const RegisterPassword = ({route}) => {
 
   return (
     // TODO: translate
-    <View style={styles.container}>
-      <View>
-        <Header
-          back
-          avoidStatusBar
-          blackIcon
-          // style={styles.header}
-          renderRightComponent={() => (
-            <TouchableOpacity
-              style={styles.pRight}
-              onPress={() => setShowModal(true)}>
-              <Icon
-                icon={Images.Register.Info}
-                style={styles.firstIcon}
-                tintColor={Colors.BLACK}
-              />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-
+    <BlueHeader>
+      <Header
+        back
+        renderRightComponent={() => (
+          <TouchableOpacity
+            style={{paddingRight: Spacing.PADDING}}
+            onPress={() => setShowModal(true)}>
+            <Icon
+              icon={Images.Register.Info}
+              style={styles.iconSize}
+              tintColor={Colors.white}
+            />
+          </TouchableOpacity>
+        )}
+        logo={Images.logoEpay}
+      />
       <Formik
         initialValues={{
           newPassword: '',
@@ -73,18 +70,19 @@ const RegisterPassword = ({route}) => {
           };
           // TODO: translate
           return (
-            <View style={styles.wrap}>
+            <View style={[styles.flex1]}>
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={{paddingVertical: scale(24)}}>
-                <BigLogo />
+                contentContainerStyle={[
+                  {paddingVertical: scale(24)},
+                  styles.wrap,
+                ]}>
                 <Content
-                  title="Tạo mật khẩu Epay"
+                  title="Tạo mật khẩu"
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
-                  style={{paddingBottom: Spacing.PADDING}}
                 />
                 <TextInput
                   password
@@ -113,22 +111,22 @@ const RegisterPassword = ({route}) => {
                 </Text>
               </ScrollView>
 
-              <View style={{paddingBottom: 20}}>
+              <FooterContainer>
                 <View style={styles.flexRow}>
                   <Checkbox onPress={setActive} />
-                  <Text>
+                  <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
-                      style={{marginTop: -3}}
-                      onPress={() => onNavigate(SCREEN.AGREEMENT)}>
+                      style={styles.mtMinus1}
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
                     </TouchableOpacity>
                     và
                     <TouchableOpacity
-                      style={{marginTop: -3}}
-                      onPress={() => onNavigate(SCREEN.POLICY)}>
+                      style={styles.mtMinus1}
+                      onPress={() => onGoTerm(SCREEN.POLICY)}>
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
@@ -136,13 +134,14 @@ const RegisterPassword = ({route}) => {
                     của Epay Services
                   </Text>
                 </View>
+
                 <Button
                   disabled={!active}
                   mt={10}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-              </View>
+              </FooterContainer>
             </View>
           );
         }}
@@ -152,36 +151,24 @@ const RegisterPassword = ({route}) => {
         setShowModal={setShowModal}
         onPress={openCallDialog}
       />
-    </View>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  flex1: {flex: 1},
+  flexRow: {flexDirection: 'row'},
+  //-----------------------
+  mtMinus1: {marginTop: -3},
+  //-----------------------
+  iconSize: {
+    width: scale(20),
+    height: scale(20),
   },
-  wrap: {
-    flex: 1,
-    paddingHorizontal: Spacing.PADDING,
-  },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
-  firstIcon: {
-    width: scale(24),
-    height: scale(24),
-  },
-  // header: {
-  //   paddingTop: 10,
-  //   backgroundColor: Colors.white,
-  //   color: Colors.BLACK,
-  // },
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
   },
-  flexRow: {flexDirection: 'row'},
   textNote: {
     fontSize: 12,
     fontWeight: '500',

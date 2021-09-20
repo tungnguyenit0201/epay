@@ -11,6 +11,8 @@ import BigLogo from 'components/Auth/BigLogo';
 import Content from 'components/Auth/Content';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
+import BlueHeader from 'components/Auth/BlueHeader';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const Login = ({route}) => {
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
@@ -23,13 +25,12 @@ const Login = ({route}) => {
   });
 
   return (
-    <>
-      <View style={styles.blockHeader}>
-        <View>
-          <Header back blackIcon avoidStatusBar />
-        </View>
-        <BigLogo />
+    //TODO: translate
+    <BlueHeader>
+      <View style={styles.pb1}>
+        <BigLogo style={{marginBottom: 30}} />
         <Content
+          style={styles.wrap}
           title={translation.enter_your_password}
           text={
             translation.password_for_account_security_and_transaction_confirmation_at_checkout
@@ -61,26 +62,8 @@ const Login = ({route}) => {
           };
 
           return (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.BACKGROUNDCOLOR,
-              }}>
-              <View
-                style={[
-                  styles.wrap,
-                  {
-                    flex: 1,
-                  },
-                ]}>
-                {/* <InputBlock
-                  password
-                  placeholder="Nhập mật khẩu"
-                  onChange={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  error={touched.password && errors.password}
-                  value={values.password}
-                /> */}
+            <View style={styles.flex1}>
+              <View style={[styles.wrap, styles.flex1]}>
                 <TextInput
                   password
                   required
@@ -91,27 +74,28 @@ const Login = ({route}) => {
                   value={values.password}
                   leftIcon={Images.Transfer.Lock}
                   autoFocus
+                  style={styles.wrap}
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
                   <Pressable onPress={onForgetPassword}>
-                    <Text style={[styles.link_text]}>
+                    <Text style={[styles.linkText]}>
                       {translation.forgot_password}
                     </Text>
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
+                    <Text style={[styles.linkText]}>Đổi số điện thoại</Text>
                   </Pressable>
                 </View>
               </View>
 
-              <View style={[styles.wrap, styles.py_1]}>
-                <View style={styles.flexRow}>
+              <FooterContainer>
+                <View style={[styles.flexRow]}>
                   <Button
                     label="Đăng nhập"
                     onPress={handleSubmit}
-                    style={!biometryType ? styles.fullBtn : styles.firstBtn}
+                    style={!biometryType ? styles.flex1 : styles.firstBtn}
                     disabled={!values.password || !_.isEmpty(errors)}
                   />
 
@@ -129,29 +113,23 @@ const Login = ({route}) => {
                     </Pressable>
                   )}
                 </View>
-              </View>
+              </FooterContainer>
             </View>
           );
         }}
       </Formik>
-    </>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: Colors.BACKGROUNDCOLOR,
-  // },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  py_1: {
-    paddingVertical: Spacing.PADDING,
-  },
-  link_text: {
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  //-------------------
+  flex1: {flex: 1},
+  pb1: {paddingBottom: 24},
+  //-------------------
+  linkText: {
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
-    // textDecorationLine: 'underline',
   },
   box: {
     flexDirection: 'row',
@@ -183,17 +161,6 @@ const styles = StyleSheet.create({
   iconSize: {
     width: scale(17),
     height: scale(17),
-  },
-  blockHeader: {
-    backgroundColor: Colors.white,
-    paddingBottom: 24,
-  },
-  // header: {
-  //   backgroundColor: Colors.white,
-  //   color: Colors.BLACK,
-  // },
-  fullBtn: {
-    flex: 1,
   },
 });
 export default Login;

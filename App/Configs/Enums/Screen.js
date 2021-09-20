@@ -22,7 +22,7 @@ const SCREEN = {
   EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
-  QRPAY: 'QRPay',
+  MY_QR: 'MyQR',
   TRANSFER: 'Transfer',
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
@@ -62,5 +62,7 @@ const SCREEN = {
   OTP_BY_SMART_OTP: 'OTPBySmartOTP',
   VERIFY_EMAIL_RESULT: 'VerifyEmailResult',
   DETAIL_HISTORY: 'DetailHistory',
+  QRPAY: 'QRPay',
+  QR_TRANSFER: 'QRTransfer',
 };
 export default SCREEN;

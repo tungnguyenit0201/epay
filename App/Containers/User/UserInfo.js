@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   ScrollView,
   Pressable,
@@ -8,12 +7,23 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Button, Text, Icon, Header, ActionSheet, Modal} from 'components';
-import {SCREEN, PERSONAL_IC, GENDER} from 'configs/Constants';
+import {
+  Button,
+  Text,
+  Icon,
+  Header,
+  HeaderBg,
+  ActionSheet,
+  Modal,
+} from 'components';
+import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
+
+import DinhDanh from 'components/User/DinhDanh';
+import StatusUser from 'components/Common/StatusUser';
 
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
@@ -43,51 +53,34 @@ const UserInfo = () => {
     AddressInfo?.Provincial;
   const data = [
     {
+      icon: require('images/profile/NapVI.png'),
       name: 'Họ tên',
-      val: PersonalInfo?.FullName || 'Chưa có',
+      val: PersonalInfo?.FullName || <Text color={Colors.g4}>Chưa có</Text>,
     },
     {
+      icon: require('images/profile/Date.png'),
       name: 'Ngày sinh',
-      val: PersonalInfo?.DateOfBirth || 'Chưa có',
+      val: PersonalInfo?.DateOfBirth || <Text color={Colors.g4}>Chưa có</Text>,
     },
     {
+      icon: require('images/profile/GioiTinh.png'),
       name: 'Giới tính',
-      val: GENDER[PersonalInfo?.SexType] || 'Chưa có',
+      val: GENDER[PersonalInfo?.SexType] || (
+        <Text color={Colors.g4}>Chưa có</Text>
+      ),
     },
-    {name: 'CMND', val: ICInfor?.ICNumber || 'Chưa có'},
-    {
-      name: 'Nơi cấp',
-      val: ICInfor?.ICIssuedPlace || 'Chưa có',
-    },
-    {name: 'Địa chỉ', val: AddressInfo?.Provincial ? address : 'Chưa có'},
   ];
 
   return (
     <>
-      <ScrollView>
-        <View
-          style={[
-            base.container,
-            {
-              paddingTop: top + 10,
-              paddingBottom: 20,
-              backgroundColor: Colors.cl1,
-            },
-          ]}>
-          <Pressable style={styles.left} onPress={() => Navigator.goBack()}>
-            <Icon icon={Images.ArrowLeft} tintColor={Colors.white} size={30} />
-          </Pressable>
-
-          <View style={{alignItems: 'center'}}>
+      <HeaderBg mb={0}>
+        <Header back title="Trang cá nhân" />
+      </HeaderBg>
+      <ScrollView style={base.wrap}>
+        <View style={[base.container]}>
+          <View style={{alignItems: 'center', marginBottom: 20}}>
             <Pressable style={{marginBottom: 15}} onPress={onUpdateAvatar}>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  height: 94,
-                  with: 94,
-                  borderRadius: 99,
-                  backgroundColor: Colors.g4,
-                }}>
+              <View style={styles.avatar}>
                 <Image
                   style={{width: 94, height: 94}}
                   source={
@@ -98,124 +91,199 @@ const UserInfo = () => {
                   resizeMode="cover"
                 />
               </View>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 99,
-                  position: 'absolute',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  bottom: 0,
-                  right: -10,
-                  width: 40,
-                  height: 40,
-                  backgroundColor: Colors.cl4,
-                }}>
-                <Image style={{width: 16, height: 16}} source={Images.Edit} />
+              <View style={styles.wedit}>
+                <Image
+                  style={{width: 16, height: 16, tintColor: Colors.g5}}
+                  source={Images.Edit}
+                />
               </View>
             </Pressable>
 
-            <Text color={Colors.white} size={Fonts.FONT_MEDIUM_LARGE} mb={5}>
+            <Text fs="h5" bold mb={5}>
               {PersonalInfo?.FullName}
             </Text>
-            <Text color={Colors.white} mb={10}>
-              {phone}
-            </Text>
-            <Button
-              disabled={statusVerified != PERSONAL_IC.INACTIVE}
-              bg={Colors.cl4}
-              radius={30}
-              color={Colors.black}
-              label={getStatusVerifiedText()}
-              style={{minWidth: 150}}
-              onPress={onVerify}
-            />
+            <Text mb={10}>{phone}</Text>
+
+            <StatusUser />
           </View>
-        </View>
-        <View style={[base.container, styles.heading]}>
-          <View style={styles.item}>
-            <Text style={styles.title}>Thông tin cá nhân</Text>
-            {statusVerified == PERSONAL_IC.ACTIVED && (
+
+          <DinhDanh />
+
+          <View style={[base.boxShadow]}>
+            <View style={styles.heading}>
+              <View>
+                <Text bold fs="h5" mb={5}>
+                  Thông tin cá nhân
+                </Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
+              </View>
+
+              {statusVerified == PERSONAL_IC.ACTIVED && (
+                <TouchableOpacity
+                  style={base.leftAuto}
+                  onPress={() => {
+                    Navigator.push(SCREEN.EDIT_INFO);
+                  }}>
+                  <Image
+                    style={[styles.editBox]}
+                    source={require('images/profile/Edit2.png')}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+            {data.map((item, index) => {
+              return (
+                <View
+                  style={[
+                    styles.rowItem,
+                    base.row,
+                    index == 0 && styles.rowFirst,
+                  ]}
+                  key={index}>
+                  <Image style={[styles.rowIcon]} source={item.icon} />
+                  <Text style={styles.rowTitle}>{item.name}</Text>
+                  <Text style={base.leftAuto}>{item.val}</Text>
+                </View>
+              );
+            })}
+            <View style={[styles.rowItem]}>
+              <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/CMND.png')}
+              />
+              <View>
+                <Text mt={3} mb={5} style={styles.rowTitle}>
+                  CMND/CCCD/Hộ chiếu
+                </Text>
+                <Text style={[styles.rowVal]}>
+                  {ICInfor?.ICNumber || <Text color={Colors.g4}>Chưa có</Text>}
+                </Text>
+              </View>
+            </View>
+            <View style={[styles.rowItem]}>
+              <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/Location.png')}
+              />
+              <View>
+                <Text mt={3} mb={5} style={styles.rowTitle}>
+                  Địa chỉ
+                </Text>
+                <Text style={[styles.rowVal]}>
+                  {AddressInfo?.Provincial ? (
+                    address
+                  ) : (
+                    <Text color={Colors.g4}>Chưa có</Text>
+                  )}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={[base.boxShadow]}>
+            <View style={styles.heading}>
+              <View>
+                <Text bold fs="h5" mb={5}>
+                  Thông tin tài khoản
+                </Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
+              </View>
+
               <TouchableOpacity
-                style={styles.itemRight}
+                style={base.leftAuto}
                 onPress={() => {
                   Navigator.push(SCREEN.EDIT_INFO);
                 }}>
-                <Text style={styles.link}>Chỉnh sửa</Text>
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png')}
+                />
               </TouchableOpacity>
-            )}
-          </View>
-        </View>
-        {data.map((item, index) => {
-          return (
-            <View style={[base.container, styles.row]} key={index}>
-              <View style={styles.item}>
-                <Text>{item.name}</Text>
-                <Text style={styles.textRight}>{item.val}</Text>
+            </View>
+
+            <View style={[base.row]}>
+              <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/Wating.png')}
+              />
+              <View>
+                <Text style={styles.rowVal}>{getStatusVerifiedText()}</Text>
+                {statusVerified != PERSONAL_IC.VERIFYING &&
+                  statusVerified != PERSONAL_IC.RE_VERIFYING && (
+                    <TouchableOpacity
+                      style={styles.itemRight}
+                      onPress={
+                        statusVerified == PERSONAL_IC.INACTIVE
+                          ? onVerify
+                          : () => onReVerify('showModal')
+                      }>
+                      <Text style={styles.link}>
+                        {statusVerified == PERSONAL_IC.INACTIVE
+                          ? 'Xác thực tài khoản'
+                          : 'Đổi giấy tờ tùy thân'}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
               </View>
             </View>
-          );
-        })}
-
-        <View style={[base.container, styles.heading]}>
-          <View style={styles.item}>
-            <Text style={styles.title}>Thông tin tài khoản</Text>
           </View>
-        </View>
-        <View style={[base.container, styles.row]}>
-          <View style={styles.item}>
-            <Text>{getStatusVerifiedText()}</Text>
-            {statusVerified != PERSONAL_IC.VERIFYING &&
-              statusVerified != PERSONAL_IC.RE_VERIFYING && (
+
+          <View style={[base.boxShadow]}>
+            <View style={styles.heading}>
+              <View>
+                <Text bold fs="h5" mb={5}>
+                  Thông tin Email
+                </Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
+              </View>
+
+              {PersonalInfo?.Email && (
                 <TouchableOpacity
-                  style={styles.itemRight}
-                  onPress={
-                    statusVerified == PERSONAL_IC.INACTIVE
-                      ? onVerify
-                      : () => onReVerify('showModal')
-                  }>
-                  <Text style={styles.link}>
-                    {statusVerified == PERSONAL_IC.INACTIVE
-                      ? 'Xác thực tài khoản'
-                      : 'Đổi giấy tờ tùy thân'}
-                  </Text>
+                  style={base.leftAuto}
+                  onPress={() => {
+                    Navigator.push(SCREEN.CHANGE_PASSWORD, {
+                      type: 'update_email',
+                      headerLabel: 'Nhập mật khẩu',
+                    });
+                  }}>
+                  <Image
+                    style={[styles.editBox]}
+                    source={require('images/profile/Edit2.png')}
+                  />
                 </TouchableOpacity>
               )}
-          </View>
-        </View>
+            </View>
 
-        <View style={[base.container, styles.heading]}>
-          <View style={styles.item}>
-            <Text style={styles.title}>Thông tin Email</Text>
+            <View style={[base.row]}>
+              <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/Email.png')}
+              />
+              {PersonalInfo?.Email ? (
+                <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
+              ) : (
+                <>
+                  <Text color={Colors.g4}>Chưa có</Text>
+                  <TouchableOpacity
+                    style={base.leftAuto}
+                    onPress={() => {
+                      Navigator.push(SCREEN.VERIFY_EMAIL, {
+                        functionType: FUNCTION_TYPE.AUTH_EMAIL,
+                      });
+                    }}>
+                    <Text style={styles.link}>Thêm email</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
           </View>
-        </View>
-        <View style={[base.container, styles.row]}>
-          {PersonalInfo?.Email ? (
-            <View style={styles.item}>
-              <Text>{PersonalInfo.Email}</Text>
-              <TouchableOpacity
-                style={styles.itemRight}
-                onPress={() => {
-                  Navigator.push(SCREEN.CHANGE_PASSWORD, {
-                    type: 'update_email',
-                    headerLabel: 'Nhập mật khẩu',
-                  });
-                }}>
-                <Text style={styles.link}>Chỉnh sửa</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.item}>
-              <Text>Chưa có</Text>
-              <TouchableOpacity
-                style={styles.itemRight}
-                onPress={() => {
-                  Navigator.push(SCREEN.VERIFY_EMAIL);
-                }}>
-                <Text style={styles.link}>Thêm email</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <View style={{height: 40}}></View>
         </View>
       </ScrollView>
       <ActionSheet
@@ -248,33 +316,63 @@ const UserInfo = () => {
   );
 };
 const styles = StyleSheet.create({
-  heading: {
-    marginTop: 20,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
+  avatar: {
+    overflow: 'hidden',
+    height: 94,
+    width: 94,
+    borderRadius: 99,
+    backgroundColor: Colors.g4,
   },
-  title: {
-    textTransform: 'uppercase',
-  },
-  link: {
-    textDecorationLine: 'underline',
-  },
-  row: {
+  wedit: {
+    overflow: 'hidden',
+    borderRadius: 99,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 0,
+    right: -10,
+    width: 40,
+    height: 40,
+
     backgroundColor: Colors.white,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderColor: Colors.cl4,
   },
-  item: {
+  heading: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+
+  editBox: {
+    width: scale(46),
+    height: scale(46),
+    marginTop: -10,
+    marginRight: -10,
+  },
+
+  rowItem: {
     flexDirection: 'row',
     paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: Colors.g2,
+    marginHorizontal: -15,
+    paddingHorizontal: 15,
   },
-  itemRight: {
-    marginLeft: 'auto',
+  rowFirst: {
+    borderTopWidth: 0,
   },
-  textRight: {
-    marginLeft: 'auto',
-    width: scale(180),
-    textAlign: 'right',
+
+  rowIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 5,
+  },
+  rowTitle: {
+    fontSize: Fonts.H6,
+    fontWeight: '500',
+  },
+  rowVal: {
+    //color: Colors.g2,
   },
 });
 export default UserInfo;

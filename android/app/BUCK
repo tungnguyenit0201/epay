@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.ebay",
+    package = "com.mangoads.epay",
 )
 
 android_resource(
     name = "res",
-    package = "com.ebay",
+    package = "com.mangoads.epay",
     res = "src/main/res",
 )
 

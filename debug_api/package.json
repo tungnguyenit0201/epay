@@ -1,0 +1,22 @@
+{
+  "name": "debug_api",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "login_account.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aes-js": "^3.1.2",
+    "base64-arraybuffer": "^1.0.1",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.1.1",
+    "moment": "^2.29.1",
+    "node-aes-gcm": "^0.2.6",
+    "node-rsa": "^1.1.1",
+    "request": "^2.88.2"
+  }
+}

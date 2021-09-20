@@ -10,6 +10,7 @@ import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import {useConfig} from 'context/Common/utils';
+import messaging from '@react-native-firebase/messaging';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,6 @@ import Language from 'containers/Language';
 import Home from 'containers/Home';
 import Auth from 'containers/Auth';
 import Login from 'containers/Auth/Login';
-import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
 import Policy from 'containers/Auth/Policy';
@@ -36,7 +36,7 @@ import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
-import QRPay from 'containers/Wallet/QRPay';
+import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
@@ -76,6 +76,8 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
+import QRPay from 'containers/QRPay';
+import QRTransfer from 'containers/QRPay/Transfer';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -99,6 +101,26 @@ const AppNavigator = () => {
     Platform.OS == 'android' && SplashScreen.hide();
   }, []); // eslint-disable-line
 
+  React.useEffect(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+        }
+      });
+  }, []); // eslint-disable-line
+
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
@@ -116,7 +138,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
-          <Stack.Screen name={SCREEN.REGISTER} component={Register} />
           <Stack.Screen
             name={SCREEN.FORGET_PASSWORD}
             component={ForgetPassword}
@@ -149,7 +170,7 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
           <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
-          <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
+          <Stack.Screen name={SCREEN.MY_QR} component={MyQR} />
           <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
@@ -245,6 +266,8 @@ const AppNavigator = () => {
             name={SCREEN.DETAIL_HISTORY}
             component={DetailHistory}
           />
+          <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
+          <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

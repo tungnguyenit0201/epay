@@ -37,10 +37,10 @@ export const emailSchema = yup.object().shape({
 export const phoneSchema = yup.object().shape({
   phone: yup
     .string()
-    .required(TEXT.PHONE_INVALID)
+    .required('Số điện thoại không đúng')
     .matches(
       /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
-      TEXT.PHONE_INVALID,
+      'Số điện thoại không đúng',
     )
     .label(TEXT.PHONE),
 });
@@ -51,7 +51,7 @@ export const passwordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
+      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
     )
     .label('Mật khẩu'),
 });
@@ -62,7 +62,7 @@ export const newPasswordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
+      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
     )
     .label('Mật khẩu'),
   passwordConfirm: yup

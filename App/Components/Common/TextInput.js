@@ -88,8 +88,9 @@ export default React.forwardRef(
             style={[
               styles.textInput,
               error && styles.error,
-              style,
               Boolean(leftIcon) && {paddingLeft: 50},
+              (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
+              style,
             ]}
             placeholderTextColor={placeholderTextColor || Colors.BOTTOMBORDER}
             onChangeText={onChange}

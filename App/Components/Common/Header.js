@@ -6,6 +6,7 @@ import {Colors, Fonts, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
+import {SCREEN} from 'configs/Constants';
 
 const Header = ({
   title,
@@ -13,11 +14,12 @@ const Header = ({
   style,
   titleStyle,
   back = false,
-  cart = false,
   onPressBack,
   renderRightComponent,
   avoidStatusBar = false,
   blackIcon = false,
+  logo,
+  onPressLogo,
 }) => {
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
@@ -30,96 +32,77 @@ const Header = ({
         style,
       ]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
-      <View style={[{minHeight: scale(24)}]}>
-        <Text
-          semibold
-          fs="h6"
-          style={[
-            styles.title,
-            titleStyle,
-            blackIcon && {color: Colors.black},
-          ]}>
-          {title}
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            position: 'absolute',
-            justifyContent: 'space-between',
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}>
-          {Platform.isPad || Platform.OS == 'macos' ? (
-            <Pressable
-              style={styles.menuIcon}
-              onPress={() => Navigator.openDrawer()}>
-              <Image
-                source={Images.MenuIcon}
-                style={{height: scale(12), width: scale(12)}}
+      <View style={styles.header}>
+        {back ? (
+          <Pressable
+            onPress={() => goBack()}
+            hitSlop={{
+              right: scale(30),
+              top: scale(20),
+              bottom: scale(20),
+              left: scale(30),
+            }}>
+            <View style={styles.back}>
+              <Icon
+                icon={Images.ArrowLeft}
+                tintColor={blackIcon ? Colors.BLACK : Colors.white}
               />
+            </View>
+          </Pressable>
+        ) : (
+          <View />
+        )}
+        <View style={styles.wrapCenter}>
+          {!!title && (
+            <Text
+              fw="700"
+              fs="h6"
+              color={Colors.white}
+              centered
+              style={[titleStyle, blackIcon && {color: Colors.black}]}>
+              {title}
+            </Text>
+          )}
+          {!!logo && (
+            <Pressable onPress={onPressLogo}>
+              <Image source={logo} resizeMode="contain" style={[styles.logo]} />
             </Pressable>
-          ) : (
-            <>
-              {back ? (
-                <Pressable
-                  style={styles.left}
-                  onPress={() => goBack()}
-                  hitSlop={{
-                    right: scale(30),
-                    top: scale(20),
-                    bottom: scale(20),
-                    left: scale(30),
-                  }}>
-                  <View style={styles.back}>
-                    <Icon
-                      icon={Images.ArrowLeft}
-                      tintColor={blackIcon ? Colors.BLACK : Colors.white}
-                    />
-                  </View>
-                </Pressable>
-              ) : (
-                <View />
-              )}
-            </>
           )}
-
-          {cart && (
-            <View
-              style={{
-                marginHorizontal: Spacing.PADDING,
-              }}></View>
-          )}
-          {!!renderRightComponent && renderRightComponent()}
         </View>
+
+        {!!renderRightComponent ? (
+          renderRightComponent()
+        ) : (
+          <View style={styles.rightIcon} />
+        )}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  wrap: {
-    paddingBottom: scale(10),
-  },
-  avoidStatusBar: {height: getStatusBarHeight()},
-  left: {
+  wrap: {paddingVertical: scale(10)},
+
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    minHeight: scale(24),
   },
-  back: {
-    paddingHorizontal: Spacing.PADDING / 2,
+
+  avoidStatusBar: {height: getStatusBarHeight()},
+
+  back: {paddingHorizontal: Spacing.PADDING / 2},
+  wrapCenter: {
+    alignItems: 'center',
+    flex: 1,
   },
-  title: {
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    color: Colors.white,
-    paddingTop: 5,
+
+  logo: {
+    width: 110,
+    height: 40,
   },
-  menuIcon: {
-    paddingLeft: Spacing.PADDING,
-    paddingVertical: scale(8),
-    paddingRight: Spacing.PADDING * 10,
+  rightIcon: {
+    width: Spacing.PADDING * 2.5,
   },
 });
 

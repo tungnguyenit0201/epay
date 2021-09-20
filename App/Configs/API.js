@@ -1,4 +1,4 @@
-const ROOT = 'https://dev.epayservices.com.vn:9443/api/';
+const ROOT = 'https://dev2.epayservices.com.vn:9443/api/v2/';
 const TIMEOUT = 10000;
 
 export default {
@@ -6,7 +6,7 @@ export default {
   TIMEOUT,
   AUTH: {
     CHECK_PHONE: 'account/check_exist',
-    LOGIN: 'v2/account/login_account',
+    LOGIN: 'account/login_account',
     REGISTER: 'account/create_account',
   },
   COMMON: {
@@ -19,6 +19,7 @@ export default {
     SYNC_SMART_OTP: 'smartotp/smartotp_synchronize',
     GEN_SMART_OTP: 'smartotp/gen_smart_otp',
     GET_CONFIG_INFO: 'config/get_config_info',
+    GET_TERMS: 'common/get_terms_of_service',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
@@ -33,7 +34,7 @@ export default {
     GET_SETTINGS_INFO: 'setting/get_all_info',
     GET_QRCODE: 'account/get_qrcode',
     VERIFY_EMAIL: 'account/authentication_email',
-    UPDATE_EMAIL: 'account/change_email',
+    UPDATE_EMAIL: 'v2/account/change_email',
     UPDATE_AVATAR: 'account/update_avatar',
   },
   WALLET: {

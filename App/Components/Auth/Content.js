@@ -4,17 +4,29 @@ import {Text} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 
-const Content = ({title, text, style}) => {
+const Content = ({title, text, style, titleMb, textMb, styleText}) => {
   const translation = useTranslation();
   return (
-    <View style={[styles.wrap, style]}>
+    <View style={style}>
       {Boolean(title) && (
-        <Text bold fs="h5" centered>
+        <Text
+          bold
+          fs="h3"
+          style={[
+            styles.textWhite,
+            titleMb ? {marginBottom: titleMb} : styles.mb1,
+          ]}>
           {title}
         </Text>
       )}
       {Boolean(text) && (
-        <Text centered mt={15} fs="md" color={Colors.l6}>
+        <Text
+          fs="h6"
+          style={[
+            styles.textGray,
+            textMb ? {marginBottom: textMb} : styles.mb2,
+            styleText,
+          ]}>
           {text}
         </Text>
       )}
@@ -23,9 +35,12 @@ const Content = ({title, text, style}) => {
 };
 
 const styles = StyleSheet.create({
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
+  //-----------------------
+  mb1: {marginBottom: 14},
+  mb2: {marginBottom: 26},
+  //-----------------------
+  textWhite: {color: Colors.white},
+  textGray: {color: Colors.gray},
 });
 
 export default Content;

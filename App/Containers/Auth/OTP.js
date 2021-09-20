@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Text, Header, Button, Icon} from 'components';
+import {Text, Header, Button, Icon, Modal} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
 import OTPContainer from 'components/Auth/OTPContainer';
@@ -8,6 +8,7 @@ import {useTranslation} from 'context/Language';
 import {useAuth} from 'context/Auth/utils';
 import {useOTP} from 'context/Common/utils';
 import {HelpModal} from 'components/Auth';
+import BlueHeader from 'components/Auth/BlueHeader';
 
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
@@ -29,28 +30,27 @@ const OTP = ({route}) => {
     <TouchableOpacity
       onPress={() => setShowModal(true)}
       style={styles.iconRight}>
-      <Icon icon={Images.Register.Info} tintColor={Colors.BLACK} />
+      <Icon
+        icon={Images.Register.Info}
+        tintColor={Colors.white}
+        style={styles.iconSize}
+      />
     </TouchableOpacity>
   );
 
   return (
     // TODO: translate
     <>
-      <View>
+      <BlueHeader>
         <Header
           back
-          blackIcon
-          avoidStatusBar
-          // style={styles.header}
+          // blackIcon
+          // avoidStatusBar
           renderRightComponent={() => renderRightComponent()}
+          logo={Images.logoEpay}
         />
-      </View>
 
-      <View style={styles.container}>
         <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
-          <View style={styles.logo}>
-            <Image source={Images.logoEpay} resizeMode="contain" />
-          </View>
           <OTPContainer
             onChange={onChange}
             onCodeFilled={onConfirmOTP}
@@ -62,55 +62,92 @@ const OTP = ({route}) => {
             label={label}
           />
         </View>
-      </View>
+      </BlueHeader>
+
       <TouchableOpacity
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          paddingVertical: Spacing.PADDING - 5,
-          backgroundColor: Colors.OtpGray_1,
-        }}
+        style={[
+          styles.flexRow,
+          styles.justifyCenter,
+          styles.bgGray,
+          {paddingVertical: Spacing.PADDING - 5},
+        ]}
         onPress={() => setShowModal(true)}>
-        <Image
-          source={Images.Phone}
-          style={{
-            height: Spacing.PADDING,
-            width: Spacing.PADDING,
-            marginRight: 10,
-            top: 1,
-          }}
-        />
+        <View
+          style={[
+            styles.lineSize,
+            styles.absolute,
+            styles.bgGray1,
+            styles.top1,
+            styles.left1,
+          ]}></View>
+        <View
+          style={[
+            styles.lineSize,
+            styles.absolute,
+            styles.bgGray1,
+            styles.top1,
+            styles.right1,
+          ]}></View>
+        <Image source={Images.Phone} style={styles.iconPhone} />
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>
 
-      <HelpModal
+      {/* <HelpModal
         showModal={showModal}
         setShowModal={setShowModal}
         onPress={openCallDialog}
+      /> */}
+      <Modal
+        visible={showModal}
+        onClose={() => setShowModal(false)}
+        title="Gọi tổng đài"
+        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, 
+          vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
+        buttonGroup={() => (
+          <>
+            <Button mb={15} label="Gọi 1900-0000" bold onPress={() => {}} />
+            <TouchableOpacity onPress={() => setShowModal(false)}>
+              <Text style={styles.textCenter}>Không, cảm ơn</Text>
+            </TouchableOpacity>
+          </>
+        )}
+        icon={Images.SignUp.TouchId}
+        // icon={Images.SignUp.BigPhone}
       />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  //-----------------------------
+  absolute: {position: 'absolute'},
+  top1: {top: 15},
+  left1: {left: 30},
+  right1: {right: 30},
+  //-----------------------------
+  flexRow: {flexDirection: 'row'},
+  justifyCenter: {justifyContent: 'center'},
+  //-----------------------------
+  textCenter: {textAlign: 'center'},
+  //-----------------------------
+  bgGray: {backgroundColor: Colors.OtpGray_1},
+  bgGray1: {backgroundColor: Colors.OtpGray_2},
+  //-----------------------------
+  iconRight: {paddingRight: Spacing.PADDING},
+  iconPhone: {
+    height: Spacing.PADDING,
+    width: Spacing.PADDING,
+    marginRight: 10,
+    top: 1,
   },
-  // header: {
-  //   paddingTop: 10,
-  //   backgroundColor: Colors.white,
-  //   color: Colors.BLACK,
-  // },
-  logo: {
-    marginBottom: Spacing.PADDING + 40,
-    alignItems: 'center',
+  lineSize: {
+    width: 1,
+    height: 25,
   },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  iconRight: {
-    paddingRight: Spacing.PADDING,
+  iconSize: {
+    width: 20,
+    height: 20,
   },
 });
 export default OTP;

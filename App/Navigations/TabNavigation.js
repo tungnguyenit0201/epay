@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 import {Text} from 'components';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -19,6 +20,8 @@ const Tab = createBottomTabNavigator();
 
 import User from 'containers/User';
 import Home from 'containers/Home';
+import Notification from 'containers/Notification';
+
 import {useTranslation} from 'context/Language';
 
 const TabIcons = {
@@ -39,7 +42,7 @@ const TabNavigation = () => {
     return (
       <View style={styles.container}>
         <View style={[styles.wrapTab, {width: width}]}>
-          {state.routes.map((route, index) => {
+          {state.routes?.slice(0, 2).map((route, index) => {
             const {options} = descriptors[route.key];
             const label =
               options.tabBarLabel !== undefined
@@ -119,6 +122,7 @@ const TabNavigation = () => {
       <Tab.Navigator tabBar={props => <TabBarCustom {...props} />}>
         <Tab.Screen name={SCREEN.HOME} component={Home} />
         <Tab.Screen name={SCREEN.USER} component={User} />
+        <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
       </Tab.Navigator>
     </View>
   );
