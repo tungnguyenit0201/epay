@@ -1,7 +1,7 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import axios from './Axios';
-import {API} from 'configs';
-import {buildURL} from './Functions';
+import { API } from 'configs';
+import { buildURL } from './Functions';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -10,15 +10,20 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {debugData} from 'components/Common/Debug';
-import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
+import { debugData } from 'components/Common/Debug';
+import { ASYNC_STORAGE_KEY, COMMON_ENUM } from 'configs/Constants';
+
+import AES from "./AES";
+import RSA from "./RSA";
+var aes = new AES()
+var rsa = new RSA()
+
 
 let transactionID = '';
 
-const getCommonParams = async (url, language = 'vi') => {
-  const uniqueDeviceID = getUniqueId();
+const getRequestData = async (url, params) => {
   let urlPart = url.split('/');
-  let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+  const uniqueDeviceID = getUniqueId();
   return {
     MsgID: uniqueDeviceID + moment().format('DD-MM-YYYY HH:mm:ss.SSS'),
     MsgType: urlPart[urlPart.length - 1],
@@ -26,11 +31,28 @@ const getCommonParams = async (url, language = 'vi') => {
       transactionID !== null && transactionID !== ''
         ? transactionID
         : (
-            new Date().getTime() +
-            '' +
-            Math.floor(Math.random() * 10000)
-          ).toString(),
-    RequestTime: moment().format(COMMON_ENUM.DATETIME_FORMAT),
+          new Date().getTime() +
+          '' +
+          Math.floor(Math.random() * 10000)
+        ).toString(),
+    ...params,
+
+  }
+};
+
+const getEncryptParam = async (url, params) => {
+  let language = 'vi'
+  const uniqueDeviceID = getUniqueId();
+  let urlPart = url.split('/');
+  let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+  let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
+  let requestData = getRequestData(url, params)
+  let dataEncrypted = aes.Encrypt(JSON.stringify(requestData))
+  let signature = rsa.Sign(requestTime, dataEncrypted)
+
+  return {
+    MsgType: urlPart[urlPart.length - 1],
+    RequestTime: requestTime,
     Lang: currentLanguage ? currentLanguage : language,
     Channel: 'App',
     AppVersion: getVersion(),
@@ -41,6 +63,8 @@ const getCommonParams = async (url, language = 'vi') => {
     DeviceInfo:
       (Platform.OS === 'ios' ? 'Iphone iOS ' : 'Android ') + Platform.Version,
     DeviceID: uniqueDeviceID,
+    Data: dataEncrypted,
+    Signature: signature
   };
 };
 
@@ -57,7 +81,7 @@ async function request({
   let root = API.ROOT;
   const requestMethod = axios;
   const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
-  if (token) headers = {...headers, Authorization: `Bearer ${token}`};
+  if (token) headers = { ...headers, Authorization: `Bearer ${token}` };
 
   if (typeof requestMethod[method] === 'function') {
     try {
@@ -70,7 +94,7 @@ async function request({
           console.log(method, buildURL(root + url, query), params, result);
         }
       } else {
-        let postParams = {...(await getCommonParams(url)), ...params};
+        let postParams = await getEncryptParam(url, params);
         // console.log('postParams :>> ', postParams);
         if (form) {
           postParams = new FormData();
@@ -92,26 +116,52 @@ async function request({
           debugData.push(result);
         }
       }
-      if (
-        result.status === 200 ||
-        result.status === 201 ||
-        result.status === 203
-      ) {
-        if (_.get(result, 'data.TransactionID', '')) {
-          transactionID = _.get(result, 'data.TransactionID', '');
-        }
 
-        if (typeof success === 'function') {
-          return success(result?.data || result);
+      
+
+      let { data, status } = result || {};
+      let { ResponseTime, Data, Signature, ErrorMessage, ErrorCode } = data || {};
+
+      console.log('[Request] Signature: '+JSON.stringify(result.data))
+      //Verify signature
+      const verified = rsa.Verify(ResponseTime, Data, Signature);
+      if (!!verified) {
+        if (
+          (status === 200 ||
+          status === 201 ||
+          status === 203)
+        ) {
+          if (_.get(result, 'data.TransactionID', '')) {
+            transactionID = _.get(result, 'data.TransactionID', '');
+          }
+
+          console.log('[Request] Data text before decrypt: '+Data)
+          let deCryptedText = aes.Decrypt(Data)
+          console.log('[Request] Data text after decrypt: '+deCryptedText)
+
+          const decryptedData = JSON.parse(deCryptedText);
+
+          transactionID = decryptedData?.TransactionID || transactionID;
+  
+          if (typeof success === 'function') {
+            if(!ErrorCode) {
+              return success(decryptedData);
+            } else {
+              return success(data);
+            }
+            
+          }
+        } else {
+          if (__DEV__) {
+            console.log(method, buildURL(url, query), params, result);
+          }
+          return failure({
+            status: status,
+            message: ErrorMessage || aes.Decrypt(Data),
+          });
         }
       } else {
-        if (__DEV__) {
-          console.log(method, buildURL(url, query), params, result);
-        }
-        return failure({
-          status: result?.status,
-          message: result?.data,
-        });
+        throw Error('WRONG_SIGNATURE');
       }
     } catch (err) {
       if (__DEV__) {
@@ -125,7 +175,7 @@ async function request({
             ...err?.response?.data,
           });
         } else {
-          return failure({message: result?.message});
+          return failure({ message: result?.message });
         }
       }
     }
@@ -136,4 +186,5 @@ const defaultFailureHandle = error => {
   console.error(error);
 };
 
-export {request};
+export { request };
+

@@ -1,4 +1,4 @@
-const ROOT = 'https://dev.epayservices.com.vn:9443/api/';
+const ROOT = 'https://dev2.epayservices.com.vn:9443/api/v2/';
 const TIMEOUT = 10000;
 
 export default {
