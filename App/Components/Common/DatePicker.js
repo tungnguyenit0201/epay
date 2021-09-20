@@ -50,13 +50,23 @@ export default ({
         onPress={showDatePicker}
         style={[styles.wrap, error && styles.error]}>
         <View style={{flex: 1}}>
-          <Text color={!!value ? Colors.TEXT : Colors.GRAY}>{value}</Text>
+          <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
+            {value}
+          </Text>
         </View>
-        <Image
-          source={Images.DatePicker}
-          style={styles.icon}
-          resizeMode={'contain'}
-        />
+        <View
+          style={[
+            styles.fullHeight,
+            styles.justifyCenter,
+            styles.p1,
+            {backgroundColor: Colors.l4},
+          ]}>
+          <Image
+            source={Images.Kyc.Calendar}
+            style={styles.icon}
+            resizeMode={'contain'}
+          />
+        </View>
       </Pressable>
       {!!error && showErrorLabel && (
         <Text color={Colors.ALERT} mt={3} size={scale(12)}>
@@ -87,19 +97,26 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     height: 48,
-    paddingVertical: 10,
-    paddingHorizontal: 11,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#CCCCCB',
+    borderColor: Colors.cl4,
   },
+  //----------------
+  fullHeight: {height: '100%'},
+  //----------------
+  justifyCenter: {justifyContent: 'center'},
+  //----------------
+  p1: {padding: 12},
+  //----------------
+  pl1: {paddingLeft: 10},
+  //----------------
   error: {
     borderColor: Colors.ALERT,
     borderWidth: 1,
   },
   icon: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
     tintColor: Colors.GRAY,
   },
 });
