@@ -50,7 +50,7 @@ const SelectMoney = () => {
             />
             <Button
               label="Xác nhận"
-              onPress={() => Navigator.navigate(SCREEN.QRPAY, {value})}
+              onPress={() => Navigator.navigate(SCREEN.MY_QR, {value})}
               disabled={value ? false : true}
               style={{
                 width: '45%',

@@ -51,7 +51,7 @@ const User = () => {
             <Col space={10}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.QRPAY)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.MaThanhToan}
