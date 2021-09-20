@@ -1,4 +1,4 @@
-const ROOT = 'https://dev.epayservices.com.vn:9443/api/';
+const ROOT = 'https://dev2.epayservices.com.vn:9443/api/v2/';
 const TIMEOUT = 10000;
 
 export default {
@@ -6,7 +6,7 @@ export default {
   TIMEOUT,
   AUTH: {
     CHECK_PHONE: 'account/check_exist',
-    LOGIN: 'v2/account/login_account',
+    LOGIN: 'account/login_account',
     REGISTER: 'account/create_account',
   },
   COMMON: {
