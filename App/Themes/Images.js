@@ -137,6 +137,10 @@ export default {
   },
   Kyc: {
     Calendar: require('images/icons/calendar.png'),
+    Wave: require('images/icons/wave-2.png'),
+    Test: require('images/icons/test.png'),
+    BigCircle: require('images/icons/big-circle.png'),
+    SpecialArrow: require('images/icons/special-arrow.png'),
   },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),
