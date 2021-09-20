@@ -167,7 +167,9 @@ const useUserInfo = type => {
             });
             break;
           case 'update_email':
-            Navigator.push(SCREEN.VERIFY_EMAIL);
+            Navigator.push(SCREEN.VERIFY_EMAIL, {
+              functionType: FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL,
+            });
             break;
           default:
             Navigator.push(SCREEN.OTP, {

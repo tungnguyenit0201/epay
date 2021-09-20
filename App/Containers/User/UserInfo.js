@@ -16,7 +16,7 @@ import {
   ActionSheet,
   Modal,
 } from 'components';
-import {SCREEN, PERSONAL_IC, GENDER} from 'configs/Constants';
+import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -273,7 +273,9 @@ const UserInfo = () => {
                   <TouchableOpacity
                     style={base.leftAuto}
                     onPress={() => {
-                      Navigator.push(SCREEN.VERIFY_EMAIL);
+                      Navigator.push(SCREEN.VERIFY_EMAIL, {
+                        functionType: FUNCTION_TYPE.AUTH_EMAIL,
+                      });
                     }}>
                     <Text style={styles.link}>Thêm email</Text>
                   </TouchableOpacity>
