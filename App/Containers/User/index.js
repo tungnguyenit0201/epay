@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {PERSONAL_IC, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
@@ -17,7 +18,7 @@ import UserInfo from 'components/User/UserInfo';
 import Account from 'components/User/Account';
 import DinhDanh from 'components/User/DinhDanh';
 
-import {useUserInfo} from 'context/User/utils';
+import {useSecuritySettings, useUserInfo} from 'context/User/utils';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import {useAuth} from 'context/Auth/utils';
@@ -31,6 +32,7 @@ const User = () => {
   const {onGetAllBank} = useBankInfo();
   const {onLogout} = useAuth();
   const {listConnectBank} = useWallet();
+  const {onSmartOTP} = useSecuritySettings();
 
   // TODO: translate
   return (
@@ -80,7 +82,8 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
+                  // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
+                  Alert.alert('', 'Coming soon');
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -88,16 +91,12 @@ const User = () => {
                 />
                 <Text semibold>Nạp ví tự động</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                }}>
+              <TouchableOpacity style={styles.item} onPress={onSmartOTP}>
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/OTP.png')}
                 />
-                <Text semibold>Cài đặt Smart OTP </Text>
+                <Text semibold>Cài đặt Smart OTP</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -109,12 +108,13 @@ const User = () => {
                   style={[styles.icon]}
                   source={Images.Profile.Translate}
                 />
-                <Text semibold>{translation.language_setting} </Text>
+                <Text semibold>{translation.language_setting}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.navigate(SCREEN.NOTIFICATION);
+                  // Navigator.navigate(SCREEN.NOTIFICATION);
+                  Alert.alert('', 'Coming soon');
                 }}>
                 <Image
                   style={[styles.icon]}
@@ -142,7 +142,8 @@ const User = () => {
           <TouchableOpacity
             style={[base.row, styles.itemMenu]}
             onPress={() => {
-              Navigator.navigate(SCREEN.NOTIFICATION);
+              // Navigator.navigate(SCREEN.NOTIFICATION);
+              Alert.alert('', 'Coming soon');
             }}>
             <Image
               style={[styles.iconMenu]}
@@ -163,7 +164,8 @@ const User = () => {
           <TouchableOpacity
             style={[base.row, styles.itemMenu]}
             onPress={() => {
-              Navigator.navigate(SCREEN.NOTIFICATION);
+              // Navigator.navigate(SCREEN.NOTIFICATION);
+              Alert.alert('', 'Coming soon');
             }}>
             <Image
               style={[styles.iconMenu]}
