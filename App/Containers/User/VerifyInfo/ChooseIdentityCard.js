@@ -36,7 +36,7 @@ const ChooseIdentityCard = ({ route }) => {
           <Header back title={translation?.verify_your_account} />
         </HeaderBg>
       </View>
-      <View style={[base.container, styles.container]}>
+      <View style={[base.container, styles.bgWhite, styles.flex1, styles.pt1]}>
         <Text fs="h6" bold mb={24}>
           {translation?.kycDescription}
         </Text>
@@ -98,9 +98,7 @@ const styles = StyleSheet.create({
   bgWhite: {
     backgroundColor: Colors.white,
   },
-  selector: {
-    minHeight: 200,
-    paddingTop: 16,
-  },
+  flex1: { flex: 1 },
+  pt1: { paddingTop: 20 },
 });
 export default ChooseIdentityCard;

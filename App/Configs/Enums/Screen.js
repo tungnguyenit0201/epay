@@ -22,7 +22,7 @@ const SCREEN = {
   EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
-  QRPAY: 'QRPay',
+  MY_QR: 'MyQR',
   TRANSFER: 'Transfer',
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
@@ -66,5 +66,7 @@ const SCREEN = {
   BOTTOM_MODAL: 'BottomModal',
   POPUP_MODAL: 'PopupModal',
   ALERT_MODAL: 'AlerModal',
+  QRPAY: 'QRPay',
+  QR_TRANSFER: 'QRTransfer',
 };
 export default SCREEN;

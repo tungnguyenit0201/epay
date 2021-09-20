@@ -6,14 +6,17 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
 
-const useEmail = () => {
+const useEmail = ({functionType}) => {
   const {setLoading} = useLoading();
   const {phone} = useUser();
   const {setError} = useError();
 
-  const onEmailAuth = async ({email, update}) => {
+  const onEmailAuth = async ({email}) => {
     setLoading(true);
-    const emailFunction = update ? updateEmail : verifyEmail;
+    const emailFunction =
+      functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL
+        ? updateEmail
+        : verifyEmail;
     const result = await emailFunction({phone, email});
     setLoading(false);
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
@@ -23,7 +26,7 @@ const useEmail = () => {
     Navigator.push(SCREEN.OTP, {
       phone,
       email,
-      functionType: FUNCTION_TYPE.AUTH_EMAIL,
+      functionType,
     });
   };
 

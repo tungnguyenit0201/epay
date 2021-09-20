@@ -1,7 +1,8 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
-import {checkPhone, getConfigInfo, login, register} from 'services/auth';
-import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {checkPhone, login, register} from 'services/auth';
+import {getTerm} from 'services/common';
+import {ERROR_CODE, FUNCTION_TYPE, SCREEN, TERM_TYPE} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
@@ -280,7 +281,7 @@ const useRegister = () => {
   const {setError} = useError();
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
-  const {setPhone} = useAsyncStorage();
+  const {setPhone, getPhone} = useAsyncStorage();
 
   let [active, setActive] = useState(false);
   let [showModal, setShowModal] = useState(false);
@@ -293,8 +294,8 @@ const useRegister = () => {
     registerRef.current[key] = val;
   };
 
-  const onNavigate = screen => {
-    !!screen ? Navigator.navigate(screen) : Navigator.popToTop();
+  const onNavigate = (screen, params) => {
+    !!screen ? Navigator.navigate(screen, params) : Navigator.popToTop();
   };
 
   const openCallDialog = () => {
@@ -326,6 +327,29 @@ const useRegister = () => {
     }
   };
 
+  const onGoTerm = async screen => {
+    try {
+      setLoading(true);
+
+      const phone = await getPhone();
+
+      const result = await getTerm({
+        phone,
+        type: TERM_TYPE.REGISTER_ACCOUNT,
+      });
+
+      setLoading(false);
+      let errorCode = _.get(result, 'ErrorCode', '');
+      if (errorCode == ERROR_CODE.SUCCESS) {
+        onNavigate(screen, result);
+        return result;
+      } else setError(result);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return {
     active,
     setActive,
@@ -336,6 +360,7 @@ const useRegister = () => {
     createAccount,
     setFirstLogin,
     onNavigate,
+    onGoTerm,
   };
 };
 
