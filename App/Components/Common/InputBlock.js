@@ -9,6 +9,7 @@ import {
 import {Icon, Text, TextInput} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
+import {ColorSwatch} from 'react-native-ui-lib';
 
 const InputBlock = ({
   label,
@@ -22,6 +23,7 @@ const InputBlock = ({
   onFocus,
   onBlur,
   rightIcon,
+  rightIconBgGray,
   isSelect,
   onPress,
   inputStyle,
@@ -54,6 +56,7 @@ const InputBlock = ({
             {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
             inputStyle,
           ]}
+          placeholderTextColor={Colors.l5}
           password={password && !showPassword}
           email={email}
           numeric={numeric}
@@ -84,25 +87,39 @@ const InputBlock = ({
       {rightIcon && (
         <TouchableOpacity
           onPress={onPress}
-          style={{
-            position: 'absolute',
-            right: scale(10),
-            top: scale(48),
-          }}>
-          <Icon icon={rightIcon} />
+          style={[styles.absolute, styles.top1, styles.right1]}>
+          <Icon icon={rightIcon} resizeMode="contain" tintColor={Colors.gray} />
+        </TouchableOpacity>
+      )}
+      {rightIconBgGray && (
+        <TouchableOpacity
+          onPress={onPress}
+          style={[
+            styles.h1,
+            styles.justifyCenter,
+            styles.alignCenter,
+            styles.w1,
+            styles.bgGray,
+            styles.absolute,
+            styles.top2,
+            styles.rightZero,
+            styles.botRadius1,
+            styles.topRadius1,
+          ]}>
+          <Image
+            source={rightIconBgGray}
+            resizeMode="contain"
+            style={styles.rightIcon}
+          />
         </TouchableOpacity>
       )}
       {!!password && (
         <Pressable
           onPress={() => setShowPassword(!showPassword)}
-          style={{
-            position: 'absolute',
-            right: scale(10),
-            top: scale(48),
-          }}>
+          style={[styles.absolute, styles.top1, styles.right1]}>
           <Image
             source={showPassword ? Images.Eye : Images.EyeGray}
-            style={{width: scale(20), height: scale(20)}}
+            style={[styles.w2, styles.h2]}
             resizeMode="contain"
           />
         </Pressable>
@@ -114,11 +131,32 @@ const InputBlock = ({
 export default InputBlock;
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
+  input: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  //---------------
+  absolute: {position: 'absolute'},
+  rightZero: {right: 0},
+  //----------------
+  top1: {top: scale(45)},
+  top2: {top: scale(34)},
+  //----------------
+  right1: {right: scale(10)},
+  //----------------
+  w1: {width: 48},
+  w2: {width: scale(20)},
+  //----------------
+  h1: {height: 52},
+  h2: {height: scale(20)},
+  //----------------
+  justifyCenter: {justifyContent: 'center'},
+  alignCenter: {alignItems: 'center'},
+  //----------------
+  bgGray: {backgroundColor: Colors.l4},
+  //----------------
+  topRadius1: {borderTopRightRadius: 8},
+  //----------------
+  botRadius1: {borderBottomRightRadius: 8},
+  //----------------
   inputLabel: {
-    color: Colors.GRAY,
     marginTop: scale(5),
     marginBottom: scale(10),
   },
@@ -129,12 +167,16 @@ const styles = StyleSheet.create({
     height: scale(48),
     borderColor: Colors.cl4,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
   error: {
     borderColor: Colors.ALERT,
     borderWidth: 1,
+  },
+  rightIcon: {
+    width: 16,
+    height: 16,
   },
 });
