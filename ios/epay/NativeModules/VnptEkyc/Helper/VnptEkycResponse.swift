@@ -49,7 +49,9 @@ extension VnptEkycResponse {
     guard let image = dataModel.image else {
       return VnptEkycState.error(.SDK_ERROR).arrayValue()
     }
-    return VnptEkycState.oneSideResult(convertImageToBase64(image: image)).arrayValue()
+    
+    let cropedImage = dataModel.cropImage(image: image)
+    return VnptEkycState.oneSideResult(convertImageToBase64(image: image),convertImageToBase64(image: cropedImage)).arrayValue()
   }
 }
 

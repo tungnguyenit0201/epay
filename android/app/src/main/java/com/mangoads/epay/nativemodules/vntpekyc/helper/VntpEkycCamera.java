@@ -45,7 +45,9 @@ public class VntpEkycCamera {
                             try {
                                 if (resultData.bitmapOneSide != null) {
                                     String imageBase64 = convertImageToBase64(resultData.bitmapOneSide);
+                                    String imageCropBase64 = convertImageToBase64(resultData.getCropBitmap(resultData.bitmapOneSide));
                                     result.putString("imageBase64", imageBase64);
+                                    result.putString("imageCropBase64", imageCropBase64);
                                 } else if (resultData.bitmapFront != null && resultData.bitmapBack != null) {
                                     String frontImageBase64 = convertImageToBase64(resultData.bitmapFront);
                                     String backImageBase64 = convertImageToBase64(resultData.bitmapBack);

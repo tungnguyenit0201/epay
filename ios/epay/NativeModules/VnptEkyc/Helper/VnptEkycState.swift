@@ -11,7 +11,7 @@ enum VnptEkycState {
   case error(VnptEkycConstants)
   case completed
   case faceAdvanceResult([String:Any])
-  case oneSideResult(String)
+  case oneSideResult(String,String)
   case twoSideResult(String,String)
   case faceOvalResult(String,String)
   
@@ -23,9 +23,10 @@ enum VnptEkycState {
         return [["errorCode":""]]
       case .faceAdvanceResult(let result):
         return [result]
-      case .oneSideResult(let imageBase64):
+      case .oneSideResult(let imageBase64, let imageCropBase64):
         return [[
-          "imageBase64": imageBase64
+          "imageBase64": imageBase64,
+          "imageCropBase64": imageCropBase64,
         ]]
       case .twoSideResult(let frontImageBase64, let backImageBase64):
         return [[
