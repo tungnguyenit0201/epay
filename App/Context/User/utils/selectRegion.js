@@ -11,11 +11,7 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
   // const [search, setSearch] = useState('');
   const translation = useTranslation();
   const {region, dispatch} = useUser();
-  console.log('region :>> ', region);
-  // dispatch({
-  //   type: 'SET_REGION',
-  //   data: {},
-  // });
+
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {getPhone} = useAsyncStorage();
