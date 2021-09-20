@@ -70,6 +70,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
       case FUNCTION_TYPE.REGISTER_SMART_OTP:
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
       case FUNCTION_TYPE.AUTH_EMAIL:
+      case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
         onGetPersonalInfo();
         Navigator.push(SCREEN.VERIFY_EMAIL_RESULT, {type: 'success'});
         return;
