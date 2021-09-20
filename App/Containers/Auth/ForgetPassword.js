@@ -1,24 +1,7 @@
 import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  useWindowDimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-  Icon,
-} from 'components';
+import {StyleSheet, View} from 'react-native';
+import {Button, TextInput} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
-import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {phoneSchema} from 'utils/ValidationSchemas';

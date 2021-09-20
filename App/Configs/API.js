@@ -19,6 +19,7 @@ export default {
     SYNC_SMART_OTP: 'smartotp/smartotp_synchronize',
     GEN_SMART_OTP: 'smartotp/gen_smart_otp',
     GET_CONFIG_INFO: 'config/get_config_info',
+    GET_TERMS: 'common/get_terms_of_service',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',

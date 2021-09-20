@@ -18,7 +18,6 @@ const OTPContainer = ({
   label,
 }) => {
   const translation = useTranslation();
-  console.log('countdown > 0 :>> ', countdown > 0);
   return (
     // TODO: translate
     <>

@@ -11,7 +11,11 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
   // const [search, setSearch] = useState('');
   const translation = useTranslation();
   const {region, dispatch} = useUser();
-
+  console.log('region :>> ', region);
+  // dispatch({
+  //   type: 'SET_REGION',
+  //   data: {},
+  // });
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {getPhone} = useAsyncStorage();
@@ -77,11 +81,16 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
         });
         break;
       case 'districts':
-        if (!type) {
+        if (!region?.ProvinceID) {
           pleaseChooseFirst(translation.provice);
         } else {
+          let _items = [];
+          if (!type)
+            _items = await onGetDistrict({
+              ProvinceID: region?.ProvinceID,
+            });
           Navigator.navigate('RegionSelect', {
-            items,
+            items: type ? items : _items,
             type: _type,
             parentType: type,
             callbackScreen,
@@ -89,11 +98,13 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
         }
         break;
       case 'wards':
-        if (!type) {
+        if (!region?.DistrictID) {
           pleaseChooseFirst(translation.district);
         } else {
+          let _items = [];
+          if (!type) _items = await onGetWard({DistrictID: region?.DistrictID});
           Navigator.navigate('RegionSelect', {
-            items,
+            items: type ? items : _items,
             type: _type,
             parentType: type,
             callbackScreen,
@@ -107,7 +118,7 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
     if (type === 'cites') {
       dispatch({
         type: 'SET_REGION',
-        data: {...region, Provincial: item?.ProvinceName},
+        data: {...region, Provincial: item?.ProvinceName, ...item},
       });
       const _items = await onGetDistrict({
         ProvinceID: item?.ProvinceID.toString(),
@@ -121,7 +132,7 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
     } else if (type === 'districts') {
       dispatch({
         type: 'SET_REGION',
-        data: {...region, County: item?.DistrictName},
+        data: {...region, County: item?.DistrictName, ...item},
       });
       const _items = await onGetWard({DistrictID: item?.DistrictID});
       if (!_items?.length) {
@@ -138,7 +149,10 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
       }
     } else if (type === 'wards') {
       console.log('callbackScreen', callbackScreen);
-      dispatch({type: 'SET_REGION', data: {...region, Ward: item?.WardName}});
+      dispatch({
+        type: 'SET_REGION',
+        data: {...region, Ward: item?.WardName, ...item},
+      });
       Navigator.navigate(callbackScreen, {
         type: parentType,
       });
