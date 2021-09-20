@@ -122,7 +122,7 @@ async function request({
       let { data, status } = result || {};
       let { ResponseTime, Data, Signature, ErrorMessage, ErrorCode } = data || {};
 
-      console.log('[Request] Signature: '+JSON.stringify(result.data))
+      console.log('[Request] Data: '+JSON.stringify(result.data))
       //Verify signature
       const verified = rsa.Verify(ResponseTime, Data, Signature);
       if (!!verified) {
