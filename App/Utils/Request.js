@@ -1,7 +1,7 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import axios from './Axios';
-import { API } from 'configs';
-import { buildURL } from './Functions';
+import {API} from 'configs';
+import {buildURL} from './Functions';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -10,14 +10,13 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { debugData } from 'components/Common/Debug';
-import { ASYNC_STORAGE_KEY, COMMON_ENUM } from 'configs/Constants';
+import {debugData} from 'components/Common/Debug';
+import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
 
-import AES from "./AES";
-import RSA from "./RSA";
-var aes = new AES()
-var rsa = new RSA()
-
+import AES from './AES';
+import RSA from './RSA';
+var aes = new AES();
+var rsa = new RSA();
 
 let transactionID = '';
 
@@ -31,24 +30,23 @@ const getRequestData = async (url, params) => {
       transactionID !== null && transactionID !== ''
         ? transactionID
         : (
-          new Date().getTime() +
-          '' +
-          Math.floor(Math.random() * 10000)
-        ).toString(),
+            new Date().getTime() +
+            '' +
+            Math.floor(Math.random() * 10000)
+          ).toString(),
     ...params,
-
-  }
+  };
 };
 
 const getEncryptParam = async (url, params) => {
-  let language = 'vi'
+  let language = 'vi';
   const uniqueDeviceID = getUniqueId();
   let urlPart = url.split('/');
   let currentLanguage = await AsyncStorage.getItem('currentLanguage');
   let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
-  let requestData = getRequestData(url, params)
-  let dataEncrypted = aes.Encrypt(JSON.stringify(requestData))
-  let signature = rsa.Sign(requestTime, dataEncrypted)
+  let requestData = await getRequestData(url, params);
+  let dataEncrypted = aes.Encrypt(JSON.stringify(requestData));
+  let signature = rsa.Sign(requestTime, dataEncrypted);
 
   return {
     MsgType: urlPart[urlPart.length - 1],
@@ -64,7 +62,7 @@ const getEncryptParam = async (url, params) => {
       (Platform.OS === 'ios' ? 'Iphone iOS ' : 'Android ') + Platform.Version,
     DeviceID: uniqueDeviceID,
     Data: dataEncrypted,
-    Signature: signature
+    Signature: signature,
   };
 };
 
@@ -81,7 +79,10 @@ async function request({
   let root = API.ROOT;
   const requestMethod = axios;
   const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
-  if (token) headers = { ...headers, Authorization: `Bearer ${token}` };
+  if (token) {
+    console.log('token', token);
+    headers = {...headers, Authorization: `Bearer ${token}`};
+  }
 
   if (typeof requestMethod[method] === 'function') {
     try {
@@ -117,39 +118,33 @@ async function request({
         }
       }
 
-      
+      let {data, status} = result || {};
+      let {ResponseTime, Data, Signature, ErrorMessage, ErrorCode} = data || {};
 
-      let { data, status } = result || {};
-      let { ResponseTime, Data, Signature, ErrorMessage, ErrorCode } = data || {};
-
-      console.log('[Request] Data: '+JSON.stringify(result.data))
+      console.log('[Request] Data: ' + JSON.stringify(result.data));
       //Verify signature
       const verified = rsa.Verify(ResponseTime, Data, Signature);
       if (!!verified) {
-        if (
-          (status === 200 ||
-          status === 201 ||
-          status === 203)
-        ) {
+        if (status === 200 || status === 201 || status === 203) {
           if (_.get(result, 'data.TransactionID', '')) {
             transactionID = _.get(result, 'data.TransactionID', '');
           }
 
-          console.log('[Request] Data text before decrypt: '+Data)
-          let deCryptedText = aes.Decrypt(Data)
-          console.log('[Request] Data text after decrypt: '+deCryptedText)
+          console.log('[Request] Data text before decrypt: ' + Data);
+          let deCryptedText = aes.Decrypt(Data);
+          console.log('[Request] Data text after decrypt: ' + deCryptedText);
 
           const decryptedData = JSON.parse(deCryptedText);
 
           transactionID = decryptedData?.TransactionID || transactionID;
-  
+
           if (typeof success === 'function') {
-            if(!ErrorCode) {
-              return success(decryptedData);
-            } else {
-              return success(data);
-            }
-            
+            // if (!ErrorCode) {
+            //   return success(decryptedData);
+            // } else {
+            //   return success(data);
+            // }
+            return success({...result?.data, ...decryptedData} || result);
           }
         } else {
           if (__DEV__) {
@@ -175,7 +170,7 @@ async function request({
             ...err?.response?.data,
           });
         } else {
-          return failure({ message: result?.message });
+          return failure({message: result?.message});
         }
       }
     }
@@ -186,5 +181,4 @@ const defaultFailureHandle = error => {
   console.error(error);
 };
 
-export { request };
-
+export {request};

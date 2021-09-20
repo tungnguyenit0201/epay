@@ -6,7 +6,7 @@ export default {
   TIMEOUT,
   AUTH: {
     CHECK_PHONE: 'account/check_exist',
-    LOGIN: 'v2/account/login_account',
+    LOGIN: 'account/login_account',
     REGISTER: 'account/create_account',
   },
   COMMON: {

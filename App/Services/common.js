@@ -7,7 +7,8 @@ export const genOtp = async ({phone, functionType}) => {
   await request({
     url: API.COMMON.GEN_OTP,
     method: 'post',
-    params: {PhoneNumber: phone, FunctionType: functionType},
+    // params: {PhoneNumber: phone, FunctionType: functionType},
+    params: {FunctionType: functionType},
     success: res => {
       response = res;
     },
