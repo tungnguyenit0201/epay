@@ -71,8 +71,8 @@ const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type
                   styles.img,
                   cameraType != 'back' && styles.imgFront,
                   cameraType != 'back' && {
-                    width: image?.widthImg,
-                    height: image?.heightImg,
+                    width: image?.widthImg || scale(150),
+                    height: image?.heightImg || scale(150),
                   },
                 ]}
                 source={{ uri: imagePath ? imagePath : draft?.path }}

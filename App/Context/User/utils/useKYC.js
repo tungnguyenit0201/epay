@@ -28,7 +28,7 @@ const useKYC = (documentType) => {
     useEffect(() => {
         const getKYCConfig = async () => {
             // Call api to get config
-            dispatch({ type: 'SET_KYC_TYPE', data: 'EKYC' });
+            dispatch({ type: 'SET_KYC_TYPE', data: 'KYC' });
         };
 
         userInfo.kycType === undefined && getKYCConfig();

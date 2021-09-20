@@ -1,8 +1,8 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import {useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 import ImageEditor from '@react-native-community/image-editor';
-import {useWindowDimensions, Platform} from 'react-native';
-import {scale} from 'utils/Functions';
+import { useWindowDimensions, Platform } from 'react-native';
+import { scale } from 'utils/Functions';
 
 const useDropImage = () => {
   const camera = useRef();
@@ -12,7 +12,7 @@ const useDropImage = () => {
   let [loading, setLoading] = useState(false);
 
   const dropImage = async capturedImg => {
-    const {uri, width, height} = capturedImg;
+    const { uri, width, height } = capturedImg;
     // tỉ lệ màn hình so với tỉ lệ image
     let scaleWidth = width / diemsion.width;
     let scaleHeight = height / diemsion.height;
@@ -26,8 +26,8 @@ const useDropImage = () => {
           x: scale(37) * scaleWidth,
           y: scale(170) * scaleHeight,
         },
-        size: {width: widthImg, height: heightImg},
-        displaySize: {width: widthImg, height: heightImg},
+        size: { width: widthImg, height: heightImg },
+        displaySize: { width: widthImg, height: heightImg },
       },
       error => {
         console.error('Error resizing image: ', error);
@@ -37,16 +37,16 @@ const useDropImage = () => {
       path = path.replace('file://', '');
     }
     let data = await RNFetchBlob.fs.readFile(path, 'base64');
-    return {path, data};
+    return { path, data };
   };
 
   const capturePicture = async (onDropImage, isDrop) => {
     setLoading(true);
     if (camera.current) {
       camera.current
-        .takePictureAsync({base64: true})
+        .takePictureAsync({ base64: true })
         .then(async capturedImg => {
-          const {uri, base64, width, height} = capturedImg;
+          const { uri, base64, width, height } = capturedImg;
           let raito = width / height;
           let result = {
             path: uri,

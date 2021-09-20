@@ -720,6 +720,8 @@ PODS:
     - React-Core
   - react-native-flipper (0.96.1):
     - React-Core
+  - react-native-get-random-values (1.7.0):
+    - React-Core
   - react-native-image-editor (2.3.0):
     - React
     - React-RCTImage
@@ -921,6 +923,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-flipper (from `../node_modules/react-native-flipper`)
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - "react-native-image-editor (from `../node_modules/@react-native-community/image-editor`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -1034,6 +1037,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-contacts"
   react-native-flipper:
     :path: "../node_modules/react-native-flipper"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-image-editor:
     :path: "../node_modules/@react-native-community/image-editor"
   react-native-safe-area-context:
@@ -1157,6 +1162,7 @@ SPEC CHECKSUMS:
   react-native-camera: 384df93277a5ccdc800ca9f86daac7107598365e
   react-native-contacts: bc424db19c3384e44e6a9d9da9a78ee51b0aa7a1
   react-native-flipper: a5b02e319fab599965d522d79aa34dc865a07d16
+  react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-editor: bd67912f38a8e7a895bf6eb8f445acdcefd8fd0c
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865

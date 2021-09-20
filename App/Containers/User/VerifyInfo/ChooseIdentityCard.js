@@ -80,7 +80,7 @@ const DocumentTypeSelector = (props = {}) => {
                 onPress(item);
                 requestClose?.();
               }}>
-              <Text fs="md" mb={Spacing.PADDING}>
+              <Text fs="md" style={styles.selectorText}>
                 {item?.label}
               </Text>
             </TouchableOpacity>
@@ -100,5 +100,11 @@ const styles = StyleSheet.create({
   },
   flex1: { flex: 1 },
   pt1: { paddingTop: 20 },
+  selector: {
+    minHeight: 200,
+  },
+  selectorText: {
+    marginVertical: 10,
+  }
 });
 export default ChooseIdentityCard;

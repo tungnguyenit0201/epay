@@ -101,6 +101,7 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
                 { label: translation.others, value: 3 },
               ]}
               onChange={handleChange('SexType')}
+              selectedValue={values.SexType}
             />
           </View>
 

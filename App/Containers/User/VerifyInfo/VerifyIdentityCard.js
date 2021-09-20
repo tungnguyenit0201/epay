@@ -21,7 +21,7 @@ const VerifyIdentityCard = ({ route }) => {
   const { width } = useWindowDimensions();
 
   return (
-    <View>
+    <View style={styles.container}>
       <HeaderBg>
         <Header back title={translation?.account_verification} />
         <Progress space={1} step={2} />
@@ -53,6 +53,9 @@ const VerifyIdentityCard = ({ route }) => {
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   triangleDown: {
     position: 'absolute',
     left: Spacing.PADDING * 2,
