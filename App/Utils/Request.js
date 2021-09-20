@@ -121,7 +121,7 @@ async function request({
       let {data, status} = result || {};
       let {ResponseTime, Data, Signature, ErrorMessage, ErrorCode} = data || {};
 
-      console.log('[Request] Data: ' + JSON.stringify(result.data));
+      // console.log('[Request] Data: ' + JSON.stringify(result.data));
       //Verify signature
       const verified = rsa.Verify(ResponseTime, Data, Signature);
       if (!!verified) {
@@ -130,9 +130,9 @@ async function request({
             transactionID = _.get(result, 'data.TransactionID', '');
           }
 
-          console.log('[Request] Data text before decrypt: ' + Data);
+          // console.log('[Request] Data text before decrypt: ' + Data);
           let deCryptedText = aes.Decrypt(Data);
-          console.log('[Request] Data text after decrypt: ' + deCryptedText);
+          // console.log('[Request] Data text after decrypt: ' + deCryptedText);
 
           const decryptedData = JSON.parse(deCryptedText);
 
