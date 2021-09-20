@@ -13,6 +13,7 @@ import SMART_OTP from './Enums/SmartOTP';
 import MENU from './Enums/Menu';
 import IC_TPYE from './Enums/ICType';
 import GENDER from './Enums/Gender';
+import TERM_TYPE from './Enums/TermType';
 
 export {
   TEXT,
@@ -30,4 +31,5 @@ export {
   MENU,
   IC_TPYE,
   GENDER,
+  TERM_TYPE,
 };

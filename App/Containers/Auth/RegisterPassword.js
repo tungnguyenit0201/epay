@@ -21,7 +21,7 @@ const RegisterPassword = ({route}) => {
     setShowModal,
     openCallDialog,
     createAccount,
-    onNavigate,
+    onGoTerm,
   } = useRegister();
   const translation = useTranslation();
 
@@ -118,7 +118,7 @@ const RegisterPassword = ({route}) => {
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onNavigate(SCREEN.AGREEMENT)}>
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -126,7 +126,7 @@ const RegisterPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onNavigate(SCREEN.POLICY)}>
+                      onPress={() => onGoTerm(SCREEN.POLICY)}>
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>

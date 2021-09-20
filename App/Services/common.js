@@ -128,3 +128,19 @@ export const getConfigInfo = async () => {
   });
   return response;
 };
+
+export const getTerm = async ({phone, type}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.GET_TERMS,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      TermsOfServiceType: type,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
