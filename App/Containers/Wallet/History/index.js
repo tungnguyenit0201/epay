@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import {Header, HeaderBg, Text} from 'components';
 import {useTranslation} from 'context/Language';
@@ -62,7 +63,8 @@ const History = () => {
   const bgBlue = '#F2F8FF';
   const gray = '#848181';
   const red = '#D80000';
-  const {historyData, onDetail, onFilter, onSearch} = useHistory();
+  const {historyData, onDetail, onFilter, onSearch, onGetHistory} =
+    useHistory();
 
   const renderTransactionSections = data =>
     data.map(item => {
@@ -210,7 +212,16 @@ const History = () => {
         </View>
       </View>
 
-      <FlatList data={historyData} renderItem={renderMonth} />
+      <FlatList
+        data={historyData}
+        renderItem={renderMonth}
+        refreshControl={
+          <RefreshControl
+            refreshing={!historyData?.length}
+            onRefresh={onGetHistory}
+          />
+        }
+      />
     </>
   );
 };
