@@ -36,7 +36,7 @@ import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
-import MyQR from 'containers/Wallet/MyQR';
+import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
