@@ -34,15 +34,7 @@ const ChooseIdentityCard = ({route}) => {
         </HeaderBg>
       </View>
 
-      <View
-        style={[
-          base.container,
-          styles.bgWhite,
-          {
-            // paddingTop: 20,
-            flex: 1,
-          },
-        ]}>
+      <View style={[base.container, styles.bgWhite, styles.flex1, styles.pt1]}>
         <Text fs="h6" bold mb={24}>
           Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn
         </Text>
@@ -81,5 +73,7 @@ const styles = StyleSheet.create({
   bgWhite: {
     backgroundColor: Colors.white,
   },
+  flex1: {flex: 1},
+  pt1: {paddingTop: 20},
 });
 export default ChooseIdentityCard;
