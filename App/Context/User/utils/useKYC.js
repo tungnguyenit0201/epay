@@ -28,7 +28,7 @@ const useKYC = (documentType) => {
     useEffect(() => {
         const getKYCConfig = async () => {
             // Call api to get config
-            dispatch({ type: 'SET_KYC_TYPE', data: 'KYC' });
+            dispatch({ type: 'SET_KYC_TYPE', data: 'EKYC' });
         };
 
         userInfo.kycType === undefined && getKYCConfig();
@@ -65,6 +65,7 @@ const useKYC = (documentType) => {
 
             const {
                 imageBase64, //Side image: passport
+                imageCropBase64, //Side image: passport
                 nearImageBase64, // Near face image,
             } = sdkResult || {};
 
@@ -80,7 +81,7 @@ const useKYC = (documentType) => {
                 }
                 return;
             }
-            const data = screen === EKYC_ORC ? imageBase64 : nearImageBase64;
+            const data = screen === EKYC_ORC ? imageCropBase64 : nearImageBase64;
             setSDKImage({
                 data,
                 path: `data:image/jpeg;base64,${data}`,
@@ -140,7 +141,7 @@ const useKYC = (documentType) => {
                     bank,
                 });
                 setLoading(false);
-                ConsoleUtils.log('[extractCardInfo]', JSON.stringify(extractData));
+                ConsoleUtils.log('[extractCardInfo]', extractData);
                 return extractData;
             } catch (e) {
                 setLoading(false);
