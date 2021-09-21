@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "586847441521",
+    "project_id": "epay-a15b9",
+    "storage_bucket": "epay-a15b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586847441521:android:bdaade45b6bfcbbc06c1d0",
+        "android_client_info": {
+          "package_name": "com.mangoads.epay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586847441521-aqvhr3gvenobqbvir8ojtfikvm2f2r36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1PNF4wLi19hwo5f84JyhhU06RbXdyML0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586847441521-aqvhr3gvenobqbvir8ojtfikvm2f2r36.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "586847441521-pe2hvk0h0hh4b50p2o3ldmb3jbr46cnc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mangoads.epay"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

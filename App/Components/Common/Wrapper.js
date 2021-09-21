@@ -15,7 +15,7 @@ import Debug from './Debug';
 
 const Wrapper = React.memo(
   ({
-    barStyle = 'dark-content',
+    barStyle = 'light-content',
     children,
     disableAvoidKeyboard = false,
     avoidStatusBar = false,

@@ -45,7 +45,7 @@ const useUserStatus = () => {
       case PERSONAL_IC.INACTIVE:
         return translation.unverified;
       case PERSONAL_IC.VERIFYING:
-        return 'Đang xác thực';
+        return 'Đang chờ duyệt';
       case PERSONAL_IC.RE_VERIFYING:
         return 'Đang xác thực lại';
       case PERSONAL_IC.EXPIRED:
@@ -53,7 +53,7 @@ const useUserStatus = () => {
       case PERSONAL_IC.REJECTED:
         return 'Xác thực bị từ chối';
       default:
-        return 'Đã xác thực';
+        return 'Đã xác thực tài khoản';
     }
   };
 

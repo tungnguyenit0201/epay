@@ -24,7 +24,9 @@ import Col from 'components/Common/Col';
 // import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const VerifyUserInfo = ({route}) => {
-  const {disabledIdentify, onChange, onContinue} = useVerifyInfo(route?.params);
+  const {disabledIdentify, onChange, onContinue, verifyInfo} = useVerifyInfo(
+    route?.params,
+  );
   const translation = useTranslation();
   const identityCard = _.get(route, 'params.identifyCard.ICType', IC_TPYE.CMND);
   const [showModal, setShowModal] = useState(false);
@@ -66,47 +68,23 @@ const VerifyUserInfo = ({route}) => {
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container, styles.pt1]}>
-          {/* <Progress step={1} /> */}
-
-          {/* <Picker
-            items={[
-              {label: 'Nữ', value: 1},
-              {label: 'Nam', value: 2},
-            ]}
-            onChange={index => onPicker(index)}
-            value={domain}
-          /> */}
-          {/* 
-          <InputBlock
-            label={'Họ và tên'}
-            onChange={value => onChange('name', value)}
-          />
-          <InputBlock
-            label={'Ngày sinh'}
-            onChange={value => onChange('birthday', value)}
-          /> */}
-
-          {/* <SelectImage
-            title="Mặt trước" // TODO: translate
-            onSelectImage={value => {
-              onChange('ICFrontPhoto', value?.data);
-              identityCard == 3 && onChange('ICBackPhoto', value?.data);
-            }}
-            css={styles.mb1}
-          /> */}
           <DropImage
             title="Ảnh mặt trước" // TODO: translate
             onDropImage={value => {
-              onChange('ICFrontPhoto', value?.data);
+              onChange('ICFrontPhoto', value);
               identityCard == IC_TPYE.PASSPORT &&
                 onChange('ICBackPhoto', value?.data);
             }}
+            draft={verifyInfo?.ICFrontPhoto}
             style={styles.mb1}
           />
           {identityCard != IC_TPYE.PASSPORT && (
             <DropImage
               title="Ảnh mặt sau" // TODO: translate
-              onDropImage={value => onChange('ICBackPhoto', value?.data)}
+              onDropImage={value => {
+                onChange('ICBackPhoto', value);
+              }}
+              draft={verifyInfo?.ICBackPhoto}
               style={styles.mb1}
             />
           )}
@@ -115,7 +93,7 @@ const VerifyUserInfo = ({route}) => {
 
       <View style={[styles.wrap, styles.bgWhite, styles.py1]}>
         <Button
-          disabled={disabledIdentify}
+          disabled={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
           label="Tiếp tục" // TODO: translate
           onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
         />
@@ -281,7 +259,7 @@ const styles = StyleSheet.create({
   alignCenter: {alignItems: 'center'},
   triangleDown: {
     position: 'absolute',
-    left: 30,
+    left: Spacing.PADDING * 2 + 10 / 2,
     bottom: -9,
   },
   triangleDownImg: {

@@ -8,7 +8,7 @@ import {Formik} from 'formik';
 import {emailSchema} from 'utils/ValidationSchemas';
 
 const VerifyEmail = ({route}) => {
-  const {onEmailAuth} = useEmail();
+  const {onEmailAuth} = useEmail(route?.params);
 
   return (
     <>

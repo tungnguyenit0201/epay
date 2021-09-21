@@ -29,7 +29,7 @@ const useUserInfo = type => {
   let personalInfo = useRef({
     FullName: '',
     DateOfBirth: '',
-    SexType: 0,
+    SexType: 1,
     Avatar: '',
     Email: '',
   });
@@ -65,7 +65,7 @@ const useUserInfo = type => {
     }
   };
 
-  const onUpdatePersonalInfo = async () => {
+  const onUpdatePersonalInfo = async ({FullName}) => {
     try {
       setLoading(true);
       let phone = await getPhone();
@@ -75,6 +75,7 @@ const useUserInfo = type => {
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        await onGetAllInfo();
         showModalSmartOTP(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else setError(result);
@@ -92,6 +93,7 @@ const useUserInfo = type => {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
         return setError(result);
       case ERROR_CODE.SUCCESS:
+        console.log('result?.PersonalInfo :>> ', result?.PersonalInfo);
         dispatch({
           type: 'UPDATE_WALLET',
           data: result?.WalletInfo?.AvailableBlance,
@@ -165,7 +167,9 @@ const useUserInfo = type => {
             });
             break;
           case 'update_email':
-            Navigator.push(SCREEN.VERIFY_EMAIL);
+            Navigator.push(SCREEN.VERIFY_EMAIL, {
+              functionType: FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL,
+            });
             break;
           default:
             Navigator.push(SCREEN.OTP, {

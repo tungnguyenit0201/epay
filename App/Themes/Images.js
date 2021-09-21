@@ -9,6 +9,7 @@ export default {
   User: require('images/User.png'),
   Up: require('images/Up.png'),
   Down: require('images/Down.png'),
+  Right: require('images/right.png'),
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
   DefaultUser: require('images/default_user.png'),
@@ -128,6 +129,19 @@ export default {
     FingerPrint: require('images/icons/fingerprint.png'),
     Face: require('images/icons/face.png'),
   },
+  SignUp: {
+    BgBlue: require('images/bg-blue.png'),
+    BigPhone: require('images/icons/big-phone.png'),
+    BlueWave: require('images/bg/blue-wave.png'),
+    TouchId: require('images/icons/touch-id.png'),
+  },
+  Kyc: {
+    Calendar: require('images/icons/calendar.png'),
+    Wave: require('images/icons/wave-2.png'),
+    Test: require('images/icons/test.png'),
+    BigCircle: require('images/icons/big-circle.png'),
+    SpecialArrow: require('images/icons/special-arrow.png'),
+  },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),
     camera: require('images/icons/camera.png'),
@@ -151,5 +165,7 @@ export default {
     TopRight: require('images/camera/TopRight.png'),
     BottomLeft: require('images/camera/BottomLeft.png'),
     BottomRight: require('images/camera/BottomRight.png'),
+    Oval: require('images/camera/oval.png'),
+    CameraSquare: require('images/camera/CameraSquare.png'),
   },
 };

@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  Alert,
 } from 'react-native';
 
 import {Text, Button, Icon, Header, HeaderBg} from 'components';
@@ -22,13 +23,14 @@ const PaymentSettings = () => {
   return (
     <ScrollView style={base.wrap}>
       <HeaderBg>
-        <Header back title={translation.payment_setting} back />
+        <Header back title={translation.payment_setting} />
       </HeaderBg>
 
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.AUTOPAYMENT);
+          // Navigator.navigate(SCREEN.AUTOPAYMENT);
+          Alert.alert('', 'Coming soon');
         }}>
         <Icon
           mr={8}
@@ -44,11 +46,7 @@ const PaymentSettings = () => {
           tintColor="#000"
         />
       </TouchableOpacity>
-      <View
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
-        }}>
+      <View style={styles.item}>
         <Icon
           mr={8}
           icon={Images.Profile.MaThanhToan}
@@ -76,7 +74,8 @@ const PaymentSettings = () => {
       <TouchableOpacity
         style={styles.item}
         onPress={() => {
-          Navigator.push(SCREEN.NOTIFICATION);
+          // Navigator.navigate(SCREEN.NOTIFICATION);
+          Alert.alert('', 'Coming soon');
         }}>
         <Icon
           mr={8}
@@ -101,8 +100,8 @@ const PaymentSettings = () => {
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#EEEEEE',
+    backgroundColor: Colors.white,
+    borderBottomColor: Colors.l2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,

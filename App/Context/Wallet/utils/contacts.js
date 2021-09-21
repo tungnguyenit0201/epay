@@ -1,10 +1,12 @@
+import {useError} from 'context/Common/utils';
 import React, {useEffect, useState, useRef} from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 import Contacts from 'react-native-contacts';
-import {TEXT} from 'configs/Constants';
 
 const useContacts = () => {
   const [data, setData] = useState(null);
+  const {setError} = useError();
+
   const contentRef = useRef({
     contacts: null,
   });
@@ -31,7 +33,7 @@ const useContacts = () => {
         setData(contacts);
       })
       .catch(e => {
-        alert(TEXT.ERROR);
+        setError({ErrorCode: -1, ErrorMessage: 'Không thể truy cập danh bạ.'});
       });
     Contacts.checkPermission();
   };
@@ -47,7 +49,7 @@ const useContacts = () => {
     } else {
       loadData();
     }
-  }, []);
+  }, []); // eslint-disable-line
 
   return {data, onSearch};
 };

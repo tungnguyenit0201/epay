@@ -12,9 +12,10 @@ import {base, Colors, Images} from 'themes';
 import {IC_TPYE, SCREEN} from 'configs/Constants';
 import {useVerifyInfo} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
+import {DropDown} from 'components';
 
-const ChooseIdentityCard = () => {
-  const {verifyInfo, onChange, onContinue} = useVerifyInfo();
+const ChooseIdentityCard = ({route}) => {
+  const {verifyInfo, onChange, onContinue} = useVerifyInfo(route?.params);
   const translation = useTranslation();
   const [visible, setVisible] = useState(false);
 
@@ -24,9 +25,7 @@ const ChooseIdentityCard = () => {
     {label: 'Chứng minh thư quân đội', ICType: IC_TPYE.CMNDQD},
     {label: translation?.passport, ICType: IC_TPYE.PASSPORT},
   ];
-  cardList?.map((item, index) => {
-    cardList[index] = {...item, onPress: () => onChange('identifyCard', item)};
-  });
+
   return (
     <>
       <View style={styles.bgWhite}>
@@ -35,15 +34,7 @@ const ChooseIdentityCard = () => {
         </HeaderBg>
       </View>
 
-      <View
-        style={[
-          base.container,
-          styles.bgWhite,
-          {
-            // paddingTop: 20,
-            flex: 1,
-          },
-        ]}>
+      <View style={[base.container, styles.bgWhite, styles.flex1, styles.pt1]}>
         <Text fs="h6" bold mb={24}>
           Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn
         </Text>
@@ -66,39 +57,12 @@ const ChooseIdentityCard = () => {
           label={translation?.continue}
           onPress={() => onContinue(SCREEN.VERIFY_USER_INFO)}
         />
-        <ActionSheet
+        <DropDown
           visible={visible}
           setVisible={setVisible}
+          title={'Chọn giấy tờ tuỳ thân'}
           data={cardList}
-          // cancelButtonIndex={0}
-          useNativeIOS={true}
-          showCancelButton={false}
-          renderTitle={() => (
-            <View style={styles.childModal}>
-              <Text bold fs="h6" centered color={Colors.cl1}>
-                Trợ giúp
-              </Text>
-              <Pressable style={styles.btn}>
-                <Image
-                  source={Images.WidthDraw.Plus}
-                  style={styles.iconClose}
-                />
-              </Pressable>
-            </View>
-          )}
-          // title={'Trợ giúp'}
-          // message={'dssd'}
-          containerStyle={[
-            styles.bgWhite,
-            {
-              borderTopLeftRadius: 16,
-              borderTopRightRadius: 16,
-            },
-          ]}
-          // dialogStyle={[{
-          //   color: 'red',
-          //   backgroundColor: 'red'
-          // }]}
+          onPress={item => onChange('identifyCard', item)}
         />
       </View>
     </>
@@ -109,16 +73,7 @@ const styles = StyleSheet.create({
   bgWhite: {
     backgroundColor: Colors.white,
   },
-  iconClose: {
-    height: 13,
-    width: 13,
-    transform: [{rotate: '45deg'}],
-  },
-  childModal: {
-    padding: 16,
-    borderStyle: 'solid',
-    borderBottomColor: Colors.l2,
-    borderBottomWidth: 1,
-  },
+  flex1: {flex: 1},
+  pt1: {paddingTop: 20},
 });
 export default ChooseIdentityCard;

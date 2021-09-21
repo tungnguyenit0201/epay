@@ -21,8 +21,13 @@ const OTPContainer = ({
   return (
     // TODO: translate
     <>
-      <Text style={[styles.header, styles.textCenter]}>{`Nhập OTP`}</Text>
-      <Text style={[styles.textDefault, styles.textCenter]}>{label}</Text>
+      <Text
+        bold
+        fs="h3"
+        style={[styles.textWhite, styles.mb1]}>{`Nhập OTP`}</Text>
+      <Text fs="h6" style={[styles.textGray, styles.mb2]}>
+        {label}
+      </Text>
       <OTPInputView
         style={styles.wrapOtp}
         pinCount={6}
@@ -50,7 +55,9 @@ const OTPContainer = ({
                   color: Colors.cl1,
                 },
               ]}>
-              {countdown > 0 ? ` 00:${countdown}` : ` Gửi lại`}
+              {countdown > 0
+                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                : ` Gửi lại`}
             </Text>
           </Pressable>
         </Text>
@@ -68,23 +75,23 @@ const OTPContainer = ({
 };
 
 const styles = StyleSheet.create({
-  // wrap: {
-  //   paddingHorizontal: Spacing.PADDING,
-  //   paddingTop: Spacing.PADDING * 3,
+  mb1: {marginBottom: 12},
+  mb2: {marginBottom: 26},
+  //-----------------------
+  textWhite: {color: Colors.white},
+  textGray: {color: Colors.gray},
+  //-----------------------
+  // header: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   paddingBottom: 8,
   // },
-  header: {
-    fontSize: 20,
-    // lineHeight: 28,
-    fontWeight: 'bold',
-    paddingBottom: 8,
-  },
-
-  textCenter: {textAlign: 'center'},
-  textDefault: {
-    color: Colors.GRAY,
-    paddingBottom: Spacing.PADDING - 4,
-    fontSize: Fonts.FONT_MEDIUM_LARGE,
-  },
+  // textCenter: {textAlign: 'center'},
+  // textDefault: {
+  //   color: Colors.GRAY,
+  //   paddingBottom: Spacing.PADDING - 4,
+  //   fontSize: Fonts.FONT_MEDIUM_LARGE,
+  // },
   wrapOtp: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -95,18 +102,19 @@ const styles = StyleSheet.create({
   otp: {
     width: scale(40),
     backgroundColor: Colors.white,
-    fontSize: Fonts.FONT_LARGE,
+    fontSize: Fonts.H4,
     color: Colors.BLACKTEXT,
     textAlign: 'center',
-    borderColor: Colors.cl4,
-    borderWidth: 1,
+    borderBottomColor: Colors.cl4,
+    borderWidth: 0,
+    borderBottomWidth: 1,
     borderRadius: 2,
+    height: scale(28),
   },
   message: {
     marginTop: 16,
     color: Colors.Highlight,
     textAlign: 'center',
-    // marginBottom: Spacing.PADDING,
   },
   fontSize_1: {fontSize: 14},
   flexRow_1: {

@@ -30,6 +30,7 @@ const ListItem = ({
   const screenContent = _screenWidth - (Spacing.PADDING * 2 + 15);
   const {checkInfo} = useCheckInfo();
   const translation = useTranslation();
+
   const Item = ({item}) => (
     <TouchableOpacity
       style={[styles.item, styleItem]}

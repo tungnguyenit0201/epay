@@ -1,5 +1,11 @@
 import React, {useCallback} from 'react';
-import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {
   HeaderBg,
   InputBlock,
@@ -7,19 +13,23 @@ import {
   Header,
   Button,
   DatePicker,
+  Text,
+  Checkbox,
 } from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
-import {base} from 'themes';
+// import {base} from 'themes';
 import {Formik, useFormikContext, Form} from 'formik';
 import {useTranslation} from 'context/Language';
 import {verifyUserSchema} from 'utils/ValidationSchemas';
 import {useUser} from 'context/User';
 import {useFocusEffect} from '@react-navigation/native';
 import {SCREEN} from 'configs/Constants';
+import FooterContainer from 'components/Auth/FooterContainer';
+// import styles from 'themes/Style';
 
-const FormikCustom = () => {
+const FormikCustom = ({identifyCard, onContinue}) => {
   const {goRegionSelect} = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
@@ -35,6 +45,7 @@ const FormikCustom = () => {
     errors,
     values,
   } = useFormikContext();
+
   const handleChange = field => value => {
     setFieldValue(field, value);
     setFieldTouched(field, true, false);
@@ -48,138 +59,238 @@ const FormikCustom = () => {
     }, [region]), // eslint-disable-line
   );
   return (
-    <View style={[base.container, {paddingTop: 20}]}>
-      <Progress step={3} />
-      <InputBlock
-        label={translation.enter_your_full_name}
-        style={{marginBottom: 10}}
-        onChange={handleChange('ICFullName')}
-        onBlur={handleBlur('ICFullName')}
-        error={touched.ICFullName && errors.ICFullName}
-        value={values.ICFullName}
-        required
-      />
+    <>
+      <ScrollView style={[styles.bgWhite, styles.pt1]}>
+        <View style={styles.wrap}>
+          <InputBlock
+            label={translation.enter_your_full_name}
+            style={styles.mb1}
+            onChange={handleChange('ICFullName')}
+            onBlur={handleBlur('ICFullName')}
+            error={touched.ICFullName && errors.ICFullName}
+            value={values.ICFullName}
+            required
+            placeholder="Nhập họ & tên"
+          />
 
-      <DatePicker
-        label={translation.date_of_birth_ddmmyyyy}
-        onChange={handleChange('DateOfBirth')}
-        error={touched.DateOfBirth && errors.DateOfBirth}
-        onBlur={handleBlur('DateOfBirth')}
-        value={values.DateOfBirth}
-        required
-      />
-      <Radio
-        items={[
-          {label: translation.male, value: 1},
-          {label: translation.female, value: 2},
-          {label: translation.others, value: 3},
-        ]}
-        onChange={handleChange('SexType')}
-      />
+          <DatePicker
+            label={translation.date_of_birth_ddmmyyyy}
+            onChange={handleChange('DateOfBirth')}
+            error={touched.DateOfBirth && errors.DateOfBirth}
+            onBlur={handleBlur('DateOfBirth')}
+            value={values.DateOfBirth}
+            required
+            placeholder="dd/mm/yyyy"
+          />
 
-      <InputBlock
-        label={translation.enter_id_code}
-        onChange={handleChange('ICNumber')}
-        onBlur={handleBlur('ICNumber')}
-        error={touched.ICNumber && errors.ICNumber}
-        value={values.ICNumber}
-        style={{marginBottom: 10}}
-        required
-        numeric
-      />
+          <View>
+            <Text medium mb={10}>
+              {translation.gender}
+            </Text>
+            <Radio
+              items={[
+                {label: translation.male, value: 1},
+                {label: translation.female, value: 2},
+                {label: translation.others, value: 3},
+              ]}
+              onChange={handleChange('SexType')}
+            />
+          </View>
 
-      <DatePicker
-        label={translation.valid_date}
-        onChange={handleChange('ICIssuedDate')}
-        error={touched.ICIssuedDate && errors.ICIssuedDate}
-        onBlur={handleBlur('ICIssuedDate')}
-        value={values.ICIssuedDate}
-        required
-      />
-      <InputBlock
-        label="Nơi cấp" // TODO: translate
-        onChange={handleChange('ICIssuedPlace')}
-        onBlur={handleBlur('ICIssuedPlace')}
-        error={touched.ICIssuedPlace && errors.ICIssuedPlace}
-        value={values.ICIssuedPlace}
-        style={{marginBottom: 10}}
-        required
-      />
-      <InputBlock
-        label={translation.provice}
-        rightIcon={Images.Down}
-        error={touched?.Provincial && errors?.Provincial}
-        isSelect
-        required
-        value={values?.Provincial}
-        onPress={() => goRegionSelect('cites')}
-      />
+          <InputBlock
+            label={identifyCard?.label || translation.enter_id_code}
+            onChange={handleChange('ICNumber')}
+            onBlur={handleBlur('ICNumber')}
+            error={touched.ICNumber && errors.ICNumber}
+            value={values.ICNumber}
+            style={styles.mb1}
+            required
+            numeric
+            placeholder="Nhập số GTTT"
+          />
 
-      <InputBlock
-        label={translation.district}
-        rightIcon={Images.Down}
-        error={touched?.County && errors?.County}
-        isSelect
-        required
-        value={values?.County}
-        onPress={() => goRegionSelect('districts')}
-      />
-      <InputBlock
-        label={translation.town}
-        rightIcon={Images.Down}
-        error={touched?.Ward && errors?.Ward}
-        isSelect
-        required
-        value={values?.Ward}
-        onPress={() => goRegionSelect('wards')}
-      />
-      <InputBlock
-        label={translation.address}
-        onChange={handleChange('Address')}
-        onBlur={handleBlur('Address')}
-        error={touched.Address && errors.Address}
-        value={values.Address}
-        style={{marginBottom: 10}}
-        required
-      />
+          <DatePicker
+            label={translation.valid_date}
+            onChange={handleChange('ICIssuedDate')}
+            error={touched.ICIssuedDate && errors.ICIssuedDate}
+            onBlur={handleBlur('ICIssuedDate')}
+            value={values.ICIssuedDate}
+            required
+            placeholder="dd/mm/yyyy"
+          />
+          <InputBlock
+            label="Nơi cấp" // TODO: translate
+            onChange={handleChange('ICIssuedPlace')}
+            onBlur={handleBlur('ICIssuedPlace')}
+            error={touched.ICIssuedPlace && errors.ICIssuedPlace}
+            value={values.ICIssuedPlace}
+            style={styles.mb1}
+            required
+            placeholder="Nhập nơi cấp"
+          />
+        </View>
+        <View style={[styles.bgGray, styles.h1]}></View>
+        <View style={[styles.wrap, styles.pt1]}>
+          <InputBlock
+            label={translation.address}
+            onChange={handleChange('Address')}
+            onBlur={handleBlur('Address')}
+            error={touched.Address && errors.Address}
+            value={values.Address}
+            style={{marginBottom: 0}}
+            required
+            placeholder="Nhập số nhà, đường,..."
+          />
+          <InputBlock
+            label={translation.provice}
+            rightIconBgGray={Images.Right}
+            error={touched?.Provincial && errors?.Provincial}
+            isSelect
+            required
+            value={values?.Provincial}
+            onPress={() => goRegionSelect('cites')}
+            defaultValue={translation.provice}
+          />
 
-      <Button label={translation.done} onPress={handleSubmit} />
-    </View>
+          <InputBlock
+            label={translation.district}
+            rightIconBgGray={Images.Right}
+            error={touched?.County && errors?.County}
+            isSelect
+            required
+            value={values?.County}
+            onPress={() => goRegionSelect('districts')}
+            defaultValue={translation.district}
+          />
+          <InputBlock
+            label={translation.town}
+            rightIconBgGray={Images.Right}
+            error={touched?.Ward && errors?.Ward}
+            isSelect
+            required
+            value={values?.Ward}
+            onPress={() => goRegionSelect('wards')}
+            defaultValue={translation.town}
+          />
+
+          <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
+            <Checkbox
+            // onPress={setActive}
+            />
+            <Text style={{marginLeft: 5}} fs="md">
+              {` Tôi đồng ý với các `}
+              <TouchableOpacity
+                style={styles.mtMinus1}
+                // onPress={() => onNavigate(SCREEN.AGREEMENT)}
+              >
+                <Text style={styles.firstLink}>{'Thoả thuận người dùng '}</Text>
+              </TouchableOpacity>
+              và
+              <TouchableOpacity
+                style={styles.mtMinus1}
+                // onPress={() => onNavigate(SCREEN.POLICY)}
+              >
+                <Text style={styles.firstLink}>
+                  {'Chính sách quyền riêng tư '}
+                </Text>
+              </TouchableOpacity>
+              của Epay Services
+            </Text>
+          </View>
+
+          <Text
+            onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}
+            style={styles.underline}
+            centered
+            color={Colors.Highlight}
+            bold
+            mb={48}
+            fs="h6">
+            Xác thực lại từ đầu
+          </Text>
+        </View>
+      </ScrollView>
+      <View style={[styles.bgWhite]}>
+        <FooterContainer>
+          <Button type={1} label={translation.done} onPress={handleSubmit} />
+        </FooterContainer>
+      </View>
+    </>
   );
 };
 
 const VerifyUserPortrait = ({route}) => {
-  const {onUpdateAllInfo} = useVerifyInfo(route?.params);
+  const {onUpdateAllInfo, onContinue} = useVerifyInfo(route?.params);
   const translation = useTranslation();
 
   return (
     <>
-      <HeaderBg>
+      <HeaderBg style={{zIndex: 1}}>
         <Header back title={translation?.account_verification} />
+        <Progress step={3} />
+        <Image
+          source={Images.VerifyUserInfo.iconDown}
+          style={[styles.triangleDown]}
+          resizeMode="contain"
+        />
       </HeaderBg>
-      <ScrollView style={styles.container}>
-        <Formik
-          initialValues={{
-            ICFullName: '',
-            DateOfBirth: '',
-            ICNumber: '',
-            ICIssuedDate: '',
-            ICIssuedPlace: '',
-            Provincial: '',
-            County: '',
-            Ward: '',
-            Address: '',
-            SexType: 1,
-          }}
-          validationSchema={verifyUserSchema}
-          onSubmit={onUpdateAllInfo}>
-          <FormikCustom />
-        </Formik>
-      </ScrollView>
+      {/* <View> */}
+      <Formik
+        initialValues={{
+          ICFullName: '',
+          DateOfBirth: '',
+          ICNumber: '',
+          ICIssuedDate: '',
+          ICIssuedPlace: '',
+          Provincial: '',
+          County: '',
+          Ward: '',
+          Address: '',
+          SexType: 1,
+        }}
+        validationSchema={verifyUserSchema}
+        onSubmit={onUpdateAllInfo}>
+        <FormikCustom
+          identifyCard={route?.params?.identifyCard}
+          onContinue={onContinue}
+        />
+      </Formik>
+      {/* </View> */}
     </>
   );
 };
 const styles = StyleSheet.create({
-  container: {backgroundColor: Colors.white},
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  //---------------
+  flexRow: {flexDirection: 'row'},
+  //---------------
+  h1: {height: 8},
+  //---------------
+  mtMinus1: {marginTop: -3},
+  //---------------
+  mb1: {marginBottom: 10},
+  //---------------
+  pt1: {paddingTop: 20},
+  pt2: {paddingTop: 10},
+  //---------------
+  pb1: {paddingBottom: 24},
+  //---------------
+  underline: {textDecorationLine: 'underline'},
+  //---------------
+  bgWhite: {backgroundColor: Colors.white},
+  bgGray: {backgroundColor: Colors.l4},
+  //---------------
+  firstLink: {
+    textDecorationLine: 'underline',
+    marginLeft: 3,
+  },
+  //---------------
+  triangleDown: {
+    position: 'absolute',
+    right: Spacing.PADDING * 2 + 10 / 2,
+    bottom: -9,
+    width: 20,
+    height: 10,
+  },
 });
 export default VerifyUserPortrait;

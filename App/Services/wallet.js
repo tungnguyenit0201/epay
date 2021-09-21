@@ -121,3 +121,46 @@ export const getWalletInfo = async ({phone}) => {
   });
   return response;
 };
+
+export const getHistory = async ({
+  phone,
+  ServiceId = 0,
+  StateId = 0,
+  StartDate,
+  EndDate,
+  CodeFilter = '',
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_HISTORY,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      ServiceId,
+      StateId,
+      StartDate,
+      EndDate,
+      CodeFilter,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const getHistoryDetail = async ({phone, TransCode}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_HISTORY_DETAIL,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      TransCode,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

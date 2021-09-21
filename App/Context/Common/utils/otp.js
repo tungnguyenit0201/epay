@@ -10,7 +10,7 @@ import useLoading from './loading';
 import useError from './error';
 import {useUserInfo} from 'context/User/utils';
 
-const useOTP = ({functionType, phone, password}) => {
+const useOTP = ({functionType, phone, password, encrypted}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(60);
   const [code, setCode] = useState('');
@@ -62,7 +62,7 @@ const useOTP = ({functionType, phone, password}) => {
     // success
     switch (functionType) {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
-        return onLogin({phone, password});
+        return onLogin({phone, password, encrypted});
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
         return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
       case FUNCTION_TYPE.FORGOT_PASS:
@@ -70,6 +70,7 @@ const useOTP = ({functionType, phone, password}) => {
       case FUNCTION_TYPE.REGISTER_SMART_OTP:
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
       case FUNCTION_TYPE.AUTH_EMAIL:
+      case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
         onGetPersonalInfo();
         Navigator.push(SCREEN.VERIFY_EMAIL_RESULT, {type: 'success'});
         return;

@@ -1,24 +1,7 @@
 import React, {useRef, useState} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  useWindowDimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import {
-  Text,
-  InputBlock,
-  Header,
-  Button,
-  FWLoading,
-  TextInput,
-  Icon,
-} from 'components';
+import {StyleSheet, View} from 'react-native';
+import {Button, TextInput} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
-import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {phoneSchema} from 'utils/ValidationSchemas';
@@ -26,7 +9,9 @@ import _ from 'lodash';
 import {useForgetPassword, usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 import BigLogo from 'components/Auth/BigLogo';
+import BlueHeader from 'components/Auth/BlueHeader';
 import Content from 'components/Auth/Content';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const ForgetPassword = () => {
   const {phone} = usePhone();
@@ -35,12 +20,11 @@ const ForgetPassword = () => {
 
   // TODO: translate
   return (
-    <View style={styles.container}>
-      <View>
-        <Header back blackIcon avoidStatusBar />
-      </View>
-      <BigLogo />
+    <BlueHeader>
+      {/* <Header back blackIcon avoidStatusBar /> */}
+      <BigLogo style={{marginBottom: 30}} />
       <Content
+        style={styles.wrap}
         title="Quên mật khẩu"
         text="Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới"
       />
@@ -69,14 +53,7 @@ const ForgetPassword = () => {
 
           return (
             <>
-              <View
-                style={[
-                  styles.wrap,
-                  {
-                    marginTop: 24,
-                    flex: 1,
-                  },
-                ]}>
+              <View style={[styles.wrap, styles.flex1, styles.mt1]}>
                 <TextInput
                   numeric
                   autoFocus
@@ -87,61 +64,30 @@ const ForgetPassword = () => {
                   error={touched.phone && errors.phone}
                   value={values.phone}
                   leftIcon={Images.Phone_1}
+                  isDeleted={values.phone}
                 />
               </View>
-              <View
-                style={[
-                  styles.wrap,
-                  {
-                    paddingVertical: Spacing.PADDING,
-                  },
-                ]}>
+              <FooterContainer>
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
                   fs={Fonts.FONT_MEDIUM}
                 />
-              </View>
+              </FooterContainer>
             </>
           );
         }}
       </Formik>
-    </View>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  // header: {
-  //   paddingTop: 10,
-  //   backgroundColor: Colors.white,
-  //   color: Colors.BLACK,
-  // },
-  /////////////////////////////
-  // content: {
-  //   paddingHorizontal: Spacing.PADDING,
-  //   paddingVertical: scale(30),
-  // },
-  // inputBlock: {
-  //   backgroundColor: 'transparent',
-  //   borderColor: Colors.BLACK,
-  //   fontSize: Fonts.FONT_MEDIUM,
-  //   marginTop: Spacing.PADDING,
-  // },
-  // textDescription: {
-  //   color: Colors.GRAY,
-  //   fontSize: Fonts.FONT_MEDIUM,
-  // },
-  // buttonBlock: {
-  //   marginTop: Spacing.PADDING,
-  //   paddingVertical: Fonts.H6,
-  //   backgroundColor: Colors.g9,
-  // },
+  flex1: {flex: 1},
+  //------------------
+  mt1: {marginTop: 24},
 });
 export default ForgetPassword;

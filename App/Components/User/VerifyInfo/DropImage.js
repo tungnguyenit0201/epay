@@ -15,7 +15,7 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropPicture = ({onDropImage, title, style}) => {
+const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
@@ -28,15 +28,24 @@ const DropPicture = ({onDropImage, title, style}) => {
         <View
           style={[
             styles.wrap,
-            image?.path && {paddingVertical: Spacing.PADDING},
+            image?.path && {
+              paddingVertical: Spacing.PADDING / 2,
+            },
             style && style,
           ]}>
-          {image?.path ? (
-            <View style={{paddingBottom: Spacing.PADDING}}>
+          {image?.path || draft ? (
+            <View style={styles.wrapImg}>
               <Image
-                style={styles.img}
-                source={{uri: image?.path}}
-                resizeMode="contain"
+                style={[
+                  styles.img,
+                  cameraType != 'back' && styles.imgFront,
+                  cameraType != 'back' && {
+                    width: image?.widthImg,
+                    height: image?.heightImg,
+                  },
+                ]}
+                source={{uri: image?.path ? image?.path : draft?.path}}
+                resizeMode={'contain'}
               />
             </View>
           ) : (
@@ -75,7 +84,11 @@ const DropPicture = ({onDropImage, title, style}) => {
             <RNCamera
               ref={camera}
               style={styles.preview}
-              type={RNCamera.Constants.Type.back}
+              type={
+                cameraType == 'back'
+                  ? RNCamera.Constants.Type.back
+                  : RNCamera.Constants.Type.front
+              }
               androidCameraPermissionOptions={{
                 title: 'Permission to use camera',
                 message: 'We need your permission to use your camera',
@@ -109,43 +122,16 @@ const DropPicture = ({onDropImage, title, style}) => {
                         width: width,
                         height: height,
                       }}>
-                      <View
-                        style={[
-                          styles.bgCamera,
-                          styles.bgCameraTop,
-                          {width: width},
-                        ]}></View>
-                      <View style={styles.bgWrapCameraLR}>
-                        <View style={[styles.bgCamera, styles.bgCameraLR]}>
-                          <View style={styles.iconTL}>
-                            <Image
-                              source={Images.Camera.TopLeft}
-                              style={styles.iconCorner}
-                            />
-                          </View>
-                        </View>
-                        <View style={[styles.bgCamera, styles.bgCameraLR]}>
-                          <View style={styles.iconTR}>
-                            <Image
-                              source={Images.Camera.TopRight}
-                              style={styles.iconCorner}
-                            />
-                          </View>
-                        </View>
-                      </View>
-                      <View style={[styles.bgCamera, {height: height}]}>
-                        <View style={styles.iconBL}>
-                          <Image
-                            source={Images.Camera.BottomLeft}
-                            style={styles.iconCorner}
-                          />
-                        </View>
-                        <View style={styles.iconBR}>
-                          <Image
-                            source={Images.Camera.BottomRight}
-                            style={styles.iconCorner}
-                          />
-                        </View>
+                      <Image
+                        source={
+                          cameraType == 'back'
+                            ? Images.Camera.CameraSquare
+                            : Images.Camera.Oval
+                        }
+                        style={{width: width, height: height}}
+                      />
+                      {loading && <FWLoading />}
+                      <View style={styles.wrapText}>
                         <Text
                           color={Colors.white}
                           fs="h6"
@@ -157,11 +143,13 @@ const DropPicture = ({onDropImage, title, style}) => {
                           chụp đủ sáng và rõ nét
                         </Text>
                       </View>
-                      {loading && <FWLoading />}
+
                       <Pressable
                         disabled={loading}
                         style={styles.wrapBtn}
-                        onPress={() => capturePicture(onDropImage)}>
+                        onPress={() =>
+                          capturePicture(onDropImage, cameraType == 'back')
+                        }>
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}
@@ -173,40 +161,46 @@ const DropPicture = ({onDropImage, title, style}) => {
               }}
             </RNCamera>
           )}
-          {showCamera == 2 && (
-            <PreviewImage
-              visible={showCamera == 2}
-              setShowCamera={setShowCamera}
-              image={image}
-              title={title}
-            />
-          )}
+          <PreviewImage
+            visible={showCamera == 2}
+            setShowCamera={setShowCamera}
+            image={image}
+            title={title}
+            cameraType={cameraType}
+          />
         </Modal>
       )}
     </>
   );
 };
 const styles = StyleSheet.create({
+  wrap: {
+    paddingVertical: Spacing.PADDING * 3,
+    backgroundColor: Colors.l2,
+    borderRadius: 8,
+  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
     alignSelf: 'stretch',
   },
+  wrapImg: {paddingBottom: Spacing.PADDING / 2, alignItems: 'center'},
   img: {
     width: '100%',
     height: scale(186),
+  },
+  imgFront: {
+    borderColor: Colors.cl1,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 
   captureIcon: {
     width: scale(64),
     height: scale(64),
   },
-  wrap: {
-    paddingVertical: Spacing.PADDING * 3,
-    backgroundColor: Colors.l2,
-    borderRadius: 8,
-  },
+
   textUppercase: {textTransform: 'uppercase'},
   bgImg: {
     position: 'absolute',
@@ -217,44 +211,17 @@ const styles = StyleSheet.create({
     width: 128,
     paddingHorizontal: 5,
   },
-  bgCamera: {
-    backgroundColor: Colors.black,
-    opacity: 0.5,
-  },
-  bgCameraTop: {left: 0, top: 0, height: scale(170)},
-  bgWrapCameraLR: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  bgCameraLR: {width: scale(37), height: scale(178)},
+
   wrapBtn: {
     position: 'absolute',
     bottom: Spacing.PADDING * 2,
     alignSelf: 'center',
   },
-  iconCorner: {
-    width: 24,
-    height: 24,
-  },
-  iconTL: {
-    right: -12,
-    top: -12,
+
+  wrapText: {
     position: 'absolute',
-  },
-  iconBL: {
-    left: scale(37) - 12,
-    top: -12,
-    position: 'absolute',
-  },
-  iconTR: {
-    left: -12,
-    top: -12,
-    position: 'absolute',
-  },
-  iconBR: {
-    right: scale(37) - 12,
-    top: -12,
-    position: 'absolute',
+    top: scale(420),
+    alignSelf: 'center',
   },
 });
-export default DropPicture;
+export default DropImage;

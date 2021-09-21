@@ -1,11 +1,12 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
-import {checkPhone, getConfigInfo, login, register} from 'services/auth';
-import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {checkPhone, login, register} from 'services/auth';
+import {getTerm} from 'services/common';
+import {ERROR_CODE, FUNCTION_TYPE, SCREEN, TERM_TYPE} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
-import {Linking} from 'react-native';
+import {Linking, Platform} from 'react-native';
 import {useTranslation} from 'context/Language';
 import {
   useLoading,
@@ -19,10 +20,17 @@ import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useWalletInfo} from 'context/Wallet/utils';
+import moment from 'moment';
 
-const useTouchID = () => {
+const useTouchID = ({onSuccess}) => {
   const [biometryType, setBiometryType] = useState(null);
-  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
+  const {
+    getTouchIdEnabled,
+    getPhone,
+    getTouchIDAndroidData,
+    setTouchIDAndroidData,
+  } = useAsyncStorage();
+  const {setError} = useError();
 
   const checkBiometry = async () => {
     const touchIdEnabled = await getTouchIdEnabled();
@@ -43,17 +51,44 @@ const useTouchID = () => {
     TouchID.isSupported({})
       .then(biometryType => {
         setBiometryType(biometryType);
+        onTouchID(biometryType);
       })
       .catch(error => {
         __DEV__ && console.log('Touch ID is not supported.');
       });
   };
 
-  const onTouchID = async () => {
-    if (!biometryType) {
+  const onTouchID = async (_biometryType, passcode = false) => {
+    if (!_biometryType && !biometryType) {
       return;
     }
+    let touchIDAndroid = null;
 
+    // android check
+    if (Platform.OS === 'android') {
+      touchIDAndroid = await getTouchIDAndroidData();
+      !touchIDAndroid && (touchIDAndroid = {remaining: 5});
+      if (touchIDAndroid?.lockedTimestamp) {
+        if (
+          moment().diff(
+            moment(touchIDAndroid.lockedTimestamp),
+            'minutes',
+            true,
+          ) < 5
+        ) {
+          // TODO: translate
+          setError({
+            ErrorCode: -1,
+            ErrorMessage:
+              'Bạn đã nhập sai touch ID quá nhiều lần. Vui lòng thử lại sau ít phút.',
+          });
+        } else {
+          touchIDAndroid = {remaining: 5};
+        }
+      }
+    }
+
+    // TODO: translate
     const options = {
       title: 'Authentication Required', // Android
       imageColor: '#e00606', // Android
@@ -63,21 +98,53 @@ const useTouchID = () => {
       cancelText: 'Cancel', // Android
       fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
       unifiedErrors: false, // use unified error messages (default false)
-      passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
+      passcodeFallback: passcode, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     };
 
-    return await new Promise((resolve, reject) => {
-      TouchID.authenticate('Đăng nhập bằng Touch ID', options)
-        .then(success => {
-          resolve(success);
-        })
-        .catch(error => {
-          if (error?.name === 'LAErrorUserCancel') {
-            return;
-          }
-          reject(error);
-        });
-    });
+    TouchID.authenticate('Đăng nhập bằng Touch ID', options)
+      .then(success => {
+        onSuccess && onSuccess(success);
+      })
+      .catch(error => {
+        // user cancel
+        if (
+          error?.name === 'LAErrorUserCancel' ||
+          error?.name === 'LAErrorSystemCancel' ||
+          error?.name === 'LAErrorAuthenticationFailed'
+        ) {
+          return;
+        }
+        // supported touchID but not enabled by user
+        if (error?.name === 'LAErrorTouchIDNotEnrolled') {
+          setBiometryType(null);
+          return;
+        }
+        // user press show passcode
+        if (
+          error?.name === 'LAErrorUserFallback' ||
+          error?.name === 'RCTTouchIDUnknownError'
+        ) {
+          onTouchID(_biometryType, true);
+          return;
+        }
+        // android user failed to authenticate
+        if (
+          error?.name === 'LAErrorAuthenticationFailed' &&
+          Platform.OS === 'android'
+        ) {
+          touchIDAndroid?.remaining > 1
+            ? setTouchIDAndroidData({
+                remaining: touchIDAndroid?.remaining - 1,
+              })
+            : setTouchIDAndroidData({
+                remaining: 0,
+                lockedTimestamp: moment().valueOf(),
+              });
+          return;
+        }
+        // other errors
+        setError({ErrorCode: -1, ErrorMessage: error});
+      });
   };
 
   useEffect(() => {
@@ -148,6 +215,7 @@ const useAuth = () => {
           phone,
           functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
           password,
+          encrypted,
         });
 
       case ERROR_CODE.SUCCESS:
@@ -172,6 +240,7 @@ const useAuth = () => {
       const credentials = await Keychain.getGenericPassword();
       const passwordEncrypted = credentials?.password;
       if (!passwordEncrypted || !phone) {
+        setLoading(false);
         return;
       }
       onLogin({phone, password: passwordEncrypted, encrypted: true});
@@ -212,7 +281,7 @@ const useRegister = () => {
   const {setError} = useError();
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
-  const {setPhone} = useAsyncStorage();
+  const {setPhone, getPhone} = useAsyncStorage();
 
   let [active, setActive] = useState(false);
   let [showModal, setShowModal] = useState(false);
@@ -225,8 +294,8 @@ const useRegister = () => {
     registerRef.current[key] = val;
   };
 
-  const onNavigate = screen => {
-    !!screen ? Navigator.navigate(screen) : Navigator.popToTop();
+  const onNavigate = (screen, params) => {
+    !!screen ? Navigator.navigate(screen, params) : Navigator.popToTop();
   };
 
   const openCallDialog = () => {
@@ -258,6 +327,29 @@ const useRegister = () => {
     }
   };
 
+  const onGoTerm = async screen => {
+    try {
+      setLoading(true);
+
+      const phone = await getPhone();
+
+      const result = await getTerm({
+        phone,
+        type: TERM_TYPE.REGISTER_ACCOUNT,
+      });
+
+      setLoading(false);
+      let errorCode = _.get(result, 'ErrorCode', '');
+      if (errorCode == ERROR_CODE.SUCCESS) {
+        onNavigate(screen, result);
+        return result;
+      } else setError(result);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return {
     active,
     setActive,
@@ -268,6 +360,7 @@ const useRegister = () => {
     createAccount,
     setFirstLogin,
     onNavigate,
+    onGoTerm,
   };
 };
 
