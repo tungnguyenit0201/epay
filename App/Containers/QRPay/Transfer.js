@@ -16,6 +16,7 @@ import {
   ActionSheet,
   Modal,
   TextInput,
+  Radio,
 } from 'components';
 import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
@@ -27,6 +28,8 @@ import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
+
+import Bank from 'components/QRPay/Bank';
 
 const Transfer = () => {
   const {phone} = usePhone();
@@ -61,16 +64,37 @@ const Transfer = () => {
             <Text mb={10}>{phone}</Text>
           </View>
 
-          <View style={[base.boxShadow]}>
-            <TextInput numeric maxLength={1} selectTextOnFocus />
-          </View>
+          <TextInput
+            placeholder="Nhập tiền"
+            maxLength={100}
+            selectTextOnFocus
+          />
+
+          <TextInput
+            placeholder="Nhập lời nhắn"
+            maxLength={100}
+            selectTextOnFocus
+          />
+          <Radio
+            //onChange={onAcceptTermConditions}
+            selectedValue={1}
+            items={[
+              {label: 'Người gửi chịu phí', value: 1},
+              {label: 'Người nhận chịu phí ', value: 2},
+            ]}
+            style={styles.wradio}
+          />
         </View>
+
+        <Bank />
 
         <View style={styles.boxBottom}>
           <Button
-            //onPress={onLogout}
+            onPress={() => {
+              Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+            }}
             type={1}
-            label={translation.log_out}
+            label="Tiếp tục"
             bold
           />
         </View>
@@ -89,8 +113,11 @@ const styles = StyleSheet.create({
     height: 94,
     width: 94,
     borderRadius: 99,
+    marginBottom: 15,
     backgroundColor: Colors.g4,
   },
+  wradio: {},
+
   boxBottom: {
     marginTop: 30,
     paddingTop: scale(20),
