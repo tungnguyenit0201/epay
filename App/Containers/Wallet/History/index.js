@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  ScrollView,
   View,
   StyleSheet,
   Image,
@@ -7,13 +8,15 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {Header, HeaderBg, Text} from 'components';
+import {Header, HeaderBg, Text, Button, Icon} from 'components';
 import {useTranslation} from 'context/Language';
 import {formatMoney, scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import {COMMON_ENUM, TRANS_TYPE} from 'configs/Constants';
 import {useHistory} from 'context/Wallet/utils';
+import Modal from 'react-native-modal';
 import moment from 'moment';
+import FooterContainer from 'components/Auth/FooterContainer';
 
 const filterData = {
   service: [
@@ -63,6 +66,45 @@ const History = () => {
   const gray = '#848181';
   const red = '#D80000';
   const {historyData, onDetail, onFilter, onSearch} = useHistory();
+
+  const [showModal, setShowModal] = useState(false);
+  const onShowModal = () => {
+    setShowModal(true);
+  };
+
+  const onHideModal = () => {
+    setShowModal(false);
+  };
+
+  const months = [
+    {data: 'Tháng 8/2021'},
+    {data: 'Tháng 8/2021'},
+    {data: 'Tháng 8/2021'},
+    {data: 'Tháng 8/2021'},
+    {data: 'Tháng 8/2021'},
+    {data: 'Tháng 8/2021'},
+    {data: 'Tháng 8/2021'},
+  ];
+
+  const renderRightComponent = () => (
+    <TouchableOpacity onPress={() => setShowModal(false)}>
+      <Icon
+        icon={Images.WidthDraw.Close}
+        tintColor={Colors.white}
+        style={styles.iconPrimary}
+      />
+    </TouchableOpacity>
+  );
+
+  const renderListMonth = ({item, index}) => (
+    <TouchableOpacity
+      key={index}
+      style={[styles.bgWhite, styles.blockShadow, styles.w2, styles.mr1]}>
+      <Text centered style={[styles.textSize1, styles.px1, styles.py2]}>
+        {item.data}
+      </Text>
+    </TouchableOpacity>
+  );
 
   const renderTransactionSections = data =>
     data.map(item => {
@@ -146,7 +188,7 @@ const History = () => {
     <>
       <View style={[styles.bgWhite]}>
         <HeaderBg>
-          <Header title={translation?.transaction_history} />
+          <Header back title={translation?.transaction_history} />
         </HeaderBg>
 
         {/* <Header back title="Lịch sử" avoidStatusBar blackIcon />
@@ -154,7 +196,7 @@ const History = () => {
           <Text>Chi tiết</Text>
         </Pressable> */}
 
-        <View style={[styles.wrap, styles.pb1]}>
+        <View style={[styles.wrap, styles.ptb1]}>
           <View style={[styles.flexRow, styles.alignCenter]}>
             <View style={[styles.flex1, styles.pr2]}>
               <Image
@@ -177,7 +219,9 @@ const History = () => {
               />
             </View>
 
-            <TouchableOpacity style={[styles.pr1, styles.width1]}>
+            <TouchableOpacity
+              style={[styles.pr1, styles.w1]}
+              onPress={onShowModal}>
               <Text bold>{translation.filter}</Text>
 
               <View style={[styles.absolute, styles.topZero, styles.rightZero]}>
@@ -211,6 +255,48 @@ const History = () => {
       </View>
 
       <FlatList data={historyData} renderItem={renderMonth} />
+
+      <Modal
+        isVisible={showModal}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        style={[styles.fullWidth, styles.mlZero, styles.mbZero, styles.mtZero]}
+        hideModalContentWhileAnimating
+        backdropTransitionOutTiming={0}
+        onBackdropPress={onHideModal}>
+        <View style={[styles.flex1, styles.bgWhite]}>
+          <HeaderBg>
+            <Header
+              title={translation?.transaction_history}
+              renderRightComponent={() => renderRightComponent()}
+              style={styles.pbZero}
+            />
+          </HeaderBg>
+
+          <ScrollView style={[styles.wrap, styles.pt1]}>
+            <Text bold fs="h6" mb={-10}>
+              {translation.by_month}
+            </Text>
+
+            <FlatList
+              data={months}
+              renderItem={renderListMonth}
+              // keyExtractor={(item, index) => `${item.name}-${Math.random(0, 100)}`}
+              horizontal={true}
+              style={{
+                marginLeft: -3,
+                marginRight: -Spacing.PADDING,
+                paddingVertical: 20,
+                paddingLeft: 5,
+              }}
+            />
+          </ScrollView>
+
+          <FooterContainer>
+            <Button label="Đã hiểu" bold />
+          </FooterContainer>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -221,35 +307,62 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   fWrap: {flexWrap: 'wrap'},
   justifyBetween: {justifyContent: 'space-between'},
+  //------------------
   absolute: {position: 'absolute'},
   topZero: {top: 0},
   rightZero: {right: 0},
+  //------------------
   top1: {top: 11},
   topMinus1: {top: -5},
+  //------------------
   rightMinus1: {right: -2},
+  //------------------
   left1: {left: 14},
+  //------------------
+  fullWidth: {width: '100%'},
+  //------------------
   minWidth1: {minWidth: 97},
-  width1: {width: 65},
+  w1: {width: 65},
+  w2: {width: 112},
   //margin and padding
+  mbZero: {marginBottom: 0},
+  mlZero: {marginLeft: 0},
+  mtZero: {marginTop: 0},
+  pbZero: {paddingBottom: 0},
+  //------------------
+  mr1: {marginRight: 12},
+  //------------------
   mb1: {marginBottom: 4},
+  //------------------
+  pt1: {paddingTop: 20},
+  //------------------
   pr1: {paddingRight: 10},
   pr2: {paddingRight: 16},
-  pb1: {paddingBottom: 16},
+  //------------------
   pl1: {paddingLeft: 40},
   pl2: {paddingLeft: 8},
+  //------------------
+  px1: {paddingHorizontal: 8},
+  //------------------
   py1: {paddingVertical: 4},
+  py2: {paddingVertical: 9},
+  //------------------
+  ptb1: {paddingVertical: 16},
   //end
   bgWhite: {backgroundColor: Colors.white},
   alignCenter: {alignItems: 'center'},
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
+  //------------------
   textSize1: {fontSize: 12},
   textSize2: {fontSize: 14},
   textSize3: {fontSize: 10},
+  //------------------
   cirle: {borderRadius: 100},
+  //------------------
   textCenter: {textAlign: 'center'},
   textWhite: {color: Colors.white},
-  //-----------------------------
+  //-----------------
   textInput: {
     margin: 0,
     paddingHorizontal: scale(10),
@@ -293,6 +406,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: Colors.l2,
+  },
+  blockShadow: {
+    borderRadius: 8,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 1.8,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
   },
 });
 export default History;
