@@ -7,7 +7,7 @@ import FooterNavigation from './FooterNavigation';
 storiesOf('Groups/FooterNavigation', module)
   .addDecorator(withKnobs)
   .add('FooterNavigation', () => (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{marginTop: 25}}>
       <FooterNavigation />
     </SafeAreaProvider>
   ));

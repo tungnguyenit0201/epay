@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
@@ -11,22 +11,17 @@ import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import BigLogo from '../../Atoms/BigLogo';
 import Content from '../../Atoms/Content';
-import {passwordSchema} from 'utils/ValidationSchemas';
-
+import {passwordSchema} from '../../Utils/ValidationSchemas';
+import BlueHeader from '../../Atoms/BlueHeader';
 const Login = ({route}) => {
-    const translation = require('../../../Context/Language/vi.json');
-
-  const biometryType = false;
-
-
+  const translation = require('../../../Context/Language/vi.json');
+  const biometryType = true;
   return (
-    <>
-      <View style={styles.blockHeader}>
-        <View>
-          <Header back blackIcon style={styles.header} />
-        </View>
-        <BigLogo />
+    <BlueHeader>
+      <View style={styles.pb1}>
+        <BigLogo style={{marginBottom: 18}} />
         <Content
+          style={styles.wrap}
           title={translation.enter_your_password}
           text={
             translation.password_for_account_security_and_transaction_confirmation_at_checkout
@@ -39,8 +34,8 @@ const Login = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) =>
-        () => console.log('password')
-        }
+          () =>
+            console.log('password')}
         validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
@@ -68,6 +63,7 @@ const Login = ({route}) => {
                   styles.wrap,
                   {
                     flex: 1,
+                    marginBottom: 25,
                   },
                 ]}>
                 <TextInput
@@ -80,6 +76,7 @@ const Login = ({route}) => {
                   value={values.password}
                   leftIcon={Images.Transfer.Lock}
                   autoFocus
+                  style={{outline: 'none'}}
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
@@ -105,7 +102,9 @@ const Login = ({route}) => {
                   />
 
                   {!!biometryType && (
-                    <Pressable onPress={() => console.log('press')} style={styles.btn}>
+                    <Pressable
+                      onPress={() => console.log('press')}
+                      style={styles.btn}>
                       <Icon
                         icon={Images.SignIn.Face}
                         style={styles.iconSize}
@@ -115,28 +114,37 @@ const Login = ({route}) => {
                   )}
                 </View>
               </View>
+              <View style={[styles.flexRow]}>
+                {!!biometryType && (
+                  <Pressable style={styles.btn}>
+                    <Icon
+                      icon={
+                        biometryType === 'FaceID'
+                          ? Images.SignIn.Face.default
+                          : Images.SignIn.FingerPrint.default
+                      }
+                      style={styles.iconSize}
+                      tintColor={Colors.white}
+                    />
+                  </Pressable>
+                )}
+              </View>
             </View>
           );
         }}
       </Formik>
-    </>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: Colors.BACKGROUNDCOLOR,
-  // },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  py_1: {
-    paddingVertical: Spacing.PADDING,
-  },
-  link_text: {
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  //-------------------
+  flex1: {flex: 1},
+  pb1: {paddingBottom: 24},
+  //-------------------
+  linkText: {
     textDecorationStyle: 'solid',
     textDecorationColor: Colors.BLACK,
-    // textDecorationLine: 'underline',
   },
   box: {
     flexDirection: 'row',
@@ -169,17 +177,6 @@ const styles = StyleSheet.create({
     width: scale(17),
     height: scale(17),
   },
-  blockHeader: {
-    backgroundColor: Colors.white,
-    paddingBottom: 24,
-  },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
-  },
-  fullBtn: {
-    flex: 1,
-  },
+  mt_1: {marginTop: 24},
 });
 export default Login;

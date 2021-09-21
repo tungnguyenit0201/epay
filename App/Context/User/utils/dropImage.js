@@ -11,40 +11,48 @@ const useDropImage = () => {
   const diemsion = useWindowDimensions();
   let [loading, setLoading] = useState(false);
 
-  const capturePicture = async onDropImage => {
+  const dropImage = async capturedImg => {
+    const {uri, width, height} = capturedImg;
+    // tỉ lệ màn hình so với tỉ lệ image
+    let scaleWidth = width / diemsion.width;
+    let scaleHeight = height / diemsion.height;
+
+    let widthImg = 300 * scaleWidth;
+    let heightImg = 180 * scaleHeight;
+    let path = await ImageEditor.cropImage(
+      uri,
+      {
+        offset: {
+          x: 37 * scaleWidth,
+          y: 170 * scaleHeight,
+        },
+        size: {width: widthImg, height: heightImg},
+        displaySize: {width: widthImg, height: heightImg},
+      },
+      error => {
+        console.error('Error resizing image: ', error);
+      },
+    );
+    if (Platform.OS === 'ios') {
+      path = path.replace('file://', '');
+    }
+    let data = await RNFetchBlob.fs.readFile(path, 'base64');
+    return {path, data};
+  };
+
+  const capturePicture = async (onDropImage, isDrop) => {
     setLoading(true);
     if (camera.current) {
       camera.current
         .takePictureAsync({base64: true})
         .then(async capturedImg => {
-          const {uri, width, height} = capturedImg;
-          // tỉ lệ màn hình so với tỉ lệ image
-          let scaleWidth = width / diemsion.width;
-          let scaleHeight = height / diemsion.height;
+          const {uri, base64} = capturedImg;
+          let result = {path: uri, data: base64};
 
-          let widthImg = scale(300) * scaleWidth;
-          let heightImg = scale(180) * scaleHeight;
-          let path = await ImageEditor.cropImage(
-            uri,
-            {
-              offset: {
-                x: 37 * scaleWidth,
-                y: 170 * scaleHeight,
-              },
-              size: {width: widthImg, height: heightImg},
-              displaySize: {width: widthImg, height: heightImg},
-            },
-            error => {
-              console.error('Error resizing image: ', error);
-            },
-          );
-          if (Platform.OS === 'ios') {
-            path = path.replace('file://', '');
-          }
-          let file = await RNFetchBlob.fs.readFile(path, 'base64');
-          //   console.log('file :>> ', file);
-          setImage({path, data: file});
-          !!onDropImage && onDropImage({path, data: file});
+          if (isDrop) result = await dropImage(capturedImg);
+
+          setImage(result);
+          !!onDropImage && onDropImage(result);
           setShowCamera(2);
           setLoading(false);
         })

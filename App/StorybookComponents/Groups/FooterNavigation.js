@@ -29,7 +29,7 @@ const TabNavigation = () => {
   function TabBarCustom({state, descriptors, navigation}) {
     return (
       <View>
-        <View style={[styles.wrapTab, {width: width - 32}]}>
+        <View style={[styles.wrapTab]}>
           {routes.map((route, index) => {
             return (
               <TouchableOpacity style={[styles.tab]}>
@@ -59,13 +59,45 @@ const TabNavigation = () => {
   }
 
   return (
-    <View style={{flex: 1, marginTop: 15}}>
-      <TabBarCustom />
+    <View
+      style={{
+        width: width - 32,
+        height: 150,
+      }}>
+      <View style={[styles.wrapTab]}>
+        {routes.map((route, index) => {
+          return (
+            <TouchableOpacity style={[styles.tab]}>
+              <Image
+                source={route.image}
+                style={[styles.icon]}
+                resizeMode={'cover'}
+              />
+              <Text style={{color: Colors.cl1}}>Trang chủ</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <View style={styles.wrapTabImg}>
+        <Image
+          source={Images.TabBar.BottomTab.default}
+          style={[styles.tabImage]}
+        />
+      </View>
+      <TouchableOpacity
+        style={[styles.wrapQR, {left: width / 2 - scale(37)}]}
+        onPress={() => console.log('onPress')}>
+        <Image source={Images.TabBar.QR.default} style={[styles.qrImg]} />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrap: {
+    flex: 1,
+    backgroundColor: Colors.BACKGROUNDCOLOR,
+  },
   container: {
     height: scale(80),
     position: 'absolute',

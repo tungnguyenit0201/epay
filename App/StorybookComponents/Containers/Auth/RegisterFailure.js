@@ -13,21 +13,63 @@ import Icon from '../../Atoms/Icon';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {scale} from 'utils/Functions';
 
+import BlueHeader from '../../Atoms/BlueHeader';
+import Content from '../../Atoms/Content';
+import FooterContainer from '../../Atoms/FooterContainer';
 const RegisterFailure = ({route}) => {
-
+  const renderRightComponent = () => (
+    <TouchableOpacity
+      // onPress={() => setShowModal(true)}
+      style={styles.iconRight}>
+      <Icon
+        icon={Images.Register.Info}
+        tintColor={Colors.white}
+        style={styles.iconSize}
+      />
+    </TouchableOpacity>
+  );
   return (
     // TODO: translate
-    <>
-      <View>
+    <BlueHeader heightBg="100%">
+      <Header
+        back
+        // blackIcon
+        // avoidStatusBar
+        logo={Images.logoEpay.default}
+        onPressBack={() => onNavigate(SCREEN.AUTH)}
+        renderRightComponent={() => renderRightComponent()}
+      />
+      <Content
+        title={'Đăng ký \nkhông thành công!'}
+        text="Bạn đã nhập sai OTP quá 5 lần, 
+          vui lòng quay lại sau ít phút."
+        styleText={{color: Colors.white}}
+        style={[styles.wrap, styles.flex1, styles.mt1]}
+      />
+      <FooterContainer style={{marginTop: 100}}>
+        <Button
+          label="Gọi 024 32252336"
+          style={styles.btn}
+          mb={Spacing.PADDING - 10}
+          bold
+        />
+        <Button
+          label="Quay lại sau"
+          style={styles.btn}
+          bg={Colors.white}
+          color={Colors.black}
+          border={Colors.cl4}
+          bold
+        />
+      </FooterContainer>
+      {/* <View>
         <Header
           back
-          blackIcon
-          style={{
-            paddingTop: 10,
-            paddingBottom: 10,
-            backgroundColor: Colors.white,
-            color: Colors.BLACK,
-          }}
+          // blackIcon
+          // avoidStatusBar
+          logo={Images.logoEpay}
+          onPressBack={() => onNavigate(SCREEN.AUTH)}
+          renderRightComponent={() => renderRightComponent()}
         />
         <TouchableOpacity
           style={{
@@ -52,7 +94,11 @@ const RegisterFailure = ({route}) => {
             marginBottom: Spacing.PADDING + 30,
             alignItems: 'center',
           }}>
-          <Image style={{ width: 120, height: 72 }} source={Images.logoEpay.default} resizeMode="contain" />
+          <Image
+            style={{width: 120, height: 72}}
+            source={Images.logoEpay.default}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.wrap}>
@@ -89,35 +135,22 @@ const RegisterFailure = ({route}) => {
           onPress={() => console.log('press')}
           bold
         />
-      </View>
-    </>
+      </View> */}
+    </BlueHeader>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING * 2,
-    // paddingTop: Spacing.PADDING * 3,
-  },
-  wrap_1: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  bg_white: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  text_center: {textAlign: 'center'},
-  text_error: {
-    fontSize: 14,
-    color: Colors.Highlight,
-  },
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  flex1: {flex: 1},
+  //--------------------
+  mt1: {marginTop: 56},
+  //--------------------
   btn: {
     paddingTop: 15,
     paddingBottom: 15,
   },
+  iconRight: {paddingRight: Spacing.PADDING},
 });
 
 export default RegisterFailure;

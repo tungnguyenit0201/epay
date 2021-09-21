@@ -10,6 +10,7 @@ import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import {useConfig} from 'context/Common/utils';
+import messaging from '@react-native-firebase/messaging';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,6 @@ import Language from 'containers/Language';
 import Home from 'containers/Home';
 import Auth from 'containers/Auth';
 import Login from 'containers/Auth/Login';
-import Register from 'containers/Auth/Register';
 import ForgetPassword from 'containers/Auth/ForgetPassword';
 import RegisterPassword from 'containers/Auth/RegisterPassword';
 import Policy from 'containers/Auth/Policy';
@@ -99,6 +99,26 @@ const AppNavigator = () => {
     Platform.OS == 'android' && SplashScreen.hide();
   }, []); // eslint-disable-line
 
+  React.useEffect(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+        }
+      });
+  }, []); // eslint-disable-line
+
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
@@ -116,7 +136,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
-          <Stack.Screen name={SCREEN.REGISTER} component={Register} />
           <Stack.Screen
             name={SCREEN.FORGET_PASSWORD}
             component={ForgetPassword}

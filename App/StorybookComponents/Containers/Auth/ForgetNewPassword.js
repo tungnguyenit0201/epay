@@ -8,11 +8,11 @@ import {
   Image,
 } from 'react-native';
 import Text from '../../Atoms/Text';
-import TextInput from '../../Atoms/TextInput'
+import TextInput from '../../Atoms/TextInput';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import Icon from '../../Atoms/Icon';
-import {Colors, Spacing, Images} from 'themes';
+import {Colors, Spacing, Images, Fonts} from 'themes';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
@@ -20,35 +20,33 @@ import BigLogo from '../../Atoms/BigLogo';
 import Content from '../../Atoms/Content';
 import _ from 'lodash';
 
+import BlueHeader from '../../Atoms/BlueHeader';
+import FooterContainer from '../../Atoms/FooterContainer';
+import Checkbox from '../../Atoms/Checkbox';
 const ForgetNewPassword = ({route}) => {
   const phone = '0932122345';
   const scrollViewRef = useRef(null);
   const translation = require('../../../Context/Language/vi.json');
 
   const onSubmit = values => {
-    console.log('hello')
+    console.log('hello');
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Header
-          back
-          blackIcon
-          style={styles.header}
-          title={translation.reset_your_password}
-          titleStyle={styles.headerTitle}
-          renderRightComponent={() => (
-            <TouchableOpacity style={styles.pRight}>
-              <Icon
-                icon={Images.Register.Info}
-                style={styles.firstIcon}
-                tintColor={Colors.BLACK}
-              />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+    <BlueHeader>
+      <Header
+        back
+        renderRightComponent={() => (
+          <TouchableOpacity style={styles.pr1}>
+            <Icon
+              icon={Images.Register.Info.default}
+              style={styles.firstIcon}
+              tintColor={Colors.white}
+            />
+          </TouchableOpacity>
+        )}
+        logo={Images.logoEpay.default}
+      />
 
       <Formik
         initialValues={{
@@ -81,7 +79,7 @@ const ForgetNewPassword = ({route}) => {
                 ref={scrollViewRef}>
                 {/* <BigLogo /> */}
                 <Content
-                  // title="Tạo mật khẩu Epay"
+                  title="Đặt lại mật khẩu"
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
@@ -115,46 +113,65 @@ const ForgetNewPassword = ({route}) => {
                   }
                 </Text>
               </ScrollView>
-
-              <View style={{paddingBottom: 20}}>
+              {/* <View style={{paddingBottom: 20}}>
                 <Button
                   disabled={!_.isEmpty(errors)}
                   mt={10}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-              </View>
+              </View> */}
             </View>
           );
         }}
       </Formik>
-    </View>
+      <FooterContainer style={{marginTop: 100}}>
+        <View style={styles.flexRow}>
+          <Checkbox />
+          <Text style={{marginLeft: 5, fontSize: Fonts.FONT_SMALL}}>
+            {` Tôi đồng ý với các `}
+            <TouchableOpacity style={styles.mtMinus1} onPress={() => {}}>
+              <Text style={[styles.firstLink]}>{'Thoả thuận người dùng '}</Text>
+            </TouchableOpacity>
+            và
+            <TouchableOpacity style={styles.mtMinus1} onPress={() => {}}>
+              <Text style={[styles.firstLink]}>
+                {'Chính sách quyền riêng tư '}
+              </Text>
+            </TouchableOpacity>
+            của Epay Services
+          </Text>
+        </View>
+
+        <Button mt={10} label={translation?.continue} />
+      </FooterContainer>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
   wrap: {
-    flex: 1,
     paddingHorizontal: Spacing.PADDING,
   },
-  pRight: {
-    position: 'absolute',
-    right: 15,
-  },
+  flex1: {flex: 1},
+  flexRow: {flexDirection: 'row'},
+  //-----------------------
+  mtMinus1: {marginTop: -3},
+  //------------------
+  py1: {paddingVertical: scale(24)},
+  pr1: {paddingRight: Spacing.PADDING},
+  //------------------
   firstIcon: {
     width: scale(24),
     height: scale(24),
   },
-  header: {
-    paddingTop: 10,
-    backgroundColor: Colors.white,
-    color: Colors.BLACK,
+  note: {
+    paddingRight: 10,
+    fontSize: 12,
   },
-  headerTitle: {
-    color: Colors.BLACKTEXT,
+  firstLink: {
+    textDecorationLine: 'underline',
+    marginLeft: 3,
+    fontSize: Fonts.FONT_SMALL,
   },
 });
 export default ForgetNewPassword;

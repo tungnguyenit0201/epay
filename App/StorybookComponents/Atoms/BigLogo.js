@@ -6,7 +6,11 @@ const BigLogo = ({mb, style}) => {
   return (
     <View
       style={[styles.alignCenter, mb ? {marginBottom: mb} : styles.mb, style]}>
-      <Image style={{ width: 120, height: 72 }} source={Images.logoEpay.default} resizeMode="contain" />
+      <Image
+        style={{width: 120, height: 72}}
+        source={Images.logoEpay.default}
+        resizeMode="contain"
+      />
     </View>
   );
 };

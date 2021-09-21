@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  useWindowDimensions,
 } from 'react-native';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
@@ -31,6 +32,7 @@ import FooterNavigation from '../../Groups/FooterNavigation';
 const Home = () => {
   // TODO : translation
   const translation = require('../../../Context/Language/vi.json');
+  const {width, height} = useWindowDimensions();
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
@@ -108,7 +110,7 @@ const Home = () => {
 
   return (
     <>
-      <View style={base.wrap}>
+      <View style={[base.wrap, {overflow: 'hidden'}]}>
         <HeaderBg>
           <View style={styles.rowHeader}>
             <Image
@@ -129,20 +131,35 @@ const Home = () => {
             />
           </View>
         </HeaderBg>
-
-        <View style={base.container}>
-          <DinhDanh />
-          <Banner data={dataBanner} />
-        </View>
         <View style={base.container}>
           <Image style={styles.bgHome} source={Images.Homes.Wave.default} />
+          <DinhDanh />
+          <Banner data={dataBanner} />
+          <SlideIcon data={dataHome} />
         </View>
-        <SlideIcon data={dataHome} />
-        <View style={{position: 'absolute', bottom: -120}}>
+        <View style={{marginTop: scale(50)}}>
           <FooterNavigation />
         </View>
-        {/* <FooterNavigation /> */}
+        {/* <View style={base.container}>
+          <Image
+            style={{
+              width: width - 32,
+              height: 'auto',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+            }}
+            source={Images.Homes.Wave.default}
+          />
+          <DinhDanh />
+          <Banner data={dataBanner} />
+          <SlideIcon data={dataHome} />
+        </View> */}
+        {/* <View style={base.container}>
+          <Image style={styles.bgHome} source={Images.Homes.Wave.default} />
+        </View> */}
       </View>
+      {/* <FooterNavigation /> */}
     </>
   );
 };
@@ -163,7 +180,7 @@ const styles = StyleSheet.create({
   },
   bgHome: {
     width: scale(375),
-    height: scale(433),
+    height: scale(580),
     position: 'absolute',
     top: 0,
     left: 0,

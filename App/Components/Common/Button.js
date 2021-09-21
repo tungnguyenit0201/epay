@@ -8,6 +8,7 @@ import Navigator from 'navigations/Navigator';
 
 export default ({
   onPress,
+  type,
   label,
   label2,
   icon,
@@ -53,6 +54,10 @@ export default ({
         style,
         disabled && {backgroundColor: Colors.g4},
       ]}>
+      {type && (
+        <Image source={require('images/BgHeader.jpg')} style={styles.bgImg} />
+      )}
+
       {!!leftIcon && (
         <Image
           source={leftIcon}
@@ -104,6 +109,8 @@ const styles = StyleSheet.create({
     borderRadius: scale(8),
     backgroundColor: Colors.cl1,
     height: 48,
+    position: 'relative',
+    overflow: 'hidden',
   },
   xxs: {
     height: 20,
@@ -118,6 +125,15 @@ const styles = StyleSheet.create({
   sm: {height: 34, paddingHorizontal: 15},
   lg: {height: 55},
   xl: {height: 70},
+
+  bgImg: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    resizeMode: 'cover',
+  },
 
   image: {
     width: scale(15),

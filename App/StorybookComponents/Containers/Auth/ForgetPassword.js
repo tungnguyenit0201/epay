@@ -1,8 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import TextInput from '../../Atoms/TextInput';
@@ -13,20 +10,19 @@ import _ from 'lodash';
 import BigLogo from '../../Atoms/BigLogo';
 import Content from '../../Atoms/Content';
 
+import BlueHeader from '../../Atoms/BlueHeader';
 const ForgetPassword = () => {
   const phone = '0902345678';
   const translation = require('../../../Context/Language/vi.json');
 
   // TODO: translate
   return (
-    <View style={styles.container}>
-      <View>
-        <Header back blackIcon style={styles.header} />
-      </View>
-      <BigLogo />
+    <BlueHeader style={styles.container}>
+      <BigLogo style={{marginBottom: 20}} />
       <Content
         title="Quên mật khẩu"
         text="Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới"
+        style={{paddingHorizontal: Spacing.PADDING}}
       />
 
       <Formik
@@ -91,7 +87,7 @@ const ForgetPassword = () => {
           );
         }}
       </Formik>
-    </View>
+    </BlueHeader>
   );
 };
 const styles = StyleSheet.create({

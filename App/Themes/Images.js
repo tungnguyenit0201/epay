@@ -128,6 +128,12 @@ export default {
     FingerPrint: require('images/icons/fingerprint.png'),
     Face: require('images/icons/face.png'),
   },
+  SignUp: {
+    BgBlue: require('images/bg-blue.png'),
+    BigPhone: require('images/icons/big-phone.png'),
+    BlueWave: require('images/bg/blue-wave.png'),
+    TouchId: require('images/icons/touch-id.png'),
+  },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),
     camera: require('images/icons/camera.png'),
@@ -151,5 +157,7 @@ export default {
     TopRight: require('images/camera/TopRight.png'),
     BottomLeft: require('images/camera/BottomLeft.png'),
     BottomRight: require('images/camera/BottomRight.png'),
+    Oval: require('images/camera/oval.png'),
+    CameraSquare: require('images/camera/CameraSquare.png'),
   },
 };

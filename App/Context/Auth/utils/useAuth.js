@@ -5,7 +5,7 @@ import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
-import {Linking} from 'react-native';
+import {Linking, Platform} from 'react-native';
 import {useTranslation} from 'context/Language';
 import {
   useLoading,
@@ -19,10 +19,16 @@ import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useWalletInfo} from 'context/Wallet/utils';
+import moment from 'moment';
 
 const useTouchID = ({onSuccess}) => {
   const [biometryType, setBiometryType] = useState(null);
-  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
+  const {
+    getTouchIdEnabled,
+    getPhone,
+    getTouchIDAndroidData,
+    setTouchIDAndroidData,
+  } = useAsyncStorage();
   const {setError} = useError();
 
   const checkBiometry = async () => {
@@ -51,11 +57,37 @@ const useTouchID = ({onSuccess}) => {
       });
   };
 
-  const onTouchID = _biometryType => {
+  const onTouchID = async (_biometryType, passcode = false) => {
     if (!_biometryType && !biometryType) {
       return;
     }
+    let touchIDAndroid = null;
 
+    // android check
+    if (Platform.OS === 'android') {
+      touchIDAndroid = await getTouchIDAndroidData();
+      !touchIDAndroid && (touchIDAndroid = {remaining: 5});
+      if (touchIDAndroid?.lockedTimestamp) {
+        if (
+          moment().diff(
+            moment(touchIDAndroid.lockedTimestamp),
+            'minutes',
+            true,
+          ) < 5
+        ) {
+          // TODO: translate
+          setError({
+            ErrorCode: -1,
+            ErrorMessage:
+              'Bạn đã nhập sai touch ID quá nhiều lần. Vui lòng thử lại sau ít phút.',
+          });
+        } else {
+          touchIDAndroid = {remaining: 5};
+        }
+      }
+    }
+
+    // TODO: translate
     const options = {
       title: 'Authentication Required', // Android
       imageColor: '#e00606', // Android
@@ -65,7 +97,7 @@ const useTouchID = ({onSuccess}) => {
       cancelText: 'Cancel', // Android
       fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
       unifiedErrors: false, // use unified error messages (default false)
-      passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
+      passcodeFallback: passcode, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     };
 
     TouchID.authenticate('Đăng nhập bằng Touch ID', options)
@@ -73,13 +105,43 @@ const useTouchID = ({onSuccess}) => {
         onSuccess && onSuccess(success);
       })
       .catch(error => {
-        if (error?.name === 'LAErrorUserCancel') {
+        // user cancel
+        if (
+          error?.name === 'LAErrorUserCancel' ||
+          error?.name === 'LAErrorSystemCancel' ||
+          error?.name === 'LAErrorAuthenticationFailed'
+        ) {
           return;
         }
+        // supported touchID but not enabled by user
         if (error?.name === 'LAErrorTouchIDNotEnrolled') {
           setBiometryType(null);
           return;
         }
+        // user press show passcode
+        if (
+          error?.name === 'LAErrorUserFallback' ||
+          error?.name === 'RCTTouchIDUnknownError'
+        ) {
+          onTouchID(_biometryType, true);
+          return;
+        }
+        // android user failed to authenticate
+        if (
+          error?.name === 'LAErrorAuthenticationFailed' &&
+          Platform.OS === 'android'
+        ) {
+          touchIDAndroid?.remaining > 1
+            ? setTouchIDAndroidData({
+                remaining: touchIDAndroid?.remaining - 1,
+              })
+            : setTouchIDAndroidData({
+                remaining: 0,
+                lockedTimestamp: moment().valueOf(),
+              });
+          return;
+        }
+        // other errors
         setError({ErrorCode: -1, ErrorMessage: error});
       });
   };
@@ -152,6 +214,7 @@ const useAuth = () => {
           phone,
           functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
           password,
+          encrypted,
         });
 
       case ERROR_CODE.SUCCESS:

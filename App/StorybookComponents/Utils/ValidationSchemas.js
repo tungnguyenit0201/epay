@@ -54,7 +54,7 @@ export const phoneSchema = yup.object().shape({
 export const passwordSchema = yup.object().shape({
   password: yup
     .string()
-    .required()
+    .required('Mật khẩu không được bỏ trống.')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
       'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',

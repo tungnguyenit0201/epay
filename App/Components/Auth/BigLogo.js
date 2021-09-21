@@ -1,19 +1,25 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, Pressable} from 'react-native';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 
-const BigLogo = ({mb, style}) => {
+const BigLogo = ({style, onPress}) => {
   return (
-    <View
-      style={[styles.alignCenter, mb ? {marginBottom: mb} : styles.mb, style]}>
-      <Image source={Images.logoEpay} resizeMode="contain" />
-    </View>
+    <Pressable onPress={onPress} style={[styles.alignCenter, style]}>
+      <Image
+        source={Images.logoEpay}
+        resizeMode="contain"
+        style={styles.logo}
+      />
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   alignCenter: {alignItems: 'center'},
-  mb: {marginBottom: Spacing.PADDING + 40},
+  logo: {
+    width: 110,
+    height: 40,
+  },
 });
 
 export default BigLogo;

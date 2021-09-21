@@ -18,6 +18,8 @@ import BigLogo from '../../Atoms/BigLogo';
 import {Formik} from 'formik';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
+import BlueHeader from '../../Atoms/BlueHeader';
+import FooterContainer from '../../Atoms/FooterContainer';
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = require('../../../Context/Language/vi.json');
@@ -43,36 +45,17 @@ const RegisterName = () => {
           const handleChange = field => value => {
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
-            console.log('setpersonalinfo')
+            console.log('setpersonalinfo');
           };
 
           return (
             <>
-              <View style={styles.container}>
-                <View>
-                  <Header
-                    back
-                    blackIcon
-                    style={styles.header}
-                    renderRightComponent={() => (
-                      <TouchableOpacity
-                        style={styles.pRight}
-                        onPress={() => setShowModal(true)}>
-                        <Icon
-                          icon={Images.Register.Info}
-                          style={styles.firstIcon}
-                          tintColor={Colors.BLACK}
-                        />
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-                <BigLogo />
+              <BlueHeader style={styles.container}>
+                <BigLogo style={{marginBottom: 20}} />
                 <Content
+                  style={styles.wrap}
                   title="Nhập tên"
-                  text={
-                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
-                  }
+                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                 />
 
                 <View style={[styles.wrap, {marginTop: Spacing.PADDING * 3}]}>
@@ -87,23 +70,15 @@ const RegisterName = () => {
                     isDeleted={values.FullName}
                   />
                 </View>
-              </View>
-
-              <View
-                style={[
-                  styles.wrap,
-                  {
-                    paddingVertical: Spacing.PADDING,
-                    backgroundColor: Colors.BACKGROUNDCOLOR,
-                  },
-                ]}>
-                <Button
-                  disabled={disable}
-                  label={translation.done}
-                  style={styles.btn}
-                  onPress={handleSubmit}
-                />
-              </View>
+                <FooterContainer style={{marginTop: 100}}>
+                  <Button
+                    disabled={disable}
+                    label={translation.done}
+                    style={styles.btn}
+                    onPress={handleSubmit}
+                  />
+                </FooterContainer>
+              </BlueHeader>
               <HelpModal
                 showModal={showModal}
                 setShowModal={setShowModal}

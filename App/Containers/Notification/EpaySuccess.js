@@ -50,17 +50,17 @@ const CheckoutSuccess = () => {
 
   return (
     <>
+      <HeaderBg>
+        <Header title={translation.transaction_details} back />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header title={translation.transaction_details} back />
-        </HeaderBg>
         <View style={base.container}>
           <View style={styles.success}>
             <Image
-              source={require('images/Success.png')}
+              source={require('images/noti/Noti.png')}
               style={styles.imgSuccess}
             />
-            <Text bold size={Fonts.H5} mb={15}>
+            <Text bold fs="h5" mb={15}>
               {translation.epay_notification}
             </Text>
             <Text centered>
@@ -69,27 +69,21 @@ const CheckoutSuccess = () => {
             </Text>
           </View>
           <View style={styles.block}>
-            <Image
-              source={require('images/bgXacNhan.png')}
-              style={styles.bgImg}
-            />
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              nisi ut aliquip ex ea commodo consequat aliqua.
             </Text>
           </View>
         </View>
       </ScrollView>
-      <View style={base.bottom}>
+      <Image source={require('images/wave.png')} style={styles.bgImg} />
+      <View style={base.boxBottom}>
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              size="sm"
-              bg="#fff"
+              bg={Colors.white}
               border={Colors.cl1}
               color={Colors.cl1}
               label={translation.save_photo}
@@ -99,17 +93,33 @@ const CheckoutSuccess = () => {
           </Col>
           <Col space={10} width="50%">
             <Button
-              size="sm"
+              type={1}
               label={translation.share_photo}
               onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
             />
           </Col>
         </Row>
+        <Pressable
+          onPress={() => {
+            Navigator.push(SCREEN.HOME);
+          }}>
+          <Text centered mt={10} style={styles.linkHome}>
+            Về trang chủ
+          </Text>
+        </Pressable>
       </View>
     </>
   );
 };
 const styles = StyleSheet.create({
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+
   block: {
     marginBottom: 20,
     marginTop: 20,
@@ -125,13 +135,9 @@ const styles = StyleSheet.create({
     height: 80,
     marginBottom: 10,
   },
-  bgImg: {
-    width: 128,
-    height: 128,
-    position: 'absolute',
-    top: 0,
-    left: '50%',
-    transform: [{translateX: scale(-64)}, {translateY: 0}],
+
+  linkHome: {
+    textDecorationLine: 'underline',
   },
 });
 export default CheckoutSuccess;
