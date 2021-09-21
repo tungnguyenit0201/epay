@@ -15,6 +15,7 @@ import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
 
 import AES from './AES';
 import RSA from './RSA';
+import {signature} from './crypto';
 var aes = new AES();
 var rsa = new RSA();
 
@@ -45,8 +46,8 @@ const getEncryptParam = async (url, params) => {
   let currentLanguage = await AsyncStorage.getItem('currentLanguage');
   let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
   let requestData = await getRequestData(url, params);
-  let dataEncrypted = aes.Encrypt(JSON.stringify(requestData));
-  let signature = rsa.Sign(requestTime, dataEncrypted);
+  // let dataEncrypted = aes.Encrypt(JSON.stringify(requestData));
+  // let signature = rsa.Sign(requestTime, dataEncrypted);
 
   return {
     MsgType: urlPart[urlPart.length - 1],
@@ -61,8 +62,10 @@ const getEncryptParam = async (url, params) => {
     DeviceInfo:
       (Platform.OS === 'ios' ? 'Iphone iOS ' : 'Android ') + Platform.Version,
     DeviceID: uniqueDeviceID,
-    Data: dataEncrypted,
-    Signature: signature,
+    // Data: dataEncrypted,
+    Data: JSON.stringify(requestData),
+    // Signature: signature,
+    Signature: 'FAKE',
   };
 };
 
@@ -131,12 +134,12 @@ async function request({
           }
 
           // console.log('[Request] Data text before decrypt: ' + Data);
-          let deCryptedText = aes.Decrypt(Data);
+          // let deCryptedText = aes.Decrypt(Data);
           // console.log('[Request] Data text after decrypt: ' + deCryptedText);
 
-          const decryptedData = JSON.parse(deCryptedText);
+          // const decryptedData = JSON.parse(deCryptedText);
 
-          transactionID = decryptedData?.TransactionID || transactionID;
+          // transactionID = decryptedData?.TransactionID || transactionID;
 
           if (typeof success === 'function') {
             // if (!ErrorCode) {
@@ -144,7 +147,8 @@ async function request({
             // } else {
             //   return success(data);
             // }
-            return success({...result?.data, ...decryptedData} || result);
+            // return success({...result?.data, ...decryptedData} || result);
+            return success({...result?.data, ...JSON.parse(Data)} || result);
           }
         } else {
           if (__DEV__) {
