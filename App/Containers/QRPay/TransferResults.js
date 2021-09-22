@@ -1,5 +1,12 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, Image, Pressable} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+  useWindowDimensions,
+} from 'react-native';
 import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
@@ -11,9 +18,17 @@ import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import {useTransactionResult} from 'context/Wallet/utils';
 
+import ModalBottom from 'components/Common/ModalBottom';
+
+import Bank from 'components/QRPay/Bank';
+import SelectBank from 'components/QRPay/SelectBank';
+
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 const TransactionResult = () => {
   const translation = useTranslation();
-  const {message, onRetry, onBackHome} = useTransactionResult();
+  const [showModal, setShowModal] = React.useState(false);
+
   const data = [
     {
       label: 'Chuyển đến ',
@@ -51,6 +66,7 @@ const TransactionResult = () => {
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={base.container}>
+          <SelectBank onPress={() => setShowModal(!showModal)} />
           <View style={styles.block}>
             <Image
               source={require('images/bgXacNhan.png')}
@@ -75,17 +91,22 @@ const TransactionResult = () => {
             })}
           </View>
         </View>
+        <View style={{height: 50}}></View>
       </ScrollView>
-      <View style={base.boxBottom}>
+      <View style={[base.boxBottom]}>
         <Button
           onPress={() => {
-            Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+            Navigator.navigate(SCREEN.TRANSFER_SUCCESS);
           }}
           type={1}
           label="Chuyển tiền"
           bold
         />
       </View>
+
+      <ModalBottom visible={showModal} onClose={() => setShowModal(false)}>
+        <Bank />
+      </ModalBottom>
     </>
   );
 };

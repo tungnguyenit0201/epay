@@ -14,7 +14,6 @@ import {
   Header,
   HeaderBg,
   ActionSheet,
-  Modal,
   TextInput,
   Radio,
 } from 'components';
@@ -29,12 +28,14 @@ import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 
+import Modal from 'components/Common/ModalCustom';
 import Bank from 'components/QRPay/Bank';
 
 const Transfer = () => {
   const {phone} = usePhone();
   const {userInfo} = useUser();
   const translation = useTranslation();
+  const [showModal, setShowModal] = React.useState(true);
 
   const PersonalInfo = userInfo.personalInfo;
 
@@ -82,23 +83,39 @@ const Transfer = () => {
               {label: 'Người gửi chịu phí', value: 1},
               {label: 'Người nhận chịu phí ', value: 2},
             ]}
-            style={styles.wradio}
           />
         </View>
-
-        <Bank />
-
-        <View style={styles.boxBottom}>
-          <Button
-            onPress={() => {
-              Navigator.navigate(SCREEN.TRANSFER_RESULTS);
-            }}
-            type={1}
-            label="Tiếp tục"
-            bold
-          />
+        <View style={[base.container, {paddingTop: 20}]}>
+          <Bank myPay={0} />
         </View>
+        <View style={{height: 50}}></View>
       </ScrollView>
+      <View style={styles.boxBottom}>
+        <Button
+          onPress={() => {
+            Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+          }}
+          type={1}
+          label="Tiếp tục"
+          bold
+        />
+      </View>
+
+      <Modal
+        visible={showModal}
+        onClose={() => setShowModal(false)}
+        icon={require('images/qrpay/MoneySend.png')}>
+        <Text centered mb={20}>
+          Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
+          trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
+        </Text>
+        <Button
+          type={1}
+          mb={10}
+          label="Đóng"
+          onPress={() => setShowModal(false)}
+        />
+      </Modal>
     </>
   );
 };
@@ -116,13 +133,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: Colors.g4,
   },
-  wradio: {},
 
   boxBottom: {
-    marginTop: 30,
-    paddingTop: scale(20),
-    paddingHorizontal: scale(20),
-    paddingBottom: scale(60),
+    padding: scale(20),
+    paddingBottom: scale(40),
     backgroundColor: Colors.white,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,

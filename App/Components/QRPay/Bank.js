@@ -29,7 +29,7 @@ import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
 import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 
-const TransferBank = () => {
+const TransferBank = (myPay = 1) => {
   const {phone} = usePhone();
   const {userInfo} = useUser();
   const translation = useTranslation();
@@ -39,8 +39,8 @@ const TransferBank = () => {
   return (
     //TODO : translation
     <>
-      <View style={[base.container]}>
-        <Text bold fs="h6" mb={20} mt={30}>
+      <View>
+        <Text bold fs="h6" mb={20}>
           Chọn nguồn tiền
         </Text>
         <View style={[styles.itemBank]}>
@@ -61,22 +61,25 @@ const TransferBank = () => {
             />
             <Text>Phí giao dịch: X.000đ</Text>
           </View>
-          {/* <View style={styles.opaciy}> </View> */}
-          <Text style={styles.opaciy}>opaciy</Text>
-          <Button
-            //onPress={onLogout}
-            style={styles.pushMoney}
-            size="sm"
-            type={1}
-            label="Nạp tiền "
-            bold
-          />
+          {myPay === 0 && (
+            <>
+              <Text style={styles.opaciy}>opaciy</Text>
+              <Button
+                //onPress={onLogout}
+                style={styles.pushMoney}
+                size="sm"
+                type={1}
+                label="Nạp tiền "
+                bold
+              />
+            </>
+          )}
         </View>
 
         <View style={[styles.itemBank, styles.itemBankActive]}>
           <Image
             style={[styles.iconBank]}
-            source={require('images/qrpay/EXB.png')}
+            source={require('images/qrpay/VCB.png')}
           />
           <View>
             <Text fs="h6" bold>
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
     padding: scale(10),
   },
   itemBankActive: {
-    backgroundColor: Colors.moneyItem,
+    backgroundColor: Colors.cl5,
   },
   opaciy: {
     position: 'absolute',
