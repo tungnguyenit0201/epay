@@ -11,7 +11,10 @@ const User = ({style}) => {
   return (
     <View style={[styles.item, style]}>
       <TouchableOpacity style={[styles.wicon]}>
-        <Image style={{width: 56, height: 56}} source={Images.User.default} />
+        <Image
+          style={{width: 56, height: 56}}
+          source={Images.Kyc.Test.default}
+        />
       </TouchableOpacity>
       <View>
         <Text bold size={Fonts.H6} mb={5} style={{textTransform: 'uppercase'}}>

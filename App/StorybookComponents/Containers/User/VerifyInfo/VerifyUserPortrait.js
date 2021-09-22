@@ -143,7 +143,6 @@ const FormikCustom = () => {
 };
 
 const VerifyUserPortrait = ({route}) => {
-
   return (
     <>
       <HeaderBg>

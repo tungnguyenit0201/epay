@@ -7,7 +7,8 @@ export const genOtp = async ({phone, functionType}) => {
   await request({
     url: API.COMMON.GEN_OTP,
     method: 'post',
-    params: {PhoneNumber: phone, FunctionType: functionType},
+    // params: {PhoneNumber: phone, FunctionType: functionType},
+    params: {FunctionType: functionType},
     success: res => {
       response = res;
     },
@@ -121,6 +122,22 @@ export const getConfigInfo = async () => {
   await request({
     url: API.COMMON.GET_CONFIG_INFO,
     method: 'post',
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const getTerm = async ({phone, type}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.GET_TERMS,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      TermsOfServiceType: type,
+    },
     success: res => {
       response = res;
     },

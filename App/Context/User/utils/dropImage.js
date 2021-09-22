@@ -17,14 +17,14 @@ const useDropImage = () => {
     let scaleWidth = width / diemsion.width;
     let scaleHeight = height / diemsion.height;
 
-    let widthImg = 300 * scaleWidth;
-    let heightImg = 180 * scaleHeight;
+    let widthImg = scale(300) * scaleWidth;
+    let heightImg = scale(180) * scaleHeight;
     let path = await ImageEditor.cropImage(
       uri,
       {
         offset: {
-          x: 37 * scaleWidth,
-          y: 170 * scaleHeight,
+          x: scale(37) * scaleWidth,
+          y: scale(170) * scaleHeight,
         },
         size: {width: widthImg, height: heightImg},
         displaySize: {width: widthImg, height: heightImg},
@@ -46,8 +46,14 @@ const useDropImage = () => {
       camera.current
         .takePictureAsync({base64: true})
         .then(async capturedImg => {
-          const {uri, base64} = capturedImg;
-          let result = {path: uri, data: base64};
+          const {uri, base64, width, height} = capturedImg;
+          let raito = width / height;
+          let result = {
+            path: uri,
+            data: base64,
+            widthImg: scale(150),
+            heightImg: scale(150) / raito,
+          };
 
           if (isDrop) result = await dropImage(capturedImg);
 

@@ -21,7 +21,6 @@ import Content from '../../Atoms/Content';
 const Auth = () => {
   const phone = '0903899495';
   const translation = require('../../../Context/Language/vi.json');
-  const {width, height} = useWindowDimensions();
   return (
     <BlueHeader style={styles.wrap}>
       <BigLogo style={{marginBottom: 18}} />

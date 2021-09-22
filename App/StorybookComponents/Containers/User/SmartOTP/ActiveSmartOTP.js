@@ -33,11 +33,14 @@ const ActiveSmartOtp = () => {
           <Text fs="h5" bold mb={20}>
             {phone}
           </Text>
-          <View style={[{paddingLeft: 22}]}>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+            }}>
             <Radio
               onChange={() => console.log('hello')}
               items={[{label: '', value: 1}]}
-              style={[{marginRight: 0, position: 'absolute', let: 0, top: 1}]}
             />
             <Text>
               Tôi đồng ý với

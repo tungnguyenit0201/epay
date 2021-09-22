@@ -36,7 +36,7 @@ import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
 import Withdraw from 'containers/Wallet/Withdraw';
-import QRPay from 'containers/Wallet/QRPay';
+import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
@@ -76,6 +76,8 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
+import QRPay from 'containers/QRPay';
+import QRTransfer from 'containers/QRPay/Transfer';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -168,7 +170,7 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
           <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
-          <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
+          <Stack.Screen name={SCREEN.MY_QR} component={MyQR} />
           <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
@@ -264,6 +266,8 @@ const AppNavigator = () => {
             name={SCREEN.DETAIL_HISTORY}
             component={DetailHistory}
           />
+          <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
+          <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

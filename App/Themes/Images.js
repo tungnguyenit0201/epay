@@ -9,6 +9,7 @@ export default {
   User: require('images/User.png'),
   Up: require('images/Up.png'),
   Down: require('images/Down.png'),
+  Right: require('images/right.png'),
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
   DefaultUser: require('images/default_user.png'),
@@ -101,6 +102,7 @@ export default {
     MaThanhToan: require('images/profile/MaThanhToan.png'),
     ThanhToan: require('images/profile/ThanhToan.png'),
     Translate: require('images/profile/Translate.png'),
+    User: require('images/profile/User.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),
@@ -133,6 +135,13 @@ export default {
     BigPhone: require('images/icons/big-phone.png'),
     BlueWave: require('images/bg/blue-wave.png'),
     TouchId: require('images/icons/touch-id.png'),
+  },
+  Kyc: {
+    Calendar: require('images/icons/calendar.png'),
+    Wave: require('images/icons/wave-2.png'),
+    Test: require('images/icons/test.png'),
+    BigCircle: require('images/icons/big-circle.png'),
+    SpecialArrow: require('images/icons/special-arrow.png'),
   },
   VerifyUserInfo: {
     iconDown: require('images/icons/down.png'),

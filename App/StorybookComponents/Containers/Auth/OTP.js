@@ -92,6 +92,19 @@ const OTP = ({route}) => {
           setShowModal={setShowModal}
           onPress={() => console.log('OpenCatalog')}
         /> */}
+        <TouchableOpacity
+          style={[
+            styles.flexRow,
+            styles.justifyCenter,
+            styles.bgGray,
+            {
+              paddingVertical: Spacing.PADDING - 5,
+              marginTop: Spacing.PADDING * 5,
+            },
+          ]}>
+          <Image source={Images.Phone.default} style={styles.iconPhone} />
+          <Text bold>Gọi cho tôi</Text>
+        </TouchableOpacity>
       </BlueHeader>
     </>
   );

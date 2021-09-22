@@ -15,6 +15,10 @@ import {scale} from 'utils/Functions';
 import Button from '../../Atoms/Button';
 import Text from '../../Atoms/Text';
 import Icon from '../../Atoms/Icon';
+import Header from '../../Atoms/Header';
+import HeaderBg from '../../Atoms/HeaderBg';
+import StatusUser from '../../Groups/StatusUser';
+import DinhDanh from '../../Groups/DinhDanh';
 const UserInfo = () => {
   const translation = require('../../../Context/Language/vi.json');
   const data = [
@@ -40,155 +44,223 @@ const UserInfo = () => {
 
   return (
     <>
-      <ScrollView style={{backgroundColor: Colors.g2}}>
-        <View
-          style={[
-            base.container,
-            {
-              paddingTop: 10,
-              paddingBottom: 20,
-              backgroundColor: Colors.cl1,
-            },
-          ]}>
-          <Pressable onPress={() => console.log('onPress')}>
-            <Icon icon={Images.ArrowLeft} tintColor={Colors.white} size={30} />
-          </Pressable>
-          <View style={{alignItems: 'center'}}>
+      <HeaderBg mb={0}>
+        <Header back title="Trang cá nhân" />
+      </HeaderBg>
+      <ScrollView style={base.wrap}>
+        <View style={[base.container]}>
+          <View style={{alignItems: 'center', marginBottom: 20}}>
             <Pressable style={{marginBottom: 15}}>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  height: 94,
-                  with: 94,
-                  borderRadius: 99,
-                  backgroundColor: Colors.g4,
-                }}>
+              <View style={styles.avatar}>
                 <Image
                   style={{width: 94, height: 94}}
-                  source={Images.DefaultUser.default}
+                  source={Images.Kyc.Test.default}
                   resizeMode="cover"
                 />
               </View>
-              <View
-                style={{
-                  overflow: 'hidden',
-                  borderRadius: 99,
-                  position: 'absolute',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  bottom: 0,
-                  right: -10,
-                  width: 40,
-                  height: 40,
-                  backgroundColor: Colors.cl4,
-                }}>
+              <View style={styles.wedit}>
                 <Image
-                  style={{width: 16, height: 16}}
+                  style={{width: 16, height: 16, tintColor: Colors.g5}}
                   source={Images.Edit.default}
                 />
               </View>
             </Pressable>
 
-            <Text
-              color={Colors.white}
-              style={{textTransform: 'uppercase'}}
-              mb={5}>
-              Ca si lát
+            <Text fs="h5" bold mb={5}>
+              Phước Lộc
             </Text>
-            <Text color={Colors.white} mb={10}>
-              0907856256
-            </Text>
-            <Button
-              disabled={true}
-              bg={Colors.cl4}
-              radius={30}
-              color={Colors.black}
-              label={'Đã xác thực'}
-              style={{minWidth: 150}}
-            />
+            <Text mb={10}>0907999999</Text>
+
+            <StatusUser />
           </View>
-        </View>
-        <View style={[base.container, styles.heading]}>
-          <View style={styles.item}>
-            <Text style={styles.title}>Thông tin cá nhân</Text>
-            <TouchableOpacity
-              style={styles.itemRight}
-              onPress={() => {
-                Navigator.push(SCREEN.EDIT_INFO);
-              }}>
-              <Text style={[styles.link]}>Chỉnh sửa</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {data.map((item, index) => {
-          return (
-            <View style={[base.container, styles.row]} key={index}>
-              <View style={styles.item}>
-                <Text>{item.name}</Text>
-                <Text style={styles.textRight}>{item.val}</Text>
+
+          <DinhDanh />
+
+          <View style={[base.boxShadow]}>
+            <View style={styles.heading}>
+              <View>
+                <Text bold fs="h5" mb={5}>
+                  Thông tin cá nhân
+                </Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
+              </View>
+              <TouchableOpacity style={base.leftAuto}>
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png').default}
+                />
+              </TouchableOpacity>
+            </View>
+            {data.map((item, index) => {
+              return (
+                <View
+                  style={[
+                    styles.rowItem,
+                    base.row,
+                    index == 0 && styles.rowFirst,
+                  ]}
+                  key={index}>
+                  {/* <Image source={item.icon} /> */}
+                  <Text style={styles.rowTitle}>{item.name}</Text>
+                  <Text style={base.leftAuto}>{item.val}</Text>
+                </View>
+              );
+            })}
+            <View style={[styles.rowItem]}>
+              {/* <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/CMND.png').default}
+              /> */}
+              <View>
+                <Text mt={3} mb={5} style={styles.rowTitle}>
+                  CMND/CCCD/Hộ chiếu
+                </Text>
+                <Text style={[styles.rowVal]}>3016859236</Text>
               </View>
             </View>
-          );
-        })}
-        <View style={[base.container, styles.heading]}>
-          <View style={[styles.item]}>
-            <Text style={[styles.title]}>Thông tin tài khoản</Text>
+            <View style={[styles.rowItem]}>
+              {/* <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/Location.png').default}
+              /> */}
+              <View>
+                <Text mt={3} mb={5} style={styles.rowTitle}>
+                  Địa chỉ
+                </Text>
+                <Text style={[styles.rowVal]}>
+                  123, Phường 4, Quận 5, TP.HCM
+                </Text>
+              </View>
+            </View>
           </View>
-        </View>
-        <View style={[base.container, styles.row]}>
-          <View style={styles.item}>
-            <Text>Đã xác thực</Text>
-            <TouchableOpacity style={styles.itemRight}>
-              <Text style={[styles.link]}>Đổi giấy tờ tùy thân</Text>
-            </TouchableOpacity>
+
+          <View style={[base.boxShadow]}>
+            <View style={styles.heading}>
+              <View>
+                <Text bold fs="h5" mb={5}>
+                  Thông tin tài khoản
+                </Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
+              </View>
+
+              <TouchableOpacity style={base.leftAuto}>
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png').default}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={[base.row]}>
+              <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/Wating.png').default}
+              />
+              <View>
+                <Text style={styles.rowVal}>Đã xác thực tài khoản</Text>
+                <TouchableOpacity style={styles.itemRight}>
+                  <Text style={styles.link}>Đổi giấy tờ tùy thân</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
-        <View style={[base.container, styles.heading]}>
-          <View style={styles.item}>
-            <Text style={styles.title}>Thông tin Email</Text>
+
+          <View style={[base.boxShadow]}>
+            <View style={styles.heading}>
+              <View>
+                <Text bold fs="h5" mb={5}>
+                  Thông tin Email
+                </Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
+              </View>
+
+              <TouchableOpacity style={base.leftAuto}>
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png').default}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={[base.row]}>
+              <Image
+                style={[styles.rowIcon]}
+                source={require('images/profile/Email.png')}
+              />
+              <Text style={styles.rowTitle}>epay@gmail.com</Text>
+            </View>
           </View>
-        </View>
-        <View style={[base.container, styles.row]}>
-          <View style={styles.item}>
-            <Text>epay123@gmail.com</Text>
-            <TouchableOpacity style={styles.itemRight}>
-              <Text style={[styles.link]}>Chỉnh sửa</Text>
-            </TouchableOpacity>
-          </View>
+          <View style={{height: 40}}></View>
         </View>
       </ScrollView>
     </>
   );
 };
 const styles = StyleSheet.create({
-  heading: {
-    marginTop: 20,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
+  avatar: {
+    overflow: 'hidden',
+    height: 94,
+    width: 94,
+    borderRadius: 99,
+    backgroundColor: Colors.g4,
   },
-  title: {
-    textTransform: 'uppercase',
-  },
-  link: {
-    textDecorationLine: 'underline',
-  },
-  row: {
+  wedit: {
+    overflow: 'hidden',
+    borderRadius: 99,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 0,
+    right: -10,
+    width: 40,
+    height: 40,
+
     backgroundColor: Colors.white,
-    borderBottomColor: Colors.l4,
-    borderBottomWidth: 1,
+    borderWidth: 1,
+    borderColor: Colors.cl4,
   },
-  item: {
+  heading: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+
+  editBox: {
+    width: scale(46),
+    height: scale(46),
+    marginTop: -10,
+    marginRight: -10,
+  },
+
+  rowItem: {
     flexDirection: 'row',
     paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: Colors.g2,
+    marginHorizontal: -15,
+    paddingHorizontal: 15,
     justifyContent: 'space-between',
   },
-  itemRight: {
-    marginLeft: 'auto',
+  rowFirst: {
+    borderTopWidth: 0,
   },
-  textRight: {
-    marginLeft: 'auto',
-    width: scale(180),
-    textAlign: 'right',
+
+  rowIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 5,
+  },
+  rowTitle: {
+    fontSize: Fonts.H6,
+    fontWeight: '500',
+  },
+  rowVal: {
+    //color: Colors.g2,
   },
 });
 export default UserInfo;

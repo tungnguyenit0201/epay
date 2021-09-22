@@ -28,15 +28,24 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
         <View
           style={[
             styles.wrap,
-            image?.path && {paddingVertical: Spacing.PADDING},
+            image?.path && {
+              paddingVertical: Spacing.PADDING / 2,
+            },
             style && style,
           ]}>
           {image?.path || draft ? (
-            <View style={{paddingBottom: Spacing.PADDING}}>
+            <View style={styles.wrapImg}>
               <Image
-                style={[styles.img, {width: width - Spacing.PADDING * 2}]}
+                style={[
+                  styles.img,
+                  cameraType != 'back' && styles.imgFront,
+                  cameraType != 'back' && {
+                    width: image?.widthImg,
+                    height: image?.heightImg,
+                  },
+                ]}
                 source={{uri: image?.path ? image?.path : draft?.path}}
-                resizeMode={cameraType == 'back' ? 'contain' : 'cover'}
+                resizeMode={'contain'}
               />
             </View>
           ) : (
@@ -157,6 +166,7 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
             setShowCamera={setShowCamera}
             image={image}
             title={title}
+            cameraType={cameraType}
           />
         </Modal>
       )}
@@ -164,26 +174,33 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
   );
 };
 const styles = StyleSheet.create({
+  wrap: {
+    paddingVertical: Spacing.PADDING * 3,
+    backgroundColor: Colors.l2,
+    borderRadius: 8,
+  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
     alignSelf: 'stretch',
   },
+  wrapImg: {paddingBottom: Spacing.PADDING / 2, alignItems: 'center'},
   img: {
     width: '100%',
     height: scale(186),
+  },
+  imgFront: {
+    borderColor: Colors.cl1,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 
   captureIcon: {
     width: scale(64),
     height: scale(64),
   },
-  wrap: {
-    paddingVertical: Spacing.PADDING * 3,
-    backgroundColor: Colors.l2,
-    borderRadius: 8,
-  },
+
   textUppercase: {textTransform: 'uppercase'},
   bgImg: {
     position: 'absolute',

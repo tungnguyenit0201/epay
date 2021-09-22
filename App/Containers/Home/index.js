@@ -61,8 +61,8 @@ const Home = () => {
     },
     {
       icon: Images.Homes.LichSuGd,
-      name: 'QRPAY',
-      screen: SCREEN.QRPAY,
+      name: 'My QR',
+      screen: SCREEN.MY_QR,
     },
   ];
   const dataBanner = [
@@ -90,7 +90,7 @@ const Home = () => {
     {
       icon: Images.Homes.DichVuGt,
       name: translation.traffic_fee_service,
-      screen: SCREEN.QRPAY,
+      screen: SCREEN.MY_QR,
     },
   ];
   const dataGT = [
@@ -107,7 +107,7 @@ const Home = () => {
     {
       icon: Images.Homes.LichSuXe,
       name: translation.history_of_passed_stations,
-      screen: SCREEN.QRPAY,
+      screen: SCREEN.MY_QR,
     },
   ];
   return (
