@@ -24,6 +24,8 @@ const SCREEN = {
   WITHDRAW: 'Withdraw',
   MY_QR: 'MyQR',
   TRANSFER: 'Transfer',
+  TRANSFER_RESULTS: 'TransferResults',
+  TRANSFER_SUCCESS: 'TransferSuccess',
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
   CONFIRMATION: 'Confirmation',

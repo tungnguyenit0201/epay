@@ -3,6 +3,7 @@ export default {
   cl2: '#6FC3EA',
   cl3: '#969696',
   cl4: '#CCCCCB',
+  cl5: '#EEF6FF',
 
   white: '#fff',
   black: '#222',

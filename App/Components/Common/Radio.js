@@ -20,13 +20,13 @@ export default ({
     onChange?.(item?.value);
   };
 
-  const renderRadio = item => {
+  const renderRadio = (item, index) => {
     //const isSelected = item?.value === value;
     return (
       <Pressable
         onPress={() => onPress(item)}
         key={item?.value}
-        style={[styles.radio, style]}>
+        style={[styles.radio, index + 1 === items.length && styles.radioEnd]}>
         <View style={styles.tickWrap}>
           {checked === item?.value && <View style={styles.tick} />}
         </View>
@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: scale(40),
+  },
+  radioEnd: {
+    marginRight: 0,
   },
   tickWrap: {
     width: 15,
