@@ -98,7 +98,7 @@ const History = () => {
 
   const renderListMonth = ({item, index}) => (
     <TouchableOpacity
-      key={index}
+      // key={index}
       style={[styles.bgWhite, styles.blockShadow, styles.w2, styles.mr1]}>
       <Text centered style={[styles.textSize1, styles.px1, styles.py2]}>
         {item.data}
@@ -106,8 +106,9 @@ const History = () => {
     </TouchableOpacity>
   );
 
-  const renderTransactionSections = data =>
-    data.map(item => {
+  const renderTransactionSections = data => {
+    const blue = '#1F5CAB';
+    return data.map(item => {
       let title = item?.Description;
       if (!title) {
         title = filterData.service.find(x => x.value === item?.TransType).label;
@@ -117,7 +118,7 @@ const History = () => {
         <TouchableOpacity
           key={item?.TransCode}
           style={[
-            styles.wrap,
+            styles.px1,
             styles.flexRow,
             styles.alignCenter,
             styles.blockTransaction,
@@ -125,7 +126,7 @@ const History = () => {
           onPress={() => onDetail(item)}>
           <View style={styles.blockCardTick}>
             <Image
-              source={Images.TransactionHistory.cardTick}
+              source={Images.TransactionHistory.CardTick}
               style={styles.iconCardTick}
             />
           </View>
@@ -137,7 +138,12 @@ const History = () => {
                   'hh:mm   DD/MM/YYYY',
                 )}
               </Text>
-              <Text fs="md" bold>
+              <Text
+                fs="md"
+                bold
+                style={
+                  item?.isIncome ? {color: blue} : {color: Colors.Highlight}
+                }>
                 {(item?.isIncome ? '+' : '-') +
                   formatMoney(item?.TransAmount, 'đ')}
               </Text>
@@ -146,6 +152,7 @@ const History = () => {
         </TouchableOpacity>
       );
     });
+  };
 
   const renderNotifyComponent = ({label, income, expense}) => (
     <View
@@ -178,7 +185,7 @@ const History = () => {
     const {key, list, income, expense} = item;
     return (
       <View>
-        {renderNotifyComponent({label: `Tháng ${key}`, income, expense})}
+        {/* {renderNotifyComponent({label: `Tháng ${key}`, income, expense})} */}
         {renderTransactionSections(list)}
       </View>
     );
@@ -254,7 +261,15 @@ const History = () => {
         </View>
       </View>
 
-      <FlatList data={historyData} renderItem={renderMonth} />
+      <View style={[styles.bgWhite, styles.flex1, styles.pb1]}>
+        <View style={[styles.blockShadow, styles.mx1]}>
+          <FlatList
+            data={historyData}
+            renderItem={renderMonth}
+            style={[styles.bgWhite, styles.borderRadius1, styles.blockShadow]}
+          />
+        </View>
+      </View>
 
       <Modal
         isVisible={showModal}
@@ -281,14 +296,9 @@ const History = () => {
             <FlatList
               data={months}
               renderItem={renderListMonth}
-              // keyExtractor={(item, index) => `${item.name}-${Math.random(0, 100)}`}
+              keyExtractor={(item, index) => `${item}-${Math.random(0, 100)}`}
               horizontal={true}
-              style={{
-                marginLeft: -3,
-                marginRight: -Spacing.PADDING,
-                paddingVertical: 20,
-                paddingLeft: 5,
-              }}
+              style={styles.listMonthBtn}
             />
           </ScrollView>
 
@@ -303,10 +313,14 @@ const History = () => {
 
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING - 4},
+  //------------------
   flexRow: {flexDirection: 'row'},
   flex1: {flex: 1},
   fWrap: {flexWrap: 'wrap'},
+  //------------------
   justifyBetween: {justifyContent: 'space-between'},
+  //------------------
+  alignCenter: {alignItems: 'center'},
   //------------------
   absolute: {position: 'absolute'},
   topZero: {top: 0},
@@ -330,6 +344,8 @@ const styles = StyleSheet.create({
   mtZero: {marginTop: 0},
   pbZero: {paddingBottom: 0},
   //------------------
+  mx1: {marginHorizontal: Spacing.PADDING},
+  //------------------
   mr1: {marginRight: 12},
   //------------------
   mb1: {marginBottom: 4},
@@ -348,9 +364,11 @@ const styles = StyleSheet.create({
   py2: {paddingVertical: 9},
   //------------------
   ptb1: {paddingVertical: 16},
+  //------------------
+  pb1: {paddingBottom: Spacing.PADDING * 1.5},
   //end
   bgWhite: {backgroundColor: Colors.white},
-  alignCenter: {alignItems: 'center'},
+  //------------------
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
   //------------------
@@ -362,6 +380,8 @@ const styles = StyleSheet.create({
   //------------------
   textCenter: {textAlign: 'center'},
   textWhite: {color: Colors.white},
+  //-----------------
+  borderRadius1: {borderRadius: 8},
   //-----------------
   textInput: {
     margin: 0,
@@ -382,8 +402,8 @@ const styles = StyleSheet.create({
     height: 18,
   },
   iconCardTick: {
-    width: 20,
-    height: 17,
+    width: 24,
+    height: 20,
   },
   iconPrimary: {
     width: 12,
@@ -417,6 +437,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
+  },
+  listMonthBtn: {
+    marginLeft: -3,
+    marginRight: -Spacing.PADDING,
+    paddingVertical: 20,
+    paddingLeft: 5,
   },
 });
 export default History;
