@@ -59,5 +59,6 @@ export default {
     CHARGES_NOTIFY: 'notify/charges_notify',
     PROMOTION_NOTIFY: 'notify/promotion_notify',
     OTHER_NOTIFY: 'notify/other_notify',
+    READ_NOTIFY: 'notify/read_notify',
   },
 };

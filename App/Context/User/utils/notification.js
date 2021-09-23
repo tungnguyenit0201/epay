@@ -1,27 +1,21 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
-import {ERROR_CODE, SCREEN, FUNCTION_TYPE, NOTIFY} from 'configs/Constants';
-import {
-  useAsyncStorage,
-  useError,
-  useLoading,
-  useShowModal,
-} from 'context/Common/utils';
+import {ERROR_CODE, SCREEN, NOTIFY} from 'configs/Constants';
+import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
-import {useWallet} from 'context/Wallet';
 import _ from 'lodash';
-import {sha256} from 'react-native-sha256';
-import {cos} from 'react-native-reanimated';
 import {
   getChargesNotify,
   getPromotionNotify,
   getOtherNotify,
-} from 'services/user';
+  readNotify,
+} from 'services/notification';
+import {getAll} from 'utils/Functions';
+
 const useNotify = () => {
-  const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
-  const {dispatch, userInfo} = useUser();
+  const {dispatch, userInfo, phone} = useUser();
 
   let listChargesNotify = [];
   let listPromotionNotify = [];
@@ -37,7 +31,6 @@ const useNotify = () => {
   const onGetChargesNotify = async () => {
     try {
       setLoading(true);
-      let phone = await getPhone();
       let result = await getChargesNotify({phone});
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
@@ -56,7 +49,6 @@ const useNotify = () => {
   const onGetPromotionNotify = async () => {
     try {
       setLoading(true);
-      let phone = await getPhone();
       let result = await getPromotionNotify({phone});
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
@@ -75,7 +67,6 @@ const useNotify = () => {
   const onGetOtherNotify = async () => {
     try {
       setLoading(true);
-      let phone = await getPhone();
       let result = await getOtherNotify({phone});
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
@@ -94,9 +85,11 @@ const useNotify = () => {
   const onGetAllNotify = async () => {
     try {
       setLoading(true);
-      const listCharges = await onGetChargesNotify();
-      const listPromotion = await onGetPromotionNotify();
-      const listOther = await onGetOtherNotify();
+      const [listCharges, listPromotion, listOther] = await getAll(
+        onGetChargesNotify,
+        onGetPromotionNotify,
+        onGetOtherNotify,
+      );
       setLoading(false);
       if (listCharges?.archive || listPromotion?.archive || listOther.archive) {
         listChargesNotify = listCharges?.archive;
@@ -125,12 +118,16 @@ const useNotify = () => {
         return result;
     }
   };
+  const onReadNotify = async id => {
+    const result = await readNotify({phone, id});
+  };
   return {
     onGetChargesNotify,
     onGetPromotionNotify,
     onGetOtherNotify,
     onGetAllNotify,
     selectNotify,
+    onReadNotify,
   };
 };
 export default useNotify;
