@@ -12,51 +12,9 @@ import {Header, HeaderBg, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import {formatMoney, scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
-import {COMMON_ENUM, TRANS_TYPE} from 'configs/Constants';
+import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {useHistory} from 'context/Wallet/utils';
 import moment from 'moment';
-
-const filterData = {
-  service: [
-    {value: 0, label: 'all'},
-    {value: TRANS_TYPE.CashIn, label: 'top_up'},
-    {value: TRANS_TYPE.CashOut, label: 'withdraw'},
-    {
-      value: TRANS_TYPE.CashTransfer,
-      label: 'transfer',
-    },
-    {
-      value: TRANS_TYPE.AutoCashIn,
-      label: 'automatically_top_up',
-    },
-    {
-      value: TRANS_TYPE.CashReceive,
-      label: 'receive',
-    },
-    {
-      value: `${TRANS_TYPE.PaymentToll},${TRANS_TYPE.PaymentMerchant}`,
-      label: 'bill_pay',
-    },
-  ],
-  status: [
-    {
-      value: 0,
-      label: 'all',
-    },
-    {
-      value: 1,
-      label: 'successful',
-    },
-    {
-      value: 3,
-      label: 'processing',
-    },
-    {
-      value: 2,
-      label: 'failed',
-    },
-  ],
-};
 
 const History = () => {
   const translation = useTranslation();
@@ -70,7 +28,9 @@ const History = () => {
     data.map(item => {
       let title = item?.Description;
       if (!title) {
-        title = filterData.service.find(x => x.value === item?.TransType).label;
+        title = TRANS_DETAIL.SERVICE.find(
+          x => x.value === item?.TransType,
+        ).label;
         title = translation[title] || title;
       }
       return (
