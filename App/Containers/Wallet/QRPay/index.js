@@ -116,7 +116,11 @@ const QRPay = () => {
                     tintColor={Colors.white}
                     mr={Spacing.PADDING / 2}
                   />
-                  <Text fw="700" fs="h6" color={Colors.white} onPress={onPhoto}>
+                  <Text
+                    fw="700"
+                    fs="h6"
+                    color={Colors.white}
+                    onPress={() => onPhoto(true)}>
                     Chọn hình có sẵn
                   </Text>
                 </Pressable>
