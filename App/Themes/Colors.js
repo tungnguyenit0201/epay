@@ -25,13 +25,17 @@ export default {
   g8: '#1F2937',
   g9: '#111827',
 
-  Highlight: '#E10000',
+  red: '#D80000',
+  green: '#1EC84E',
+
   OtpGray_1: '#D1D5DB',
   OtpGray_2: '#BEC2C9',
+
   barLeft: '#A389FF',
   barRight: '#3AD3E8',
 
   moneyItem: '#A3C9ED',
+  Highlight: '#E10000',
 
   TEXT: '#555555',
   GRAY: '#696969',

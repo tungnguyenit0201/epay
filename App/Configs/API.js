@@ -48,6 +48,7 @@ export default {
     GET_WALLET_INFO: 'account/get_wallet_info',
     GET_HISTORY: 'history/get_history',
     GET_HISTORY_DETAIL: 'history/get_detail',
+    GET_QRCODE_INFO: 'wallet/get_qrcode_info',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

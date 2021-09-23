@@ -76,8 +76,8 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
-import QRPay from 'containers/QRPay';
-import QRTransfer from 'containers/QRPay/Transfer';
+import QRPay from 'containers/Wallet/QRPay';
+import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;

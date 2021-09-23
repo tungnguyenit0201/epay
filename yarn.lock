@@ -3289,6 +3289,11 @@ autoprefixer@^9.7.2:
     postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
+axios-curlirize@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/axios-curlirize/-/axios-curlirize-1.4.0.tgz#9a42565c953163a75e510c5083b062babf4ea973"
+  integrity sha512-hpA7L+WbAuN/gWOabr4cAjv7F0ELP3Sl9O36cJ3g2cOL9hf8iB2cjPQ8j91fpmUrKRABYEGiVVDSSjnjV3aUrg==
+
 axios@^0.21.1:
   version "0.21.4"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
@@ -11978,6 +11983,11 @@ rn-placeholder@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/rn-placeholder/-/rn-placeholder-3.0.3.tgz#98f635b263ee003af2a984eed32d86ade308df35"
   integrity sha512-EmVeLT8zDcTPilQZ2OHO/IiYUy2gApKGgbshDZBX0C4qxsn0cFATwgwOwyz8O7Vwg1Hul97Ci95hu7d6Js6XMQ==
+
+rn-qr-generator@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.1.7.tgz#b962fff2c123f3fa891e274c9b65c5c5777eb3a8"
+  integrity sha512-6Wi4xqO0K2BojwLVVW9Qxyh5TzfZNsoFlZ8sMbwMdz+5qJzk3qAPwmB5s8LqmOMVeY2RZNuOmk//Emq5zn5xWg==
 
 roarr@^2.15.3:
   version "2.15.4"
