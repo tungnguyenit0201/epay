@@ -17,6 +17,7 @@ export default {
   Background: require('images/Background.png'),
   TabBar: {
     Home: require('images/tabBar/home.png'),
+    HomeGray: require('images/tabBar/HomeGray.png'),
     Category: require('images/Category.png'),
     Search: require('images/Search.png'),
     User: require('images/tabBar/user.png'),
@@ -170,5 +171,10 @@ export default {
     BottomRight: require('images/camera/BottomRight.png'),
     Oval: require('images/camera/oval.png'),
     CameraSquare: require('images/camera/CameraSquare.png'),
+    ScanQR: require('images/camera/ScanQR.png'),
+    Flash: require('images/camera/Flash.png'),
+    QR: require('images/camera/QR.png'),
+    Scan: require('images/camera/Scan.png'),
+    Gallery: require('images/camera/Gallery.png'),
   },
 };

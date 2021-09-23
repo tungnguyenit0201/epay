@@ -144,3 +144,15 @@ export const getTerm = async ({phone, type}) => {
   });
   return response;
 };
+
+export const getBanner = async () => {
+  let response = null;
+  await request({
+    url: API.COMMON.GET_BANNER,
+    method: 'post',
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

@@ -831,6 +831,8 @@ PODS:
     - TOCropViewController
   - RNKeychain (7.0.0):
     - React-Core
+  - RNQrGenerator (1.1.7):
+    - React
   - RNReanimated (2.2.0):
     - DoubleConversion
     - FBLazyVector
@@ -945,6 +947,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
@@ -1084,6 +1087,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-crop-picker"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNQrGenerator:
+    :path: "../node_modules/rn-qr-generator"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1175,6 +1180,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 35a3ceb837446fa11547704709bb22b5fac6d584
   RNKeychain: f75b8c8b2f17d3b2aa1f25b4a0ac5b83d947ff8f
+  RNQrGenerator: 1d9ad6533d6648dc528ea8fb05b2f4fb8db106d4
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSha256: 68357f69fa5f755a495e13ec42c8f0fc75316db0

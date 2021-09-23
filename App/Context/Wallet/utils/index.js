@@ -9,7 +9,7 @@ import {
 import {useWalletInfo, useMoney} from './walletInfo';
 import useContacts from './contacts';
 import useHistory from './history';
-
+import useScanQR from './qrPay';
 export {
   useBankInfo,
   useTopUp,
@@ -21,4 +21,5 @@ export {
   useMoney,
   useContacts,
   useHistory,
+  useScanQR,
 };
