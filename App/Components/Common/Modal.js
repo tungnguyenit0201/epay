@@ -28,23 +28,14 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
           styles.borderRadius1,
           styles.pb1,
         ]}>
-        <ImageBackground
-          source={Images.SignUp.BlueWave}
-          style={[
-            styles.fullWidth,
-            styles.alignCenter,
-            styles.justifyCenter,
-            styles.h1,
-          ]}
-          resizeMode="contain">
-          {!!icon && (
-            <Image
-              source={icon}
-              style={[styles.iconBigSize, styles.topMinus1]}
-              resizeMode="contain"
-            />
-          )}
-        </ImageBackground>
+        <View style={styles.header}>
+          <Image
+            source={require('images/bgModal.png')}
+            style={styles.bgImg}
+            resizeMode="contain"
+          />
+          {icon && <Image source={icon} style={styles.icon} />}
+        </View>
 
         {title && (
           <Text bold fs="h6" centered mb={8}>
@@ -87,17 +78,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  //------------------
-  topMinus1: {top: -22},
+
   //------------------
   alignCenter: {alignItems: 'center'},
-  justifyCenter: {justifyContent: 'center'},
+
   //------------------
-  fullWidth: {width: '100%'},
-  w1: {width: '90%'},
-  maxWidth1: {maxWidth: 311},
-  //------------------
-  h1: {height: 195},
+
+  w1: {width: 311},
+  maxWidth1: {maxWidth: '100%'},
+
   //------------------
   px1: {paddingHorizontal: 32},
   pb1: {paddingBottom: 15},
@@ -105,8 +94,24 @@ const styles = StyleSheet.create({
   bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
   //------------------
   borderRadius1: {borderRadius: Spacing.PADDING},
-  //------------------
-  iconBigSize: {
+
+  header: {
+    height: 124,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  bgImg: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+  },
+
+  icon: {
     width: 64,
     height: 64,
   },
