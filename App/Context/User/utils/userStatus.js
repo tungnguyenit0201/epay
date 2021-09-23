@@ -59,6 +59,7 @@ const useUserStatus = () => {
 
   return {
     status: getStatus(),
+    getStatus,
     statusVerified,
     getStatusVerifiedText,
     onCheck,

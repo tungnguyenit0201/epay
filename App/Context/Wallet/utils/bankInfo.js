@@ -50,8 +50,8 @@ const useBankInfo = () => {
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
       dispatch({
         type: 'LIST_CONNECT_BANK',
-        // data: result?.ListBankConnect,
-        data: [__DEV__ ? bankTest : {}, ...result?.ListBankConnect], // TODO: remove bankTest
+        data: result?.ListBankConnect,
+        // data: [__DEV__ ? bankTest : {}, ...result?.ListBankConnect], // TODO: remove bankTest
       });
       return {result};
     } else setError(result);

@@ -23,8 +23,14 @@ import Home from 'containers/Home';
 import Notification from 'containers/Notification';
 
 import {useTranslation} from 'context/Language';
+import {useCheckInfo} from 'context/Home/utils';
+import {useBankInfo} from 'context/Wallet/utils';
 
 const TabIcons = {
+  Home: Images.TabBar.HomeGray,
+  User: Images.TabBar.User,
+};
+const TabIconsActive = {
   Home: Images.TabBar.Home,
   User: Images.TabBar.User,
 };
@@ -39,6 +45,14 @@ const TabNavigation = () => {
   };
 
   function TabBarCustom({state, descriptors, navigation}) {
+    const {checkInfo} = useCheckInfo();
+    const {onGetConnectedBank} = useBankInfo();
+    const onCheck = async () => {
+      let banks = await onGetConnectedBank();
+      let result = await checkInfo(SCREEN.QRPAY);
+      console.log('resutl :>> ', result, banks);
+      Boolean(result) && navigation.navigate(SCREEN.QRPAY);
+    };
     return (
       <View style={styles.container}>
         <View style={[styles.wrapTab, {width: width}]}>
@@ -83,10 +97,16 @@ const TabNavigation = () => {
                 onLongPress={onLongPress}
                 style={styles.tab}>
                 <Image
-                  source={TabIcons[route.name]}
+                  source={
+                    // !isFocused
+                    //   ? TabIcons[route.name]
+                    //   : TabIconsActive[route.name]
+                    TabIcons[route.name]
+                  }
                   style={[
                     styles.icon,
-                    route.name != 'Home' && {
+                    // route.name != 'Home' &&
+                    {
                       tintColor: isFocused ? Colors.cl1 : Colors.gray,
                     },
                   ]}
@@ -110,7 +130,7 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={() => navigation.navigate(SCREEN.QRPAY)}>
+          onPress={onCheck}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>

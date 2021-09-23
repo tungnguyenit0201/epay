@@ -11,6 +11,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import {useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
+import {useBankInfo} from 'context/Wallet/utils';
 
 const Stack = createStackNavigator();
 
@@ -76,8 +77,8 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
-import QRPay from 'containers/QRPay';
-import QRTransfer from 'containers/QRPay/Transfer';
+import QRPay from 'containers/Wallet/QRPay';
+import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferResults from 'containers/QRPay/TransferResults';
 import TransferSuccess from 'containers/QRPay/TransferSuccess';
 
@@ -85,6 +86,7 @@ const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
   const {onGetConfig} = useConfig();
+  const {onGetConnectedBank} = useBankInfo();
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
@@ -94,6 +96,7 @@ const AppNavigator = () => {
     };
     const getConfig = async () => {
       await onGetConfig();
+      let bank = await onGetConnectedBank();
     };
     getConfig();
     getCurrentLanguage();

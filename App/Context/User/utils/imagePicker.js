@@ -4,15 +4,15 @@ import _ from 'lodash';
 const imagePickerOptions = {
   width: 850,
   height: 540,
-  cropping: true,
+  cropping: false,
   includeBase64: true,
 };
 
 const useImagePicker = onSelectImage => {
   const [image, setImage] = useState(null);
 
-  const onPhoto = () => {
-    ImagePicker.openPicker(imagePickerOptions).then(image => {
+  const onPhoto = (cropping = false) => {
+    ImagePicker.openPicker({...imagePickerOptions, cropping}).then(image => {
       setImage(image);
       !!onSelectImage && onSelectImage(image);
     });
@@ -27,7 +27,7 @@ const useImagePicker = onSelectImage => {
 
   useEffect(() => {
     onSelectImage && onSelectImage(image);
-  }, [image]);
+  }, [image]); // eslint-disable-line
 
   return {image, onPhoto, onCamera};
 };
