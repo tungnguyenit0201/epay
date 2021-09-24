@@ -58,7 +58,7 @@ const RegisterName = () => {
                   text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                 />
 
-                <View style={[styles.wrap, {marginTop: Spacing.PADDING * 3}]}>
+                <View style={[styles.wrap, {marginTop: 40}]}>
                   <TextInput
                     required
                     onFocus={e => setDisable(false)}
@@ -71,12 +71,19 @@ const RegisterName = () => {
                   />
                 </View>
                 <FooterContainer style={{marginTop: 100}}>
-                  <Button
-                    disabled={disable}
-                    label={translation.done}
-                    style={styles.btn}
-                    onPress={handleSubmit}
-                  />
+                  {values?.FullName.length >= 3 ? (
+                    <>
+                      <Image
+                        source={Images.Gradient.B_Done.default}
+                        style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+                      />
+                    </>
+                  ) : (
+                    <Image
+                      source={Images.Gradient.B_doneDisable.default}
+                      style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+                    />
+                  )}
                 </FooterContainer>
               </BlueHeader>
               <HelpModal

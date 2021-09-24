@@ -7,7 +7,7 @@ import {TEXT} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {Fonts, Colors, Images} from 'themes';
 
-const SelectImage = ({title, onSelectImage, chooseImage, css}) => {
+const SelectImage = ({title, onSelectImage, chooseImage, css, imageICD}) => {
   // const {image, onCamera, onPhoto} = useImagePicker(onSelectImage);
   const image = Images.Avatar;
   return (
@@ -18,7 +18,7 @@ const SelectImage = ({title, onSelectImage, chooseImage, css}) => {
       {image?.path && (
         <Image
           style={{marginBottom: 20, width: '100%', height: scale(270)}}
-          source={{uri: image?.path}}
+          source={{uri: image?.path || imageICD}}
         />
       )}
 

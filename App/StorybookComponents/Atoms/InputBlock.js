@@ -45,7 +45,7 @@ const InputBlock = ({
 
   return (
     <View>
-      <Text style={styles.inputLabel}>
+      <Text style={[styles.inputLabel]}>
         {label} {required && <Text color={'red'}>* </Text>}
       </Text>
       {!isSelect ? (
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     color: Colors.GRAY,
-    marginTop: scale(5),
-    marginBottom: scale(10),
+    marginTop: scale(10),
+    marginBottom: scale(12),
   },
   select: {
     paddingHorizontal: Spacing.PADDING / 2,

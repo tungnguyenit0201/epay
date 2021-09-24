@@ -24,8 +24,8 @@ const User = ({data, style}) => {
           onPress={() => console.log('hello')}
           style={[styles.wicon]}>
           <Image
-            style={{width: 40, height: 40}}
-            source={Images.User.default}
+            style={{width: 32, height: 32}}
+            source={Images.Kyc.Test.default}
             resizeMode="cover"
           />
         </TouchableOpacity>
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   },
   wicon: {
     overflow: 'hidden',
-    height: 40,
-    width: 40,
+    height: 32,
+    width: 32,
     borderRadius: 99,
     backgroundColor: Colors.black,
     borderWidth: 1,

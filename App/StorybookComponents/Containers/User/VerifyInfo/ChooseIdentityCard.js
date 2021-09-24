@@ -24,7 +24,11 @@ const ChooseIdentityCard = ({route}) => {
     <SafeAreaProvider>
       <View style={styles.bgWhite}>
         <HeaderBg>
-          <Header back title={translation?.verify_your_account} />
+          <Header
+            back
+            title={translation?.verify_your_account}
+            style={{marginTop: 40, marginBottom: -15}}
+          />
         </HeaderBg>
       </View>
 
@@ -33,17 +37,31 @@ const ChooseIdentityCard = ({route}) => {
           Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn
         </Text>
 
-        <InputBlock
-          label="Chọn giấy tờ tuỳ thân"
-          isSelect
-          onPress={() => setVisible(true)}
-          rightIcon={Images.Down}
-          value="CMND/CCCD"
-        />
+        <View style={{position: 'relative'}}>
+          <InputBlock
+            label="Chọn giấy tờ tuỳ thân"
+            isSelect
+            onPress={() => setVisible(true)}
+            value="CMND/CCCD"
+          />
+          <Image
+            source={Images.Down.default}
+            style={{
+              width: 20,
+              height: 14,
+              position: 'absolute',
+              right: 10,
+              top: '60%',
+            }}
+          />
+        </View>
       </View>
 
       <View style={base.bottom}>
-        <Button label={translation?.continue} />
+        <Image
+          source={Images.Gradient.B_Continue.default}
+          style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+        />
         <DropDown
           visible={visible}
           setVisible={setVisible}

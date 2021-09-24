@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   },
   text: {
     width: 80,
+    color: 'white',
   },
 });
 export default Progress;

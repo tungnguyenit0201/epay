@@ -18,11 +18,13 @@ import _ from 'lodash';
 import BlueHeader from '../../Atoms/BlueHeader';
 import BigLogo from '../../Atoms/BigLogo';
 import Content from '../../Atoms/Content';
+import FooterContainer from '../../Atoms/FooterContainer';
 const Auth = () => {
   const phone = '0903899495';
   const translation = require('../../../Context/Language/vi.json');
+  const {width, height} = useWindowDimensions();
   return (
-    <BlueHeader style={styles.wrap}>
+    <BlueHeader style={styles.wrap} heightBg={180}>
       <BigLogo style={{marginBottom: 18}} />
       <Content
         title="Nhập số điện thoại"
@@ -58,10 +60,12 @@ const Auth = () => {
                 onBlur={handleBlur('phone')}
                 error={touched.phone && errors.phone}
                 value={values.phone}
-                leftIcon={Images.Phone_1}
                 isDeleted={values.phone}
               />
-              <Button label={translation.continue} />
+              <Image
+                source={Images.Gradient.B_Continue.default}
+                style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+              />
             </>
           );
         }}

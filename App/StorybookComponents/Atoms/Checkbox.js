@@ -27,7 +27,7 @@ const Checkbox = ({onPress, hitSlop, label}) => {
             ]}>
             <Image
               resizeMode="cover"
-              source={Images.Check}
+              source={Images.Check.default}
               style={{
                 width: '100%',
                 height: '100%',

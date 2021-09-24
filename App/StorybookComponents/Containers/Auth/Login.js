@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
+import {ScrollView, StyleSheet, View, Pressable, Image} from 'react-native';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import Icon from '../../Atoms/Icon';
@@ -15,17 +15,14 @@ import {passwordSchema} from '../../Utils/ValidationSchemas';
 import BlueHeader from '../../Atoms/BlueHeader';
 const Login = ({route}) => {
   const translation = require('../../../Context/Language/vi.json');
-  const biometryType = true;
   return (
-    <BlueHeader>
+    <BlueHeader heightBg={180}>
       <View style={styles.pb1}>
         <BigLogo style={{marginBottom: 18}} />
         <Content
           style={styles.wrap}
-          title={translation.enter_your_password}
-          text={
-            translation.password_for_account_security_and_transaction_confirmation_at_checkout
-          }
+          title={'Xin chào Vân'}
+          text={'0907999999'}
         />
       </View>
 
@@ -73,17 +70,15 @@ const Login = ({route}) => {
                   onBlur={handleBlur('password')}
                   placeholder={translation.enter_your_password}
                   error={touched.password && errors.password}
-                  value={values.password}
-                  leftIcon={Images.Transfer.Lock}
+                  /* value={values.password} */
+                  defaultValue={'Epay123@'}
                   autoFocus
                   style={{outline: 'none'}}
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
                   <Pressable onPress={() => console.log('press')}>
-                    <Text style={[styles.link_text]}>
-                      {translation.forgot_password}
-                    </Text>
+                    <Text style={[styles.link_text]}>Quên mật khẩu?</Text>
                   </Pressable>
 
                   <Pressable onPress={() => console.log('press')}>
@@ -91,42 +86,17 @@ const Login = ({route}) => {
                   </Pressable>
                 </View>
               </View>
-
-              <View style={[styles.wrap, styles.py_1]}>
-                <View style={styles.flexRow}>
-                  <Button
-                    label="Đăng nhập"
-                    onPress={handleSubmit}
-                    style={!biometryType ? styles.fullBtn : styles.firstBtn}
-                    disabled={!values.password || !_.isEmpty(errors)}
+              <View style={[styles.wrap]}>
+                {_.isEmpty(errors) ? (
+                  <Image
+                    source={Images.Gradient.B_Login.default}
+                    style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
                   />
-
-                  {!!biometryType && (
-                    <Pressable
-                      onPress={() => console.log('press')}
-                      style={styles.btn}>
-                      <Icon
-                        icon={Images.SignIn.Face}
-                        style={styles.iconSize}
-                        tintColor={Colors.white}
-                      />
-                    </Pressable>
-                  )}
-                </View>
-              </View>
-              <View style={[styles.flexRow]}>
-                {!!biometryType && (
-                  <Pressable style={styles.btn}>
-                    <Icon
-                      icon={
-                        biometryType === 'FaceID'
-                          ? Images.SignIn.Face.default
-                          : Images.SignIn.FingerPrint.default
-                      }
-                      style={styles.iconSize}
-                      tintColor={Colors.white}
-                    />
-                  </Pressable>
+                ) : (
+                  <Image
+                    source={Images.Gradient.B_loginDisabled.default}
+                    style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+                  />
                 )}
               </View>
             </View>

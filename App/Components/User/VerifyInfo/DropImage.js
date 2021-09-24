@@ -1,4 +1,4 @@
-import React, {PureComponent, useRef, useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -84,6 +84,7 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
             <RNCamera
               ref={camera}
               style={styles.preview}
+              captureAudio={false}
               type={
                 cameraType == 'back'
                   ? RNCamera.Constants.Type.back

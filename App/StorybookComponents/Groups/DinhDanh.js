@@ -13,7 +13,7 @@ const User = () => {
       style={[styles.item]}>
       <Image style={styles.img} source={Images.Homes.Avatar.default} />
       <Text style={[styles.text]}>
-        Liên kết ngân hàng để thực hiện giao dịch.
+        Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.
       </Text>
       <Image style={styles.arrow} source={Images.Homes.Arrow.default} />
     </TouchableOpacity>

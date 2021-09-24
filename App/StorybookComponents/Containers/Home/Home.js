@@ -77,33 +77,23 @@ const Home = () => {
 
   const dataHome = [
     {
-      icon: Images.Homes.GiaoThong,
-      name: 'Giao thông',
+      icon: require('images/storybook/airport.png'),
+      name: 'Sân bay',
       screen: 'hello',
     },
     {
-      icon: Images.Homes.BaoHiem,
-      name: 'Vaccine',
+      icon: require('images/storybook/fines.png'),
+      name: 'Nộp phạt',
       screen: 'hello',
     },
     {
-      icon: Images.Homes.GiaoThong,
-      name: 'Giao thông',
+      icon: require('images/storybook/customs.png'),
+      name: 'Hải quan',
       screen: 'hello',
     },
     {
-      icon: Images.Homes.BaoHiem,
-      name: 'Bảo hiểm',
-      screen: 'hello',
-    },
-    {
-      icon: Images.Homes.YTe,
-      name: 'Y tế',
-      screen: 'hello',
-    },
-    {
-      icon: Images.Homes.SanBay,
-      name: 'Sân bay ',
+      icon: require('images/storybook/vacxin.png'),
+      name: 'Y tế',
       screen: 'hello',
     },
   ];
@@ -135,8 +125,8 @@ const Home = () => {
           <Image style={styles.bgHome} source={Images.Homes.Wave.default} />
           <DinhDanh />
           <Banner data={dataBanner} />
-          <SlideIcon data={dataHome} />
         </View>
+        <SlideIcon data={dataHome} />
         <View style={{marginTop: scale(50)}}>
           <FooterNavigation />
         </View>

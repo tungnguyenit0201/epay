@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Row from '../Atoms/Row';
-import Col from '../Atoms/Col';
+import Icon from '../Atoms/Icon';
 import Text from '../Atoms/Text';
 import {scale} from 'utils/Functions';
-import {Images, Colors} from 'themes';
+import {Images, Colors, base, Spacing} from 'themes';
 import _ from 'lodash';
 
-const Item = ({item}) => (
+/* const Item = ({item}) => (
   <TouchableOpacity style={[styles.item]} onPress={() => console.log('hello')}>
     <Image source={item.icon.default} style={styles.icon} />
 
@@ -22,7 +22,7 @@ const Item = ({item}) => (
       {item.name}
     </Text>
   </TouchableOpacity>
-);
+); */
 
 const SlideIcon = ({data}) => {
   let [indexTab, setIndexTab] = useState(0);
@@ -39,9 +39,9 @@ const SlideIcon = ({data}) => {
     setIndexTab(index);
   };
 
-  const renderItem = ({index, item}) => {
+  /* const renderItem = ({index, item}) => {
     return (
-      <View style={{width: width}}>
+      <View style={base.container}>
         <Row>
           {data.slice(index * 4, index * 4 + 4)?.map((item, index) => {
             return (
@@ -53,45 +53,39 @@ const SlideIcon = ({data}) => {
         </Row>
       </View>
     );
-  };
+  }; */
 
   return (
-    <View style={{position: 'relative'}}>
-      <FlatList
-        data={[...Array(Math.ceil(data?.length / 4))]}
-        renderItem={renderItem}
-        keyExtractor={item => Math.random(1, 100)}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        ref={flatlistRef}
-        onViewableItemsChanged={onViewRef.current}
-        viewabilityConfig={viewConfigRef.current}
-        pagingEnabled
+    <View
+      style={{
+        position: 'relative',
+        flex: 1,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: Spacing.PADDING * 2,
+      }}>
+      {data.map((item, index) => (
+        <TouchableOpacity
+          style={[styles.item]}
+          onPress={() => console.log('hello')}>
+          <Image source={item.icon.default} style={styles.icon} />
+
+          <Text centered bold mt={5}>
+            {item.name}
+          </Text>
+        </TouchableOpacity>
+      ))}
+      <Image
+        source={require('images/gradient/A_right.png').default}
+        style={{
+          position: 'absolute',
+          bottom: '50%',
+          right: 10,
+          width: 9,
+          height: 21,
+        }}
       />
-      <View
-        style={[
-          styles.wrapSwitch,
-          {
-            width: scale(64),
-            left: width / 2 - scale(32),
-            position: 'absolute',
-            bottom: 0,
-          },
-        ]}>
-        <TouchableOpacity
-          style={[
-            styles.wrapSwitch,
-            indexTab == 0 && {backgroundColor: Colors.cl1},
-          ]}
-          onPress={() => onPressSwitch(0)}></TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.wrapSwitch,
-            indexTab == 1 && {backgroundColor: Colors.cl1},
-            {left: scale(32)},
-          ]}
-          onPress={() => onPressSwitch(1)}></TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -101,6 +95,8 @@ export default SlideIcon;
 const styles = StyleSheet.create({
   item: {
     alignItems: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
   icon: {
     resizeMode: 'contain',

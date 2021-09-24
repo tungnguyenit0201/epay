@@ -43,7 +43,7 @@ const OTPContainer = ({
 
       <View style={styles.flexRow_1}>
         <Text style={styles.fontSize_1}>
-          Gửi lại mã xác thực (OTP) sau:
+          Gửi lại mã xác thực (OTP)
           <Pressable
             style={{marginTop: -3}}
             disabled={countdown > 0}
@@ -69,7 +69,7 @@ const OTPContainer = ({
         </Pressable>
       </View>
 
-      <Text style={styles.message}>{message}</Text>
+      <Text style={[styles.message]}>{message}</Text>
     </>
   );
 };
@@ -112,9 +112,10 @@ const styles = StyleSheet.create({
     height: scale(28),
   },
   message: {
-    marginTop: 16,
+    marginTop: 40,
     color: Colors.Highlight,
     textAlign: 'center',
+    color: 'red',
   },
   fontSize_1: {fontSize: 14},
   flexRow_1: {

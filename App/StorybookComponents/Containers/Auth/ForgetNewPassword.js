@@ -23,23 +23,22 @@ import _ from 'lodash';
 import BlueHeader from '../../Atoms/BlueHeader';
 import FooterContainer from '../../Atoms/FooterContainer';
 import Checkbox from '../../Atoms/Checkbox';
-const ForgetNewPassword = ({route}) => {
+const ForgetNewPassword = ({route, create}) => {
   const phone = '0932122345';
   const scrollViewRef = useRef(null);
   const translation = require('../../../Context/Language/vi.json');
-
   const onSubmit = values => {
     console.log('hello');
   };
-
+  const [active, setActive] = useState(false);
   return (
-    <BlueHeader>
+    <BlueHeader heightBg={180}>
       <Header
         back
         renderRightComponent={() => (
           <TouchableOpacity style={styles.pr1}>
             <Icon
-              icon={Images.Register.Info.default}
+              icon={Images.Register.Info}
               style={styles.firstIcon}
               tintColor={Colors.white}
             />
@@ -79,9 +78,9 @@ const ForgetNewPassword = ({route}) => {
                 ref={scrollViewRef}>
                 {/* <BigLogo /> */}
                 <Content
-                  title="Đặt lại mật khẩu"
+                  title={create ? 'Tạo mật khẩu' : 'Đặt lại mật khẩu'}
                   text={
-                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                    'Lưu ý: Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số'
                   }
                 />
                 <View style={{height: scale(24)}} />
@@ -92,9 +91,8 @@ const ForgetNewPassword = ({route}) => {
                   onBlur={handleBlur('newPassword')}
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
-                  value={values.newPassword}
+                  defaultValue={'Epay123@'}
                   scrollViewRef={scrollViewRef}
-                  leftIcon={Images.Transfer.Lock}
                 />
                 <TextInput
                   password
@@ -103,9 +101,8 @@ const ForgetNewPassword = ({route}) => {
                   onBlur={handleBlur('passwordConfirm')}
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
-                  value={values.passwordConfirm}
+                  defaultValue={'Epay123@'}
                   scrollViewRef={scrollViewRef}
-                  leftIcon={Images.Transfer.Lock}
                 />
                 <Text style={styles.textNote}>
                   {
@@ -121,30 +118,54 @@ const ForgetNewPassword = ({route}) => {
                   onPress={handleSubmit}
                 />
               </View> */}
+              <View style={styles.flexRow}>
+                <Checkbox onPress={() => setActive(!active)} />
+                <Text style={{marginLeft: 5, fontSize: Fonts.FONT_SMALL}}>
+                  {` Tôi đồng ý với `}
+                  <TouchableOpacity style={styles.mtMinus1} onPress={() => {}}>
+                    <Text style={[styles.firstLink]}>
+                      {'điều kiện & điều khoản '}
+                    </Text>
+                  </TouchableOpacity>
+                  của Epay
+                </Text>
+              </View>
+              {_.isEmpty(errors) && active === true ? (
+                <>
+                  <Image
+                    source={Images.Gradient.B_Register.default}
+                    style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+                  />
+                </>
+              ) : (
+                <Image
+                  source={Images.Gradient.B_registerDisable.default}
+                  style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+                />
+              )}
             </View>
           );
         }}
       </Formik>
-      <FooterContainer style={{marginTop: 100}}>
+      {/* <FooterContainer style={{marginTop: 100}}>
         <View style={styles.flexRow}>
           <Checkbox />
           <Text style={{marginLeft: 5, fontSize: Fonts.FONT_SMALL}}>
-            {` Tôi đồng ý với các `}
-            <TouchableOpacity style={styles.mtMinus1} onPress={() => {}}>
-              <Text style={[styles.firstLink]}>{'Thoả thuận người dùng '}</Text>
-            </TouchableOpacity>
-            và
+            {` Tôi đồng ý với `}
             <TouchableOpacity style={styles.mtMinus1} onPress={() => {}}>
               <Text style={[styles.firstLink]}>
-                {'Chính sách quyền riêng tư '}
+                {'điều kiện & điều khoản '}
               </Text>
             </TouchableOpacity>
-            của Epay Services
+            của Epay
           </Text>
         </View>
 
-        <Button mt={10} label={translation?.continue} />
-      </FooterContainer>
+        <Image
+          source={Images.Gradient.B_Register.default}
+          style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+        />
+      </FooterContainer> */}
     </BlueHeader>
   );
 };
@@ -153,7 +174,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
   },
   flex1: {flex: 1},
-  flexRow: {flexDirection: 'row'},
+  flexRow: {flexDirection: 'row', marginBottom: 16},
   //-----------------------
   mtMinus1: {marginTop: -3},
   //------------------

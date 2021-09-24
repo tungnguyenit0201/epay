@@ -30,6 +30,7 @@ export default ({
   style,
   labelStyle,
   label2Style,
+  mode = 'contain', //outline
 }) => {
   return (
     <Pressable
@@ -37,6 +38,8 @@ export default ({
       onPress={onPress}
       style={[
         styles.button,
+        mode == 'contain' && styles.contain,
+        mode == 'outline' && styles.outline,
         border && {borderColor: border, borderWidth: 1},
         radius && {borderRadius: radius},
         bg && {backgroundColor: bg},
@@ -107,10 +110,16 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: scale(20),
     borderRadius: scale(8),
-    backgroundColor: Colors.cl1,
     height: 48,
     position: 'relative',
     overflow: 'hidden',
+  },
+  contain: {
+    backgroundColor: Colors.cl1,
+  },
+  outline: {
+    borderWidth: 1,
+    borderColor: Colors.white,
   },
   xxs: {
     height: 20,

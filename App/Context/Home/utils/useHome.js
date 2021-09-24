@@ -2,13 +2,24 @@ import {useState, useEffect} from 'react';
 import Navigator from 'navigations/Navigator';
 import {MENU, SCREEN} from 'configs/Constants';
 import {useCommon} from 'context/Common';
+import {getBanner} from 'services/common';
 import {useAsyncStorage, useShowModal} from 'context/Common/utils';
 import {Images} from 'themes';
 
 const useHome = () => {
+  let [banner, setBanner] = useState();
   const goSecurity = () => {
     Navigator.navigate(SCREEN.SECURITY);
   };
+  const onGetBanner = async () => {
+    let result = await getBanner();
+    console.log('result :>> ', result);
+    setBanner(result);
+  };
+  // useEffect(() => {
+  //   onGetBanner();
+  // }, []);
+
   return {goSecurity};
 };
 

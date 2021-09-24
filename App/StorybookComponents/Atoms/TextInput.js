@@ -5,7 +5,7 @@ import {
   Pressable,
   Image,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import Icon from './Icon';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -105,7 +105,11 @@ export default React.forwardRef(
                 top: scale(12),
               }}>
               <Image
-                source={showPassword ? Images.Eye.default : Images.EyeGray.default}
+                source={
+                  showPassword
+                    ? Images.Storybook.Eye.default
+                    : Images.Storybook.EyeGray.default
+                }
                 style={{width: scale(20), height: scale(20)}}
                 resizeMode="contain"
               />
@@ -121,10 +125,11 @@ export default React.forwardRef(
                 top: 14,
               }}>
               <Icon
-                icon={Images.Transfer.CloseCircle}
+                icon={Images.Storybook.Close}
+                tintColor="#666666"
                 style={{
-                  width: scale(17),
-                  height: scale(17),
+                  width: scale(23),
+                  height: scale(23),
                 }}
               />
             </TouchableOpacity>

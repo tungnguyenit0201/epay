@@ -20,6 +20,7 @@ export default {
     GEN_SMART_OTP: 'smartotp/gen_smart_otp',
     GET_CONFIG_INFO: 'config/get_config_info',
     GET_TERMS: 'common/get_terms_of_service',
+    GET_BANNER: 'ads/get_banner',
   },
   USER: {
     UPDATE_PASSWORD: 'account/change_password',
@@ -47,6 +48,7 @@ export default {
     GET_WALLET_INFO: 'account/get_wallet_info',
     GET_HISTORY: 'history/get_history',
     GET_HISTORY_DETAIL: 'history/get_detail',
+    GET_QRCODE_INFO: 'wallet/get_qrcode_info',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   topZero: {top: 0},
   leftZero: {left: 0},
   rightZero: {right: 0},
-  pt1: {paddingTop: 58},
+  pt1: {paddingTop: 15},
   //-------------------------
   bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
 });

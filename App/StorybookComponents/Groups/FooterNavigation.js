@@ -18,10 +18,6 @@ import Text from '../Atoms/Text';
 
 const TabNavigation = () => {
   const {width, height} = useWindowDimensions();
-  const TabLabels = {
-    Home: 'Trang chủ', // TODO: translate
-    User: 'Tài khoản',
-  };
   const routes = [
     {name: 'Trang chủ', image: Images.TabBar.Home.default},
     {name: 'Tài khoản', image: Images.TabBar.User.default},
@@ -38,7 +34,14 @@ const TabNavigation = () => {
                   style={[styles.icon]}
                   resizeMode={'cover'}
                 />
-                <Text style={{color: Colors.cl1}}>Trang chủ</Text>
+                <Text
+                  style={
+                    route.name == 'Trang chủ'
+                      ? {color: Colors.cl1}
+                      : {color: 'red'}
+                  }>
+                  {route.name}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -73,7 +76,14 @@ const TabNavigation = () => {
                 style={[styles.icon]}
                 resizeMode={'cover'}
               />
-              <Text style={{color: Colors.cl1}}>Trang chủ</Text>
+              <Text
+                style={
+                  route.name == 'Trang chủ'
+                    ? {color: Colors.cl1}
+                    : {color: Colors.g5}
+                }>
+                {route.name}
+              </Text>
             </TouchableOpacity>
           );
         })}

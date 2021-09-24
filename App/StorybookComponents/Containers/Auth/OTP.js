@@ -1,5 +1,11 @@
 import React, {useRef, useState} from 'react';
-import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
@@ -10,16 +16,18 @@ import OTPContainer from '../../Groups/OTPContainer';
 import HelpModal from '../../Groups/HelpModal';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import BlueHeader from '../../Atoms/BlueHeader';
+import ModalCustom from '../../Groups/ModalCustom';
 const OTP = ({route}) => {
-  const label = 'Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký';
+  const label = 'Nhập mã OTP xác thực';
   const [showModal, setShowModal] = useState(false);
+  const [hotline, setHotline] = useState(false);
 
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
       style={styles.iconRight}>
       <Icon
-        icon={Images.Register.Info.default}
+        icon={Images.Register.Info}
         tintColor={Colors.white}
         style={styles.iconSize}
       />
@@ -28,8 +36,8 @@ const OTP = ({route}) => {
 
   return (
     // TODO: translate
-    <>
-      <BlueHeader>
+    <SafeAreaProvider>
+      <BlueHeader heightBg={180}>
         <Header
           back
           renderRightComponent={() => renderRightComponent()}
@@ -39,7 +47,7 @@ const OTP = ({route}) => {
           <OTPContainer
             onChange={() => console.log('change')}
             onCodeFilled={() => console.log('confirm')}
-            message={'Bạn còn 4 lần nhập nữa'}
+            message={'Mã xác thực không đúng, bạn còn 1 lần thử'}
             countdown={60}
             resentOTP={() => console.log('gửi lại otp')}
             onChangePhone={() => console.log('onChangePhone')}
@@ -101,12 +109,37 @@ const OTP = ({route}) => {
               paddingVertical: Spacing.PADDING - 5,
               marginTop: Spacing.PADDING * 5,
             },
-          ]}>
+          ]}
+          onPress={() => setHotline(true)}>
           <Image source={Images.Phone.default} style={styles.iconPhone} />
           <Text bold>Gọi cho tôi</Text>
         </TouchableOpacity>
       </BlueHeader>
-    </>
+      <HelpModal showModal={showModal} setShowModal={setShowModal} otp={true} />
+      <ModalCustom
+        visible={hotline}
+        onClose={() => setShow(false)}
+        icon={require('images/storybook/hotline.png').default}>
+        <Text
+          bold
+          style={{fontSize: 18, textAlign: 'center', marginBottom: 10}}>
+          Gọi tổng đài
+        </Text>
+        <Text centered mb={20}>
+          Nếu bạn đang gặp vấn đề cần được giúp đỡ, vui lòng gọi về cho chúng
+          tôi để được tư vấn hỗ trợ
+        </Text>
+        <Image
+          source={Images.Gradient.B_Hotline.default}
+          style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+        />
+        <Pressable onPress={() => setHotline(false)}>
+          <Text style={{textAlign: 'center', marginTop: 15}}>
+            Không, cảm ơn
+          </Text>
+        </Pressable>
+      </ModalCustom>
+    </SafeAreaProvider>
   );
 };
 

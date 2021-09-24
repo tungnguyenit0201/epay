@@ -41,8 +41,8 @@ const RegisterFailure = ({route}) => {
       />
       <Content
         title={'Đăng ký \nkhông thành công!'}
-        text="Bạn đã nhập sai OTP quá 5 lần, 
-          vui lòng quay lại sau ít phút."
+        text="Bạn đã nhập sai OTP quá 3 lần, vui lòng 
+        quay lại sau 30 phút"
         styleText={{color: Colors.white}}
         style={[styles.wrap, styles.flex1, styles.mt1]}
       />
