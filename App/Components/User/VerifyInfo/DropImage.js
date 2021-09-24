@@ -17,7 +17,16 @@ import PreviewImage from './PreviewImage';
 import useKYC from 'context/User/utils/useKYC';
 import KYCType from 'configs/Enums/KYCType';
 
-const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type, documentType }) => {
+const DropImage = ({
+  onDropImage,
+  title,
+  style,
+  cameraType = 'back',
+  draft,
+  type,
+  documentType,
+  identify,
+}) => {
   const { width, height } = useWindowDimensions();
   const { image, camera, showCamera, loading, setShowCamera, capturePicture } = useDropImage();
   const isFocused = useIsFocused();
@@ -113,6 +122,7 @@ const DropImage = ({ onDropImage, title, style, cameraType = 'back', draft, type
             <RNCamera
               ref={camera}
               style={styles.preview}
+              captureAudio={false}
               type={
                 cameraType === 'back'
                   ? RNCamera.Constants.Type.back

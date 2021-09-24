@@ -54,28 +54,24 @@ const useVerifyInfo = (initialValue = {}) => {
     ICNumber,
     identifyCard,
   }) => {
-    try {
-      setLoading(true);
-      let phone = await getPhone();
-      let result = await updateIdentify({
-        phone,
-        ICInfor: {
-          ICBackPhoto: ICBackPhoto?.data,
-          ICFrontPhoto: ICFrontPhoto?.data,
-          ICFullName,
-          ICIssuedDate,
-          ICIssuedPlace,
-          ICNumber,
-          ICType: identifyCard?.ICType,
-        },
-      });
-      setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        Navigator.navigate(SCREEN.VERIFY_SUCCESS);
-      } else setError(result);
-    } catch (error) {
-      setLoading(false);
-    }
+    setLoading(true);
+    let phone = await getPhone();
+    let result = await updateIdentify({
+      phone,
+      ICInfor: {
+        ICBackPhoto: ICBackPhoto?.data,
+        ICFrontPhoto: ICFrontPhoto?.data,
+        ICFullName,
+        ICIssuedDate,
+        ICIssuedPlace,
+        ICNumber,
+        ICType: identifyCard?.ICType,
+      },
+    });
+    setLoading(false);
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      Navigator.navigate(SCREEN.VERIFY_SUCCESS);
+    } else setError(result);
   };
 
   const onUpdatePersonalInfo = async ({
@@ -85,53 +81,45 @@ const useVerifyInfo = (initialValue = {}) => {
     Email,
     SexType,
   }) => {
-    try {
-      setLoading(true);
+    setLoading(true);
 
-      let phone = await getPhone();
-      let result = await updatePersonalInfo({
-        phone,
-        personalInfo: {
-          FullName: ICFullName,
-          Avatar: Avatar?.data,
-          DateOfBirth,
-          Email,
-          SexType,
-        },
-      });
-      setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-      } else setError(result);
-    } catch (error) {
-      setLoading(false);
-    }
+    let phone = await getPhone();
+    let result = await updatePersonalInfo({
+      phone,
+      personalInfo: {
+        FullName: ICFullName,
+        Avatar: Avatar?.data,
+        DateOfBirth,
+        Email,
+        SexType,
+      },
+    });
+    setLoading(false);
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+    } else setError(result);
   };
 
   const onUpdateUserAddress = async ({ Address, Ward, County, Provincial }) => {
-    try {
-      setLoading(true);
-      let phone = await getPhone();
-      let result = await updateUserAddress({
-        phone,
-        Address,
-        Ward,
-        County,
-        Provincial,
+    setLoading(true);
+    let phone = await getPhone();
+    let result = await updateUserAddress({
+      phone,
+      Address,
+      Ward,
+      County,
+      Provincial,
+    });
+    setLoading(false);
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      dispatch({
+        type: 'SET_PERSONAL_ADDRESS',
+        data: { Address, Ward, County, Provincial },
       });
-      setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        dispatch({
-          type: 'SET_PERSONAL_ADDRESS',
-          data: { Address, Ward, County, Provincial },
-        });
-        dispatch({
-          type: 'SET_REGION',
-          data: { Ward: '', County: '', Provincial: '' },
-        });
-      } else setError(result);
-    } catch (error) {
-      setLoading(false);
-    }
+      dispatch({
+        type: 'SET_REGION',
+        data: { Ward: '', County: '', Provincial: '' },
+      });
+    } else setError(result);
   };
 
   const onUpdateAllInfo = async value => {

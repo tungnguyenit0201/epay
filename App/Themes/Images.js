@@ -15,8 +15,10 @@ export default {
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),
+  BgModal: require('images/bgModal.png'),
   TabBar: {
     Home: require('images/tabBar/home.png'),
+    HomeGray: require('images/tabBar/HomeGray.png'),
     Category: require('images/Category.png'),
     Search: require('images/Search.png'),
     User: require('images/tabBar/user.png'),
@@ -116,6 +118,12 @@ export default {
     logoVbb: require('images/logo-bank/logo-10.png'),
     logoShb: require('images/logo-bank/logo-11.png'),
     logoTpb: require('images/logo-bank/logo-12.png'),
+    //------------
+    Deposit: require('images/icons/deposit.png'),
+    Withdraw: require('images/icons/withdraw.png'),
+    Exchange: require('images/icons/exchange.png'),
+    Plus: require('images/icons/add.png'),
+    Search: require('images/icons/search-normal.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
@@ -157,7 +165,10 @@ export default {
   },
   TransactionHistory: {
     filter: require('images/icons/filter.png'),
-    cardTick: require('images/icons/card-tick.png'),
+    CardTick: require('images/icons/card-tick.png'),
+    Success: require('images/icons/success.png'),
+    Fail: require('images/icons/fail.png'),
+    LogoBg: require('images/LogoBG.png'),
   },
   Capture: require('images/Capture.png'),
   Camera: {
@@ -167,5 +178,15 @@ export default {
     BottomRight: require('images/camera/BottomRight.png'),
     Oval: require('images/camera/oval.png'),
     CameraSquare: require('images/camera/CameraSquare.png'),
+    ScanQR: require('images/camera/ScanQR.png'),
+    Flash: require('images/camera/Flash.png'),
+    QR: require('images/camera/QR.png'),
+    Scan: require('images/camera/Scan.png'),
+    Gallery: require('images/camera/Gallery.png'),
+  },
+  Modal: {
+    Camera: require('images/modal/camera.png'),
+    Lock: require('images/modal/lock.png'),
+    UserTick: require('images/modal/userTick.png'),
   },
 };

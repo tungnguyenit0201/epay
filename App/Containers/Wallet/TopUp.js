@@ -36,22 +36,16 @@ const TopUp = () => {
 
   return (
     <>
+      <HeaderBg>
+        <Header title={translation.top_up} back />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
-          <Header title={translation.top_up} back style={{marginBottom: 20}} />
-          <Monney
-            style={[
-              {
-                position: 'absolute',
-                bottom: -20,
-                left: Spacing.PADDING,
-                right: Spacing.PADDING,
-              },
-            ]}
-          />
-        </HeaderBg>
         <View style={base.container}>
-          <InputMoney ref={inputRef} onChange={onChangeCash} />
+          <View style={base.boxShadow}>
+            <Monney />
+            <InputMoney ref={inputRef} onChange={onChangeCash} />
+          </View>
+
           <SelectBank
             data={bankData}
             feeData={bankFeeData}
@@ -60,9 +54,9 @@ const TopUp = () => {
           />
         </View>
       </ScrollView>
-      <View style={base.bottom}>
+      <View style={base.boxBottom}>
         <Button
-          label="Tiếp tục"
+          label="Tiếp tục "
           onPress={onContinue}
           disabled={!isContinueEnabled}
         />

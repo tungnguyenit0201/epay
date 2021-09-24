@@ -40,13 +40,15 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
   };
 
   return (
-    <View style={[styles.block, style]}>
+    <View style={[style]}>
       <Input ref={ref} onChange={onChange} />
       <Row space="10">
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
             <TouchableOpacity onPress={() => onPress(item.money)}>
-              <Text style={styles.item}>{formatMoney(item.money)}</Text>
+              <Text bold style={styles.item}>
+                {formatMoney(item.money)}
+              </Text>
             </TouchableOpacity>
           </Col>
         ))}
@@ -83,7 +85,7 @@ const Input = forwardRef(({onChange}, ref) => {
         />
         <Text style={styles.subText}>vnđ</Text>
       </View>
-      <Text style={styles.warningText}>
+      <Text color={Colors.Highlight} style={styles.warningText}>
         *Số tiền nạp tối thiểu là 10.000 vnđ
       </Text>
     </View>
@@ -91,9 +93,6 @@ const Input = forwardRef(({onChange}, ref) => {
 });
 
 const styles = StyleSheet.create({
-  block: {
-    marginBottom: 15,
-  },
   rowInput: {
     position: 'relative',
   },

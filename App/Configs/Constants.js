@@ -15,6 +15,7 @@ import IC_TPYE from './Enums/ICType';
 import GENDER from './Enums/Gender';
 import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
+import TRANS_DETAIL from './Enums/TransDetail';
 
 export {
   TEXT,
@@ -34,4 +35,5 @@ export {
   GENDER,
   KYCType,
   TERM_TYPE,
+  TRANS_DETAIL,
 };

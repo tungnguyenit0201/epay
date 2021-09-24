@@ -3,6 +3,7 @@ export default {
   cl2: '#6FC3EA',
   cl3: '#969696',
   cl4: '#CCCCCB',
+  cl5: '#EEF6FF',
 
   white: '#fff',
   black: '#222',
@@ -25,13 +26,17 @@ export default {
   g8: '#1F2937',
   g9: '#111827',
 
-  Highlight: '#E10000',
+  red: '#D80000',
+  green: '#1EC84E',
+
   OtpGray_1: '#D1D5DB',
   OtpGray_2: '#BEC2C9',
+
   barLeft: '#A389FF',
   barRight: '#3AD3E8',
 
-  moneyItem: '#A3C9ED',
+  moneyItem: '#C8DFF4',
+  Highlight: '#E10000',
 
   TEXT: '#555555',
   GRAY: '#696969',
