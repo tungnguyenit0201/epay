@@ -15,6 +15,7 @@ import {
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import _ from 'lodash';
 import FooterContainer from 'components/Auth/FooterContainer';
+import {TRANS_DETAIL} from 'configs/Constants';
 
 const ToggleRightText = ({text}) => {
   const [textShown, setTextShown] = useState(false);
@@ -123,7 +124,11 @@ const DetailHistory = ({route}) => {
         <View style={[styles.pt1, {backgroundColor: blue}]}>
           <View style={[styles.alignCenter, styles.wrap, styles.pb1]}>
             <Image
-              source={Images.TransactionHistory.Success}
+              source={
+                Status === 1
+                  ? Images.TransactionHistory.Success
+                  : Images.TransactionHistory.Fail
+              }
               style={styles.iconSuccess}
               resizeMode="contain"
             />
@@ -131,7 +136,11 @@ const DetailHistory = ({route}) => {
 
           <View style={[styles.alignCenter, styles.pb2]}>
             <Text fs="h5" bold style={styles.maxWidth1} centered mb={7}>
-              Thanh toán phí giao thông thành công
+              {translation[
+                TRANS_DETAIL.SERVICE.find(x => x.value === TransType).label
+              ] +
+                ' ' +
+                translation[TRANS_DETAIL.STATUS[Status]].toLowerCase()}
             </Text>
 
             <Text fs="h3" bold color={blue_1} centered style={styles.wrap}>
@@ -140,10 +149,10 @@ const DetailHistory = ({route}) => {
 
             <View style={styles.mt2}>
               <Text fs="md" centered color={Colors.gray}>
-                Mã giao dịch: 346278456276
+                Mã giao dịch: {TransCode}
               </Text>
               <Text fs="md" centered color={Colors.gray}>
-                Thời gian: 22-10-2021 20:10:09
+                Thời gian: {TransTime}
               </Text>
             </View>
           </View>
