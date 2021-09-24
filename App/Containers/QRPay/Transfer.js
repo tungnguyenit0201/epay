@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   Pressable,
@@ -39,6 +39,10 @@ const Transfer = () => {
 
   const PersonalInfo = userInfo.personalInfo;
 
+  const [showClose, setShowClose] = useState(false);
+  const handleChange = e => {
+    e ? setShowClose(true) : setShowClose(false);
+  };
   return (
     <>
       <HeaderBg mb={0}>
@@ -65,11 +69,27 @@ const Transfer = () => {
             <Text mb={10}>{phone}</Text>
           </View>
 
-          <TextInput
-            placeholder="Nhập tiền"
-            maxLength={100}
-            selectTextOnFocus
-          />
+          <View style={[styles.wrapInputMoney]}>
+            <TextInput
+              numeric
+              style={styles.inputMoney}
+              placeholder="100.000"
+              //placeholderTextColor={Colors.g4}
+              onChange={handleChange}
+            />
+            <Text mr={5} ml={5}>
+              VNĐ
+            </Text>
+            {showClose && (
+              <TouchableOpacity>
+                <Icon
+                  icon={Images.Transfer.CloseCircle}
+                  tintColor={Colors.g4}
+                  style={styles.closeCircle}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
 
           <TextInput
             placeholder="Nhập lời nhắn"
@@ -133,7 +153,24 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: Colors.g4,
   },
-
+  wrapInputMoney: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+    height: 48,
+    borderRadius: scale(8),
+    marginBottom: 20,
+  },
+  inputMoney: {
+    height: 24,
+    borderWidth: 0,
+    flex: 1,
+    fontSize: 30,
+    fontWeight: '700',
+    borderBottomWidth: 1,
+  },
   boxBottom: {
     padding: scale(20),
     paddingBottom: scale(40),

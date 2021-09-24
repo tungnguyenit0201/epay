@@ -35,7 +35,7 @@ export default {
   barLeft: '#A389FF',
   barRight: '#3AD3E8',
 
-  moneyItem: '#A3C9ED',
+  moneyItem: '#C8DFF4',
   Highlight: '#E10000',
 
   TEXT: '#555555',
