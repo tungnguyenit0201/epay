@@ -9,6 +9,7 @@ import {
   getPromotionNotify,
   getOtherNotify,
   readNotify,
+  getAllNofify,
 } from 'services/notification';
 import {getAll} from 'utils/Functions';
 
@@ -21,13 +22,15 @@ const useNotify = () => {
   let listPromotionNotify = [];
   let listOtherNotify = [];
   let listAllNotify = [];
+
   const addFlag = (dataNotify, flag) => {
     const listNotify = dataNotify.map(value => {
-      value.flag = flag;
+      !value?.NotifyType && (value.NotifyType = flag?.value || flag);
       return value;
     });
     return listNotify;
   };
+
   const onGetChargesNotify = async () => {
     try {
       setLoading(true);
@@ -85,42 +88,76 @@ const useNotify = () => {
   const onGetAllNotify = async () => {
     try {
       setLoading(true);
-      const [listCharges, listPromotion, listOther] = await getAll(
-        onGetChargesNotify,
-        onGetPromotionNotify,
-        onGetOtherNotify,
-      );
-      setLoading(false);
-      if (listCharges?.archive || listPromotion?.archive || listOther.archive) {
-        listChargesNotify = listCharges?.archive;
-        listPromotionNotify = listPromotion?.archive;
-        listOtherNotify = listOther?.archive;
-        listAllNotify = [
-          ...listChargesNotify,
-          ...listPromotionNotify,
-          ...listOtherNotify,
-        ];
-        dispatch({type: 'SET_NOTIFY', data: listAllNotify});
-        Navigator.navigate(SCREEN.NOTIFICATION);
-      } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
-    } catch (error) {
+      const result = await getAllNofify({phone});
+      if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+        setError(result);
+        return;
+      }
+      dispatch({type: 'SET_NOTIFY', data: result?.NotifyInfo});
+    } finally {
       setLoading(false);
     }
+
+    // old API
+    // try {
+    //   setLoading(true);
+    //   const [listCharges, listPromotion, listOther] = await getAll(
+    //     onGetChargesNotify,
+    //     onGetPromotionNotify,
+    //     onGetOtherNotify,
+    //   );
+    //   setLoading(false);
+    //   if (listCharges?.archive || listPromotion?.archive || listOther.archive) {
+    //     listChargesNotify = listCharges?.archive;
+    //     listPromotionNotify = listPromotion?.archive;
+    //     listOtherNotify = listOther?.archive;
+    //     listAllNotify = [
+    //       ...listChargesNotify,
+    //       ...listPromotionNotify,
+    //       ...listOtherNotify,
+    //     ];
+    //     dispatch({type: 'SET_NOTIFY', data: listAllNotify});
+    //   } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
+    // } catch (error) {
+    //   setLoading(false);
+    // }
   };
+
+  const onGoNotify = async () => {
+    await onGetAllNotify();
+    Navigator.navigate(SCREEN.NOTIFICATION);
+  };
+
   const selectNotify = type => {
+    const notifyType = _.mapKeys(NOTIFY, ({value}) => value);
     switch (type) {
-      case NOTIFY.ALL:
+      case NOTIFY.ALL.title:
         return userInfo?.listNotify;
       default:
         const result = userInfo?.listNotify.filter(notify => {
-          return notify?.flag === type;
+          return notifyType[notify?.NotifyType].title === type;
         });
         return result;
     }
   };
-  const onReadNotify = async id => {
-    const result = await readNotify({phone, id});
+
+  const onReadNotify = async notifyID => {
+    const result = await readNotify({phone, notifyID});
+    if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
+      onGetAllNotify();
+    }
   };
+
+  const onPressNotify = item => {
+    // if (item?.NotifyType === NOTIFY.OTHER.value) {
+    //   Navigator.push(SCREEN.TRANSACTION_SUCCESS);
+    // } else {
+    //   Navigator.navigate(SCREEN.EPAY_SUCCESS, {data: item});
+    // }
+    Navigator.navigate(SCREEN.EPAY_SUCCESS, {data: item});
+    item?.Id && !item?.IsRead && onReadNotify(item.Id);
+  };
+
   return {
     onGetChargesNotify,
     onGetPromotionNotify,
@@ -128,6 +165,8 @@ const useNotify = () => {
     onGetAllNotify,
     selectNotify,
     onReadNotify,
+    onPressNotify,
+    onGoNotify,
   };
 };
 export default useNotify;

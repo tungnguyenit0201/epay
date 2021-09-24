@@ -232,6 +232,7 @@ const useAuth = () => {
         );
         onGetAllInfo();
         onGetWalletInfo();
+        Navigator.reset(SCREEN.TAB_NAVIGATION);
         return;
     }
   };

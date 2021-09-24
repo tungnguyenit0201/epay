@@ -40,12 +40,25 @@ export const getOtherNotify = async ({phone}) => {
   return response;
 };
 
-export const readNotify = async ({phone, id}) => {
+export const getAllNofify = async ({phone}) => {
   let response = null;
   await request({
-    url: API.NOTIFY.OTHER_NOTIFY,
+    url: API.NOTIFY.GET_NOTIFY,
     method: 'post',
     params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const readNotify = async ({phone, notifyID}) => {
+  let response = null;
+  await request({
+    url: API.NOTIFY.READ_NOTIFY,
+    method: 'post',
+    params: {PhoneNumber: phone, NotifyId: notifyID},
     success: res => {
       response = res;
     },
