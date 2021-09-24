@@ -57,11 +57,6 @@ const Home = () => {
       name: 'Lịch sử',
       screen: SCREEN.HISTORY,
     },
-    {
-      icon: Images.Homes.LichSuGd,
-      name: 'My QR',
-      screen: SCREEN.MY_QR,
-    },
   ];
   const dataBanner = [
     {

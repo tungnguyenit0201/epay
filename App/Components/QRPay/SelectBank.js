@@ -14,8 +14,8 @@ const TransferBank = ({onPress}) => {
   return (
     //TODO : translation
     <>
-      <View>
-        <Text bold fs="h6" mb={20}>
+      <View style={styles.block}>
+        <Text bold fs="h6" mb={10}>
           Nguồn tiền
         </Text>
         <Pressable onPress={onPress} style={[styles.itemBank]}>
@@ -41,6 +41,9 @@ const TransferBank = ({onPress}) => {
   );
 };
 const styles = StyleSheet.create({
+  block: {
+    marginBottom: 20,
+  },
   itemBank: {
     position: 'relative',
     marginBottom: 20,
