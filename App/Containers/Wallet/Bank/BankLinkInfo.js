@@ -97,6 +97,7 @@ export default function (props) {
   );
 
   const renderCard = () => {
+    //Todo: pick from a list of KYC
     return (
       <View style={[styles.shadow]}>
         <Text style={styles.subTitle}>Họ và tên </Text>

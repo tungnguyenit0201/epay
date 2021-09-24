@@ -29,13 +29,16 @@ const BankLinkKYCInfo = () => {
   useEffect(() => {
     return () => onClearRegionData();
   }, []);
+  const onSubmit = () => {
+    onUpdateUserAddress?.(region)?.then();
+  };
 
   return (
-    <View>
+    <View flex={1}>
       <HeaderBg>
         <Header title={translation.connect_bank} back />
       </HeaderBg>
-      <ScrollView style={{backgroundColor: Colors.white}}>
+      <ScrollView style={{backgroundColor: Colors.white, flex: 1}}>
         <View style={[base.container, {paddingTop: 20}]}>
           <Formik
             initialValues={{
@@ -45,11 +48,24 @@ const BankLinkKYCInfo = () => {
               Provincial: personalAddress?.Provincial,
             }}
             validationSchema={addressSchema}
-            onSubmit={onUpdateUserAddress}>
+            onSubmit={region => onUpdateUserAddress(region)}>
             <FormikContent region={region} goRegionSelect={goRegionSelect} />
           </Formik>
         </View>
       </ScrollView>
+
+      <View style={styles.shadowButton}>
+        <Button
+          label={'Liên kết'}
+          bold
+          size="lg"
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={onSubmit}
+        />
+      </View>
     </View>
   );
 };
@@ -115,9 +131,6 @@ const FormikContent = ({region, goRegionSelect}) => {
         error={touched.Address && errors.Address}
         value={values.Address}
       />
-      <View style={{paddingBottom: Spacing.PADDING}}>
-        <Button onPress={handleSubmit} label="Lưu" />
-      </View>
     </View>
   );
 };
@@ -129,5 +142,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     paddingVertical: 10,
+  },
+  shadowButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    backgroundColor: Colors.white,
+    shadowColor: 'rgba(0, 0, 0, 0.16)',
+    shadowOpacity: 1,
+    shadowOffset: {width: 1, height: 0},
+    borderRadius: 8,
+    paddingBottom: 24,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
   },
 });

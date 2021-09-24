@@ -209,15 +209,18 @@ const useBankInfo = () => {
     try {
       setLoading(true);
       let phone = await getPhone();
-      let result = await updateUserAddress({
-        phone,
-        Address,
-        Ward,
-        County,
-        Provincial,
-      });
+      //todo: GTTT flow
+      // let result = await updateUserAddress({
+      //   phone,
+      //   Address,
+      //   Ward,
+      //   County,
+      //   Provincial,
+      // });
+      const result = {};
       setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      // if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      if (result) {
         dispatch({
           type: 'SET_PERSONAL_ADDRESS',
           data: {Address, Ward, County, Provincial},

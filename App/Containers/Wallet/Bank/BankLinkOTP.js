@@ -1,57 +1,63 @@
-import React, {useState, useEffect} from 'react';
+import React, {useRef, useState} from 'react';
 import {
-  View,
-  ScrollView,
-  StyleSheet,
   Image,
+  StyleSheet,
+  View,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import {
-  HeaderBg,
-  Header,
-  Icon,
-  Text,
-  InputBlock,
-  Row,
-  Col,
-  TextInput,
-  Button,
-} from 'components';
-
-import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
-import {useRoute} from '@react-navigation/native';
+import {Text, Header, Button, Icon, Modal, HeaderBg} from 'components';
+import {Colors, Fonts, Images, Spacing} from 'themes';
+import _ from 'lodash';
+import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
-import {Colors, Fonts, Spacing} from 'themes';
-import {scale} from 'utils/Functions';
+import {useAuth} from 'context/Auth/utils';
+import {useOTP} from 'context/Common/utils';
+import {HelpModal} from 'components/Auth';
+import BlueHeader from 'components/Auth/BlueHeader';
+import {useRoute} from '@react-navigation/native';
+import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
-export default function (props) {
-  const translation = useTranslation();
+const OTP = props => {
   const {params} = useRoute() || {};
   const {item} = params || {};
-
-  //  const onSubmit = () => {
-  //    const isValid = validateInfo?.();
-  //    //todo: call api connect
-  //    if (isValid) {
-  //        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-  //          screen: MapBankRoutes.BankLinkKYCInfo,
-  //          params: {kycInfo, bank, bankAccount},
-  //        });
-  //      } else {
-  //        //open KYC flow
-  //      }
-  //    }
-  //  };
-  // ;
+  const {onChangePhone} = useAuth();
+  const {
+    errorMessage,
+    countdown,
+    code,
+    showModal,
+    setShowModal,
+    onChange,
+    onConfirmOTP,
+    resentOTP,
+    openCallDialog,
+    label,
+  } = useOTP({});
+  const translation = useTranslation();
 
   const onSubmit = () => {
     props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankLinkOTP,
+      screen: MapBankRoutes.BankLinkResult,
       // params: {kycInfo, bank, bankAccount},
     });
   };
 
+  const renderOTP = () => {
+    return (
+      <OTPContainer
+        onChange={onChange}
+        onCodeFilled={onConfirmOTP}
+        message={errorMessage}
+        code={code}
+        countdown={countdown}
+        resentOTP={resentOTP}
+        onChangePhone={onChangePhone}
+        label={label}
+      />
+    );
+  };
   const renderButton = () => {
     return (
       <View style={styles.shadowButton}>
@@ -77,13 +83,43 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      />
+        showsVerticalScrollIndicator={false}>
+        {renderOTP()}
+      </ScrollView>
       {renderButton()}
     </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
+  absolute: {position: 'absolute'},
+  top1: {top: 15},
+  left1: {left: 30},
+  right1: {right: 30},
+  //-----------------------------
+  flexRow: {flexDirection: 'row'},
+  justifyCenter: {justifyContent: 'center'},
+  //-----------------------------
+  textCenter: {textAlign: 'center'},
+  //-----------------------------
+  bgGray: {backgroundColor: Colors.OtpGray_1},
+  bgGray1: {backgroundColor: Colors.OtpGray_2},
+  //-----------------------------
+  iconRight: {paddingRight: Spacing.PADDING},
+  iconPhone: {
+    height: Spacing.PADDING,
+    width: Spacing.PADDING,
+    marginRight: 10,
+    top: 1,
+  },
+  lineSize: {
+    width: 1,
+    height: 25,
+  },
+  iconSize: {
+    width: 20,
+    height: 20,
+  },
   container: {
     flex: 1,
     paddingHorizontal: Spacing.PADDING,
@@ -149,3 +185,4 @@ const styles = StyleSheet.create({
   },
   text_gray: {color: '#666666'},
 });
+export default OTP;
