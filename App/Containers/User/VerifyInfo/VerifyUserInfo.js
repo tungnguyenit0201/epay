@@ -213,7 +213,7 @@ const VerifyUserInfo = ({route}) => {
 
           <View
             style={[styles.wrap, styles.py1, styles.bgWhite, styles.blockBtn]}>
-            <Button label="Đã hiểu" bold />
+            <Button label="Đã hiểu" bold onPress={onHideModal} />
           </View>
         </View>
       </Modal>

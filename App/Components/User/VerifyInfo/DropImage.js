@@ -15,12 +15,18 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
+const DropImage = ({
+  onDropImage,
+  title,
+  style,
+  cameraType = 'back',
+  draft,
+  identify,
+}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
   const isFocused = useIsFocused();
-
   return (
     // TODO: translate
     <>

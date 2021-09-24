@@ -11,7 +11,6 @@ import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import {useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
-import {useBankInfo} from 'context/Wallet/utils';
 
 const Stack = createStackNavigator();
 
@@ -30,9 +29,11 @@ import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
 import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
-import BankList from 'containers/Wallet/Bank/BankList';
-import BankInfo from 'containers/Wallet/Bank/BankInfo';
-import BankResult from 'containers/Wallet/Bank/BankResult';
+import BankList from 'containers/Wallet/Bank/LinkingList';
+import BankInfo from 'containers/Wallet/Bank/LinkingInfo';
+import LinkingAddress from 'containers/Wallet/Bank/LinkingAddress';
+import LinkingConfirm from 'containers/Wallet/Bank/LinkingConfirm';
+import BankResult from 'containers/Wallet/Bank/LinkingResult';
 import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
@@ -86,7 +87,6 @@ const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
   const {onGetConfig} = useConfig();
-  const {onGetConnectedBank} = useBankInfo();
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
@@ -96,7 +96,6 @@ const AppNavigator = () => {
     };
     const getConfig = async () => {
       await onGetConfig();
-      let bank = await onGetConnectedBank();
     };
     getConfig();
     getCurrentLanguage();
@@ -166,6 +165,14 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
+          <Stack.Screen
+            name={SCREEN.LINKING_ADDRESS}
+            component={LinkingAddress}
+          />
+          <Stack.Screen
+            name={SCREEN.LINKING_CONFIRM}
+            component={LinkingConfirm}
+          />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
           <Stack.Screen

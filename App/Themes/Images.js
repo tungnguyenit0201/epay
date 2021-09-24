@@ -15,6 +15,7 @@ export default {
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),
+  BgModal: require('images/bgModal.png'),
   TabBar: {
     Home: require('images/tabBar/home.png'),
     HomeGray: require('images/tabBar/HomeGray.png'),
@@ -176,5 +177,10 @@ export default {
     QR: require('images/camera/QR.png'),
     Scan: require('images/camera/Scan.png'),
     Gallery: require('images/camera/Gallery.png'),
+  },
+  Modal: {
+    Camera: require('images/modal/camera.png'),
+    Lock: require('images/modal/lock.png'),
+    UserTick: require('images/modal/userTick.png'),
   },
 };

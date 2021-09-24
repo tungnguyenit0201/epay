@@ -30,7 +30,7 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
         ]}>
         <View style={styles.header}>
           <Image
-            source={require('images/bgModal.png')}
+            source={Images.BgModal}
             style={styles.bgImg}
             resizeMode="contain"
           />

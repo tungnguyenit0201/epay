@@ -82,11 +82,15 @@ async function request({
 }) {
   let root = API.ROOT;
   const requestMethod = axios;
-  // __DEV__ && curlirize(requestMethod);
+  __DEV__ && curlirize(requestMethod);
 
   const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
   if (token) {
-    headers = {...headers, Authorization: `Bearer ${token}`};
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
   }
 
   if (typeof requestMethod[method] === 'function') {

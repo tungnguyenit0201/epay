@@ -88,18 +88,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR,
   },
-  h_full: {
-    height: '100%',
-  },
+
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  flex_row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
+
   items_center: {alignItems: 'center'},
-  justify_between: {justifyContent: 'space-between'},
 });
 
 export default BankResult;
