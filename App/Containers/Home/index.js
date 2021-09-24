@@ -165,7 +165,7 @@ const Home = () => {
           <IconList />
         </View>
 
-        <View style={styles.bottom}></View>
+        <View style={styles.bottom} />
       </ScrollView>
       <Image source={require('images/wave.png')} style={styles.bgImg} />
       {modalSmartOTP.smartOTP && (
@@ -222,7 +222,7 @@ const Home = () => {
               <Button
                 mb={10}
                 label={translation.connect_now}
-                onPress={() => onNavigate(SCREEN.BANK_LINKED)}
+                onPress={() => onNavigate(SCREEN.MAP_BANK_FLOW)}
               />
               <TouchableOpacity onPress={() => checkInfo({value: false})}>
                 <Text style={styles.underline}>Nhắc tôi sau</Text>

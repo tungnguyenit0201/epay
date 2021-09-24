@@ -18,7 +18,7 @@ export default {
   TabBar: {
     Home: require('images/tabBar/home.png'),
     Category: require('images/Category.png'),
-    Search: require('images/Search.png'),
+    Search: require('images/bank/icon_search-2.png'),
     User: require('images/tabBar/user.png'),
     BottomTab: require('images/tabBar/BottomTab.png'),
     QR: require('images/tabBar/QR.png'),

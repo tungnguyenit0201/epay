@@ -14,10 +14,12 @@ import {Colors, Fonts, Spacing, Images, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import HeaderBg from 'components/Common/HeaderBg';
 import {useWallet} from 'context/Wallet';
+import {useBankInfo} from 'context/Wallet/utils';
 const BankLinked = () => {
   const translation = useTranslation();
   const {walletInfo} = useWallet();
-  const {listConnectBank, listDomesticBank, listInternationalBank} = walletInfo;
+  const {listConnectBank, listDomesticBank, listInternationalBank} = walletInfo; //have bank already
+
   const renderListBank = banks => {
     if (banks && banks.length !== 0) {
       return banks.map((value, index) => (
@@ -39,13 +41,17 @@ const BankLinked = () => {
       return <Text>Chưa có</Text>;
     }
   };
+  const header = () => {
+    return (
+      <HeaderBg>
+        <Header back title={translation.connect_bank} />
+      </HeaderBg>
+    );
+  };
   return (
-    <>
+    <View flex={1}>
+      {header()}
       <ScrollView style={[styles.container]}>
-        <HeaderBg>
-          <Header back title={translation.connect_bank} />
-        </HeaderBg>
-
         <View style={styles.wrap}>
           <View>
             <Text bold style={{textTransform: 'uppercase', marginBottom: 16}}>
@@ -73,7 +79,7 @@ const BankLinked = () => {
           onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
         />
       </View>
-    </>
+    </View>
   );
 };
 

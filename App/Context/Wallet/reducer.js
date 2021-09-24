@@ -26,6 +26,11 @@ export default function userReducer(state, action) {
         ...state,
         listDomesticBank: action?.data,
       };
+    case 'LIST_NAPAS_BANK':
+      return {
+        ...state,
+        listNapasBank: action?.data,
+      };
     case 'LIST_INTERNATIONAL_BANK':
       return {
         ...state,

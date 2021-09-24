@@ -16,13 +16,13 @@ const User = () => {
         status == USER_STATUS.INACTIVE_KYC &&
           Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK &&
-          Navigator.navigate(SCREEN.BANK_LINKED);
+          Navigator.navigate(SCREEN.MAP_BANK_FLOW);
       }}
       style={[styles.item]}>
       <Image style={styles.img} source={Images.Homes.Avatar} />
       <Text style={styles.text}>
         {status == USER_STATUS.INACTIVE_KYC
-          ? `Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.`
+          ? 'Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.'
           : 'Liên kết ngân hàng để thực hiện giao dịch'}
       </Text>
       <Image style={styles.arrow} source={Images.Homes.Arrow} />

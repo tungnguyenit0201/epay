@@ -26,6 +26,18 @@ export const getDomesticBank = async ({phone}) => {
   });
   return response;
 };
+export const getNapasBank = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_NAPAS_BANKS,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
 
 export const getInternationalBank = async ({phone}) => {
   let response = null;

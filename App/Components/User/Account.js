@@ -18,7 +18,7 @@ const Account = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank} = useUserInfo();
-  const {onGetAllBank} = useBankInfo();
+  const {onGetAllBank, goToBankLinked, mapBank} = useBankInfo();
   const {listConnectBank} = useWallet();
   const {showMoney, setShowMoney} = useMoney();
 
@@ -57,11 +57,11 @@ const Account = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.line}></View>
+      <View style={styles.line} />
 
       <TouchableOpacity
         style={[base.row, {marginBottom: 10}]}
-        onPress={onGetAllBank}>
+        onPress={goToBankLinked}>
         <Text semibold mr={5}>
           {translation.bank_linking}
           <Text>({listConnectBank?.length})</Text>
@@ -72,7 +72,7 @@ const Account = () => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={[base.row]} onPress={onGetAllBank}>
+      <TouchableOpacity style={[base.row]} onPress={mapBank}>
         <Image
           style={{width: 40, height: 40}}
           source={require('images/profile/plus2.png')}

@@ -38,7 +38,8 @@ export default {
     UPDATE_AVATAR: 'account/update_avatar',
   },
   WALLET: {
-    GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
+    GET_DOMESTIC_BANKS: 'bank/get_domestic_banks', ///api/v2/bank/get_domestic_banks
+    GET_NAPAS_BANKS: 'bank/get_napas_banks', ///api/v2/bank/get_domestic_banks
     GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
     CHANGE_LIMIT: 'security/change_limit',
