@@ -8,7 +8,7 @@ import Navigator from 'navigations/Navigator';
 
 export default ({
   onPress,
-  type,
+  bgImg = 1,
   label,
   label2,
   icon,
@@ -33,6 +33,7 @@ export default ({
   label2Style,
   mode = 'contain', //outline
 }) => {
+  console.log(bgImg);
   return (
     <Pressable
       disabled={disabled}
@@ -58,8 +59,18 @@ export default ({
         style,
         disabled && {backgroundColor: Colors.g4},
       ]}>
-      {type && (
-        <Image source={require('images/BgHeader.jpg')} style={styles.bgImg} />
+      {bgImg === 1 && (
+        <>
+          <Image source={require('images/Button.png')} style={styles.bgImg} />
+          {disabled ? (
+            <Image
+              source={require('images/ButtonDisable.png')}
+              style={styles.bgImg}
+            />
+          ) : (
+            <Image source={require('images/Button.png')} style={styles.bgImg} />
+          )}
+        </>
       )}
 
       {!!leftIcon && (
@@ -109,10 +120,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: scale(20),
     borderRadius: scale(8),
-    height: 48,
+    height: scale(48),
     position: 'relative',
     overflow: 'hidden',
   },
@@ -140,9 +149,10 @@ const styles = StyleSheet.create({
   bgImg: {
     position: 'absolute',
     left: 0,
-    right: 0,
     bottom: 0,
     top: 0,
+    width: scale(375),
+    height: scale(64),
     resizeMode: 'cover',
   },
 
