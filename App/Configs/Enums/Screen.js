@@ -1,3 +1,5 @@
+import BankPickerScreen from 'containers/Wallet/Bank/BankPickerScreen';
+
 const SCREEN = {
   LANGUAGE: 'Language',
   HOME: 'Home',
@@ -68,5 +70,7 @@ const SCREEN = {
   BOTTOM_MODAL: 'BottomModal',
   POPUP_MODAL: 'PopupModal',
   ALERT_MODAL: 'AlerModal',
+  MAP_BANK_FLOW: 'MapBankFlow',
+  BANK_PICKER_SCREEN: 'BankPickerScreen',
 };
 export default SCREEN;
