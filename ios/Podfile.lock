@@ -721,7 +721,7 @@ PODS:
   - react-native-image-editor (2.3.0):
     - React
     - React-RCTImage
-  - react-native-safe-area-context (3.3.2):
+  - react-native-safe-area-context (3.2.0):
     - React-Core
   - react-native-splash-screen (3.2.0):
     - React
@@ -795,13 +795,13 @@ PODS:
     - React
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNCAsyncStorage (1.15.8):
+  - RNCAsyncStorage (1.15.5):
     - React-Core
   - RNCClipboard (1.5.1):
     - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
-  - RNDeviceInfo (8.3.3):
+  - RNDeviceInfo (8.3.0):
     - React-Core
   - RNFBApp (12.8.0):
     - Firebase/CoreOnly (= 8.7.0)
@@ -833,7 +833,7 @@ PODS:
     - React-Core
   - RNQrGenerator (1.1.7):
     - React
-  - RNReanimated (2.2.2):
+  - RNReanimated (2.2.0):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -862,7 +862,7 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.7.2):
+  - RNScreens (3.4.0):
     - React-Core
     - React-RCTImage
   - RNSha256 (1.4.7):
@@ -1110,7 +1110,7 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
-  FBReactNativeSpec: f78471677d7780e6c14f1cd44e808782366074a1
+  FBReactNativeSpec: fde12cb80ce02665a0023dc3f42f61f2c907801e
   Firebase: bc9325d5ee2041524bac78a5213d0e530c651309
   FirebaseAuth: 2e7d029977648c67a5d51a263d4cbab76d34cf12
   FirebaseCore: f4804c1d3f4bbbefc88904d15653038f2c99ddf7
@@ -1147,14 +1147,14 @@ SPEC CHECKSUMS:
   React-jsi: 67747b9722f6dab2ffe15b011bcf6b3f2c3f1427
   React-jsiexecutor: 80c46bd381fd06e418e0d4f53672dc1d1945c4c3
   React-jsinspector: cc614ec18a9ca96fd275100c16d74d62ee11f0ae
-  react-native-camera: fdfefd4139bbbb53f69e8b6fde1ee549b524eb88
+  react-native-camera: 384df93277a5ccdc800ca9f86daac7107598365e
   react-native-contacts: bc424db19c3384e44e6a9d9da9a78ee51b0aa7a1
   react-native-flipper: a5b02e319fab599965d522d79aa34dc865a07d16
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
-  react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
+  react-native-image-editor: bd67912f38a8e7a895bf6eb8f445acdcefd8fd0c
+  react-native-safe-area-context: e471852c5ed67eea4b10c5d9d43c1cebae3b231d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-webview: 133a6a5149f963259646e710b4545c67ef35d7c9
+  react-native-webview: b176c6404ad40d10cfc818be41c053f85a72d751
   React-perflogger: 25373e382fed75ce768a443822f07098a15ab737
   React-RCTActionSheet: af7796ba49ffe4ca92e7277a5d992d37203f7da5
   React-RCTAnimation: 6a2e76ab50c6f25b428d81b76a5a45351c4d77aa
@@ -1169,10 +1169,10 @@ SPEC CHECKSUMS:
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   ReactNativeUiLib: cde7263a7d308b60161cd286f95c9433e79f2f7d
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNCAsyncStorage: e8b8d6320a0dd90eb610fb0d0b1ef90596697c69
-  RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
-  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
-  RNDeviceInfo: cc7de0772378f85d8f36ae439df20f05c590a651
+  RNCAsyncStorage: 8324611026e8dc3706f829953aa6e3899f581589
+  RNCClipboard: 5e299c6df8e0c98f3d7416b86ae563d3a9f768a3
+  RNDateTimePicker: c9911be59b1f8670b9f244b85af3a7c295e175ed
+  RNDeviceInfo: 85f751647430c4fb7e87d0e6615907087c23682c
   RNFBApp: b97d6654509a5852d49f0abf93be76b300fd2e2c
   RNFBAuth: 07fd836f31fe09d465c22476a052766251af1c49
   RNFBFirestore: a1eeb9f7b0f05f87f41cdff34aba1c6a780814e6
@@ -1180,10 +1180,10 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 35a3ceb837446fa11547704709bb22b5fac6d584
   RNKeychain: f75b8c8b2f17d3b2aa1f25b4a0ac5b83d947ff8f
-  RNQrGenerator: 86fb623932ed29627c6a95b8dc94af5e93d8abe1
-  RNReanimated: 241c586663f44f19a53883c63375fdd041253960
-  RNScreens: 0591543e343c7444ea1756b6265d81a4295922c9
-  RNSha256: bf2c90a9e0cec6dcbcc4100e4e19715ae7feaa34
+  RNQrGenerator: 1d9ad6533d6648dc528ea8fb05b2f4fb8db106d4
+  RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
+  RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
+  RNSha256: 68357f69fa5f755a495e13ec42c8f0fc75316db0
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
@@ -1192,4 +1192,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 59ebb2dad5a283057c0fc45dc6181d7e80f561ab
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.10.1

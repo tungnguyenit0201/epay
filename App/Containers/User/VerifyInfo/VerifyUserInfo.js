@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
   },
   guildBtn: {
     position: 'absolute',
-    right: 15,
-    top: 65,
+    right: 20,
+    top: 72,
   },
   alignCenter: {alignItems: 'center'},
   triangleDown: {
