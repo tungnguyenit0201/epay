@@ -226,10 +226,8 @@ const DetailHistory = ({route}) => {
               styles.py2,
             ]}>
             {dataTest_2.map((item, index) => (
-              <>
-                <View
-                  style={[styles.flexRow, styles.pt2, styles.pb3]}
-                  key={index}>
+              <View key={index}>
+                <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
                   <Text fs="md" style={[styles.haftWidth, styles.pr1]}>
                     {item.title}
                   </Text>
@@ -244,7 +242,7 @@ const DetailHistory = ({route}) => {
                     dashColor={Colors.l3}
                   />
                 )}
-              </>
+              </View>
             ))}
           </View>
         </View>
@@ -297,6 +295,8 @@ const styles = StyleSheet.create({
   pb2: {paddingBottom: 38},
   pb3: {paddingBottom: 13},
   //end
+  textRight: {textAlign: 'right'},
+  //-----------------
   bgWhite: {backgroundColor: Colors.white},
   //-----------------
   borderRadius1: {borderRadius: 8},
