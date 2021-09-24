@@ -159,7 +159,10 @@ export default {
   },
   TransactionHistory: {
     filter: require('images/icons/filter.png'),
-    cardTick: require('images/icons/card-tick.png'),
+    CardTick: require('images/icons/card-tick.png'),
+    Success: require('images/icons/success.png'),
+    Fail: require('images/icons/fail.png'),
+    LogoBg: require('images/LogoBG.png'),
   },
   Capture: require('images/Capture.png'),
   Camera: {
