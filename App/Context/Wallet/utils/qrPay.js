@@ -1,4 +1,4 @@
-import {useAsyncStorage, useError} from 'context/Common/utils';
+import {useAsyncStorage, useError, usePermission} from 'context/Common/utils';
 import {useEffect, useState} from 'react';
 import {getQRCodeInfo} from 'services/wallet';
 import Navigator from 'navigations/Navigator';
@@ -7,7 +7,7 @@ import _ from 'lodash';
 import {ERROR_CODE} from 'configs/Constants';
 import RNQRGenerator from 'rn-qr-generator';
 import {useCommon} from 'context/Common';
-
+import {RESULTS} from 'react-native-permissions';
 const useScanQR = () => {
   let [flash, setFlash] = useState(false);
   let [loading, setLoading] = useState(false);
@@ -15,6 +15,7 @@ const useScanQR = () => {
   const {error} = useCommon();
   const {getPhone} = useAsyncStorage();
   const {setError} = useError();
+  const {checkPermission} = usePermission();
 
   const onGetQRCodeInfo = async QrCode => {
     if (loading) return;
@@ -50,6 +51,9 @@ const useScanQR = () => {
     }
   };
 
+  useEffect(() => {
+    checkPermission('', () => Navigator.goBack());
+  }, []); // eslint-disable-line
   return {
     loading,
     image,

@@ -129,7 +129,7 @@ const Wrapper = React.memo(
                     onPress={() => askPermission()}
                   />
                   <TouchableOpacity onPress={() => showModalCamera(false)}>
-                    <Text style={styles.underline}>Nhắc tôi sau</Text>
+                    <Text>Nhắc tôi sau</Text>
                   </TouchableOpacity>
                 </View>
               )}
