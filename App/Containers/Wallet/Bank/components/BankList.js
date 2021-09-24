@@ -43,7 +43,7 @@ const BankItem = ({title, icon, item, callback}) => (
         source={icon}
         style={{
           width: scale(32),
-          height: scale(32),
+          aspectRatio: 2,
         }}
         resizeMode={'contain'}
       />
@@ -218,5 +218,5 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 8,
   },
-  item: {alignItems: 'center'},
+  item: {alignItems: 'center', flex: 1},
 });

@@ -10,13 +10,14 @@ import { Text } from 'components';
 import { Images, Colors, Spacing } from 'themes';
 import { scale } from 'utils/Functions';
 
+export const DISPLAY_POPUP = 'DISPLAY_POPUP';
 const PopupModal = (props = {}) => {
     const { navigation, route = {} } = props;
-    const { onClose, screen: ScreenComp, title, params, style } = route.params || {};
+    const { onClose, screen: ScreenComp, title, params, style, type } = route.params || {};
     const { width, height } = useWindowDimensions();
     const modalStyle = {
         width: width * 0.9,
-        minHeight: height * 0.3
+        minHeight: height * 0.3,
     };
 
     const onPressClose = () => {
@@ -32,7 +33,13 @@ const PopupModal = (props = {}) => {
             />;
         } return <View />;
     };
-
+  if (type && type === DISPLAY_POPUP) {
+    return (
+        <View style={[styles.container, {}]}>
+          <View style={[styles.modal, modalStyle, style]}>{renderScreen()}</View>
+        </View>
+    );
+  }
     return (
         <View style={styles.container}>
             <View style={[styles.modal, modalStyle, style]}>

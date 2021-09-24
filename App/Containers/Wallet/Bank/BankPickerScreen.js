@@ -16,10 +16,12 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-const popupBankLink = () => {
-  return <View />;
-};
-const BankPickerScreen = () => {
+import BankImages from './images';
+import PopUpBankLink from './components/PopUpBankLink';
+import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
+
+const BankPickerScreen = props => {
+  const {navigation} = props;
   const translation = useTranslation();
   const {onGetAllBank} = useBankInfo();
   const [keysearch, setKeySearch] = useState('');
@@ -43,25 +45,38 @@ const BankPickerScreen = () => {
     setKeySearch(text);
     onSearchDebounce(text);
   };
-
-  const onPressBankLink = item => {
-    //getKYC state
-
-    // showPOPUP
-    Navigator.showPopup({
-      screen: popupBankLink,
-      title: 'Chọn giấy tờ tuỳ thân',
-      onClose: () => {},
-      params: {
-        data: [],
-      },
-    });
+  const onContinueMap = item => {
+    const {ic, bank} = item;
     if (item) {
-      Navigator.push(SCREEN.MAP_BANK_FLOW, {
+      navigation.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BankLinkInfo,
-        bank: item,
+        params: {item: item},
       });
     }
+  };
+  const getKYC = () => {
+    //getKYC state
+  };
+  const onPressBankLink = item => {
+    //getKYC state
+    const kyc = getKYC();
+
+    // showPOPUP
+    const icData = [{label: 'CMND *******789', value: 1}];
+    Navigator.showPopup({
+      screen: PopUpBankLink,
+      title: '',
+      onClose: () => {},
+      type: DISPLAY_POPUP,
+      params: {
+        data: [],
+        icData,
+        onContinue: () => onContinueMap({bank: item, ic: icData[0]}),
+      },
+      style: {
+        borderRadius: 20,
+      },
+    });
   };
 
   const renderSearchView = () => {

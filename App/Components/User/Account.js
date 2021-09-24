@@ -86,7 +86,7 @@ const Account = () => {
           </View>
         ))
       ) : (
-        <TouchableOpacity style={[base.row]} onPress={onGetAllBank}>
+        <TouchableOpacity style={[base.row]} onPress={mapBank}>
           <Image
             style={{width: 40, height: 40}}
             source={require('images/profile/plus2.png')}
