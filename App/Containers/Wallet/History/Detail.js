@@ -1,6 +1,6 @@
 import {Header, HeaderBg, Text, Button, Icon} from 'components';
 import {useTranslation} from 'context/Language';
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import DashedLine from 'react-native-dashed-line';
 import LinearGradient from 'react-native-linear-gradient';
 import {
@@ -19,15 +19,22 @@ import FooterContainer from 'components/Auth/FooterContainer';
 const ToggleRightText = ({text}) => {
   const [textShown, setTextShown] = useState(false);
   const [showMoreButton, setShowMoreButton] = useState(false);
+  const [numLines, setNumLines] = useState(undefined);
 
   const toggleTextShown = () => {
     setTextShown(!textShown);
   };
 
+  useEffect(() => {
+    setNumLines(textShown ? undefined : 2);
+  }, [textShown]);
+
+  //show link show more/less if line length > 2
   const onTextLayout_1 = useCallback(
     e => {
-      if (e.nativeEvent.lines.length >= 2 && !textShown) {
+      if (e.nativeEvent.lines.length > 2 && !textShown) {
         setShowMoreButton(true);
+        setNumLines(2);
       }
     },
     [textShown],
@@ -40,7 +47,7 @@ const ToggleRightText = ({text}) => {
         bold
         style={[styles.textRight]}
         onTextLayout={onTextLayout_1}
-        numberOfLines={textShown ? undefined : 2}>
+        numberOfLines={numLines}>
         {text}
       </Text>
       {showMoreButton && (
