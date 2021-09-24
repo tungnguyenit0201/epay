@@ -21,10 +21,18 @@ const Tab = createBottomTabNavigator();
 import User from 'containers/User';
 import Home from 'containers/Home';
 import Notification from 'containers/Notification';
+import EpaySuccess from 'containers/Notification/EpaySuccess';
 
 import {useTranslation} from 'context/Language';
+import {useCheckInfo} from 'context/Home/utils';
+import {useBankInfo} from 'context/Wallet/utils';
+import {usePermission} from 'context/Common/utils';
 
 const TabIcons = {
+  Home: Images.TabBar.HomeGray,
+  User: Images.TabBar.User,
+};
+const TabIconsActive = {
   Home: Images.TabBar.Home,
   User: Images.TabBar.User,
 };
@@ -39,6 +47,22 @@ const TabNavigation = () => {
   };
 
   function TabBarCustom({state, descriptors, navigation}) {
+    const {checkInfo} = useCheckInfo();
+    const {onGetConnectedBank} = useBankInfo();
+    const {checkPermission} = usePermission();
+
+    useEffect(() => {
+      const getConnectBank = async () => {
+        let banks = await onGetConnectedBank();
+      };
+      getConnectBank();
+    }, []); // eslint-disable-line
+    const onCheck = async () => {
+      // let permission = await checkPermission(async () => {
+      let result = await checkInfo(SCREEN.QRPAY);
+      Boolean(result) && navigation.navigate(SCREEN.QRPAY);
+      // });
+    };
     return (
       <View style={styles.container}>
         <View style={[styles.wrapTab, {width: width}]}>
@@ -83,10 +107,16 @@ const TabNavigation = () => {
                 onLongPress={onLongPress}
                 style={styles.tab}>
                 <Image
-                  source={TabIcons[route.name]}
+                  source={
+                    // !isFocused
+                    //   ? TabIcons[route.name]
+                    //   : TabIconsActive[route.name]
+                    TabIcons[route.name]
+                  }
                   style={[
                     styles.icon,
-                    route.name != 'Home' && {
+                    // route.name != 'Home' &&
+                    {
                       tintColor: isFocused ? Colors.cl1 : Colors.gray,
                     },
                   ]}
@@ -110,7 +140,7 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={() => navigation.navigate(SCREEN.QRPAY)}>
+          onPress={onCheck}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>
@@ -123,6 +153,7 @@ const TabNavigation = () => {
         <Tab.Screen name={SCREEN.HOME} component={Home} />
         <Tab.Screen name={SCREEN.USER} component={User} />
         <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
+        <Tab.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
       </Tab.Navigator>
     </View>
   );

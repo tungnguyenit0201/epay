@@ -13,6 +13,7 @@ const AlertCustom = () => {
   const {setError} = useError();
 
   return (
+    // TODO: translate
     <View style={styles.container}>
       <Modal
         animationType="slide"

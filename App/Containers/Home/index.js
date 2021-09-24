@@ -20,7 +20,7 @@ import IconList from 'components/Home/IconList';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-import {useCheckInfo, useHome, useModalSmartOTP} from 'context/Home/utils';
+import {useHome} from 'context/Home/utils';
 import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
 
@@ -31,8 +31,6 @@ const Home = () => {
   const {goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
-  const modalSmartOTP = useModalSmartOTP();
-  const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
 
   const dataMenu = [
     {
@@ -58,11 +56,6 @@ const Home = () => {
       icon: Images.Homes.LichSuGd,
       name: 'Lịch sử',
       screen: SCREEN.HISTORY,
-    },
-    {
-      icon: Images.Homes.LichSuGd,
-      name: 'My QR',
-      screen: SCREEN.MY_QR,
     },
   ];
   const dataBanner = [
@@ -135,102 +128,15 @@ const Home = () => {
           <DinhDanh />
 
           <Banner data={dataBanner} />
-
-          {/* <View style={{marginBottom: 20}}>
-            <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
-              {translation.epay_services}
-            </Text>
-            <ListItem scroll space={1} col={4} data={dataEpay} />
-          </View>
-          <View style={{marginBottom: 20}}>
-            <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
-              {translation.traffic_payment_services}
-            </Text>
-            <ListItem space={20} col={4} data={dataGT} />
-          </View>
-          <View style={{marginBottom: 20}}>
-            <Text bold color={Colors.cl1} size={Fonts.H5} mb={15}>
-              {translation.how_to_use_epay}
-            </Text>
-            <TouchableOpacity onPress={() => {}}>
-              <Image
-                source={Images.Homes.Banner}
-                style={[{height: scale(128), width: scale(335)}]}
-              />
-            </TouchableOpacity>
-          </View> */}
         </View>
         <View style={base.container}>
-          {/* <ListItemSimple space={10} col={2} data={dataHome} sizeIcon={80} /> */}
           <IconList />
         </View>
 
         <View style={styles.bottom} />
       </ScrollView>
       <Image source={require('images/wave.png')} style={styles.bgImg} />
-      {modalSmartOTP.smartOTP && (
-        <Modal
-          visible={modalSmartOTP.smartOTP}
-          onClose={() => setFirstLogin(false)}
-          title="Nhanh và bảo mật hơn với smart OTP"
-          content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label="Cài smart OTP ngay"
-                onPress={modalSmartOTP.onGoSmartOTP}
-              />
-              <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
-                <Text style={styles.underline}>Không, cảm ơn</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={modalSmartOTP.onClose}>
-                <Text style={styles.underline}>Nhắc tôi sau</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      )}
-      {KYC && (
-        <Modal
-          visible={KYC}
-          onClose={() => checkInfo({value: false})}
-          title={translation.notification}
-          content="Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn."
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label="Định danh"
-                onPress={() => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD)}
-              />
-              <TouchableOpacity onPress={() => checkInfo({value: false})}>
-                <Text style={styles.underline}>Nhắc tôi sau</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      )}
-      {connectBank && (
-        <Modal
-          visible={connectBank}
-          onClose={() => checkInfo({value: false})}
-          title={translation.notification}
-          content="Liên kết ngân hàng để thực hiện giao dịch."
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label={translation.connect_now}
-                onPress={() => onNavigate(SCREEN.MAP_BANK_FLOW)}
-              />
-              <TouchableOpacity onPress={() => checkInfo({value: false})}>
-                <Text style={styles.underline}>Nhắc tôi sau</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      )}
+
       {firstLogin && (
         <Modal
           visible={firstLogin}
@@ -269,9 +175,7 @@ const styles = StyleSheet.create({
   buttonGroup: {
     alignItems: 'center',
   },
-  underline: {
-    textDecorationLine: 'underline',
-  },
+
   bgImg: {
     width: scale(375),
     height: scale(375),

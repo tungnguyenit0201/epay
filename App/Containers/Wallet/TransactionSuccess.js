@@ -59,12 +59,23 @@ const TransactionResult = () => {
               );
             })}
 
-            <View style={[styles.total]}>
-              <Text style={styles.textLeft}>Hỗ trợ khiếu nại</Text>
-
-              <Text bold style={styles.textRight}>
-                Gọi 1900-0000
-              </Text>
+            <View style={[styles.wtotal, base.shadow]}>
+              <Image
+                source={require('images/naptien/BgSupport.png')}
+                style={styles.bgToal}
+              />
+              <View style={[styles.total]}>
+                <Image
+                  source={require('images/naptien/Call.png')}
+                  style={[{width: 20, height: 20}]}
+                />
+                <Text color={Colors.white} ml={10}>
+                  Hỗ trợ khiếu nại
+                </Text>
+                <Text color={Colors.white} bold style={base.leftAuto}>
+                  Gọi 1900-0000
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -73,30 +84,22 @@ const TransactionResult = () => {
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
+              bgImg={0}
               bg={Colors.white}
               border={Colors.cl1}
               color={Colors.cl1}
-              label={translation.save_photo}
+              label="Về trang chủ"
               labelStyle={{fontSize: 14}}
-              onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
+              onPress={() => Navigator.navigate(SCREEN.HOME)}
             />
           </Col>
           <Col space={10} width="50%">
             <Button
-              type={1}
-              label={translation.share_photo}
-              onPress={() => Navigator.navigate(SCREEN.NOTIFICATION)}
+              label="Thêm giao dịch"
+              onPress={() => Navigator.navigate(SCREEN.TOP_UP)}
             />
           </Col>
         </Row>
-        <Pressable
-          onPress={() => {
-            Navigator.push(SCREEN.HOME);
-          }}>
-          <Text centered mt={10} style={styles.linkHome}>
-            Về trang chủ
-          </Text>
-        </Pressable>
       </View>
     </>
   );
@@ -131,14 +134,27 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
+  wtotal: {
+    position: 'relative',
+    marginTop: 20,
+  },
+
   total: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor: Colors.l3,
-    borderWidth: 1,
+    alignItems: 'center',
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    //paddingVertical: 10,
     borderRadius: 10,
+    height: 44,
+  },
+  bgToal: {
+    width: scale(343),
+    height: scale(40),
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    maxWidth: '100%',
   },
   textLeft: {
     color: Colors.cl3,

@@ -3,14 +3,21 @@ import {useRef, useState} from 'react';
 import ImageEditor from '@react-native-community/image-editor';
 import {useWindowDimensions, Platform} from 'react-native';
 import {scale} from 'utils/Functions';
+import {usePermission} from 'context/Common/utils';
 
 const useDropImage = () => {
   const camera = useRef();
   const [image, setImage] = useState(null);
-  const [showCamera, setShowCamera] = useState(false);
+  const [showCamera, setShow] = useState(false);
   const diemsion = useWindowDimensions();
   let [loading, setLoading] = useState(false);
-
+  const {checkPermission} = usePermission();
+  const setShowCamera = async value => {
+    let result = await checkPermission(
+      () => setShow(value),
+      () => setShow(false),
+    );
+  };
   const dropImage = async capturedImg => {
     const {uri, width, height} = capturedImg;
     // tỉ lệ màn hình so với tỉ lệ image

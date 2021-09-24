@@ -213,7 +213,7 @@ const VerifyUserInfo = ({route}) => {
 
           <View
             style={[styles.wrap, styles.py1, styles.bgWhite, styles.blockBtn]}>
-            <Button label="Đã hiểu" bold />
+            <Button label="Đã hiểu" bold onPress={onHideModal} />
           </View>
         </View>
       </Modal>
@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
   },
   guildBtn: {
     position: 'absolute',
-    right: 15,
-    top: 65,
+    right: 20,
+    top: 72,
   },
   alignCenter: {alignItems: 'center'},
   triangleDown: {

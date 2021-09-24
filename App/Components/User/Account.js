@@ -72,15 +72,30 @@ const Account = () => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={[base.row]} onPress={mapBank}>
-        <Image
-          style={{width: 40, height: 40}}
-          source={require('images/profile/plus2.png')}
-        />
-        <Text semibold ml={10}>
-          Liên kết ngân hàng ngay
-        </Text>
-      </TouchableOpacity>
+      {listConnectBank?.length ? (
+        listConnectBank.map(({BankName, BankLogoUrl}) => (
+          <View style={base.row}>
+            <Image
+              style={{width: 40, height: 40}}
+              source={{uri: BankLogoUrl}}
+              resizeMode="contain"
+            />
+            <Text semibold ml={10}>
+              {BankName}
+            </Text>
+          </View>
+        ))
+      ) : (
+        <TouchableOpacity style={[base.row]} onPress={onGetAllBank}>
+          <Image
+            style={{width: 40, height: 40}}
+            source={require('images/profile/plus2.png')}
+          />
+          <Text semibold ml={10}>
+            Liên kết ngân hàng ngay
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

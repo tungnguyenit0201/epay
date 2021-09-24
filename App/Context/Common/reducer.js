@@ -23,6 +23,7 @@ export default function commonReducer(state, action) {
         showModal: {
           ...state.showModal,
           [action?.modal?.type]: action?.modal?.value,
+          goBack: action?.goBack,
         },
       };
     default:
