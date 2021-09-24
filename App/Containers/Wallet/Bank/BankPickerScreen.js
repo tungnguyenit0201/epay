@@ -16,7 +16,6 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import BankImages from './images';
 import PopUpBankLink from './components/PopUpBankLink';
 import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
 
