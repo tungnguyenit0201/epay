@@ -3,6 +3,7 @@ import {
   StackActions,
   DrawerActions,
 } from '@react-navigation/native';
+import { SCREEN } from 'configs/Constants';
 
 let _container;
 
@@ -43,6 +44,42 @@ function navigate(name, params, key) {
     _container.dispatch(
       CommonActions.navigate({
         name,
+        params,
+        key,
+      }),
+    );
+  }
+}
+
+function showAlert(params, key) {
+  if (_container) {
+    _container.dispatch(
+      CommonActions.navigate(SCREEN.MODAL_NAVIGATION, {
+        screen: SCREEN.ALERT_MODAL,
+        params,
+        key,
+      }),
+    );
+  }
+}
+
+function showPopup(params, key) {
+  if (_container) {
+    _container.dispatch(
+      CommonActions.navigate(SCREEN.MODAL_NAVIGATION, {
+        screen: SCREEN.POPUP_MODAL,
+        params,
+        key,
+      }),
+    );
+  }
+}
+
+function showBottom(params, key) {
+  if (_container) {
+    _container.dispatch(
+      CommonActions.navigate(SCREEN.MODAL_NAVIGATION, {
+        screen: SCREEN.BOTTOM_MODAL,
         params,
         key,
       }),
@@ -170,6 +207,9 @@ const Navigator = {
   push,
   openDrawer,
   toggleDrawer,
+  showBottom,
+  showPopup,
+  showAlert,
 };
 
 if (__DEV__) {

@@ -1,15 +1,15 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
-import {SCREEN} from 'configs/Constants';
+import { SCREEN } from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTranslation} from 'context/Language';
+import { useTranslation } from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform} from 'react-native';
-import {useConfig} from 'context/Common/utils';
+import { Platform } from 'react-native';
+import { useConfig } from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
 
 const Stack = createStackNavigator();
@@ -78,11 +78,14 @@ import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
 import QRPay from 'containers/QRPay';
 import QRTransfer from 'containers/QRPay/Transfer';
+import BottomModal from 'containers/Modal/BottomModal';
+import PopupModal from 'containers/Modal/PopupModal';
+import AlertModal from 'containers/Modal/AlertModal';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
-  const {setLanguage} = useTranslation();
-  const {onGetConfig} = useConfig();
+  const { setLanguage } = useTranslation();
+  const { onGetConfig } = useConfig();
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
@@ -121,15 +124,47 @@ const AppNavigator = () => {
       });
   }, []); // eslint-disable-line
 
+  const modalOptions = {
+    animationEnabled: true,
+    cardOverlayEnabled: true,
+    cardStyle: {
+      backgroundColor: 'rgba(0,0,0,0.15)',
+    },
+    cardStyleInterpolator: ({ current: { progress } }) => {
+      return {
+        cardStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 0.5, 0.9, 1],
+            outputRange: [0, 0.25, 0.7, 1],
+          })
+        },
+        overlayStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 0.25],
+            extrapolate: "clamp",
+          })
+        }
+      }
+    }
+  }
+
   return (
     <NavigationContainer ref={Navigator.setContainer}>
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
+          mode="modal"
+          headerMode="none"
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
           }}>
+          <Stack.Screen
+            name={SCREEN.MODAL_NAVIGATION}
+            component={ModalNavigation}
+            options={modalOptions}
+          />
           <Stack.Screen
             name={SCREEN.TAB_NAVIGATION}
             component={TabNavigation}
@@ -273,5 +308,34 @@ const AppNavigator = () => {
     </NavigationContainer>
   );
 };
+
+const ModalNavigation = () => {
+  return (
+    <Stack.Navigator
+      mode="modal"
+      headerMode="none"
+      screenOptions={{
+        ...TransitionPresets.ModalSlideFromBottomIOS,
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'transparent',
+          opacity: 0.99,
+        },
+      }}>
+      <Stack.Screen
+        name={SCREEN.ALERT_MODAL}
+        component={AlertModal}
+      />
+      <Stack.Screen
+        name={SCREEN.POPUP_MODAL}
+        component={PopupModal}
+      />
+      <Stack.Screen
+        name={SCREEN.BOTTOM_MODAL}
+        component={BottomModal}
+      />
+    </Stack.Navigator>
+  )
+}
 
 export default AppNavigator;
