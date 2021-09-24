@@ -12,7 +12,7 @@ import {SCREEN} from 'configs/Constants';
 import {useVerifyInfo} from 'context/User/utils';
 import Progress from 'components/User/VerifyInfo/Progress';
 import SelectImage from 'components/User/VerifyInfo/SelectImage';
-import DropImage from 'components/User/VerifyInfo/DropImage';
+import CapturePicture from 'components/User/VerifyInfo/CapturePicture';
 import {useTranslation} from 'context/Language';
 
 const VerifyIdentityCard = ({route}) => {
@@ -34,7 +34,7 @@ const VerifyIdentityCard = ({route}) => {
         />
       </HeaderBg>
       <View style={[base.container, {paddingTop: 20}]}>
-        <DropImage
+        <CapturePicture
           title="Hình minh họa" // TODO: translate
           onDropImage={value => onChange('Avatar', value)}
           cameraType="front"
