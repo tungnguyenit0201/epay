@@ -26,7 +26,6 @@ const History = () => {
   const red = '#D80000';
   const {historyData, onDetail, onFilter, onSearch, onGetHistory} =
     useHistory();
-
   const [showModal, setShowModal] = useState(false);
   const onShowModal = () => {
     setShowModal(true);
@@ -66,54 +65,51 @@ const History = () => {
     </TouchableOpacity>
   );
 
-  const renderTransactionSections = data => {
+  const renderTransactionSections = ({item}) => {
     const blue = '#1F5CAB';
-    return data.map(item => {
-      let title = item?.Description;
-      if (!title) {
-        title = TRANS_DETAIL.SERVICE.find(
-          x => x.value === item?.TransType,
-        ).label;
-        title = translation[title] || title;
-      }
-      return (
-        <TouchableOpacity
-          key={item?.TransCode}
-          style={[
-            styles.px1,
-            styles.flexRow,
-            styles.alignCenter,
-            styles.blockTransaction,
-          ]}
-          onPress={() => onDetail(item)}>
-          <View style={styles.blockCardTick}>
-            <Image
-              source={Images.TransactionHistory.CardTick}
-              style={styles.iconCardTick}
-            />
+    let title = item?.Description;
+    if (!title) {
+      title = TRANS_DETAIL.SERVICE.find(x => x.value === item?.TransType).label;
+      title = translation[title] || title;
+    }
+
+    return (
+      <TouchableOpacity
+        key={item?.TransCode}
+        style={[
+          styles.px1,
+          styles.flexRow,
+          styles.alignCenter,
+          styles.blockTransaction,
+        ]}
+        onPress={() => onDetail(item)}>
+        <View style={styles.blockCardTick}>
+          <Image
+            source={Images.TransactionHistory.CardTick}
+            style={styles.iconCardTick}
+          />
+        </View>
+        <View style={[styles.flex1, styles.pl2]}>
+          <Text style={[styles.textSize2, styles.mb1]}>{title}</Text>
+          <View style={[styles.flexRow, styles.justifyBetween, styles.flex1]}>
+            <Text style={[styles.textSize1, {color: gray}]}>
+              {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT).format(
+                'hh:mm   DD/MM/YYYY',
+              )}
+            </Text>
+            <Text
+              fs="md"
+              bold
+              style={
+                item?.isIncome ? {color: blue} : {color: Colors.Highlight}
+              }>
+              {(item?.isIncome ? '+' : '-') +
+                formatMoney(item?.TransAmount, 'đ')}
+            </Text>
           </View>
-          <View style={[styles.flex1, styles.pl2]}>
-            <Text style={[styles.textSize2, styles.mb1]}>{title}</Text>
-            <View style={[styles.flexRow, styles.justifyBetween, styles.flex1]}>
-              <Text style={[styles.textSize1, {color: gray}]}>
-                {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT).format(
-                  'hh:mm   DD/MM/YYYY',
-                )}
-              </Text>
-              <Text
-                fs="md"
-                bold
-                style={
-                  item?.isIncome ? {color: blue} : {color: Colors.Highlight}
-                }>
-                {(item?.isIncome ? '+' : '-') +
-                  formatMoney(item?.TransAmount, 'đ')}
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      );
-    });
+        </View>
+      </TouchableOpacity>
+    );
   };
 
   const renderNotifyComponent = ({label, income, expense}) => (
@@ -227,7 +223,7 @@ const History = () => {
         <View style={[styles.blockShadow, styles.mx1]}>
           <FlatList
             data={historyData}
-            renderItem={renderMonth}
+            renderItem={renderTransactionSections}
             style={[styles.bgWhite, styles.borderRadius1, styles.blockShadow]}
             refreshControl={
               <RefreshControl

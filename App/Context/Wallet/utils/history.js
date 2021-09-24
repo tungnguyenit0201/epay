@@ -88,7 +88,8 @@ const useHistory = () => {
       setError(result);
       return;
     }
-    parseHistory(result?.ListTransHist);
+    // parseHistory(result?.ListTransHist);
+    setHistoryData(result?.ListTransHist);
   };
 
   useEffect(() => {
