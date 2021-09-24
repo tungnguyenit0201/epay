@@ -165,14 +165,14 @@ export const getHistoryDetail = async ({phone, TransCode}) => {
   return response;
 };
 
-export const getQRCodeInfo = async ({phone, QRCode}) => {
+export const getQRCodeInfo = async ({phone, QrCode}) => {
   let response = null;
   await request({
     url: API.WALLET.GET_QRCODE_INFO,
     method: 'post',
     params: {
       PhoneNumber: phone,
-      QRCode,
+      QrCode,
     },
     success: res => {
       response = res;

@@ -15,6 +15,8 @@ const SCREEN = {
   ACTIVE_SMART_OTP: 'ActiveSmartOTP',
   BANK_LIST: 'BankList',
   BANK_INFO: 'BankInfo',
+  LINKING_ADDRESS: 'LinkingAddress',
+  LINKING_CONFIRM: 'LinkingComfirm',
   BANK_RESULT: 'BankResult',
   NOTIFICATION: 'Notification',
   TRANSACTION_SUCCESS: 'TransactionSuccess',

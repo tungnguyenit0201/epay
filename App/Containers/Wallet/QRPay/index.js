@@ -22,7 +22,6 @@ const QRPay = () => {
   const {width, height} = useWindowDimensions();
   const top = getStatusBarHeight();
   const {
-    isScan,
     loading,
     image,
     setImage,
@@ -120,7 +119,7 @@ const QRPay = () => {
                     fw="700"
                     fs="h6"
                     color={Colors.white}
-                    onPress={() => onPhoto(true)}>
+                    onPress={() => onPhoto(false)}>
                     Chọn hình có sẵn
                   </Text>
                 </Pressable>

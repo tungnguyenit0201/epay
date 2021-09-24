@@ -19,6 +19,7 @@ export default ({
   bg,
   radius,
   fs,
+  fw,
   size,
   mt,
   mb,
@@ -71,6 +72,7 @@ export default ({
       <Text
         centered
         size={Fonts.H6}
+        fw={fw}
         style={[
           size == 'xxs' && {fontSize: scale(10)},
           size == 'xs' && {fontSize: scale(12)},
