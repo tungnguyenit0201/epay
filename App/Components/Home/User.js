@@ -12,7 +12,7 @@ import {hidePhone} from 'utils/Functions';
 const User = ({data, style}) => {
   const {personalInfo, phone} = useUser();
 
-  const {onGetAllNotify} = useNotify();
+  const {onGoNotify} = useNotify();
   return (
     // TODO: translate
     <View style={[base.shadow, styles.item, style]}>
@@ -25,7 +25,7 @@ const User = ({data, style}) => {
         <Text style={styles.text}>{hidePhone(phone)}</Text>
       </TouchableOpacity>
       <View>
-        <TouchableOpacity onPress={() => onGetAllNotify()} style={styles.wicon}>
+        <TouchableOpacity onPress={onGoNotify} style={styles.wicon}>
           {personalInfo?.Avatar ? (
             <Image
               style={{width: 40, height: 40}}

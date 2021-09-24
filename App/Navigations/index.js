@@ -29,9 +29,11 @@ import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
 import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
-import BankList from 'containers/Wallet/Bank/BankList';
-import BankInfo from 'containers/Wallet/Bank/BankInfo';
-import BankResult from 'containers/Wallet/Bank/BankResult';
+import BankList from 'containers/Wallet/Bank/LinkingList';
+import BankInfo from 'containers/Wallet/Bank/LinkingInfo';
+import LinkingAddress from 'containers/Wallet/Bank/LinkingAddress';
+import LinkingConfirm from 'containers/Wallet/Bank/LinkingConfirm';
+import BankResult from 'containers/Wallet/Bank/LinkingResult';
 import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
@@ -76,8 +78,10 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
-import QRPay from 'containers/QRPay';
-import QRTransfer from 'containers/QRPay/Transfer';
+import QRPay from 'containers/Wallet/QRPay';
+import QRTransfer from 'containers/Wallet/QRPay/Transfer';
+import TransferResults from 'containers/QRPay/TransferResults';
+import TransferSuccess from 'containers/QRPay/TransferSuccess';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -161,6 +165,14 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
+          <Stack.Screen
+            name={SCREEN.LINKING_ADDRESS}
+            component={LinkingAddress}
+          />
+          <Stack.Screen
+            name={SCREEN.LINKING_CONFIRM}
+            component={LinkingConfirm}
+          />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
           <Stack.Screen
@@ -172,6 +184,14 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.WITHDRAW} component={Withdraw} />
           <Stack.Screen name={SCREEN.MY_QR} component={MyQR} />
           <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
+          <Stack.Screen
+            name={SCREEN.TRANSFER_RESULTS}
+            component={TransferResults}
+          />
+          <Stack.Screen
+            name={SCREEN.TRANSFER_SUCCESS}
+            component={TransferSuccess}
+          />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />

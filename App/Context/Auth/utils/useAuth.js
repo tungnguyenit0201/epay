@@ -164,7 +164,6 @@ const useAuth = () => {
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
     const result = await checkPhone(phone);
-    console.log('result', result);
     setLoading(false);
     phone && setPhone(phone);
 
@@ -231,6 +230,7 @@ const useAuth = () => {
         );
         onGetAllInfo();
         onGetWalletInfo();
+        Navigator.reset(SCREEN.TAB_NAVIGATION);
         return;
     }
   };

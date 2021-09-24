@@ -46,8 +46,8 @@ const BankInfo = () => {
 
           <View style={styles.flex}>
             <Button
-              bg={cardOption ? '#6FC3EA' : Colors.BORDER}
-              color={!cardOption && '#666'}
+              bg={cardOption ? Colors.cl1 : Colors.BORDER}
+              color={!cardOption && Colors.l3}
               label="Thẻ"
               onPress={chooseCard}
               mr={10}
@@ -55,8 +55,8 @@ const BankInfo = () => {
             />
 
             <Button
-              bg={accountOption ? '#6FC3EA' : Colors.BORDER}
-              color={!accountOption && '#666'}
+              bg={accountOption ? Colors.cl1 : Colors.BORDER}
+              color={!accountOption && Colors.l3}
               label="Tài khoản"
               onPress={chooseAccount}
               style={styles.btn}
@@ -66,7 +66,7 @@ const BankInfo = () => {
 
         <View style={styles.mb_1}>
           <TextInput placeholder={translation.card_number} />
-          <Text style={{color: 'red'}}>
+          <Text style={{color: Colors.Highlight}}>
             {translation.incorrect_card_number}
           </Text>
         </View>
@@ -132,7 +132,7 @@ const BankInfo = () => {
 
         <Button
           mt={30}
-          onPress={() => Navigator.push(SCREEN.BANK_RESULT)}
+          onPress={() => Navigator.navigate(SCREEN.LINKING_ADDRESS)}
           label={translation.connect_now}
         />
       </View>
@@ -166,20 +166,20 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     height: 32,
   },
-  input: {
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: '#fff',
-  },
+  // input: {
+  //   borderColor: Colors.black,
+  //   borderRadius: 3,
+  //   backgroundColor: Colors.white,
+  // },
   mb_1: {marginBottom: 16},
   dot: {
     width: 3,
     height: 3,
     marginRight: 8,
-    backgroundColor: '#666666',
+    backgroundColor: Colors.l3,
     borderRadius: 100,
   },
-  text_gray: {color: '#666666'},
+  text_gray: {color: Colors.l3},
 });
 
 export default BankInfo;

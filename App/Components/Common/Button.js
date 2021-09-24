@@ -8,7 +8,7 @@ import Navigator from 'navigations/Navigator';
 
 export default ({
   onPress,
-  type,
+  bgImg = 1,
   label,
   label2,
   icon,
@@ -19,6 +19,7 @@ export default ({
   bg,
   radius,
   fs,
+  fw,
   size,
   mt,
   mb,
@@ -30,13 +31,17 @@ export default ({
   style,
   labelStyle,
   label2Style,
+  mode = 'contain', //outline
 }) => {
+  console.log(bgImg);
   return (
     <Pressable
       disabled={disabled}
       onPress={onPress}
       style={[
         styles.button,
+        mode == 'contain' && styles.contain,
+        mode == 'outline' && styles.outline,
         border && {borderColor: border, borderWidth: 1},
         radius && {borderRadius: radius},
         bg && {backgroundColor: bg},
@@ -54,8 +59,18 @@ export default ({
         style,
         disabled && {backgroundColor: Colors.g4},
       ]}>
-      {type && (
-        <Image source={require('images/BgHeader.jpg')} style={styles.bgImg} />
+      {bgImg === 1 && (
+        <>
+          <Image source={require('images/Button.png')} style={styles.bgImg} />
+          {disabled ? (
+            <Image
+              source={require('images/ButtonDisable.png')}
+              style={styles.bgImg}
+            />
+          ) : (
+            <Image source={require('images/Button.png')} style={styles.bgImg} />
+          )}
+        </>
       )}
 
       {!!leftIcon && (
@@ -68,6 +83,7 @@ export default ({
       <Text
         centered
         size={Fonts.H6}
+        fw={fw}
         style={[
           size == 'xxs' && {fontSize: scale(10)},
           size == 'xs' && {fontSize: scale(12)},
@@ -104,13 +120,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: scale(20),
     borderRadius: scale(8),
-    backgroundColor: Colors.cl1,
-    height: 48,
+    height: scale(48),
     position: 'relative',
     overflow: 'hidden',
+  },
+  contain: {
+    backgroundColor: Colors.cl1,
+  },
+  outline: {
+    borderWidth: 1,
+    borderColor: Colors.white,
   },
   xxs: {
     height: 20,
@@ -129,9 +149,10 @@ const styles = StyleSheet.create({
   bgImg: {
     position: 'absolute',
     left: 0,
-    right: 0,
     bottom: 0,
     top: 0,
+    width: scale(375),
+    height: scale(64),
     resizeMode: 'cover',
   },
 

@@ -12,6 +12,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {debugData} from 'components/Common/Debug';
 import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
+import curlirize from 'axios-curlirize';
 
 import AES from './AES';
 import RSA from './RSA';
@@ -81,10 +82,15 @@ async function request({
 }) {
   let root = API.ROOT;
   const requestMethod = axios;
+  __DEV__ && curlirize(requestMethod);
+
   const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
   if (token) {
-    console.log('token', token);
-    headers = {...headers, Authorization: `Bearer ${token}`};
+    headers = {
+      ...headers,
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
   }
 
   if (typeof requestMethod[method] === 'function') {

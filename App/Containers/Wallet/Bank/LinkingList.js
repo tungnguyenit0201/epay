@@ -72,7 +72,7 @@ const BankList = () => {
     <TouchableOpacity
       style={styles.item}
       onPress={() => {
-        Navigator.push(screen);
+        Navigator.navigate(screen);
       }}>
       <View
         style={{

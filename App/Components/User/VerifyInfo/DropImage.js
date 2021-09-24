@@ -1,4 +1,4 @@
-import React, {PureComponent, useRef, useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -15,12 +15,18 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
+const DropImage = ({
+  onDropImage,
+  title,
+  style,
+  cameraType = 'back',
+  draft,
+  identify,
+}) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
   const isFocused = useIsFocused();
-
   return (
     // TODO: translate
     <>
@@ -84,6 +90,7 @@ const DropImage = ({onDropImage, title, style, cameraType = 'back', draft}) => {
             <RNCamera
               ref={camera}
               style={styles.preview}
+              captureAudio={false}
               type={
                 cameraType == 'back'
                   ? RNCamera.Constants.Type.back

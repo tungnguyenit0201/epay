@@ -77,7 +77,7 @@ const ListItem = ({
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item, index) => item.name}
+          keyExtractor={(item, index) => `${Math.random(1, 100)}-simple`}
           //showsHorizontalScrollIndicator={true}
           horizontal={true}
           style={style}
