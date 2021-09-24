@@ -23,12 +23,13 @@ import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'context/Language';
 import {Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {item} = params || {};
   const [bankAccount, setBankAccount] = useState('');
-  const {bank, ic} = item || {};
+  const {bank, kycInfo, optionKyc} = item || {};
   const errorMessage = 'Vui lòng nhập thông tin số thẻ/tài khoản';
   const [err, setShowErr] = useState('');
 
@@ -65,10 +66,14 @@ export default function (props) {
   const onSubmit = () => {
     const isValid = validateInfo?.();
     if (isValid) {
-      props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-        screen: SCREEN.BANK_LINKED,
-        params: {ic, bank, bankAccount},
-      });
+      if (optionKyc) {
+        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+          screen: MapBankRoutes.BankLinkKYCInfo,
+          params: {kycInfo, bank, bankAccount},
+        });
+      } else {
+        //open KYC flow
+      }
     }
   };
   const onFocus = () => {
@@ -78,12 +83,11 @@ export default function (props) {
   };
 
   const renderBankInput = () => (
-    <TextInput
+    <InputBlock
       placeholder={'Nhập số tài khoản/Số thẻ'}
       value={bankAccount}
       onChangeText={onChangeBankNumber}
       keyboardType={'numeric'}
-      style={{marginTop: 24}}
       error={err}
       showErrorLabel={true}
       onBlur={validateInfo}
@@ -99,7 +103,7 @@ export default function (props) {
         <Text style={styles.title}>NGUYEN VAN AN</Text>
         <View height={16} />
         <Text style={styles.subTitle}>CMND</Text>
-        <Text style={styles.title}>{ic?.label}</Text>
+        <Text style={styles.title}>{kycInfo?.label}</Text>
       </View>
     );
   };

@@ -18,6 +18,8 @@ import {
 import {useWallet} from 'context/Wallet';
 import _ from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {updatePersonalInfo, updateUserAddress} from 'services/user';
+import {useUserInfo} from 'context/User/utils';
 export const BANK_TYPE = {
   LIST_DOMESTIC_BANK: 'LIST_DOMESTIC_BANK',
   LIST_NAPAS_BANK: 'LIST_NAPAS_BANK',
@@ -203,6 +205,34 @@ const useBankInfo = () => {
     }
   };
 
+  const onUpdateUserAddress = async ({Address, Ward, County, Provincial}) => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await updateUserAddress({
+        phone,
+        Address,
+        Ward,
+        County,
+        Provincial,
+      });
+      setLoading(false);
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        dispatch({
+          type: 'SET_PERSONAL_ADDRESS',
+          data: {Address, Ward, County, Provincial},
+        });
+        Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
+          screen: MapBankRoutes.BankLinkConfirm,
+        });
+      } else {
+        setError(result);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return {
     onGetConnectedBank,
     onGetDomesticBanks,
@@ -213,6 +243,7 @@ const useBankInfo = () => {
     onGetNapasBanks,
     mapBank,
     goToBankLinked,
+    onUpdateUserAddress,
   };
 };
 export default useBankInfo;

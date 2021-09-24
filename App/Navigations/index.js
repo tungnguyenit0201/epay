@@ -86,6 +86,7 @@ import TransferSuccess from 'containers/QRPay/TransferSuccess';
 import BottomModal from 'containers/Modal/BottomModal';
 import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
+import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -296,6 +297,10 @@ const AppNavigator = () => {
             component={SmartOTPResult}
           />
           <Stack.Screen name={SCREEN.MAP_BANK_FLOW} component={MapBankFlow} />
+          <Stack.Screen
+            name={SCREEN.BANK_KYC_SCREEN}
+            component={BankLinkKYCInfo}
+          />
           <Stack.Screen name={SCREEN.BANK_DETAIL} component={BankDetail} />
           <Stack.Screen name={SCREEN.LIMIT_SETTING} component={LimitSetting} />
           <Stack.Screen

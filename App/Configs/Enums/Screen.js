@@ -76,5 +76,6 @@ const SCREEN = {
   ALERT_MODAL: 'AlerModal',
   MAP_BANK_FLOW: 'MapBankFlow',
   BANK_PICKER_SCREEN: 'BankPickerScreen',
+  BANK_KYC_SCREEN: 'BankKYCInfo',
 };
 export default SCREEN;

@@ -1,207 +1,133 @@
-import React, {useState} from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  HeaderBg,
-  Header,
-  Icon,
-  Text,
-  InputBlock,
-  Row,
-  Col,
-  TextInput,
-  Button,
-} from 'components';
-import {useRoute} from '@react-navigation/native';
-import {useTranslation} from 'context/Language';
-import {Colors, Fonts, Spacing} from 'themes';
+import React, {useEffect, useRef} from 'react';
+import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {Button, Header, InputBlock, Radio, HeaderBg, Text} from 'components';
+import {GENDER, SCREEN, TEXT} from 'configs/Constants';
+import Navigator from 'navigations/Navigator';
+import {use} from '@react-navigation/native';
+import {Formik, useFormikContext} from 'formik';
+import {addressSchema} from 'utils/ValidationSchemas';
 import {scale} from 'utils/Functions';
-export default function (props) {
+import {useSelectRegion, useUserInfo} from 'context/User/utils';
+import {useUser} from 'context/User';
+import _ from 'lodash';
+import {useTranslation} from 'context/Language';
+import {useBankInfo} from 'context/Wallet/utils';
+
+const BankLinkKYCInfo = () => {
+  // TODO : translation
+  const {onUpdateUserAddress} = useBankInfo();
   const translation = useTranslation();
-  const {params} = useRoute() || {};
-  const {item} = params || {};
-  const [bankAccount, setBankAccount] = useState('');
-  const {bank, ic} = item || {};
-  const renderBankInfo = () => {
-    return (
-      <View
-        style={[styles.shadow, {flexDirection: 'row', alignItems: 'center'}]}>
-        <Image
-          source={{uri: bank?.BankLogoUrl}}
-          style={{
-            // width: scale(32),
-            height: scale(32),
-            aspectRatio: 2,
-            marginRight: 12,
-          }}
-          resizeMode={'contain'}
-        />
-        <Text bold={true} size={Fonts.H6}>
-          {bank?.BankName || ''}
-        </Text>
-      </View>
-    );
-  };
-  const onChangeBankNumber = text => {
-    setBankAccount(text?.trim());
-  };
-  const renderBankInput = () => (
-    <TextInput
-      placeholder={'Nhập số tài khoản/Số thẻ'}
-      value={bankAccount}
-      onChangeText={onChangeBankNumber}
-      keyboardType={'numeric'}
-      style={{marginTop: 24}}
-    />
-  );
-  const renderCard = () => {
-    return (
-      <View style={[styles.shadow]}>
-        <Text style={styles.subTitle}>Họ và tên </Text>
-        <Text style={styles.title}>NGUYEN VAN AN</Text>
-        <View height={16} />
-        <Text style={styles.subTitle}>CMND</Text>
-        <Text style={styles.title}>{ic?.label}</Text>
-      </View>
-    );
-  };
-  const renderAddress = () => {
-    const policy =
-      '\u2022 Đã đăng ký dịch vụ SMS Banking tại ngân hàng\n\u2022 Số điện thoại ${sdt} đã đăng ký tại VCB\n\u2022 Số GTTT trùng khớp với thông tin đăng ký tại ngân hàng';
 
-    return (
-      <View>
-        <Text style={styles.title} bold={true}>
-          Điều kiện liên kết
-        </Text>
-        <Text>{policy?.replace('${sdt}', '0967828333')}</Text>
-      </View>
-    );
-  };
-  const renderAddIc = () => {
-    return (
-      <TouchableOpacity
-        style={{
-          borderRadius: 8,
-          borderColor: Colors.BORDER,
-          borderWidth: 1,
-          paddingHorizontal: 18,
-          paddingVertical: 8,
-          marginVertical: 16,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text size={Fonts.H6}>Thêm giấy tờ tùy thân khác </Text>
-        <View flex={1} />
-        <Image
-          source={require('./images/icon_plus.png')}
-          style={{width: 22, aspectRatio: 1}}
-          resizeMode={'contain'}
-        />
-      </TouchableOpacity>
-    );
-  };
-  const onSubmit = () => {};
-  const renderButton = () => {
-    return (
-      <View style={styles.shadowButton}>
-        <Button
-          label={translation.continue}
-          bold
-          size="lg"
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={onSubmit}
-        />
-      </View>
-    );
-  };
+  const {userInfo, region} = useUser();
+  const {personalAddress} = userInfo; //todo: from param
+
+  const {goRegionSelect, onClearRegionData} = useSelectRegion({
+    callbackScreen: SCREEN.MAP_BANK_FLOW,
+  });
+
+  useEffect(() => {
+    return () => onClearRegionData();
+  }, []);
+
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View>
       <HeaderBg>
-        <Header back title={translation.connect_bank} />
+        <Header title={translation.connect_bank} back />
       </HeaderBg>
-
-      <ScrollView
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
-        {renderAddress()}
+      <ScrollView style={{backgroundColor: Colors.white}}>
+        <View style={[base.container, {paddingTop: 20}]}>
+          <Formik
+            initialValues={{
+              Address: personalAddress?.Address,
+              Ward: personalAddress?.Ward,
+              County: personalAddress?.County,
+              Provincial: personalAddress?.Provincial,
+            }}
+            validationSchema={addressSchema}
+            onSubmit={onUpdateUserAddress}>
+            <FormikContent region={region} goRegionSelect={goRegionSelect} />
+          </Formik>
+        </View>
       </ScrollView>
-      {renderButton()}
     </View>
   );
-}
+};
+
+const FormikContent = ({region, goRegionSelect}) => {
+  const {
+    handleChange: _handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    setFieldTouched,
+    touched,
+    errors,
+    values,
+  } = useFormikContext();
+
+  useEffect(() => {
+    if (region?.Provincial && region?.County) {
+      for (const [key, value] of Object.entries(region)) {
+        setFieldValue(key, value);
+      }
+    }
+  }, [region]); // eslint-disable-line
+
+  const handleChange = field => value => {
+    setFieldValue(field, value);
+    setFieldTouched(field, true, false);
+  };
+
+  return (
+    <View>
+      <InputBlock
+        label="Tỉnh / Thành phố"
+        error={touched.Provincial && errors.Provincial}
+        value={values.Provincial}
+        isSelect
+        rightIcon={Images.Down}
+        onPress={() => goRegionSelect('cites')}
+      />
+      <InputBlock
+        label="Quận"
+        error={touched.County && errors.County}
+        value={values.County}
+        isSelect
+        rightIcon={Images.Down}
+        onPress={() => goRegionSelect('districts')}
+      />
+      <InputBlock
+        label="Phường / Xã"
+        email
+        required
+        error={touched.Ward && errors.Ward}
+        value={values.Ward}
+        isSelect
+        rightIcon={Images.Down}
+        onPress={() => goRegionSelect('wards')}
+      />
+      <InputBlock
+        label="Địa chỉ"
+        required
+        onChange={handleChange('Address')}
+        onBlur={handleBlur('Address')}
+        error={touched.Address && errors.Address}
+        value={values.Address}
+      />
+      <View style={{paddingBottom: Spacing.PADDING}}>
+        <Button onPress={handleSubmit} label="Lưu" />
+      </View>
+    </View>
+  );
+};
+
+export default BankLinkKYCInfo;
+
 const styles = StyleSheet.create({
-  container: {
+  flexRow: {
     flex: 1,
-    paddingHorizontal: Spacing.PADDING,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  shadowButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 16,
-    backgroundColor: Colors.white,
-    shadowColor: 'rgba(0, 0, 0, 0.16)',
-    shadowOpacity: 1,
-    shadowOffset: {width: 1, height: 0},
-    borderRadius: 8,
-    paddingBottom: 24,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-  },
-  shadow: {
-    paddingHorizontal: 12,
-    paddingVertical: 16,
-    backgroundColor: Colors.BACKGROUND_BLUE,
-    shadowColor: 'rgba(0, 0, 0, 0.16)',
-    shadowOpacity: 1,
-    shadowOffset: {width: 0, height: 0},
-    borderRadius: 8,
-    marginVertical: 16,
-  },
-  subTitle: {color: '#666666', fontSize: Fonts.MD},
-  title: {fontSize: Fonts.H6, marginTop: 8},
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  pt_1: {paddingTop: 24},
-  flex: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
+    paddingVertical: 10,
   },
-  flex_2: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  items_center: {
-    alignItems: 'center',
-  },
-  btn: {
-    minWidth: 102,
-    borderRadius: 16,
-    height: 32,
-  },
-  input: {
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: '#fff',
-  },
-  mb_1: {marginBottom: 16},
-  dot: {
-    width: 3,
-    height: 3,
-    marginRight: 8,
-    backgroundColor: '#666666',
-    borderRadius: 100,
-  },
-  text_gray: {color: '#666666'},
 });

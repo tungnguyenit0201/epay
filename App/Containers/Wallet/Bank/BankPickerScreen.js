@@ -46,7 +46,6 @@ const BankPickerScreen = props => {
     onSearchDebounce(text);
   };
   const onContinueMap = item => {
-    const {ic, bank} = item;
     if (item) {
       navigation.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BankLinkInfo,
@@ -60,9 +59,8 @@ const BankPickerScreen = props => {
   const onPressBankLink = item => {
     //getKYC state
     const kyc = getKYC();
-
-    // showPOPUP
-    const icData = [{label: 'CMND *******789', value: 1}];
+    // kyc info-> reformat to kycInfo
+    const kycInfo = [{label: 'CMND *******789', value: 1}];
     Navigator.showPopup({
       screen: PopUpBankLink,
       title: '',
@@ -70,8 +68,9 @@ const BankPickerScreen = props => {
       type: DISPLAY_POPUP,
       params: {
         data: [],
-        icData,
-        onContinue: () => onContinueMap({bank: item, ic: icData[0]}),
+        kycInfo,
+        onContinue: optionKyc =>
+          onContinueMap({bank: item, kycInfo: kycInfo[0], optionKyc}),
       },
       style: {
         borderRadius: 20,
