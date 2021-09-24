@@ -118,6 +118,12 @@ export default {
     logoVbb: require('images/logo-bank/logo-10.png'),
     logoShb: require('images/logo-bank/logo-11.png'),
     logoTpb: require('images/logo-bank/logo-12.png'),
+    //------------
+    Deposit: require('images/icons/deposit.png'),
+    Withdraw: require('images/icons/withdraw.png'),
+    Exchange: require('images/icons/exchange.png'),
+    Plus: require('images/icons/add.png'),
+    Search: require('images/icons/search-normal.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
