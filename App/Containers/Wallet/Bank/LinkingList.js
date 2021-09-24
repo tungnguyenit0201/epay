@@ -3,16 +3,17 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  Text,
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {HeaderBg, Header, Icon, InputBlock, Row, Col} from 'components';
+import {HeaderBg, Header, Icon, Text, Row, Col, TextInput} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
+
+import ListBank from 'components/Wallet/Bank/ListBank';
 
 const BankList = () => {
   const translation = useTranslation();
@@ -68,85 +69,54 @@ const BankList = () => {
     },
   ];
 
-  const Item = ({title, icon, screen, iconHeight, iconWidth}) => (
-    <TouchableOpacity
-      style={styles.item}
-      onPress={() => {
-        Navigator.navigate(screen);
-      }}>
-      <View
-        style={{
-          width: 48,
-          height: 48,
-          borderRadius: 100,
-          backgroundColor: Colors.BORDER,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Image
-          source={icon}
-          style={{
-            width: iconWidth ? iconWidth : scale(26),
-            height: iconHeight ? scale(iconHeight) : scale(26),
-          }}
-        />
-      </View>
-      <Text centered style={{marginTop: 10}}>
-        {title}
-      </Text>
-    </TouchableOpacity>
-  );
-
   return (
-    <ScrollView style={styles.container}>
+    <>
       <HeaderBg>
         <Header back title={translation.connect_bank} />
-      </HeaderBg>
-
-      <View style={[styles.wrap, styles.mb_1, {marginTop: -16}]}>
-        <View>
-          <View style={styles.icon}>
-            <Image source={Images.TabBar.Search} style={styles.image} />
-          </View>
-
-          <InputBlock
-            placeholder={translation.which_back_are_you_looking_for}
-            style={styles.input_text}
+        <View style={styles.mt1}>
+          <TextInput
+            placeholder="Nhập tên Ngân hàng cần tìm "
+            placeholderTextColor={Colors.l5}
+            leftIcon={Images.ConnectBank.Search}
+            // value={value}
+            // onChange={_onChange}
+            // showErrorLabel={error}
+            // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
           />
         </View>
-      </View>
+      </HeaderBg>
 
-      <View
-        style={{
-          width: '100%',
-          height: 7,
-          backgroundColor: Colors.l4,
-        }}></View>
+      <ScrollView style={styles.container}>
+        <View style={[styles.wrap, styles.py1]}>
+          <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
+            <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
+              {translation.bank_linking}
+            </Text>
+            {/* {renderListBank} */}
 
-      <View style={[styles.wrap, styles.py_1]}>
-        <Text size={Fonts.h6} style={{fontWeight: 'bold', marginBottom: 16}}>
-          {translation.bank_linking}
-        </Text>
-        <Row space={10}>
-          {dataBlock.map((item, index) => {
-            return (
-              <Col
-                width={`33.333%`}
-                space={10}
-                key={index}
-                style={{marginBottom: 16}}>
-                <Item
-                  title={item.name}
-                  icon={item.icon}
-                  screen={item.screen}
-                  iconHeight={item.iconHeight}
-                />
-              </Col>
-            );
-          })}
-        </Row>
-      </View>
-    </ScrollView>
+            {/* use component ListBank to test layout,
+              delete when no use 
+              * component ListBank will not be use in future,
+              remember to delete it*/}
+            <ListBank listBank={dataBlock} />
+          </View>
+
+          <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
+            <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
+              {translation.bank_linking}
+            </Text>
+            <ListBank listBank={dataBlock} />
+          </View>
+
+          <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
+            <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
+              {translation.bank_linking}
+            </Text>
+            <ListBank listBank={dataBlock} />
+          </View>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
@@ -158,30 +128,35 @@ const styles = StyleSheet.create({
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
-  mb_1: {marginBottom: 24},
-  py_1: {paddingVertical: 25},
-  image: {
-    width: 20,
-    height: 20,
+  //--------------
+  mt1: {marginTop: 20},
+  //--------------
+  mb1: {marginBottom: Spacing.PADDING},
+  //--------------
+  py1: {
+    paddingTop: 25,
+    paddingBottom: Spacing.PADDING,
   },
-  icon: {
-    position: 'absolute',
-    top: 48,
-    left: 10,
-    paddingRight: 10,
-    borderRightWidth: 1,
-    borderStyle: 'solid',
-    borderColor: Colors.GRAY,
-    zIndex: 1,
+  //---------------
+  ptb1: {
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
-  input_text: {
-    paddingLeft: 50,
-    borderRightWidth: 1,
-    borderStyle: 'solid',
-    borderColor: Colors.l4,
-    backgroundColor: Colors.white,
+  //---------------
+  textSize1: {fontSize: 18},
+  //--------------
+  blockShadow: {
+    backgroundColor: Colors.BACKGROUNDCOLOR,
+    borderRadius: 8,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
   },
-  item: {alignItems: 'center'},
 });
 
 export default BankList;
