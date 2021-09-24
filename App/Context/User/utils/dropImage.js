@@ -13,11 +13,10 @@ const useDropImage = () => {
   let [loading, setLoading] = useState(false);
   const {checkPermission} = usePermission();
   const setShowCamera = async value => {
-    if (value == 1) {
-      let result = await checkPermission(() => setShow(value));
-      return;
-    }
-    setShow(value);
+    let result = await checkPermission(
+      () => setShow(value),
+      () => setShow(false),
+    );
   };
   const dropImage = async capturedImg => {
     const {uri, width, height} = capturedImg;

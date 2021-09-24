@@ -21,6 +21,7 @@ const Tab = createBottomTabNavigator();
 import User from 'containers/User';
 import Home from 'containers/Home';
 import Notification from 'containers/Notification';
+import EpaySuccess from 'containers/Notification/EpaySuccess';
 
 import {useTranslation} from 'context/Language';
 import {useCheckInfo} from 'context/Home/utils';
@@ -57,10 +58,10 @@ const TabNavigation = () => {
       getConnectBank();
     }, []); // eslint-disable-line
     const onCheck = async () => {
-      let permission = await checkPermission(async () => {
-        let result = await checkInfo(SCREEN.QRPAY);
-        Boolean(result) && navigation.navigate(SCREEN.QRPAY);
-      });
+      // let permission = await checkPermission(async () => {
+      let result = await checkInfo(SCREEN.QRPAY);
+      Boolean(result) && navigation.navigate(SCREEN.QRPAY);
+      // });
     };
     return (
       <View style={styles.container}>
@@ -152,6 +153,7 @@ const TabNavigation = () => {
         <Tab.Screen name={SCREEN.HOME} component={Home} />
         <Tab.Screen name={SCREEN.USER} component={User} />
         <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
+        <Tab.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
       </Tab.Navigator>
     </View>
   );

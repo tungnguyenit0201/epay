@@ -14,6 +14,7 @@ import MENU from './Enums/Menu';
 import IC_TPYE from './Enums/ICType';
 import GENDER from './Enums/Gender';
 import TERM_TYPE from './Enums/TermType';
+import TRANS_DETAIL from './Enums/TransDetail';
 
 export {
   TEXT,
@@ -32,4 +33,5 @@ export {
   IC_TPYE,
   GENDER,
   TERM_TYPE,
+  TRANS_DETAIL,
 };
