@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {
   check,
   PERMISSIONS,
@@ -10,7 +10,7 @@ import {useCommon} from '..';
 
 export const usePermission = () => {
   const {showModalCamera} = useModalPermission();
-  const checkPermission = async action => {
+  const checkPermission = async (action, goBack) => {
     try {
       const result = await check(PERMISSIONS.IOS.CAMERA);
       switch (result) {
@@ -23,7 +23,8 @@ export const usePermission = () => {
           console.log(
             'The permission has not been requested / is denied but requestable',
           );
-
+          !!action && action();
+          !!goBack && goBack();
           break;
         case RESULTS.LIMITED:
           console.log('The permission is limited: some actions are possible');
@@ -35,7 +36,8 @@ export const usePermission = () => {
           break;
         case RESULTS.BLOCKED:
           console.log('The permission is denied and not requestable anymore');
-          showModalCamera(true);
+
+          showModalCamera(true, goBack);
 
           break;
       }
@@ -50,8 +52,13 @@ export const usePermission = () => {
 
 export const useModalPermission = () => {
   const {dispatch, showModal} = useCommon();
-  const showModalCamera = (value = true) => {
-    dispatch({type: 'SHOW_MODAL', modal: {type: 'permissionCamera', value}});
+  const showModalCamera = (value = true, goBack) => {
+    dispatch({
+      type: 'SHOW_MODAL',
+      modal: {type: 'permissionCamera', value},
+      goBack,
+    });
+    showModal?.goBack && showModal?.goBack();
   };
   const askPermission = () => {
     try {

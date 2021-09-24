@@ -137,11 +137,6 @@ const QRPay = () => {
                   onPress={detectQRCode}
                 />
               </View>
-
-              {/* <Button
-                onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
-                mt={10}
-                label="Chuyển tiền số điện thoại"></Button> */}
             </View>
           </View>
         );
