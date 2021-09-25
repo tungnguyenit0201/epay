@@ -14,8 +14,8 @@ import { scale } from 'utils/Functions';
 import { useDropImage } from 'context/User/utils';
 import { useIsFocused } from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
-import useKYC from 'context/User/utils/useKYC';
 import KYCType from 'configs/Enums/KYCType';
+import { useVerifyInfo } from 'context/User/utils';
 
 const DropImage = ({
   onDropImage,
@@ -26,6 +26,7 @@ const DropImage = ({
   type,
   documentType,
   identify,
+  verifyParams,
 }) => {
   const { width, height } = useWindowDimensions();
   const { image, camera, showCamera, loading, setShowCamera, capturePicture } = useDropImage();
@@ -36,7 +37,7 @@ const DropImage = ({
     captureBackImage,
     captureFaceImage,
     SDKImage,
-  } = useKYC(documentType);
+  } = useVerifyInfo(verifyParams);
   const eKYC = kycType === KYCType.EKYC;
 
   useEffect(() => {

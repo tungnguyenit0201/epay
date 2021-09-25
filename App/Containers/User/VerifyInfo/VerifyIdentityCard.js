@@ -39,6 +39,7 @@ const VerifyIdentityCard = ({ route }) => {
             cameraType="front"
             style={styles.drop}
             draft={verifyInfo?.Avatar}
+            verifyParams={route?.params}
           />
         </View>
       </ScrollView>

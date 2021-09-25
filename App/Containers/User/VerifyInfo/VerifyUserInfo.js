@@ -75,6 +75,7 @@ const VerifyUserInfo = ({ route }) => {
             draft={verifyInfo?.ICFrontPhoto}
             style={styles.mb1}
             documentType={documentType}
+            verifyParams={route?.params}
           />
           {identityCard !== IC_TPYE.PASSPORT && (
             <DropImage
@@ -86,6 +87,7 @@ const VerifyUserInfo = ({ route }) => {
               style={styles.mb1}
               type={'back'}
               documentType={documentType}
+              verifyParams={route?.params}
             />
           )}
         </View>

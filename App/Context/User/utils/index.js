@@ -9,7 +9,6 @@ import useUserStatus from './userStatus';
 import useQRCode from './useQRCode';
 import useEmail from './email';
 import useDropImage from './dropImage';
-import useKYC from './useKYC';
 export {
   useVerifyInfo,
   useImagePicker,
@@ -24,5 +23,4 @@ export {
   useQRCode,
   useEmail,
   useDropImage,
-  useKYC,
 };

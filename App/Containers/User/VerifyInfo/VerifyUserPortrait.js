@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -30,6 +30,7 @@ import FooterContainer from 'components/Auth/FooterContainer';
 // import styles from 'themes/Style';
 
 const FormikCustom = ({ identifyCard, onContinue }) => {
+  const [acceptPolicy, setAcceptPolicy] = useState();
   const { goRegionSelect } = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
@@ -46,24 +47,29 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
     values,
   } = useFormikContext();
 
+  const GENDERS = [
+    { label: translation.male, value: 1 },
+    { label: translation.female, value: 2 },
+    { label: translation.others, value: 3 },
+  ];
+
   const handleChange = field => value => {
     setFieldValue(field, value);
     setFieldTouched(field, true, false);
   };
   useFocusEffect(
     useCallback(() => {
-      if (region?.Provincial && region?.County)
+      if (region?.Provincial && region?.County) {
         for (const [key, value] of Object.entries(region)) {
           setFieldValue(key, value);
         }
+      }
     }, [region]), // eslint-disable-line
   );
 
-  const GENDERS = [
-    { label: translation.male, value: 1 },
-    { label: translation.female, value: 2 },
-    { label: translation.others, value: 3 },
-  ];
+  const enableButton = useMemo(() => {
+    return acceptPolicy;
+  }, [acceptPolicy]);
 
   return (
     <>
@@ -186,10 +192,10 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
 
           <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
             <Checkbox
-            // onPress={setActive}
+              onPress={setAcceptPolicy}
             />
             <Text style={{ marginLeft: 5 }} fs="md">
-              {` Tôi đồng ý với các `}
+              {' Tôi đồng ý với các '}
               <TouchableOpacity
                 style={styles.mtMinus1}
               // onPress={() => onNavigate(SCREEN.AGREEMENT)}
@@ -223,7 +229,12 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
       </ScrollView>
       <View style={[styles.bgWhite]}>
         <FooterContainer>
-          <Button type={1} label={translation.done} onPress={handleSubmit} />
+          <Button
+            type={1}
+            label={translation.done}
+            onPress={handleSubmit}
+            disabled={!enableButton}
+          />
         </FooterContainer>
       </View>
     </>
@@ -244,7 +255,7 @@ const VerifyUserPortrait = ({ route }) => {
     County: extractCardInfo.District,
     Ward: extractCardInfo.Ward,
     Address: extractCardInfo.Address,
-    SexType: extractCardInfo.Gender ?? 1,
+    SexType: extractCardInfo.Gender,
   };
 
   return (

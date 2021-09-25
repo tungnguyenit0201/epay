@@ -3,6 +3,7 @@ import { request } from 'utils/Request';
 import { ERROR_CODE } from 'configs/Constants';
 
 const extractIdentityCardInfo = async ({
+    PhoneNumber,
     IdentityCardType,
     FrontPhoto,
     BackPhoto,
@@ -16,6 +17,7 @@ const extractIdentityCardInfo = async ({
             url,
             method: 'post',
             params: {
+                PhoneNumber,
                 IdentityCardType,
                 FrontPhoto,
                 BackPhoto,
@@ -35,6 +37,7 @@ const extractIdentityCardInfo = async ({
 };
 
 const compareFace = async ({
+    PhoneNumber,
     CardId,
     FacePhoto,
     bank,
@@ -47,6 +50,7 @@ const compareFace = async ({
             url,
             method: 'post',
             params: {
+                PhoneNumber,
                 CardId,
                 FacePhoto,
             },
@@ -65,6 +69,7 @@ const compareFace = async ({
 };
 
 const identityCardVerify = async ({
+    PhoneNumber,
     IdentityCardInfor,
     bank,
 }) => {
@@ -76,6 +81,7 @@ const identityCardVerify = async ({
             url,
             method: 'post',
             params: {
+                PhoneNumber,
                 IdentityCardInfor,
             },
             success: (res = {}) => {
