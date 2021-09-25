@@ -15,61 +15,73 @@ import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 
-const DropImage = ({
+const CapturePicture = ({
   onDropImage,
   title,
   style,
   cameraType = 'back',
   draft,
-  identify,
 }) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
   const isFocused = useIsFocused();
-
   return (
     // TODO: translate
     <>
       {!showCamera && (
-        <View style={[styles.wrap, style && style]}>
-          <View style={styles.content}>
-            <Text fs="h6" fw="600" centered bold style={styles.textUppercase}>
-              {title}
-            </Text>
-            <View style={{alignItems: 'center'}}>
-              <Button
-                size="sm"
-                onPress={() => {
-                  setShowCamera(1);
-                }}
-                label={'Chụp ảnh'}
-                style={styles.btn}
-                leftIcon={Images.VerifyUserInfo.camera}
-              />
-            </View>
-          </View>
+        <View
+          style={[
+            styles.wrap,
+            image?.path && {
+              paddingVertical: Spacing.PADDING / 2,
+            },
+            style && style,
+          ]}>
           {image?.path || draft ? (
             <View style={styles.wrapImg}>
               <Image
-                style={[styles.img]}
+                style={[
+                  styles.img,
+                  styles.imgFront,
+                  {
+                    width: image?.widthImg || draft?.widthImg,
+                    height: image?.heightImg || draft?.heightImg,
+                  },
+                ]}
+                imageStyle={styles.imgFront}
                 source={{uri: image?.path ? image?.path : draft?.path}}
                 resizeMode={'contain'}
               />
             </View>
           ) : (
-            <View style={styles.wrapImg}>
+            <>
+              <Text
+                size={Fonts.H6}
+                mb={10}
+                centered
+                bold
+                style={styles.textUppercase}>
+                {title}
+              </Text>
+
               <Image
-                style={[styles.img]}
-                source={
-                  identify
-                    ? Images.VerifyUserInfo.IdFront
-                    : Images.VerifyUserInfo.IdBack
-                }
-                resizeMode={'contain'}
+                style={styles.bgImg}
+                source={Images.VerifyUserInfo.wave}
+                resizeMode="contain"
               />
-            </View>
+            </>
           )}
+          <View style={{alignItems: 'center'}}>
+            <Button
+              onPress={() => {
+                setShowCamera(1);
+              }}
+              label={'Chụp ảnh'}
+              style={styles.btn}
+              leftIcon={Images.VerifyUserInfo.camera}
+            />
+          </View>
         </View>
       )}
       {showCamera && (
@@ -79,7 +91,11 @@ const DropImage = ({
               ref={camera}
               style={styles.preview}
               captureAudio={false}
-              type={RNCamera.Constants.Type.back}
+              type={
+                cameraType == 'back'
+                  ? RNCamera.Constants.Type.back
+                  : RNCamera.Constants.Type.front
+              }
               androidCameraPermissionOptions={{
                 title: 'Permission to use camera',
                 message: 'We need your permission to use your camera',
@@ -114,7 +130,11 @@ const DropImage = ({
                         height: height,
                       }}>
                       <Image
-                        source={Images.Camera.CameraSquare}
+                        source={
+                          cameraType == 'back'
+                            ? Images.Camera.CameraSquare
+                            : Images.Camera.Oval
+                        }
                         style={{width: width, height: height}}
                       />
                       {loading && <FWLoading />}
@@ -162,23 +182,9 @@ const DropImage = ({
 };
 const styles = StyleSheet.create({
   wrap: {
-    paddingVertical: scale(16),
-    backgroundColor: Colors.white,
+    paddingVertical: Spacing.PADDING * 3,
+    backgroundColor: Colors.l2,
     borderRadius: 8,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  content: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginHorizontal: scale(31),
   },
   preview: {
     flex: 1,
@@ -186,10 +192,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-  wrapImg: {paddingTop: Spacing.PADDING / 2, alignItems: 'center'},
+  wrapImg: {paddingBottom: Spacing.PADDING / 2, alignItems: 'center'},
   img: {
     width: '100%',
     height: scale(186),
+  },
+  imgFront: {
+    borderColor: Colors.cl1,
+    borderWidth: 1,
+    borderRadius: 5,
   },
 
   captureIcon: {
@@ -198,7 +209,11 @@ const styles = StyleSheet.create({
   },
 
   textUppercase: {textTransform: 'uppercase'},
-
+  bgImg: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
   btn: {
     width: 128,
     paddingHorizontal: 5,
@@ -216,4 +231,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
-export default DropImage;
+export default CapturePicture;
