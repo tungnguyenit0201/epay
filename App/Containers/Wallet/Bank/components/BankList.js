@@ -122,7 +122,10 @@ const BankList = forwardRef((props, ref) => {
   }, []);
 
   const search = _keysearch => {
-    if (_keysearch && !isSearch.current) {
+    if (_keysearch === '') {
+      setBankData(allBank.current);
+      isSearch.current = false;
+    } else if (_keysearch && !isSearch.current) {
       isSearch.current = true;
       const filterdata = allBank.current?.filter?.(
         item => item.BankName?.toLowerCase()?.indexOf?.(_keysearch) !== -1,

@@ -72,6 +72,20 @@ export const newPasswordSchema = yup.object().shape({
     .label('Xác nhận mật khẩu'),
 });
 
+export const napasSchema = yup.object().shape({
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'),
+  Ward: yup.string().required('Phương không được bỏ trống.'),
+  County: yup.string().required('Quận không được bỏ trống.'),
+  Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
+});
+
+export const visaSchema = yup.object().shape({
+  Address: yup.string().required('Địa chỉ không được bỏ trống.'),
+  Ward: yup.string().required('Phương không được bỏ trống.'),
+  County: yup.string().required('Quận không được bỏ trống.'),
+  Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
+});
+
 export const addressSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
   Ward: yup.string().required('Phương không được bỏ trống.'),
@@ -90,6 +104,7 @@ export const verifyUserSchema = yup.object().shape({
   ICNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
   DateOfBirth: yup.string().required('Ngày sinh không được bỏ trống.'),
 });
+
 export const nameSchema = yup.object().shape({
   FullName: yup.string().required('Tên không được bỏ trống.').max(100),
 });

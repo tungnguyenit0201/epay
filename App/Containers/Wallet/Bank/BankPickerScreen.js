@@ -42,7 +42,13 @@ const BankPickerScreen = props => {
 
   const onChange = text => {
     setKeySearch(text);
-    onSearchDebounce(text);
+    if (keysearch === '') {
+      visaRef.current?.search?.('');
+      bankLinkRef.current?.search?.('');
+      napasRef.current?.search?.('');
+    } else {
+      onSearchDebounce(text);
+    }
   };
   const onContinueMap = item => {
     if (item) {
@@ -55,6 +61,7 @@ const BankPickerScreen = props => {
   const getKYC = () => {
     //getKYC state
   };
+
   const onPressBankLink = item => {
     //getKYC state
     const kyc = getKYC();
@@ -75,6 +82,24 @@ const BankPickerScreen = props => {
         borderRadius: 20,
       },
     });
+  };
+
+  const onPressBankNapas = item => {
+    if (item) {
+      navigation.push(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankCardInfo,
+        params: {item: item, type: BANK_TYPE.LIST_NAPAS_BANK},
+      });
+    }
+  };
+
+  const onPressInternationalBank = item => {
+    if (item) {
+      navigation.push(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankCardInfo,
+        params: {item: item, type: BANK_TYPE.LIST_INTERNATIONAL_BANK},
+      });
+    }
   };
 
   const renderSearchView = () => {
@@ -112,16 +137,18 @@ const BankPickerScreen = props => {
           callback={onPressBankLink}
         />
         <BankList
-          ref={napasRef}
+          ref={visaRef}
           title={'Ngân hàng thanh toán Quốc tế'}
           key={'InternationalBank'}
           type={BANK_TYPE.LIST_INTERNATIONAL_BANK}
+          callback={onPressInternationalBank}
         />
         <BankList
-          ref={visaRef}
+          ref={napasRef}
           title={'Ngân hàng nội địa '}
           key={'NapasBank'}
           type={BANK_TYPE.LIST_NAPAS_BANK}
+          callback={onPressBankNapas}
         />
       </ScrollView>
     </View>

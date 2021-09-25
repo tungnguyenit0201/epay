@@ -7,7 +7,8 @@ import BankLinkResult from './BankLinkResult';
 import BankLinkKYCInfo from './BankLinkKYCInfo';
 import BankLinkConfirm from './BankLinkConfirm';
 import BankLinkInfo from './BankLinkInfo';
-import BankLinkOTP from 'containers/Wallet/Bank/BankLinkOTP';
+import BankCardInfo from './BankCardInfo';
+import BankLinkOTP from './BankLinkOTP';
 const Stack = createNativeStackNavigator();
 
 const MapBankFlow = () => {
@@ -57,12 +58,18 @@ const MapBankFlow = () => {
         component={BankLinkOTP}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name={MapBankRoutes.BankCardInfo}
+        component={BankCardInfo}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
 
 export default MapBankFlow;
 export const MapBankRoutes = {
+  BankCardInfo: 'BankCardInfo',
   BankLinked: 'BankLinked',
   BankDetail: 'BankDetail',
   BankPickerScreen: 'BankPickerScreen',

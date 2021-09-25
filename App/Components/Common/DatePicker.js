@@ -48,11 +48,17 @@ export default ({
 
       <Pressable
         onPress={showDatePicker}
-        style={[styles.wrap, error && styles.error]}>
+        style={[styles.wrap, error && styles.error, style]}>
         <View style={{flex: 1}}>
-          <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
-            {value}
-          </Text>
+          {!value && placeholder ? (
+            <Text color={Colors.l5} style={styles.pl1}>
+              {placeholder}
+            </Text>
+          ) : (
+            <Text color={value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
+              {value}
+            </Text>
+          )}
         </View>
         <View
           style={[
