@@ -162,6 +162,8 @@ export default {
     cmndBlur: require('images/identity-card/cmnd-blur.png'),
     cmndDark: require('images/identity-card/cmnd-dark.png'),
     cmndFail: require('images/identity-card/cmnd-fail.png'),
+    IdFront: require('images/identity-card/Front.png'),
+    IdBack: require('images/identity-card/Back.png'),
   },
   TransactionHistory: {
     filter: require('images/icons/filter.png'),

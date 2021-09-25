@@ -66,39 +66,38 @@ const VerifyUserInfo = ({route}) => {
           resizeMode="contain"
         />
       </HeaderBg>
-      <ScrollView style={base.wrap}>
-        <View style={[base.container, styles.pt1]}>
-          <DropImage
-            title="Ảnh mặt trước" // TODO: translate
-            onDropImage={value => {
-              onChange('ICFrontPhoto', value);
-              identityCard == IC_TPYE.PASSPORT &&
-                onChange('ICBackPhoto', value?.data);
-            }}
-            draft={verifyInfo?.ICFrontPhoto}
-            style={styles.mb1}
-          />
-          {identityCard != IC_TPYE.PASSPORT && (
-            <DropImage
-              title="Ảnh mặt sau" // TODO: translate
-              onDropImage={value => {
-                onChange('ICBackPhoto', value);
-              }}
-              draft={verifyInfo?.ICBackPhoto}
-              style={styles.mb1}
-            />
-          )}
-        </View>
-      </ScrollView>
-
-      <View style={[styles.wrap, styles.bgWhite, styles.py1]}>
-        <Button
-          disabled={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
-          label="Tiếp tục" // TODO: translate
-          onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
+      <ScrollView style={styles.container}>
+        <DropImage
+          title="Ảnh mặt trước" // TODO: translate
+          onDropImage={value => {
+            onChange('ICFrontPhoto', value);
+            identityCard == IC_TPYE.PASSPORT &&
+              onChange('ICBackPhoto', value?.data);
+          }}
+          identify
+          draft={verifyInfo?.ICFrontPhoto}
+          style={styles.mb3}
         />
+        {identityCard != IC_TPYE.PASSPORT && (
+          <DropImage
+            title="Ảnh mặt sau" // TODO: translate
+            onDropImage={value => {
+              onChange('ICBackPhoto', value);
+            }}
+            draft={verifyInfo?.ICBackPhoto}
+            style={styles.mb3}
+          />
+        )}
+      </ScrollView>
+      <View style={base.bgWhite}>
+        <View style={[styles.btnBottom, base.shadow]}>
+          <Button
+            disabled={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
+            label="Tiếp tục" // TODO: translate
+            onPress={() => onContinue(SCREEN.VERIFY_IDENTITY_CARD)}
+          />
+        </View>
       </View>
-
       <Modal
         isVisible={showModal}
         animationIn="slideInUp"
@@ -222,6 +221,10 @@ const VerifyUserInfo = ({route}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Colors.white,
+    padding: Spacing.PADDING,
+  },
   wrap: {paddingHorizontal: Spacing.PADDING},
   flexRow: {flexDirection: 'row'},
   flex1: {flex: 1},
@@ -240,7 +243,6 @@ const styles = StyleSheet.create({
   mb2: {marginBottom: 16},
   mb3: {marginBottom: 10},
   py1: {paddingVertical: Spacing.PADDING},
-  pt1: {paddingTop: 48},
   pt2: {paddingTop: 37},
   ptbZero: {padding: 0},
   ptb1: {padding: 4},
@@ -290,6 +292,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
+  },
+  btnBottom: {
+    padding: Spacing.PADDING,
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    // marginBottom: Spacing.PADDING,
   },
 });
 
