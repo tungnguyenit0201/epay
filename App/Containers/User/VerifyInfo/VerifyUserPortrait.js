@@ -78,6 +78,9 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
             value={values.ICFullName}
             required
             placeholder="Nhập họ & tên"
+            alphanumeric
+            trimOnBlur
+            multiline
           />
 
           <DatePicker
@@ -95,11 +98,7 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
               {translation.gender}
             </Text>
             <Radio
-              items={[
-                { label: translation.male, value: 1 },
-                { label: translation.female, value: 2 },
-                { label: translation.others, value: 3 },
-              ]}
+              items={GENDERS}
               onChange={handleChange('SexType')}
               selectedValue={values.SexType}
             />
@@ -115,6 +114,8 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
             required
             numeric
             placeholder="Nhập số GTTT"
+            alphanumeric
+            trimOnBlur
           />
 
           <DatePicker
@@ -135,9 +136,10 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
             style={styles.mb1}
             required
             placeholder="Nhập nơi cấp"
+            trimOnBlur
           />
         </View>
-        <View style={[styles.bgGray, styles.h1]}></View>
+        <View style={[styles.bgGray, styles.h1]} />
         <View style={[styles.wrap, styles.pt1]}>
           <InputBlock
             label={translation.address}
@@ -148,6 +150,7 @@ const FormikCustom = ({ identifyCard, onContinue }) => {
             style={{ marginBottom: 0 }}
             required
             placeholder="Nhập số nhà, đường,..."
+            trimOnBlur
           />
           <InputBlock
             label={translation.provice}
