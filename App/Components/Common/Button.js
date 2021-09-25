@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, Image, StyleSheet, View} from 'react-native';
-import {Colors, Fonts} from 'themes';
+import {Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 import {useSelector} from 'react-redux';
@@ -33,7 +33,6 @@ export default ({
   label2Style,
   mode = 'contain', //outline
 }) => {
-  console.log(bgImg);
   return (
     <Pressable
       disabled={disabled}
@@ -124,6 +123,7 @@ const styles = StyleSheet.create({
     height: scale(48),
     position: 'relative',
     overflow: 'hidden',
+    paddingHorizontal: Spacing.PADDING,
   },
   contain: {
     backgroundColor: Colors.cl1,

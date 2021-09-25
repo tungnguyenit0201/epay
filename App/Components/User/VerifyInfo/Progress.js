@@ -5,7 +5,7 @@ import {Colors, Spacing} from 'themes';
 import LinearGradient from 'react-native-linear-gradient';
 
 const data = [
-  {name: 'Chụp hình cmnd'},
+  {name: 'Chụp ảnh GTTT'},
   {name: 'Chụp ảnh chân dung'},
   {name: 'Thông tin cá nhân'},
 ];

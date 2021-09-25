@@ -14,6 +14,7 @@ import {scale} from 'utils/Functions';
 import {useDropImage} from 'context/User/utils';
 import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
+import {IC_TPYE} from 'configs/Constants';
 
 const DropImage = ({
   onDropImage,
@@ -63,7 +64,9 @@ const DropImage = ({
                 style={[styles.img]}
                 source={
                   identify
-                    ? Images.VerifyUserInfo.IdFront
+                    ? identify == IC_TPYE.PASSPORT
+                      ? Images.VerifyUserInfo.Passport
+                      : Images.VerifyUserInfo.IdFront
                     : Images.VerifyUserInfo.IdBack
                 }
                 resizeMode={'contain'}
