@@ -74,7 +74,7 @@ const VerifyUserInfo = ({route}) => {
             identityCard == IC_TPYE.PASSPORT &&
               onChange('ICBackPhoto', value?.data);
           }}
-          identify
+          identify={identityCard}
           draft={verifyInfo?.ICFrontPhoto}
           style={styles.mb3}
         />
