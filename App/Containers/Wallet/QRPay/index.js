@@ -127,11 +127,13 @@ const QRPay = () => {
               <View style={styles.wrapBtn}>
                 <Button
                   label="Mã thanh toán"
+                  bgImg={0}
                   leftIcon={Images.Camera.QR}
                   mode="outline"
                   mr={Spacing.PADDING / 2}
                 />
                 <Button
+                  bgImg={0}
                   label="Quét mã QR"
                   leftIcon={Images.Camera.Scan}
                   onPress={detectQRCode}

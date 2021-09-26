@@ -164,6 +164,7 @@ export default {
     cmndFail: require('images/identity-card/cmnd-fail.png'),
     IdFront: require('images/identity-card/Front.png'),
     IdBack: require('images/identity-card/Back.png'),
+    Passport: require('images/identity-card/Passport.png'),
   },
   TransactionHistory: {
     filter: require('images/icons/filter.png'),

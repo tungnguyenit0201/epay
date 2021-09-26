@@ -19,7 +19,7 @@ import {useUserInfo} from 'context/User/utils';
 import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
-import {useWalletInfo} from 'context/Wallet/utils';
+import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
 import moment from 'moment';
 
 const useTouchID = ({onSuccess}) => {
@@ -160,6 +160,7 @@ const useAuth = () => {
   const {setError} = useError();
   const {setPhone, setToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
+  const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -230,6 +231,7 @@ const useAuth = () => {
         );
         onGetAllInfo();
         onGetWalletInfo();
+        onGetConnectedBank();
         Navigator.reset(SCREEN.TAB_NAVIGATION);
         return;
     }
