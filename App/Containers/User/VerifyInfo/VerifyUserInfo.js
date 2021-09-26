@@ -53,12 +53,18 @@ const VerifyUserInfo = ({route}) => {
     //TODO: translate
     <>
       <HeaderBg style={[styles.bgWhite, styles.headerContainer]}>
-        <Header back title={translation?.account_verification} />
-        <TouchableOpacity onPress={onShowModal} style={styles.guildBtn}>
-          <Text fs="md" color={Colors.white}>
-            Hướng dẫn
-          </Text>
-        </TouchableOpacity>
+        <Header
+          back
+          title={translation?.account_verification}
+          renderRightComponent={() => (
+            <TouchableOpacity onPress={onShowModal} style={styles.guildBtn}>
+              <Text fs="md" color={Colors.white}>
+                Hướng dẫn
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+
         <Progress step={1} />
         <Image
           source={Images.VerifyUserInfo.iconDown}
@@ -254,9 +260,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   guildBtn: {
-    position: 'absolute',
-    right: 20,
-    top: 72,
+    marginLeft: -Spacing.PADDING * 2,
   },
   alignCenter: {alignItems: 'center'},
   triangleDown: {

@@ -70,11 +70,9 @@ const Header = ({
           )}
         </View>
 
-        {!!renderRightComponent ? (
-          renderRightComponent()
-        ) : (
-          <View style={styles.rightIcon} />
-        )}
+        <View style={styles.rightIcon}>
+          {!!renderRightComponent && renderRightComponent()}
+        </View>
       </View>
     </View>
   );
