@@ -1,4 +1,4 @@
-import React, { useCallback, useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   StyleSheet,
   View,
@@ -13,39 +13,36 @@ import {
 } from 'components';
 import { Colors, Spacing, Images } from 'themes';
 import { useVerifyInfo, useSelectRegion } from 'context/User/utils';
-import { Formik, useFormikContext } from 'formik';
 import { useTranslation } from 'context/Language';
-import { verifyUserSchema } from 'utils/ValidationSchemas';
 import { useUser } from 'context/User';
-import { useFocusEffect } from '@react-navigation/native';
 import { SCREEN } from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 
-const FormikCustom = forwardRef(({
-  identifyCard,
-  onContinue,
-  onButtonEnabled,
-}, ref) => {
-  useImperativeHandle(ref, () => ({
-    handleSubmit,
-  }));
-
+const VerifyUserPortrait = ({ route }) => {
+  const { onUpdateAllInfo, onContinue, verifyInfo } = useVerifyInfo(route?.params);
+  const { extractCardInfo = {} } = verifyInfo || {};
+  const translation = useTranslation() || {};
   const [acceptPolicy, setAcceptPolicy] = useState();
+  const [error, setError] = useState({});
   const { goRegionSelect } = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
-  const translation = useTranslation();
   const { region } = useUser();
-  const {
-    handleChange: _handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-    setFieldTouched,
-    touched,
-    errors,
-    values,
-  } = useFormikContext();
+  const { wardEmpty } = region || {};
+  const { identifyCard } = route?.params || {};
+  const { ICType, label } = identifyCard || {};
+  const [info, setInfo] = useState({
+    ICFullName: extractCardInfo.FullName,
+    DateOfBirth: extractCardInfo.BirthDay,
+    ICNumber: extractCardInfo.CardNumber,
+    ICIssuedDate: extractCardInfo.IssueDate,
+    ICIssuedPlace: extractCardInfo.IssuePlace,
+    Provincial: extractCardInfo.Province,
+    County: extractCardInfo.District,
+    Ward: wardEmpty ? '' : extractCardInfo.Ward,
+    Address: extractCardInfo.Address,
+    SexType: extractCardInfo.Gender,
+  });
 
   const GENDERS = [
     { label: translation.male, value: 1 },
@@ -53,159 +50,206 @@ const FormikCustom = forwardRef(({
     { label: translation.others, value: 3 },
   ];
 
-  const handleChange = field => value => {
-    setFieldValue(field, value);
-    setFieldTouched(field, true, false);
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      if (region?.Provincial && region?.County) {
-        for (const [key, value] of Object.entries(region)) {
-          setFieldValue(key, value);
-        }
-      }
-    }, [region]),
-  );
+  const CARD_RULE = useMemo(() => {
+    return {
+      1: {
+        title: translation.IDCardNumber,
+        maxLength: 12,
+        minLength: 9,
+        fixedLength: true,
+        regex: '^[0-9]*$',
+        keyboardType: 'numeric',
+      },
+      2: {
+        title: translation.passportNumber,
+        regex: '^([a-zA-Z][0-9]+)$',
+        minLength: 8,
+        maxLength: 15,
+        keyboardType: 'default',
+      },
+      3: {
+        title: translation.militaryIDNumber,
+        regex: '^[0-9]*$',
+        minLength: 8,
+        maxLength: 8,
+        keyboardType: 'numeric',
+      },
+    };
+  }, [translation]);
 
   useEffect(() => {
-    onButtonEnabled?.(acceptPolicy);
-  }, [acceptPolicy]);
+    const { Provincial, County, Ward } = region;
+    setInfo({
+      ...info,
+      Provincial,
+      County,
+      Ward,
+    });
+  }, [region]);
+
+  useEffect(() => {
+    onBlurCardNumber();
+  }, [info.ICNumber]);
+
+  const cardRule = useMemo(() => {
+    return CARD_RULE[ICType] || {};
+  }, [ICType, CARD_RULE]);
+
+  const validateID = (value) => {
+    const { regex, title, fixedLength, minLength, maxLength } = cardRule || {};
+    const cardNumber = value || info.ICNumber || '';
+    const regexValid = new RegExp(regex).test(cardNumber);
+    if (cardNumber.length === 0) { return { valid: true, error: '' }; }
+    if (!regexValid) {
+      return { valid: false, error: translation.inputRegexError?.replace?.('$type', title) };
+    } else {
+      if (fixedLength) {
+        if (cardNumber.length !== minLength && cardNumber.length !== maxLength) {
+          return { valid: false, error: translation.inputRegexError?.replace?.('$type', title) };
+        }
+      } else if (cardNumber.length < minLength) {
+        return { valid: false, error: translation.inputRegexError?.replace?.('$type', title) };
+      }
+    }
+    return { valid: true, error: '' };
+  };
+
+  const onBlurCardNumber = () => {
+    const { error: _error } = validateID();
+    setError({ ...error, ICNumber: _error });
+  };
+
+  const handleChange = (key, value) => {
+    setInfo({ ...info, [key]: value });
+  };
+
+  const buttonEnabled = useMemo(() => {
+    return (
+      info.ICFullName
+      && (!error.ICNumber && info.ICNumber)
+      && info.DateOfBirth
+      && GENDERS.find(gender => gender.value === info.SexType)
+      && info.ICIssuedDate
+      && info.ICIssuedPlace
+      // && (originalInfo?.ValidDate ? info.ValidDate : true)
+      && info.Provincial
+      && info.County
+      && (wardEmpty ? true : info.Ward)
+      && info.Address
+      && acceptPolicy
+    );
+  }, [info, acceptPolicy, error]);
 
   return (
-    <>
-      <View style={styles.wrap}>
+    <BaseVerifyInfo
+      step={3}
+      showInstruction={false}
+      onPressButton={onUpdateAllInfo}
+      disableButton={!buttonEnabled}
+      buttonTitle={translation.updateInfo}>
+      <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
           style={styles.mb1}
-          onChange={handleChange('ICFullName')}
-          onBlur={handleBlur('ICFullName')}
-          error={touched.ICFullName && errors.ICFullName}
-          value={values.ICFullName}
+          onChange={value => handleChange('ICFullName', value)}
+          value={info.ICFullName}
+          error={error.ICFullName}
           required
           placeholder={translation?.inputFullName}
           alphanumeric
           trimOnBlur
-          multiline
-        />
-
+          multiline />
         <DatePicker
           label={translation.date_of_birth_ddmmyyyy}
-          onChange={handleChange('DateOfBirth')}
-          error={touched.DateOfBirth && errors.DateOfBirth}
-          onBlur={handleBlur('DateOfBirth')}
-          value={values.DateOfBirth}
+          value={info.DateOfBirth}
           required
-          placeholder="dd/mm/yyyy"
-        />
-
+          placeholder="dd/mm/yyyy" />
         <View>
           <Text medium mb={10}>
             {translation.gender}
           </Text>
           <Radio
             items={GENDERS}
-            onChange={handleChange('SexType')}
-            selectedValue={values.SexType}
-          />
+            onChange={value => handleChange('SexType', value)}
+            selectedValue={info.SexType} />
         </View>
-
         <InputBlock
-          label={identifyCard?.label || translation.enter_id_code}
-          onChange={handleChange('ICNumber')}
-          onBlur={handleBlur('ICNumber')}
-          error={touched.ICNumber && errors.ICNumber}
-          value={values.ICNumber}
+          label={label || translation.enter_id_code}
+          onChange={value => handleChange('ICNumber', value)}
+          value={info.ICNumber}
+          error={error.ICNumber}
           style={styles.mb1}
           required
           numeric
-          placeholder={translation?.inputIDNumber}
+          placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
-          trimOnBlur
-        />
-
+          trimOnBlur />
         <DatePicker
           label={translation.valid_date}
-          onChange={handleChange('ICIssuedDate')}
-          error={touched.ICIssuedDate && errors.ICIssuedDate}
-          onBlur={handleBlur('ICIssuedDate')}
-          value={values.ICIssuedDate}
+          onChange={value => handleChange('ICIssuedDate', value)}
+          value={info.ICIssuedDate}
           required
-          placeholder="dd/mm/yyyy"
-        />
+          placeholder="dd/mm/yyyy" />
         <InputBlock
-          label="Nơi cấp" // TODO: translate
-          onChange={handleChange('ICIssuedPlace')}
-          onBlur={handleBlur('ICIssuedPlace')}
-          error={touched.ICIssuedPlace && errors.ICIssuedPlace}
-          value={values.ICIssuedPlace}
+          label={translation?.issuedPlace}
+          onChange={value => handleChange('ICIssuedPlace', value)}
+          value={info.ICIssuedPlace}
+          error={error.ICIssuedPlace}
           style={styles.mb1}
           required
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
-        />
+          multiline />
       </View>
       <View style={[styles.bgGray, styles.h1]} />
       <View style={[styles.wrap, styles.pt1]}>
         <InputBlock
           label={translation.address}
-          onChange={handleChange('Address')}
-          onBlur={handleBlur('Address')}
-          error={touched.Address && errors.Address}
-          value={values.Address}
-          style={{ marginBottom: 0 }}
+          onChange={value => handleChange('Address', value)}
+          value={info.Address}
+          error={error.Address}
+          style={styles.address}
           required
           placeholder={translation?.inputAddress}
           trimOnBlur
-        />
+          multiline />
         <InputBlock
           label={translation.provice}
           rightIconBgGray={Images.Right}
-          error={touched?.Provincial && errors?.Provincial}
           isSelect
           required
-          value={values?.Provincial}
+          value={info?.Provincial}
+          error={error.Provincial}
           onPress={() => goRegionSelect('cites')}
-          defaultValue={translation.provice}
-        />
-
+          defaultValue={translation.provice} />
         <InputBlock
           label={translation.district}
           rightIconBgGray={Images.Right}
-          error={touched?.County && errors?.County}
           isSelect
           required
-          value={values?.County}
+          value={info?.County}
+          error={error.County}
           onPress={() => goRegionSelect('districts')}
-          defaultValue={translation.district}
-        />
+          defaultValue={translation.district} />
         <InputBlock
           label={translation.town}
           rightIconBgGray={Images.Right}
-          error={touched?.Ward && errors?.Ward}
           isSelect
-          required
-          value={values?.Ward}
-          onPress={() => goRegionSelect('wards')}
-          defaultValue={translation.town}
-        />
-
+          required={!wardEmpty}
+          value={info?.Ward}
+          error={error.Ward}
+          onPress={() => !wardEmpty && goRegionSelect('wards')}
+          defaultValue={translation.town} />
         <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
           <Checkbox onPress={setAcceptPolicy} />
-          <Text style={{ marginLeft: 5 }} fs="md">
+          <Text style={styles.policy} fs="md">
             {translation?.iAgreeWith}
-            <TouchableOpacity
-              style={styles.mtMinus1}
-            // onPress={() => onNavigate(SCREEN.AGREEMENT)}
-            >
+            <TouchableOpacity style={styles.mtMinus1}>
               <Text style={styles.firstLink}>{translation?.userAgreement}</Text>
             </TouchableOpacity>
             {' '}
             {translation?.and}
-            <TouchableOpacity
-              style={styles.mtMinus1}
-            // onPress={() => onNavigate(SCREEN.POLICY)}
-            >
+            <TouchableOpacity style={styles.mtMinus1}>
               <Text style={styles.firstLink}>
                 {translation?.privacyPolicy}
               </Text>
@@ -214,7 +258,6 @@ const FormikCustom = forwardRef(({
             {translation?.ofEPAY}
           </Text>
         </View>
-
         <Text
           onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}
           style={styles.underline}
@@ -223,62 +266,17 @@ const FormikCustom = forwardRef(({
           bold
           mb={48}
           fs="h6">
-          {translation?.verifyAgain}
+          {translation?.verifyAgainFromBeginning}
         </Text>
       </View>
-    </>
-  );
-});
-
-const VerifyUserPortrait = ({ route }) => {
-  const screenRef = useRef();
-  const [disableButton, setDisableButton] = useState();
-  const { onUpdateAllInfo, onContinue, verifyInfo } = useVerifyInfo(route?.params);
-  const { extractCardInfo = {} } = verifyInfo || {};
-  const translation = useTranslation();
-  const initialValues = {
-    ICFullName: extractCardInfo.FullName,
-    DateOfBirth: extractCardInfo.BirthDay,
-    ICNumber: extractCardInfo.CardNumber,
-    ICIssuedDate: extractCardInfo.IssueDate,
-    ICIssuedPlace: extractCardInfo.IssuePlace,
-    Provincial: extractCardInfo.Province,
-    County: extractCardInfo.District,
-    Ward: extractCardInfo.Ward,
-    Address: extractCardInfo.Address,
-    SexType: extractCardInfo.Gender,
-  };
-
-  const onButtonEnabled = (enable) => {
-    setDisableButton(!enable);
-  }
-
-  const onPressButton = () => {
-    screenRef?.current?.handleSubmit?.();
-  };
-
-  return (
-    <BaseVerifyInfo
-      step={3}
-      showInstruction={false}
-      onPressButton={onPressButton}
-      disableButton={disableButton}
-      buttonTitle={translation.done}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={verifyUserSchema}
-        onSubmit={onUpdateAllInfo}>
-        <FormikCustom
-          ref={screenRef}
-          identifyCard={route?.params?.identifyCard}
-          onContinue={onContinue}
-          onButtonEnabled={onButtonEnabled}
-        />
-      </Formik>
     </BaseVerifyInfo>
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: Spacing.PADDING,
+    marginTop: Spacing.PADDING,
+  },
   wrap: { paddingHorizontal: Spacing.PADDING },
   //---------------
   flexRow: { flexDirection: 'row' },
@@ -295,24 +293,17 @@ const styles = StyleSheet.create({
   pb1: { paddingBottom: 24 },
   //---------------
   underline: { textDecorationLine: 'underline' },
-  //---------------
-  bgWhite: { backgroundColor: Colors.white },
   bgGray: { backgroundColor: Colors.l4 },
   //---------------
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
   },
-  //---------------
-  triangleDown: {
-    position: 'absolute',
-    right: Spacing.PADDING * 2 + 10 / 2,
-    bottom: -9,
-    width: 20,
-    height: 10,
+  address: {
+    marginBottom: 0,
   },
-  button: {
-    marginVertical: 16,
+  policy: {
+    marginLeft: 5,
   },
 });
 export default VerifyUserPortrait;

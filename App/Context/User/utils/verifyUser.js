@@ -48,7 +48,7 @@ const useVerifyInfo = (initialValue = {}) => {
   const { onClearRegionData } = useSelectRegion();
   const { kycType } = userInfo;
   const [SDKImage, setSDKImage] = useState();
-  const strings = useTranslation();
+  const strings = useTranslation() || {};
   const { showError } = useAlert();
   const documentType = contentRef.current?.identifyCard?.ICType;
   const eKYC = kycType === KYCType.EKYC;
@@ -64,8 +64,8 @@ const useVerifyInfo = (initialValue = {}) => {
     (key === 'Avatar') && setDisabledAvatar(Boolean(!value));
   };
 
-  const onContinue = screen => {
-    Navigator.navigate(screen, contentRef.current);
+  const onContinue = (screen, params) => {
+    Navigator.navigate(screen, { ...contentRef.current, ...params, kycType });
   };
 
   const onUpdateIdentify = ({
@@ -161,6 +161,7 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const onUpdateAllInfo = async value => {
+    let resultContent;
     try {
       const updateInfo = { ...contentRef.current, ...value };
       if (eKYC) {
@@ -183,8 +184,14 @@ const useVerifyInfo = (initialValue = {}) => {
           Verified,
           Ward: value.Ward,
         });
+        resultContent = {
+          title: strings.verifySuccess,
+        };
       } else {
         await onUpdateIdentify(updateInfo);
+        resultContent = {
+          title: strings.kycPendingVerify,
+        };
       }
       await Promise.all([
         onUpdatePersonalInfo(updateInfo, false),
@@ -192,10 +199,14 @@ const useVerifyInfo = (initialValue = {}) => {
         onGetAllInfo(),
         onClearRegionData(),
       ]);
-      onContinue(SCREEN.VERIFY_SUCCESS);
     } catch (e) {
       const { ErrorMessage = strings?.unknownError } = e || {};
-      showError({ message: ErrorMessage });
+      resultContent = {
+        title: strings.verifyFailed,
+        message: ErrorMessage,
+      };
+    } finally {
+      onContinue(SCREEN.VERIFY_SUCCESS, { resultContent });
     }
   };
 
@@ -369,24 +380,6 @@ const useVerifyInfo = (initialValue = {}) => {
         ConsoleUtils.log('ERROR [extractCardInfo]', e);
         const { ErrorMessage = strings?.unknownError } = e || {};
         showError({ message: ErrorMessage });
-        // return {
-        //   'Address': '3123zzzz',
-        //   'BirthDay': '25-08-1991',
-        //   'CardID': 2201,
-        //   'CardNumber': '301382190',
-        //   'District': '',
-        //   'Extracted': 0,
-        //   'FullName': 'Nguyễn Thanh Tâm',
-        //   'Gender': 1,
-        //   'ICType': documentType,
-        //   'IssueDate': '20-07-2013',
-        //   'IssuePlace': 'Long An',
-        //   'Province': '',
-        //   'ValidDate': '',
-        //   'Verified': 3,
-        //   'Ward': '',
-        //   'Step': 0,
-        // };
       }
     } else {
       ConsoleUtils.warn('[extractCardInfo] Missing Data!');

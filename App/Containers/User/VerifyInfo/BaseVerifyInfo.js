@@ -87,6 +87,7 @@ const VerifyUserInfo = ({
               disabled={disableButton}
               label={buttonTitle}
               onPress={onPressButton}
+              bold
             />
           </View>
         </View>

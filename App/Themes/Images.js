@@ -189,4 +189,5 @@ export default {
     Lock: require('images/modal/lock.png'),
     UserTick: require('images/modal/userTick.png'),
   },
+  warning: require('images/ic_warning.png'),
 };
