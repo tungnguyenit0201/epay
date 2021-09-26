@@ -4,13 +4,12 @@ import {Colors, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {scale} from 'utils/Functions';
 import StatusBar from './StatusBar';
-//import {getStatusBarHeight} from 'react-native-status-bar-height';
-//getStatusBarHeight()
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const bgheader = require('images/home/homeHeader.jpg');
 
 const Header = ({children, bgimg, bgColor = Colors.white, mb = 0, style}) => {
-  const {top} = useSafeAreaInsets();
+  const top = getStatusBarHeight();
   return (
     <View
       style={[
