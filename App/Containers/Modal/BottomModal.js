@@ -41,7 +41,7 @@ const BottomModal = (props = {}) => {
                     <Image source={Images.WidthDraw.Plus} style={styles.img} />
                 </Pressable>
             </View>
-            <View style={[styles.wrap]}>
+            <View style={styles.wrap}>
                 {renderScreen()}
             </View>
         </View>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: Spacing.PADDING,
     },
     wrap: {
-        paddingHorizontal: Spacing.PADDING,
+        // paddingHorizontal: Spacing.PADDING,
     },
     header: {
         padding: Spacing.PADDING,

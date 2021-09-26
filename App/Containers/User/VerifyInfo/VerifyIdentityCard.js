@@ -3,38 +3,30 @@ import {
   ScrollView,
   StyleSheet,
   View,
-  Image,
-  useWindowDimensions,
 } from 'react-native';
-import { Header, Button, HeaderBg } from 'components';
-import { Colors, Spacing, base, Images } from 'themes';
+import { Colors, Spacing, base } from 'themes';
 import { useVerifyInfo } from 'context/User/utils';
-import Progress from 'components/User/VerifyInfo/Progress';
 import DropImage from 'components/User/VerifyInfo/DropImage';
 import { useTranslation } from 'context/Language';
+import BaseVerifyInfo from './BaseVerifyInfo';
 
 const VerifyIdentityCard = ({ route }) => {
   const { onDoneCaptureFace, onChange, verifyInfo } = useVerifyInfo(
     route?.params,
   );
   const translation = useTranslation();
-  const { width } = useWindowDimensions();
 
   return (
-    <View style={styles.container}>
-      <HeaderBg>
-        <Header back title={translation?.account_verification} />
-        <Progress space={1} step={2} />
-        <Image
-          source={Images.VerifyUserInfo.iconDown}
-          style={[styles.triangleDown, { left: width / 2 - 10 }]}
-          resizeMode="contain"
-        />
-      </HeaderBg>
+    <BaseVerifyInfo
+      step={2}
+      disableButton={!verifyInfo?.Avatar}
+      buttonTitle={translation?.continue}
+      onPressButton={onDoneCaptureFace}
+    >
       <ScrollView style={{ backgroundColor: Colors.white }}>
         <View style={[base.container, styles.main]}>
           <DropImage
-            title="Hình minh họa" // TODO: translate
+            title={translation?.portrait_photo}
             onDropImage={value => onChange('Avatar', value)}
             cameraType="front"
             style={styles.drop}
@@ -43,14 +35,7 @@ const VerifyIdentityCard = ({ route }) => {
           />
         </View>
       </ScrollView>
-      <View style={styles.buttonContainer}>
-        <Button
-          disabled={!verifyInfo?.Avatar}
-          label={'Tiếp tục'} // TODO: translate
-          onPress={onDoneCaptureFace}
-        />
-      </View>
-    </View>
+    </BaseVerifyInfo>
   );
 };
 const styles = StyleSheet.create({

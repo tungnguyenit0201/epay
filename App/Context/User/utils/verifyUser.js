@@ -192,7 +192,7 @@ const useVerifyInfo = (initialValue = {}) => {
         onGetAllInfo(),
         onClearRegionData(),
       ]);
-      Navigator.navigate(SCREEN.VERIFY_SUCCESS);
+      onContinue(SCREEN.VERIFY_SUCCESS);
     } catch (e) {
       const { ErrorMessage = strings?.unknownError } = e || {};
       showError({ message: ErrorMessage });
@@ -212,14 +212,15 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const onDoneIdentityCard = async () => {
+    const screen = bank ? SCREEN.VERIFY_USER_PORTRAIT : SCREEN.VERIFY_IDENTITY_CARD;
     if (eKYC) {
       const result = await extractCardInfo();
       if (result) {
         onChange('extractCardInfo', { ...result });
-        onContinue(SCREEN.VERIFY_IDENTITY_CARD);
+        onContinue(screen);
       }
     } else {
-      onContinue(SCREEN.VERIFY_IDENTITY_CARD);
+      onContinue(screen);
     }
   };
 

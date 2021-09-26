@@ -16,6 +16,7 @@ import { useIsFocused } from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 import KYCType from 'configs/Enums/KYCType';
 import { useVerifyInfo } from 'context/User/utils';
+import { useTranslation } from 'context/Language';
 
 const DropImage = ({
   onDropImage,
@@ -24,13 +25,12 @@ const DropImage = ({
   cameraType = 'back',
   draft,
   type,
-  documentType,
-  identify,
   verifyParams,
 }) => {
   const { width, height } = useWindowDimensions();
   const { image, camera, showCamera, loading, setShowCamera, capturePicture } = useDropImage();
   const isFocused = useIsFocused();
+  const translation = useTranslation();
   const {
     kycType,
     captureFrontImage,
@@ -66,21 +66,32 @@ const DropImage = ({
     // TODO: translate
     <>
       {!showCamera && (
-        <View
-          style={[
-            styles.wrap,
-            imagePath && {
-              paddingVertical: Spacing.PADDING / 2,
-            },
-            style && style,
-          ]}>
+        <View style={style}>
           {imagePath || draft ? (
             <View style={styles.wrapImg}>
+              <View style={styles.titleRow}>
+                <Text
+                  size={Fonts.H6}
+                  centered
+                  bold
+                  style={styles.textUppercase}>
+                  {title}
+                </Text>
+                <View style={styles.button}>
+                  <Button
+                    onPress={KYCFunction}
+                    label={translation?.take_a_photo}
+                    style={styles.smallButton}
+                    leftIcon={Images.VerifyUserInfo.camera}
+                    bold
+                  />
+                </View>
+              </View>
               <Image
                 style={[
                   styles.img,
-                  cameraType != 'back' && styles.imgFront,
-                  cameraType != 'back' && {
+                  cameraType !== 'back' && styles.imgFront,
+                  cameraType !== 'back' && {
                     width: image?.widthImg || scale(150),
                     height: image?.heightImg || scale(150),
                   },
@@ -90,7 +101,7 @@ const DropImage = ({
               />
             </View>
           ) : (
-            <>
+            <View style={styles.emptyHolder}>
               <Text
                 size={Fonts.H6}
                 mb={10}
@@ -99,22 +110,22 @@ const DropImage = ({
                 style={styles.textUppercase}>
                 {title}
               </Text>
-
               <Image
                 style={styles.bgImg}
                 source={Images.VerifyUserInfo.wave}
                 resizeMode="contain"
               />
-            </>
+              <View style={styles.button}>
+                <Button
+                  onPress={KYCFunction}
+                  label={translation?.take_a_photo}
+                  style={styles.btn}
+                  leftIcon={Images.VerifyUserInfo.camera}
+                  bold
+                />
+              </View>
+            </View>
           )}
-          <View style={styles.button}>
-            <Button
-              onPress={KYCFunction}
-              label={'Chụp ảnh'}
-              style={styles.btn}
-              leftIcon={Images.VerifyUserInfo.camera}
-            />
-          </View>
         </View>
       )}
       {showCamera && (
@@ -214,18 +225,23 @@ const DropImage = ({
   );
 };
 const styles = StyleSheet.create({
-  wrap: {
-    paddingVertical: Spacing.PADDING * 3,
-    backgroundColor: Colors.l2,
-    borderRadius: 8,
-  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-  wrapImg: { paddingBottom: Spacing.PADDING / 2, alignItems: 'center' },
+  wrapImg: {
+    paddingVertical: Spacing.PADDING / 2,
+    paddingHorizontal: Spacing.PADDING,
+    alignItems: 'center',
+    borderRadius: 8,
+    elevation: 3,
+    shadowRadius: 8,
+    shadowColor: Colors.gray,
+    shadowOpacity: 0.3,
+    backgroundColor: Colors.white,
+  },
   img: {
     width: '100%',
     height: scale(186),
@@ -235,12 +251,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
-
   captureIcon: {
     width: scale(64),
     height: scale(64),
   },
-  textUppercase: { textTransform: 'uppercase' },
+  textUppercase: { textTransform: 'uppercase', fontWeight: '600' },
   bgImg: {
     position: 'absolute',
     bottom: 0,
@@ -250,20 +265,35 @@ const styles = StyleSheet.create({
     width: 128,
     paddingHorizontal: 5,
   },
-
   wrapBtn: {
     position: 'absolute',
     bottom: Spacing.PADDING * 2,
     alignSelf: 'center',
   },
-
   wrapText: {
     position: 'absolute',
     top: scale(420),
     alignSelf: 'center',
   },
   button: {
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  emptyHolder: {
+    paddingVertical: Spacing.PADDING * 3,
+    backgroundColor: Colors.l2,
+    borderRadius: 8,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Spacing.PADDING / 2,
+    marginTop: 4,
+  },
+  smallButton: {
+    height: scale(32),
+    paddingHorizontal: 16,
   },
 });
 export default DropImage;

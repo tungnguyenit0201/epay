@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ScrollView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   Text,
@@ -17,10 +17,13 @@ const ChooseIdentityCard = ({ route }) => {
   const translation = useTranslation();
   const cardList = [
     { label: translation?.id_card, ICType: IC_TPYE.CMND },
-    { label: 'Chứng minh thư quân đội', ICType: IC_TPYE.CMNDQD },
+    { label: translation?.militaryID, ICType: IC_TPYE.CMNDQD },
     { label: translation?.passport, ICType: IC_TPYE.PASSPORT },
   ];
-  const { verifyInfo, onChange, onContinue } = useVerifyInfo({ identifyCard: cardList[0] });
+  const { verifyInfo, onChange, onContinue } = useVerifyInfo({
+    identifyCard: cardList[0],
+    KYCFlow: route?.params?.KYCFlow,
+  });
   const [info, setInfo] = useState(verifyInfo.identifyCard);
 
   const label = useMemo(() => {
@@ -48,6 +51,7 @@ const ChooseIdentityCard = ({ route }) => {
             title: translation?.selectPersonalDocument,
             params: {
               data: cardList,
+              selectedItem: info,
               onPress: item => {
                 onChange('identifyCard', item);
                 setInfo(item);
@@ -62,6 +66,7 @@ const ChooseIdentityCard = ({ route }) => {
         <Button
           label={translation?.continue}
           onPress={() => onContinue(SCREEN.VERIFY_USER_INFO)}
+          bold
         />
       </View>
     </>
@@ -69,13 +74,18 @@ const ChooseIdentityCard = ({ route }) => {
 };
 
 const DocumentTypeSelector = (props = {}) => {
-  const { data, onPress, requestClose } = props;
+  const { data, onPress, requestClose, selectedItem = {} } = props;
   return (
     <ScrollView style={styles.selector}>
       {data?.map(item => {
+        const selected = item.ICType === selectedItem.ICType;
+        const selectedStyle = {
+          backgroundColor: selected ? Colors.selected_gray : Colors.white,
+        };
         return (
           <View key={`${Math.random(1, 100)}-dropdown`}>
             <TouchableOpacity
+              style={selectedStyle}
               onPress={() => {
                 onPress(item);
                 requestClose?.();
@@ -105,6 +115,7 @@ const styles = StyleSheet.create({
   },
   selectorText: {
     marginVertical: 10,
-  }
+    marginHorizontal: Spacing.PADDING,
+  },
 });
 export default ChooseIdentityCard;
