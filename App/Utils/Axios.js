@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {API} from 'configs';
+import curlirize from 'axios-curlirize';
 
 const {TIMEOUT, ROOT} = API;
 const instance = axios.create({
@@ -17,5 +18,7 @@ export function setDefaultHeaders(headers) {
     instance.defaults.headers.common[key] = headers[key];
   });
 }
+
+__DEV__ && curlirize(instance);
 
 export default instance;

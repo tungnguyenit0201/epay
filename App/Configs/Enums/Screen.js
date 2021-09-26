@@ -66,6 +66,10 @@ const SCREEN = {
   OTP_BY_SMART_OTP: 'OTPBySmartOTP',
   VERIFY_EMAIL_RESULT: 'VerifyEmailResult',
   DETAIL_HISTORY: 'DetailHistory',
+  MODAL_NAVIGATION: 'ModalNavigation',
+  BOTTOM_MODAL: 'BottomModal',
+  POPUP_MODAL: 'PopupModal',
+  ALERT_MODAL: 'AlerModal',
   QRPAY: 'QRPay',
   QR_TRANSFER: 'QRTransfer',
 };

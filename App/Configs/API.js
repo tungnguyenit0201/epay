@@ -62,4 +62,12 @@ export default {
     GET_NOTIFY: 'notify/get_notify',
     READ_NOTIFY: 'notify/read_notify',
   },
+  EKYC: {
+    EXTRACT_IDENTITY_CARD_INFO: 'account/extract_identity_card_info',
+    COMPARE_FACE: 'account/compare_face',
+    IDENTITY_CARD_VERIFY: 'account/identity_card_verify',
+    BANK_EXTRACT_IDENTITY_CARD_INFO: 'bank/extract_identity_card_info',
+    BANK_COMPARE_FACE: 'bank/compare_face',
+    BANK_IDENTITY_CARD_VERIFY: 'bank/identity_card_verify',
+  },
 };

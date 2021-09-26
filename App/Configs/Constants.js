@@ -13,6 +13,7 @@ import SMART_OTP from './Enums/SmartOTP';
 import MENU from './Enums/Menu';
 import IC_TPYE from './Enums/ICType';
 import GENDER from './Enums/Gender';
+import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
 
@@ -32,6 +33,7 @@ export {
   MENU,
   IC_TPYE,
   GENDER,
+  KYCType,
   TERM_TYPE,
   TRANS_DETAIL,
 };
