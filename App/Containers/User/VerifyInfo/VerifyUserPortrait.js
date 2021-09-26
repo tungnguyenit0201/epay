@@ -83,7 +83,7 @@ const FormikCustom = forwardRef(({
           error={touched.ICFullName && errors.ICFullName}
           value={values.ICFullName}
           required
-          placeholder="Nhập họ & tên"
+          placeholder={translation?.inputFullName}
           alphanumeric
           trimOnBlur
           multiline
@@ -119,7 +119,7 @@ const FormikCustom = forwardRef(({
           style={styles.mb1}
           required
           numeric
-          placeholder="Nhập số GTTT"
+          placeholder={translation?.inputIDNumber}
           alphanumeric
           trimOnBlur
         />
@@ -141,7 +141,7 @@ const FormikCustom = forwardRef(({
           value={values.ICIssuedPlace}
           style={styles.mb1}
           required
-          placeholder="Nhập nơi cấp"
+          placeholder={translation?.inputIssuedPlace}
           trimOnBlur
         />
       </View>
@@ -155,7 +155,7 @@ const FormikCustom = forwardRef(({
           value={values.Address}
           style={{ marginBottom: 0 }}
           required
-          placeholder="Nhập số nhà, đường,..."
+          placeholder={translation?.inputAddress}
           trimOnBlur
         />
         <InputBlock
@@ -191,27 +191,27 @@ const FormikCustom = forwardRef(({
         />
 
         <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
-          <Checkbox
-            onPress={setAcceptPolicy}
-          />
+          <Checkbox onPress={setAcceptPolicy} />
           <Text style={{ marginLeft: 5 }} fs="md">
-            {' Tôi đồng ý với các '}
+            {translation?.iAgreeWith}
             <TouchableOpacity
               style={styles.mtMinus1}
             // onPress={() => onNavigate(SCREEN.AGREEMENT)}
             >
-              <Text style={styles.firstLink}>{'Thoả thuận người dùng '}</Text>
+              <Text style={styles.firstLink}>{translation?.userAgreement}</Text>
             </TouchableOpacity>
-            và
+            {' '}
+            {translation?.and}
             <TouchableOpacity
               style={styles.mtMinus1}
             // onPress={() => onNavigate(SCREEN.POLICY)}
             >
               <Text style={styles.firstLink}>
-                {'Chính sách quyền riêng tư '}
+                {translation?.privacyPolicy}
               </Text>
             </TouchableOpacity>
-            của Epay Services
+            {' '}
+            {translation?.ofEPAY}
           </Text>
         </View>
 
@@ -223,7 +223,7 @@ const FormikCustom = forwardRef(({
           bold
           mb={48}
           fs="h6">
-          Xác thực lại từ đầu
+          {translation?.verifyAgain}
         </Text>
       </View>
     </>
