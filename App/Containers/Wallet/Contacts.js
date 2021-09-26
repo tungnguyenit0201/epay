@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,19 +7,27 @@ import {
   FlatList,
 } from 'react-native';
 //import {useContacts} from 'context/Wallet/utils';
-import {Text, HeaderBg, Header, TextInput, Icon} from 'components';
+import {Text, HeaderBg, TextInput, Icon, Header} from 'components';
 import {Colors, Fonts, Spacing, Images, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-
-import SearchContact from 'components/Wallet/SearchContact';
+import LinearView from 'components/Common/LinearView';
+import {useContacts} from 'context/Wallet/utils';
+import EPayAvatar from 'components/Common/EPayAvatar';
 
 const Contacts = () => {
   const translation = useTranslation();
+  const contactContext = useContacts();
   const [show, setShow] = useState(false);
-  //const {data, onSearch} = useContacts();
+  const [listContact, setListContact] = useState([]);
+
+  useEffect(() => {
+    if (contactContext?.data?.length !== listContact?.length) {
+      setListContact(contactContext.data);
+    }
+  }, [contactContext, listContact]);
   const listUsers = [
     {
       id: 1,
@@ -56,25 +64,32 @@ const Contacts = () => {
     return (
       <TouchableOpacity
         style={styles.blockHorizontal}
-        onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}>
-        <Image source={item.avatar} style={styles.avatar} />
-        <Text bold>{item.name}</Text>
+        onPress={() =>
+          Navigator.navigate(SCREEN.TRANSFER_PHONE, {ePayUser: item})
+        }>
+        <View style={styles.avatarHorizontalWrapper}>
+          <EPayAvatar avatar={item?.avatar} name={item?.name} />
+        </View>
+        <Text>{item.name}</Text>
         <Text style={styles.fontSmall}>{item.phone}</Text>
       </TouchableOpacity>
     );
   };
 
-  const renderVertical = ({item}) => (
-    <TouchableOpacity
-      style={styles.blockVertical}
-      onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}>
-      <Image source={item.avatar} style={styles.avatar} />
-      <View style={styles.ml_16}>
-        <Text bold>{item.name}</Text>
-        <Text style={styles.fontSmall}>{item.phone}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const renderVertical = ({item}) => {
+    const showName = [item.familyName, item.middleName, item.givenName].join(
+      ' ',
+    );
+    return (
+      <TouchableOpacity style={styles.blockVertical}>
+        <EPayAvatar avatar={item?.avatar} name={showName} />
+        <View style={styles.ml_16}>
+          <Text>{showName}</Text>
+          <Text style={styles.fontSmall}>{item.phoneNumbers[0].number}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const handleChange = e => {
     e ? setShow(true) : setShow(false);
@@ -82,36 +97,47 @@ const Contacts = () => {
   return (
     <>
       <HeaderBg>
-        <Header back title={translation.transfer_to_phone_number} />
-        <SearchContact style={{marginTop: 10}} />
+        <Header
+          back
+          title={translation.transfer_to_phone_number}
+          style={{marginBottom: 25}}
+        />
+        <View style={styles.searchWrapper}>
+          <TextInput
+            placeholder={translation.enter_name_or_phone_number}
+            numeric
+            onChange={handleChange}
+            leftIcon={Images.SearchLinear}
+            isDeleted={show}
+            style={styles.inputSearch}
+            placeholderTextColor={Colors.gray}
+          />
+        </View>
       </HeaderBg>
-      <View style={base.wrap}>
-        <View style={base.container}>
-          <View style={styles.block}>
-            <Text bold fs="h6" mb={15}>
-              {translation.recent_transactions}
-            </Text>
-            <FlatList
-              data={listUsers}
-              renderItem={renderHorizontal}
-              keyExtractor={item => item.id}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            />
-          </View>
-
-          <Text bold fs="h6" mb={15}>
-            {translation.epay_contact_book}
+      <View style={styles.wrap}>
+        <View>
+          <Text bold style={styles.textTitle}>
+            {translation.recent_transactions}
           </Text>
           <FlatList
             data={listUsers}
-            renderItem={renderVertical}
+            renderItem={renderHorizontal}
             keyExtractor={item => item.id}
-            showsVerticalScrollIndicator={false}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
+        <View style={styles.spacing}></View>
+        <Text bold style={styles.textTitle}>
+          {translation.epay_contact_book}
+        </Text>
+        <FlatList
+          data={listContact}
+          renderItem={renderVertical}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
-      <Image source={require('images/wave.png')} style={styles.bgImg} />
     </>
   );
 };
@@ -129,13 +155,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  avatar: {
-    width: scale(50),
-    height: scale(50),
-    marginBottom: scale(8),
-  },
   fontSmall: {
     fontSize: Fonts.FONT_SMALL,
+    color: Colors.cl3,
   },
   blockVertical: {
     flex: 1,
@@ -143,16 +165,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: scale(16),
   },
-
+  textTitle: {
+    fontSize: Fonts.H6,
+    marginBottom: scale(16),
+  },
+  spacing: {
+    marginTop: scale(20),
+    marginBottom: scale(16),
+  },
+  inputSearch: {
+    borderRadius: scale(8),
+  },
   ml_16: {
     marginLeft: scale(16),
   },
-
-  bgImg: {
-    width: scale(375),
-    height: scale(375),
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
+  avatarHorizontalWrapper: {
+    marginBottom: scale(8),
+  },
+  wrap: {
+    padding: scale(16),
+  },
+  searchWrapper: {
+    paddingHorizontal: scale(16),
   },
 });

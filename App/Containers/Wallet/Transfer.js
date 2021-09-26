@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Text, Button, HeaderBg, TextInput, Icon, Header} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
@@ -7,24 +7,47 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
 import {useTranslation} from 'context/Language';
-
-import SearchContact from 'components/Wallet/SearchContact';
+import useContacts from 'context/Wallet/utils/contacts';
 
 const Transfer = () => {
   const [open, setOpen] = useState(false);
   const translation = useTranslation();
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      stickyHeaderIndices={[0]}
+      bounces={false}>
       <HeaderBg>
-        <Header back title={translation.transaction_details} />
-        <SearchContact style={{marginTop: 10}} />
+        <Header back title={translation.transfer} />
       </HeaderBg>
       <View style={styles.mt_30}>
         <View style={styles.flexBox}>
           <View style={styles.wrap}>
+            {/* Input with Icon */}
+            <View style={styles.inputIcon}>
+              <TouchableOpacity style={styles.iconSearch}>
+                <Icon icon={Images.Search} tintColor={Colors.g4} />
+              </TouchableOpacity>
+              <TextInput
+                style={styles.inputSearch}
+                placeholder={translation.enter_name_or_phone_number}
+                placeholderTextColor={Colors.g4}
+              />
+            </View>
+            {/* Input with Icon */}
+            {/* Icon Rectangle */}
+            <Icon
+              style={styles.iconRectangle}
+              icon={Images.Transfer.Rectangle}
+              tintColor={Colors.g2}
+            />
+            {/* Icon Rectangle */}
             {/* Text with Icon */}
             <TouchableOpacity
-              onPress={() => setOpen(true)}
+              onPress={() => {
+                Navigator.navigate(SCREEN.CONTACTS);
+              }}
               style={styles.inputNavigate}>
               <Icon
                 style={styles.iconNav}
@@ -66,46 +89,45 @@ const Transfer = () => {
                 />
               </View>
             </TouchableOpacity>
-            {/* Text with Icon */}
           </View>
         </View>
       </View>
-      <Modal
-        isVisible={open}
-        animationIn="fadeIn"
-        animationOut="fadeOut"
-        style={{flex: 1}}
-        useNativeDriver
-        hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
-        <View style={styles.modal}>
-          <Text bold style={styles.textTitle}>
-            {translation.allow_access_to_contact_book}
-          </Text>
-          <Text style={styles.textDescription}>
-            {
-              translation.to_use_the_money_transfer_function_epay_needs_access_to_your_contact_book
-            }
-          </Text>
-          <View style={styles.blockButton}>
-            <Button
-              label="Không"
-              style={styles.buttonCancle}
-              color={Colors.cl1}
-              fs={Fonts.H6}
-              onPress={() => setOpen(false)}
-            />
-            <Button
-              label="Đồng ý"
-              style={styles.buttonAcp}
-              fs={Fonts.H6}
-              onPress={() =>
-                setOpen(false) & Navigator.navigate(SCREEN.CONTACTS)
-              }
-            />
-          </View>
-        </View>
-      </Modal>
+      {/*<Modal*/}
+      {/*  isVisible={open}*/}
+      {/*  animationIn="fadeIn"*/}
+      {/*  animationOut="fadeOut"*/}
+      {/*  style={{flex: 1}}*/}
+      {/*  useNativeDriver*/}
+      {/*  hideModalContentWhileAnimating*/}
+      {/*  backdropTransitionOutTiming={0}>*/}
+      {/*  <View style={styles.modal}>*/}
+      {/*    <Text bold style={styles.textTitle}>*/}
+      {/*      {translation.allow_access_to_contact_book}*/}
+      {/*    </Text>*/}
+      {/*    <Text style={styles.textDescription}>*/}
+      {/*      {*/}
+      {/*        translation.to_use_the_money_transfer_function_epay_needs_access_to_your_contact_book*/}
+      {/*      }*/}
+      {/*    </Text>*/}
+      {/*    <View style={styles.blockButton}>*/}
+      {/*      <Button*/}
+      {/*        label="Không"*/}
+      {/*        style={styles.buttonCancle}*/}
+      {/*        color={Colors.cl1}*/}
+      {/*        fs={Fonts.H6}*/}
+      {/*        onPress={() => setOpen(false)}*/}
+      {/*      />*/}
+      {/*      <Button*/}
+      {/*        label="Đồng ý"*/}
+      {/*        style={styles.buttonAcp}*/}
+      {/*        fs={Fonts.H6}*/}
+      {/*        onPress={() =>*/}
+      {/*          setOpen(false) & Navigator.navigate(SCREEN.CONTACTS)*/}
+      {/*        }*/}
+      {/*      />*/}
+      {/*    </View>*/}
+      {/*  </View>*/}
+      {/*</Modal>*/}
     </ScrollView>
   );
 };
@@ -118,7 +140,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     paddingTop: Spacing.PADDING,
   },
-
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    color: Colors.white,
+    fontSize: Fonts.H6,
+    textAlign: 'center',
+  },
+  inputIcon: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: Colors.g2,
+    borderWidth: 1,
+    borderRadius: scale(5),
+  },
   iconNav: {
     width: scale(18),
     height: scale(22),
@@ -126,7 +164,22 @@ const styles = StyleSheet.create({
     top: scale(2),
     marginRight: scale(20),
   },
-
+  iconSearch: {
+    paddingHorizontal: scale(10),
+    borderRightWidth: 1,
+    borderColor: Colors.g2,
+  },
+  inputSearch: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    fontSize: Fonts.H6,
+    borderColor: 'transparent',
+  },
+  iconRectangle: {
+    height: scale(8),
+    width: '100%',
+    marginVertical: scale(24),
+  },
   textTitle: {
     fontSize: Fonts.H6,
     textAlign: 'center',
@@ -139,7 +192,7 @@ const styles = StyleSheet.create({
   buttonCancle: {
     width: scale(120),
     height: scale(42),
-    //backgroundColor: 'transparent',
+    backgroundColor: 'transparent',
     borderColor: Colors.cl1,
     borderWidth: 1,
   },
@@ -164,9 +217,12 @@ const styles = StyleSheet.create({
     right: scale(15),
     top: scale(15),
   },
-
+  icon: {
+    width: scale(20),
+    height: scale(20),
+  },
   inputNavigate: {
-    backgroundColor: Colors.cl2,
+    backgroundColor: '#DAE9F8',
     padding: Spacing.PADDING,
     marginBottom: scale(10),
     flex: 1,

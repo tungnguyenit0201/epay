@@ -5,10 +5,13 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import {Text, Modal, Button, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Contacts from 'react-native-contacts';
 
 import ListItem from 'components/Common/ListItem';
 import ListItemSimple from 'components/Common/ListItemSimple';
@@ -49,8 +52,21 @@ const Home = () => {
     {
       icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
-      screen: SCREEN.TRANSFER,
+      screen: SCREEN.CONTACTS,
       checkSmartOTP: true,
+      checkPermission: () => {
+        return Platform.OS === 'ios'
+          ? Contacts.requestPermission()
+          : PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+              {
+                title: translation.allow_access_to_contact_book,
+                message:
+                  translation.to_use_the_money_transfer_function_epay_needs_access_to_your_contact_book,
+                buttonPositive: translation.agree,
+              },
+            );
+      },
     },
     {
       icon: Images.Homes.LichSuGd,

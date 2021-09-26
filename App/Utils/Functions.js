@@ -236,6 +236,19 @@ const generateTOTP = ({phone, smartOtpSharedKey}) => {
 const hidePhone = phone =>
   phone?.slice(0, 3) + '****' + phone?.slice(phone?.length - 3, phone?.length);
 
+const maskText = (text, padLeft, padRight, maskedCharacter = '*') => {
+  try {
+    const maskedText = maskedCharacter.repeat(
+      text?.length - padRight - padLeft,
+    );
+    const partOne = text.slice(0, padLeft);
+    const partTwo = text.slice(text?.length - padRight);
+    return partOne + maskedText + partTwo;
+  } catch (e) {
+    return text;
+  }
+};
+
 export {
   toObjectKeys,
   buildURL,
@@ -258,4 +271,5 @@ export {
   calculateFee,
   generateTOTP,
   hidePhone,
+  maskText,
 };

@@ -6,6 +6,7 @@ export default {
   MenuIcon: require('images/Menu.png'),
   NoImage: require('images/NoImage.png'),
   Search: require('images/Search.png'),
+  SearchLinear: require('images/Search-Linear.png'),
   User: require('images/User.png'),
   Up: require('images/Up.png'),
   Down: require('images/Down.png'),
@@ -15,6 +16,9 @@ export default {
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),
+  LinearCircleChecked: require('images/arrow-linear-checked.png'),
+  LinearCircleUnChecked: require('images/arrow-linear-uncheck.png'),
+
   BgModal: require('images/bgModal.png'),
   TabBar: {
     Home: require('images/tabBar/home.png'),
@@ -92,6 +96,8 @@ export default {
     Background: require('images/LogoBG.png'),
     Lock: require('images/Lock.png'),
     CloseCircle: require('images/close-circle.png'),
+    CloseFillCircle: require('images/close-fill-circle.png'),
+    MyWallet: require('images/MyWallet.png'),
   },
   Profile: {
     SoDu: require('images/profile/SoDu.png'),

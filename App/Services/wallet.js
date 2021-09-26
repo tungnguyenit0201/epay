@@ -180,3 +180,16 @@ export const getQRCodeInfo = async ({phone, QrCode}) => {
   });
   return response;
 };
+
+export const getRecentUsers = async () => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_RECENT_USERS,
+    method: 'post',
+    success: res => {
+      response = res;
+    },
+  });
+
+  return response;
+};

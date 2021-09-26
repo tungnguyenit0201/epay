@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
-import {Colors, Fonts} from 'themes';
+import {Colors} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 
@@ -12,6 +12,7 @@ export default ({
   error,
   selectedValue,
   showErrorLabel = true,
+  groupStyle,
 }) => {
   const [checked, setChecked] = React.useState(selectedValue);
 
@@ -38,7 +39,7 @@ export default ({
   return (
     <>
       <View style={[{marginBottom}, style]}>
-        <View style={styles.wrap}>{items?.map(renderRadio)}</View>
+        <View style={[styles.wrap, groupStyle]}>{items?.map(renderRadio)}</View>
         {!!error && showErrorLabel && (
           <Text color={'#FF0600'} mt={3} size={12}>
             {error}

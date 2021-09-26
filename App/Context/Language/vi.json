@@ -228,6 +228,7 @@
   "transfer_by_epay": "Chuyển tiền bằng ví EPAY",
   "my_epay_wallet": "Ví EPAY của tôi",
   "transfer_confirmation": "Xác nhận chuyển tiền",
+  "currency": "VND",
   "errorCode": {
     "1": "Tài khoản không tồn tại hoặc mật khẩu sai",
     "2": "Tài khoản đang bị khóa",

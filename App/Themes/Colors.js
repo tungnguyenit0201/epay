@@ -56,4 +56,12 @@ export default {
   CORRECT: 'green',
   BUTTON: '#FDB000',
   MEDIUMGRAY: '#999',
+
+  textPlaceholder: '#141212',
+  textMoneyTransfer: '#817676',
+  textCurrency: '#848181',
+  focusBorderTextMoneyInput: '#1F5CAB',
+  footerButtonColorLeft: '#281185',
+  footerButtonColorRight: '#281185',
+  selectedSourceBackground: '#ebf5fe',
 };
