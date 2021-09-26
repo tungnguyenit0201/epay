@@ -9,8 +9,7 @@ const useAlert = () => {
     const showError = useCallback(params => {
         const { title, message } = params || {};
         Navigator.showAlert({
-            icon: Images.Register.Info,
-            iconColor: Colors.white,
+            icon: Images.TransactionHistory.Fail,
             title: title ?? strings?.error,
             message: message ?? strings?.unknownError,
         });
