@@ -34,6 +34,7 @@ const VerifyUserInfo = ({ route }) => {
             identityCard === IC_TPYE.PASSPORT &&
               onChange('ICBackPhoto', value?.data);
           }}
+          identify={identityCard}
           draft={verifyInfo?.ICFrontPhoto}
           style={styles.mb1}
           documentType={documentType}
