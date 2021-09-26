@@ -35,6 +35,11 @@ export default function userReducer(state, action) {
         ...state,
         personalIC: action?.data,
       };
+    case 'SET_BANK_LINK_INFO':
+      return {
+        ...state,
+        bankLinkInfo: action?.data,
+      };
     case 'SET_REGION':
       return {
         ...state,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Image, View, StyleSheet} from 'react-native';
 import {Button, Radio, Text} from 'components';
 import {useTranslation} from 'context/Language';
@@ -6,9 +6,11 @@ import {Colors, Spacing, Images} from 'themes';
 const PopUpBankLink = props => {
   const {kycInfo, onChooseIc, onContinue, requestClose} = props || {};
   const translation = useTranslation();
+  const selectedItem = useRef(kycInfo?.[0]);
 
   const handleChange = item => {
-    onChooseIc?.(item);
+    selectedItem.current = item;
+    // onChooseIc?.(item);
   };
 
   const renderOptionIc = () => {
@@ -46,7 +48,7 @@ const PopUpBankLink = props => {
           }}
           onPress={() => {
             requestClose?.();
-            onContinue?.(true);
+            onContinue?.(selectedItem.current);
           }}
         />
         <Button

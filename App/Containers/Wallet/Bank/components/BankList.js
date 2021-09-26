@@ -22,8 +22,11 @@ import MapBankFlow, {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {scale} from 'utils/Functions';
 import {useWallet} from 'context/Wallet';
 import {useBankInfo} from 'context/Wallet/utils';
-import {BANK_TYPE} from 'context/Wallet/utils/bankInfo';
+import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {useLoading} from 'context/Common/utils';
+import PopUpBankLink from 'containers/Wallet/Bank/components/PopUpBankLink';
+import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
+
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
     style={styles.item}
@@ -56,7 +59,7 @@ const BankItem = ({title, icon, item, callback}) => (
 
 const BankList = forwardRef((props, ref) => {
   const translation = useTranslation();
-  const {title, type = '', bankInfo = '', callback} = props || {};
+  const {title, type = '', bankInfo = '', callback, style} = props || {};
   const [bankData, setBankData] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const allBank = useRef([]);
@@ -66,6 +69,10 @@ const BankList = forwardRef((props, ref) => {
     onGetDomesticBanks,
     onGetInternationalBanks,
     onGetNapasBanks,
+    onGetConnectedBank,
+    onChange,
+    onContinue,
+    onGetIcInfor,
   } = useBankInfo();
   const {walletInfo} = useWallet();
   const {
@@ -76,23 +83,25 @@ const BankList = forwardRef((props, ref) => {
   } = walletInfo; //have
   const {setLoading} = useLoading();
   useImperativeHandle(ref, () => ({search}));
-
+  const BANK_MAP_KEY = {
+    [BANK_TYPE.LIST_DOMESTIC_BANK]: {
+      getData: onGetDomesticBanks,
+      data: listDomesticBank,
+    },
+    [BANK_TYPE.LIST_NAPAS_BANK]: {
+      getData: onGetNapasBanks,
+      data: listNapasBank,
+    },
+    [BANK_TYPE.LIST_INTERNATIONAL_BANK]: {
+      getData: onGetInternationalBanks,
+      data: listInternationalBank,
+    },
+    [BANK_TYPE.LIST_BANK_CONNECT]: {
+      getData: onGetConnectedBank,
+      data: listConnectBank,
+    },
+  };
   useEffect(() => {
-    const BANK_MAP_KEY = {
-      [BANK_TYPE.LIST_DOMESTIC_BANK]: {
-        getData: onGetDomesticBanks,
-        data: listDomesticBank,
-      },
-      [BANK_TYPE.LIST_NAPAS_BANK]: {
-        getData: onGetNapasBanks,
-        data: listNapasBank,
-      },
-      [BANK_TYPE.LIST_INTERNATIONAL_BANK]: {
-        getData: onGetInternationalBanks,
-        data: listInternationalBank,
-      },
-    };
-
     const checkData = async () => {
       if (
         !Array.isArray(BANK_MAP_KEY?.[type]?.data) ||
@@ -135,20 +144,100 @@ const BankList = forwardRef((props, ref) => {
     }
   };
 
+  const onPressBankNapas = item => {
+    if (item) {
+      onContinue(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankCardInfo,
+        params: {item: item, type: BANK_TYPE.LIST_NAPAS_BANK},
+      });
+    }
+  };
+
+  const onPressInternationalBank = item => {
+    if (item) {
+      onContinue(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankCardInfo,
+        params: {item: item, type: BANK_TYPE.LIST_INTERNATIONAL_BANK},
+      });
+    }
+  };
+
+  const onPressBankLink = async (item, callback) => {
+    try {
+      onChange('Bank', item);
+      const icInfor = await onGetIcInfor();
+      const {ICInfo, CheckICInfo, IdentityCardInfor} = icInfor?.result || {};
+      //todo if Array
+      const {Number} = ICInfo || {};
+      const IDNumber = censorCardNumber(Number);
+      const kycInfo = [{label: IDNumber, value: 1, data: ICInfo}];
+      Navigator.showPopup({
+        screen: PopUpBankLink,
+        title: '',
+        onClose: () => {},
+        type: DISPLAY_POPUP,
+        params: {
+          data: [],
+          kycInfo,
+          onContinue: optionKyc => {
+            if (optionKyc) {
+              onContinue(SCREEN.MAP_BANK_FLOW, {
+                screen: MapBankRoutes.BankLinkInfo,
+                params: {item: item, optionKyc},
+              });
+            } else {
+              onContinue(SCREEN.VERIFY_USER_INFO, {
+                params: {isMapBank: true},
+              });
+            }
+          },
+        },
+        style: {
+          borderRadius: 20,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onPressBankConnect = () => {};
+  const onPressBankInt = () => {};
+  const onPress = item => {
+    switch (type) {
+      case BANK_TYPE.LIST_BANK_CONNECT:
+        onPressBankConnect(item);
+        break;
+      case BANK_TYPE.LIST_INTERNATIONAL_BANK:
+        onPressBankInt(item);
+        break;
+      case BANK_TYPE.LIST_NAPAS_BANK:
+        onPressBankNapas(item);
+        break;
+      case BANK_TYPE.LIST_DOMESTIC_BANK:
+        onPressBankLink(item);
+        break;
+      default:
+        return;
+    }
+  };
   const renderBankBlock = () => {
     return (
       <View
-        style={{
-          backgroundColor: Colors.WHITETEXT,
-          shadowColor: 'rgba(0, 0, 0, 0.16)',
-          shadowOpacity: 1,
-          shadowOffset: {width: 0, height: 0},
-          elevation: 1,
-          marginHorizontal: 16,
-          borderRadius: 16,
-          padding: 16,
-          marginVertical: 8,
-        }}>
+        style={[
+          {
+            backgroundColor: Colors.WHITETEXT,
+            shadowColor: 'rgba(0, 0, 0, 0.16)',
+            shadowOpacity: 1,
+            shadowOffset: {width: 0, height: 0},
+            elevation: 1,
+            marginHorizontal: 16,
+            borderRadius: 16,
+            padding: 16,
+            marginVertical: 8,
+          },
+          style,
+        ]}>
         <Text
           size={18}
           style={{
@@ -168,7 +257,7 @@ const BankList = forwardRef((props, ref) => {
                 key={index}
                 style={{marginBottom: 16}}>
                 <BankItem
-                  callback={callback}
+                  callback={onPress}
                   bankInfo={bankInfo}
                   title={item.BankName}
                   icon={{uri: item.BankLogoUrl}}

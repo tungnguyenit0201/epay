@@ -68,6 +68,7 @@ const MapBankFlow = () => {
 };
 
 export default MapBankFlow;
+
 export const MapBankRoutes = {
   BankCardInfo: 'BankCardInfo',
   BankLinked: 'BankLinked',

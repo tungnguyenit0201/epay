@@ -59,11 +59,15 @@ const useUserInfo = type => {
           personalInfo: result?.PersonalInfo,
         });
         dispatch({type: 'SET_PHONE', phone});
-      } else setError(result);
+      } else {
+        setError(result);
+      }
     } catch (error) {
       setLoading(false);
     }
   };
+
+
 
   const onUpdatePersonalInfo = async ({FullName}) => {
     try {
@@ -78,7 +82,9 @@ const useUserInfo = type => {
         await onGetAllInfo();
         showModalSmartOTP(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
-      } else setError(result);
+      } else {
+        setError(result);
+      }
     } catch (error) {
       setLoading(false);
     }
@@ -127,7 +133,9 @@ const useUserInfo = type => {
           data: {Address, Ward, County, Provincial},
         });
         Navigator.navigate(SCREEN.USER_INFO);
-      } else setError(result);
+      } else {
+        setError(result);
+      }
     } catch (error) {
       setLoading(false);
     }
@@ -140,7 +148,9 @@ const useUserInfo = type => {
     setLoading(false);
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
       return Navigator.navigate(SCREEN.MY_WALLET, result);
-    } else setError(result);
+    } else {
+      setError(result);
+    }
   };
 
   const onConfirmPassword = async ({password}) => {
@@ -178,7 +188,9 @@ const useUserInfo = type => {
             });
             break;
         }
-      } else setError(result);
+      } else {
+        setError(result);
+      }
     } catch (error) {
       setLoading(false);
     }
@@ -190,9 +202,11 @@ const useUserInfo = type => {
       let phone = await getPhone();
       let result = await getLimit({phone});
       setLoading(false);
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS)
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         Navigator.navigate(SCREEN.LIMIT_SETTING, result);
-      else setError(result);
+      } else {
+        setError(result);
+      }
     } catch (error) {
       setLoading(false);
     }

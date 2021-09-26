@@ -13,15 +13,27 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {useMoney} from 'context/Wallet/utils';
+import {SCREEN} from 'configs/Constants';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
 const Account = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank} = useUserInfo();
-  const {onGetAllBank, goToBankLinked, mapBank} = useBankInfo();
+  const {onGetAllBank, onContinue} = useBankInfo();
   const {listConnectBank} = useWallet();
   const {showMoney, setShowMoney} = useMoney();
 
+  const mapBank = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankPickerScreen,
+    });
+  };
+  const goToBankLinked = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankLinked,
+    });
+  };
   // TODO: translate
   return (
     <View style={base.boxShadow}>

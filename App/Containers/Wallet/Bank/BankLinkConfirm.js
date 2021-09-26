@@ -21,9 +21,10 @@ import {
 import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'context/Language';
-import {Colors, Fonts, Spacing} from 'themes';
+import {base, Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import SelectBank from 'components/QRPay/SelectBank';
 
 export default function (props) {
   const translation = useTranslation();
@@ -68,6 +69,66 @@ export default function (props) {
       </View>
     );
   };
+
+  const renderContent = () => {
+    const data = [
+      {
+        label: 'Chuyển đến ',
+        value: 'NGUYEN VAN B ',
+      },
+      {
+        label: 'Số điện thoại ',
+        value: '0909000999 ',
+      },
+      {
+        label: 'Nội dung ',
+        value: 'FROM AN ',
+      },
+      {
+        label: 'Phí giao dịch',
+        value: 'Miễn phí',
+      },
+      {
+        label: 'Người chịu phí ',
+        value: 'Người gửi ',
+      },
+      {
+        label: 'Thực chuyển ',
+        value: '1.000.000 vnd',
+      },
+      {
+        label: 'Tổng số tiền',
+        value: <Text bold>1.005.000 vnđ</Text>,
+      },
+    ];
+    return (
+      <View style={base.container}>
+        <View style={styles.block}>
+          <Image
+            source={require('images/bgXacNhan.png')}
+            style={styles.bgImg}
+          />
+          {data.map((item, index) => {
+            return (
+              <View key={index}>
+                <View
+                  style={[
+                    styles.row,
+                    index + 1 === data.length && {
+                      borderBottomWidth: 0,
+                    },
+                  ]}>
+                  <Text style={styles.textLeft}>{item.label}</Text>
+
+                  <Text style={styles.textRight}>{item.value}</Text>
+                </View>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
@@ -77,8 +138,9 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      />
+        showsVerticalScrollIndicator={false}>
+        {renderContent()}
+      </ScrollView>
       {renderButton()}
     </View>
   );
@@ -148,4 +210,33 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   text_gray: {color: '#666666'},
+  block: {
+    marginBottom: 20,
+    position: 'relative',
+    minHeight: 128,
+  },
+
+  bgImg: {
+    width: 128,
+    height: 128,
+    position: 'absolute',
+    top: 20,
+    left: '50%',
+    transform: [{translateX: scale(-64)}, {translateY: 0}],
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomColor: Colors.l3,
+    borderBottomWidth: 1,
+    paddingVertical: 15,
+  },
+
+  textLeft: {
+    color: Colors.cl3,
+  },
+  textRight: {
+    color: Colors.BLACKTEXT,
+    maxWidth: scale(160),
+  },
 });

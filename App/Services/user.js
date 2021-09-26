@@ -40,6 +40,19 @@ export const getPersonalInfo = async ({phone}) => {
   return response;
 };
 
+export const getIdentifyInfo = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.USER.GET_ID_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const getAllInfo = async ({phone}) => {
   let response = null;
   await request({

@@ -9,46 +9,156 @@ import {
   changeLimit,
   getNapasBank,
 } from 'services/wallet';
-import {
-  useAsyncStorage,
-  useError,
-  useLoading,
-  useShowModal,
-} from 'context/Common/utils';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
-import _ from 'lodash';
+import _, {isEmpty} from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
-import {updatePersonalInfo, updateUserAddress} from 'services/user';
+
+import {
+  updatePersonalInfo,
+  getIdentifyInfo,
+  updateUserAddress,
+} from 'services/user';
 import {useUserInfo} from 'context/User/utils';
+import PopUpBankLink from 'containers/Wallet/Bank/components/PopUpBankLink';
+import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
+const mockIc = {
+  CheckICInfo: {
+    Address: '83/9 Phú Hòa, Phường 8 Tân Bình, TP. Hồ Chí Minh',
+    BankNumber: '',
+    District: '',
+    ImgBack: null,
+    ImgFront: null,
+    Name: 'NGUYEN NHAT PHUONG',
+    Number: '079096012342',
+    Province: '',
+    Status: 5,
+    Type: 'IC',
+    Ward: '',
+  },
+  ErrorCode: 0,
+  ErrorMessage: 'Thành công',
+  ICInfo: {
+    Address: '3123zzzz',
+    BankNumber: '',
+    District: 'Huyện Đất Đỏ',
+    ImgBack: null,
+    ImgFront: null,
+    Name: 'NGUYEN THANH TAM',
+    Number: '301382190',
+    Province: 'Bà Rịa - Vũng Tàu',
+    Status: 3,
+    Type: 'IC',
+    Ward: 'Xã Lộc An',
+  },
+  IdentityCardInfor: {
+    Address: 'Khu phố 9 Phường 1, TX. Kiến Tường, Long An',
+    BirthDay: '',
+    CardID: -1,
+    CardNumber: '301382190',
+    District: '',
+    Extracted: 0,
+    FullName: 'NGUYEN THANH TAM',
+    Gender: null,
+    ICType: 1,
+    IssueDate: '',
+    IssuePlace: '',
+    Province: '',
+    ValidDate: '',
+    Verified: null,
+    Ward: '',
+  },
+  MsgID: 'E5E54209-D64B-431F-BA0A-BEF33C4E45A424-09-2021 22:59:59.730',
+  MsgType: 'get_ic_info_response',
+  ResponseTime: '24-09-2021 22:59:59',
+  ServerUtcTimeEpoch: 1632499199896,
+  TransactionID: 'TR1632499066377237',
+};
 export const BANK_TYPE = {
+  LIST_BANK_CONNECT: 'LIST_BANK_CONNECT',
   LIST_DOMESTIC_BANK: 'LIST_DOMESTIC_BANK',
   LIST_NAPAS_BANK: 'LIST_NAPAS_BANK',
   LIST_INTERNATIONAL_BANK: 'LIST_INTERNATIONAL_BANK',
 };
-const bankTest = {
-  // TODO: remove test data
-  BankCode: 'VCB',
-  BankName: 'Ngân hàng test',
-  ConnectTime: '08-09-2021 22:41:32',
-  BankLogoUrl:
-    'https://t3.ftcdn.net/jpg/00/62/78/62/360_F_62786254_cxVz7e28OMBn63qGzDFEBqHv7e1o2HgU.jpg',
-  BankId: 1,
-  BankConnectId: 1594,
-  BankLimit: 2000000,
-  BankNumber: '123456789',
-  CardHolder: 'DAT',
-  CardNumber: '',
-  ConnectionType: 0,
-  IsDefault: false,
-  CardTypeId: 0,
-  IsAvailable: false,
+export const censorCardNumber = (
+  cardNumber,
+  label = '*',
+  countDigitsShow = 3,
+) => {
+  if (!cardNumber || cardNumber.length < 3) {
+    return cardNumber;
+  }
+  // assume card number length > 3
+
+  const string = String(cardNumber);
+  const length = string?.length;
+  let surfix = string.slice(length - countDigitsShow, length);
+  let result = '';
+  for (let index = 0; index < length - countDigitsShow; index++) {
+    result += label || '*';
+  }
+  result = result + surfix;
+  return result;
 };
 
-const useBankInfo = () => {
+const useBankInfo = (initialValue = {}) => {
+  const mapBankInfo = useRef(initialValue);
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
+  // const {onGetIcInfor, onGetAllInfo} = useUserInfo();
+
+  const onChange = (key, value) => {
+    mapBankInfo.current[key] = value;
+  };
+
+  const goToBankLinked = () => {
+    Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankLinked,
+    });
+  };
+
+  const mapBank = () => {
+    Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankPickerScreen,
+    });
+  };
+
+  const onContinue = (screen, params) => {
+    if (!isEmpty(params)) {
+      //is nested navigator
+      const {screen: childScreen, params: childParams} = params || {};
+      Navigator.navigate(screen, {
+        screen: childScreen,
+        params: {...mapBankInfo.current, ...childParams},
+      });
+    } else {
+      Navigator.navigate(screen, mapBankInfo.current);
+    }
+  };
+
+  const onGetIcInfor = async () => {
+    try {
+      setLoading(true);
+      let phone = await getPhone();
+      setLoading(false);
+      let result = await getIdentifyInfo({phone});
+      result = mockIc;
+      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        // dispatch({
+        //   type: 'SET_IDENTIFY_INFO',
+        //   ICInfor: result?.ICInfor,
+        // });
+        // dispatch({type: 'SET_PHONE', phone});
+        return {result};
+      } else {
+        setError(result);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
 
   const onGetConnectedBank = async () => {
     setLoading(true);
@@ -59,9 +169,8 @@ const useBankInfo = () => {
       dispatch({
         type: 'LIST_CONNECT_BANK',
         data: result?.ListBankConnect,
-        // data: [__DEV__ ? bankTest : {}, ...result?.ListBankConnect], // TODO: remove bankTest
       });
-      return {result};
+      return {result: result?.ListBankConnect};
     } else {
       setError(result);
     }
@@ -105,51 +214,6 @@ const useBankInfo = () => {
       return {result: result?.InternationalBank};
     } else {
       setError(result);
-    }
-  };
-
-  const getBanksByApisKey = api => {};
-
-  const onGetAllBank_Old = async () => {
-    const listConnectBank = await onGetConnectedBank();
-    const listDomesticBanks = await onGetDomesticBanks();
-    const listNapas = await onGetDomesticBanks();
-    const listInternationalBanks = await onGetInternationalBanks();
-    if (
-      _.get(listConnectBank.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-      _.get(listInternationalBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-      _.get(listDomesticBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS
-    ) {
-      Navigator.navigate(SCREEN.BANK_LINKED);
-    } else {
-      setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
-    }
-  };
-
-  const goToBankLinked = () => {
-    Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
-      screen: SCREEN.BANK_LINKED,
-    });
-  };
-
-  const mapBank = () => {
-    Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
-      screen: SCREEN.BANK_PICKER_SCREEN,
-    });
-  };
-  const onGetBankLinked = async () => {
-    const listConnectBank = await onGetConnectedBank();
-    const listDomesticBanks = await onGetDomesticBanks();
-    const listNapas = await onGetDomesticBanks();
-    const listInternationalBanks = await onGetInternationalBanks();
-    if (
-      _.get(listConnectBank.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-      _.get(listInternationalBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS &&
-      _.get(listDomesticBanks.result, 'ErrorCode') == ERROR_CODE.SUCCESS
-    ) {
-      Navigator.navigate(SCREEN.BANK_LINKED);
-    } else {
-      setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
     }
   };
 
@@ -236,6 +300,15 @@ const useBankInfo = () => {
     }
   };
 
+  const onUpdateAllInfo = async value => {
+    // console.log('data :>> ', {...contentRef.current, ...value});
+    // await onUpdateIdentify({...contentRef.current, ...value});
+    // await onUpdatePersonalInfo({...contentRef.current, ...value});
+    // await onUpdateUserAddress({...contentRef.current, ...value});
+    // await onGetAllInfo();
+    // onClearRegionData();
+  };
+
   return {
     onGetConnectedBank,
     onGetDomesticBanks,
@@ -247,6 +320,10 @@ const useBankInfo = () => {
     mapBank,
     goToBankLinked,
     onUpdateUserAddress,
+    onChange,
+    onContinue,
+    onUpdateAllInfo,
+    onGetIcInfor,
   };
 };
 export default useBankInfo;

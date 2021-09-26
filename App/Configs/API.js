@@ -27,6 +27,7 @@ export default {
     UPDATE_PERSONAL_INFO: 'account/update_personal_info',
     GET_PERSONAL_INFO: 'account/get_personal_info',
     GET_ALL_INFO: 'account/get_all_info',
+    GET_ID_INFO: 'account/get_ic_info',
     UPDATE_USER_ADDRESS: 'account/update_address_info',
     UPDATE_IDENTIFY: 'account/update_identify_info',
     GET_CONNECTED_BANK: 'wallet/get_connected_bank',
@@ -63,4 +64,10 @@ export default {
     GET_NOTIFY: 'notify/get_notify',
     READ_NOTIFY: 'notify/read_notify',
   },
+  BANK:{
+    GET_BANK_IC_INFO:'',
+    ACTIVE_USER:'',
+    ACTIVE_USER_OTP:'',
+
+  }
 };

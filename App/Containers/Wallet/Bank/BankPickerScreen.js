@@ -9,7 +9,7 @@ import {
 import {HeaderBg, Header, Icon, Text, InputBlock, Row, Col} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
-import {debounce} from 'lodash';
+import {debounce, isEmpty} from 'lodash';
 import BankList from 'containers/Wallet/Bank/components/BankList';
 import {BANK_TYPE} from 'context/Wallet/utils/bankInfo';
 import {useBankInfo} from 'context/Wallet/utils';
@@ -18,11 +18,14 @@ import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import PopUpBankLink from './components/PopUpBankLink';
 import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
+import {useWallet} from 'context/Wallet';
 
 const BankPickerScreen = props => {
   const {navigation} = props;
   const translation = useTranslation();
-  const {onGetAllBank} = useBankInfo();
+  const {onGetAllBank, onPressBankLink: onPressBankLinkUtils} = useBankInfo();
+  const {walletInfo} = useWallet();
+  const {listConnectBank} = walletInfo; //have
   const [keysearch, setKeySearch] = useState('');
   const bankLinkRef = useRef();
   const napasRef = useRef();
@@ -38,11 +41,11 @@ const BankPickerScreen = props => {
     visaRef.current?.search?.(key);
     bankLinkRef.current?.search?.(key);
     napasRef.current?.search?.(key);
-  }, 100);
+  }, 0);
 
   const onChange = text => {
     setKeySearch(text);
-    if (keysearch === '') {
+    if (text === '') {
       visaRef.current?.search?.('');
       bankLinkRef.current?.search?.('');
       napasRef.current?.search?.('');
@@ -55,49 +58,6 @@ const BankPickerScreen = props => {
       navigation.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BankLinkInfo,
         params: {item: item},
-      });
-    }
-  };
-  const getKYC = () => {
-    //getKYC state
-  };
-
-  const onPressBankLink = item => {
-    //getKYC state
-    const kyc = getKYC();
-    // kyc info-> reformat to kycInfo
-    const kycInfo = [{label: 'CMND *******789', value: 1}];
-    Navigator.showPopup({
-      screen: PopUpBankLink,
-      title: '',
-      onClose: () => {},
-      type: DISPLAY_POPUP,
-      params: {
-        data: [],
-        kycInfo,
-        onContinue: optionKyc =>
-          onContinueMap({bank: item, kycInfo: kycInfo[0], optionKyc}),
-      },
-      style: {
-        borderRadius: 20,
-      },
-    });
-  };
-
-  const onPressBankNapas = item => {
-    if (item) {
-      navigation.push(SCREEN.MAP_BANK_FLOW, {
-        screen: MapBankRoutes.BankCardInfo,
-        params: {item: item, type: BANK_TYPE.LIST_NAPAS_BANK},
-      });
-    }
-  };
-
-  const onPressInternationalBank = item => {
-    if (item) {
-      navigation.push(SCREEN.MAP_BANK_FLOW, {
-        screen: MapBankRoutes.BankCardInfo,
-        params: {item: item, type: BANK_TYPE.LIST_INTERNATIONAL_BANK},
       });
     }
   };
@@ -118,7 +78,42 @@ const BankPickerScreen = props => {
       </View>
     );
   };
-
+  const renderContent = () => {
+    if (isEmpty(listConnectBank)) {
+      return (
+        <View>
+          <BankList
+            ref={bankLinkRef}
+            title={translation.bank_linking}
+            key={'DomesticBank'}
+            type={BANK_TYPE.LIST_DOMESTIC_BANK}
+          />
+        </View>
+      );
+    }
+    return (
+      <View>
+        <BankList
+          ref={bankLinkRef}
+          title={translation.bank_linking}
+          key={'DomesticBank'}
+          type={BANK_TYPE.LIST_DOMESTIC_BANK}
+        />
+        <BankList
+          ref={visaRef}
+          title={'Ngân hàng thanh toán Quốc tế'}
+          key={'InternationalBank'}
+          type={BANK_TYPE.LIST_INTERNATIONAL_BANK}
+        />
+        <BankList
+          ref={napasRef}
+          title={'Ngân hàng nội địa '}
+          key={'NapasBank'}
+          type={BANK_TYPE.LIST_NAPAS_BANK}
+        />
+      </View>
+    );
+  };
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
@@ -129,27 +124,7 @@ const BankPickerScreen = props => {
       <ScrollView
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
-        <BankList
-          ref={bankLinkRef}
-          title={translation.bank_linking}
-          key={'DomesticBank'}
-          type={BANK_TYPE.LIST_DOMESTIC_BANK}
-          callback={onPressBankLink}
-        />
-        <BankList
-          ref={visaRef}
-          title={'Ngân hàng thanh toán Quốc tế'}
-          key={'InternationalBank'}
-          type={BANK_TYPE.LIST_INTERNATIONAL_BANK}
-          callback={onPressInternationalBank}
-        />
-        <BankList
-          ref={napasRef}
-          title={'Ngân hàng nội địa '}
-          key={'NapasBank'}
-          type={BANK_TYPE.LIST_NAPAS_BANK}
-          callback={onPressBankNapas}
-        />
+        {renderContent()}
       </ScrollView>
     </View>
   );

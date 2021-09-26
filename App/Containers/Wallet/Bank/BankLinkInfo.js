@@ -24,12 +24,26 @@ import {useTranslation} from 'context/Language';
 import {Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {useUser} from 'context/User';
+import {useBankInfo} from 'context/Wallet/utils';
+import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
+const DEFAULT_BANK = {
+  BankId: 1,
+  BankCode: 'VCB',
+  BankName: 'Vietcombank',
+  ConnectTime: '21-02-2020 16:20:57',
+  BankLogoUrl:
+    'https://gateway.epayservices.com.vn/epay-images/bank/icon-Vietcombank.png',
+};
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
-  const {item} = params || {};
+  const {userInfo} = useUser();
+  const {onChange} = useBankInfo();
+  const {item, selectedItem: selectedIC, optionKyc} = params || {};
   const [bankAccount, setBankAccount] = useState('');
-  const {bank, kycInfo, optionKyc} = item || {};
+  const {bank, kycInfo} = item || {};
+  const {personalIC} = userInfo || {};
   const errorMessage = 'Vui lòng nhập thông tin số thẻ/tài khoản';
   const [err, setShowErr] = useState('');
 
@@ -38,7 +52,7 @@ export default function (props) {
       <View
         style={[styles.shadow, {flexDirection: 'row', alignItems: 'center'}]}>
         <Image
-          source={{uri: bank?.BankLogoUrl}}
+          source={{uri: bank?.BankLogoUrl || DEFAULT_BANK.BankLogoUrl}}
           style={{
             height: scale(32),
             aspectRatio: 2,
@@ -47,7 +61,7 @@ export default function (props) {
           resizeMode={'contain'}
         />
         <Text bold={true} size={Fonts.H6}>
-          {bank?.BankName || ''}
+          {bank?.BankName || DEFAULT_BANK.BankName}
         </Text>
       </View>
     );
@@ -65,6 +79,7 @@ export default function (props) {
   };
   const onSubmit = () => {
     const isValid = validateInfo?.();
+    onChange('BankAccount', bankAccount);
     if (isValid) {
       if (optionKyc) {
         props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
@@ -73,6 +88,7 @@ export default function (props) {
         });
       } else {
         //open KYC flow
+        props?.navigation?.navigate?.(SCREEN.CHOOSE_IDENTITY_CARD);
       }
     }
   };
@@ -97,14 +113,20 @@ export default function (props) {
   );
 
   const renderCard = () => {
-    //Todo: pick from a list of KYC
+    //Todo: pick from a list of KYC array
+    // const icData= op
     return (
       <View style={[styles.shadow]}>
         <Text style={styles.subTitle}>Họ và tên </Text>
-        <Text style={styles.title}>NGUYEN VAN AN</Text>
+        <Text style={styles.title}>
+          {optionKyc?.data?.Name || personalIC.ICFullName}
+        </Text>
         <View height={16} />
         <Text style={styles.subTitle}>CMND</Text>
-        <Text style={styles.title}>{kycInfo?.label}</Text>
+        <Text style={styles.title}>
+          {censorCardNumber(optionKyc?.data?.Number || personalIC.ICNumber) ||
+            optionKyc?.label}
+        </Text>
       </View>
     );
   };
@@ -121,9 +143,15 @@ export default function (props) {
       </View>
     );
   };
+  const onAddIc = () => {
+    props?.navigation?.push(SCREEN.VERIFY_USER_INFO, {
+      params: {isMapBank: true},
+    });
+  };
   const renderAddIc = () => {
     return (
       <TouchableOpacity
+        onPress={onAddIc}
         style={{
           borderRadius: 8,
           borderColor: Colors.BORDER,
