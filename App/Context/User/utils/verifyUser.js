@@ -283,6 +283,7 @@ const useVerifyInfo = (initialValue = {}) => {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
         titleFront: backSide ? 'Mặt sau' : 'Mặt trước',
+        isHasTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
 
@@ -313,6 +314,7 @@ const useVerifyInfo = (initialValue = {}) => {
         data,
         path: `data:image/jpeg;base64,${imageDisplay}`,
       });
+      onChange('eKYCTutorialShown', true);
     };
 
     const EKYC_PERMISSIONS = Platform.OS === 'android'
