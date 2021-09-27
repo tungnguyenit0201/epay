@@ -6,19 +6,9 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {
-  HeaderBg,
-  Header,
-  Icon,
-  Text,
-  InputBlock,
-  Row,
-  Col,
-  TextInput,
-  Button,
-} from 'components';
+import {HeaderBg, Header, Text, InputBlock, Button} from 'components';
 
-import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
+import {SCREEN} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'context/Language';
 import {Colors, Fonts, Spacing} from 'themes';
@@ -26,7 +16,8 @@ import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {useUser} from 'context/User';
 import {useBankInfo} from 'context/Wallet/utils';
-import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
+import {censorCardNumber} from 'context/Wallet/utils/bankInfo';
+
 const DEFAULT_BANK = {
   BankId: 1,
   BankCode: 'VCB',
@@ -35,12 +26,13 @@ const DEFAULT_BANK = {
   BankLogoUrl:
     'https://gateway.epayservices.com.vn/epay-images/bank/icon-Vietcombank.png',
 };
+
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {userInfo} = useUser();
-  const {onChange} = useBankInfo();
-  const {item, selectedItem: selectedIC, optionKyc} = params || {};
+  const {onChange} = useBankInfo(params);
+  const {item, optionKyc} = params || {};
   const [bankAccount, setBankAccount] = useState('');
   const {bank, kycInfo} = item || {};
   const {personalIC} = userInfo || {};
@@ -49,15 +41,10 @@ export default function (props) {
 
   const renderBankInfo = () => {
     return (
-      <View
-        style={[styles.shadow, {flexDirection: 'row', alignItems: 'center'}]}>
+      <View style={[styles.shadow, styles.row]}>
         <Image
           source={{uri: bank?.BankLogoUrl || DEFAULT_BANK.BankLogoUrl}}
-          style={{
-            height: scale(32),
-            aspectRatio: 2,
-            marginRight: 12,
-          }}
+          style={styles.bankIcon}
           resizeMode={'contain'}
         />
         <Text bold={true} size={Fonts.H6}>
@@ -115,14 +102,16 @@ export default function (props) {
   const renderCard = () => {
     //Todo: pick from a list of KYC array
     // const icData= op
+    const idText = 'CMND',
+      nameText = 'Họ và tên ';
     return (
       <View style={[styles.shadow]}>
-        <Text style={styles.subTitle}>Họ và tên </Text>
+        <Text style={styles.subTitle}>{nameText}</Text>
         <Text style={styles.title}>
           {optionKyc?.data?.Name || personalIC.ICFullName}
         </Text>
         <View height={16} />
-        <Text style={styles.subTitle}>CMND</Text>
+        <Text style={styles.subTitle}>{idText}</Text>
         <Text style={styles.title}>
           {censorCardNumber(optionKyc?.data?.Number || personalIC.ICNumber) ||
             optionKyc?.label}
@@ -150,24 +139,12 @@ export default function (props) {
   };
   const renderAddIc = () => {
     return (
-      <TouchableOpacity
-        onPress={onAddIc}
-        style={{
-          borderRadius: 8,
-          borderColor: Colors.BORDER,
-          borderWidth: 1,
-          paddingHorizontal: 18,
-          paddingVertical: 8,
-          marginVertical: 16,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+      <TouchableOpacity onPress={onAddIc} style={styles.bankIc}>
         <Text size={Fonts.H6}>Thêm giấy tờ tùy thân khác </Text>
         <View flex={1} />
         <Image
           source={require('./images/icon_plus.png')}
-          style={{width: 22, aspectRatio: 1}}
+          style={styles.iconAdd}
           resizeMode={'contain'}
         />
       </TouchableOpacity>
@@ -180,10 +157,7 @@ export default function (props) {
           label={translation.continue}
           bold
           size="lg"
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          style={styles.button}
           onPress={onSubmit}
         />
       </View>
@@ -213,6 +187,28 @@ export default function (props) {
   );
 }
 const styles = StyleSheet.create({
+  iconAdd: {width: 22, aspectRatio: 1},
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bankIc: {
+    borderRadius: 8,
+    borderColor: Colors.BORDER,
+    borderWidth: 1,
+    paddingHorizontal: 18,
+    paddingVertical: 8,
+    marginVertical: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  row: {flexDirection: 'row', alignItems: 'center'},
+  bankIcon: {
+    height: scale(32),
+    aspectRatio: 2,
+    marginRight: 12,
+  },
   container: {
     flex: 1,
     paddingHorizontal: Spacing.PADDING,
@@ -242,39 +238,4 @@ const styles = StyleSheet.create({
   },
   subTitle: {color: '#666666', fontSize: Fonts.MD},
   title: {fontSize: Fonts.H6, marginTop: 8},
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-  },
-  pt_1: {paddingTop: 24},
-  flex: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-  },
-  flex_2: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  items_center: {
-    alignItems: 'center',
-  },
-  btn: {
-    minWidth: 102,
-    borderRadius: 16,
-    height: 32,
-  },
-  input: {
-    borderColor: 'black',
-    borderRadius: 3,
-    backgroundColor: '#fff',
-  },
-  mb_1: {marginBottom: 16},
-  dot: {
-    width: 3,
-    height: 3,
-    marginRight: 8,
-    backgroundColor: '#666666',
-    borderRadius: 100,
-  },
-  text_gray: {color: '#666666'},
 });

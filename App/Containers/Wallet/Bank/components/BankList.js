@@ -65,7 +65,6 @@ const BankList = forwardRef((props, ref) => {
   const allBank = useRef([]);
   const isSearch = useRef(false);
   const {
-    onGetAllBank,
     onGetDomesticBanks,
     onGetInternationalBanks,
     onGetNapasBanks,
@@ -202,14 +201,14 @@ const BankList = forwardRef((props, ref) => {
   };
 
   const onPressBankConnect = () => {};
-  const onPressBankInt = () => {};
+
   const onPress = item => {
     switch (type) {
       case BANK_TYPE.LIST_BANK_CONNECT:
         onPressBankConnect(item);
         break;
       case BANK_TYPE.LIST_INTERNATIONAL_BANK:
-        onPressBankInt(item);
+        onPressInternationalBank(item);
         break;
       case BANK_TYPE.LIST_NAPAS_BANK:
         onPressBankNapas(item);

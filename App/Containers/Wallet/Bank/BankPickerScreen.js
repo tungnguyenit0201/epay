@@ -1,29 +1,21 @@
-import React, {useState, useEffect, useLayoutEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   ScrollView,
   StyleSheet,
   Image,
-  TouchableOpacity,
 } from 'react-native';
-import {HeaderBg, Header, Icon, Text, InputBlock, Row, Col} from 'components';
-import {Colors, Fonts, Spacing, Images} from 'themes';
+import {HeaderBg, Header, InputBlock} from 'components';
+import {Colors, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {debounce, isEmpty} from 'lodash';
 import BankList from 'containers/Wallet/Bank/components/BankList';
 import {BANK_TYPE} from 'context/Wallet/utils/bankInfo';
 import {useBankInfo} from 'context/Wallet/utils';
-import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
-import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
-import PopUpBankLink from './components/PopUpBankLink';
-import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
 import {useWallet} from 'context/Wallet';
 
 const BankPickerScreen = props => {
-  const {navigation} = props;
   const translation = useTranslation();
-  const {onGetAllBank, onPressBankLink: onPressBankLinkUtils} = useBankInfo();
   const {walletInfo} = useWallet();
   const {listConnectBank} = walletInfo; //have
   const [keysearch, setKeySearch] = useState('');
@@ -53,15 +45,6 @@ const BankPickerScreen = props => {
       onSearchDebounce(text);
     }
   };
-  const onContinueMap = item => {
-    if (item) {
-      navigation.push(SCREEN.MAP_BANK_FLOW, {
-        screen: MapBankRoutes.BankLinkInfo,
-        params: {item: item},
-      });
-    }
-  };
-
   const renderSearchView = () => {
     return (
       <View style={[{marginTop: -20}]}>
@@ -135,8 +118,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.BACKGROUNDCOLOR,
     paddingBottom: 40,
-    marginTop: 16,
-    // padding: 16,
+    marginTop: Spacing.PADDING,
   },
   image: {
     width: 20,

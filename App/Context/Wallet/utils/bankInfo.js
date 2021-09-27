@@ -14,14 +14,8 @@ import {useWallet} from 'context/Wallet';
 import _, {isEmpty} from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
-import {
-  updatePersonalInfo,
-  getIdentifyInfo,
-  updateUserAddress,
-} from 'services/user';
-import {useUserInfo} from 'context/User/utils';
-import PopUpBankLink from 'containers/Wallet/Bank/components/PopUpBankLink';
-import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
+import {getIdentifyInfo} from 'services/user';
+
 const mockIc = {
   CheckICInfo: {
     Address: '83/9 Phú Hòa, Phường 8 Tân Bình, TP. Hồ Chí Minh',
@@ -103,11 +97,11 @@ export const censorCardNumber = (
 
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
+  console.log('initialValue', initialValue);
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
-  // const {onGetIcInfor, onGetAllInfo} = useUserInfo();
 
   const onChange = (key, value) => {
     mapBankInfo.current[key] = value;
@@ -146,11 +140,12 @@ const useBankInfo = (initialValue = {}) => {
       let result = await getIdentifyInfo({phone});
       result = mockIc;
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        // dispatch({
-        //   type: 'SET_IDENTIFY_INFO',
-        //   ICInfor: result?.ICInfor,
-        // });
-        // dispatch({type: 'SET_PHONE', phone});
+        const {ICInfo, CheckICInfo, IdentityCardInfor} = result || {};
+        dispatch({
+          type: 'SET_IC_INFO',
+          ICInfor: result?.ICInfo,
+        });
+        dispatch({type: 'SET_PHONE', phone});
         return {result};
       } else {
         setError(result);

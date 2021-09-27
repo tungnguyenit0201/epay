@@ -1,8 +1,9 @@
 import React, {useRef} from 'react';
 import {Image, View, StyleSheet} from 'react-native';
-import {Button, Radio, Text} from 'components';
+import {Button, Radio, Text, SecondaryButton} from 'components';
 import {useTranslation} from 'context/Language';
 import {Colors, Spacing, Images} from 'themes';
+
 const PopUpBankLink = props => {
   const {kycInfo, onChooseIc, onContinue, requestClose} = props || {};
   const translation = useTranslation();
@@ -22,13 +23,7 @@ const PopUpBankLink = props => {
         onChange={handleChange}
         items={kycInfo}
         selectedValue={kycInfo?.[0]?.value}
-        style={[
-          {
-            marginRight: 0,
-            justifyContent: 'center',
-            alignSelf: 'flex-start',
-          },
-        ]}
+        style={[styles.radio]}
       />
     );
   };
@@ -51,16 +46,15 @@ const PopUpBankLink = props => {
             onContinue?.(selectedItem.current);
           }}
         />
-        <Button
+        <View height={12} />
+        <SecondaryButton
           label={'Dùng giấy tờ tùy thân khác'}
           bold
           size="lg"
-          color={Colors.white}
+          // color={Colors.white}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: Spacing.PADDING,
-            padding: 15,
           }}
           onPress={() => {
             requestClose?.();
@@ -113,4 +107,10 @@ const PopUpBankLink = props => {
   );
 };
 export default PopUpBankLink;
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  radio: {
+    marginRight: 0,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+  },
+});
