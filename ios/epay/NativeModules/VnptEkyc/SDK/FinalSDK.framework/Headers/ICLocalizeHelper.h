@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*) localizedStringForKey:(NSString*)key;
 
 // set a new language:
-- (void) setLanguage:(NSString*)language;
+- (void) setLanguage:(NSString*)language bundle:(NSBundle*) bundle;
 
 @end
 
