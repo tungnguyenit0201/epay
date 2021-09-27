@@ -33,7 +33,6 @@ export default ({
   label2Style,
   mode = 'contain', //outline
 }) => {
-  console.log(bgImg);
   return (
     <Pressable
       disabled={disabled}

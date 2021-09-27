@@ -225,6 +225,7 @@ const History = () => {
             data={historyData}
             renderItem={renderTransactionSections}
             style={[styles.bgWhite, styles.borderRadius1, styles.blockShadow]}
+            keyExtractor={item => item?.TransCode}
             refreshControl={
               <RefreshControl
                 refreshing={!historyData?.length}

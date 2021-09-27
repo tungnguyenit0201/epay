@@ -52,7 +52,6 @@ const Confirmation = () => {
   const toggleModal = () => {
     setOpen(!open);
   };
-  console.log(data);
 
   return (
     <>

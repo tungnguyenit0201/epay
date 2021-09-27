@@ -19,7 +19,6 @@ const BankLinked = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const bankInfo = route.params;
-  console.log(userInfo);
   return (
     <>
       <ScrollView style={[styles.container]}>
