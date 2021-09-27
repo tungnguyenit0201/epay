@@ -81,10 +81,10 @@ import DetailHistory from 'containers/Wallet/History/Detail';
 import BottomModal from 'containers/Modal/BottomModal';
 import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
-import QRPay from 'containers/QRPay';
-import QRTransfer from 'containers/QRPay/Transfer';
-import TransferResults from 'containers/QRPay/TransferResults';
-import TransferSuccess from 'containers/QRPay/TransferSuccess';
+import QRPay from 'containers/Wallet/QRPay';
+import QRTransfer from 'containers/Wallet/QRPay/Transfer';
+import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -154,9 +154,12 @@ const AppNavigator = () => {
       };
     },
   };
-
+  const linking = {
+    prefixes: ['epay://'],
+    config: {},
+  };
   return (
-    <NavigationContainer ref={Navigator.setContainer}>
+    <NavigationContainer ref={Navigator.setContainer} linking={linking}>
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
