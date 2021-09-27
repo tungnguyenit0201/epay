@@ -6,6 +6,7 @@
     "clear": "rm -rf yarn.lock node_modules ios/Pods ios/Podfile.lock ios/epay.xcworkspace && yarn install && cd ios && pod install && cd ..",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios-11": "react-native run-ios --simulator 'iPhone 11 Pro'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
