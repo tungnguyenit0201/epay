@@ -92,21 +92,27 @@ const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
   const {onGetConfig} = useConfig();
+  const isReadyRef = React.useRef(false);
+
+  React.useEffect(() => {
+    const getConfig = async () => {
+      await onGetConfig();
+    };
+    getConfig();
+  }, []); // eslint-disable-line
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
       let currentLanguage = await AsyncStorage.getItem(
         ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
       );
-      if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
+      if (!currentLanguage && isReadyRef.current)
+        Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
-    const getConfig = async () => {
-      await onGetConfig();
-    };
-    getConfig();
+
     getCurrentLanguage();
-  }, []); // eslint-disable-line
+  }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {
     Platform.OS == 'android' && SplashScreen.hide();
@@ -161,7 +167,11 @@ const AppNavigator = () => {
     config: {},
   };
   return (
-    <NavigationContainer ref={Navigator.setContainer} linking={linking}>
+    <NavigationContainer
+      ref={Navigator.setContainer}
+      linking={linking}
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}

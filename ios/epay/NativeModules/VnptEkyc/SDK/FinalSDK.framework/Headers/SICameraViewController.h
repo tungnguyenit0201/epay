@@ -16,6 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) UIColor *buttonTitleColor;
 @property (nonatomic) UIColor *buttonReTakeColor;
 @property (nonatomic) UIColor *buttonBackgroundColor;
+@property (nonatomic) UIColor *ovalCircleColor;
+@property (nonatomic) UIColor *titleFeedbackColor;
+
+
+@property (nonatomic) UIColor *screenTitleTextColor;
+@property (nonatomic) UIColor *backgroundColor;
 
 @property (nonatomic) UIImage *logoTrademarkImage;
 @property (nonatomic) BOOL isShowHelp;
@@ -23,6 +29,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL isSkipVoiceVideo;
 @property (nonatomic) NSString *languageApplication; // "vi"
+@property (nonatomic) NSBundle *bundle; // "vi"
+
+@property (nonatomic) BOOL isBtnBack;
+@property (strong,nonatomic) NSBundle *bundleOvalAnimation;
+@property (strong,nonatomic) NSBundle *bundleFeedBackAnimation;
+
+
+//@property (strong,nonatomic) UIView *viewHelp;
+@property (strong,nonatomic) UIViewController *viewControllerHelp;
+@property (nonatomic) UIImage *imgBottom;
+
+@property (strong,nonatomic) FaceOvalViewController *faceOval;
+
 @property (weak, nonatomic) id<FaceOvalDelegate> ovalDelegate;
 
 @end

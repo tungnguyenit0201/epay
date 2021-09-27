@@ -3,7 +3,7 @@ import {
   StackActions,
   DrawerActions,
 } from '@react-navigation/native';
-import { SCREEN } from 'configs/Constants';
+import {SCREEN} from 'configs/Constants';
 
 let _container;
 
