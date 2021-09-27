@@ -58,7 +58,12 @@ const ChangePassword = ({route}) => {
                     error={touched.password && errors.password}
                     value={values.password}
                   />
-                  <Button mb={10} label="Xác nhận" onPress={handleSubmit} />
+                  <Button
+                    mb={10}
+                    label="Xác nhận"
+                    onPress={handleSubmit}
+                    disabled={!values.password || errors.password}
+                  />
                 </View>
               );
             }}

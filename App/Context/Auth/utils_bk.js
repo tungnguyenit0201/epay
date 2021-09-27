@@ -15,7 +15,7 @@ import {
 } from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
-import {updatePassword} from 'services/user';
+import {updateForgotPassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useWalletInfo} from 'context/Wallet/utils';
@@ -312,7 +312,10 @@ const useForgetPassword = () => {
   const onNewPassword = async ({newPassword, phone}) => {
     setLoading(true);
     const passwordEncrypted = await sha256(newPassword);
-    const result = await updatePassword({password: passwordEncrypted, phone});
+    const result = await updateForgotPassword({
+      password: passwordEncrypted,
+      phone,
+    });
     setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
       setError(result);
