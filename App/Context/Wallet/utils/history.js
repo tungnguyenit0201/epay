@@ -89,7 +89,12 @@ const useHistory = () => {
       return;
     }
     // parseHistory(result?.ListTransHist);
-    setHistoryData(result?.ListTransHist);
+    setHistoryData(
+      result?.ListTransHist.map(item => ({
+        ...item,
+        isIncome: incomeType.includes(item?.TransType),
+      })),
+    );
   };
 
   useEffect(() => {
@@ -117,7 +122,7 @@ const useHistory = () => {
     }
 
     Navigator.push(SCREEN.DETAIL_HISTORY, {
-      data: _.get(result, 'TransDetail', {}),
+      data: {..._.get(result, 'TransDetail', {}), isIncome: item?.isIncome},
     });
   };
 

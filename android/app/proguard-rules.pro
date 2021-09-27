@@ -8,3 +8,8 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+
+-ignorewarnings
+-keep class ai.icenter.face3d.native_lib.Face3DConfig { *; }
+-keep class ai.icenter.face3d.native_lib.Face3DWrapper { *; }
+-keep class ai.icenter.ekyc.Face3DConfig { *; }

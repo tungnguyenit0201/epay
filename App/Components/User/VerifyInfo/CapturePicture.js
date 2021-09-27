@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -7,13 +7,16 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import {Button, Text, FWLoading, Header} from 'components';
-import {RNCamera} from 'react-native-camera';
-import {Colors, Fonts, Images, Spacing} from 'themes';
-import {scale} from 'utils/Functions';
-import {useDropImage} from 'context/User/utils';
-import {useIsFocused} from '@react-navigation/native';
+import { Button, Text, FWLoading, Header } from 'components';
+import { RNCamera } from 'react-native-camera';
+import { Colors, Fonts, Images, Spacing } from 'themes';
+import { scale } from 'utils/Functions';
+import { useDropImage } from 'context/User/utils';
+import { useIsFocused } from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
+import { useVerifyInfo } from 'context/User/utils';
+import KYCType from 'configs/Enums/KYCType';
+import { useTranslation } from 'context/Language';
 
 const CapturePicture = ({
   onDropImage,
@@ -21,41 +24,85 @@ const CapturePicture = ({
   style,
   cameraType = 'back',
   draft,
+  verifyParams,
+  type,
 }) => {
-  const {width, height} = useWindowDimensions();
-  const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
+  const { width, height } = useWindowDimensions();
+  const { image, camera, showCamera, loading, setShowCamera, capturePicture } =
     useDropImage();
   const isFocused = useIsFocused();
+  const translation = useTranslation();
+  const {
+    kycType,
+    captureFrontImage,
+    captureBackImage,
+    captureFaceImage,
+    SDKImage,
+  } = useVerifyInfo(verifyParams);
+  const eKYC = kycType === KYCType.EKYC;
+
+  useEffect(() => {
+    if (eKYC && SDKImage) {
+      onDropImage(SDKImage);
+    }
+  }, [SDKImage, eKYC]);
+
+  const KYCFunction = useMemo(() => {
+    if (eKYC) {
+      if (cameraType === 'front') {
+        return () => captureFaceImage();
+      }
+      return () => type === 'back'
+        ? captureBackImage()
+        : captureFrontImage();
+    }
+    return () => setShowCamera(1);
+  }, [eKYC, cameraType, type]);
+
+  const imagePath = useMemo(() => {
+    return eKYC ? SDKImage?.path : image?.path;
+  }, [SDKImage, image]);
+
   return (
     // TODO: translate
     <>
       {!showCamera && (
         <View
-          style={[
-            styles.wrap,
-            image?.path && {
-              paddingVertical: Spacing.PADDING / 2,
-            },
-            style && style,
-          ]}>
-          {image?.path || draft ? (
-            <View style={styles.wrapImg}>
+          style={style}>
+          {imagePath || draft ? (
+            <View style={[styles.wrapImg, style]}>
+              <View style={styles.titleRow}>
+                <Text
+                  size={Fonts.H6}
+                  centered
+                  bold
+                  style={styles.textUppercase}>
+                  {title}
+                </Text>
+                <Button
+                  onPress={KYCFunction}
+                  label={translation?.take_a_photo}
+                  style={styles.smallButton}
+                  leftIcon={Images.VerifyUserInfo.camera}
+                  bold
+                />
+              </View>
               <Image
                 style={[
                   styles.img,
                   styles.imgFront,
                   {
-                    width: image?.widthImg || draft?.widthImg,
-                    height: image?.heightImg || draft?.heightImg,
+                    width: image?.widthImg || draft?.widthImg || scale(150),
+                    height: image?.heightImg || draft?.heightImg || scale(150),
                   },
                 ]}
                 imageStyle={styles.imgFront}
-                source={{uri: image?.path ? image?.path : draft?.path}}
+                source={{ uri: imagePath ? imagePath : draft?.path }}
                 resizeMode={'contain'}
               />
             </View>
           ) : (
-            <>
+            <View style={styles.emptyHolder}>
               <Text
                 size={Fonts.H6}
                 mb={10}
@@ -64,24 +111,22 @@ const CapturePicture = ({
                 style={styles.textUppercase}>
                 {title}
               </Text>
-
               <Image
                 style={styles.bgImg}
                 source={Images.VerifyUserInfo.wave}
                 resizeMode="contain"
               />
-            </>
+              <View style={{ alignItems: 'center' }}>
+                <Button
+                  onPress={KYCFunction}
+                  label={'Chụp ảnh'}
+                  style={styles.btn}
+                  leftIcon={Images.VerifyUserInfo.camera}
+                />
+              </View>
+            </View>
           )}
-          <View style={{alignItems: 'center'}}>
-            <Button
-              onPress={() => {
-                setShowCamera(1);
-              }}
-              label={'Chụp ảnh'}
-              style={styles.btn}
-              leftIcon={Images.VerifyUserInfo.camera}
-            />
-          </View>
+
         </View>
       )}
       {showCamera && (
@@ -108,7 +153,7 @@ const CapturePicture = ({
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}>
-              {({camera, status, recordAudioPermissionStatus}) => {
+              {({ camera, status, recordAudioPermissionStatus }) => {
                 if (status !== 'READY') return <FWLoading />;
                 return (
                   <View
@@ -121,7 +166,7 @@ const CapturePicture = ({
                       avoidStatusBar
                       title={title}
                       onPressBack={() => setShowCamera(false)}
-                      style={{zIndex: 10}}
+                      style={{ zIndex: 10 }}
                     />
                     <View
                       style={{
@@ -135,7 +180,7 @@ const CapturePicture = ({
                             ? Images.Camera.CameraSquare
                             : Images.Camera.Oval
                         }
-                        style={{width: width, height: height}}
+                        style={{ width: width, height: height }}
                       />
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>
@@ -192,7 +237,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-  wrapImg: {paddingBottom: Spacing.PADDING / 2, alignItems: 'center'},
+  wrapImg: {
+    paddingVertical: Spacing.PADDING / 2,
+    paddingHorizontal: Spacing.PADDING,
+    alignItems: 'center',
+    borderRadius: 8,
+    elevation: 3,
+    shadowRadius: 8,
+    shadowColor: Colors.gray,
+    shadowOpacity: 0.3,
+    backgroundColor: Colors.white,
+  },
   img: {
     width: '100%',
     height: scale(186),
@@ -208,7 +263,10 @@ const styles = StyleSheet.create({
     height: scale(64),
   },
 
-  textUppercase: {textTransform: 'uppercase'},
+  textUppercase: {
+    textTransform: 'uppercase',
+    fontWeight: '600',
+  },
   bgImg: {
     position: 'absolute',
     bottom: 0,
@@ -224,11 +282,27 @@ const styles = StyleSheet.create({
     bottom: Spacing.PADDING * 2,
     alignSelf: 'center',
   },
-
   wrapText: {
     position: 'absolute',
     top: scale(420),
     alignSelf: 'center',
+  },
+  titleRow: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: Spacing.PADDING / 2,
+    marginTop: 4,
+  },
+  smallButton: {
+    height: scale(32),
+    paddingHorizontal: 16,
+  },
+  emptyHolder: {
+    paddingVertical: Spacing.PADDING * 3,
+    backgroundColor: Colors.l2,
+    borderRadius: 8,
   },
 });
 export default CapturePicture;

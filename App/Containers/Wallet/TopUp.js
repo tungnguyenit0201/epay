@@ -26,6 +26,8 @@ const TopUp = () => {
     onContinue,
   } = useTopUp();
 
+
+  console.log('t-->'+JSON.stringify(translation))
   return (
     <>
       <HeaderBg>

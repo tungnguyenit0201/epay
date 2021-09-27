@@ -1,4 +1,4 @@
-import React, {createContext, useContext} from 'react';
+import React, { createContext, useContext } from 'react';
 import userReducer from './reducer';
 
 const UserContext = createContext({});
@@ -18,9 +18,10 @@ const defaultUserInfo = {
   },
   qrCode: '',
   listNotify: [],
+  kycType: undefined,
 };
 
-export const UserProvider = ({children}) => {
+export const UserProvider = ({ children }) => {
   const [userInfo, dispatch] = React.useReducer(userReducer, defaultUserInfo);
 
   const value = React.useMemo(

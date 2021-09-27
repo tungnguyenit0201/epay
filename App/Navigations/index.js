@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
-import { SCREEN } from 'configs/Constants';
+import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
@@ -78,10 +78,13 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
+import BottomModal from 'containers/Modal/BottomModal';
+import PopupModal from 'containers/Modal/PopupModal';
+import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/QRPay/TransferResults';
-import TransferSuccess from 'containers/QRPay/TransferSuccess';
+import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import SmartOTPConfirm from 'containers/Wallet/SmartOTPConfirm';
 
 const AppNavigator = () => {
@@ -91,7 +94,10 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
-      let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+      let currentLanguage = await AsyncStorage.getItem(
+        ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
+      );
+      
       if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
@@ -126,17 +132,52 @@ const AppNavigator = () => {
       });
   }, []); // eslint-disable-line
 
+  const modalOptions = {
+    animationEnabled: true,
+    cardOverlayEnabled: true,
+    cardStyle: {
+      backgroundColor: 'rgba(0,0,0,0.15)',
+    },
+    cardStyleInterpolator: ({current: {progress}}) => {
+      return {
+        cardStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 0.5, 0.9, 1],
+            outputRange: [0, 0.25, 0.7, 1],
+          }),
+        },
+        overlayStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 0.25],
+            extrapolate: 'clamp',
+          }),
+        },
+      };
+    },
+  };
+  const linking = {
+    prefixes: ['epay://'],
+    config: {},
+  };
   return (
-    <NavigationContainer ref={Navigator.setContainer}>
+    <NavigationContainer ref={Navigator.setContainer} linking={linking}>
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
+          mode="modal"
+          headerMode="none"
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
           }}
           mode="modal"
         >
+          <Stack.Screen
+            name={SCREEN.MODAL_NAVIGATION}
+            component={ModalNavigation}
+            options={modalOptions}
+          />
           <Stack.Screen
             name={SCREEN.TAB_NAVIGATION}
             component={TabNavigation}
@@ -308,6 +349,27 @@ const AppNavigator = () => {
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
+  );
+};
+
+const ModalNavigation = () => {
+  return (
+    <Stack.Navigator
+      mode="modal"
+      headerMode="none"
+      screenOptions={{
+        ...TransitionPresets.ModalSlideFromBottomIOS,
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'transparent',
+          opacity: 0.99,
+        },
+      }}
+    >
+      <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
+      <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
+      <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />
+    </Stack.Navigator>
   );
 };
 
