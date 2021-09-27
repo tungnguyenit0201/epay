@@ -283,7 +283,7 @@ const useVerifyInfo = (initialValue = {}) => {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
         titleFront: backSide ? 'Mặt sau' : 'Mặt trước',
-        isHasTutorial: !contentRef.current?.eKYCTutorialShown,
+        isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
 
