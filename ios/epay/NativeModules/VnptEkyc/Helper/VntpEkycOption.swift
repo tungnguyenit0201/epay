@@ -66,7 +66,6 @@ class VnptEkycOption {
     
     return option
   }
-  }\
   
   static func  getDocumentOneSideOption(_ config: [String:Any]) -> OneSideOption {
     let option = OneSideOption()
