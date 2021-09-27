@@ -23,7 +23,7 @@ export default {
     GET_BANNER: 'ads/get_banner',
   },
   USER: {
-    UPDATE_PASSWORD: 'account/change_password',
+    UPDATE_FORGOT_PASSWORD: 'account/change_password',
     UPDATE_PERSONAL_INFO: 'account/update_personal_info',
     GET_PERSONAL_INFO: 'account/get_personal_info',
     GET_ALL_INFO: 'account/get_all_info',
@@ -38,6 +38,7 @@ export default {
     VERIFY_EMAIL: 'account/authentication_email',
     UPDATE_EMAIL: 'v2/account/change_email',
     UPDATE_AVATAR: 'account/update_avatar',
+    UPDATE_PASSWORD: 'account/proactive_change_password',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks', ///api/v2/bank/get_domestic_banks
