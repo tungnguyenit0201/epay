@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
-import {SCREEN} from 'configs/Constants';
+import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
@@ -93,7 +93,9 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
-      let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+      let currentLanguage = await AsyncStorage.getItem(
+        ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
+      );
       if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
