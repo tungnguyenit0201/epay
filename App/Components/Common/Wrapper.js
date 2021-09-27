@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {Colors, Images} from 'themes';
+import {Colors, Images, Spacing} from 'themes';
 import {useCommon} from 'context/Common';
 import Debug from './Debug';
 import {useCheckInfo, useModalSmartOTP} from 'context/Home/utils';
@@ -60,6 +60,7 @@ const Wrapper = React.memo(
                 <View style={styles.buttonGroup}>
                   <Button
                     mb={10}
+                    style={styles.btn}
                     label="Cài smart OTP ngay"
                     onPress={modalSmartOTP.onGoSmartOTP}
                   />
@@ -83,6 +84,7 @@ const Wrapper = React.memo(
               buttonGroup={() => (
                 <View style={styles.buttonGroup}>
                   <Button
+                    style={styles.btn}
                     mb={10}
                     label="Định danh"
                     onPress={() => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD)}
@@ -104,6 +106,7 @@ const Wrapper = React.memo(
                 <View style={styles.buttonGroup}>
                   <Button
                     mb={10}
+                    style={styles.btn}
                     label={translation.connect_now}
                     onPress={() => onNavigate(SCREEN.BANK_LINKED)}
                   />
@@ -129,7 +132,7 @@ const Wrapper = React.memo(
                     onPress={() => askPermission()}
                   />
                   <TouchableOpacity onPress={() => showModalCamera(false)}>
-                    <Text style={styles.underline}>Nhắc tôi sau</Text>
+                    <Text>Nhắc tôi sau</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -153,6 +156,7 @@ const styles = StyleSheet.create({
   underline: {
     textDecorationLine: 'underline',
   },
+  btn: {width: '100%'},
 });
 
 export default Wrapper;

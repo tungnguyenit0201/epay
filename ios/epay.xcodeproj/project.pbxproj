@@ -16,6 +16,21 @@
 		2AF2E17C41984CB0A7FFFF2D /* SVN-GilroyBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 638FEAC0D789439A9FC9680E /* SVN-GilroyBold.ttf */; };
 		367081BB7CB54A389822987A /* SVN-GilroyMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FFE8F7761D5D486CBE4AF2B9 /* SVN-GilroyMedium.ttf */; };
 		406CE53C773E0CDFF0AE83D6 /* libPods-EPAY.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 067234CC868FA76736F1028C /* libPods-EPAY.a */; };
+		6910506126EFC54F00F9588B /* VnptEkyc.m in Sources */ = {isa = PBXBuildFile; fileRef = 6910505426EFC54F00F9588B /* VnptEkyc.m */; };
+		6910506226EFC54F00F9588B /* VnptEkyc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910505526EFC54F00F9588B /* VnptEkyc.swift */; };
+		6910506626EFC54F00F9588B /* VntpEkycOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910505B26EFC54F00F9588B /* VntpEkycOption.swift */; };
+		6910506726EFC54F00F9588B /* VnptExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910505C26EFC54F00F9588B /* VnptExtension.swift */; };
+		6910506826EFC54F00F9588B /* VnptEkycConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910505D26EFC54F00F9588B /* VnptEkycConstants.swift */; };
+		6910506926EFC54F00F9588B /* VnptEkycCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910505E26EFC54F00F9588B /* VnptEkycCamera.swift */; };
+		6910506A26EFC54F00F9588B /* VnptEkycResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910505F26EFC54F00F9588B /* VnptEkycResponse.swift */; };
+		6910506B26EFC54F00F9588B /* VnptEkycState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6910506026EFC54F00F9588B /* VnptEkycState.swift */; };
+		6910507026EFC64700F9588B /* BioSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6910505926EFC54F00F9588B /* BioSDK.framework */; };
+		6910507126EFC64700F9588B /* BioSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6910505926EFC54F00F9588B /* BioSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6910507326EFC64800F9588B /* FinalSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6910505826EFC54F00F9588B /* FinalSDK.framework */; };
+		6910507426EFC64800F9588B /* FinalSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6910505826EFC54F00F9588B /* FinalSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6910507526EFC64900F9588B /* GatGuSI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6910505726EFC54F00F9588B /* GatGuSI.framework */; };
+		6910507626EFC64A00F9588B /* GatGuSI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6910505726EFC54F00F9588B /* GatGuSI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		69F1840426F216F500FC04EE /* TFLTensorFlowLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69F1840326F216F500FC04EE /* TFLTensorFlowLite.framework */; };
 		72B1556E26F44BB700116C71 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72B1556D26F44BB700116C71 /* GoogleService-Info.plist */; };
 		7BDEE2B23D7742E89959EB18 /* SVN-GilroyBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8F35B907E8E46D29BBC3E09 /* SVN-GilroyBoldItalic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -33,6 +48,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6910507226EFC64700F9588B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6910507626EFC64A00F9588B /* GatGuSI.framework in Embed Frameworks */,
+				6910507426EFC64800F9588B /* FinalSDK.framework in Embed Frameworks */,
+				6910507126EFC64700F9588B /* BioSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* EPAYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EPAYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -46,10 +77,22 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = EPAY/main.m; sourceTree = "<group>"; };
 		2D944497400361842AC19284 /* Pods-EPAY-EPAYTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EPAY-EPAYTests.release.xcconfig"; path = "Target Support Files/Pods-EPAY-EPAYTests/Pods-EPAY-EPAYTests.release.xcconfig"; sourceTree = "<group>"; };
 		638FEAC0D789439A9FC9680E /* SVN-GilroyBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyBold.ttf"; path = "../assets/fonts/SVN-GilroyBold.ttf"; sourceTree = "<group>"; };
+		6910505426EFC54F00F9588B /* VnptEkyc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VnptEkyc.m; sourceTree = "<group>"; };
+		6910505526EFC54F00F9588B /* VnptEkyc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VnptEkyc.swift; sourceTree = "<group>"; };
+		6910505726EFC54F00F9588B /* GatGuSI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GatGuSI.framework; sourceTree = "<group>"; };
+		6910505826EFC54F00F9588B /* FinalSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FinalSDK.framework; sourceTree = "<group>"; };
+		6910505926EFC54F00F9588B /* BioSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BioSDK.framework; sourceTree = "<group>"; };
+		6910505B26EFC54F00F9588B /* VntpEkycOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VntpEkycOption.swift; sourceTree = "<group>"; };
+		6910505C26EFC54F00F9588B /* VnptExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VnptExtension.swift; sourceTree = "<group>"; };
+		6910505D26EFC54F00F9588B /* VnptEkycConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VnptEkycConstants.swift; sourceTree = "<group>"; };
+		6910505E26EFC54F00F9588B /* VnptEkycCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VnptEkycCamera.swift; sourceTree = "<group>"; };
+		6910505F26EFC54F00F9588B /* VnptEkycResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VnptEkycResponse.swift; sourceTree = "<group>"; };
+		6910506026EFC54F00F9588B /* VnptEkycState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VnptEkycState.swift; sourceTree = "<group>"; };
+		69F1840326F216F500FC04EE /* TFLTensorFlowLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TFLTensorFlowLite.framework; sourceTree = "<group>"; };
 		725089D126F1DC1600CC79F4 /* EPAYRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = EPAYRelease.entitlements; path = EPAY/EPAYRelease.entitlements; sourceTree = "<group>"; };
 		72B1556D26F44BB700116C71 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72E79D7726F30F8100B8CCBD /* EPAY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = EPAY.entitlements; path = EPAY/EPAY.entitlements; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = EPAY/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = epay/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		870F382ECA514CC39577A74B /* SVN-GilroyMediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyMediumItalic.ttf"; path = "../assets/fonts/SVN-GilroyMediumItalic.ttf"; sourceTree = "<group>"; };
 		8A245B9E608489DDF121F40E /* Pods-EPAY-EPAYTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EPAY-EPAYTests.debug.xcconfig"; path = "Target Support Files/Pods-EPAY-EPAYTests/Pods-EPAY-EPAYTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A8F35B907E8E46D29BBC3E09 /* SVN-GilroyBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-GilroyBoldItalic.ttf"; path = "../assets/fonts/SVN-GilroyBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -76,6 +119,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				406CE53C773E0CDFF0AE83D6 /* libPods-EPAY.a in Frameworks */,
+				6910507026EFC64700F9588B /* BioSDK.framework in Frameworks */,
+				6910507526EFC64900F9588B /* GatGuSI.framework in Frameworks */,
+				6910507326EFC64800F9588B /* FinalSDK.framework in Frameworks */,
+				69F1840426F216F500FC04EE /* TFLTensorFlowLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +175,7 @@
 			children = (
 				72E79D7726F30F8100B8CCBD /* EPAY.entitlements */,
 				725089D126F1DC1600CC79F4 /* EPAYRelease.entitlements */,
+				6910505226EFC54F00F9588B /* NativeModules */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -146,6 +194,50 @@
 				AF6912B0EE1FD047737E6580 /* libPods-EPAY-EPAYTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6910505226EFC54F00F9588B /* NativeModules */ = {
+			isa = PBXGroup;
+			children = (
+				6910505326EFC54F00F9588B /* VnptEkyc */,
+			);
+			name = NativeModules;
+			path = epay/NativeModules;
+			sourceTree = "<group>";
+		};
+		6910505326EFC54F00F9588B /* VnptEkyc */ = {
+			isa = PBXGroup;
+			children = (
+				6910505426EFC54F00F9588B /* VnptEkyc.m */,
+				6910505526EFC54F00F9588B /* VnptEkyc.swift */,
+				6910505626EFC54F00F9588B /* SDK */,
+				6910505A26EFC54F00F9588B /* Helper */,
+			);
+			path = VnptEkyc;
+			sourceTree = "<group>";
+		};
+		6910505626EFC54F00F9588B /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+				69F1840326F216F500FC04EE /* TFLTensorFlowLite.framework */,
+				6910505726EFC54F00F9588B /* GatGuSI.framework */,
+				6910505826EFC54F00F9588B /* FinalSDK.framework */,
+				6910505926EFC54F00F9588B /* BioSDK.framework */,
+			);
+			path = SDK;
+			sourceTree = "<group>";
+		};
+		6910505A26EFC54F00F9588B /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				6910505B26EFC54F00F9588B /* VntpEkycOption.swift */,
+				6910505C26EFC54F00F9588B /* VnptExtension.swift */,
+				6910505D26EFC54F00F9588B /* VnptEkycConstants.swift */,
+				6910505E26EFC54F00F9588B /* VnptEkycCamera.swift */,
+				6910505F26EFC54F00F9588B /* VnptEkycResponse.swift */,
+				6910506026EFC54F00F9588B /* VnptEkycState.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -218,6 +310,7 @@
 				79C83C4467157C3A8D9915E7 /* [CP] Embed Pods Frameworks */,
 				D85C848347640267F2860D9C /* [CP] Copy Pods Resources */,
 				A9DF6B868DE57AD400289B7B /* [CP-User] [RNFB] Core Configuration */,
+				6910507226EFC64700F9588B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -464,8 +557,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6910506626EFC54F00F9588B /* VntpEkycOption.swift in Sources */,
+				6910506726EFC54F00F9588B /* VnptExtension.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				6910506226EFC54F00F9588B /* VnptEkyc.swift in Sources */,
+				6910506926EFC54F00F9588B /* VnptEkycCamera.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				6910506A26EFC54F00F9588B /* VnptEkycResponse.swift in Sources */,
+				6910506126EFC54F00F9588B /* VnptEkyc.m in Sources */,
+				6910506826EFC54F00F9588B /* VnptEkycConstants.swift in Sources */,
+				6910506B26EFC54F00F9588B /* VnptEkycState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +585,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8A245B9E608489DDF121F40E /* Pods-EPAY-EPAYTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -511,6 +613,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D944497400361842AC19284 /* Pods-EPAY-EPAYTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = EPAYTests/Info.plist;
@@ -540,9 +643,13 @@
 				CODE_SIGN_ENTITLEMENTS = EPAY/EPAY.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21092202;
+				CURRENT_PROJECT_VERSION = 21092402;
 				DEVELOPMENT_TEAM = 5G3223L7MC;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/epay/NativeModules/VnptEkyc/SDK",
+				);
 				INFOPLIST_FILE = EPAY/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -558,6 +665,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -571,8 +679,13 @@
 				CODE_SIGN_ENTITLEMENTS = EPAY/EPAYRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21092202;
+				CURRENT_PROJECT_VERSION = 21092402;
 				DEVELOPMENT_TEAM = 5G3223L7MC;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/epay/NativeModules/VnptEkyc/SDK",
+				);
 				INFOPLIST_FILE = EPAY/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -587,6 +700,7 @@
 				PRODUCT_NAME = EPAY;
 				PROVISIONING_PROFILE_SPECIFIER = EPAY;
 				SWIFT_VERSION = 5.0;
+				VALIDATE_WORKSPACE = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

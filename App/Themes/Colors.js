@@ -56,4 +56,7 @@ export default {
   CORRECT: 'green',
   BUTTON: '#FDB000',
   MEDIUMGRAY: '#999',
+  selected_gray: '#F1F1F1',
+  primary: '#281185',
+  blue: '#1F5CAB',
 };

@@ -51,17 +51,17 @@ const TabNavigation = () => {
     const {onGetConnectedBank} = useBankInfo();
     const {checkPermission} = usePermission();
 
-    useEffect(() => {
-      const getConnectBank = async () => {
-        let banks = await onGetConnectedBank();
-      };
-      getConnectBank();
-    }, []); // eslint-disable-line
+    // useEffect(() => {
+    //   const getConnectBank = async () => {
+    //     let banks = await onGetConnectedBank();
+    //   };
+    //   getConnectBank();
+    // }, []); // eslint-disable-line
     const onCheck = async () => {
-      let permission = await checkPermission(async () => {
-        let result = await checkInfo(SCREEN.QRPAY);
-        Boolean(result) && navigation.navigate(SCREEN.QRPAY);
-      });
+      // let permission = await checkPermission(async () => {
+      let result = await checkInfo(SCREEN.QRPAY);
+      Boolean(result) && navigation.navigate(SCREEN.QRPAY);
+      // });
     };
     return (
       <View style={styles.container}>

@@ -118,6 +118,12 @@ export default {
     logoVbb: require('images/logo-bank/logo-10.png'),
     logoShb: require('images/logo-bank/logo-11.png'),
     logoTpb: require('images/logo-bank/logo-12.png'),
+    //------------
+    Deposit: require('images/icons/deposit.png'),
+    Withdraw: require('images/icons/withdraw.png'),
+    Exchange: require('images/icons/exchange.png'),
+    Plus: require('images/icons/add.png'),
+    Search: require('images/icons/search-normal.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
@@ -156,6 +162,9 @@ export default {
     cmndBlur: require('images/identity-card/cmnd-blur.png'),
     cmndDark: require('images/identity-card/cmnd-dark.png'),
     cmndFail: require('images/identity-card/cmnd-fail.png'),
+    IdFront: require('images/identity-card/Front.png'),
+    IdBack: require('images/identity-card/Back.png'),
+    Passport: require('images/identity-card/Passport.png'),
   },
   TransactionHistory: {
     filter: require('images/icons/filter.png'),
@@ -183,4 +192,6 @@ export default {
     Lock: require('images/modal/lock.png'),
     UserTick: require('images/modal/userTick.png'),
   },
+  warning: require('images/ic_warning.png'),
+  primaryButton: require('images/Button.png'),
 };
