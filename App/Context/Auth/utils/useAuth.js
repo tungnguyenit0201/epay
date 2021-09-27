@@ -388,6 +388,7 @@ const usePhone = () => {
 const useForgetPassword = () => {
   const {setError} = useError();
   const {setLoading} = useLoading();
+  const [active, setActive] = useState(false);
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
@@ -418,7 +419,11 @@ const useForgetPassword = () => {
     Navigator.popToTop();
   };
 
-  return {onSubmitPhone, onNewPassword};
+  const onSetActive = () => {
+    setActive(!active);
+  };
+
+  return {onSubmitPhone, onNewPassword, active, onSetActive};
 };
 
 export {useTouchID, useAuth, useRegister, usePhone, useForgetPassword};
