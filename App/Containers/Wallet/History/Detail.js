@@ -11,11 +11,13 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  Linking,
 } from 'react-native';
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import _ from 'lodash';
 import FooterContainer from 'components/Auth/FooterContainer';
-import {TRANS_DETAIL} from 'configs/Constants';
+import {TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
+import {formatMoney} from 'utils/Functions';
 
 const ToggleRightText = ({text}) => {
   const [textShown, setTextShown] = useState(false);
@@ -69,35 +71,6 @@ const DetailHistory = ({route}) => {
 
   const blue = '#FAFCFF';
   const blue_1 = '#1F5CAB';
-  const dataTest_1 = [
-    {title: 'Tài khoản nguồn', content: 'ví epay  09*****567'},
-    {title: translation.amount, content: '15.000'},
-    {title: translation.transaction_fee, content: translation.free},
-    {title: translation.total, content: '15.000'},
-  ];
-  const dataTest_2 = [
-    {title: 'Số quyết định ', content: '51G-5678, Loại 1 < 12 chỗ biển trắng'},
-    {title: 'Họ tên người vi phạm ', content: 'Nguyen Van A'},
-    {title: 'CMND/CCCD/Hộ chiếu ', content: '12******678'},
-    {title: 'Số tiền ', content: '1.000.000 Vnd '},
-    {
-      title: 'Hành vi vi phạm ',
-      content:
-        '51G-5678, Loại 1 < 12 chỗ biển trắng,51G-5678, Loại 1 < 12 chỗ biển trắng',
-    },
-    {title: 'Thời gian vi phạm ', content: '11-09-2021 '},
-    {
-      title: 'Hình thức phạt bổ sung ',
-      content:
-        'Lorem ipsum dolor sit amet conse Lorem ipsum dolor sit amet conse',
-    },
-    {title: 'Từ ngày phạt bổ sung ', content: '11-09-2021 '},
-    {title: 'Đến ngày phạt bổ sung ', content: '11-09-2021 '},
-    {title: 'Địa điểm vi phạm ', content: '123, Đống Đa '},
-    {title: 'Ngày ra quyết định ', content: '20-10-2021 '},
-    {title: 'Cơ quan quyết định ', content: 'CSGT số 1/ TP HN'},
-    {title: 'Trang thái quyết định ', content: 'Đã có quyết định'},
-  ];
 
   const {
     SrcAccount,
@@ -111,9 +84,74 @@ const DetailHistory = ({route}) => {
     TransFee,
     RequestedAmount,
     TransAmount,
-    CommitedAmount,
+    CommittedAmount,
     Payoneer,
+    isIncome,
   } = _.get(route, 'params.data', {});
+
+  const dataRowMain = {
+    default: [
+      {title: 'Tài khoản nguồn', value: SrcAccount},
+      {title: translation.amount, value: formatMoney(RequestedAmount)},
+      {title: translation.transaction_fee, value: formatMoney(TransFee)},
+      {
+        title: translation.total,
+        value: formatMoney(TransAmount) || formatMoney(CommittedAmount),
+      },
+    ],
+    [TRANS_TYPE.CashReceive]: [
+      {title: translation.amount, value: formatMoney(RequestedAmount)},
+      {title: translation.transaction_fee, value: formatMoney(TransFee)},
+      {
+        title: translation.total,
+        value: formatMoney(CommittedAmount),
+      },
+    ],
+    [TRANS_TYPE.CashOut]: [
+      {title: 'Tài khoản đích', value: DstAccount},
+      {title: translation.amount, value: formatMoney(RequestedAmount)},
+      {title: translation.transaction_fee, value: formatMoney(TransFee)},
+      {
+        title: translation.total,
+        value: formatMoney(CommittedAmount),
+      },
+    ],
+  };
+  const dataRowMoreInfo = {
+    [TRANS_TYPE.PaymentToll]: [
+      {title: 'Số quyết định ', value: '51G-5678, Loại 1 < 12 chỗ biển trắng'},
+      {title: 'Họ tên người vi phạm ', value: 'Nguyen Van A'},
+      {title: 'CMND/CCCD/Hộ chiếu ', value: '12******678'},
+      {title: 'Số tiền ', value: '1.000.000 Vnd '},
+      {
+        title: 'Hành vi vi phạm ',
+        value:
+          '51G-5678, Loại 1 < 12 chỗ biển trắng,51G-5678, Loại 1 < 12 chỗ biển trắng',
+      },
+      {title: 'Thời gian vi phạm ', value: '11-09-2021 '},
+      {
+        title: 'Hình thức phạt bổ sung ',
+        value:
+          'Lorem ipsum dolor sit amet conse Lorem ipsum dolor sit amet conse',
+      },
+      {title: 'Từ ngày phạt bổ sung ', value: '11-09-2021 '},
+      {title: 'Đến ngày phạt bổ sung ', value: '11-09-2021 '},
+      {title: 'Địa điểm vi phạm ', value: '123, Đống Đa '},
+      {title: 'Ngày ra quyết định ', value: '20-10-2021 '},
+      {title: 'Cơ quan quyết định ', value: 'CSGT số 1/ TP HN'},
+      {title: 'Trang thái quyết định ', value: 'Đã có quyết định'},
+    ],
+    [TRANS_TYPE.CashReceive]: [
+      {title: 'Số tài khoản', value: SrcAccount},
+      {title: 'Nội dung', value: Description},
+    ],
+    [TRANS_TYPE.CashTransfer]: [
+      {title: 'Số tài khoản', value: DstAccount},
+      {title: 'Người chịu phí', value: Payoneer ? 'Người nhận' : 'Người gửi'},
+      {title: 'Nội dung', value: Description},
+    ],
+  };
+  const dataRow = dataRowMain[TransType] || dataRowMain['default'];
 
   return (
     <>
@@ -143,9 +181,16 @@ const DetailHistory = ({route}) => {
                 translation[TRANS_DETAIL.STATUS[Status]].toLowerCase()}
             </Text>
 
-            <Text fs="h3" bold color={blue_1} centered style={styles.wrap}>
-              - 1.000.000 Vnđ
-            </Text>
+            {!!TransAmount && (
+              <Text
+                fs="h3"
+                bold
+                color={isIncome ? blue_1 : Colors.Highlight}
+                centered
+                style={styles.wrap}>
+                {isIncome ? '+' : '-'} {formatMoney(TransAmount, ' Vnđ')}
+              </Text>
+            )}
 
             <View style={styles.mt2}>
               <Text fs="md" centered color={Colors.gray}>
@@ -175,7 +220,7 @@ const DetailHistory = ({route}) => {
             />
           </View>
 
-          {dataTest_1.map((item, index) => (
+          {dataRow.map((item, index) => (
             <>
               <View
                 style={[styles.flexRow, styles.pt2, styles.pb3]}
@@ -188,10 +233,10 @@ const DetailHistory = ({route}) => {
                   bold
                   color={Colors.gray}
                   style={[styles.haftWidth, styles.textRight]}>
-                  {item.content}
+                  {item.value}
                 </Text>
               </View>
-              {index < dataTest_1.length - 1 && (
+              {index < dataRow.length - 1 && (
                 <DashedLine
                   dashLength={4}
                   dashThickness={1}
@@ -212,7 +257,9 @@ const DetailHistory = ({route}) => {
               styles.mt1,
               styles.mb2,
             ]}>
-            <TouchableOpacity style={[styles.flexRow]}>
+            <TouchableOpacity
+              style={[styles.flexRow]}
+              onPress={() => Linking.openURL('tel:19000000')}>
               <View style={[styles.flexRow, styles.flex1, styles.pr1]}>
                 <Icon
                   icon={Images.Phone_1}
@@ -220,7 +267,7 @@ const DetailHistory = ({route}) => {
                   style={styles.iconPhone}
                 />
                 <Text color={Colors.white} ml={8} bold>
-                  Hỗ trợ khiếu nại
+                  Hỗ trợ
                 </Text>
               </View>
               <Text color={Colors.white} bold>
@@ -229,45 +276,48 @@ const DetailHistory = ({route}) => {
             </TouchableOpacity>
           </LinearGradient>
 
-          <Text fs="h6" bold mb={16}>
-            Thông tin thêm
-          </Text>
-
-          <View
-            style={[
-              styles.blockShadow,
-              styles.bgWhite,
-              styles.mb2,
-              styles.px2,
-              styles.py2,
-            ]}>
-            {dataTest_2.map((item, index) => (
-              <View key={index}>
-                <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
-                  <Text fs="md" style={[styles.haftWidth, styles.pr1]}>
-                    {item.title}
-                  </Text>
-                  <View style={[styles.haftWidth]}>
-                    <ToggleRightText text={item.content} />
+          {dataRowMoreInfo[TransType] && (
+            <>
+              <Text fs="h6" bold mb={16}>
+                Thông tin thêm
+              </Text>
+              <View
+                style={[
+                  styles.blockShadow,
+                  styles.bgWhite,
+                  styles.mb2,
+                  styles.px2,
+                  styles.py2,
+                ]}>
+                {dataRowMoreInfo[TransType].map((item, index) => (
+                  <View key={index}>
+                    <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
+                      <Text fs="md" style={[styles.haftWidth, styles.pr1]}>
+                        {item.title}
+                      </Text>
+                      <View style={[styles.haftWidth]}>
+                        <ToggleRightText text={item.value} />
+                      </View>
+                    </View>
+                    {index < dataRowMoreInfo[TransType].length - 1 && (
+                      <DashedLine
+                        dashLength={4}
+                        dashThickness={1}
+                        dashColor={Colors.l3}
+                      />
+                    )}
                   </View>
-                </View>
-                {index < dataTest_1.length && (
-                  <DashedLine
-                    dashLength={4}
-                    dashThickness={1}
-                    dashColor={Colors.l3}
-                  />
-                )}
+                ))}
               </View>
-            ))}
-          </View>
+            </>
+          )}
         </View>
       </ScrollView>
-      <View style={styles.bgWhite}>
+      {/* <View style={styles.bgWhite}>
         <FooterContainer>
           <Button type={1} label="Tải biên lai" bold />
         </FooterContainer>
-      </View>
+      </View> */}
     </>
   );
 };
