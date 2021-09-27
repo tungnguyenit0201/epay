@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,10 +6,10 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import {Icon, Text, TextInput} from 'components';
-import {Colors, Images, Spacing} from 'themes';
-import {scale} from 'utils/Functions';
-import {ColorSwatch} from 'react-native-ui-lib';
+import { Icon, Text, TextInput } from 'components';
+import { Colors, Images, Spacing } from 'themes';
+import { scale } from 'utils/Functions';
+import { ColorSwatch } from 'react-native-ui-lib';
 
 const InputBlock = ({
   label,
@@ -53,7 +53,7 @@ const InputBlock = ({
           textContentType={'oneTimeCode'}
           style={[
             styles.input,
-            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
+            { borderColor: isFocused ? Colors.cl1 : Colors.BORDER },
             inputStyle,
           ]}
           placeholderTextColor={Colors.l5}
@@ -73,7 +73,7 @@ const InputBlock = ({
           <TouchableOpacity
             style={[styles.select, !!error && styles.error]}
             onPress={onPress}>
-            <Text style={{color: Colors.TEXT}}>
+            <Text style={{ color: Colors.TEXT }}>
               {value ? value : props?.defaultValue}
             </Text>
           </TouchableOpacity>
@@ -131,30 +131,30 @@ const InputBlock = ({
 export default InputBlock;
 
 const styles = StyleSheet.create({
-  input: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  input: { backgroundColor: Colors.BACKGROUNDCOLOR },
   //---------------
-  absolute: {position: 'absolute'},
-  rightZero: {right: 0},
+  absolute: { position: 'absolute' },
+  rightZero: { right: 0 },
   //----------------
-  top1: {top: scale(45)},
-  top2: {top: scale(34)},
+  top1: { top: scale(45) },
+  top2: { top: scale(35) },
   //----------------
-  right1: {right: scale(10)},
+  right1: { right: scale(10) },
   //----------------
-  w1: {width: 48},
-  w2: {width: scale(20)},
+  w1: { width: 48 },
+  w2: { width: scale(20) },
   //----------------
-  h1: {height: 52},
-  h2: {height: scale(20)},
+  h1: { height: scale(48) },
+  h2: { height: scale(20) },
   //----------------
-  justifyCenter: {justifyContent: 'center'},
-  alignCenter: {alignItems: 'center'},
+  justifyCenter: { justifyContent: 'center' },
+  alignCenter: { alignItems: 'center' },
   //----------------
-  bgGray: {backgroundColor: Colors.l4},
+  bgGray: { backgroundColor: Colors.l4 },
   //----------------
-  topRadius1: {borderTopRightRadius: 8},
+  topRadius1: { borderTopRightRadius: 8 },
   //----------------
-  botRadius1: {borderBottomRightRadius: 8},
+  botRadius1: { borderBottomRightRadius: 8 },
   //----------------
   inputLabel: {
     marginTop: scale(5),

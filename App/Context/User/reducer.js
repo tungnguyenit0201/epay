@@ -55,6 +55,11 @@ export default function userReducer(state, action) {
         ...state,
         listNotify: action?.data,
       };
+    case 'SET_KYC_TYPE':
+      return {
+        ...state,
+        kycType: action?.data,
+      };
     default:
       return state;
   }

@@ -79,13 +79,13 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
-import QRPay from 'containers/Wallet/QRPay';
-import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/QRPay/TransferResults';
-import TransferSuccess from 'containers/QRPay/TransferSuccess';
 import BottomModal from 'containers/Modal/BottomModal';
 import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
+import QRPay from 'containers/QRPay';
+import QRTransfer from 'containers/QRPay/Transfer';
+import TransferResults from 'containers/QRPay/TransferResults';
+import TransferSuccess from 'containers/QRPay/TransferSuccess';
 import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
 
 const AppNavigator = () => {

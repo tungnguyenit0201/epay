@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Pressable, Image} from 'react-native';
-import {Colors, Images, Fonts} from 'themes';
+import React, { useState } from 'react';
+import { View, StyleSheet, Pressable, Image } from 'react-native';
+import { Colors, Images, Fonts } from 'themes';
 import Text from './Text';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import dayjs from 'dayjs';
-import {scale} from 'utils/Functions';
+import { scale } from 'utils/Functions';
+import moment from 'moment';
 
 export default ({
   placeholder,
@@ -23,6 +24,7 @@ export default ({
   const displayFormat = type === 'date' ? 'DD/MM/YYYY' : 'HH:mm DD/MM/YYYY';
   const valueFormat = type === 'date' ? 'DD-MM-YYYY' : 'YYYY-MM-DD HH:mm';
   const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
+  const [date, setDate] = useState(moment(value, valueFormat).toDate());
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -32,8 +34,9 @@ export default ({
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = date => {
-    onChange?.(dayjs(date).format(valueFormat));
+  const handleConfirm = selectedDate => {
+    setDate(selectedDate);
+    onChange?.(dayjs(selectedDate).format(valueFormat));
     hideDatePicker();
   };
 
@@ -65,7 +68,7 @@ export default ({
             styles.fullHeight,
             styles.justifyCenter,
             styles.p1,
-            {backgroundColor: Colors.l4},
+            { backgroundColor: Colors.l4 },
           ]}>
           <Image
             source={Images.Kyc.Calendar}
@@ -90,8 +93,9 @@ export default ({
         headerTextIOS={'Vui lòng chọn ngày'}
         maximumDate={new Date()}
         themeVariant={'light'}
+        date={date}
       />
-      <View style={{marginBottom}} />
+      <View style={{ marginBottom }} />
     </>
   );
 };
@@ -108,13 +112,13 @@ const styles = StyleSheet.create({
     borderColor: Colors.cl4,
   },
   //----------------
-  fullHeight: {height: '100%'},
+  fullHeight: { height: '100%' },
   //----------------
-  justifyCenter: {justifyContent: 'center'},
+  justifyCenter: { justifyContent: 'center' },
   //----------------
-  p1: {padding: 12},
+  p1: { padding: 12 },
   //----------------
-  pl1: {paddingLeft: 10},
+  pl1: { paddingLeft: 10 },
   //----------------
   error: {
     borderColor: Colors.ALERT,
