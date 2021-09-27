@@ -161,9 +161,8 @@ const useUserInfo = type => {
             Navigator.navigate(SCREEN.TAB_NAVIGATION);
             break;
           case 'confirm_password_response':
-            Navigator.push(SCREEN.OTP, {
+            Navigator.push(SCREEN.NEW_PASSWORD, {
               phone,
-              functionType: FUNCTION_TYPE.FORGOT_PASS,
             });
             break;
           case 'update_email':

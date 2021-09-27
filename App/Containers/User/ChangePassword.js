@@ -7,6 +7,8 @@ import {useTranslation} from 'context/Language';
 import {base} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
+import {passwordSchema} from 'utils/ValidationSchemas';
+
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
   const {onConfirmPassword} = useUserInfo(route?.params?.type);
@@ -21,7 +23,9 @@ const ChangePassword = ({route}) => {
             initialValues={{
               password: '',
             }}
-            onSubmit={({password}) => onConfirmPassword({password})}>
+            onSubmit={({password}) => onConfirmPassword({password})}
+            validationSchema={passwordSchema}
+          >
             {({
               handleChange: _handleChange,
               handleBlur,

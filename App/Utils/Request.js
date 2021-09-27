@@ -44,7 +44,9 @@ const getEncryptParam = async (url, params) => {
   let language = 'vi';
   const uniqueDeviceID = getUniqueId();
   let urlPart = url.split('/');
-  let currentLanguage = await AsyncStorage.getItem('currentLanguage');
+  let currentLanguage = await AsyncStorage.getItem(
+    ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
+  );
   let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
   let requestData = await getRequestData(url, params);
   // let dataEncrypted = aes.Encrypt(JSON.stringify(requestData));
