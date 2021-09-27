@@ -72,6 +72,7 @@ import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
 import MapBankFlow from 'containers/Wallet/Bank/MapBankFlow';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
+import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
@@ -82,11 +83,10 @@ import DetailHistory from 'containers/Wallet/History/Detail';
 import BottomModal from 'containers/Modal/BottomModal';
 import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
-import QRPay from 'containers/QRPay';
-import QRTransfer from 'containers/QRPay/Transfer';
-import TransferResults from 'containers/QRPay/TransferResults';
-import TransferSuccess from 'containers/QRPay/TransferSuccess';
-import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
+import QRPay from 'containers/Wallet/QRPay';
+import QRTransfer from 'containers/Wallet/QRPay/Transfer';
+import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -157,9 +157,12 @@ const AppNavigator = () => {
       };
     },
   };
-
+  const linking = {
+    prefixes: ['epay://'],
+    config: {},
+  };
   return (
-    <NavigationContainer ref={Navigator.setContainer}>
+    <NavigationContainer ref={Navigator.setContainer} linking={linking}>
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -168,7 +171,8 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -350,7 +354,8 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}>
+      }}
+    >
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />
