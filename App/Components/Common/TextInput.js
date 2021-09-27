@@ -25,6 +25,7 @@ export default React.forwardRef(
       marginBottom = scale(10),
       error,
       showErrorLabel = true,
+      errorStyle,
       label,
       required,
       rightComponent,
@@ -87,7 +88,7 @@ export default React.forwardRef(
             placeholder={placeholder}
             style={[
               styles.textInput,
-              error && styles.error,
+              error && (errorStyle || styles.error),
               Boolean(leftIcon) && {paddingLeft: 50},
               (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
               style,

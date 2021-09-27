@@ -49,6 +49,8 @@ export default {
     GET_HISTORY: 'history/get_history',
     GET_HISTORY_DETAIL: 'history/get_detail',
     GET_QRCODE_INFO: 'payment/check_trans_info',
+    CHECK_AMOUNT_LIMIT: 'wallet/check_amount_limit',
+    CASH_IN: 'bank/cashin',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

@@ -41,7 +41,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
 
   return (
     <View style={[style]}>
-      <Input ref={ref} onChange={onChange} />
+      <Input ref={ref} onChange={onChange}/>
       <Row space="10">
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
@@ -59,10 +59,13 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
 
 const Input = forwardRef(({onChange}, ref) => {
   const [value, setValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const translation = useTranslation();
 
   useImperativeHandle(ref, () => ({
     value,
     setValue,
+    setError
   }));
 
   const _onChange = value => {
@@ -70,24 +73,25 @@ const Input = forwardRef(({onChange}, ref) => {
     onChange && onChange(value);
   };
 
+  const setError = (message)=>{
+    setErrorMessage(message);
+  }
+
   return (
     <View>
       <View style={styles.rowInput}>
         <TextInput
           numeric
-          placeholder="Nhập số tiền nạp"
+          placeholder={translation.topup.cashInInputMoney}
           style={styles.input}
           placeholderTextColor={Colors.l5}
           value={value}
           onChange={_onChange}
-          // showErrorLabel={error}
-          // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
+          showErrorLabel={!!errorMessage}
+          error={errorMessage}
         />
         <Text style={styles.subText}>vnđ</Text>
       </View>
-      <Text color={Colors.Highlight} style={styles.warningText}>
-        *Số tiền nạp tối thiểu là 10.000 vnđ
-      </Text>
     </View>
   );
 });

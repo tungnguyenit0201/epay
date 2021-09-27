@@ -1,15 +1,15 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
-import {SCREEN} from 'configs/Constants';
+import { SCREEN } from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTranslation} from 'context/Language';
+import { useTranslation } from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform} from 'react-native';
-import {useConfig} from 'context/Common/utils';
+import { Platform } from 'react-native';
+import { useConfig } from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
 
 const Stack = createStackNavigator();
@@ -82,11 +82,12 @@ import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferResults from 'containers/QRPay/TransferResults';
 import TransferSuccess from 'containers/QRPay/TransferSuccess';
+import SmartOTPConfirm from 'containers/Wallet/SmartOTPConfirm';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
-  const {setLanguage} = useTranslation();
-  const {onGetConfig} = useConfig();
+  const { setLanguage } = useTranslation();
+  const { onGetConfig } = useConfig();
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
@@ -133,7 +134,9 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+          mode="modal"
+        >
           <Stack.Screen
             name={SCREEN.TAB_NAVIGATION}
             component={TabNavigation}
@@ -288,6 +291,20 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
+          <Stack.Screen
+            name={SCREEN.SMART_OTP_CONFIRM}
+            component={SmartOTPConfirm}
+            options={{
+              ...TransitionPresets.ModalTransition,
+              gestureEnabled: true,
+              animationEnabled: true,
+              cardStyle: {
+                backgroundColor: 'transparent',
+                cardOverlayEnabled: true,
+              },
+            }}
+
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

@@ -68,5 +68,6 @@ const SCREEN = {
   DETAIL_HISTORY: 'DetailHistory',
   QRPAY: 'QRPay',
   QR_TRANSFER: 'QRTransfer',
+  SMART_OTP_CONFIRM: 'SmartOTPConfirm',
 };
 export default SCREEN;

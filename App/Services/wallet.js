@@ -180,3 +180,39 @@ export const getQRCodeInfo = async ({phone, QrCode}) => {
   });
   return response;
 };
+
+export const getAmountLimit = async ({phone, amount, transType, transFormType}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CHECK_AMOUNT_LIMIT,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      Amount: amount,
+      TransType: transType,
+      TransFormType: transFormType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const cashIn = async ({phone, BankConnectId, BankId, amount}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_IN,
+    method: 'post',
+    params: {
+      PhoneNumber: phone, 
+      BankConnectId: BankConnectId,
+      BankID: BankId,
+      Amount: amount
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

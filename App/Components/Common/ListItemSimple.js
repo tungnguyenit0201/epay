@@ -35,9 +35,7 @@ const ListItem = ({
     <TouchableOpacity
       style={[styles.item, styleItem]}
       onPress={() => {
-        !!item?.checkSmartOTP
-          ? checkInfo({screen: item.screen})
-          : Navigator.navigate(item.screen);
+         Navigator.navigate(item.screen);
       }}>
       <Image
         source={item.icon}

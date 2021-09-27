@@ -13,14 +13,14 @@ import Navigator from 'navigations/Navigator';
 
 import {useUser} from 'context/User';
 import {formatMoney} from 'utils/Functions';
-const Monney = ({style}) => {
+const Monney = ({style, title}) => {
   const {userInfo} = useUser();
   const translation = useTranslation();
   const [isMoney, setIsMoney] = useState(false);
   return (
     <View style={[styles.item, style]}>
       <View style={[]}>
-        <Text fs="h6">{translation.my_wallet}</Text>
+        <Text fs="h6">{title || translation.my_wallet}</Text>
       </View>
       <View style={[styles.right]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>

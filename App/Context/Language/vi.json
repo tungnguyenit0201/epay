@@ -433,5 +433,26 @@
     "523": "Gọi sang C08 bị lỗi",
     "524": "Mã lỗi mới của hệ thống",
     "-1": "Lỗi không được định nghĩa"
+  },
+  "smartOTP": {
+    "enterOTP": "Nhập mật khẩu Smart OTP",
+    "forgotPassword": "Quên mật khẩu?"
+  },
+  "topup": {
+    "walletAmount": "Số dư ví",
+    "cashInMinError": "*Số tiền nạp tối thiểu là % vnđ",
+    "cashInMaxError": "*Số tiền nạp tối đa là % vnđ",
+    "cashInInputMoney": "Nhập số tiền nạp",
+    "confirmTitle": "Xác nhận %",
+    "detailTitle": "Chi tiết %",
+    "currency": " vnd",
+    "moneySource": " Nguồn tiền"
+  },
+  "acceptTerm": {
+    "when": "Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với ",
+    "contract": "Thoả thuận Người sử dụng, Chính sách quyền riêng tư",
+    "topup": "Chính sách nạp tiền ",
+    "and": " và ",
+    "of": "của Epay"
   }
 }
