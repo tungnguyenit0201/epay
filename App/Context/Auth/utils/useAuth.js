@@ -20,7 +20,6 @@ import {updatePassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
-import moment from 'moment';
 
 const useTouchID = ({onSuccess}) => {
   const [biometryType, setBiometryType] = useState(null);
@@ -62,31 +61,6 @@ const useTouchID = ({onSuccess}) => {
     if (!_biometryType && !biometryType) {
       return;
     }
-    let touchIDAndroid = null;
-
-    // android check
-    if (Platform.OS === 'android') {
-      touchIDAndroid = await getTouchIDAndroidData();
-      !touchIDAndroid && (touchIDAndroid = {remaining: 5});
-      if (touchIDAndroid?.lockedTimestamp) {
-        if (
-          moment().diff(
-            moment(touchIDAndroid.lockedTimestamp),
-            'minutes',
-            true,
-          ) < 5
-        ) {
-          // TODO: translate
-          setError({
-            ErrorCode: -1,
-            ErrorMessage:
-              'Bạn đã nhập sai touch ID quá nhiều lần. Vui lòng thử lại sau ít phút.',
-          });
-        } else {
-          touchIDAndroid = {remaining: 5};
-        }
-      }
-    }
 
     // TODO: translate
     const options = {
@@ -125,21 +99,6 @@ const useTouchID = ({onSuccess}) => {
           error?.name === 'RCTTouchIDUnknownError'
         ) {
           onTouchID(_biometryType, true);
-          return;
-        }
-        // android user failed to authenticate
-        if (
-          error?.name === 'LAErrorAuthenticationFailed' &&
-          Platform.OS === 'android'
-        ) {
-          touchIDAndroid?.remaining > 1
-            ? setTouchIDAndroidData({
-                remaining: touchIDAndroid?.remaining - 1,
-              })
-            : setTouchIDAndroidData({
-                remaining: 0,
-                lockedTimestamp: moment().valueOf(),
-              });
           return;
         }
         // other errors
