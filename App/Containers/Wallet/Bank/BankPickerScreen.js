@@ -1,10 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, ScrollView, StyleSheet, Image} from 'react-native';
 import {HeaderBg, Header, InputBlock} from 'components';
 import {Colors, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
@@ -22,6 +17,10 @@ const BankPickerScreen = props => {
   const bankLinkRef = useRef();
   const napasRef = useRef();
   const visaRef = useRef();
+
+  useEffect(() => {
+    return () => setKeySearch('');
+  }, []);
 
   const onBlur = () => {
     onSearchDebounce(keysearch);

@@ -1,57 +1,137 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {Button, Header, InputBlock, Radio, HeaderBg, Text} from 'components';
-import {GENDER, SCREEN, TEXT} from 'configs/Constants';
-import Navigator from 'navigations/Navigator';
-import {use} from '@react-navigation/native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Keyboard,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
+import {Colors, Images, Spacing, base} from 'themes';
+import {Button, Header, InputBlock, HeaderBg} from 'components';
+import {SCREEN} from 'configs/Constants';
+import {useRoute} from '@react-navigation/native';
 import {Formik, useFormikContext} from 'formik';
 import {addressSchema} from 'utils/ValidationSchemas';
-import {scale} from 'utils/Functions';
-import {useSelectRegion, useUserInfo} from 'context/User/utils';
+import {useSelectRegion} from 'context/User/utils';
 import {useUser} from 'context/User';
-import _ from 'lodash';
 import {useTranslation} from 'context/Language';
 import {useBankInfo} from 'context/Wallet/utils';
+import {get} from 'lodash';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
-const BankLinkKYCInfo = () => {
+const BankLinkKYCInfo = props => {
   // TODO : translation
-  const {onUpdateUserAddress} = useBankInfo();
+  const {params} = useRoute() || {};
   const translation = useTranslation();
-
-  const {userInfo, region} = useUser();
-  const {personalAddress} = userInfo; //todo: from param
+  const {onChange, onContinue, onUpdate} = useBankInfo(params);
+  const ICInfo = get(params, 'optionKyc.data', {});
 
   const {goRegionSelect, onClearRegionData} = useSelectRegion({
     callbackScreen: SCREEN.MAP_BANK_FLOW,
   });
 
   useEffect(() => {
-    return () => onClearRegionData();
+    return () => {
+      Keyboard?.dismiss?.();
+      onClearRegionData();
+    };
   }, []);
-  const onSubmit = () => {
-    onUpdateUserAddress?.(region)?.then();
+
+  const onSubmit = values => {
+    onChange('ICAddress');
+    onContinue(SCREEN.MAP_BANK_FLOW, {screen: MapBankRoutes.BankLinkConfirm});
+  };
+
+  return (
+    <View flex={1} backgroundColor={Colors.white}>
+      <HeaderBg>
+        <Header title={translation.connect_bank} back />
+      </HeaderBg>
+      <Formik
+        initialValues={{
+          Address: ICInfo?.Address,
+          Ward: ICInfo?.Ward,
+          District: ICInfo?.District,
+          Province: ICInfo?.Province,
+        }}
+        validationSchema={addressSchema}>
+        <FormikContent
+          region={ICInfo}
+          goRegionSelect={goRegionSelect}
+          onSubmit={onSubmit}
+        />
+      </Formik>
+    </View>
+  );
+};
+
+const FormikContent = ({region, goRegionSelect, onSubmit}) => {
+  const {
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    setFieldTouched,
+    touched,
+    errors,
+    values,
+    handleSubmit,
+  } = useFormikContext();
+
+  useEffect(() => {
+    if (region?.Provincial && region?.County) {
+      for (const [key, value] of Object.entries(region)) {
+        setFieldValue(key, value);
+      }
+    }
+  }, [region]);
+
+  const _handleChange = field => value => {
+    setFieldValue(field, value);
+    setFieldTouched(field, true, false);
   };
 
   return (
     <View flex={1}>
-      <HeaderBg>
-        <Header title={translation.connect_bank} back />
-      </HeaderBg>
-      <ScrollView style={{backgroundColor: Colors.white, flex: 1}}>
-        <View style={[base.container, {paddingTop: 20}]}>
-          <Formik
-            initialValues={{
-              Address: personalAddress?.Address,
-              Ward: personalAddress?.Ward,
-              County: personalAddress?.County,
-              Provincial: personalAddress?.Provincial,
-            }}
-            validationSchema={addressSchema}
-            onSubmit={region => onUpdateUserAddress(region)}>
-            <FormikContent region={region} goRegionSelect={goRegionSelect} />
-          </Formik>
-        </View>
+      <ScrollView
+        style={{paddingHorizontal: Spacing.PADDING}}
+        flex={1}
+        keyboardShouldPersistTaps="handled">
+        <InputBlock
+          label="Tỉnh / Thành phố"
+          error={touched.Province && errors.Province}
+          value={values.Province}
+          isSelect
+          rightIcon={Images.Down}
+          onPress={() => goRegionSelect('cites')}
+        />
+        <InputBlock
+          label="Quận"
+          error={touched.District && errors.District}
+          value={values.District}
+          isSelect
+          rightIcon={Images.Down}
+          onPress={() => goRegionSelect('districts')}
+        />
+        <InputBlock
+          label="Phường / Xã"
+          email
+          required
+          error={touched.Ward && errors.Ward}
+          value={values.Ward}
+          isSelect
+          rightIcon={Images.Down}
+          onPress={() => goRegionSelect('wards')}
+        />
+        <InputBlock
+          label="Địa chỉ"
+          required
+          onChange={_handleChange('Address')}
+          onBlur={handleBlur('Address')}
+          error={touched.Address && errors.Address}
+          value={values.Address}
+          inputStyle={{borderColor: Colors.BORDER}}
+        />
       </ScrollView>
 
       <View style={styles.shadowButton}>
@@ -63,74 +143,9 @@ const BankLinkKYCInfo = () => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={onSubmit}
+          onPress={() => onSubmit(values)}
         />
       </View>
-    </View>
-  );
-};
-
-const FormikContent = ({region, goRegionSelect}) => {
-  const {
-    handleChange: _handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-    setFieldTouched,
-    touched,
-    errors,
-    values,
-  } = useFormikContext();
-
-  useEffect(() => {
-    if (region?.Provincial && region?.County) {
-      for (const [key, value] of Object.entries(region)) {
-        setFieldValue(key, value);
-      }
-    }
-  }, [region]); // eslint-disable-line
-
-  const handleChange = field => value => {
-    setFieldValue(field, value);
-    setFieldTouched(field, true, false);
-  };
-
-  return (
-    <View>
-      <InputBlock
-        label="Tỉnh / Thành phố"
-        error={touched.Provincial && errors.Provincial}
-        value={values.Provincial}
-        isSelect
-        rightIcon={Images.Down}
-        onPress={() => goRegionSelect('cites')}
-      />
-      <InputBlock
-        label="Quận"
-        error={touched.County && errors.County}
-        value={values.County}
-        isSelect
-        rightIcon={Images.Down}
-        onPress={() => goRegionSelect('districts')}
-      />
-      <InputBlock
-        label="Phường / Xã"
-        email
-        required
-        error={touched.Ward && errors.Ward}
-        value={values.Ward}
-        isSelect
-        rightIcon={Images.Down}
-        onPress={() => goRegionSelect('wards')}
-      />
-      <InputBlock
-        label="Địa chỉ"
-        required
-        onChange={handleChange('Address')}
-        onBlur={handleBlur('Address')}
-        error={touched.Address && errors.Address}
-        value={values.Address}
-      />
     </View>
   );
 };

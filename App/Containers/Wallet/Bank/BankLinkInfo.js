@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import {HeaderBg, Header, Text, InputBlock, Button} from 'components';
 
@@ -17,7 +18,7 @@ import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {useUser} from 'context/User';
 import {useBankInfo} from 'context/Wallet/utils';
 import {censorCardNumber} from 'context/Wallet/utils/bankInfo';
-
+import {bankCardRegex} from 'utils/ValidationSchemas';
 const DEFAULT_BANK = {
   BankId: 1,
   BankCode: 'VCB',
@@ -31,7 +32,7 @@ export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {userInfo} = useUser();
-  const {onChange} = useBankInfo(params);
+  const {onChange, onContinue} = useBankInfo(params);
   const {item, optionKyc} = params || {};
   const [bankAccount, setBankAccount] = useState('');
   const {bank, kycInfo} = item || {};
@@ -39,6 +40,9 @@ export default function (props) {
   const errorMessage = 'Vui lòng nhập thông tin số thẻ/tài khoản';
   const [err, setShowErr] = useState('');
 
+  useEffect(() => {
+    return Keyboard?.dismiss?.();
+  }, []);
   const renderBankInfo = () => {
     return (
       <View style={[styles.shadow, styles.row]}>
@@ -55,8 +59,14 @@ export default function (props) {
   };
 
   const onChangeBankNumber = text => {
-    setBankAccount(text?.trim());
+    let trimText = text?.trim();
+    const regexValid = new RegExp(bankCardRegex).test(trimText);
+    if (regexValid) {
+      console.log(regexValid);
+      setBankAccount(trimText);
+    }
   };
+
   const validateInfo = () => {
     if (!bankAccount) {
       setShowErr(errorMessage);
@@ -69,12 +79,10 @@ export default function (props) {
     onChange('BankAccount', bankAccount);
     if (isValid) {
       if (optionKyc) {
-        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+        onContinue(SCREEN.MAP_BANK_FLOW, {
           screen: MapBankRoutes.BankLinkKYCInfo,
-          params: {kycInfo, bank, bankAccount},
         });
       } else {
-        //open KYC flow
         props?.navigation?.navigate?.(SCREEN.CHOOSE_IDENTITY_CARD);
       }
     }
@@ -90,7 +98,7 @@ export default function (props) {
       placeholder={'Nhập số tài khoản/Số thẻ'}
       value={bankAccount}
       onChangeText={onChangeBankNumber}
-      keyboardType={'numeric'}
+      // keyboardType={'numeric'}
       error={err}
       showErrorLabel={true}
       onBlur={validateInfo}

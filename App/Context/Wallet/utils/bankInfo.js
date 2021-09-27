@@ -15,6 +15,7 @@ import _, {isEmpty} from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
 import {getIdentifyInfo} from 'services/user';
+import {value} from 'lodash/seq';
 
 const mockIc = {
   CheckICInfo: {
@@ -97,7 +98,7 @@ export const censorCardNumber = (
 
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
-  console.log('initialValue', initialValue);
+  // console.log('initialValue', initialValue);
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
@@ -105,6 +106,10 @@ const useBankInfo = (initialValue = {}) => {
 
   const onChange = (key, value) => {
     mapBankInfo.current[key] = value;
+  };
+
+  const onUpdate = (key, value) => {
+    mapBankInfo.current[key] = {...mapBankInfo.current[key], ...value};
   };
 
   const goToBankLinked = () => {
@@ -264,35 +269,8 @@ const useBankInfo = (initialValue = {}) => {
     }
   };
 
-  const onUpdateUserAddress = async ({Address, Ward, County, Provincial}) => {
-    try {
-      setLoading(true);
-      let phone = await getPhone();
-      //todo: GTTT flow
-      // let result = await updateUserAddress({
-      //   phone,
-      //   Address,
-      //   Ward,
-      //   County,
-      //   Provincial,
-      // });
-      const result = {};
-      setLoading(false);
-      // if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-      if (result) {
-        dispatch({
-          type: 'SET_PERSONAL_ADDRESS',
-          data: {Address, Ward, County, Provincial},
-        });
-        Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
-          screen: MapBankRoutes.BankLinkConfirm,
-        });
-      } else {
-        setError(result);
-      }
-    } catch (error) {
-      setLoading(false);
-    }
+  const onUpdateUserAddress = async ({Address, Ward, District, Province}) => {
+    onChange('ICAddress', {Address, Ward, District, Province});
   };
 
   const onUpdateAllInfo = async value => {
@@ -319,6 +297,7 @@ const useBankInfo = (initialValue = {}) => {
     onContinue,
     onUpdateAllInfo,
     onGetIcInfor,
+    onUpdate,
   };
 };
 export default useBankInfo;
