@@ -6,6 +6,7 @@ import {
     useWindowDimensions,
     ImageBackground,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native';
 import { Text } from 'components';
 import { Images, Colors, Spacing } from 'themes';
@@ -13,13 +14,24 @@ import { useTranslation } from 'context/Language';
 
 const AlertModal = (props = {}) => {
     const { navigation, route = {} } = props;
-    const { onClose, title, message, positiveButton, negativeButton, style, icon, iconColor } = route.params || {};
+    const {
+        onClose,
+        title,
+        message,
+        positiveButton,
+        negativeButton,
+        secondaryButton,
+        style,
+        icon,
+        iconColor,
+        renderBody,
+    } = route.params || {};
     const strings = useTranslation();
     const { width, height } = useWindowDimensions();
     const popupHeight = height * 311 / 812;
     const modalStyle = {
         width: width * 0.8,
-        minHeight: height * 0.48,
+        minHeight: height * 0.35,
     };
 
     const headerStyle = {
@@ -37,10 +49,38 @@ const AlertModal = (props = {}) => {
         onClose?.();
     };
 
+    const onPressSecondary = () => {
+        secondaryButton?.onPress?.();
+        navigation.pop();
+        onClose?.();
+    };
+
     const onPressNegative = () => {
         negativeButton?.onPress?.();
         navigation.pop();
         onClose?.();
+    };
+
+    const renderContent = () => {
+        if (typeof renderBody === 'function') {
+            return (
+                <ScrollView>{renderBody()}</ScrollView>
+            );
+        }
+        return (
+            <View>
+                {!!title &&
+                    <Text style={styles.title}>
+                        {title}
+                    </Text>
+                }
+                {!!message &&
+                    <Text style={styles.message}>
+                        {message}
+                    </Text>
+                }
+            </View>
+        );
     };
 
     return (
@@ -63,18 +103,9 @@ const AlertModal = (props = {}) => {
                     </ImageBackground>
                 </View>
                 <View style={styles.main}>
-                    {!!title &&
-                        <Text style={styles.title}>
-                            {title}
-                        </Text>
-                    }
-                    {!!message &&
-                        <Text style={styles.message}>
-                            {message}
-                        </Text>
-                    }
+                    {renderContent()}
                     <TouchableOpacity
-                        style={styles.buttonContainer}
+                        style={[styles.buttonContainer, styles.positiveButtonContainer]}
                         onPress={onPressPositive}>
                         <ImageBackground
                             source={Images.primaryButton}
@@ -83,8 +114,21 @@ const AlertModal = (props = {}) => {
                         >
                             <Text style={styles.positiveText}>{positiveButton?.title || strings?.agree}</Text>
                         </ImageBackground>
-
                     </TouchableOpacity>
+                    {
+                        !!secondaryButton &&
+                        <TouchableOpacity
+                            style={styles.buttonContainer}
+                            onPress={onPressSecondary}>
+                            <ImageBackground
+                                source={Images.borderButton}
+                                resizeMode="stretch"
+                                style={styles.positiveButton}
+                            >
+                                <Text style={styles.secondaryText}>{secondaryButton.title}</Text>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    }
                     {
                         !!negativeButton &&
                         <TouchableOpacity
@@ -154,6 +198,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 10,
     },
     negativeText: {
         color: '#666666',
@@ -168,16 +213,32 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    positiveButtonContainer: {
+        backgroundColor: Colors.cl1,
+        borderRadius: 8,
+        marginTop: 20,
+    },
     buttonContainer: {
         overflow: 'hidden',
-        borderRadius: 10,
         elevation: 2,
-        backgroundColor: Colors.cl1,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
-        marginBottom: 15,
+        marginTop: 10,
         flexDirection: 'row',
+    },
+    secondaryButton: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: Spacing.PADDING / 2,
+        backgroundColor: Colors.white,
+        borderColor: Colors.primary,
+        borderWidth: 1,
+        borderRadius: 10,
+    },
+    secondaryText: {
+        fontWeight: 'bold',
+        color: Colors.blue,
     },
 });
