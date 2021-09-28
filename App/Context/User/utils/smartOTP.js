@@ -15,6 +15,7 @@ import {
   checkSmartOTP,
   checkSmartOTPKey,
   genOtp,
+  getSmartOTPInfo,
   syncSmartOTP,
 } from 'services/common';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
@@ -212,6 +213,19 @@ const useSmartOTP = params => {
     }
   };
 
+  const onGoSmartOTP = async () => {
+    setLoading(true);
+    const result = await checkSmartOTP({phone});
+    setLoading(false);
+    // activated
+    if (_.get(result, 'State', 0)) {
+      Navigator.push(SCREEN.SMART_OTP);
+      return;
+    }
+    // not activated
+    Navigator.push(SCREEN.ACTIVE_SMART_OTP);
+  };
+
   return {
     phone,
     isAccepted,
@@ -224,6 +238,7 @@ const useSmartOTP = params => {
     type: params?.type,
     onBack,
     onGoPasswordSync,
+    onGoSmartOTP,
   };
 };
 
@@ -236,7 +251,8 @@ const useSmartOTPInfo = () => {
   useEffect(() => {
     const getOTPInfo = async () => {
       setLoading(true);
-      const result = await checkSmartOTP({phone});
+      const result = await getSmartOTPInfo({phone});
+      console.log('result', result);
       setLoading(false);
       setSmartOTPInfo(result?.SmartOtpInfo);
     };

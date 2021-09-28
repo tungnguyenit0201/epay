@@ -57,6 +57,10 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             type: 'failure',
             message: _.get(result, 'ErrorMessage', ''),
           });
+        case FUNCTION_TYPE.FORGOT_PASS:
+          setError(result);
+          Navigator.popToTop();
+          return;
       }
     }
     // success

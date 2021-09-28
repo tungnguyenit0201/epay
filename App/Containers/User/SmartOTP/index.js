@@ -2,8 +2,6 @@ import React from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
 
 import {Text, Button, Icon, Header, HeaderBg} from 'components';
-import {SCREEN, TEXT} from 'configs/Constants';
-import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useSmartOTPInfo} from 'context/User/utils';
@@ -25,8 +23,8 @@ const SmartOtp = () => {
           <Header back title={translation.password_and_security} />
         </HeaderBg>
 
-        <Text>Số serial: {smartOTPInfo?.SerialNumber || '...'}</Text>
-        <Text>Smart OTP: Phiên bản {smartOTPInfo?.Version || '...'}</Text>
+        <Text>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
+        <Text>Smart OTP: Phiên bản {smartOTPInfo?.version || '...'}</Text>
 
         <TouchableOpacity style={styles.item} onPress={onChangePassword}>
           <Icon
