@@ -1,15 +1,21 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
-// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BioSDK
+// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name BioSDK
 import AVFoundation
 import AVKit
 @_exported import BioSDK
+import CommonCrypto
 import FinalSDK
 import Foundation
 import GatGuSI
 import Swift
 import SystemConfiguration
 import UIKit
+extension Data {
+  public func sha256Image() -> Swift.String
+  public func diges() -> Foundation.NSData
+}
+public func verify(json: [Swift.String : Any]?, signature: Swift.String) -> Swift.Bool
 @_hasMissingDesignatedInitializers public class Utils {
   public static func convertBase64(_ consumerKey: Swift.String, _ consumerSecret: Swift.String) -> Swift.String
   @objc deinit
@@ -23,6 +29,14 @@ import UIKit
   @objc public var backgroundColor: UIKit.UIColor?
   @objc deinit
   @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers public class ImageData : ObjectiveC.NSObject {
+  public var sign: Swift.String
+  public var key: Swift.String
+  public var data: Foundation.Data?
+  public func getImage() -> UIKit.UIImage?
+  @objc override dynamic public init()
+  @objc deinit
 }
 extension Encodable {
   public func toDictionary(_ encoder: Foundation.JSONEncoder = JSONEncoder()) throws -> [Swift.String : Any]
@@ -80,6 +94,7 @@ extension Encodable {
   @objc public var isStreamCapture: Swift.Bool
   @objc public var isRecord: Swift.Bool
   @objc public var maxTimeRecord: Swift.Int
+  @objc public var tutorialLanguage: BioSDK.Language
   @objc deinit
   @objc override dynamic public init()
 }
@@ -192,7 +207,7 @@ extension Encodable {
   @objc override dynamic public init()
 }
 extension Bundle {
-  public static let myFramework: Foundation.Bundle?
+  public static var myFramework: Foundation.Bundle?
 }
 extension UIImage {
   @objc public enum JPEGQuality : Swift.Int {
@@ -312,7 +327,7 @@ open class BaseModel<T> {
   final public let header: [Swift.String : Swift.String]
   final public let body: T?
   public init(statusCode: Swift.Int, header: [Swift.String : Swift.String], body: T?)
-  convenience public init(response: Foundation.HTTPURLResponse, body: T?)
+  public convenience init(response: Foundation.HTTPURLResponse, body: T?)
   @objc deinit
 }
 public struct DetectModel : Swift.Codable {
@@ -345,6 +360,7 @@ public struct DetectModel : Swift.Codable {
 @objc public protocol CameraDelegate {
   @objc func onResult(_ data: BioSDK.DataModel)
   @objc optional func onStreamCapture(_ image: UIKit.UIImage, _ type: BioSDK.FaceStepType)
+  @objc optional func onStreamCaptureImageData(_ image: BioSDK.ImageData, _ type: BioSDK.FaceStepType)
   @objc func onClose()
   @objc optional func onError(_ message: Swift.String)
 }
@@ -418,11 +434,18 @@ public struct DetectModel : Swift.Codable {
   @objc public var backImage: UIKit.UIImage?
   @objc public var farImage: UIKit.UIImage?
   @objc public var nearImage: UIKit.UIImage?
+  @objc public var imageData: BioSDK.ImageData?
+  @objc public var frontImageData: BioSDK.ImageData?
+  @objc public var backImageData: BioSDK.ImageData?
+  @objc public var farImageData: BioSDK.ImageData?
+  @objc public var nearImageData: BioSDK.ImageData?
   @objc public var documentType: BioSDK.DocumentType
   @objc public var listPhoto: [UIKit.UIImage]
+  @objc public var listPhotoImageData: [BioSDK.ImageData]
   @objc public var topCropParam: Swift.Float
   @objc public var bottomCropParam: Swift.Float
   @objc public var listFaceSteps: [UIKit.UIImage]
+  @objc public var listFaceStepsImageData: [BioSDK.ImageData]
   @objc public var scanUrl: Foundation.URL?
   @objc public var logData: Foundation.Data?
   @objc public func getCropParam() -> Swift.String
@@ -434,30 +457,15 @@ public struct DetectModel : Swift.Codable {
   @objc public var isShowTutorial: Swift.Bool
   @objc public var isSkipTutorial: Swift.Bool
   @objc public var language: BioSDK.Language
-  @objc override dynamic public init()
+  @objc public var tutorialView: UIKit.UIView?
+  @objc public var bottomImage: UIKit.UIImage?
+  @objc public var ovalCircleColor: UIKit.UIColor?
+  @objc public var buttonTextColor: UIKit.UIColor?
+  @objc public var textFeedbackColor: UIKit.UIColor?
+  @objc public var backgroundColor: UIKit.UIColor?
+  @objc public var bgColorBtnUnderstand: UIKit.UIColor?
+  @objc public var textColorBtnUnderstand: UIKit.UIColor
+  @objc public var titleBtnUnderstand: Swift.String
   @objc deinit
+  @objc override dynamic public init()
 }
-extension UIKit.UIImage.JPEGQuality : Swift.Equatable {}
-extension UIKit.UIImage.JPEGQuality : Swift.Hashable {}
-extension UIKit.UIImage.JPEGQuality : Swift.RawRepresentable {}
-extension BioSDK.DetectModel.CodingKeys : Swift.Equatable {}
-extension BioSDK.DetectModel.CodingKeys : Swift.Hashable {}
-extension BioSDK.DetectModel.CodingKeys : Swift.RawRepresentable {}
-extension BioSDK.DocumentType : Swift.Equatable {}
-extension BioSDK.DocumentType : Swift.Hashable {}
-extension BioSDK.DocumentType : Swift.RawRepresentable {}
-extension BioSDK.FaceStepType : Swift.Equatable {}
-extension BioSDK.FaceStepType : Swift.Hashable {}
-extension BioSDK.FaceStepType : Swift.RawRepresentable {}
-extension BioSDK.LivenessMode : Swift.Equatable {}
-extension BioSDK.LivenessMode : Swift.Hashable {}
-extension BioSDK.LivenessMode : Swift.RawRepresentable {}
-extension BioSDK.TutorialType : Swift.Equatable {}
-extension BioSDK.TutorialType : Swift.Hashable {}
-extension BioSDK.TutorialType : Swift.RawRepresentable {}
-extension BioSDK.Language : Swift.Equatable {}
-extension BioSDK.Language : Swift.Hashable {}
-extension BioSDK.Language : Swift.RawRepresentable {}
-extension BioSDK.PostionCamera : Swift.Equatable {}
-extension BioSDK.PostionCamera : Swift.Hashable {}
-extension BioSDK.PostionCamera : Swift.RawRepresentable {}

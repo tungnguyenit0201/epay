@@ -214,6 +214,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class UIColor;
 enum PostionCamera : NSInteger;
 @class FaceStep;
+enum Language : NSInteger;
 
 SWIFT_CLASS("_TtC6BioSDK13AdvanceOption")
 @interface AdvanceOption : NSObject
@@ -265,6 +266,7 @@ SWIFT_CLASS("_TtC6BioSDK13AdvanceOption")
 @property (nonatomic) BOOL isStreamCapture;
 @property (nonatomic) BOOL isRecord;
 @property (nonatomic) NSInteger maxTimeRecord;
+@property (nonatomic) enum Language tutorialLanguage;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -315,7 +317,6 @@ SWIFT_CLASS("_TtC6BioSDK11BasicOption")
 enum DocumentType : NSInteger;
 @class OneSideOption;
 @class TwoSideOption;
-enum Language : NSInteger;
 @class OvalOption;
 @class UIViewController;
 
@@ -336,12 +337,14 @@ SWIFT_CLASS("_TtC6BioSDK6Camera")
 @class DataModel;
 @class UIImage;
 enum FaceStepType : NSInteger;
+@class ImageData;
 
 SWIFT_PROTOCOL("_TtP6BioSDK14CameraDelegate_")
 @protocol CameraDelegate
 - (void)onResult:(DataModel * _Nonnull)data;
 @optional
 - (void)onStreamCapture:(UIImage * _Nonnull)image :(enum FaceStepType)type;
+- (void)onStreamCaptureImageData:(ImageData * _Nonnull)image :(enum FaceStepType)type;
 @required
 - (void)onClose;
 @optional
@@ -356,11 +359,18 @@ SWIFT_CLASS("_TtC6BioSDK9DataModel")
 @property (nonatomic, strong) UIImage * _Nullable backImage;
 @property (nonatomic, strong) UIImage * _Nullable farImage;
 @property (nonatomic, strong) UIImage * _Nullable nearImage;
+@property (nonatomic, strong) ImageData * _Nullable imageData;
+@property (nonatomic, strong) ImageData * _Nullable frontImageData;
+@property (nonatomic, strong) ImageData * _Nullable backImageData;
+@property (nonatomic, strong) ImageData * _Nullable farImageData;
+@property (nonatomic, strong) ImageData * _Nullable nearImageData;
 @property (nonatomic) enum DocumentType documentType;
 @property (nonatomic, copy) NSArray<UIImage *> * _Nonnull listPhoto;
+@property (nonatomic, copy) NSArray<ImageData *> * _Nonnull listPhotoImageData;
 @property (nonatomic) float topCropParam;
 @property (nonatomic) float bottomCropParam;
 @property (nonatomic, copy) NSArray<UIImage *> * _Nonnull listFaceSteps;
+@property (nonatomic, copy) NSArray<ImageData *> * _Nonnull listFaceStepsImageData;
 @property (nonatomic, copy) NSURL * _Nullable scanUrl;
 @property (nonatomic, copy) NSData * _Nullable logData;
 - (NSString * _Nonnull)getCropParam SWIFT_WARN_UNUSED_RESULT;
@@ -396,6 +406,12 @@ typedef SWIFT_ENUM(NSInteger, FaceStepType, open) {
   FaceStepTypeDown = 3,
   FaceStepTypeStraight = 4,
 };
+
+
+SWIFT_CLASS("_TtC6BioSDK9ImageData")
+@interface ImageData : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 
 SWIFT_CLASS("_TtC6BioSDK20InvalidDocumentAlert")
@@ -478,6 +494,15 @@ SWIFT_CLASS("_TtC6BioSDK10OvalOption")
 @property (nonatomic) BOOL isShowTutorial;
 @property (nonatomic) BOOL isSkipTutorial;
 @property (nonatomic) enum Language language;
+@property (nonatomic, strong) UIView * _Nullable tutorialView;
+@property (nonatomic, strong) UIImage * _Nullable bottomImage;
+@property (nonatomic, strong) UIColor * _Nullable ovalCircleColor;
+@property (nonatomic, strong) UIColor * _Nullable buttonTextColor;
+@property (nonatomic, strong) UIColor * _Nullable textFeedbackColor;
+@property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+@property (nonatomic, strong) UIColor * _Nullable bgColorBtnUnderstand;
+@property (nonatomic, strong) UIColor * _Nonnull textColorBtnUnderstand;
+@property (nonatomic, copy) NSString * _Nonnull titleBtnUnderstand;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -549,6 +574,7 @@ SWIFT_CLASS("_TtC6BioSDK13TwoSideOption")
 @property (nonatomic, strong) UIColor * _Nullable textDescriptionInvalidColor;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 
 enum JPEGQuality : NSInteger;
@@ -789,6 +815,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class UIColor;
 enum PostionCamera : NSInteger;
 @class FaceStep;
+enum Language : NSInteger;
 
 SWIFT_CLASS("_TtC6BioSDK13AdvanceOption")
 @interface AdvanceOption : NSObject
@@ -840,6 +867,7 @@ SWIFT_CLASS("_TtC6BioSDK13AdvanceOption")
 @property (nonatomic) BOOL isStreamCapture;
 @property (nonatomic) BOOL isRecord;
 @property (nonatomic) NSInteger maxTimeRecord;
+@property (nonatomic) enum Language tutorialLanguage;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -890,7 +918,6 @@ SWIFT_CLASS("_TtC6BioSDK11BasicOption")
 enum DocumentType : NSInteger;
 @class OneSideOption;
 @class TwoSideOption;
-enum Language : NSInteger;
 @class OvalOption;
 @class UIViewController;
 
@@ -911,12 +938,14 @@ SWIFT_CLASS("_TtC6BioSDK6Camera")
 @class DataModel;
 @class UIImage;
 enum FaceStepType : NSInteger;
+@class ImageData;
 
 SWIFT_PROTOCOL("_TtP6BioSDK14CameraDelegate_")
 @protocol CameraDelegate
 - (void)onResult:(DataModel * _Nonnull)data;
 @optional
 - (void)onStreamCapture:(UIImage * _Nonnull)image :(enum FaceStepType)type;
+- (void)onStreamCaptureImageData:(ImageData * _Nonnull)image :(enum FaceStepType)type;
 @required
 - (void)onClose;
 @optional
@@ -931,11 +960,18 @@ SWIFT_CLASS("_TtC6BioSDK9DataModel")
 @property (nonatomic, strong) UIImage * _Nullable backImage;
 @property (nonatomic, strong) UIImage * _Nullable farImage;
 @property (nonatomic, strong) UIImage * _Nullable nearImage;
+@property (nonatomic, strong) ImageData * _Nullable imageData;
+@property (nonatomic, strong) ImageData * _Nullable frontImageData;
+@property (nonatomic, strong) ImageData * _Nullable backImageData;
+@property (nonatomic, strong) ImageData * _Nullable farImageData;
+@property (nonatomic, strong) ImageData * _Nullable nearImageData;
 @property (nonatomic) enum DocumentType documentType;
 @property (nonatomic, copy) NSArray<UIImage *> * _Nonnull listPhoto;
+@property (nonatomic, copy) NSArray<ImageData *> * _Nonnull listPhotoImageData;
 @property (nonatomic) float topCropParam;
 @property (nonatomic) float bottomCropParam;
 @property (nonatomic, copy) NSArray<UIImage *> * _Nonnull listFaceSteps;
+@property (nonatomic, copy) NSArray<ImageData *> * _Nonnull listFaceStepsImageData;
 @property (nonatomic, copy) NSURL * _Nullable scanUrl;
 @property (nonatomic, copy) NSData * _Nullable logData;
 - (NSString * _Nonnull)getCropParam SWIFT_WARN_UNUSED_RESULT;
@@ -971,6 +1007,12 @@ typedef SWIFT_ENUM(NSInteger, FaceStepType, open) {
   FaceStepTypeDown = 3,
   FaceStepTypeStraight = 4,
 };
+
+
+SWIFT_CLASS("_TtC6BioSDK9ImageData")
+@interface ImageData : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 
 SWIFT_CLASS("_TtC6BioSDK20InvalidDocumentAlert")
@@ -1053,6 +1095,15 @@ SWIFT_CLASS("_TtC6BioSDK10OvalOption")
 @property (nonatomic) BOOL isShowTutorial;
 @property (nonatomic) BOOL isSkipTutorial;
 @property (nonatomic) enum Language language;
+@property (nonatomic, strong) UIView * _Nullable tutorialView;
+@property (nonatomic, strong) UIImage * _Nullable bottomImage;
+@property (nonatomic, strong) UIColor * _Nullable ovalCircleColor;
+@property (nonatomic, strong) UIColor * _Nullable buttonTextColor;
+@property (nonatomic, strong) UIColor * _Nullable textFeedbackColor;
+@property (nonatomic, strong) UIColor * _Nullable backgroundColor;
+@property (nonatomic, strong) UIColor * _Nullable bgColorBtnUnderstand;
+@property (nonatomic, strong) UIColor * _Nonnull textColorBtnUnderstand;
+@property (nonatomic, copy) NSString * _Nonnull titleBtnUnderstand;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1124,6 +1175,7 @@ SWIFT_CLASS("_TtC6BioSDK13TwoSideOption")
 @property (nonatomic, strong) UIColor * _Nullable textDescriptionInvalidColor;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
 
 
 enum JPEGQuality : NSInteger;
