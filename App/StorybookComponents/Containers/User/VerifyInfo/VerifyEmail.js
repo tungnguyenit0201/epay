@@ -11,22 +11,27 @@ import Header from '../../../Atoms/Header';
 import Button from '../../../Atoms/Button';
 import TextInput from '../../../Atoms/TextInput';
 import HeaderBg from '../../../Atoms/HeaderBg';
+import FooterContainer from '../../../Atoms/FooterContainer';
+import Wrapper from '../../../Groups/Wrapper';
 import {base, Colors, Images} from 'themes';
 import {Formik} from 'formik';
-import {emailSchema} from 'utils/ValidationSchemas';
+import {emailSchema} from '../../../Utils/ValidationSchemas';
 
 const VerifyEmail = () => {
+  const translation = require('../../../../Context/Language/vi.json');
+  const [err, setErr] = useState(false);
   return (
-    <>
-      <ScrollView style={base.wrap}>
+    <Wrapper>
+      <View style={{backgroundColor: Colors.white}}>
         <HeaderBg>
           <Header
             back
-            title="Xác thực"
+            title={translation?.verify_your_account}
             style={{marginTop: 40, marginBottom: -15}}
           />
         </HeaderBg>
-
+      </View>
+      <ScrollView style={{backgroundColor: Colors.white, paddingTop: 20}}>
         <Formik
           initialValues={{
             email: '',
@@ -65,31 +70,38 @@ const VerifyEmail = () => {
                     onChange={handleChange('email')}
                     onBlur={handleBlur('email')}
                     error={touched.email && errors.email}
-                    defaultValue={'epay123@gmail.com'}
+                    value={values.email}
                   />
                 </View>
 
                 <View style={base.bottom}>
-                  {_.isEmpty(errors) ? (
-                    <>
-                      <Image
-                        source={Images.Gradient.B_Continue.default}
-                        style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
-                      />
-                    </>
-                  ) : (
-                    <Image
-                      source={Images.Gradient.B_continueDisable.default}
-                      style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
-                    />
-                  )}
+                  {_.isEmpty(errors) && values.email
+                    ? setErr(true)
+                    : setErr(false)}
                 </View>
               </View>
             );
           }}
         </Formik>
       </ScrollView>
-    </>
+      <FooterContainer>
+        {err ? (
+          <Image
+            source={Images.Gradient.B_Continue.default}
+            style={{
+              height: 48,
+              borderRadius: 8,
+              cursor: 'pointer',
+            }}
+          />
+        ) : (
+          <Image
+            source={Images.Gradient.B_continueDisable.default}
+            style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+          />
+        )}
+      </FooterContainer>
+    </Wrapper>
   );
 };
 

@@ -62,7 +62,7 @@ const History = () => {
         ]}>
         <View style={styles.blockCardTick}>
           <Image
-            source={Images.TransactionHistory.cardTick.default}
+            source={Images.TransactionHistory.CardTick.default}
             style={styles.iconCardTick}
           />
         </View>

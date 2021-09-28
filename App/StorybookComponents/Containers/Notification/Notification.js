@@ -9,7 +9,6 @@ import {
   FlatList,
 } from 'react-native';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
-import Navigator from 'navigations/Navigator';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import HeaderBg from '../../Atoms/HeaderBg';
@@ -93,14 +92,7 @@ const Notification = () => {
                 return (
                   <Pressable
                     style={[base.boxShadow, index % 2 ? styles.isRead : '']}
-                    key={index}
-                    onPress={() => {
-                      Navigator.push(
-                        index % 2
-                          ? SCREEN.TRANSACTION_SUCCESS
-                          : SCREEN.EPAY_SUCCESS,
-                      );
-                    }}>
+                    key={index}>
                     <View style={styles.head}>
                       <Image
                         source={require('images/favicon.png').default}

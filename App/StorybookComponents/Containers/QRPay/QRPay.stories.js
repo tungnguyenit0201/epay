@@ -6,9 +6,8 @@ import Transfer from './Transfer';
 import TransferResults from './TransferResults';
 import TransferSuccess from './TransferSuccess';
 
-storiesOf('Layout/QRPay', module)
-  .addDecorator(withKnobs)
-  .add('index', () => <QRPay />)
+storiesOf('Layout/QRPay', module).addDecorator(withKnobs);
+/*   .add('index', () => <QRPay />)
   .add('Transfer', () => <Transfer />)
   .add('TransferResults', () => <TransferResults />)
-  .add('TransferSuccess', () => <TransferSuccess />);
+  .add('TransferSuccess', () => <TransferSuccess />); */

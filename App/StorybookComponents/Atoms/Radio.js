@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import {Colors, Fonts} from 'themes';
-import {scale} from 'utils/Functions';
-import Text from './Text';
+import {scale} from '../Utils/Functions';
+import Text from '../Atoms/Text';
 
 export default ({
   items, // [{label, value}]
@@ -10,23 +10,23 @@ export default ({
   style,
   marginBottom = 19,
   error,
-  active,
+  selectedValue,
   showErrorLabel = true,
 }) => {
-  const [checked, setChecked] = React.useState();
+  const [checked, setChecked] = React.useState(selectedValue);
 
   const onPress = item => {
     setChecked(item?.value);
     onChange?.(item?.value);
   };
 
-  const renderRadio = item => {
+  const renderRadio = (item, index) => {
     //const isSelected = item?.value === value;
     return (
       <Pressable
         onPress={() => onPress(item)}
         key={item?.value}
-        style={[styles.radio, style]}>
+        style={[styles.radio, index + 1 === items.length && styles.radioEnd]}>
         <View style={styles.tickWrap}>
           {checked === item?.value && <View style={styles.tick} />}
         </View>
@@ -59,10 +59,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: scale(40),
   },
+  radioEnd: {
+    marginRight: 0,
+  },
   tickWrap: {
     width: 15,
     height: 15,
-    borderColor: '#999',
+    borderColor: Colors.l6,
     borderWidth: 1,
     borderRadius: 8,
     alignItems: 'center',

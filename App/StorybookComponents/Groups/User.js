@@ -15,7 +15,7 @@ const User = ({data, style}) => {
         onPress={() => console.log('hello')}
         style={[styles.user]}>
         <Text bold fs="h6" style={[styles.text]}>
-          Xin chào Epay
+          Xin chào Vân
         </Text>
         <Text style={[styles.text]}>{hidePhone(phone)}</Text>
       </TouchableOpacity>

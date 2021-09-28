@@ -1,33 +1,35 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Images, Spacing, Colors } from 'themes';
+import {View, Image, StyleSheet} from 'react-native';
+import {Images, Spacing, Colors, base} from 'themes';
 
 /* import { useLanguage } from 'context/Language/utils'; */
-import Button from '../../Atoms/Button'
+import Button from '../../Atoms/Button';
+import FooterContainer from '../../Atoms/FooterContainer';
+import Wrapper from '../../Groups/Wrapper';
 const Language = () => {
   /* const { chooseLanguage } = useLanguage(); */
   return (
-    <View style={[styles.container]}>
-      <Image source={Images.Splash.default} style={[styles.img]} />
-      <View style={[styles.groupButton]}>
+    <Wrapper>
+      <View style={[styles.container]}>
+        <Image source={Images.Splash.default} style={[styles.img]} />
+      </View>
+      <FooterContainer>
         <Button
           label="English"
           bold
-          size="lg"
+          style={{height: 48}}
           bg={Colors.white}
           color={Colors.cl1}
           border={Colors.cl1}
           mb={Spacing.PADDING}
           onPress={() => chooseLanguage('en')}
         />
-        <Button
-          label="Việt Nam"
-          bold
-          size="lg"
-          onPress={() => chooseLanguage('vi')}
+        <Image
+          source={Images.Gradient.B_Vietnamese.default}
+          style={base.buttonSB}
         />
-      </View>
-    </View>
+      </FooterContainer>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
   },
   img: {
     width: '100%',
-    minHeight: 850
+    minHeight: 850,
   },
   groupButton: {
     position: 'absolute',

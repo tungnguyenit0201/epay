@@ -189,6 +189,11 @@ export default {
     B_Home: require('images/gradient/B_home.png'),
     B_Hotline: require('images/gradient/B_hotline.png'),
     B_Understood: require('images/gradient/B_understood.png'),
+    B_Vietnamese: require('images/gradient/B_Vietnamese.png'),
+    B_photo: require('images/gradient/B_photo.png'),
+    B_Update: require('images/gradient/B_update.png'),
+    B_updateDisable: require('images/gradient/B_update_disable.png'),
+    B_Save: require('images/gradient/B_save.png'),
     Step1: require('images/gradient/step_1.png'),
   },
   Storybook: {
@@ -199,5 +204,8 @@ export default {
     Customs: require('images/storybook/customs.png'),
     Fines: require('images/storybook/fines.png'),
     Vacxin: require('images/storybook/vacxin.png'),
+    Border: require('images/storybook/border.png'),
+    Wave: require('images/storybook/wave.png'),
+    Progress: require('images/storybook/progress.png'),
   },
 };

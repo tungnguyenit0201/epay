@@ -6,10 +6,10 @@ import {Colors, Fonts} from 'themes';
 
 import Home from './Home';
 import MyWallet from './MyWallet';
-import SplashScreen from './Splash';
+/* import SplashScreen from './Splash'; */
 
 storiesOf('Layout/Home', module)
   .addDecorator(withKnobs)
   .add('HomePage', () => <Home />)
-  .add('MyWallet', () => <MyWallet />)
-  .add('SplashScreen', () => <SplashScreen />);
+  .add('MyWallet', () => <MyWallet />);
+/* .add('SplashScreen', () => <SplashScreen />); */

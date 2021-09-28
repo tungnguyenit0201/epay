@@ -20,82 +20,89 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import BlueHeader from '../../Atoms/BlueHeader';
 import FooterContainer from '../../Atoms/FooterContainer';
+import Wrapper from '../../Groups/Wrapper';
 const RegisterName = () => {
   let [disable, setDisable] = useState(true);
   const translation = require('../../../Context/Language/vi.json');
   const [showModal, setShowModal] = useState(false);
+  const [active, setActive] = useState(false);
   return (
-    <SafeAreaProvider>
-      <Formik
-        initialValues={{
-          FullName: '',
-        }}
-        // validationSchema={phoneSchema}
-        onSubmit={() => console.log('press')}>
-        {({
-          handleChange: _handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          setFieldTouched,
-          touched,
-          errors,
-          values,
-        }) => {
-          const handleChange = field => value => {
-            setFieldValue(field, value);
-            setFieldTouched(field, true, false);
-            console.log('setpersonalinfo');
-          };
+    <Wrapper>
+      <SafeAreaProvider>
+        <Formik
+          initialValues={{
+            FullName: '',
+          }}
+          // validationSchema={phoneSchema}
+          onSubmit={() => console.log('press')}>
+          {({
+            handleChange: _handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            values,
+          }) => {
+            const handleChange = field => value => {
+              setFieldValue(field, value);
+              setFieldTouched(field, true, false);
+              console.log('setpersonalinfo');
+            };
 
-          return (
-            <>
-              <BlueHeader style={styles.container}>
-                <BigLogo style={{marginBottom: 20}} />
-                <Content
-                  style={styles.wrap}
-                  title="Nhập tên"
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                />
-
-                <View style={[styles.wrap, {marginTop: 40}]}>
-                  <TextInput
-                    required
-                    onFocus={e => setDisable(false)}
-                    placeholder={translation.enter_your_name}
-                    onChange={handleChange('FullName')}
-                    onBlur={handleBlur('FullName')}
-                    // error={touched.FullName && errors.FullName}
-                    value={values.FullName}
-                    isDeleted={values.FullName}
+            return (
+              <>
+                <BlueHeader style={styles.container} heightBg={180}>
+                  <BigLogo style={{marginBottom: 20}} />
+                  <Content
+                    style={styles.wrap}
+                    title="Nhập tên"
+                    text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                   />
-                </View>
-                <FooterContainer style={{marginTop: 100}}>
-                  {values?.FullName.length >= 3 ? (
-                    <>
-                      <Image
-                        source={Images.Gradient.B_Done.default}
-                        style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
-                      />
-                    </>
-                  ) : (
-                    <Image
-                      source={Images.Gradient.B_doneDisable.default}
-                      style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+
+                  <View style={[styles.wrap, {marginTop: 20}]}>
+                    <TextInput
+                      required
+                      onFocus={e => setDisable(false)}
+                      placeholder={translation.enter_your_name}
+                      onChange={handleChange('FullName')}
+                      onBlur={handleBlur('FullName')}
+                      // error={touched.FullName && errors.FullName}
+                      value={values.FullName}
+                      isDeleted={values.FullName}
                     />
-                  )}
-                </FooterContainer>
-              </BlueHeader>
-              <HelpModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                onPress={() => console.log('press')}
-              />
-            </>
-          );
-        }}
-      </Formik>
-    </SafeAreaProvider>
+                  </View>
+                  {values?.FullName.length >= 3
+                    ? setActive(true)
+                    : setActive(false)}
+                </BlueHeader>
+                <HelpModal
+                  showModal={showModal}
+                  setShowModal={setShowModal}
+                  onPress={() => console.log('press')}
+                />
+              </>
+            );
+          }}
+        </Formik>
+      </SafeAreaProvider>
+      <FooterContainer>
+        {active ? (
+          <>
+            <Image
+              source={Images.Gradient.B_Done.default}
+              style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+            />
+          </>
+        ) : (
+          <Image
+            source={Images.Gradient.B_doneDisable.default}
+            style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+          />
+        )}
+      </FooterContainer>
+    </Wrapper>
   );
 };
 

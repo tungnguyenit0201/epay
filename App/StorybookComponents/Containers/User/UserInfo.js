@@ -24,28 +24,44 @@ const UserInfo = () => {
   const data = [
     {
       name: 'Họ tên',
-      val: 'Ca si lát',
+      val: 'Phước Lộc',
+      icon: require('images/profile/User.png').default,
     },
     {
       name: 'Ngày sinh',
-      val: '20/05/1981',
+      val: '17/05/1998',
+      icon: require('images/storybook/calendar.png').default,
     },
     {
       name: 'Giới tính',
       val: 'Nam',
+      icon: require('images/storybook/sex.png').default,
     },
-    {name: 'CMND', val: '3016852365'},
+    /*     {
+      name: 'CMND',
+      val: '3016852365',
+      icon: require('images/storybook/cmnd.png').default,
+    },
     {
       name: 'Nơi cấp',
       val: 'Tây Ninh',
+      icon: require('images/storybook/address.png').default,
     },
-    {name: 'Địa chỉ', val: 'Tây Ninh'},
+    {
+      name: 'Địa chỉ',
+      val: 'Tây Ninh',
+      icon: require('images/profile/User.png').default,
+    }, */
   ];
 
   return (
     <>
       <HeaderBg mb={0}>
-        <Header back title="Trang cá nhân" />
+        <Header
+          back
+          title="Trang cá nhân"
+          style={{marginTop: 25, marginBottom: -10}}
+        />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
@@ -60,7 +76,7 @@ const UserInfo = () => {
               </View>
               <View style={styles.wedit}>
                 <Image
-                  style={{width: 16, height: 16, tintColor: Colors.g5}}
+                  style={{width: 13, height: 13, tintColor: Colors.g5}}
                   source={Images.Edit.default}
                 />
               </View>
@@ -69,13 +85,9 @@ const UserInfo = () => {
             <Text fs="h5" bold mb={5}>
               Phước Lộc
             </Text>
-            <Text mb={10}>0907999999</Text>
-
+            <Text mb={10}>090****456</Text>
             <StatusUser />
           </View>
-
-          <DinhDanh />
-
           <View style={[base.boxShadow]}>
             <View style={styles.heading}>
               <View>
@@ -102,29 +114,59 @@ const UserInfo = () => {
                     index == 0 && styles.rowFirst,
                   ]}
                   key={index}>
-                  {/* <Image source={item.icon} /> */}
-                  <Text style={styles.rowTitle}>{item.name}</Text>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      source={item.icon}
+                      style={{width: 18, height: 18, marginRight: 5}}
+                    />
+                    <Text style={styles.rowTitle}>{item.name}</Text>
+                  </View>
                   <Text style={base.leftAuto}>{item.val}</Text>
                 </View>
               );
             })}
-            <View style={[styles.rowItem]}>
-              {/* <Image
-                style={[styles.rowIcon]}
-                source={require('images/profile/CMND.png').default}
-              /> */}
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingVertical: 12,
+                borderTopWidth: 1,
+                borderTopColor: Colors.g2,
+              }}>
+              <Image
+                style={{
+                  width: 20,
+                  height: 17,
+                  marginRight: 5,
+                }}
+                source={require('images/storybook/cmnd.png').default}
+              />
               <View>
                 <Text mt={3} mb={5} style={styles.rowTitle}>
                   CMND/CCCD/Hộ chiếu
                 </Text>
-                <Text style={[styles.rowVal]}>3016859236</Text>
+                <Text style={[styles.rowVal]}>01*********89</Text>
               </View>
             </View>
-            <View style={[styles.rowItem]}>
-              {/* <Image
-                style={[styles.rowIcon]}
-                source={require('images/profile/Location.png').default}
-              /> */}
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingVertical: 12,
+                borderTopWidth: 1,
+                borderTopColor: Colors.g2,
+              }}>
+              <Image
+                style={{
+                  width: 17,
+                  height: 20,
+                  marginRight: 5,
+                }}
+                source={require('images/storybook/address.png').default}
+              />
               <View>
                 <Text mt={3} mb={5} style={styles.rowTitle}>
                   Địa chỉ
@@ -158,13 +200,10 @@ const UserInfo = () => {
             <View style={[base.row]}>
               <Image
                 style={[styles.rowIcon]}
-                source={require('images/profile/Wating.png').default}
+                source={require('images/storybook/timer.png').default}
               />
               <View>
                 <Text style={styles.rowVal}>Đã xác thực tài khoản</Text>
-                <TouchableOpacity style={styles.itemRight}>
-                  <Text style={styles.link}>Đổi giấy tờ tùy thân</Text>
-                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -191,7 +230,7 @@ const UserInfo = () => {
             <View style={[base.row]}>
               <Image
                 style={[styles.rowIcon]}
-                source={require('images/profile/Email.png')}
+                source={require('images/storybook/sms.png').default}
               />
               <Text style={styles.rowTitle}>epay@gmail.com</Text>
             </View>
@@ -218,8 +257,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     bottom: 0,
     right: -10,
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
 
     backgroundColor: Colors.white,
     borderWidth: 1,

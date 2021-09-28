@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,15 +7,15 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import { Colors, Fonts, Images, Spacing, base } from 'themes';
-import { scale } from 'utils/Functions';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {scale} from '../../Utils/Functions';
 
-import Text from '../../Atoms/Text'
-import Header from '../../Atoms/Header'
-import Button from '../../Atoms/Button'
-import Row from '../../Atoms/Row'
-import Col from '../../Atoms/Col'
-import HeaderBg from '../../Atoms/HeaderBg'
+import Text from '../../Atoms/Text';
+import Header from '../../Atoms/Header';
+import Button from '../../Atoms/Button';
+import Row from '../../Atoms/Row';
+import Col from '../../Atoms/Col';
+import HeaderBg from '../../Atoms/HeaderBg';
 const CheckoutSuccess = () => {
   const translation = require('../../../Context/Language/vi.json');
   const data = [
@@ -51,17 +51,17 @@ const CheckoutSuccess = () => {
 
   return (
     <>
+      <HeaderBg>
+        <Header title={translation.transaction_details} back />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header title={translation.transaction_details} back />
-        </HeaderBg>
         <View style={base.container}>
           <View style={styles.success}>
             <Image
-              source={require('images/Success.png').default}
+              source={require('images/noti/Noti.png').default}
               style={styles.imgSuccess}
             />
-            <Text bold size={Fonts.H5} mb={15}>
+            <Text bold fs="h5" mb={15}>
               {translation.epay_notification}
             </Text>
             <Text centered>
@@ -70,47 +70,28 @@ const CheckoutSuccess = () => {
             </Text>
           </View>
           <View style={styles.block}>
-            <Image
-              source={require('images/bgXacNhan.png')}
-              style={styles.bgImg}
-            />
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
+              nisi ut aliquip ex ea commodo consequat aliqua.
             </Text>
           </View>
         </View>
       </ScrollView>
-      <View style={base.bottom}>
-        <Row space={10}>
-          <Col space={10} width="50%">
-            <Button
-              size="sm"
-              bg="#fff"
-              border={Colors.cl1}
-              color={Colors.cl1}
-              label={translation.save_photo}
-              labelStyle={{ fontSize: 14 }}
-              onPress={() => console.log("onPress")}
-            />
-          </Col>
-          <Col space={10} width="50%">
-            <Button
-              size="sm"
-              label={translation.share_photo}
-              onPress={() => console.log("onPress")}
-            />
-          </Col>
-        </Row>
-      </View>
+      <Image source={require('images/wave.png').default} style={styles.bgImg} />
     </>
   );
 };
 const styles = StyleSheet.create({
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+
   block: {
     marginBottom: 20,
     marginTop: 20,
@@ -126,13 +107,9 @@ const styles = StyleSheet.create({
     height: 80,
     marginBottom: 10,
   },
-  bgImg: {
-    width: 128,
-    height: 128,
-    position: 'absolute',
-    top: 0,
-    left: '50%',
-    transform: [{ translateX: scale(-64) }, { translateY: 0 }],
+
+  linkHome: {
+    textDecorationLine: 'underline',
   },
 });
 export default CheckoutSuccess;

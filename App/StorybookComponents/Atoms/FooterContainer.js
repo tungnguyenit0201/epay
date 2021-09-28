@@ -14,11 +14,13 @@ const FooterContainer = ({children, style}) => {
 };
 
 const styles = StyleSheet.create({
-  wrap: {paddingHorizontal: Spacing.PADDING},
+  wrap: {paddingHorizontal: 16},
   //------------------
-  py1: {paddingVertical: Spacing.PADDING},
+  py1: {paddingVertical: 16},
   //------------------
-  bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  bgWhite: {
+    backgroundColor: Colors.BACKGROUNDCOLOR,
+  },
   //------------------
   blockBtn: {
     borderTopLeftRadius: Spacing.PADDING,

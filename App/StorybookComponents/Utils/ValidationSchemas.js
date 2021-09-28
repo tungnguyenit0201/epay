@@ -43,7 +43,7 @@ export const reviewsSchema = yup.object().shape({
 export const phoneSchema = yup.object().shape({
   phone: yup
     .string()
-    .required(TEXT.PHONE_INVALID)
+    .required('Số điện thoại không được bỏ trống.')
     .matches(
       /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
       TEXT.PHONE_INVALID,
@@ -65,7 +65,7 @@ export const passwordSchema = yup.object().shape({
 export const newPasswordSchema = yup.object().shape({
   newPassword: yup
     .string()
-    .required()
+    .required('Mật khẩu không được bỏ trống.')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
       'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
@@ -73,7 +73,7 @@ export const newPasswordSchema = yup.object().shape({
     .label('Mật khẩu'),
   passwordConfirm: yup
     .string()
-    .required()
+    .required('Mật khẩu không được bỏ trống.')
     .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
     .label('Xác nhận mật khẩu'),
 });
@@ -95,4 +95,7 @@ export const verifyUserSchema = yup.object().shape({
   ICIssuedPlace: yup.string().required('Nơi cấp không được bỏ trống.'),
   ICNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
   DateOfBirth: yup.string().required('Ngày sinh không được bỏ trống.'),
+});
+export const emailSchema = yup.object().shape({
+  email: yup.string().email(TEXT.EMAIL_INVALID).required(TEXT.EMAIL_NOT_BLANK),
 });

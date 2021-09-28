@@ -36,10 +36,10 @@ storiesOf('Layout/User/VerifyInfo', module)
   .add('VerifyEmail', () => <VerifyEmail />)
   .add('VerifyEmailResult/True', () => <VerifyEmailResult success={true} />)
   .add('VerifyEmailResult/False', () => <VerifyEmailResult success={false} />)
-  .add('VerifyIdentityCard', () => <VerifyIdentityCard />)
-  .add('VerifySuccess', () => <VerifySuccess />)
-  .add('VerifyUserInfo/Step1', () => <VerifyUserInfo identityCard={1} />)
-  .add('VerifyUserPortrait', () => <VerifyUserPortrait />);
+  .add('Step1 / VerifyUserInfo', () => <VerifyUserInfo identityCard={1} />)
+  .add('Step2 / VerifyIdentityCard', () => <VerifyIdentityCard />)
+  .add('Step3 / VerifyUserPortrait', () => <VerifyUserPortrait />)
+  .add('VerifySuccess', () => <VerifySuccess />);
 
 storiesOf('Layout/User/Default', module)
   .addDecorator(withKnobs)

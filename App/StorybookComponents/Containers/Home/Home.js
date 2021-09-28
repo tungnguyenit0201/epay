@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   useWindowDimensions,
+  ImageBase,
 } from 'react-native';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
@@ -29,6 +30,7 @@ import DinhDanh from '../../Groups/DinhDanh';
 import Banner from '../../Groups/Banner';
 import SlideIcon from '../../Groups/SlideIcon';
 import FooterNavigation from '../../Groups/FooterNavigation';
+import Wrapper from '../../Groups/Wrapper';
 const Home = () => {
   // TODO : translation
   const translation = require('../../../Context/Language/vi.json');
@@ -100,7 +102,12 @@ const Home = () => {
 
   return (
     <>
-      <View style={[base.wrap, {overflow: 'hidden'}]}>
+      <View
+        style={{
+          overflow: 'hidden',
+          backgroundColor: Colors.white,
+          paddingBottom: 20,
+        }}>
         <HeaderBg>
           <View style={styles.rowHeader}>
             <Image
@@ -121,39 +128,33 @@ const Home = () => {
             />
           </View>
         </HeaderBg>
-        <View style={base.container}>
-          <Image style={styles.bgHome} source={Images.Homes.Wave.default} />
+        <View style={[base.container]}>
           <DinhDanh />
           <Banner data={dataBanner} />
         </View>
         <SlideIcon data={dataHome} />
-        <View style={{marginTop: scale(50)}}>
-          <FooterNavigation />
-        </View>
-        {/* <View style={base.container}>
-          <Image
-            style={{
-              width: width - 32,
-              height: 'auto',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-            }}
-            source={Images.Homes.Wave.default}
-          />
-          <DinhDanh />
-          <Banner data={dataBanner} />
-          <SlideIcon data={dataHome} />
-        </View> */}
-        {/* <View style={base.container}>
-          <Image style={styles.bgHome} source={Images.Homes.Wave.default} />
-        </View> */}
       </View>
-      {/* <FooterNavigation /> */}
+      <Image source={require('images/wave.png').default} style={styles.bgImg} />
+      <Image
+        source={require('images/storybook/Footer.png').default}
+        style={{
+          height: 100,
+          marginTop: 17,
+          position: 'relative',
+          bottom: -14,
+        }}
+      />
     </>
   );
 };
 const styles = StyleSheet.create({
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
   rowHeader: {
     flexWrap: 'wrap',
     flexDirection: 'row',

@@ -10,12 +10,12 @@ import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import Icon from '../../Atoms/Icon';
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {scale} from 'utils/Functions';
+import {Colors, Fonts, Spacing, Images, base} from 'themes';
 
 import BlueHeader from '../../Atoms/BlueHeader';
 import Content from '../../Atoms/Content';
 import FooterContainer from '../../Atoms/FooterContainer';
+import Wrapper from '../../Groups/Wrapper';
 const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
@@ -30,39 +30,24 @@ const RegisterFailure = ({route}) => {
   );
   return (
     // TODO: translate
-    <BlueHeader heightBg="100%">
-      <Header
-        back
-        // blackIcon
-        // avoidStatusBar
-        logo={Images.logoEpay.default}
-        onPressBack={() => onNavigate(SCREEN.AUTH)}
-        renderRightComponent={() => renderRightComponent()}
-      />
-      <Content
-        title={'Đăng ký \nkhông thành công!'}
-        text="Bạn đã nhập sai OTP quá 3 lần, vui lòng 
+    <Wrapper>
+      <BlueHeader heightBg="100%">
+        <Header
+          back
+          // blackIcon
+          // avoidStatusBar
+          logo={Images.logoEpay.default}
+          onPressBack={() => onNavigate(SCREEN.AUTH)}
+          renderRightComponent={() => renderRightComponent()}
+        />
+        <Content
+          title={'Đăng ký \nkhông thành công!'}
+          text="Bạn đã nhập sai OTP quá 3 lần, vui lòng 
         quay lại sau 30 phút"
-        styleText={{color: Colors.white}}
-        style={[styles.wrap, styles.flex1, styles.mt1]}
-      />
-      <FooterContainer style={{marginTop: 100}}>
-        <Button
-          label="Gọi 024 32252336"
-          style={styles.btn}
-          mb={Spacing.PADDING - 10}
-          bold
+          styleText={{color: Colors.white}}
+          style={[styles.wrap, styles.flex1, styles.mt1]}
         />
-        <Button
-          label="Quay lại sau"
-          style={styles.btn}
-          bg={Colors.white}
-          color={Colors.black}
-          border={Colors.cl4}
-          bold
-        />
-      </FooterContainer>
-      {/* <View>
+        {/* <View>
         <Header
           back
           // blackIcon
@@ -136,7 +121,22 @@ const RegisterFailure = ({route}) => {
           bold
         />
       </View> */}
-    </BlueHeader>
+      </BlueHeader>
+      <FooterContainer>
+        <Image
+          source={Images.Gradient.B_Hotline.default}
+          style={[base.buttonSB, {marginBottom: 10}]}
+        />
+        <Button
+          label="Quay lại sau"
+          style={styles.btn}
+          bg={Colors.white}
+          color={Colors.black}
+          border={Colors.cl4}
+          bold
+        />
+      </FooterContainer>
+    </Wrapper>
   );
 };
 

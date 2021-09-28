@@ -49,7 +49,20 @@ const TabNavigation = () => {
         <View style={styles.wrapTabImg}>
           <Image
             source={Images.TabBar.BottomTab.default}
-            style={[{width: width - 25}, styles.tabImage]}
+            style={[
+              {width: width - 25},
+              styles.tabImage,
+              {
+                shadowColor: Colors.black,
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              },
+            ]}
           />
         </View>
         <TouchableOpacity

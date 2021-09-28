@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
 
   back: {paddingHorizontal: Spacing.PADDING / 2},
   wrapCenter: {
-    alignItems: 'center',
     flex: 1,
+    alignItems: 'center',
   },
 
   logo: {

@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cl1,
   },
   img: {
-    width: scale(375),
+    width: 400,
     height: '100%',
     position: 'absolute',
     left: 0,

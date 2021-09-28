@@ -5,7 +5,7 @@ import Header from '../../Atoms/Header';
 import Icon from '../../Atoms/Icon';
 import Button from '../../Atoms/Button';
 import TextInput from '../../Atoms/TextInput';
-import {Colors, Spacing, Images} from 'themes';
+import {Colors, Spacing, Images, base} from 'themes';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
@@ -13,97 +13,107 @@ import BigLogo from '../../Atoms/BigLogo';
 import Content from '../../Atoms/Content';
 import {passwordSchema} from '../../Utils/ValidationSchemas';
 import BlueHeader from '../../Atoms/BlueHeader';
+import Wrapper from '../../Groups/Wrapper';
+import FooterContainer from '../../Atoms/FooterContainer';
 const Login = ({route}) => {
   const translation = require('../../../Context/Language/vi.json');
+  const [err, setErr] = useState(false);
   return (
-    <BlueHeader heightBg={180}>
-      <View style={styles.pb1}>
-        <BigLogo style={{marginBottom: 18}} />
-        <Content
-          style={styles.wrap}
-          title={'Xin chào Vân'}
-          text={'0907999999'}
-        />
-      </View>
+    <Wrapper>
+      <BlueHeader heightBg={180}>
+        <View style={styles.pb1}>
+          <BigLogo style={{marginBottom: 18}} />
+          <Content
+            style={[styles.wrap, {marginBottom: -25}]}
+            title={'Xin chào Vân'}
+            text={'0907999999'}
+          />
+        </View>
 
-      <Formik
-        initialValues={{
-          password: '',
-        }}
-        onSubmit={({password}) =>
-          () =>
-            console.log('password')}
-        validationSchema={passwordSchema}>
-        {({
-          handleChange: _handleChange,
-          handleBlur,
-          handleSubmit,
-          setFieldValue,
-          setFieldTouched,
-          touched,
-          errors,
-          values,
-        }) => {
-          const handleChange = field => value => {
-            setFieldValue(field, value);
-            setFieldTouched(field, true, false);
-          };
+        <Formik
+          initialValues={{
+            password: '',
+          }}
+          onSubmit={({password}) =>
+            () =>
+              console.log('password')}
+          validationSchema={passwordSchema}>
+          {({
+            handleChange: _handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            values,
+          }) => {
+            const handleChange = field => value => {
+              setFieldValue(field, value);
+              setFieldTouched(field, true, false);
+            };
 
-          return (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: Colors.BACKGROUNDCOLOR,
-              }}>
+            return (
               <View
-                style={[
-                  styles.wrap,
-                  {
-                    flex: 1,
-                    marginBottom: 25,
-                  },
-                ]}>
-                <TextInput
-                  password
-                  required
-                  onChange={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  placeholder={translation.enter_your_password}
-                  error={touched.password && errors.password}
-                  /* value={values.password} */
-                  defaultValue={'Epay123@'}
-                  autoFocus
-                  style={{outline: 'none'}}
-                />
+                style={{
+                  flex: 1,
+                  backgroundColor: Colors.BACKGROUNDCOLOR,
+                }}>
+                <View
+                  style={[
+                    styles.wrap,
+                    {
+                      flex: 1,
+                      marginBottom: 25,
+                    },
+                  ]}>
+                  <TextInput
+                    password
+                    required
+                    onChange={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    placeholder={translation.enter_your_password}
+                    error={touched.password && errors.password}
+                    value={values.password}
+                    /* defaultValue={'Epay123@'} */
+                    autoFocus
+                    style={{outline: 'none'}}
+                  />
 
-                <View style={[styles.box, {marginTop: 5}]}>
-                  <Pressable onPress={() => console.log('press')}>
-                    <Text style={[styles.link_text]}>Quên mật khẩu?</Text>
-                  </Pressable>
+                  <View style={[styles.box, {marginTop: 5}]}>
+                    <Pressable onPress={() => console.log('press')}>
+                      <Text style={[styles.link_text]}>Quên mật khẩu?</Text>
+                    </Pressable>
 
-                  <Pressable onPress={() => console.log('press')}>
-                    <Text style={[styles.link_text]}>Đổi số điện thoại</Text>
-                  </Pressable>
+                    <Pressable onPress={() => console.log('press')}>
+                      <Text style={[styles.link_text]}>Đổi SĐT</Text>
+                    </Pressable>
+                  </View>
+                </View>
+                <View style={[styles.wrap]}>
+                  {_.isEmpty(errors) && values.password
+                    ? setErr(true)
+                    : setErr(false)}
                 </View>
               </View>
-              <View style={[styles.wrap]}>
-                {_.isEmpty(errors) ? (
-                  <Image
-                    source={Images.Gradient.B_Login.default}
-                    style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
-                  />
-                ) : (
-                  <Image
-                    source={Images.Gradient.B_loginDisabled.default}
-                    style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
-                  />
-                )}
-              </View>
-            </View>
-          );
-        }}
-      </Formik>
-    </BlueHeader>
+            );
+          }}
+        </Formik>
+      </BlueHeader>
+      <FooterContainer>
+        {err ? (
+          <Image
+            source={Images.Gradient.B_Login.default}
+            style={base.buttonSB}
+          />
+        ) : (
+          <Image
+            source={Images.Gradient.B_loginDisabled.default}
+            style={base.buttonSB}
+          />
+        )}
+      </FooterContainer>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({

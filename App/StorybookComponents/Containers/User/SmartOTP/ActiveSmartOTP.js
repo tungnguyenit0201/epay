@@ -5,7 +5,7 @@ import Button from '../../../Atoms/Button';
 import Header from '../../../Atoms/Header';
 import Radio from '../../../Atoms/Radio';
 import HeaderBg from '../../../Atoms/HeaderBg';
-import {base} from 'themes';
+import {base, Colors} from 'themes';
 
 const ActiveSmartOtp = () => {
   const translation = require('../../../../Context/Language/vi.json');
@@ -14,11 +14,16 @@ const ActiveSmartOtp = () => {
 
   return (
     <>
-      <ScrollView style={base.wrap}>
+      <ScrollView style={{backgroundColor: Colors.white, paddingBottom: 20}}>
         <HeaderBg>
-          <Header back title="Kích hoạt smart OTP" />
+          <Header
+            back
+            title="Kích hoạt smart OTP"
+            style={{marginTop: 25, marginBottom: -15}}
+          />
         </HeaderBg>
         <View style={base.container}>
+          {/* <Text>Khai báo thông tin SmartOTP</Text> */}
           <Text mb={20}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text

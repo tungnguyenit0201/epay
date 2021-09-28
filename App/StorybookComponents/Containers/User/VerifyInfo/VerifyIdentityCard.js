@@ -13,34 +13,82 @@ import HeaderBg from '../../../Atoms/HeaderBg';
 import {Colors, Fonts, Spacing, base, Row, Col, Images} from 'themes';
 import Progress from '../../../Groups/Progress';
 import SelectImage from '../../../Groups/SelectImage';
+import Wrapper from '../../../Groups/Wrapper';
+import FooterContainer from '../../../Atoms/FooterContainer';
 const VerifyIdentityCard = ({route, disabledAvatar}) => {
   const translation = require('../../../../Context/Language/vi.json');
   const {width} = useWindowDimensions();
   return (
-    <ScrollView style={{backgroundColor: Colors.white}}>
-      <HeaderBg>
-        <Header back title={translation?.account_verification} />
-        <Progress space={1} step={2} />
+    <Wrapper>
+      <ScrollView style={{backgroundColor: Colors.white}}>
+        <HeaderBg>
+          <Header back title={translation?.account_verification} />
+          <Image
+            source={require('images/storybook/step2.png').default}
+            style={{height: 60, marginTop: 25}}
+          />
+          <Image
+            source={Images.VerifyUserInfo.iconDown.default}
+            style={[styles.triangleDown, {left: width / 2 - 10}]}
+            resizeMode="contain"
+          />
+        </HeaderBg>
+        <View style={[base.container, {paddingTop: 20}]}>
+          <View
+            style={{
+              width: 300,
+              height: 186,
+              backgroundColor: '#EEEEEE',
+              borderRadius: 8,
+              marginHorizontal: 'auto',
+              marginVertical: 0,
+              position: 'relative',
+            }}>
+            <View
+              style={{
+                flex: 1,
+                width: 300,
+                height: 186,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{textTransform: 'uppercase', fontSize: Fonts.H6}}
+                bold>
+                Ảnh chân dung
+              </Text>
+              <Image
+                source={Images.Gradient.B_photo.default}
+                style={{
+                  height: 40,
+                  width: 120,
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  marginTop: 25,
+                  zIndex: 9999999,
+                }}
+              />
+            </View>
+            <Image
+              source={Images.Storybook.Wave.default}
+              style={{
+                position: 'absolute',
+                width: 172,
+                height: 160,
+                right: 0,
+                bottom: 0,
+              }}
+            />
+          </View>
+        </View>
+      </ScrollView>
+      <FooterContainer>
         <Image
-          source={Images.VerifyUserInfo.iconDown.default}
-          style={[styles.triangleDown, {left: width / 2 - 10}]}
-          resizeMode="contain"
+          source={Images.Gradient.B_continueDisable.default}
+          style={base.buttonSB}
         />
-      </HeaderBg>
-      <View style={[base.container, {paddingTop: 20}]}>
-        <SelectImage
-          title="Hình minh họa" // TODO: translate
-          onSelectImage={value => console.log(value)}
-        />
-
-        <Button
-          disabled={disabledAvatar}
-          label={'Tiếp tục'} // TODO: translate
-          onPress={() => console.log('tiep tuc')}
-          style={{marginTop: 20}}
-        />
-      </View>
-    </ScrollView>
+      </FooterContainer>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({

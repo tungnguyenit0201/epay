@@ -20,118 +20,135 @@ import Account from '../../Groups/Account';
 import Row from '../../Atoms/Row';
 import Col from '../../Atoms/Col';
 import Button from '../../Atoms/Button';
-import FooterNavigation from '../../Groups/FooterNavigation';
+import FooterContainer from '../../Atoms/FooterContainer';
+import Wrapper from '../../Groups/Wrapper';
 const User = () => {
   const translation = require('../../../Context/Language/vi.json');
   const {width, height} = useWindowDimensions();
   // TODO: translate
   return (
-    <View>
-      <HeaderBg>
-        <Header back title={translation.bank_account} />
-      </HeaderBg>
-      <ScrollView style={[base.wrap]}>
-        <View style={[base.container]}>
-          <UserInfo style={[{marginBottom: 20}]} />
-          {/* <DinhDanh /> */}
-          <Account />
-        </View>
-        <Row space={10} style={[{marginBottom: 30}]}>
-          <Col space={10}>
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={Images.Profile.MaThanhToan.default}
-              />
-              <Text semibold>Mã thanh toán</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={Images.Profile.ThanhToan.default}
-              />
-              <Text semibold>Cài đặt hạn mức thanh toán</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={Images.Profile.BaoMat.default}
-              />
-              <Text semibold>{translation.password_and_security} </Text>
-            </TouchableOpacity>
-          </Col>
-          <Col space={10}>
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={require('images/profile/NapVI.png').default}
-              />
-              <Text semibold>Nạp ví tự động</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={require('images/profile/OTP.png').default}
-              />
-              <Text semibold>Cài đặt Smart OTP </Text>
-            </TouchableOpacity>
+    <Wrapper>
+      <View>
+        <HeaderBg>
+          <Header
+            back
+            title={translation.bank_account}
+            style={{marginTop: 25, marginBottom: -15}}
+          />
+        </HeaderBg>
+        <ScrollView style={[base.wrap]}>
+          <View style={[base.container]}>
+            <UserInfo style={[{marginBottom: 20}]} />
+            {/* <DinhDanh /> */}
+            <Account />
+          </View>
+          <Row space={10} style={[{marginBottom: 30}]}>
+            <Col space={10}>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={Images.Profile.MaThanhToan.default}
+                />
+                <Text bold>Mã thanh toán</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={Images.Profile.ThanhToan.default}
+                />
+                <Text bold>{`Cài đặt hạn mức\n thanh toán`}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={Images.Profile.BaoMat.default}
+                />
+                <Text bold>{translation.password_and_security} </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={require('images/storybook/task.png').default}
+                />
+                <Text bold>{'Trình tự thanh toán'} </Text>
+              </TouchableOpacity>
+            </Col>
+            <Col space={10}>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={require('images/profile/NapVI.png').default}
+                />
+                <Text bold>Nạp ví tự động</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={require('images/profile/OTP.png').default}
+                />
+                <Text bold>Cài đặt Smart OTP </Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={Images.Profile.Translate.default}
-              />
-              <Text semibold>{translation.language_setting} </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.item}>
-              <Image
-                style={[styles.icon]}
-                source={require('images/profile/Noti.png').default}
-              />
-              <Text semibold>Cài đặt thông báo</Text>
-            </TouchableOpacity>
-          </Col>
-        </Row>
-        <TouchableOpacity style={[base.row, styles.itemMenu]}>
-          <Image
-            style={[styles.iconMenu]}
-            source={require('images/profile/Info.png').default}
-          />
-          <Text fs="h6" semibold ml={10}>
-            {'Thông tin ứng dụng'}
-          </Text>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={Images.Profile.Translate.default}
+                />
+                <Text bold>{translation.language_setting} </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.item}>
+                <Image
+                  style={[styles.icon]}
+                  source={require('images/profile/Noti.png').default}
+                />
+                <Text bold>Cài đặt thông báo</Text>
+              </TouchableOpacity>
+            </Col>
+          </Row>
+          <TouchableOpacity
+            style={[base.row, styles.itemMenu]}
+            onPress={() => {
+              Navigator.navigate(SCREEN.NOTIFICATION);
+            }}>
+            <Image
+              style={[styles.iconMenu]}
+              source={require('images/profile/Support.png').default}
+            />
+            <Text fs="h6" bold ml={10}>
+              Trung tâm trợ giúp
+            </Text>
+            <Icon
+              style={[base.leftAuto]}
+              size={24}
+              icon={Images.ArrowRight}
+              tintColor={Colors.g3}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[base.row, styles.itemMenu]}>
+            <Image
+              style={[styles.iconMenu]}
+              source={require('images/profile/Info.png').default}
+            />
+            <Text fs="h6" bold ml={10}>
+              {'Thông tin ứng dụng'}
+            </Text>
 
-          <Icon
-            style={[base.leftAuto]}
-            size={24}
-            icon={Images.ArrowRight}
-            tintColor={Colors.g3}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[base.row, styles.itemMenu]}
-          onPress={() => {
-            Navigator.navigate(SCREEN.NOTIFICATION);
-          }}>
-          <Image
-            style={[styles.iconMenu]}
-            source={require('images/profile/Support.png').default}
-          />
-          <Text fs="h6" semibold ml={10}>
-            Trung tâm trợ giúp
-          </Text>
-        </TouchableOpacity>
-        <Button
-          type={1}
-          label={translation.log_out}
-          bold
-          style={{marginTop: 25}}
+            <Icon
+              style={[base.leftAuto]}
+              size={24}
+              icon={Images.ArrowRight}
+              tintColor={Colors.g3}
+            />
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+      <View style={{marginBottom: 35}}>
+        <Image
+          source={require('images/storybook/logout.png').default}
+          style={base.buttonSB}
         />
-        <View style={{marginTop: scale(50)}}>
-          <FooterNavigation />
-        </View>
-      </ScrollView>
-    </View>
+      </View>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({

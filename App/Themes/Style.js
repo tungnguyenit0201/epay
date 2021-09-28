@@ -101,5 +101,13 @@ const styles = StyleSheet.create({
   footer: {
     height: 100,
   },
+  buttonSB: {
+    height: 48,
+    borderRadius: 8,
+    cursor: 'pointer',
+    /* position: 'absolute',
+    width: '100%',
+    bottom: 0, */
+  },
 });
 export default styles;

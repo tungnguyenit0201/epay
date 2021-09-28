@@ -14,15 +14,20 @@ import HeaderBg from '../../../Atoms/HeaderBg';
 import Button from '../../../Atoms/Button';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {scale} from 'utils/Functions';
-
+import FooterContainer from '../../../Atoms/FooterContainer';
+import Wrapper from '../../../Groups/Wrapper';
 const VerifyEmailResult = ({route, success}) => {
   const translation = require('../../../../Context/Language/vi.json');
   const {width} = useWindowDimensions();
   return (
-    <>
+    <Wrapper>
       <ScrollView style={base.wrap}>
         <HeaderBg style={{marginBottom: 50}}>
-          <Header title={'Xác thực email'} back />
+          <Header
+            title={'Xác thực email'}
+            back
+            style={{marginTop: 30, marginBottom: -15}}
+          />
         </HeaderBg>
         <View style={base.container}>
           <View style={[styles.success]}>
@@ -49,26 +54,14 @@ const VerifyEmailResult = ({route, success}) => {
           </View>
         </View>
       </ScrollView>
-      <View style={base.bottom}>
+      <Image source={require('images/wave.png').default} style={styles.bgImg} />
+      <FooterContainer>
         <Image
           source={Images.Gradient.B_Home.default}
           style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
         />
-      </View>
-      <Image
-        source={Images.Kyc.Wave.default}
-        resizeMode="stretch"
-        style={[
-          styles.absolute,
-          styles.botZero,
-          styles.rightZero,
-          {
-            width: width,
-            height: 400,
-          },
-        ]}
-      />
-    </>
+      </FooterContainer>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({
@@ -104,6 +97,13 @@ const styles = StyleSheet.create({
   leftZero: {left: 0},
   rightZero: {right: 0},
   botZero: {bottom: 0},
+  bgImg: {
+    width: 375,
+    height: 375,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
 });
 
 export default VerifyEmailResult;

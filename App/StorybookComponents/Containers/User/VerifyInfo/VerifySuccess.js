@@ -6,26 +6,25 @@ import {
   Image,
   useWindowDimensions,
 } from 'react-native';
-import {Colors, Images, Spacing} from 'themes';
+import {Colors, Images, Spacing, base} from 'themes';
 import FooterContainer from '../../../Atoms/FooterContainer';
 import Button from '../../../Atoms/Button';
 import Header from '../../../Atoms/Header';
 import HeaderBg from '../../../Atoms/HeaderBg';
 import Text from '../../../Atoms/Text';
+import Wrapper from '../../../Groups/Wrapper';
 const VerifySuccess = () => {
   const translation = require('../../../../Context/Language/vi.json');
   let {width} = useWindowDimensions();
   return (
     // TODO: translate
-    <>
+    <Wrapper>
       <View style={[styles.pb1, styles.bgWhite]}>
         <HeaderBg>
-          {/* <Header title={translation?.account_verification}/> */}
-          <View>
-            <Text centered fs="h6" color={Colors.white} bold mb={5}>
-              {translation?.account_verification}
-            </Text>
-          </View>
+          <Header
+            title="Xác thực tài khoản"
+            style={{marginTop: 30, marginBottom: -15, marginLeft: 50}}
+          />
         </HeaderBg>
       </View>
       <ScrollView style={styles.container}>
@@ -62,10 +61,10 @@ const VerifySuccess = () => {
             centered
             fs="h5"
             mt={25}
-            mb={Spacing.PADDING - 4}
+            mb={Spacing.PADDING}
             bold
             style={styles.maxWidth1}>
-            Thông tin của bạn đã gửi đi và đang chờ duyệt
+            {`Thông tin của bạn đã gửi \n đi và đang chờ duyệt`}
           </Text>
           <Text centered style={styles.maxWidth1}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -87,22 +86,10 @@ const VerifySuccess = () => {
         ]}
       />
 
-      <FooterContainer
-        style={[
-          styles.absolute,
-          styles.botZero,
-          styles.leftZero,
-          styles.fullWidth,
-          styles.pb2,
-        ]}>
-        <Button
-          type={1}
-          label={translation?.back_to_home_page}
-          style={styles.btn}
-          onPress={() => console.log('onPress')}
-        />
+      <FooterContainer>
+        <Image source={Images.Gradient.B_Home.default} style={base.buttonSB} />
       </FooterContainer>
-    </>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({

@@ -11,7 +11,7 @@ import RegisterFailure from './RegisterFailure';
 import ForgetNewPassword from './ForgetNewPassword';
 import ForgetPassword from './ForgetPassword';
 import Agreement from './Agreement';
-import Register from './Register';
+/* import Register from './Register'; */
 import RegisterName from './RegisterName';
 
 storiesOf('Layout/Auth', module)
@@ -23,6 +23,6 @@ storiesOf('Layout/Auth', module)
   .add('Tạo mật khẩu', () => <ForgetNewPassword create={true} />)
   .add('Quên mật khẩu 1', () => <ForgetPassword />)
   .add('Quên mật khẩu 2', () => <ForgetNewPassword />)
-  .add('Đăng ký', () => <Register />)
+  /* .add('Đăng ký', () => <Register />) */
   .add('RegisterName', () => <RegisterName />)
   .add('Agreement', () => <Agreement />);

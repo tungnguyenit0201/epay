@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   ScrollView,
   StyleSheet,
-  Text,
   Image,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import Button from '../../Atoms/Button';
 import Header from '../../Atoms/Header';
@@ -13,30 +13,36 @@ import Row from '../../Atoms/Row';
 import Col from '../../Atoms/Col';
 import Icon from '../../Atoms/Icon';
 import HeaderBg from '../../Atoms/HeaderBg';
-import {Colors, Fonts, Spacing, Images} from 'themes';
+import {Colors, Fonts, Spacing, Images, base} from 'themes';
 import Monney from '../../Groups/Money';
 import ListItem from '../../Groups/ListItem';
-import {scale} from 'utils/Functions';
+import {scale} from '../../Utils/Functions';
+import Text from '../../Atoms/Text';
+import User from '../../Groups/User';
+import MonneySimple from '../../Groups/MonneySimple';
+import ListItemSimple from '../../Groups/ListItemSimple';
 const MyWallet = ({route}) => {
+  const [showMoney, setShowMoney] = useState(false);
   const listBankConnect = [
     {
-    // TODO: remove test data
-    BankCode: 'VCB',
-    BankName: 'Ngân hàng test',
-    ConnectTime: '08-09-2021 22:41:32',
-    BankLogoUrl:
-      'https://t3.ftcdn.net/jpg/00/62/78/62/360_F_62786254_cxVz7e28OMBn63qGzDFEBqHv7e1o2HgU.jpg',
-    BankId: 1,
-    BankConnectId: 1594,
-    BankLimit: 2000000,
-    BankNumber: '123456789',
-    CardHolder: 'DAT',
-    CardNumber: '',
-    ConnectionType: 0,
-    IsDefault: false,
-    CardTypeId: 0,
-    IsAvailable: false,
-  }];
+      // TODO: remove test data
+      BankCode: 'VCB',
+      BankName: 'Ngân hàng test',
+      ConnectTime: '08-09-2021 22:41:32',
+      BankLogoUrl:
+        'https://t3.ftcdn.net/jpg/00/62/78/62/360_F_62786254_cxVz7e28OMBn63qGzDFEBqHv7e1o2HgU.jpg',
+      BankId: 1,
+      BankConnectId: 1594,
+      BankLimit: 2000000,
+      BankNumber: '123456789',
+      CardHolder: 'DAT',
+      CardNumber: '',
+      ConnectionType: 0,
+      IsDefault: false,
+      CardTypeId: 0,
+      IsAvailable: false,
+    },
+  ];
   const translation = require('../../../Context/Language/vi.json');
   const dataMenu = [
     {
@@ -59,18 +65,59 @@ const MyWallet = ({route}) => {
     <>
       <ScrollView style={styles.container}>
         <HeaderBg>
-          <Header back title="Ví của tôi" style={{marginBottom: 25}} />
-          <Monney
-            style={[
-              {
-                position: 'absolute',
-                bottom: -20,
-                left: Spacing.PADDING,
-                right: Spacing.PADDING,
-                shadowColor: 'black',
-              },
-            ]}
+          <Header
+            title="Ví của tôi"
+            back
+            style={{marginTop: 25, marginBottom: 15}}
           />
+          <View
+            style={[
+              base.row,
+              {
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 30,
+              },
+            ]}>
+            {!showMoney ? (
+              <Text
+                fs="h6"
+                style={{paddingTop: 5, height: 25, color: Colors.white}}>
+                ***************
+              </Text>
+            ) : (
+              <Text
+                bold
+                fs="h5"
+                style={{
+                  paddingTop: 5,
+                  height: 25,
+                  color: Colors.white,
+                }}>
+                100.000đ
+              </Text>
+            )}
+            <TouchableOpacity
+              style={{marginLeft: 10}}
+              onPress={() => setShowMoney(!showMoney)}>
+              <Icon
+                icon={showMoney ? Images.Eye : Images.EyeGray}
+                tintColor={Colors.white}
+                size={20}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{marginBottom: 20}}>
+            <ListItemSimple
+              scroll
+              space={1}
+              col={3}
+              data={dataMenu}
+              styleText={[{fontSize: 14, color: Colors.white}]}
+              styleWicon={[{backgroundColor: Colors.cl1}]}
+            />
+          </View>
         </HeaderBg>
 
         <View style={[styles.wrap, {marginTop: 24, marginBottom: 14}]}>
@@ -154,6 +201,15 @@ const MyWallet = ({route}) => {
           onPress={() => console.log('hello')}
         />
       </View>
+      <Pressable
+        //onPress={() => onPress(item)}
+        style={styles.addBank}>
+        <Text fs="h6">Thêm tài khoản ngân hàng</Text>
+        <Image
+          style={[styles.iconAddBank]}
+          source={require('images/qrpay/plus.png').default}
+        />
+      </Pressable>
     </>
   );
 };
@@ -223,6 +279,19 @@ const styles = StyleSheet.create({
   },
   fontSmall: {
     fontSize: Fonts.FONT_SMALL,
+  },
+  addBank: {
+    borderWidth: 1,
+    borderColor: Colors.l3,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+  },
+  iconAddBank: {
+    width: scale(24),
+    height: scale(24),
+    marginLeft: 'auto',
   },
 });
 

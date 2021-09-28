@@ -17,6 +17,8 @@ export default ({
   required,
   showErrorLabel = true,
   type = 'date',
+  rightIcon,
+  styleIcon,
   ...props
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -50,7 +52,9 @@ export default ({
         onPress={showDatePicker}
         style={[styles.wrap, error && styles.error]}>
         <View style={{flex: 1}}>
-          <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
+          <Text
+            color={!!value ? Colors.TEXT : Colors.GRAY}
+            style={[styles.pl1]}>
             {value}
           </Text>
         </View>
@@ -62,8 +66,8 @@ export default ({
             {backgroundColor: Colors.l4},
           ]}>
           <Image
-            source={Images.Kyc.Calendar.default}
-            style={styles.icon}
+            source={rightIcon || Images.Kyc.Calendar.default}
+            style={styleIcon || styles.icon}
             resizeMode={'contain'}
           />
         </View>

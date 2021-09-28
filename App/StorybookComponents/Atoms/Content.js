@@ -4,7 +4,15 @@ import Text from './Text';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 
-const Content = ({title, text, style, titleMb, textMb, styleText}) => {
+const Content = ({
+  title,
+  text,
+  style,
+  titleMb,
+  textMb,
+  styleText,
+  colorTitle,
+}) => {
   const translation = useTranslation();
   return (
     <View style={style}>
@@ -13,7 +21,7 @@ const Content = ({title, text, style, titleMb, textMb, styleText}) => {
           bold
           fs="h3"
           style={[
-            styles.textWhite,
+            colorTitle ? {color: colorTitle} : styles.textWhite,
             titleMb ? {marginBottom: titleMb} : styles.mb1,
           ]}>
           {title}

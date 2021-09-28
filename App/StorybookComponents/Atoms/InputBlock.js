@@ -89,7 +89,7 @@ const InputBlock = ({
           style={{
             position: 'absolute',
             right: scale(10),
-            top: scale(30),
+            top: scale(55),
           }}>
           <Icon icon={rightIcon} />
         </TouchableOpacity>
