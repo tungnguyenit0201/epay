@@ -55,6 +55,11 @@ export default function userReducer(state, action) {
         ...state,
         kycType: action?.data,
       };
+    case 'SET_ROUTE':
+      return {
+        ...state,
+        route: action?.route,
+      };
     default:
       return state;
   }
