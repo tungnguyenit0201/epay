@@ -115,9 +115,9 @@ const useTouchID = ({onSuccess}) => {
 
 const useAuth = () => {
   const {setLoading} = useLoading();
-  const {dispatch} = useUser();
+  const {dispatch, route} = useUser();
   const {setError} = useError();
-  const {setPhone, setToken} = useAsyncStorage();
+  const {setPhone, setToken, getPushToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
@@ -157,7 +157,8 @@ const useAuth = () => {
   }) => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
-    const result = await login(phone, passwordEncrypted);
+    const pushToken = await getPushToken();
+    const result = await login(phone, passwordEncrypted, pushToken);
     setLoading(false);
 
     switch (_.get(result, 'ErrorCode', '')) {
@@ -185,9 +186,14 @@ const useAuth = () => {
         });
         await setToken(result?.Token);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+
         Navigator.navigate(
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
+        if (!!route) {
+          Navigator.navigate(route?.screen, route?.params);
+          return dispatch({type: 'SET_ROUTE', route: null});
+        }
         onGetAllInfo();
         onGetWalletInfo();
         onGetConnectedBank();

@@ -73,6 +73,10 @@ const useAsyncStorage = () => {
     );
   };
 
+  const getPushToken = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.PUSH_TOKEN);
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -87,6 +91,7 @@ const useAsyncStorage = () => {
     setModalSmartOTPDisabled,
     getSmartOTPSharedKey,
     setSmartOTPSharedKey,
+    getPushToken,
   };
 };
 
