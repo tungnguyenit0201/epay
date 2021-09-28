@@ -10,8 +10,8 @@ const SmartOTPInput = ({onFilled, message, numDigits = 6}) => {
   const textInputRef = useRef(null);
 
   const onChange = value => {
-    if (value.length >= 6) {
-      onFilled && onFilled(value);
+    if (value.length >= numDigits) {
+      onFilled && onFilled(value.substring(0, numDigits));
     }
     setCode(value);
   };
