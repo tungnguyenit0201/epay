@@ -22,7 +22,7 @@ import FooterContainer from 'components/Auth/FooterContainer';
 
 const ForgetNewPassword = ({route}) => {
   const {phone} = route?.params;
-  const {onNewPassword, active, setActive} = useForgetPassword();
+  const {onNewPassword, active, onSetActive} = useForgetPassword();
   const translation = useTranslation();
   const onSubmit = values => {
     onNewPassword({...values, phone});
@@ -52,7 +52,8 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -73,7 +74,8 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}>
+                contentContainerStyle={[styles.wrap, styles.py1]}
+              >
                 <Content
                   title="Đặt lại mật khẩu"
                   text={
@@ -109,12 +111,13 @@ const ForgetNewPassword = ({route}) => {
 
               <FooterContainer>
                 <View style={styles.flexRow}>
-                  <Checkbox onPress={setActive} />
+                  <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}>
+                      onPress={() => {}}
+                    >
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -122,7 +125,8 @@ const ForgetNewPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}>
+                      onPress={() => {}}
+                    >
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
@@ -133,7 +137,7 @@ const ForgetNewPassword = ({route}) => {
 
                 <Button
                   mt={10}
-                  disabled={!_.isEmpty(errors)}
+                  disabled={!active || !_.isEmpty(errors)}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />

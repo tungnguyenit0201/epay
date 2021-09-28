@@ -19,6 +19,7 @@ const Language = () => {
           border={Colors.cl1}
           mb={Spacing.PADDING}
           onPress={() => chooseLanguage('en')}
+          bgImg={0}
         />
         <Button
           label="Việt Nam"

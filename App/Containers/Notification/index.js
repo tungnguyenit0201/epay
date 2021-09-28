@@ -10,25 +10,25 @@ import {
 } from 'react-native';
 import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
-import Navigator from 'navigations/Navigator';
 
 import {SCREEN, NOTIFY} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
-import FooterNotification from 'components/Home/FooterNotification';
+// import FooterNotification from 'components/Home/FooterNotification';
 import {useNotify} from 'context/User/utils';
+
 const Notification = () => {
   const translation = useTranslation();
-  const [type, setType] = useState(NOTIFY.ALL);
+  const [type, setType] = useState(NOTIFY.ALL.title);
   const [refreshing, setRefreshing] = useState(false);
-  const {selectNotify, onGetAllNotify} = useNotify();
+  const {selectNotify, onGetAllNotify, onPressNotify} = useNotify();
   const dataType = [
-    {id: 0, title: NOTIFY.ALL},
-    {id: 1, title: NOTIFY.CHARGES},
-    {id: 2, title: NOTIFY.PROMOTION},
-    {id: 3, title: NOTIFY.OTHER},
+    {id: 0, title: NOTIFY.ALL.title},
+    {id: 1, title: NOTIFY.CHARGES.title},
+    {id: 2, title: NOTIFY.PROMOTION.title},
+    {id: 3, title: NOTIFY.OTHER.title},
   ];
 
   return (
@@ -74,18 +74,11 @@ const Notification = () => {
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
-                console.log(item);
                 return (
                   <Pressable
-                    style={[base.boxShadow, index % 2 ? styles.isRead : '']}
+                    style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => {
-                      Navigator.push(
-                        index % 2
-                          ? SCREEN.TRANSACTION_SUCCESS
-                          : SCREEN.EPAY_SUCCESS,
-                      );
-                    }}>
+                    onPress={() => onPressNotify(item)}>
                     <View style={styles.head}>
                       <Image
                         source={require('images/favicon.png')}
@@ -97,12 +90,12 @@ const Notification = () => {
                     <Text style={styles.title}>{item?.Title}</Text>
 
                     <Text style={styles.content}>{item?.Content}</Text>
-                    {item?.ContentImgUrl && (
+                    {/* {item?.ContentImgUrl && (
                       <Image
                         source={{uri: `${item?.ContentImgUrl}`}}
                         style={styles.imageNotify}
                       />
-                    )}
+                    )} */}
                   </Pressable>
                 );
               })
@@ -203,11 +196,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
-  },
-  imageNotify: {
-    width: '100%',
-    height: 400,
-    marginTop: 30,
   },
 
   textWhite: {

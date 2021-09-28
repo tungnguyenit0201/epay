@@ -21,10 +21,12 @@ const Tab = createBottomTabNavigator();
 import User from 'containers/User';
 import Home from 'containers/Home';
 import Notification from 'containers/Notification';
+import EpaySuccess from 'containers/Notification/EpaySuccess';
 
 import {useTranslation} from 'context/Language';
 import {useCheckInfo} from 'context/Home/utils';
 import {useBankInfo} from 'context/Wallet/utils';
+import {usePermission} from 'context/Common/utils';
 
 const TabIcons = {
   Home: Images.TabBar.HomeGray,
@@ -47,11 +49,19 @@ const TabNavigation = () => {
   function TabBarCustom({state, descriptors, navigation}) {
     const {checkInfo} = useCheckInfo();
     const {onGetConnectedBank} = useBankInfo();
+    const {checkPermission} = usePermission();
+
+    // useEffect(() => {
+    //   const getConnectBank = async () => {
+    //     let banks = await onGetConnectedBank();
+    //   };
+    //   getConnectBank();
+    // }, []); // eslint-disable-line
     const onCheck = async () => {
-      let banks = await onGetConnectedBank();
+      // let permission = await checkPermission(async () => {
       let result = await checkInfo(SCREEN.QRPAY);
-      console.log('resutl :>> ', result, banks);
       Boolean(result) && navigation.navigate(SCREEN.QRPAY);
+      // });
     };
     return (
       <View style={styles.container}>
@@ -143,6 +153,7 @@ const TabNavigation = () => {
         <Tab.Screen name={SCREEN.HOME} component={Home} />
         <Tab.Screen name={SCREEN.USER} component={User} />
         <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
+        <Tab.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
       </Tab.Navigator>
     </View>
   );

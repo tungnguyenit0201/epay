@@ -55,7 +55,7 @@ const VerifyEmail = () => {
 
             return (
               <View>
-                <View style={[base.container, {paddingTop: 20}]}>
+                <View style={[base.container]}>
                   <Text fs="h4" bold mb={10}>
                     Nhập email
                   </Text>
@@ -71,6 +71,7 @@ const VerifyEmail = () => {
                     onBlur={handleBlur('email')}
                     error={touched.email && errors.email}
                     value={values.email}
+                    style={{marginTop: -10}}
                   />
                 </View>
 

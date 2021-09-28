@@ -11,6 +11,8 @@ import VerifyIdentityCard from './VerifyInfo/VerifyIdentityCard';
 import VerifySuccess from './VerifyInfo/VerifySuccess';
 import VerifyUserInfo from './VerifyInfo/VerifyUserInfo';
 import VerifyUserPortrait from './VerifyInfo/VerifyUserPortrait';
+import PreviewImage from './VerifyInfo/PreviewImage';
+import Uploaded from './VerifyInfo/Uploaded';
 import AutoPayment from './AutoPayment';
 import ChangePassword from './ChangePassword';
 import UserInfo from './UserInfo';
@@ -39,7 +41,9 @@ storiesOf('Layout/User/VerifyInfo', module)
   .add('Step1 / VerifyUserInfo', () => <VerifyUserInfo identityCard={1} />)
   .add('Step2 / VerifyIdentityCard', () => <VerifyIdentityCard />)
   .add('Step3 / VerifyUserPortrait', () => <VerifyUserPortrait />)
-  .add('VerifySuccess', () => <VerifySuccess />);
+  .add('VerifySuccess', () => <VerifySuccess />)
+  .add('PreviewImage', () => <PreviewImage />)
+  .add('Uploaded', () => <Uploaded />);
 
 storiesOf('Layout/User/Default', module)
   .addDecorator(withKnobs)

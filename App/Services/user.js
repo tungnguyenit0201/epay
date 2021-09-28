@@ -1,10 +1,10 @@
 import {API} from 'configs';
 import {request} from 'utils/Request';
 
-export const updatePassword = async ({phone, password}) => {
+export const updateForgotPassword = async ({phone, password}) => {
   let response = null;
   await request({
-    url: API.USER.UPDATE_PASSWORD,
+    url: API.USER.UPDATE_FORGOT_PASSWORD,
     method: 'post',
     params: {PhoneNumber: phone, NewPassword: password},
     success: res => {
@@ -172,45 +172,6 @@ export const updateAvatar = async ({phone, AvatarPhoto}) => {
   return response;
 };
 
-export const getChargesNotify = async ({phone}) => {
-  let response = null;
-  await request({
-    url: API.NOTIFY.CHARGES_NOTIFY,
-    method: 'post',
-    params: {PhoneNumber: phone},
-    success: res => {
-      response = res;
-    },
-  });
-  return response;
-};
-
-export const getPromotionNotify = async ({phone}) => {
-  let response = null;
-  await request({
-    url: API.NOTIFY.PROMOTION_NOTIFY,
-    method: 'post',
-    params: {PhoneNumber: phone},
-    success: res => {
-      response = res;
-    },
-  });
-  return response;
-};
-
-export const getOtherNotify = async ({phone}) => {
-  let response = null;
-  await request({
-    url: API.NOTIFY.OTHER_NOTIFY,
-    method: 'post',
-    params: {PhoneNumber: phone},
-    success: res => {
-      response = res;
-    },
-  });
-  return response;
-};
-
 export const verifyEmail = async ({phone, email}) => {
   let response = null;
   await request({
@@ -230,6 +191,23 @@ export const updateEmail = async ({phone, email}) => {
     url: API.USER.UPDATE_EMAIL,
     method: 'post',
     params: {PhoneNumber: phone, Email: email},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const updatePassword = async ({phone, oldPassword, newPassword}) => {
+  let response = null;
+  await request({
+    url: API.USER.UPDATE_PASSWORD,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      OldPassword: oldPassword,
+      NewPassword: newPassword,
+    },
     success: res => {
       response = res;
     },

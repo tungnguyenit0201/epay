@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, Image, StyleSheet, View} from 'react-native';
-import {Colors, Fonts} from 'themes';
+import {Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 import {useSelector} from 'react-redux';
@@ -8,7 +8,7 @@ import Navigator from 'navigations/Navigator';
 
 export default ({
   onPress,
-  type,
+  bgImg = 1,
   label,
   label2,
   icon,
@@ -19,6 +19,7 @@ export default ({
   bg,
   radius,
   fs,
+  fw,
   size,
   mt,
   mb,
@@ -57,8 +58,18 @@ export default ({
         style,
         disabled && {backgroundColor: Colors.g4},
       ]}>
-      {type && (
-        <Image source={require('images/BgHeader.jpg')} style={styles.bgImg} />
+      {bgImg === 1 && (
+        <>
+          <Image source={require('images/Button.png')} style={styles.bgImg} />
+          {disabled ? (
+            <Image
+              source={require('images/ButtonDisable.png')}
+              style={styles.bgImg}
+            />
+          ) : (
+            <Image source={require('images/Button.png')} style={styles.bgImg} />
+          )}
+        </>
       )}
 
       {!!leftIcon && (
@@ -71,6 +82,7 @@ export default ({
       <Text
         centered
         size={Fonts.H6}
+        fw={fw}
         style={[
           size == 'xxs' && {fontSize: scale(10)},
           size == 'xs' && {fontSize: scale(12)},
@@ -107,12 +119,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: scale(20),
     borderRadius: scale(8),
-    height: 48,
+    height: scale(48),
     position: 'relative',
     overflow: 'hidden',
+    paddingHorizontal: Spacing.PADDING,
   },
   contain: {
     backgroundColor: Colors.cl1,
@@ -138,9 +149,10 @@ const styles = StyleSheet.create({
   bgImg: {
     position: 'absolute',
     left: 0,
-    right: 0,
     bottom: 0,
     top: 0,
+    width: scale(375),
+    height: scale(64),
     resizeMode: 'cover',
   },
 

@@ -22,7 +22,6 @@ const QRPay = () => {
   const {width, height} = useWindowDimensions();
   const top = getStatusBarHeight();
   const {
-    isScan,
     loading,
     image,
     setImage,
@@ -60,7 +59,8 @@ const QRPay = () => {
       barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
       onBarCodeRead={qrCode => {
         onGetQRCodeInfo(qrCode?.data);
-      }}>
+      }}
+    >
       {({camera, status, recordAudioPermissionStatus}) => {
         if (status !== 'READY') return <FWLoading />;
         return (
@@ -68,7 +68,8 @@ const QRPay = () => {
             style={{
               width: width,
               height: height,
-            }}>
+            }}
+          >
             <Header
               back
               avoidStatusBar
@@ -80,9 +81,12 @@ const QRPay = () => {
                 position: 'absolute',
                 width: width,
                 height: height,
-              }}>
+              }}
+            >
               {image?.path && (
-                <Image source={{uri: image?.path}} style={styles.qrImg} />
+                <View style={styles.wrapQRImg}>
+                  <Image source={{uri: image?.path}} style={styles.qrImg} />
+                </View>
               )}
               <Image
                 source={Images.Camera.ScanQR}
@@ -98,7 +102,8 @@ const QRPay = () => {
               <View style={styles.wrapAction}>
                 <Pressable
                   style={styles.action}
-                  onPress={() => setFlash(!flash)}>
+                  onPress={() => setFlash(!flash)}
+                >
                   <Icon
                     icon={Images.Camera.Flash}
                     tintColor={Colors.white}
@@ -110,7 +115,8 @@ const QRPay = () => {
                 </Pressable>
                 <Pressable
                   style={[styles.action, {marginLeft: Spacing.PADDING}]}
-                  onPress={() => setFlash(!flash)}>
+                  onPress={() => setFlash(!flash)}
+                >
                   <Icon
                     icon={Images.Camera.Gallery}
                     tintColor={Colors.white}
@@ -120,7 +126,8 @@ const QRPay = () => {
                     fw="700"
                     fs="h6"
                     color={Colors.white}
-                    onPress={() => onPhoto(true)}>
+                    onPress={() => onPhoto(false)}
+                  >
                     Chọn hình có sẵn
                   </Text>
                 </Pressable>
@@ -128,21 +135,18 @@ const QRPay = () => {
               <View style={styles.wrapBtn}>
                 <Button
                   label="Mã thanh toán"
+                  bgImg={0}
                   leftIcon={Images.Camera.QR}
                   mode="outline"
                   mr={Spacing.PADDING / 2}
                 />
                 <Button
+                  bgImg={0}
                   label="Quét mã QR"
                   leftIcon={Images.Camera.Scan}
                   onPress={detectQRCode}
                 />
               </View>
-
-              {/* <Button
-                onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
-                mt={10}
-                label="Chuyển tiền số điện thoại"></Button> */}
             </View>
           </View>
         );
@@ -176,12 +180,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
   },
-  qrImg: {
+  wrapQRImg: {
     width: scale(252),
     height: scale(252),
     position: 'absolute',
     top: scale(150),
     left: scale(61),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+  },
+  qrImg: {
+    width: scale(200),
+    height: scale(200),
   },
 });
 

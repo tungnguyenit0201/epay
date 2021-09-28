@@ -4,14 +4,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
-import {SCREEN} from 'configs/Constants';
+import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform} from 'react-native';
 import {useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
-import {useBankInfo} from 'context/Wallet/utils';
 
 const Stack = createStackNavigator();
 
@@ -30,9 +29,11 @@ import RegisterFailure from 'containers/Auth/RegisterFailure';
 import OTP from 'containers/Auth/OTP';
 import SmartOTP from 'containers/User/SmartOTP';
 import ActiveSmartOTP from 'containers/User/SmartOTP/ActiveSmartOTP';
-import BankList from 'containers/Wallet/Bank/BankList';
-import BankInfo from 'containers/Wallet/Bank/BankInfo';
-import BankResult from 'containers/Wallet/Bank/BankResult';
+import BankList from 'containers/Wallet/Bank/LinkingList';
+import BankInfo from 'containers/Wallet/Bank/LinkingInfo';
+import LinkingAddress from 'containers/Wallet/Bank/LinkingAddress';
+import LinkingConfirm from 'containers/Wallet/Bank/LinkingConfirm';
+import BankResult from 'containers/Wallet/Bank/LinkingResult';
 import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
 import TopUp from 'containers/Wallet/TopUp';
@@ -77,30 +78,39 @@ import ForgetNewPassword from 'containers/Auth/ForgetNewPassword';
 import History from 'containers/Wallet/History';
 import VerifyEmailResult from 'containers/User/VerifyInfo/VerifyEmailResult';
 import DetailHistory from 'containers/Wallet/History/Detail';
+import BottomModal from 'containers/Modal/BottomModal';
+import PopupModal from 'containers/Modal/PopupModal';
+import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/QRPay/TransferResults';
-import TransferSuccess from 'containers/QRPay/TransferSuccess';
+import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
   const {onGetConfig} = useConfig();
-  const {onGetConnectedBank} = useBankInfo();
+  const isReadyRef = React.useRef(false);
+
+  React.useEffect(() => {
+    const getConfig = async () => {
+      await onGetConfig();
+    };
+    getConfig();
+  }, []); // eslint-disable-line
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
-      let currentLanguage = await AsyncStorage.getItem('currentLanguage');
-      if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
+      let currentLanguage = await AsyncStorage.getItem(
+        ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
+      );
+      if (!currentLanguage && isReadyRef.current)
+        Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
-    const getConfig = async () => {
-      await onGetConfig();
-      let bank = await onGetConnectedBank();
-    };
-    getConfig();
+
     getCurrentLanguage();
-  }, []); // eslint-disable-line
+  }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {
     Platform.OS == 'android' && SplashScreen.hide();
@@ -126,15 +136,55 @@ const AppNavigator = () => {
       });
   }, []); // eslint-disable-line
 
+  const modalOptions = {
+    animationEnabled: true,
+    cardOverlayEnabled: true,
+    cardStyle: {
+      backgroundColor: 'rgba(0,0,0,0.15)',
+    },
+    cardStyleInterpolator: ({current: {progress}}) => {
+      return {
+        cardStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 0.5, 0.9, 1],
+            outputRange: [0, 0.25, 0.7, 1],
+          }),
+        },
+        overlayStyle: {
+          opacity: progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 0.25],
+            extrapolate: 'clamp',
+          }),
+        },
+      };
+    },
+  };
+  const linking = {
+    prefixes: ['epay://'],
+    config: {},
+  };
   return (
-    <NavigationContainer ref={Navigator.setContainer}>
+    <NavigationContainer
+      ref={Navigator.setContainer}
+      linking={linking}
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
+          mode="modal"
+          headerMode="none"
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
+          <Stack.Screen
+            name={SCREEN.MODAL_NAVIGATION}
+            component={ModalNavigation}
+            options={modalOptions}
+          />
           <Stack.Screen
             name={SCREEN.TAB_NAVIGATION}
             component={TabNavigation}
@@ -166,6 +216,14 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.BANK_LIST} component={BankList} />
           <Stack.Screen name={SCREEN.BANK_INFO} component={BankInfo} />
+          <Stack.Screen
+            name={SCREEN.LINKING_ADDRESS}
+            component={LinkingAddress}
+          />
+          <Stack.Screen
+            name={SCREEN.LINKING_CONFIRM}
+            component={LinkingConfirm}
+          />
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
           <Stack.Screen
@@ -284,6 +342,27 @@ const AppNavigator = () => {
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
+  );
+};
+
+const ModalNavigation = () => {
+  return (
+    <Stack.Navigator
+      mode="modal"
+      headerMode="none"
+      screenOptions={{
+        ...TransitionPresets.ModalSlideFromBottomIOS,
+        headerShown: false,
+        cardStyle: {
+          backgroundColor: 'transparent',
+          opacity: 0.99,
+        },
+      }}
+    >
+      <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
+      <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
+      <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />
+    </Stack.Navigator>
   );
 };
 

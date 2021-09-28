@@ -141,7 +141,7 @@ const Home = () => {
           height: 100,
           marginTop: 17,
           position: 'relative',
-          bottom: -14,
+          bottom: -35,
         }}
       />
     </>

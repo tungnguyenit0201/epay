@@ -18,11 +18,9 @@ const Monney = ({style}) => {
   const translation = useTranslation();
   const [isMoney, setIsMoney] = useState(false);
   return (
-    <View style={[styles.item, base.shadow, style]}>
+    <View style={[styles.item, style]}>
       <View style={[]}>
-        <Text size={Fonts.H6} style={styles.title}>
-          {translation.my_wallet}
-        </Text>
+        <Text fs="h6">{translation.my_wallet}</Text>
       </View>
       <View style={[styles.right]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -55,12 +53,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 99,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: Colors.l1,
+    borderRadius: 4,
+    padding: 10,
+    marginBottom: 20,
   },
-  title: {},
+
   right: {
     marginLeft: 'auto',
   },

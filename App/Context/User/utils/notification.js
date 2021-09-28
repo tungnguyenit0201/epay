@@ -1,43 +1,39 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
-import {ERROR_CODE, SCREEN, FUNCTION_TYPE, NOTIFY} from 'configs/Constants';
-import {
-  useAsyncStorage,
-  useError,
-  useLoading,
-  useShowModal,
-} from 'context/Common/utils';
+import {ERROR_CODE, SCREEN, NOTIFY} from 'configs/Constants';
+import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
-import {useWallet} from 'context/Wallet';
 import _ from 'lodash';
-import {sha256} from 'react-native-sha256';
-import {cos} from 'react-native-reanimated';
 import {
   getChargesNotify,
   getPromotionNotify,
   getOtherNotify,
-} from 'services/user';
+  readNotify,
+  getAllNofify,
+} from 'services/notification';
+import {getAll} from 'utils/Functions';
+
 const useNotify = () => {
-  const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
-  const {dispatch, userInfo} = useUser();
+  const {dispatch, userInfo, phone} = useUser();
 
   let listChargesNotify = [];
   let listPromotionNotify = [];
   let listOtherNotify = [];
   let listAllNotify = [];
+
   const addFlag = (dataNotify, flag) => {
     const listNotify = dataNotify.map(value => {
-      value.flag = flag;
+      !value?.NotifyType && (value.NotifyType = flag?.value || flag);
       return value;
     });
     return listNotify;
   };
+
   const onGetChargesNotify = async () => {
     try {
       setLoading(true);
-      let phone = await getPhone();
       let result = await getChargesNotify({phone});
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
@@ -56,7 +52,6 @@ const useNotify = () => {
   const onGetPromotionNotify = async () => {
     try {
       setLoading(true);
-      let phone = await getPhone();
       let result = await getPromotionNotify({phone});
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
@@ -75,7 +70,6 @@ const useNotify = () => {
   const onGetOtherNotify = async () => {
     try {
       setLoading(true);
-      let phone = await getPhone();
       let result = await getOtherNotify({phone});
       setLoading(false);
       switch (_.get(result, 'ErrorCode')) {
@@ -94,43 +88,85 @@ const useNotify = () => {
   const onGetAllNotify = async () => {
     try {
       setLoading(true);
-      const listCharges = await onGetChargesNotify();
-      const listPromotion = await onGetPromotionNotify();
-      const listOther = await onGetOtherNotify();
-      setLoading(false);
-      if (listCharges?.archive || listPromotion?.archive || listOther.archive) {
-        listChargesNotify = listCharges?.archive;
-        listPromotionNotify = listPromotion?.archive;
-        listOtherNotify = listOther?.archive;
-        listAllNotify = [
-          ...listChargesNotify,
-          ...listPromotionNotify,
-          ...listOtherNotify,
-        ];
-        dispatch({type: 'SET_NOTIFY', data: listAllNotify});
-        Navigator.navigate(SCREEN.NOTIFICATION);
-      } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
-    } catch (error) {
+      const result = await getAllNofify({phone});
+      if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+        setError(result);
+        return;
+      }
+      dispatch({type: 'SET_NOTIFY', data: result?.NotifyInfo});
+    } finally {
       setLoading(false);
     }
+
+    // old API
+    // try {
+    //   setLoading(true);
+    //   const [listCharges, listPromotion, listOther] = await getAll(
+    //     onGetChargesNotify,
+    //     onGetPromotionNotify,
+    //     onGetOtherNotify,
+    //   );
+    //   setLoading(false);
+    //   if (listCharges?.archive || listPromotion?.archive || listOther.archive) {
+    //     listChargesNotify = listCharges?.archive;
+    //     listPromotionNotify = listPromotion?.archive;
+    //     listOtherNotify = listOther?.archive;
+    //     listAllNotify = [
+    //       ...listChargesNotify,
+    //       ...listPromotionNotify,
+    //       ...listOtherNotify,
+    //     ];
+    //     dispatch({type: 'SET_NOTIFY', data: listAllNotify});
+    //   } else setError({ErrorCode: -1, ErrorMessage: 'Something went wrong'});
+    // } catch (error) {
+    //   setLoading(false);
+    // }
   };
+
+  const onGoNotify = async () => {
+    await onGetAllNotify();
+    Navigator.navigate(SCREEN.NOTIFICATION);
+  };
+
   const selectNotify = type => {
+    const notifyType = _.mapKeys(NOTIFY, ({value}) => value);
     switch (type) {
-      case NOTIFY.ALL:
+      case NOTIFY.ALL.title:
         return userInfo?.listNotify;
       default:
         const result = userInfo?.listNotify.filter(notify => {
-          return notify?.flag === type;
+          return notifyType[notify?.NotifyType].title === type;
         });
         return result;
     }
   };
+
+  const onReadNotify = async notifyID => {
+    const result = await readNotify({phone, notifyID});
+    if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
+      onGetAllNotify();
+    }
+  };
+
+  const onPressNotify = item => {
+    // if (item?.NotifyType === NOTIFY.OTHER.value) {
+    //   Navigator.push(SCREEN.TRANSACTION_SUCCESS);
+    // } else {
+    //   Navigator.navigate(SCREEN.EPAY_SUCCESS, {data: item});
+    // }
+    Navigator.navigate(SCREEN.EPAY_SUCCESS, {data: item});
+    item?.Id && !item?.IsRead && onReadNotify(item.Id);
+  };
+
   return {
     onGetChargesNotify,
     onGetPromotionNotify,
     onGetOtherNotify,
     onGetAllNotify,
     selectNotify,
+    onReadNotify,
+    onPressNotify,
+    onGoNotify,
   };
 };
 export default useNotify;

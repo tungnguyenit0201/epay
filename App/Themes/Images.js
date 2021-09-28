@@ -15,6 +15,7 @@ export default {
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),
+  BgModal: require('images/bgModal.png'),
   TabBar: {
     Home: require('images/tabBar/home.png'),
     HomeGray: require('images/tabBar/HomeGray.png'),
@@ -117,6 +118,12 @@ export default {
     logoVbb: require('images/logo-bank/logo-10.png'),
     logoShb: require('images/logo-bank/logo-11.png'),
     logoTpb: require('images/logo-bank/logo-12.png'),
+    //------------
+    Deposit: require('images/icons/deposit.png'),
+    Withdraw: require('images/icons/withdraw.png'),
+    Exchange: require('images/icons/exchange.png'),
+    Plus: require('images/icons/add.png'),
+    Search: require('images/icons/search-normal.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
@@ -155,6 +162,9 @@ export default {
     cmndBlur: require('images/identity-card/cmnd-blur.png'),
     cmndDark: require('images/identity-card/cmnd-dark.png'),
     cmndFail: require('images/identity-card/cmnd-fail.png'),
+    IdFront: require('images/identity-card/Front.png'),
+    IdBack: require('images/identity-card/Back.png'),
+    Passport: require('images/identity-card/Passport.png'),
   },
   TransactionHistory: {
     filter: require('images/icons/filter.png'),
@@ -177,6 +187,14 @@ export default {
     Scan: require('images/camera/Scan.png'),
     Gallery: require('images/camera/Gallery.png'),
   },
+  Modal: {
+    Camera: require('images/modal/camera.png'),
+    Lock: require('images/modal/lock.png'),
+    UserTick: require('images/modal/userTick.png'),
+  },
+  warning: require('images/ic_warning.png'),
+  primaryButton: require('images/Button.png'),
+  borderButton: require('images/border_button.png'),
   Gradient: {
     B_Continue: require('images/gradient/B-continue.png'),
     B_continueDisable: require('images/gradient/B-continue_disable.png'),

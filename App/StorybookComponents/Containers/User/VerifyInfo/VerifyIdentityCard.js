@@ -82,6 +82,7 @@ const VerifyIdentityCard = ({route, disabledAvatar}) => {
           </View>
         </View>
       </ScrollView>
+      <Image source={require('images/wave.png').default} style={styles.bgImg} />
       <FooterContainer>
         <Image
           source={Images.Gradient.B_continueDisable.default}
@@ -92,6 +93,13 @@ const VerifyIdentityCard = ({route, disabledAvatar}) => {
   );
 };
 const styles = StyleSheet.create({
+  bgImg: {
+    width: 375,
+    height: 375,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
   triangleDown: {
     position: 'absolute',
     left: Spacing.PADDING * 2,

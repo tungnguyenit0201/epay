@@ -18,7 +18,7 @@ const expenseType = [
 
 const useHistory = () => {
   const {phone} = useUser();
-  const [historyData, setHistoryData] = useState([]);
+  const [historyData, setHistoryData] = useState(null);
   const {setError} = useError();
   const {setLoading} = useLoading();
   const contentRef = useRef({
@@ -75,7 +75,7 @@ const useHistory = () => {
 
   const onGetHistory = async () => {
     const {search, startDate, endDate, serviceID, stateID} = contentRef.current;
-    setLoading(true);
+    setHistoryData(null);
     const result = await getHistory({
       phone,
       StartDate: startDate,
@@ -84,12 +84,17 @@ const useHistory = () => {
       ServiceId: serviceID,
       StateId: stateID,
     });
-    setLoading(false);
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
       setError(result);
       return;
     }
-    parseHistory(result?.ListTransHist);
+    // parseHistory(result?.ListTransHist);
+    setHistoryData(
+      result?.ListTransHist.map(item => ({
+        ...item,
+        isIncome: incomeType.includes(item?.TransType),
+      })),
+    );
   };
 
   useEffect(() => {
@@ -117,11 +122,11 @@ const useHistory = () => {
     }
 
     Navigator.push(SCREEN.DETAIL_HISTORY, {
-      data: _.get(result, 'TransDetail', {}),
+      data: {..._.get(result, 'TransDetail', {}), isIncome: item?.isIncome},
     });
   };
 
-  return {historyData, onFilter, onSearch, onDetail};
+  return {historyData, onFilter, onSearch, onDetail, onGetHistory};
 };
 
 export default useHistory;

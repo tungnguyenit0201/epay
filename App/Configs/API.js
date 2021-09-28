@@ -23,7 +23,7 @@ export default {
     GET_BANNER: 'ads/get_banner',
   },
   USER: {
-    UPDATE_PASSWORD: 'account/change_password',
+    UPDATE_FORGOT_PASSWORD: 'account/change_password',
     UPDATE_PERSONAL_INFO: 'account/update_personal_info',
     GET_PERSONAL_INFO: 'account/get_personal_info',
     GET_ALL_INFO: 'account/get_all_info',
@@ -37,6 +37,7 @@ export default {
     VERIFY_EMAIL: 'account/authentication_email',
     UPDATE_EMAIL: 'v2/account/change_email',
     UPDATE_AVATAR: 'account/update_avatar',
+    UPDATE_PASSWORD: 'account/proactive_change_password',
   },
   WALLET: {
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
@@ -48,7 +49,7 @@ export default {
     GET_WALLET_INFO: 'account/get_wallet_info',
     GET_HISTORY: 'history/get_history',
     GET_HISTORY_DETAIL: 'history/get_detail',
-    GET_QRCODE_INFO: 'wallet/get_qrcode_info',
+    GET_QRCODE_INFO: 'payment/check_trans_info',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',
@@ -59,5 +60,15 @@ export default {
     CHARGES_NOTIFY: 'notify/charges_notify',
     PROMOTION_NOTIFY: 'notify/promotion_notify',
     OTHER_NOTIFY: 'notify/other_notify',
+    GET_NOTIFY: 'notify/get_notify',
+    READ_NOTIFY: 'notify/read_notify',
+  },
+  EKYC: {
+    EXTRACT_IDENTITY_CARD_INFO: 'account/extract_identity_card_info',
+    COMPARE_FACE: 'account/compare_face',
+    IDENTITY_CARD_VERIFY: 'account/identity_card_verify',
+    BANK_EXTRACT_IDENTITY_CARD_INFO: 'bank/extract_identity_card_info',
+    BANK_COMPARE_FACE: 'bank/compare_face',
+    BANK_IDENTITY_CARD_VERIFY: 'bank/identity_card_verify',
   },
 };

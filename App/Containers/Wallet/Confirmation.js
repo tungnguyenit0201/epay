@@ -18,12 +18,19 @@ import Modal from 'react-native-modal';
 
 import {useTranslation} from 'context/Language';
 import {useConfirmation} from 'context/Wallet/utils';
+
+import ModalBottom from 'components/Common/ModalBottom';
+import Bank from 'components/QRPay/Bank';
+import SelectBank from 'components/QRPay/SelectBank';
+
 const Confirmation = () => {
   const translation = useTranslation();
   let {height} = useWindowDimensions();
   let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(false);
   const {transTypeText, data, onContinue} = useConfirmation();
+
+  const [showModal, setShowModal] = React.useState(false);
 
   let forgotRef = useRef({
     phone: '',
@@ -48,14 +55,16 @@ const Confirmation = () => {
 
   return (
     <>
+      <HeaderBg>
+        <Header title={'Xác nhận ' + transTypeText} back />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
-          <Header title={'Xác nhận ' + transTypeText} back />
-        </HeaderBg>
         <View style={base.container}>
-          <Text bold size={Fonts.H5} mb={20}>
+          <SelectBank onPress={() => setShowModal(!showModal)} />
+          <Text bold fs="h6" mb={20}>
             Thông tin {transTypeText}
           </Text>
+
           <View style={styles.block}>
             <Image
               source={require('images/bgXacNhan.png')}
@@ -86,8 +95,21 @@ const Confirmation = () => {
           </View>
         </View>
       </ScrollView>
-      <View style={base.bottom}>
-        <Button label="Tiếp tục" onPress={onContinue} />
+      <View style={[base.wrap, base.container]}>
+        <Text>
+          Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với{' '}
+          <Text underline>
+            Thoả thuận Người sử dụng, Chính sách quyền riêng tư{' '}
+          </Text>
+          và <Text underline>Chính sách rút tiền</Text> của Epay
+        </Text>
+      </View>
+      <View style={base.boxBottom}>
+        <Button
+          label="Tiếp tục"
+          //onPress={onContinue}
+          onPress={() => Navigator.push(SCREEN.TRANSACTION_SUCCESS)}
+        />
       </View>
       <Modal
         isVisible={open}
@@ -111,6 +133,10 @@ const Confirmation = () => {
           </Pressable>
         </View>
       </Modal>
+
+      <ModalBottom visible={showModal} onClose={() => setShowModal(false)}>
+        <Bank />
+      </ModalBottom>
     </>
   );
 };

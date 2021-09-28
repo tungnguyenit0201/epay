@@ -1,0 +1,6 @@
+const EKYC_ERROR = {
+    USER_CANCELLED: 'USER_CANCELLED',
+    SDK_ERROR: 'SDK_ERROR',
+};
+export default EKYC_ERROR;
+  

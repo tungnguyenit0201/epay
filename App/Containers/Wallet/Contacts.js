@@ -7,12 +7,15 @@ import {
   FlatList,
 } from 'react-native';
 //import {useContacts} from 'context/Wallet/utils';
-import {Text, HeaderBg, TextInput, Icon} from 'components';
+import {Text, HeaderBg, Header, TextInput, Icon} from 'components';
 import {Colors, Fonts, Spacing, Images, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
+
+import SearchContact from 'components/Wallet/SearchContact';
+
 const Contacts = () => {
   const translation = useTranslation();
   const [show, setShow] = useState(false);
@@ -53,7 +56,7 @@ const Contacts = () => {
     return (
       <TouchableOpacity
         style={styles.blockHorizontal}
-        onPress={() => Navigator.navigate(SCREEN.TRANSFER_PHONE)}>
+        onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}>
         <Image source={item.avatar} style={styles.avatar} />
         <Text bold>{item.name}</Text>
         <Text style={styles.fontSmall}>{item.phone}</Text>
@@ -62,7 +65,9 @@ const Contacts = () => {
   };
 
   const renderVertical = ({item}) => (
-    <TouchableOpacity style={styles.blockVertical}>
+    <TouchableOpacity
+      style={styles.blockVertical}
+      onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}>
       <Image source={item.avatar} style={styles.avatar} />
       <View style={styles.ml_16}>
         <Text bold>{item.name}</Text>
@@ -75,82 +80,47 @@ const Contacts = () => {
     e ? setShow(true) : setShow(false);
   };
   return (
-    <View style={styles.container}>
+    <>
       <HeaderBg>
-        <Text bold style={styles.headerTitle}>
-          {translation.transfer_to_phone_number}
-        </Text>
+        <Header back title={translation.transfer_to_phone_number} />
+        <SearchContact style={{marginTop: 10}} />
       </HeaderBg>
-      <View style={styles.wrap}>
-        {/* Input with Icon */}
-        <View style={styles.inputIcon}>
-          <TouchableOpacity style={styles.iconSearch}>
-            <Icon icon={Images.Search} tintColor={Colors.g4} />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.inputSearch}
-            placeholder={translation.enter_name_or_phone_number}
-            placeholderTextColor={Colors.g4}
-            onChange={handleChange}
-          />
-          {show ? (
-            <TouchableOpacity style={styles.pr_10}>
-              <Icon
-                icon={Images.Transfer.CloseCircle}
-                tintColor={Colors.g4}
-                style={styles.closeCircle}
-              />
-            </TouchableOpacity>
-          ) : (
-            <View></View>
-          )}
-        </View>
-        {/* Input with Icon */}
-        {/* Icon Rectangle */}
-        <Icon
-          style={styles.iconRectangle}
-          icon={Images.Transfer.Rectangle}
-          tintColor={Colors.g2}
-        />
-        {/* Icon Rectangle */}
-        <View>
-          <Text bold style={styles.textTitle}>
-            {translation.recent_transactions}
+      <View style={base.wrap}>
+        <View style={base.container}>
+          <View style={styles.block}>
+            <Text bold fs="h6" mb={15}>
+              {translation.recent_transactions}
+            </Text>
+            <FlatList
+              data={listUsers}
+              renderItem={renderHorizontal}
+              keyExtractor={item => item.id}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+
+          <Text bold fs="h6" mb={15}>
+            {translation.epay_contact_book}
           </Text>
           <FlatList
             data={listUsers}
-            renderItem={renderHorizontal}
+            renderItem={renderVertical}
             keyExtractor={item => item.id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
           />
         </View>
-        <View style={styles.spacing}></View>
-        <Text bold style={styles.textTitle}>
-          {translation.epay_contact_book}
-        </Text>
-        <FlatList
-          data={listUsers}
-          renderItem={renderVertical}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-        />
       </View>
-    </View>
+      <Image source={require('images/wave.png')} style={styles.bgImg} />
+    </>
   );
 };
 
 export default Contacts;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
-  },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING,
-    flex: 1,
+  block: {
+    marginBottom: 40,
   },
 
   blockHorizontal: {
@@ -173,52 +143,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: scale(16),
   },
-  headerTitle: {
-    color: Colors.white,
-    fontSize: Fonts.H6,
-    textAlign: 'center',
-  },
-  iconRectangle: {
-    height: scale(8),
-    width: '100%',
-    marginVertical: scale(15),
-  },
-  textTitle: {
-    fontSize: Fonts.H6,
-    marginBottom: scale(16),
-  },
-  spacing: {
-    marginTop: scale(20),
-    marginBottom: scale(16),
-  },
 
-  inputIcon: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: Colors.g2,
-    borderWidth: 1,
-    borderRadius: scale(5),
-  },
-  iconSearch: {
-    paddingHorizontal: scale(10),
-    borderRightWidth: 1,
-    borderColor: Colors.g2,
-  },
-  inputSearch: {
-    flex: 1,
-    //backgroundColor: 'transparent',
-    fontSize: Fonts.H6,
-    //borderColor: 'transparent',
-  },
-  closeCircle: {
-    width: scale(20),
-    height: scale(20),
-  },
-  pr_10: {
-    paddingRight: scale(10),
-  },
   ml_16: {
     marginLeft: scale(16),
+  },
+
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });

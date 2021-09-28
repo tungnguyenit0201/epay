@@ -10,6 +10,7 @@ export const CommonProvider = ({children}) => {
       smartOTP: false,
       KYC: false,
       connectBank: false,
+      permissionCamera: false,
     },
     config: {},
   });

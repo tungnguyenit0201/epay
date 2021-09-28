@@ -11,6 +11,7 @@ import {
   getLimit,
   getQRCode,
   updateAvatar,
+  updatePassword,
 } from 'services/user';
 import {
   useAsyncStorage,
@@ -24,6 +25,7 @@ import _ from 'lodash';
 import {sha256} from 'react-native-sha256';
 import {useWallet} from 'context/Wallet';
 import ImagePicker from 'react-native-image-crop-picker';
+import {getAll} from 'utils/Functions';
 
 const useUserInfo = type => {
   let personalInfo = useRef({
@@ -161,10 +163,7 @@ const useUserInfo = type => {
             Navigator.navigate(SCREEN.TAB_NAVIGATION);
             break;
           case 'confirm_password_response':
-            Navigator.push(SCREEN.OTP, {
-              phone,
-              functionType: FUNCTION_TYPE.FORGOT_PASS,
-            });
+            Navigator.push(SCREEN.NEW_PASSWORD, {oldPassword: password});
             break;
           case 'update_email':
             Navigator.push(SCREEN.VERIFY_EMAIL, {
@@ -238,6 +237,27 @@ const useUserInfo = type => {
     result?.ErrorCode && setError(result);
   };
 
+  const onUpdatePassword = async ({oldPassword, newPassword}) => {
+    setLoading(true);
+    const [oldPasswordEncrypted, newPasswordEncrypted, phone] = await getAll(
+      async () => await sha256(oldPassword),
+      async () => await sha256(newPassword),
+      getPhone,
+    );
+    const result = await updatePassword({
+      phone,
+      oldPassword: oldPasswordEncrypted,
+      newPassword: newPasswordEncrypted,
+    });
+    setLoading(false);
+    if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
+      setError({ErrorCode: -1, ErrorMessage: 'Đổi mật khẩu thành công'}); // TODO: translate
+      Navigator.navigate(SCREEN.TAB_NAVIGATION);
+      return;
+    }
+    setError(result);
+  };
+
   return {
     personalInfo: personalInfo.current,
     onUpdatePersonalInfo,
@@ -252,6 +272,7 @@ const useUserInfo = type => {
     onUpdateUserInfo,
     showModal,
     setShowModal,
+    onUpdatePassword,
   };
 };
 export default useUserInfo;

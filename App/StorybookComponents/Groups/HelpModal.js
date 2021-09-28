@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Text from '../Atoms/Text';
 import Button from '../Atoms/Button';
-import {Images, Colors, Spacing} from 'themes';
+import {Images, Colors, Spacing, base} from 'themes';
 import {scale} from 'utils/Functions';
 import Modal from 'react-native-modal';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -42,14 +42,9 @@ const HelpModal = ({showModal, setShowModal, onPress}) => {
               Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để
               được tư vấn hỗ trợ.
             </Text>
-            <Button
-              mb={10}
-              label="Gọi 1900-0000"
-              bold
-              onPress={() => {
-                setShow(true);
-                setShowModal(false);
-              }}
+            <Image
+              source={Images.Gradient.B_Continue.default}
+              style={base.buttonSB}
             />
           </View>
         </View>

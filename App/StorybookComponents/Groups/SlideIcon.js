@@ -95,7 +95,7 @@ export default SlideIcon;
 const styles = StyleSheet.create({
   item: {
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 25,
     marginBottom: 20,
   },
   icon: {

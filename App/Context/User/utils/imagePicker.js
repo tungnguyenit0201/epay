@@ -4,14 +4,14 @@ import _ from 'lodash';
 const imagePickerOptions = {
   width: 850,
   height: 540,
-  cropping: false,
+  cropping: true,
   includeBase64: true,
 };
 
 const useImagePicker = onSelectImage => {
   const [image, setImage] = useState(null);
 
-  const onPhoto = (cropping = false) => {
+  const onPhoto = (cropping = true) => {
     ImagePicker.openPicker({...imagePickerOptions, cropping}).then(image => {
       setImage(image);
       !!onSelectImage && onSelectImage(image);

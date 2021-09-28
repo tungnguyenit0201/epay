@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import en from './en.json';
 import vi from './vi.json';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ASYNC_STORAGE_KEY} from 'configs/Constants';
 
 const LanguageContext = React.createContext();
 
@@ -16,7 +17,10 @@ export const LanguageProvider = ({children}) => {
   const setLanguage = async lang => {
     try {
       setSelectedLanguage(lang);
-      await AsyncStorage.setItem('currentLanguage', lang);
+      await AsyncStorage.setItem(
+        ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
+        lang,
+      );
     } catch (error) {}
   };
 
