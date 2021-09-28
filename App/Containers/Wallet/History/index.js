@@ -9,7 +9,7 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {Header, HeaderBg, Text, Button, Icon} from 'components';
+import {Header, HeaderBg, Text, Button, Icon, DatePicker} from 'components';
 import {useTranslation} from 'context/Language';
 import {formatMoney, scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
@@ -258,13 +258,26 @@ const History = () => {
               {translation.by_month}
             </Text>
 
-            <FlatList
+            <View>
+              <Text bold fs="md">
+                Từ:
+              </Text>
+              <DatePicker
+                // label={translation.date_of_birth_ddmmyyyy}
+                // value={info.DateOfBirth}
+                // value={''}
+                // required
+                placeholder="dd/mm/yyyy"
+              />
+            </View>
+
+            {/* <FlatList
               data={months}
               renderItem={renderListMonth}
               keyExtractor={(item, index) => `${item}-${Math.random(0, 100)}`}
               horizontal={true}
               style={styles.listMonthBtn}
-            />
+            /> */}
           </ScrollView>
 
           <FooterContainer>
