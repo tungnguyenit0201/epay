@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -9,7 +9,16 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {Header, HeaderBg, Text, Button, Icon, DatePicker} from 'components';
+import {
+  Header,
+  HeaderBg,
+  Text,
+  Button,
+  Icon,
+  DatePicker,
+  Row,
+  Col,
+} from 'components';
 import {useTranslation} from 'context/Language';
 import {formatMoney, scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
@@ -17,7 +26,389 @@ import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {useHistory} from 'context/Wallet/utils';
 import Modal from 'react-native-modal';
 import moment from 'moment';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import FooterContainer from 'components/Auth/FooterContainer';
+
+const ItemType1 = ({
+  title,
+  icon,
+  value,
+  iconHeight,
+  iconWidth,
+  isChecked,
+  onChooseOption,
+}) => {
+  return (
+    <TouchableOpacity onPress={onChooseOption}>
+      <View
+        style={[
+          styles.blockShadow,
+          {
+            height: 56,
+            alignItems: 'center',
+            justifyContent: 'center',
+            // backgroundColor: '#F2F8FF',
+          },
+        ]}>
+        <Image
+          source={icon}
+          style={{
+            width: iconWidth ? iconWidth : 24,
+            height: iconHeight ? scale(iconHeight) : 24,
+          }}
+          resizeMode="contain"
+        />
+        {isChecked && (
+          <Image
+            source={Images.TransactionHistory.Success}
+            style={[
+              styles.iconStick,
+              {
+                position: 'absolute',
+                top: -5,
+                right: -5,
+              },
+            ]}
+            resizeMode="contain"
+          />
+        )}
+      </View>
+
+      <Text centered mt={5} style={{fontSize: 12}}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const ItemType2 = ({
+  title,
+  icon,
+  value,
+  iconHeight,
+  iconWidth,
+  isChecked,
+  onChooseOption,
+}) => {
+  return (
+    <TouchableOpacity onPress={onChooseOption}>
+      <View
+        style={[
+          styles.blockShadow,
+          {
+            height: 56,
+            alignItems: 'center',
+            justifyContent: 'center',
+            // backgroundColor: '#F2F8FF',
+          },
+        ]}>
+        <Image
+          source={icon}
+          style={{
+            width: iconWidth ? iconWidth : 24,
+            height: iconHeight ? scale(iconHeight) : 24,
+          }}
+          resizeMode="contain"
+        />
+        {isChecked && (
+          <Image
+            source={Images.TransactionHistory.Success}
+            style={[
+              styles.iconStick,
+              {
+                position: 'absolute',
+                top: -5,
+                right: -5,
+              },
+            ]}
+            resizeMode="contain"
+          />
+        )}
+      </View>
+
+      <Text centered mt={5} style={{fontSize: 12}}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
+const ModalFilter = ({showModal, onHideModal, renderRightComponent}) => {
+  const translation = useTranslation();
+  const [transactionList, setTransactionList] = useState([
+    {
+      id: `id1-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.CardReceive,
+      name: 'Chuyển tiền',
+      isChecked: false,
+    },
+    {
+      id: `id2-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.CardSend,
+      name: 'Chuyển tiền',
+      isChecked: false,
+    },
+    {
+      id: `id3-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.CardEdit,
+      name: 'Chuyển tiền',
+      isChecked: false,
+    },
+    {
+      id: `id4-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.CardTick,
+      name: 'Chuyển tiền',
+      isChecked: false,
+    },
+  ]);
+
+  const [serviceList, setServiceList] = useState([
+    {
+      id: `id1-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.Car,
+      name: 'Giao thông',
+      isChecked: false,
+    },
+    {
+      id: `id2-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.ShieldTick,
+      name: 'Giao thông',
+      isChecked: false,
+    },
+    {
+      id: `id3-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.Passport,
+      name: 'Giao thông',
+      isChecked: false,
+    },
+    {
+      id: `id4-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.Medic,
+      name: 'Giao thông',
+      isChecked: false,
+    },
+    {
+      id: `id5-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.Medic,
+      name: 'Giao thông',
+      isChecked: false,
+    },
+    {
+      id: `id6-${Math.random(0, 100)}`,
+      icon: Images.TransactionHistory.Passport,
+      name: 'Giao thông',
+      isChecked: false,
+    },
+  ]);
+
+  const onChooseTransaction = id => {
+    // console.log(transactionList);
+    setServiceList(
+      serviceList.map((item, index) => {
+        item.isChecked = false;
+        return {...item};
+      }),
+    );
+
+    setTransactionList(
+      transactionList.map((item, index) => {
+        if (item.id === id) {
+          item.isChecked = !item.isChecked;
+        }
+        return {...item};
+      }),
+    );
+  };
+
+  const onChooseService = id => {
+    // console.log(serviceList);
+    setTransactionList(
+      transactionList.map((item, index) => {
+        item.isChecked = false;
+        return {...item};
+      }),
+    );
+
+    setServiceList(
+      serviceList.map((item, index) => {
+        if (item.id === id) {
+          item.isChecked = !item.isChecked;
+        }
+        return {...item};
+      }),
+    );
+  };
+
+  return (
+    <Modal
+      isVisible={showModal}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      style={[styles.fullWidth, styles.mlZero, styles.mbZero, styles.mtZero]}
+      hideModalContentWhileAnimating
+      backdropTransitionOutTiming={0}
+      onBackdropPress={onHideModal}>
+      <View style={[styles.flex1, styles.bgWhite]}>
+        <HeaderBg>
+          <Header
+            title={translation?.transaction_history}
+            renderRightComponent={() => renderRightComponent()}
+            style={styles.pbZero}
+          />
+        </HeaderBg>
+
+        <ScrollView style={styles.pt1}>
+          <View style={styles.wrap}>
+            <Text bold fs="h6" mb={-10}>
+              {translation.by_month}
+            </Text>
+
+            <View>
+              <Text bold fs="md">
+                Từ:
+              </Text>
+              <DatePicker
+                label={translation.date_of_birth_ddmmyyyy}
+                // value={info.DateOfBirth}
+                // value={''}
+                // required
+                placeholder="dd/mm/yyyy"
+                noIconBg
+              />
+            </View>
+
+            <View>
+              <Text bold fs="md">
+                Từ:
+              </Text>
+              <DatePicker
+                label={translation.date_of_birth_ddmmyyyy}
+                placeholder="dd/mm/yyyy"
+                noIconBg
+              />
+            </View>
+          </View>
+
+          <Calendar
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={day => {
+              console.log('selected day', day);
+            }}
+            // Handler which gets executed on day long press. Default = undefined
+            // onDayLongPress={(day) => {console.log('selected day', day)}}
+            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+            monthFormat={'MM/yyyy'}
+            // Hide month navigation arrows. Default = false
+            // hideArrows={true}
+            // Replace default arrows with custom ones (direction can be 'left' or 'right')
+            // renderArrow={(direction) => (<Arrow/>)}
+            // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
+            // day from another month that is visible in calendar page. Default = false
+            // disableMonthChange={true}
+            // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday
+            firstDay={1}
+            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+            // onPressArrowLeft={subtractMonth => subtractMonth()}
+            // Handler which gets executed when press arrow icon right. It receive a callback can go next month
+            // onPressArrowRight={addMonth => addMonth()}
+            // Disable left arrow. Default = false
+            // disableArrowLeft={true}
+            // Disable right arrow. Default = false
+            // disableArrowRight={true}
+            // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
+            // disableAllTouchEventsForDisabledDays={true}
+            // Replace default month and year title with custom one. the function receive a date as parameter
+            renderHeader={date => {
+              return (
+                <Text centered fs="h6" bold>
+                  {date.toString('MM/yyyy')}
+                </Text>
+              );
+            }}
+            markingType={'period'}
+            markedDates={{
+              '2021-09-19': {
+                startingDay: true,
+                color: '#50cebb',
+                textColor: 'white',
+              },
+              '2021-09-20': {color: '#70d7c7', textColor: 'white'},
+              // '2021-09-21': {color: '#70d7c7', textColor: 'white', marked: true, dotColor: 'white'},
+              '2021-09-21': {color: '#70d7c7', textColor: 'white'},
+              '2021-09-22': {color: '#70d7c7', textColor: 'white'},
+              '2021-09-23': {
+                endingDay: true,
+                color: '#50cebb',
+                textColor: 'white',
+              },
+            }}
+            enableSwipeMonths={true}
+            // dayComponent={({date, state}) => {
+            //   return (
+            //     <View>
+            //       <Text style={{textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black'}}>
+            //         {date.day}
+            //       </Text>
+            //     </View>
+            //   );
+            // }}
+          />
+
+          <View style={styles.wrap}>
+            <Row space={16}>
+              {!!transactionList &&
+                transactionList.map((item, index) => {
+                  return (
+                    <Col
+                      width="25%"
+                      key={item.id}
+                      space={16}
+                      style={{marginBottom: 10}}>
+                      <ItemType1
+                        title={item.name}
+                        icon={item.icon}
+                        iconHeight={item.iconHeight}
+                        iconWidth={item.iconWidth}
+                        isChecked={item.isChecked}
+                        onChooseOption={() => onChooseTransaction(item.id)}
+                      />
+                    </Col>
+                  );
+                })}
+            </Row>
+          </View>
+
+          <View style={styles.wrap}>
+            <FlatList
+              data={serviceList}
+              renderItem={({item, index}) => (
+                <View style={[styles.w2, styles.mr1]}>
+                  <ItemType2
+                    title={item.name}
+                    icon={item.icon}
+                    iconHeight={item.iconHeight}
+                    iconWidth={item.iconWidth}
+                    isChecked={item.isChecked}
+                    onChooseOption={() => onChooseService(item.id)}
+                  />
+                </View>
+              )}
+              keyExtractor={(item, index) =>
+                `${item.name}-${Math.random(0, 100)}`
+              }
+              horizontal={true}
+              style={styles.flatList1}
+            />
+          </View>
+        </ScrollView>
+
+        <FooterContainer>
+          <Button label="Đã hiểu" bold />
+        </FooterContainer>
+      </View>
+    </Modal>
+  );
+};
 
 const History = () => {
   const translation = useTranslation();
@@ -46,7 +437,9 @@ const History = () => {
   ];
 
   const renderRightComponent = () => (
-    <TouchableOpacity onPress={() => setShowModal(false)}>
+    <TouchableOpacity
+      onPress={() => setShowModal(false)}
+      style={styles.rightMinus2}>
       <Icon
         icon={Images.WidthDraw.Close}
         tintColor={Colors.white}
@@ -55,15 +448,15 @@ const History = () => {
     </TouchableOpacity>
   );
 
-  const renderListMonth = ({item, index}) => (
-    <TouchableOpacity
-      // key={index}
-      style={[styles.bgWhite, styles.blockShadow, styles.w2, styles.mr1]}>
-      <Text centered style={[styles.textSize1, styles.px1, styles.py2]}>
-        {item.data}
-      </Text>
-    </TouchableOpacity>
-  );
+  // const renderListMonth = ({item, index}) => (
+  //   <TouchableOpacity
+  //     // key={index}
+  //     style={[styles.blockShadow, styles.w2, styles.mr1]}>
+  //     <Text centered style={[styles.textSize1, styles.px1, styles.py2]}>
+  //       {item.data}
+  //     </Text>
+  //   </TouchableOpacity>
+  // );
 
   const renderTransactionSections = ({item}) => {
     const blue = '#1F5CAB';
@@ -224,7 +617,6 @@ const History = () => {
           <FlatList
             data={historyData}
             renderItem={renderTransactionSections}
-            style={[styles.bgWhite, styles.borderRadius1, styles.blockShadow]}
             keyExtractor={item => item?.TransCode}
             refreshControl={
               <RefreshControl
@@ -236,55 +628,11 @@ const History = () => {
         </View>
       </View>
 
-      <Modal
-        isVisible={showModal}
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
-        style={[styles.fullWidth, styles.mlZero, styles.mbZero, styles.mtZero]}
-        hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}>
-        <View style={[styles.flex1, styles.bgWhite]}>
-          <HeaderBg>
-            <Header
-              title={translation?.transaction_history}
-              renderRightComponent={() => renderRightComponent()}
-              style={styles.pbZero}
-            />
-          </HeaderBg>
-
-          <ScrollView style={[styles.wrap, styles.pt1]}>
-            <Text bold fs="h6" mb={-10}>
-              {translation.by_month}
-            </Text>
-
-            <View>
-              <Text bold fs="md">
-                Từ:
-              </Text>
-              <DatePicker
-                // label={translation.date_of_birth_ddmmyyyy}
-                // value={info.DateOfBirth}
-                // value={''}
-                // required
-                placeholder="dd/mm/yyyy"
-              />
-            </View>
-
-            {/* <FlatList
-              data={months}
-              renderItem={renderListMonth}
-              keyExtractor={(item, index) => `${item}-${Math.random(0, 100)}`}
-              horizontal={true}
-              style={styles.listMonthBtn}
-            /> */}
-          </ScrollView>
-
-          <FooterContainer>
-            <Button label="Đã hiểu" bold />
-          </FooterContainer>
-        </View>
-      </Modal>
+      <ModalFilter
+        showModal={showModal}
+        onHideModal={onHideModal}
+        renderRightComponent={renderRightComponent}
+      />
     </>
   );
 };
@@ -308,6 +656,7 @@ const styles = StyleSheet.create({
   topMinus1: {top: -5},
   //------------------
   rightMinus1: {right: -2},
+  rightMinus2: {right: -20},
   //------------------
   left1: {left: 14},
   //------------------
@@ -315,7 +664,7 @@ const styles = StyleSheet.create({
   //------------------
   minWidth1: {minWidth: 97},
   w1: {width: 65},
-  w2: {width: 112},
+  w2: {width: 74},
   //margin and padding
   mbZero: {marginBottom: 0},
   mlZero: {marginLeft: 0},
@@ -387,6 +736,10 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
   },
+  iconStick: {
+    width: 16,
+    height: 16,
+  },
   blockSumIncome: {
     paddingLeft: 8,
     borderLeftWidth: 0.8,
@@ -415,11 +768,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
+    backgroundColor: Colors.white,
   },
-  listMonthBtn: {
-    marginLeft: -3,
+  flatList1: {
+    // marginLeft: -10,
     marginRight: -Spacing.PADDING,
-    paddingVertical: 20,
+    paddingVertical: 10,
     paddingLeft: 5,
   },
 });
