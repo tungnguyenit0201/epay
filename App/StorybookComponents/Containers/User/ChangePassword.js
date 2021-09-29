@@ -17,7 +17,7 @@ const ChangePassword = ({route}) => {
   const [err, setErr] = useState(false);
   return (
     <Wrapper>
-      <ScrollView style={base.wrap}>
+      <ScrollView style={{backgroundColor: Colors.white, paddingBottom: 20}}>
         <HeaderBg>
           <Header
             back

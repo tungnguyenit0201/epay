@@ -22,6 +22,13 @@ import BankLinked from './Bank/BankLinked';
 import BankList from './Bank/BankList';
 import BankResult from './Bank/BankResult';
 import TransactionHistory from './History';
+import TransactionDetails from './History/Detail';
+import Empty from './History/Empty';
+
+import LinkingAddress from './Bank/LinkingAddress';
+import LinkingInfo from './Bank/LinkingInfo';
+import LinkingConfirm from './Bank/LinkingConfirm';
+import LinkingResult from './Bank/LinkingResult';
 storiesOf('Layout/Wallet/Default', module)
   .addDecorator(withKnobs)
   .add('Confirmation', () => <Confirmation />)
@@ -43,9 +50,16 @@ storiesOf('Layout/Wallet/Bank', module)
   .add('BankDetail', () => <BankDetail />)
   .add('BankInfo', () => <BankInfo />)
   .add('BankLinked', () => <BankLinked />)
-  .add('BankList', () => <BankList />)
-  .add('BankResult', () => <BankResult />);
+  .add('SelectBank / 1', () => <BankList />)
+  .add('SelectBank / 2', () => <BankList type={2} />)
+  .add('BankResult', () => <BankResult />)
+  .add('LinkingAddress', () => <LinkingAddress />)
+  .add('LinkingInfo', () => <LinkingInfo />)
+  .add('LinkingConfirm', () => <LinkingConfirm />)
+  .add('LinkingResult', () => <LinkingResult />);
 
 storiesOf('Layout/Wallet/History', module)
   .addDecorator(withKnobs)
-  .add('TransactionHistory', () => <TransactionHistory />);
+  .add('TransactionHistory', () => <TransactionHistory />)
+  .add('TransactionDetails', () => <TransactionDetails />)
+  .add('TransactionEmpty', () => <Empty />);

@@ -11,7 +11,7 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {scale} from '../Utils/Functions';
 import Button from '../Atoms/Button';
 import Text from '../Atoms/Text';
-const TransferBank = (myPay = 1) => {
+const TransferBank = ({myPay = 1, wallet}) => {
   return (
     //TODO : translation
     <>
@@ -19,39 +19,42 @@ const TransferBank = (myPay = 1) => {
         <Text bold fs="h6" mb={20}>
           Chọn nguồn tiền
         </Text>
-        <View style={[styles.itemBank]}>
-          <Image
-            style={[styles.iconBank]}
-            source={require('images/qrpay/Wallet.png').default}
-          />
-          <View>
-            <Text fs="h6" bold>
-              Ví của tôi
-            </Text>
-            <Text>9704 45********678</Text>
-          </View>
-          <View style={styles.itemRight}>
+        {wallet === false ? (
+          <View></View>
+        ) : (
+          <View style={[styles.itemBank]}>
             <Image
-              style={[styles.iconCircle]}
-              source={require('images/qrpay/Circle.png').default}
+              style={[styles.iconBank]}
+              source={require('images/qrpay/Wallet.png').default}
             />
-            <Text>Phí giao dịch: X.000đ</Text>
-          </View>
-          {myPay === 0 && (
-            <>
-              <Text style={styles.opaciy}>opaciy</Text>
-              <Button
-                //onPress={onLogout}
-                style={styles.pushMoney}
-                size="sm"
-                type={1}
-                label="Nạp tiền "
-                bold
+            <View>
+              <Text fs="h6" bold>
+                Ví của tôi
+              </Text>
+              <Text>9704 45********678</Text>
+            </View>
+            <View style={styles.itemRight}>
+              <Image
+                style={[styles.iconCircle]}
+                source={require('images/qrpay/Circle.png').default}
               />
-            </>
-          )}
-        </View>
-
+              <Text>Phí giao dịch: X.000đ</Text>
+            </View>
+            {myPay === 0 && (
+              <>
+                <Text style={styles.opaciy}>opaciy</Text>
+                <Button
+                  //onPress={onLogout}
+                  style={styles.pushMoney}
+                  size="sm"
+                  type={1}
+                  label="Nạp tiền "
+                  bold
+                />
+              </>
+            )}
+          </View>
+        )}
         <View style={[styles.itemBank, styles.itemBankActive]}>
           <Image
             style={[styles.iconBank]}

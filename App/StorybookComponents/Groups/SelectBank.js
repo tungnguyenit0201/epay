@@ -55,13 +55,29 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
             </Col>
           );
         })}
+        <Pressable style={[styles.item, {marginLeft: 19}]}>
+          <View style={[styles.wicon]}>
+            <Image
+              source={Images.Bank.Plus.default}
+              style={{
+                width: 15,
+                height: 15,
+                position: 'relative',
+                top: 17,
+                left: 16,
+              }}
+            />
+          </View>
+          <Text centered size={12} mt={5}>
+            Liên kết NH
+          </Text>
+        </Pressable>
       </Row>
       {/* ))} */}
-
-      <View style={styles.itemAddBank}>
+      {/* <View style={styles.itemAddBank}>
         <Image source={Images.Bank.Plus.default} style={[styles.iconAddBank]} />
         <Text centered>{translation.add_cardbank_account}</Text>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -76,8 +92,8 @@ const styles = StyleSheet.create({
   wicon: {
     width: scale(48),
     height: scale(48),
-    backgroundColor: Colors.moneyItem,
-    borderRadius: 16,
+    backgroundColor: Colors.g2,
+    borderRadius: 100,
     marginBottom: 5,
   },
   icon: {

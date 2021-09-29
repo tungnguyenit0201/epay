@@ -6,23 +6,18 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import Button from '../Atoms/Button';
 import Icon from '../Atoms/Icon';
 import Text from '../Atoms/Text';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
-const Eye = require('images/Eye.png');
-const EyeGray = require('images/EyeGray.png');
-
-const Money = ({style}) => {
+import {useUser} from 'context/User';
+const Monney = ({style}) => {
   const translation = require('../../Context/Language/vi.json');
   const [isMoney, setIsMoney] = useState(false);
   return (
-    <View style={[styles.item, base.shadow, style]}>
+    <View style={[styles.item, style]}>
       <View style={[]}>
-        <Text size={Fonts.H6} style={styles.title}>
-        {translation.my_wallet}
-        </Text>
+        <Text style={{fontSize: 14}}>{translation.my_wallet}</Text>
       </View>
       <View style={[styles.right]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -32,14 +27,14 @@ const Money = ({style}) => {
             </Text>
           ) : (
             <Text bold size={Fonts.H5} style={styles.text}>
-              5555 đ
+              7.000.000 vnđ
             </Text>
           )}
           <TouchableOpacity
             style={{marginLeft: 10}}
             onPress={() => setIsMoney(!isMoney)}>
             <Icon
-              icon={isMoney ? Eye : EyeGray}
+              icon={isMoney ? Images.Eye : Images.EyeGray}
               //tintColor={isMoney ? Colors.l4 : ''}
               size={20}
             />
@@ -55,12 +50,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 99,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    backgroundColor: Colors.l1,
+    borderRadius: 4,
+    padding: 10,
+    marginBottom: 20,
   },
-  title: {},
+
   right: {
     marginLeft: 'auto',
   },
@@ -69,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Money;
+export default Monney;

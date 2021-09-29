@@ -19,34 +19,44 @@ const History = () => {
   const red = '#D80000';
   const listTransactionSection = [
     {
-      title: 'Nạp tiền từ ngân hàng liên kết Vietcombank',
-      time: '03:30',
-      date: '23/07/2021',
-      money: '+20.000đ',
-    },
-    {
       title: 'Nạp tiền vào ví từ Vietcombank',
       time: '03:30',
       date: '23/07/2021',
       money: '+50.000đ',
+      icon: require('images/storybook/tick.png').default,
+      type: 1,
+    },
+    {
+      title: 'Chuyển tiền vào ví từ Vietcombank',
+      time: '03:30',
+      date: '23/07/2021',
+      money: '-1.200.000đ',
+      icon: require('images/storybook/arrow-up.png').default,
+      type: 2,
     },
     {
       title: 'Nạp tiền vào ví từ Vietcombank',
       time: '03:30',
       date: '23/07/2021',
       money: '+200.000đ',
+      icon: require('images/storybook/tick.png').default,
+      type: 1,
     },
     {
       title: 'Nạp tiền vào ví từ Vietcombank',
       time: '03:30',
       date: '23/07/2021',
       money: '+500.000đ',
+      icon: require('images/storybook/tick.png').default,
+      type: 1,
     },
     {
       title: 'Nạp tiền vào ví từ Vietcombank',
       time: '03:30',
       date: '23/07/2021',
       money: '+1.200.000đ',
+      icon: require('images/storybook/tick.png').default,
+      type: 1,
     },
   ];
 
@@ -61,10 +71,7 @@ const History = () => {
           styles.blockTransaction,
         ]}>
         <View style={styles.blockCardTick}>
-          <Image
-            source={Images.TransactionHistory.CardTick.default}
-            style={styles.iconCardTick}
-          />
+          <Image source={e?.icon} style={styles.iconCardTick} />
         </View>
         <View style={[styles.flex1, styles.pl2]}>
           <Text style={[styles.textSize2, styles.mb1]}>{e.title}</Text>
@@ -75,7 +82,10 @@ const History = () => {
               </Text>
               <Text style={[styles.textSize1, {color: gray}]}>{e.date}</Text>
             </View>
-            <Text fs="md" bold>
+            <Text
+              fs="md"
+              bold
+              style={e.type === 1 ? {color: '#1F5CAB'} : {color: '#D80000'}}>
               {e.money}
             </Text>
           </View>
@@ -114,7 +124,10 @@ const History = () => {
     <>
       <View style={[styles.bgWhite]}>
         <HeaderBg>
-          <Header title={translation?.transaction_history} />
+          <Header
+            title={translation?.transaction_history}
+            style={{marginLeft: 45, marginTop: 25, marginBottom: -15}}
+          />
         </HeaderBg>
 
         {/* <Header back title="Lịch sử" avoidStatusBar blackIcon />
@@ -126,7 +139,7 @@ const History = () => {
           <View style={[styles.flexRow, styles.alignCenter]}>
             <View style={[styles.flex1, styles.pr2]}>
               <Image
-                source={Images.Search.default}
+                source={require('images/storybook/search-normal.png').default}
                 style={[
                   styles.iconSearch,
                   styles.absolute,
@@ -179,8 +192,7 @@ const History = () => {
         </View>
       </View>
 
-      <ScrollView style={styles.bgWhite}>
-        {renderNotifyComponent()}
+      <ScrollView style={[styles.bgWhite, styles.blockShadow]}>
         {renderTransactionSections()}
       </ScrollView>
     </>
@@ -241,8 +253,8 @@ const styles = StyleSheet.create({
     height: 18,
   },
   iconCardTick: {
-    width: 20,
-    height: 17,
+    width: 23,
+    height: 23,
   },
   iconPrimary: {
     width: 12,
@@ -265,6 +277,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderColor: Colors.l2,
+  },
+  blockShadow: {
+    borderRadius: 8,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 1.8,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
   },
 });
 export default History;

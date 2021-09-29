@@ -7,33 +7,35 @@ import {
   Pressable,
   Image,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Text from '../../Atoms/Text';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
 import HeaderBg from '../../Atoms/HeaderBg';
 import TextInput from '../../Atoms/TextInput';
+import Icon from '../../Atoms/Icon';
+import Wrapper from '../../Groups/Wrapper';
+import FooterContainer from '../../Atoms/FooterContainer';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
-import {scale, formatMoney} from 'utils/Functions';
-import Modal from 'react-native-modal';
-
+import {scale, formatMoney} from '../../Utils/Functions';
+import ModalBottom from '../../Groups/ModalBottom';
+import Bank from '../../Groups/Bank';
+import DashedLine from 'react-native-dashed-line';
 const data = [
   {
-    name: 'Nguồn tiền',
-    value: 'VietComBank',
-  },
-  {
     name: 'Số tiền',
-    value: formatMoney('100000', true),
+    value: '100.000 vnđ',
   },
   {
     name: 'Phí giao dịch',
-    value: formatMoney('100000', true),
+    value: 'Miễn phí',
   },
   {
     name: 'Tổng số tiền',
-    value: formatMoney('100000', true),
+    value: '100.000 vnđ',
     bold: true,
   },
 ];
@@ -53,7 +55,7 @@ const Confirmation = () => {
   const handleChange = e => {
     if (e === '1') {
       setOpen(false);
-      console.log('hello')
+      console.log('hello');
     }
     if (e === '0') {
       setOpen(!open);
@@ -65,58 +67,104 @@ const Confirmation = () => {
   };
 
   return (
-    <>
-      <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
-          <Header title={'Xác nhận ' + transTypeText} back />
-        </HeaderBg>
-        <View style={base.container}>
-          <Text bold size={Fonts.H5} mb={20}>
-            Thông tin {transTypeText}
-          </Text>
-          <View style={styles.block}>
-            <Image
-              source={require('images/bgXacNhan.png')}
-              style={styles.bgImg}
+    <Wrapper>
+      <SafeAreaProvider>
+        <ScrollView style={{backgroundColor: Colors.white, paddingBottom: 20}}>
+          <HeaderBg style={{marginBottom: 50}}>
+            <Header
+              title={'Xác nhận ' + transTypeText}
+              back
+              style={{marginTop: 25, marginBottom: -15}}
             />
+          </HeaderBg>
+          <View style={base.container}>
+            <Text
+              bold
+              fs={Fonts.H4}
+              mb={20}
+              style={{marginTop: -15, fontSize: 16}}>
+              Nguồn tiền
+            </Text>
+            <View style={[styles.itemBank, styles.itemBankActive]}>
+              <Image
+                style={[styles.iconBank]}
+                source={require('images/qrpay/VCB.png').default}
+              />
+              <View>
+                <Text fs="h6" bold>
+                  Vietcombank
+                </Text>
+                <Text>********1234</Text>
+              </View>
+              <TouchableOpacity onPress={() => setOpen(true)}>
+                <Image
+                  source={require('images/storybook/edit.png').default}
+                  style={{
+                    height: 24,
+                    width: 24,
+                    position: 'relative',
+                    left: 150,
+                    cursor: 'pointer',
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text bold mb={12} style={{fontSize: 16}}>
+              Chi tiết nạp tiền
+            </Text>
+            <View style={styles.block}>
+              <Image
+                source={require('images/bgXacNhan.png').default}
+                style={styles.bgImg}
+              />
 
-            {data.map((item, index) => {
-              return (
-                <View key={index}>
-                  <View
-                    style={[
-                      styles.row,
-                      index + 1 === data.length && {
-                        borderBottomWidth: 0,
-                      },
-                    ]}>
-                    <Text style={styles.textLeft}>{item.name}</Text>
-                    <Text
-                      bold={item.bold}
-                      size={Fonts.H6}
-                      style={styles.textRight}>
-                      {item.value}
-                    </Text>
+              {data.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <View style={[styles.row]}>
+                      <Text style={styles.textLeft}>{item.name}</Text>
+                      <Text
+                        bold={item.bold}
+                        size={Fonts.H6}
+                        style={styles.textRight}>
+                        {item.value}
+                      </Text>
+                    </View>
+                    <DashedLine
+                      dashLength={4}
+                      dashThickness={1}
+                      dashColor={Colors.l3}
+                    />
                   </View>
-                </View>
-              );
-            })}
+                );
+              })}
+            </View>
           </View>
+        </ScrollView>
+        <View style={base.bottom}>
+          <Text>
+            Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với{' '}
+            <Text style={{textDecorationLine: 'underline'}}>
+              Thoả thuận Người sử dụng, Chính sách quyền riêng tư
+            </Text>{' '}
+            và{' '}
+            <Text style={{textDecorationLine: 'underline'}}>
+              Chính sách rút tiền
+            </Text>{' '}
+            của Epay
+          </Text>
         </View>
-      </ScrollView>
-      <View style={base.bottom}>
-        <Button label="Tiếp tục" onPress={console.log('hello')} />
-      </View>
-      <Modal
-        isVisible={open}
+        {/* <Modal
+        isVisible={true}
         animationIn="fadeIn"
         animationOut="fadeOut"
-        //style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}>
         <View style={base.modal}>
-          <Text style={base.modalTitle}>Nhập mật khẩu</Text>
+          <Text bold style={base.modalTitle}>
+            Nhập mật khẩu Smart OTP
+          </Text>
           <TextInput
             placeholder="1 -> next , 0 -> error"
             password
@@ -128,11 +176,42 @@ const Confirmation = () => {
             <Text style={base.closeText}>x</Text>
           </Pressable>
         </View>
-      </Modal>
-    </>
+      </Modal> */}
+        <ModalBottom visible={open} onClose={() => setOpen(false)}>
+          <Bank wallet={false} />
+        </ModalBottom>
+      </SafeAreaProvider>
+      <FooterContainer>
+        <Image
+          source={require('images/gradient/B_topup.png').default}
+          style={base.buttonSB}
+        />
+      </FooterContainer>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({
+  itemBank: {
+    position: 'relative',
+    marginBottom: 20,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: scale(10),
+  },
+  itemBankActive: {
+    backgroundColor: Colors.cl5,
+  },
   textUnderline: {
     textDecorationLine: 'underline',
     marginTop: scale(10),
@@ -155,8 +234,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
-    borderBottomWidth: 1,
     paddingVertical: 15,
   },
   textLeft: {
@@ -166,6 +243,11 @@ const styles = StyleSheet.create({
   textRight: {
     fontSize: Fonts.H6,
     color: Colors.black,
+  },
+  iconBank: {
+    width: scale(24),
+    height: scale(24),
+    marginRight: 10,
   },
 });
 export default Confirmation;
