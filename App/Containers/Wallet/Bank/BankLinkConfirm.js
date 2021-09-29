@@ -18,38 +18,24 @@ import {
   Button,
 } from 'components';
 
-import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
+import {ERROR_CODE, SCREEN, FUNCTION_TYPE, IC_TPYE} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'context/Language';
 import {base, Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
-import SelectBank from 'components/QRPay/SelectBank';
-
+import {get} from 'lodash';
+import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
+import {getFullAddress} from 'context/Wallet/utils/bankInfo';
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
-  const {item} = params || {};
-
-  //  const onSubmit = () => {
-  //    const isValid = validateInfo?.();
-  //    //todo: call api connect
-  //    if (isValid) {
-  //        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-  //          screen: MapBankRoutes.BankLinkKYCInfo,
-  //          params: {kycInfo, bank, bankAccount},
-  //        });
-  //      } else {
-  //        //open KYC flow
-  //      }
-  //    }
-  //  };
-  // ;
 
   const onSubmit = () => {
+    //call Api active_customer 
     props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
       screen: MapBankRoutes.BankLinkOTP,
-      // params: {kycInfo, bank, bankAccount},
+     
     });
   };
 
@@ -71,34 +57,43 @@ export default function (props) {
   };
 
   const renderContent = () => {
+    const cardList = {
+      [IC_TYPE_CHAR.CMND]: translation?.id_card,
+      [IC_TYPE_CHAR.CMNDQD]: translation?.militaryID,
+      [IC_TYPE_CHAR.PASSPORT]: translation?.passport,
+    };
+
+    const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
+    const BankName = get(Bank, 'BankName', 'Vietcombank');
+    const Name = get(optionKyc, 'data.Name', '');
+    const type = get(optionKyc, 'data.Type', '');
+    const idNumber = get(optionKyc, 'data.Number', '');
+    const address = getFullAddress(ICAddress);
+
     const data = [
       {
-        label: 'Chuyển đến ',
-        value: 'NGUYEN VAN B ',
+        label: 'Ngân hàng',
+        value: BankName,
       },
       {
-        label: 'Số điện thoại ',
-        value: '0909000999 ',
+        label: 'Số thẻ',
+        value: BankAccount,
       },
       {
-        label: 'Nội dung ',
-        value: 'FROM AN ',
+        label: 'Họ tên',
+        value: Name,
       },
       {
-        label: 'Phí giao dịch',
-        value: 'Miễn phí',
+        label: 'Loại GTTT',
+        value: cardList[type],
       },
       {
-        label: 'Người chịu phí ',
-        value: 'Người gửi ',
+        label: 'Số ID',
+        value: idNumber,
       },
       {
-        label: 'Thực chuyển ',
-        value: '1.000.000 vnd',
-      },
-      {
-        label: 'Tổng số tiền',
-        value: <Text bold>1.005.000 vnđ</Text>,
+        label: 'Địa chỉ liên hệ',
+        value: address,
       },
     ];
     return (
@@ -111,17 +106,21 @@ export default function (props) {
           {data.map((item, index) => {
             return (
               <View key={index}>
-                <View
-                  style={[
-                    styles.row,
-                    index + 1 === data.length && {
-                      borderBottomWidth: 0,
-                    },
-                  ]}>
-                  <Text style={styles.textLeft}>{item.label}</Text>
+                <View style={[styles.row, ,]}>
+                  <Text fs={'h6'} style={styles.textLeft}>
+                    {item.label}
+                  </Text>
 
-                  <Text style={styles.textRight}>{item.value}</Text>
+                  <Text fs={'h6'} bold style={styles.textRight}>
+                    {item.value}
+                  </Text>
                 </View>
+                {index + 1 < data.length && (
+                  <Image
+                    source={require('./images/dash_line-2.png')}
+                    style={{width: '100%', height: 1}}
+                  />
+                )}
               </View>
             );
           })}
@@ -132,13 +131,19 @@ export default function (props) {
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
-        <Header back title={translation.connect_bank} />
+        <Header back title={'Xác nhận liên kết'} />
       </HeaderBg>
 
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
+        <View alignItems="center">
+          <Text fs={'h4'} bold>
+            {translation.connect_bank}
+          </Text>
+        </View>
+
         {renderContent()}
       </ScrollView>
       {renderButton()}
@@ -228,7 +233,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomColor: Colors.l3,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     paddingVertical: 15,
   },
 

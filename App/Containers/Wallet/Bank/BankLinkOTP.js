@@ -45,6 +45,17 @@ const OTP = props => {
   };
 
   const renderOTP = () => {
+    //  <OTPInputView
+    //   style={styles.wrapOtp}
+    //   pinCount={6}
+    //   onCodeChanged={onChange}
+    //   autoFocusOnLoad
+    //   codeInputFieldStyle={styles.otp}
+    //   codeInputHighlightStyle={{}}
+    //   onCodeFilled={onCodeFilled}
+    //   clearInputs={message}
+    //   code={code}
+    // />
     return (
       <OTPContainer
         onChange={onChange}
@@ -53,11 +64,12 @@ const OTP = props => {
         code={code}
         countdown={countdown}
         resentOTP={resentOTP}
-        onChangePhone={onChangePhone}
+        // onChangePhone={onChangePhone}
         label={label}
       />
     );
   };
+
   const renderButton = () => {
     return (
       <View style={styles.shadowButton}>

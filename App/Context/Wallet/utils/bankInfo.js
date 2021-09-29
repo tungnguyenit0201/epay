@@ -75,6 +75,26 @@ export const BANK_TYPE = {
   LIST_NAPAS_BANK: 'LIST_NAPAS_BANK',
   LIST_INTERNATIONAL_BANK: 'LIST_INTERNATIONAL_BANK',
 };
+
+export const getFullAddress = params => {
+  if (!params) {
+    return '';
+  }
+  const {
+    Address: addressName,
+    Ward: wardName,
+    District: districtName,
+    Province: cityName,
+  } = params || {};
+  const comma = ', ';
+  return (
+    (addressName ? addressName + comma : '') +
+    (wardName ? wardName + comma : '') +
+    (districtName ? districtName + comma : '') +
+    (cityName || '')
+  );
+};
+
 export const censorCardNumber = (
   cardNumber,
   label = '*',
@@ -98,7 +118,7 @@ export const censorCardNumber = (
 
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
-  // console.log('initialValue', initialValue);
+  console.log('initialValue', initialValue);
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();

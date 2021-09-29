@@ -170,12 +170,25 @@ const BankList = forwardRef((props, ref) => {
       const {Number} = ICInfo || {};
       const IDNumber = censorCardNumber(Number);
       const kycInfo = [{label: IDNumber, value: 1, data: ICInfo}];
-      Navigator.showPopup({
+      // renderBody: () => <View/>
+      // secondaryButton: {
+      // title,
+      // onPress
+      // }
+      Navigator.showAlert({
         screen: PopUpBankLink,
         title: '',
         onClose: () => {},
         type: DISPLAY_POPUP,
         params: {
+          // icon: Images.TransactionHistory.Fail,
+          // title: title ?? strings?.error,
+          // message: message ?? strings?.unknownError,
+          // renderBody: () => <View/>
+          // secondaryButton: {
+          // title,
+          // onPress
+          // }
           data: [],
           kycInfo,
           onContinue: optionKyc => {
@@ -185,8 +198,8 @@ const BankList = forwardRef((props, ref) => {
                 params: {item: item, optionKyc},
               });
             } else {
-              onContinue(SCREEN.VERIFY_USER_INFO, {
-                params: {isMapBank: true},
+              Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD, {
+                KYCFlow: 'bank',
               });
             }
           },

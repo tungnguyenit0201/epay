@@ -1,12 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Keyboard,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {StyleSheet, View, ScrollView, Keyboard} from 'react-native';
 import {Colors, Images, Spacing, base} from 'themes';
 import {Button, Header, InputBlock, HeaderBg} from 'components';
 import {SCREEN} from 'configs/Constants';
@@ -21,7 +14,6 @@ import {get} from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
 const BankLinkKYCInfo = props => {
-  // TODO : translation
   const {params} = useRoute() || {};
   const translation = useTranslation();
   const {onChange, onContinue, onUpdate} = useBankInfo(params);
@@ -39,7 +31,7 @@ const BankLinkKYCInfo = props => {
   }, []);
 
   const onSubmit = values => {
-    onChange('ICAddress');
+    onChange('ICAddress', values);
     onContinue(SCREEN.MAP_BANK_FLOW, {screen: MapBankRoutes.BankLinkConfirm});
   };
 
