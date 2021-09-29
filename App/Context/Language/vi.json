@@ -460,5 +460,10 @@
   "IDCardNumber": "Số CMND/CCCD",
   "militaryIDNumber": "Số Chứng minh thư quân đội",
   "passportNumber": "Số Hộ chiếu",
-  "inputRegexError": "$type không đúng định dạng"
+  "inputRegexError": "$type không đúng định dạng",
+  "kycPermissionTitle": "Yêu cầu truy cập máy ảnh và thư viện",
+  "permissionRequested": "Quý khách vui lòng cho phép Epay truy cập máy ảnh và thư viện để có thể sử dụng tính năng này.",
+  "permissionDenied": "Quý khách vui lòng bật lại quyền truy cập máy ảnh và thư viện trong cài đặt ứng dụng để có thể sử dụng tính năng này.",
+  "acceptRequested": "Cho phép truy cập",
+  "cancelled": "Huỷ bỏ"
 }

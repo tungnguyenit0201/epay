@@ -36,7 +36,6 @@ const VerifyUserInfo = ({ route }) => {
           }}
           identify={identityCard}
           draft={verifyInfo?.ICFrontPhoto}
-          style={styles.mb1}
           documentType={documentType}
           verifyParams={route?.params}
         />
