@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect, useCallback} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
@@ -301,21 +301,31 @@ const useSyncSmartOTP = params => {
   const {phone} = useUser();
   const [status, setStatus] = useState(params?.type);
   const {setSmartOTPSharedKey} = useAsyncStorage();
+  const {onShowModal} = useModalSmartOTP();
 
-  const onSync = useCallback(async () => {
+  const onSync = async smartOTPPassword => {
+    setStatus('sync');
+    let passwordEncrypted = params?.passwordEncrypted;
+    if (smartOTPPassword) {
+      passwordEncrypted = await sha256(smartOTPPassword);
+    }
     const result = await syncSmartOTP({
       phone,
-      password: params?.passwordEncrypted,
+      password: passwordEncrypted,
     });
     setStatus(result?.ErrorCode === ERROR_CODE.SUCCESS ? 'success' : 'failure');
     result?.SharedKey && setSmartOTPSharedKey(result.SharedKey);
-  }, [phone, params?.passwordEncrypted, setSmartOTPSharedKey]);
+  }; // eslint-disable-line
 
-  useEffect(() => {
-    params?.type === 'sync' && onSync();
-  }, [params?.type, onSync]);
+  const onGoPasswordSync = () => {
+    onShowModal(onSync);
+  };
 
-  return {status, onSync};
+  // useEffect(() => {
+  //   params?.type === 'sync' && onSync();
+  // }, [params?.type, onSync]);
+
+  return {status, onSync, onGoPasswordSync};
 };
 
 const useModalSmartOTP = () => {

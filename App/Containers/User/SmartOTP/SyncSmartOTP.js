@@ -6,8 +6,8 @@ import {useSmartOTP, useSyncSmartOTP} from 'context/User/utils';
 import {Modal} from 'components';
 
 const SyncSmartOTP = ({route}) => {
-  const {onGoPasswordSync, onBack} = useSmartOTP();
-  const {status, onSync} = useSyncSmartOTP(route?.params);
+  const {onBack} = useSmartOTP();
+  const {status, onSync, onGoPasswordSync} = useSyncSmartOTP(route?.params);
 
   const renderText = () => {
     switch (status) {
@@ -46,7 +46,7 @@ const SyncSmartOTP = ({route}) => {
       {status === 'sync' && (
         <View style={styles.modalContainer}>
           <View style={styles.modalBackground} />
-          <Text style={styles.modalText}>Đang đồng bộ smart otp ......</Text>
+          <Text style={styles.modalText}>Đang đồng bộ Smart OTP</Text>
         </View>
       )}
       {status === 'success' && (
