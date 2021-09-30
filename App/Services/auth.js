@@ -14,12 +14,12 @@ export const checkPhone = async phone => {
   return response;
 };
 
-export const login = async (phone, password) => {
+export const login = async (phone, password, PushToken) => {
   let response = null;
   await request({
     url: API.AUTH.LOGIN,
     method: 'post',
-    params: {PhoneNumber: phone, Password: password},
+    params: {PhoneNumber: phone, Password: password, PushToken},
     success: res => {
       response = res;
     },

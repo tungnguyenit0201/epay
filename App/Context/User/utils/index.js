@@ -2,7 +2,12 @@ import useVerifyInfo from './verifyUser';
 import useImagePicker from './imagePicker';
 import useUserInfo from './userInfo';
 import useSecuritySettings from './securitySettings';
-import { useSmartOTP, useSmartOTPInfo, useSyncSmartOTP } from './smartOTP';
+import {
+  useSmartOTP,
+  useSmartOTPInfo,
+  useSyncSmartOTP,
+  useModalSmartOTP,
+} from './smartOTP';
 import useSelectRegion from './selectRegion';
 import useNotify from './notification';
 import useUserStatus from './userStatus';
@@ -23,4 +28,5 @@ export {
   useQRCode,
   useEmail,
   useDropImage,
+  useModalSmartOTP,
 };

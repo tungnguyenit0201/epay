@@ -12,7 +12,8 @@ export default {
   COMMON: {
     GEN_OTP: 'common/otp/gen_otp',
     CONFIRM_OTP: 'common/otp/confirm_otp',
-    CHECK_SMART_OTP: 'smartotp/get_smartotp_active',
+    CHECK_SMART_OTP: 'smartotp/smartotp_check_active',
+    GET_SMART_OTP_INFO: 'smartotp/get_smartotp_active',
     ACTIVATE_SMART_OTP: 'smartotp/smartotp_active',
     CHECK_SMART_OTP_KEY: 'smartotp/smartotp_key_check',
     CHANGE_SMART_OTP_PASSWORD: 'smartotp/smartotp_pass_change',
@@ -35,7 +36,7 @@ export default {
     GET_SETTINGS_INFO: 'setting/get_all_info',
     GET_QRCODE: 'account/get_qrcode',
     VERIFY_EMAIL: 'account/authentication_email',
-    UPDATE_EMAIL: 'v2/account/change_email',
+    UPDATE_EMAIL: 'account/change_email',
     UPDATE_AVATAR: 'account/update_avatar',
     UPDATE_PASSWORD: 'account/proactive_change_password',
   },

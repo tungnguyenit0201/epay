@@ -1,22 +1,59 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from 'components';
+import React, {useState, useRef, useEffect} from 'react';
+import {StyleSheet, View, TextInput} from 'react-native';
+import {Row, Text} from 'components';
 import {Colors, Spacing} from 'themes';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {useIsFocused} from '@react-navigation/native';
 
-const SmartOTPInput = ({onFilled, message}) => {
+const SmartOTPInput = ({onFilled, message, numDigits = 6}) => {
+  let isFocused;
+  try {
+    /* eslint-disable-next-line */
+    isFocused = useIsFocused();
+  } catch {
+    isFocused = true;
+  }
+  const [code, setCode] = useState('');
+  const textInputRef = useRef(null);
+
+  const onChange = value => {
+    if (value.length >= numDigits) {
+      onFilled && onFilled(value.substring(0, numDigits));
+    }
+    setCode(value);
+  };
+
+  useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
+    setCode('');
+    textInputRef.current && textInputRef.current.focus();
+  }, [isFocused]);
+
   return (
-    <View>
-      <OTPInputView // xài đỡ, sau này sửa lại cái khác
-        pinCount={6}
-        autoFocusOnLoad
-        codeInputFieldStyle={{color: Colors.black}}
-        onCodeFilled={onFilled}
-        style={{
-          flexDirection: 'row',
-        }}
+    <View style={styles.container}>
+      <TextInput
+        ref={textInputRef}
+        value={code}
+        keyboardType="numeric"
+        style={styles.textInput}
+        onChangeText={onChange}
       />
-      <Text style={styles.message}>{message}</Text>
+      <Row>
+        {[...Array(numDigits)].map((digit, index) => (
+          <View
+            key={index}
+            style={[
+              styles.circle,
+              index >= code.length ? styles.activeCirle : null,
+              index ? {marginLeft: Spacing.PADDING} : null,
+            ]}
+          />
+        ))}
+      </Row>
+      <Text style={styles.message} mt={Spacing.PADDING}>
+        {message}
+      </Text>
     </View>
   );
 };
@@ -24,7 +61,22 @@ const SmartOTPInput = ({onFilled, message}) => {
 export default SmartOTPInput;
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
   message: {
     color: Colors.Highlight,
+  },
+  textInput: {
+    display: 'none',
+  },
+  circle: {
+    width: Spacing.PADDING,
+    height: Spacing.PADDING,
+    borderRadius: Spacing.PADDING / 2,
+    backgroundColor: Colors.g9,
+  },
+  activeCirle: {
+    backgroundColor: Colors.l4,
   },
 });

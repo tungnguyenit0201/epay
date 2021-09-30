@@ -6,17 +6,35 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {Colors, Images, Spacing} from 'themes';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import {useCommon} from 'context/Common';
 import Debug from './Debug';
-import {useCheckInfo, useModalSmartOTP} from 'context/Home/utils';
+import {
+  useCheckInfo,
+  useModalSmartOTP as useModalSmartOTPSuggestion,
+} from 'context/Home/utils';
 import {useTranslation} from 'context/Language';
 import {SCREEN} from 'configs/Constants';
-import {Modal, Alert, FWLoading, Button, Text} from 'components';
-import {useModalPermission} from 'context/Common/utils';
+import {
+  Modal as ModalCustom,
+  Alert,
+  FWLoading,
+  Button,
+  Text,
+  Icon,
+  InputBlock,
+} from 'components';
+import {useModalPassword, useModalPermission} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
+import {useModalSmartOTP as useModalSmartOTPPassword} from 'context/User/utils';
+import {scale} from 'utils/Functions';
+import SmartOTPInput from 'components/User/SmartOTP/SmartOTPInput';
+import {Formik} from 'formik';
+import {passwordSchema} from 'utils/ValidationSchemas';
+
 const Wrapper = React.memo(
   ({
     barStyle = 'light-content',
@@ -25,12 +43,14 @@ const Wrapper = React.memo(
     avoidStatusBar = false,
   }) => {
     const {loading, error} = useCommon();
-    const modalSmartOTP = useModalSmartOTP();
+    const modalSmartOTP = useModalSmartOTPSuggestion();
     const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
     const translation = useTranslation();
     const {permissionCamera, showModalCamera, askPermission} =
       useModalPermission();
     const {setFirstLogin} = useRegister();
+    const smartOTPPassword = useModalSmartOTPPassword();
+    const modalPassword = useModalPassword();
 
     return (
       // TODO: translate
@@ -38,7 +58,8 @@ const Wrapper = React.memo(
         <KeyboardAvoidingView
           style={styles.flexFill}
           behavior={'padding'}
-          enabled={Platform.OS === 'ios' && !disableAvoidKeyboard}>
+          enabled={Platform.OS === 'ios' && !disableAvoidKeyboard}
+        >
           <StatusBar
             barStyle={barStyle}
             translucent
@@ -49,10 +70,10 @@ const Wrapper = React.memo(
           {loading && <FWLoading />}
           {!!error?.errorCode && <Alert />}
           {__DEV__ && <Debug />}
-          {modalSmartOTP.smartOTP && (
-            <Modal
+          {modalSmartOTP.smartOTPSuggestion && (
+            <ModalCustom
               icon={Images.Modal.Lock}
-              visible={modalSmartOTP.smartOTP}
+              visible={modalSmartOTP.smartOTPSuggestion}
               onClose={() => setFirstLogin(false)}
               title="Nhanh và bảo mật hơn với smart OTP"
               content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
@@ -75,7 +96,7 @@ const Wrapper = React.memo(
             />
           )}
           {KYC && (
-            <Modal
+            <ModalCustom
               icon={Images.Modal.UserTick}
               visible={KYC}
               onClose={() => checkInfo({value: false})}
@@ -97,7 +118,7 @@ const Wrapper = React.memo(
             />
           )}
           {connectBank && (
-            <Modal
+            <ModalCustom
               visible={connectBank}
               onClose={() => checkInfo({value: false})}
               title={translation.notification}
@@ -118,7 +139,7 @@ const Wrapper = React.memo(
             />
           )}
           {permissionCamera && (
-            <Modal
+            <ModalCustom
               visible={permissionCamera}
               onClose={() => showModalCamera(false)}
               title={'Truy cập camera'}
@@ -137,6 +158,112 @@ const Wrapper = React.memo(
                 </View>
               )}
             />
+          )}
+          {smartOTPPassword.smartOTPPassword?.show && (
+            <View style={styles.backdrop}>
+              <Pressable
+                onPress={smartOTPPassword.onHideModal}
+                style={{flex: 1}}
+              />
+              <View style={styles.bottomModalContainer}>
+                <TouchableOpacity onPress={smartOTPPassword.onHideModal}>
+                  <Icon
+                    icon={Images.CloseThin}
+                    tintColor={Colors.black}
+                    size={scale(10)}
+                    style={styles.iconCloseSmartOTPPassword}
+                  />
+                </TouchableOpacity>
+                {/* TODO: translate */}
+                <Text bold style={styles.modalTitle} mb={scale(54)}>
+                  Nhập mật khẩu Smart OTP hiện tại
+                </Text>
+                <SmartOTPInput
+                  onFilled={smartOTPPassword.onCodeFilled}
+                  message={smartOTPPassword.smartOTPPassword?.message}
+                />
+                <Text
+                  mt={scale(130)}
+                  style={styles.modalForgetPasswordText}
+                  onPress={smartOTPPassword.onForgetSmartOTPPassword}
+                >
+                  {translation.forgot_password}
+                </Text>
+              </View>
+            </View>
+          )}
+          {modalPassword.password?.show && (
+            <View style={styles.backdrop}>
+              <Pressable
+                onPress={modalPassword.onHideModal}
+                style={{flex: 1}}
+              />
+              <View style={styles.bottomModalContainer}>
+                <TouchableOpacity onPress={modalPassword.onHideModal}>
+                  <Icon
+                    icon={Images.CloseThin}
+                    tintColor={Colors.black}
+                    size={scale(10)}
+                    style={styles.iconCloseSmartOTPPassword}
+                  />
+                </TouchableOpacity>
+                {/* TODO: translate */}
+                <Text bold style={styles.modalTitle}>
+                  Nhập mật khẩu
+                </Text>
+                <Formik
+                  initialValues={{
+                    password: '',
+                  }}
+                  onSubmit={modalPassword.onPasswordFilled}
+                  validationSchema={passwordSchema}
+                >
+                  {({
+                    handleChange: _handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    setFieldValue,
+                    setFieldTouched,
+                    touched,
+                    errors,
+                    values,
+                  }) => {
+                    const handleChange = field => value => {
+                      setFieldValue(field, value);
+                      setFieldTouched(field, true, false);
+                    };
+                    return (
+                      <View style={{paddingHorizontal: Spacing.PADDING}}>
+                        <InputBlock
+                          password
+                          placeholder="Nhập mật khẩu"
+                          onChange={handleChange('password')}
+                          onBlur={handleBlur('password')}
+                          value={values.password}
+                          autoFocus
+                          error={
+                            modalPassword.password?.message ||
+                            (touched.password && errors.password)
+                          }
+                        />
+                        <Button
+                          mb={Spacing.PADDING}
+                          label="Xác nhận"
+                          onPress={handleSubmit}
+                          disabled={!values.password || errors.password}
+                        />
+                      </View>
+                    );
+                  }}
+                </Formik>
+                <Text
+                  style={styles.modalForgetPasswordText}
+                  onPress={modalPassword.onForgetPassword}
+                >
+                  {translation.forgot_password}
+                </Text>
+              </View>
+            </View>
           )}
         </KeyboardAvoidingView>
       </View>
@@ -157,6 +284,31 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   btn: {width: '100%'},
+  backdrop: {
+    backgroundColor: '#00000099',
+    ...StyleSheet.absoluteFill,
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+  bottomModalContainer: {
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    backgroundColor: Colors.white,
+  },
+  iconCloseSmartOTPPassword: {
+    position: 'absolute',
+    right: scale(20),
+    top: Spacing.PADDING,
+  },
+  modalTitle: {
+    marginTop: scale(36),
+    textAlign: 'center',
+    fontSize: Fonts.H5,
+  },
+  modalForgetPasswordText: {
+    marginBottom: Spacing.PADDING,
+    textAlign: 'center',
+  },
 });
 
 export default Wrapper;
