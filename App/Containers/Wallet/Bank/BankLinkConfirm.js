@@ -51,7 +51,7 @@ export default function (props) {
     };
     try {
       const res = await onActiveUser?.({BankConnectInfo});
-      alert(res);
+      // alert(res);
     } catch (e) {}
 
     props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
