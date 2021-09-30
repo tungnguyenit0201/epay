@@ -246,6 +246,7 @@ const useSmartOTP = params => {
     onBack,
     onGoPasswordSync,
     onGoSmartOTP,
+    onTransaction,
   };
 };
 
