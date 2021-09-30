@@ -9,19 +9,38 @@ const useShowModal = () => {
   const {getModalSmartOTPDisabled} = useAsyncStorage();
   const {dispatch} = useCommon();
 
-  const showModalSmartOTP = async (value = true) => {
+  const showModalSmartOTPSuggestion = async (show = true) => {
     let isDisabled = await getModalSmartOTPDisabled();
     if (token && !isDisabled) {
       const result = await getSettingsInfo({phone});
       isDisabled = !!result?.SettingInfo?.ActivedSmartOTP;
     }
-    if (value && isDisabled) {
+    if (show && isDisabled) {
       return;
     }
-    dispatch({type: 'SHOW_MODAL', modal: {type: 'smartOTP', value}});
+    dispatch({
+      type: 'SHOW_MODAL',
+      modal: {type: 'smartOTPSuggestion', value: show},
+    });
   };
 
-  return {showModalSmartOTP};
+  const showModalSmartOTPPassword = async ({
+    show = true,
+    code = '',
+    message = '',
+    goBack = () => {},
+  }) => {
+    dispatch({
+      type: 'SHOW_MODAL',
+      modal: {
+        type: 'smartOTPPassword',
+        value: {show, code, message},
+      },
+      goBack,
+    });
+  };
+
+  return {showModalSmartOTPSuggestion, showModalSmartOTPPassword};
 };
 
 export default useShowModal;
