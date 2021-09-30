@@ -181,6 +181,8 @@ export default {
     Medic: require('images/icons/medic.png'),
     BarCross: require('images/icons/bag-cross.png'),
     SearchZoomOut: require('images/icons/search-zoom-out.png'),
+    EmptyWalletChange: require('images/icons/empty-wallet-change.png'),
+    Warning: require('images/icons/warning.png'),
   },
   Capture: require('images/Capture.png'),
   Camera: {
