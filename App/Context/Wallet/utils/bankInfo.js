@@ -8,67 +8,122 @@ import {
   getConnectedBankDetail,
   changeLimit,
   getNapasBank,
+  activeUser,
 } from 'services/wallet';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
 import _, {isEmpty} from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
-import {getIdentifyInfo} from 'services/user';
-import {value} from 'lodash/seq';
+import {getIdentifyInfo, updatePersonalInfo} from 'services/user';
+import {useUser} from 'context/User';
 
-const mockIc = {
-  CheckICInfo: {
-    Address: '83/9 Phú Hòa, Phường 8 Tân Bình, TP. Hồ Chí Minh',
-    BankNumber: '',
-    District: '',
-    ImgBack: null,
-    ImgFront: null,
-    Name: 'NGUYEN NHAT PHUONG',
-    Number: '079096012342',
-    Province: '',
-    Status: 5,
-    Type: 'IC',
-    Ward: '',
+const mockIc = [
+  {
+    CheckICInfo: {
+      Address: '83/9 Phú Hòa, Phường 8 Tân Bình, TP. Hồ Chí Minh',
+      BankNumber: '',
+      District: '',
+      ImgBack: null,
+      ImgFront: null,
+      Name: 'NGUYEN NHAT PHUONG',
+      Number: '079096012342',
+      Province: '',
+      Status: 5,
+      Type: 'IC',
+      Ward: '',
+    },
+    ErrorCode: 0,
+    ErrorMessage: 'Thành công',
+    ICInfo: {
+      Address: '3123zzzz',
+      BankNumber: '',
+      District: 'Huyện Đất Đỏ',
+      ImgBack: null,
+      ImgFront: null,
+      Name: 'NGUYEN THANH TAM',
+      Number: '079096012342',
+      Province: 'Bà Rịa - Vũng Tàu',
+      Status: 3,
+      Type: 'IC',
+      Ward: 'Xã Lộc An',
+    },
+    IdentityCardInfor: {
+      Address: 'Khu phố 9 Phường 1, TX. Kiến Tường, Long An',
+      BirthDay: '',
+      CardID: -1,
+      CardNumber: '301382190',
+      District: '',
+      Extracted: 0,
+      FullName: 'NGUYEN THANH TAM',
+      Gender: null,
+      ICType: 1,
+      IssueDate: '',
+      IssuePlace: '',
+      Province: '',
+      ValidDate: '',
+      Verified: null,
+      Ward: '',
+    },
+    MsgID: 'E5E54209-D64B-431F-BA0A-BEF33C4E45A424-09-2021 22:59:59.730',
+    MsgType: 'get_ic_info_response',
+    ResponseTime: '24-09-2021 22:59:59',
+    ServerUtcTimeEpoch: 1632499199896,
+    TransactionID: 'TR1632499066377237',
   },
-  ErrorCode: 0,
-  ErrorMessage: 'Thành công',
-  ICInfo: {
-    Address: '3123zzzz',
-    BankNumber: '',
-    District: 'Huyện Đất Đỏ',
-    ImgBack: null,
-    ImgFront: null,
-    Name: 'NGUYEN THANH TAM',
-    Number: '301382190',
-    Province: 'Bà Rịa - Vũng Tàu',
-    Status: 3,
-    Type: 'IC',
-    Ward: 'Xã Lộc An',
+  {
+    CheckICInfo: {
+      Address: '83/9 Phú Hòa, Phường 8 Tân Bình, TP. Hồ Chí Minh',
+      BankNumber: '',
+      District: '',
+      ImgBack: null,
+      ImgFront: null,
+      Name: 'NGUYEN NHAT PHUONG',
+      Number: '079096012342',
+      Province: '',
+      Status: 5,
+      Type: 'IC',
+      Ward: '',
+    },
+    ErrorCode: 0,
+    ErrorMessage: 'Thành công',
+    ICInfo: {
+      Address: '3123zzzz',
+      BankNumber: '',
+      District: 'Huyện Đất Đỏ',
+      ImgBack: null,
+      ImgFront: null,
+      Name: 'NGUYEN THANH TAM',
+      Number: '301382190',
+      Province: 'Bà Rịa - Vũng Tàu',
+      Status: 3,
+      Type: 'IC',
+      Ward: 'Xã Lộc An',
+    },
+    IdentityCardInfor: {
+      Address: 'Khu phố 9 Phường 1, TX. Kiến Tường, Long An',
+      BirthDay: '',
+      CardID: -1,
+      CardNumber: '301382190',
+      District: '',
+      Extracted: 0,
+      FullName: 'NGUYEN THANH TAM',
+      Gender: null,
+      ICType: 1,
+      IssueDate: '',
+      IssuePlace: '',
+      Province: '',
+      ValidDate: '',
+      Verified: null,
+      Ward: '',
+    },
+    MsgID: 'E5E54209-D64B-431F-BA0A-BEF33C4E45A424-09-2021 22:59:59.730',
+    MsgType: 'get_ic_info_response',
+    ResponseTime: '24-09-2021 22:59:59',
+    ServerUtcTimeEpoch: 1632499199896,
+    TransactionID: 'TR1632499066377237',
   },
-  IdentityCardInfor: {
-    Address: 'Khu phố 9 Phường 1, TX. Kiến Tường, Long An',
-    BirthDay: '',
-    CardID: -1,
-    CardNumber: '301382190',
-    District: '',
-    Extracted: 0,
-    FullName: 'NGUYEN THANH TAM',
-    Gender: null,
-    ICType: 1,
-    IssueDate: '',
-    IssuePlace: '',
-    Province: '',
-    ValidDate: '',
-    Verified: null,
-    Ward: '',
-  },
-  MsgID: 'E5E54209-D64B-431F-BA0A-BEF33C4E45A424-09-2021 22:59:59.730',
-  MsgType: 'get_ic_info_response',
-  ResponseTime: '24-09-2021 22:59:59',
-  ServerUtcTimeEpoch: 1632499199896,
-  TransactionID: 'TR1632499066377237',
-};
+];
 export const BANK_TYPE = {
   LIST_BANK_CONNECT: 'LIST_BANK_CONNECT',
   LIST_DOMESTIC_BANK: 'LIST_DOMESTIC_BANK',
@@ -99,6 +154,7 @@ export const censorCardNumber = (
   cardNumber,
   label = '*',
   countDigitsShow = 3,
+  prefixDigitShow = 0,
 ) => {
   if (!cardNumber || cardNumber.length < 3) {
     return cardNumber;
@@ -107,18 +163,22 @@ export const censorCardNumber = (
 
   const string = String(cardNumber);
   const length = string?.length;
+  const prefix = string.slice(0, prefixDigitShow);
   let surfix = string.slice(length - countDigitsShow, length);
   let result = '';
-  for (let index = 0; index < length - countDigitsShow; index++) {
+  for (
+    let index = prefixDigitShow || 0;
+    index < length - countDigitsShow;
+    index++
+  ) {
     result += label || '*';
   }
-  result = result + surfix;
+  result = prefix + result + surfix;
   return result;
 };
 
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
-  console.log('initialValue', initialValue);
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
@@ -159,25 +219,61 @@ const useBankInfo = (initialValue = {}) => {
 
   const onGetIcInfor = async () => {
     try {
-      setLoading(true);
-      let phone = await getPhone();
-      setLoading(false);
-      let result = await getIdentifyInfo({phone});
-      result = mockIc;
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        const {ICInfo, CheckICInfo, IdentityCardInfor} = result || {};
-        dispatch({
-          type: 'SET_IC_INFO',
-          ICInfor: result?.ICInfo,
-        });
-        dispatch({type: 'SET_PHONE', phone});
-        return {result};
+      const phone = await getPhone();
+      const result = await getIdentifyInfo({phone});
+      let mockresult = mockIc;
+
+      dispatch({type: 'SET_IC_INFO', data: mockIc});
+      if (true || _.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+        // dispatch({
+        //   type: 'SET_IC_INFO',
+        //   ICBankInfor: result?.data,
+        // });
+        return {result: mockresult};
       } else {
         setError(result);
       }
-    } catch (error) {
-      setLoading(false);
+    } catch (error) {}
+  };
+
+  const onActiveUser = async param => {
+    setLoading(true);
+    const {BankConnectInfo} = param || {};
+    let phone = await getPhone();
+    const result = await activeUser({phone, BankConnectInfo});
+    setLoading(false);
+    alert(JSON.stringify(result));
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      dispatch({
+        type: 'SET_TRAN_STATE',
+        data: result?.TransState,
+      });
+      return {result: result};
+    } else {
+      setError(result);
     }
+  };
+  const onActiveUserOTP = async param => {
+    setLoading(true);
+    let phone = await getPhone();
+    const {BankConnectInfo} = param || {};
+
+    return new Promise(async (resolve, reject) => {
+      setLoading(true);
+      let phone = await getPhone();
+      let result = await updatePersonalInfo({
+        phone,
+        BankConnectInfo,
+      });
+
+      setLoading(false);
+      if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
+        const {TransState} = result || {};
+        resolve({TransState: TransState});
+      } else {
+        reject();
+      }
+    });
   };
 
   const onGetConnectedBank = async () => {
@@ -293,16 +389,11 @@ const useBankInfo = (initialValue = {}) => {
     onChange('ICAddress', {Address, Ward, District, Province});
   };
 
-  const onUpdateAllInfo = async value => {
-    // console.log('data :>> ', {...contentRef.current, ...value});
-    // await onUpdateIdentify({...contentRef.current, ...value});
-    // await onUpdatePersonalInfo({...contentRef.current, ...value});
-    // await onUpdateUserAddress({...contentRef.current, ...value});
-    // await onGetAllInfo();
-    // onClearRegionData();
-  };
+  const onUpdateAllInfo = async value => {};
 
   return {
+    onActiveUser,
+    onActiveUserOTP,
     onGetConnectedBank,
     onGetDomesticBanks,
     onGetInternationalBanks,
@@ -320,4 +411,5 @@ const useBankInfo = (initialValue = {}) => {
     onUpdate,
   };
 };
+
 export default useBankInfo;

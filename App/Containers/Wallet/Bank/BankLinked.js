@@ -35,7 +35,7 @@ import {useBankInfo} from 'context/Wallet/utils';
 import BankList from 'containers/Wallet/Bank/components/BankList';
 import {BANK_TYPE} from 'context/Wallet/utils/bankInfo';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
-const BankLinked = () => {
+const BankLinked = props => {
   const translation = useTranslation();
   const {walletInfo} = useWallet();
   const {listConnectBank, listDomesticBank, listInternationalBank} = walletInfo;
@@ -173,6 +173,7 @@ const BankLinked = () => {
             key={'ListBankConnect'}
             type={BANK_TYPE.LIST_BANK_CONNECT}
             callback={onPressBank}
+            navigation={props?.navigation}
           />
         </ScrollView>
       </View>

@@ -1,6 +1,40 @@
 import {API} from 'configs';
 import {request} from 'utils/Request';
 
+export const activeUser = async param => {
+  const {phone, BankConnectInfo} = param || {};
+  let response = null;
+  await request({
+    url: API.WALLET.ACTIVE_USER,
+    method: 'get',
+    params: {
+      BankConnectInfo: BankConnectInfo || {},
+      PhoneNumber: phone,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const activeCustomerOtp = async param => {
+  const {phone, TransState, otp} = param || {};
+  let response = null;
+  await request({
+    url: API.WALLET.ACTIVE_USER_OTP,
+    method: 'post',
+    params: {
+      TransState: TransState || {},
+      PhoneNumber: phone,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const getConnectedBank = async ({phone}) => {
   let response = null;
   await request({

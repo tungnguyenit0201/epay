@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useState,
-  memo,
   useImperativeHandle,
   useRef,
   forwardRef,
@@ -14,18 +13,17 @@ import {
   View,
 } from 'react-native';
 import {Colors} from 'themes';
-import {Col, Row, Text} from 'components';
+import {Col, Row, Text, Radio} from 'components';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import MapBankFlow, {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {scale} from 'utils/Functions';
 import {useWallet} from 'context/Wallet';
 import {useBankInfo} from 'context/Wallet/utils';
 import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {useLoading} from 'context/Common/utils';
-import PopUpBankLink from 'containers/Wallet/Bank/components/PopUpBankLink';
-import {DISPLAY_POPUP} from 'containers/Modal/PopupModal';
+import {Images, Spacing} from 'themes';
 
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
@@ -57,6 +55,38 @@ const BankItem = ({title, icon, item, callback}) => (
   </TouchableOpacity>
 );
 
+const RadioICInfo = forwardRef(({kycInfo, selectedValue, style}, ref) => {
+  const data = kycInfo;
+  const [selectedItem, setSelectedItem] = useState(
+    selectedValue && selectedValue > 0 ? data?.[selectedValue - 1] : data?.[0],
+  );
+
+  useImperativeHandle(ref, () => ({getItem}));
+  const getItem = () => {
+    return selectedItem;
+  };
+  const handleChange = value => {
+    setSelectedItem(data?.[value - 1]);
+  };
+
+  return (
+    <View>
+      <Text style={{}}>
+        Thông tin giấy tờ tuỳ thân mà bạn chọn để liên kết phải trùng khớp với
+        thông tin giấy tờ tuỳ thân được khai báo tại ngân hàng.
+      </Text>
+      <Radio
+        onChange={handleChange}
+        items={data}
+        selectedValue={selectedItem?.value}
+        style={[styles.radio]}
+        wrapStyle={{flexDirection: 'column', flexWrap: ''}}
+        marginBottom={0}
+      />
+    </View>
+  );
+});
+
 const BankList = forwardRef((props, ref) => {
   const translation = useTranslation();
   const {title, type = '', bankInfo = '', callback, style} = props || {};
@@ -64,6 +94,7 @@ const BankList = forwardRef((props, ref) => {
   const [loaded, setLoaded] = useState(false);
   const allBank = useRef([]);
   const isSearch = useRef(false);
+  const radioButtonRef = useRef(null);
   const {
     onGetDomesticBanks,
     onGetInternationalBanks,
@@ -161,53 +192,60 @@ const BankList = forwardRef((props, ref) => {
     }
   };
 
+  const onPressPrimary = async item => {
+    const optionKyc = radioButtonRef.current?.getItem?.() || {};
+    alert(optionKyc);
+    Navigator.push(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankLinkInfo,
+      params: {item: item, optionKyc},
+    });
+  };
+
+  const onPressSecondary = () => {
+    // props?.navigation?.push({screen: SCREEN.MAP_BANK_FLOW});
+    props.navigation.navigate(SCREEN.CHOOSE_IDENTITY_CARD, {
+      KYCFlow: 'bank',
+    });
+  };
   const onPressBankLink = async (item, callback) => {
+    onChange('Bank', item);
     try {
-      onChange('Bank', item);
       const icInfor = await onGetIcInfor();
-      const {ICInfo, CheckICInfo, IdentityCardInfor} = icInfor?.result || {};
-      //todo if Array
-      const {Number} = ICInfo || {};
-      const IDNumber = censorCardNumber(Number);
-      const kycInfo = [{label: IDNumber, value: 1, data: ICInfo}];
-      // renderBody: () => <View/>
-      // secondaryButton: {
-      // title,
-      // onPress
-      // }
-      Navigator.showAlert({
-        screen: PopUpBankLink,
-        title: '',
-        onClose: () => {},
-        type: DISPLAY_POPUP,
-        params: {
-          // icon: Images.TransactionHistory.Fail,
-          // title: title ?? strings?.error,
-          // message: message ?? strings?.unknownError,
-          // renderBody: () => <View/>
-          // secondaryButton: {
-          // title,
-          // onPress
-          // }
-          data: [],
-          kycInfo,
-          onContinue: optionKyc => {
-            if (optionKyc) {
-              onContinue(SCREEN.MAP_BANK_FLOW, {
-                screen: MapBankRoutes.BankLinkInfo,
-                params: {item: item, optionKyc},
-              });
-            } else {
-              Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD, {
-                KYCFlow: 'bank',
-              });
-            }
+      // if (Array.isArray(icInfor?.result) && icInfor?.result.length > 0) {
+      if (1) {
+        let formatIcInfo = [];
+
+        icInfor?.result?.forEach((item, index) => {
+          const {ICInfo} = item || {};
+          const {Number} = ICInfo || {};
+          const IDNumber = censorCardNumber(Number);
+          const kycInfo = {label: IDNumber, value: index + 1, data: ICInfo};
+          formatIcInfo.push(kycInfo);
+        });
+
+        Navigator.showAlert({
+          icon: Images.ConnectBank.BankLink,
+          renderBody: () => {
+            return (
+              <RadioICInfo
+                ref={radioButtonRef}
+                kycInfo={formatIcInfo}
+                selectedValue={1}
+              />
+            );
           },
-        },
-        style: {
-          borderRadius: 20,
-        },
-      });
+          secondaryButton: {
+            title: 'Dùng giấy tờ tùy thân khác',
+            onPress: () => {
+              onPressSecondary();
+            },
+          },
+          positiveButton: {
+            title: translation.continue,
+            onPress: () => onPressPrimary(item),
+          },
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -323,4 +361,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   item: {alignItems: 'center', flex: 1},
+  radio: {
+    marginRight: 0,
+    marginTop: 4,
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
+    flexDirection: 'column',
+  },
 });

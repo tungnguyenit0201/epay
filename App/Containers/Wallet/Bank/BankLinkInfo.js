@@ -7,18 +7,22 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
+import {useSelector} from 'react-redux';
+
 import {HeaderBg, Header, Text, InputBlock, Button} from 'components';
 
 import {SCREEN} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'context/Language';
-import {Colors, Fonts, Spacing} from 'themes';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {useUser} from 'context/User';
 import {useBankInfo} from 'context/Wallet/utils';
 import {censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {bankCardRegex} from 'utils/ValidationSchemas';
+import {useWallet} from 'context/Wallet';
+
 const DEFAULT_BANK = {
   BankId: 1,
   BankCode: 'VCB',
@@ -33,12 +37,15 @@ export default function (props) {
   const {params} = useRoute() || {};
   const {userInfo} = useUser();
   const {onChange, onContinue} = useBankInfo(params);
+  const {walletInfo, limit, icInfo} = useWallet();
+  const {listNapasBank, icInfo: ICBankInfor} = walletInfo; //have
   const {item, optionKyc} = params || {};
   const [bankAccount, setBankAccount] = useState('');
   const {bank, kycInfo} = item || {};
   const {personalIC} = userInfo || {};
   const errorMessage = 'Vui lòng nhập thông tin số thẻ/tài khoản';
   const [err, setShowErr] = useState('');
+  const [selectedIc, setSelectedIc] = useState({ICInfo: optionKyc?.data});
 
   useEffect(() => {
     return Keyboard?.dismiss?.();
@@ -74,13 +81,18 @@ export default function (props) {
     }
     return true;
   };
+
   const onSubmit = () => {
     const isValid = validateInfo?.();
     onChange('BankAccount', bankAccount);
     if (isValid) {
-      if (optionKyc) {
-        onContinue(SCREEN.MAP_BANK_FLOW, {
+      if (selectedIc?.ICInfo) {
+        props?.navigation?.push?.(SCREEN.MAP_BANK_FLOW, {
           screen: MapBankRoutes.BankLinkKYCInfo,
+          params: {
+            ...params,
+            optionKyc: selectedIc?.ICInfo,
+          },
         });
       } else {
         props?.navigation?.navigate?.(SCREEN.CHOOSE_IDENTITY_CARD);
@@ -107,25 +119,82 @@ export default function (props) {
     />
   );
 
-  const renderCard = () => {
-    //Todo: pick from a list of KYC array
-    // const icData= op
+  const renderKYCCard = ({
+    title,
+    number,
+    isSelected,
+    callback,
+    keyExtractor,
+  }) => {
     const idText = 'CMND',
       nameText = 'Họ và tên ';
     return (
-      <View style={[styles.shadow]}>
-        <Text style={styles.subTitle}>{nameText}</Text>
-        <Text style={styles.title}>
-          {optionKyc?.data?.Name || personalIC.ICFullName}
-        </Text>
+      <TouchableOpacity
+        key={keyExtractor}
+        disabled={typeof callback !== 'function'}
+        onPress={() => callback?.()}
+        style={[
+          styles.shadow,
+          {backgroundColor: isSelected ? Colors.BACKGROUND_BLUE : Colors.white},
+        ]}>
+        <View style={{flexDirection: 'row'}}>
+          <View flex={1}>
+            <Text style={styles.subTitle}>{nameText}</Text>
+            <Text style={styles.title}>{title}</Text>
+          </View>
+          {isSelected ? (
+            <Image
+              resizeMode="cover"
+              source={Images.Check}
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: 16,
+              }}
+            />
+          ) : (
+            <View
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: 16,
+                backgroundColor: Colors.white,
+                borderWidth: 1,
+                borderColor: Colors.GRAY,
+              }}
+            />
+          )}
+        </View>
+
         <View height={16} />
         <Text style={styles.subTitle}>{idText}</Text>
-        <Text style={styles.title}>
-          {censorCardNumber(optionKyc?.data?.Number || personalIC.ICNumber) ||
-            optionKyc?.label}
-        </Text>
-      </View>
+        <Text style={styles.title}>{censorCardNumber(number, '*', 3, 2)}</Text>
+      </TouchableOpacity>
     );
+  };
+
+  const renderListKYCOptions = ICBankInfor => {
+    if (!Array.isArray(ICBankInfor) && typeof ICBankInfor === 'object') {
+      const info = {
+        title: optionKyc?.data?.Name || personalIC.ICFullName,
+        number: optionKyc?.data?.Number,
+        isSelected: true,
+      };
+      return renderKYCCard(info);
+    } else {
+      return ICBankInfor?.map?.((item, index) => {
+        const {ICInfo} = item;
+
+        const info = {
+          title: ICInfo?.Name,
+          number: ICInfo?.Number,
+          isSelected: selectedIc?.ICInfo?.Number === ICInfo?.Number,
+          callback: () => setSelectedIc(item),
+          keyExtractor: 'ic' + index,
+        };
+        return renderKYCCard(info);
+      });
+    }
   };
   const renderPolicy = () => {
     const policy =
@@ -176,14 +245,13 @@ export default function (props) {
       <HeaderBg>
         <Header back title={translation.connect_bank} />
       </HeaderBg>
-
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
         {renderBankInfo()}
         {renderBankInput()}
-        {renderCard()}
+        {renderListKYCOptions(icInfo)}
         <Text style={{fontSize: Fonts.SM}}>
           Thông tin GTTT phải trùng khớp với thông tin đăng ký tại ngân hàng
         </Text>
@@ -218,9 +286,10 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   container: {
-    flex: 1,
+    // flex: 1,
     paddingHorizontal: Spacing.PADDING,
     backgroundColor: Colors.BACKGROUNDCOLOR,
+    paddingBottom: 40,
   },
   shadowButton: {
     paddingHorizontal: 12,

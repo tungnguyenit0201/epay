@@ -27,15 +27,36 @@ import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {get} from 'lodash';
 import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
 import {getFullAddress} from 'context/Wallet/utils/bankInfo';
+import {useBankInfo} from 'context/Wallet/utils';
+
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
+  const {onActiveUser} = useBankInfo(params);
 
-  const onSubmit = () => {
-    //call Api active_customer 
+  const onSubmit = async () => {
+    const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
+
+    const BankConnectInfo = {
+      BankID: Bank?.BankID,
+      BankAccount,
+      FullName: optionKyc?.Name,
+      ICType: optionKyc?.ICType,
+      ICNumber: optionKyc?.Number,
+      ICFrontPhoto: optionKyc?.Number,
+      ICBackPhoto: optionKyc?.Number,
+      Province: ICAddress?.Province || optionKyc?.Province,
+      District: ICAddress?.Province || optionKyc?.Province,
+      Ward: ICAddress?.Province || optionKyc?.Province,
+      Address: ICAddress?.Province || optionKyc?.Province,
+    };
+    try {
+      const res = await onActiveUser?.({BankConnectInfo});
+      alert(res);
+    } catch (e) {}
+
     props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
       screen: MapBankRoutes.BankLinkOTP,
-     
     });
   };
 
@@ -65,9 +86,9 @@ export default function (props) {
 
     const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
     const BankName = get(Bank, 'BankName', 'Vietcombank');
-    const Name = get(optionKyc, 'data.Name', '');
-    const type = get(optionKyc, 'data.Type', '');
-    const idNumber = get(optionKyc, 'data.Number', '');
+    const Name = get(optionKyc, 'Name', '');
+    const type = get(optionKyc, 'Type', '');
+    const idNumber = get(optionKyc, 'Number', '');
     const address = getFullAddress(ICAddress);
 
     const data = [

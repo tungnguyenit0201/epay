@@ -41,6 +41,11 @@ export default function userReducer(state, action) {
         ...state,
         limit: action?.data,
       };
+    case 'SET_IC_INFO':
+      return {
+        ...state,
+        icInfo: action?.data,
+      };
     case 'UPDATE_TRANSACTION_INFO':
       return {
         ...state,

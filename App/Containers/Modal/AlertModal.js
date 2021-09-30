@@ -43,23 +43,23 @@ const AlertModal = (props = {}) => {
         tintColor: iconColor,
     };
 
-    const onPressPositive = () => {
-        positiveButton?.onPress?.();
-        navigation.pop();
-        onClose?.();
-    };
+  const onPressPositive = () => {
+    navigation.pop();
+    onClose?.();
+    positiveButton?.onPress?.();
+  };
 
-    const onPressSecondary = () => {
-        secondaryButton?.onPress?.();
-        navigation.pop();
-        onClose?.();
-    };
+  const onPressSecondary = () => {
+    navigation.pop();
+    onClose?.();
+    secondaryButton?.onPress?.();
+  };
 
-    const onPressNegative = () => {
-        negativeButton?.onPress?.();
-        navigation.pop();
-        onClose?.();
-    };
+  const onPressNegative = () => {
+    navigation.pop();
+    onClose?.();
+    negativeButton?.onPress?.();
+  };
 
     const renderContent = () => {
         if (typeof renderBody === 'function') {

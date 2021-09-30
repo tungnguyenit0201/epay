@@ -42,8 +42,11 @@ export default {
     UPDATE_PASSWORD: 'account/proactive_change_password',
   },
   WALLET: {
-    GET_DOMESTIC_BANKS: 'bank/get_domestic_banks', ///api/v2/bank/get_domestic_banks
-    GET_NAPAS_BANKS: 'bank/get_napas_banks', ///api/v2/bank/get_domestic_banks
+    GET_BANK_IC_INFO: 'bank/get_ic_info',
+    ACTIVE_USER: 'bank/active_customer',
+    ACTIVE_USER_OTP: 'bank/active_customer_otp',
+    GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
+    GET_NAPAS_BANKS: 'bank/get_napas_banks',
     GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
     CHANGE_LIMIT: 'security/change_limit',
@@ -74,10 +77,4 @@ export default {
     BANK_COMPARE_FACE: 'bank/compare_face',
     BANK_IDENTITY_CARD_VERIFY: 'bank/identity_card_verify',
   },
-  BANK:{
-    GET_BANK_IC_INFO:'',
-    ACTIVE_USER:'',
-    ACTIVE_USER_OTP:'',
-
-  }
 };

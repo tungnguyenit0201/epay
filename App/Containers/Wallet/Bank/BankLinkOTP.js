@@ -18,11 +18,11 @@ import BlueHeader from 'components/Auth/BlueHeader';
 import {useRoute} from '@react-navigation/native';
 import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {useBankInfo} from 'context/Wallet/utils';
 
 const OTP = props => {
   const {params} = useRoute() || {};
   const {item} = params || {};
-  const {onChangePhone} = useAuth();
   const {
     errorMessage,
     countdown,
@@ -32,14 +32,16 @@ const OTP = props => {
     onChange,
     onConfirmOTP,
     resentOTP,
-    openCallDialog,
     label,
   } = useOTP({});
+  const {onActiveUserOTP} = useBankInfo();
   const translation = useTranslation();
 
   const onSubmit = () => {
+    //call api submit otp
+
     props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankLinkResult,
+      screen: MapBankRoutes.BaseResultScreen,
       // params: {kycInfo, bank, bankAccount},
     });
   };

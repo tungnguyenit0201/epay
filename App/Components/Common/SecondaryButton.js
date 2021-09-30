@@ -3,8 +3,6 @@ import {Pressable, Image, StyleSheet, View} from 'react-native';
 import {Colors, Fonts, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
-import {useSelector} from 'react-redux';
-import Navigator from 'navigations/Navigator';
 import {LinearView} from 'components';
 
 export default ({

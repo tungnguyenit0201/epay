@@ -17,7 +17,7 @@ const BankLinkKYCInfo = props => {
   const {params} = useRoute() || {};
   const translation = useTranslation();
   const {onChange, onContinue, onUpdate} = useBankInfo(params);
-  const ICInfo = get(params, 'optionKyc.data', {});
+  const ICInfo = get(params, 'optionKyc', {});
 
   const {goRegionSelect, onClearRegionData} = useSelectRegion({
     callbackScreen: SCREEN.MAP_BANK_FLOW,
@@ -31,8 +31,13 @@ const BankLinkKYCInfo = props => {
   }, []);
 
   const onSubmit = values => {
-    onChange('ICAddress', values);
-    onContinue(SCREEN.MAP_BANK_FLOW, {screen: MapBankRoutes.BankLinkConfirm});
+    props?.navigation?.push?.(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankLinkConfirm,
+      params: {
+        ...params,
+        ICAddress: values,
+      },
+    });
   };
 
   return (

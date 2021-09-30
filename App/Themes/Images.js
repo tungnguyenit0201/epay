@@ -124,6 +124,7 @@ export default {
     Exchange: require('images/icons/exchange.png'),
     Plus: require('images/icons/add.png'),
     Search: require('images/icons/search-normal.png'),
+    BankLink: require('images/icon_banklink-2.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),

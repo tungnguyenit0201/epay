@@ -4,6 +4,7 @@ import BankDetail from './BankDetail';
 import BankLinked from './BankLinked';
 import BankPickerScreen from './BankPickerScreen';
 import BankLinkResult from './BankLinkResult';
+import BaseResultScreen from './BaseResultScreen';
 import BankLinkKYCInfo from './BankLinkKYCInfo';
 import BankLinkConfirm from './BankLinkConfirm';
 import BankLinkInfo from './BankLinkInfo';
@@ -54,6 +55,11 @@ const MapBankFlow = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name={MapBankRoutes.BaseResultScreen}
+        component={BaseResultScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name={MapBankRoutes.BankLinkOTP}
         component={BankLinkOTP}
         options={{headerShown: false}}
@@ -77,6 +83,7 @@ export const MapBankRoutes = {
   BankLinkKYCInfo: 'BankLinkKYCInfo',
   BankLinkConfirm: 'BankLinkConfirm',
   BankLinkResult: 'BankLinkResult',
+  BaseResultScreen: 'BaseResultScreen',
   BankLinkInfo: 'BankLinkInfo',
   BankLinkOTP: 'BankLinkOTP',
 };

@@ -65,6 +65,7 @@ const BankPickerScreen = props => {
       return (
         <View>
           <BankList
+            navigation={props?.navigation}
             ref={bankLinkRef}
             title={translation.bank_linking}
             key={'DomesticBank'}
@@ -80,18 +81,21 @@ const BankPickerScreen = props => {
           title={translation.bank_linking}
           key={'DomesticBank'}
           type={BANK_TYPE.LIST_DOMESTIC_BANK}
+          navigation={props?.navigation}
         />
         <BankList
           ref={visaRef}
           title={'Ngân hàng thanh toán Quốc tế'}
           key={'InternationalBank'}
           type={BANK_TYPE.LIST_INTERNATIONAL_BANK}
+          navigation={props?.navigation}
         />
         <BankList
           ref={napasRef}
           title={'Ngân hàng nội địa '}
           key={'NapasBank'}
           type={BANK_TYPE.LIST_NAPAS_BANK}
+          navigation={props?.navigation}
         />
       </View>
     );
