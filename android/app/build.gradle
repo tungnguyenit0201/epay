@@ -230,7 +230,7 @@ android {
 
 configurations{
     all*.exclude module:'gson'
-
+    all*.exclude group:'com.squareup.okhttp', module:'okhttp'
 }
 
 dependencies {
