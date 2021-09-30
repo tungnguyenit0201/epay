@@ -194,7 +194,6 @@ const BankList = forwardRef((props, ref) => {
 
   const onPressPrimary = async item => {
     const optionKyc = radioButtonRef.current?.getItem?.() || {};
-    alert(optionKyc);
     Navigator.push(SCREEN.MAP_BANK_FLOW, {
       screen: MapBankRoutes.BankLinkInfo,
       params: {item: item, optionKyc},

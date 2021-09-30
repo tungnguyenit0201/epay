@@ -8,6 +8,7 @@ export const activeUser = async param => {
     url: API.WALLET.ACTIVE_USER,
     method: 'post',
     params: {
+      'MsgType': 'active_customer',
       BankConnectInfo: BankConnectInfo || {},
       PhoneNumber: phone,
     },
@@ -25,8 +26,9 @@ export const activeCustomerOtp = async param => {
     url: API.WALLET.ACTIVE_USER_OTP,
     method: 'post',
     params: {
-      TransState: TransState || {},
       PhoneNumber: phone,
+      'MsgType': 'link_card',
+      ...param,
     },
     success: res => {
       response = res;

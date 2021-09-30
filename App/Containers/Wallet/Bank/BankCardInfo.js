@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {
@@ -24,15 +24,49 @@ const BankCardInfo = () => {
   // TODO : translation
   const {onUpdateUserInfo} = useUserInfo();
   const {userInfo, region} = useUser();
+
   const {personalInfo, personalAddress, personalIC} = userInfo;
-  const {goRegionSelect, onClearRegionData} = useSelectRegion({
-    callbackScreen: SCREEN.EDIT_INFO,
-  });
+const [cardNumber, setCardNumber] = useState();
+const [issueDate, setissueDate] = useState();
+const [cardNumberErr, setCardNumberErr] = useState();
+const [name, setName] = useState(personalInfo?.FullName);
 
   useEffect(() => {
-    return () => onClearRegionData();
+    return () => {};
   }, []); // eslint-disable-line
 
+  const onChangeCard = (number)=>{
+    const _number = number?.trim();
+    if (!1){
+      //validate card
+      setCardNumberErr('Invalid card number');
+
+    }
+    setCardNumber(_number);
+
+  };
+
+  const onChangeDate = (date)=>{
+    setissueDate(date);
+  };
+
+  const onBlur = (input)=>{
+    switch (input){
+      case 'cardNumber':{
+        //check validate
+        break;
+      }
+      case 'name':{
+        //check validate
+        break;
+      }
+      case 'date':{
+        //check validate
+        break;
+      }
+    }
+  };
+const onSubmit = ()=>{};
   return (
     <ScrollView
       style={{backgroundColor: Colors.white}}
@@ -41,82 +75,35 @@ const BankCardInfo = () => {
         <Header title="Thông tin cá nhân" back />
       </HeaderBg>
       <View style={[base.container, {paddingTop: 20, flex: 1}]}>
-        <Formik
-          initialValues={{
-            Address: personalAddress?.Address,
-            Ward: personalAddress?.Ward,
-            County: personalAddress?.County,
-            Provincial: personalAddress?.Provincial,
-            SexType: personalInfo?.SexType,
-          }}
-          validationSchema={addressSchema}
-          onSubmit={onUpdateUserInfo}>
-          <FormikContent
-            region={region}
-            goRegionSelect={goRegionSelect}
-            personalInfo={personalInfo}
-            personalIC={personalIC}
-          />
-        </Formik>
+        <View flex={1}>
+          <View flex={1} style={{justifyContent: 'flex-start'}}>
+            <InputBlock
+                value={cardNumber}
+                placeholder="Nhập số tài khoản/Số thẻ"
+                inputStyle={{marginTop: -40}}
+                onChange={onChangeCard}
+                error={cardNumberErr}
+            />
+            <InputBlock
+                placeholder="Họ và Tên"
+                value={name}
+                inputStyle={{marginTop: -40}}
+            />
+            <DatePicker
+                // onChange={handleChange('DateOfBirth')}
+                // error={touched.DateOfBirth && errors.DateOfBirth}
+                onChange={onChangeDate}
+                value={issueDate}
+                style={{borderColor: Colors.BORDER}}
+                placeholder="Issue date mm/yyyy"
+            />
+          </View>
+          <View style={{paddingBottom: Spacing.PADDING}}>
+            <Button onPress={onSubmit} label="Lưu" />
+          </View>
+        </View>
       </View>
     </ScrollView>
-  );
-};
-
-const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
-  const {
-    handleChange: _handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-    setFieldTouched,
-    touched,
-    errors,
-    values,
-  } = useFormikContext();
-
-  useEffect(() => {
-    if (region?.Provincial && region?.County) {
-      for (const [key, value] of Object.entries(region)) {
-        setFieldValue(key, value);
-      }
-    }
-  }, [region]); // eslint-disable-line
-
-  const handleChange = field => value => {
-    setFieldValue(field, value);
-    setFieldTouched(field, true, false);
-  };
-
-  return (
-    <View flex={1}>
-      <View flex={1} style={{justifyContent: 'flex-start'}}>
-        <InputBlock
-          onChange={handleChange('Address')}
-          onBlur={handleBlur('Address')}
-          error={touched.Address && errors.Address}
-          value={values.Address}
-          placeholder="Nhập số tài khoản/Số thẻ"
-          inputStyle={{marginTop: -40}}
-        />
-        <InputBlock
-          placeholder="Họ và Tên"
-          value={personalInfo?.FullName}
-          inputStyle={{marginTop: -40}}
-        />
-        <DatePicker
-          // onChange={handleChange('DateOfBirth')}
-          // error={touched.DateOfBirth && errors.DateOfBirth}
-          // onBlur={handleBlur('DateOfBirth')}
-          // value={values.DateOfBirth}
-          style={{borderColor: Colors.BORDER}}
-          placeholder="Issue date mm/yyyy"
-        />
-      </View>
-      <View style={{paddingBottom: Spacing.PADDING}}>
-        <Button onPress={handleSubmit} label="Lưu" />
-      </View>
-    </View>
   );
 };
 

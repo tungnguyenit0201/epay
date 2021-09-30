@@ -8,7 +8,7 @@ import {
   getConnectedBankDetail,
   changeLimit,
   getNapasBank,
-  activeUser,
+  activeUser, activeCustomerOtp,
 } from 'services/wallet';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
@@ -255,24 +255,17 @@ const useBankInfo = (initialValue = {}) => {
   const onActiveUserOTP = async param => {
     setLoading(true);
     let phone = await getPhone();
-    const {BankConnectInfo} = param || {};
-
-    return new Promise(async (resolve, reject) => {
-      setLoading(true);
-      let phone = await getPhone();
-      let result = await updatePersonalInfo({
-        phone,
-        BankConnectInfo,
+    const result = await activeCustomerOtp({...param,phone});
+    setLoading(false);
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      dispatch({
+        type: 'SET_TRAN_STATE',
+        data: result?.TransState,
       });
-
-      setLoading(false);
-      if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
-        const {TransState} = result || {};
-        resolve({TransState: TransState});
-      } else {
-        reject();
-      }
-    });
+      return {result};
+    } else {
+      setError(result);
+    }
   };
 
   const onGetConnectedBank = async () => {

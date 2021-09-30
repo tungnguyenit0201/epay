@@ -41,7 +41,16 @@ const OTP = props => {
 
   const onSubmit = async () => {
     try {
-      const result = await onActiveUserOTP({otp, TranState});
+      const params = {
+        'MsgType': 'link_card',
+        'MsgID': '1123123123',
+        'TransactionID': '',
+        'PhoneNumber': '0936898626',
+        'BankID': 1,
+        'TransCode': '123456789',
+        'OtpCode': '666666',
+      };
+      const result = await onActiveUserOTP(params);
        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
          screen: MapBankRoutes.BaseResultScreen,
          params: {result:result},
