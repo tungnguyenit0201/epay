@@ -179,6 +179,8 @@ export default {
     Passport: require('images/icons/passport.png'),
     Car: require('images/icons/car.png'),
     Medic: require('images/icons/medic.png'),
+    BarCross: require('images/icons/bag-cross.png'),
+    SearchZoomOut: require('images/icons/search-zoom-out.png'),
   },
   Capture: require('images/Capture.png'),
   Camera: {

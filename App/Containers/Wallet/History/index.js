@@ -38,6 +38,7 @@ const ItemType1 = ({
   isChecked,
   onChooseOption,
 }) => {
+  const blurBlue = '#F2F8FF';
   return (
     <TouchableOpacity onPress={onChooseOption}>
       <View
@@ -47,8 +48,8 @@ const ItemType1 = ({
             height: 56,
             alignItems: 'center',
             justifyContent: 'center',
-            // backgroundColor: '#F2F8FF',
           },
+          isChecked && {backgroundColor: blurBlue},
         ]}>
         <Image
           source={icon}
@@ -58,20 +59,6 @@ const ItemType1 = ({
           }}
           resizeMode="contain"
         />
-        {isChecked && (
-          <Image
-            source={Images.TransactionHistory.Success}
-            style={[
-              styles.iconStick,
-              {
-                position: 'absolute',
-                top: -5,
-                right: -5,
-              },
-            ]}
-            resizeMode="contain"
-          />
-        )}
       </View>
 
       <Text centered mt={5} style={{fontSize: 12}}>
@@ -99,7 +86,6 @@ const ItemType2 = ({
             height: 56,
             alignItems: 'center',
             justifyContent: 'center',
-            // backgroundColor: '#F2F8FF',
           },
         ]}>
         <Image
@@ -135,6 +121,7 @@ const ItemType2 = ({
 
 const ModalFilter = ({showModal, onHideModal, renderRightComponent}) => {
   const translation = useTranslation();
+  const [chooseService, setChooseService] = useState(false);
   const [transactionList, setTransactionList] = useState([
     {
       id: `id1-${Math.random(0, 100)}`,
@@ -203,12 +190,15 @@ const ModalFilter = ({showModal, onHideModal, renderRightComponent}) => {
 
   const onChooseTransaction = id => {
     // console.log(transactionList);
-    setServiceList(
-      serviceList.map((item, index) => {
-        item.isChecked = false;
-        return {...item};
-      }),
-    );
+    if (chooseService) {
+      setChooseService(false);
+      setServiceList(
+        serviceList.map((item, index) => {
+          item.isChecked = false;
+          return {...item};
+        }),
+      );
+    }
 
     setTransactionList(
       transactionList.map((item, index) => {
@@ -222,12 +212,15 @@ const ModalFilter = ({showModal, onHideModal, renderRightComponent}) => {
 
   const onChooseService = id => {
     // console.log(serviceList);
-    setTransactionList(
-      transactionList.map((item, index) => {
-        item.isChecked = false;
-        return {...item};
-      }),
-    );
+    if (!chooseService) {
+      setChooseService(true);
+      setTransactionList(
+        transactionList.map((item, index) => {
+          item.isChecked = false;
+          return {...item};
+        }),
+      );
+    }
 
     setServiceList(
       serviceList.map((item, index) => {
@@ -400,10 +393,75 @@ const ModalFilter = ({showModal, onHideModal, renderRightComponent}) => {
               style={styles.flatList1}
             />
           </View>
+
+          <View style={styles.wrap}>
+            <Row space={16}>
+              <Col space={16} width="50%">
+                <TouchableOpacity
+                  // key={index}
+                  style={[styles.blockShadow]}>
+                  <Text
+                    centered
+                    style={[styles.textSize1, styles.px1, styles.py2]}>
+                    {translation.all}
+                  </Text>
+                  {/* {isChecked && ( */}
+                  <Image
+                    source={Images.TransactionHistory.Success}
+                    style={[
+                      styles.iconStick,
+                      {
+                        position: 'absolute',
+                        top: -5,
+                        right: -5,
+                      },
+                    ]}
+                    resizeMode="contain"
+                  />
+                  {/* )} */}
+                </TouchableOpacity>
+              </Col>
+              <Col space={16} width="50%">
+                <TouchableOpacity
+                  // key={index}
+                  style={[styles.blockShadow]}>
+                  <Text
+                    centered
+                    style={[styles.textSize1, styles.px1, styles.py2]}>
+                    {translation.all}
+                  </Text>
+                  {/* {isChecked && ( */}
+                  <Image
+                    source={Images.TransactionHistory.Success}
+                    style={[
+                      styles.iconStick,
+                      {
+                        position: 'absolute',
+                        top: -5,
+                        right: -5,
+                      },
+                    ]}
+                    resizeMode="contain"
+                  />
+                  {/* )} */}
+                </TouchableOpacity>
+              </Col>
+            </Row>
+          </View>
         </ScrollView>
 
         <FooterContainer>
-          <Button label="Đã hiểu" bold />
+          {/* <Button label={translation.apply} bold 
+            bgImg={0} bg={'white'} color={Colors.Highlight}
+            border={Colors.blue}/> */}
+          <Button
+            label={translation.apply}
+            bold
+            bgImg={0}
+            bg={'white'}
+            color={Colors.Highlight}
+            border={Colors.blue}
+          />
         </FooterContainer>
       </View>
     </Modal>
@@ -549,7 +607,8 @@ const History = () => {
           <Header back title={translation?.transaction_history} />
         </HeaderBg>
 
-        {/* <Header back title="Lịch sử" avoidStatusBar blackIcon />
+        {/* delete when no use
+        <Header back title="Lịch sử" avoidStatusBar blackIcon />
         <Pressable onPress={() => Navigator.navigate(SCREEN.DETAIL_HISTORY)}>
           <Text>Chi tiết</Text>
         </Pressable> */}
@@ -626,6 +685,23 @@ const History = () => {
             }
           />
         </View>
+
+        {/* layout search not found
+        <ScrollView contentContainerStyle={[styles.flex1,
+          styles.alignCenter,styles.justifyCenter]}>
+          <View style={styles.alignCenter}>
+            <Image
+              style={styles.iconBarCross}
+              source={Images.TransactionHistory.BarCross}
+
+              //img Search not found
+              // source={Images.TransactionHistory.SearchZoomOut} 
+            />
+            <Text centered mt={20} fs="h6" color={Colors.gray}>
+              Chưa có giao dịch để hiển thị
+            </Text>
+          </View>
+        </ScrollView> */}
       </View>
 
       <ModalFilter
@@ -645,6 +721,7 @@ const styles = StyleSheet.create({
   fWrap: {flexWrap: 'wrap'},
   //------------------
   justifyBetween: {justifyContent: 'space-between'},
+  justifyCenter: {justifyContent: 'center'},
   //------------------
   alignCenter: {alignItems: 'center'},
   //------------------
@@ -739,6 +816,10 @@ const styles = StyleSheet.create({
   iconStick: {
     width: 16,
     height: 16,
+  },
+  iconBarCross: {
+    width: 88,
+    height: 88,
   },
   blockSumIncome: {
     paddingLeft: 8,
