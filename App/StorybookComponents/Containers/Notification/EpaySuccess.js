@@ -52,7 +52,11 @@ const CheckoutSuccess = () => {
   return (
     <>
       <HeaderBg>
-        <Header title={translation.transaction_details} back />
+        <Header
+          title={translation.transaction_details}
+          back
+          style={{marginTop: 25, marginBottom: -15}}
+        />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={base.container}>

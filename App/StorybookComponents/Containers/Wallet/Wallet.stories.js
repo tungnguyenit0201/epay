@@ -15,6 +15,7 @@ import TransactionSuccess from './TransactionSuccess';
 import Transfer from './Transfer';
 import TransferBank from './TransferBank';
 import TransferPhone from './TransferPhone';
+import PromoCode from './PromoCode';
 import Withdraw from './Withdraw';
 import BankDetail from './Bank/BankDetail';
 import BankInfo from './Bank/BankInfo';
@@ -42,6 +43,7 @@ storiesOf('Layout/Wallet/Default', module)
   .add('TransactionSuccess', () => <TransactionSuccess />)
   .add('Transfer', () => <Transfer />)
   .add('TransferBank', () => <TransferBank />)
+  .add('PromoCode', () => <PromoCode />)
   .add('TransferPhone', () => <TransferPhone />)
   .add('Withdraw', () => <Withdraw />);
 
