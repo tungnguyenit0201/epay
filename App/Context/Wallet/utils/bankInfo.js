@@ -242,13 +242,12 @@ const useBankInfo = (initialValue = {}) => {
     let phone = await getPhone();
     const result = await activeUser({phone, BankConnectInfo});
     setLoading(false);
-    alert(JSON.stringify(result));
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
       dispatch({
         type: 'SET_TRAN_STATE',
         data: result?.TransState,
       });
-      return {result: result};
+      return {result};
     } else {
       setError(result);
     }

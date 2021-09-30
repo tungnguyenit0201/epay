@@ -19,6 +19,7 @@ import {useRoute} from '@react-navigation/native';
 import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {useBankInfo} from 'context/Wallet/utils';
+import {useWallet} from 'context/Wallet';
 
 const OTP = props => {
   const {params} = useRoute() || {};
@@ -35,15 +36,24 @@ const OTP = props => {
     label,
   } = useOTP({});
   const {onActiveUserOTP} = useBankInfo();
+  const {BankConnectInfo} = useWallet();
   const translation = useTranslation();
 
-  const onSubmit = () => {
-    //call api submit otp
+  const onSubmit = async () => {
+    try {
+      const result = await onActiveUserOTP({otp, TranState});
+       props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+         screen: MapBankRoutes.BaseResultScreen,
+         params: {result:result},
+       });
 
-    props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BaseResultScreen,
-      // params: {kycInfo, bank, bankAccount},
-    });
+
+    } catch (e){
+      props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BaseResultScreen,
+        params: {result:false},
+      });
+    }
   };
 
   const renderOTP = () => {

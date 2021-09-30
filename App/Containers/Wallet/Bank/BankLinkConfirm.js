@@ -35,13 +35,12 @@ export default function (props) {
   const {onActiveUser} = useBankInfo(params);
 
   const onSubmit = async () => {
-    const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
-
+    const {item:Bank, ICAddress, optionKyc, BankAccount} = params || {};
     const BankConnectInfo = {
-      BankID: Bank?.BankID,
+      BankID: Bank?.BankId,
       BankAccount,
       FullName: optionKyc?.Name,
-      ICType: optionKyc?.ICType,
+      ICType: optionKyc?.Type,
       ICNumber: optionKyc?.Number,
       ICFrontPhoto: optionKyc?.Number,
       ICBackPhoto: optionKyc?.Number,

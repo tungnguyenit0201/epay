@@ -6,7 +6,7 @@ export const activeUser = async param => {
   let response = null;
   await request({
     url: API.WALLET.ACTIVE_USER,
-    method: 'get',
+    method: 'post',
     params: {
       BankConnectInfo: BankConnectInfo || {},
       PhoneNumber: phone,
