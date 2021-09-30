@@ -25,7 +25,10 @@ const useCheckInfo = () => {
       screen && Navigator.navigate(screen);
       return true;
     }
-    dispatch({type: 'SHOW_MODAL', modal: {type: 'smartOTP', value: true}});
+    dispatch({
+      type: 'SHOW_MODAL',
+      modal: {type: 'smartOTPSuggestion', value: true},
+    });
   };
 
   const checkInfo = ({screen, value = true}) => {

@@ -70,10 +70,10 @@ const Wrapper = React.memo(
           {loading && <FWLoading />}
           {!!error?.errorCode && <Alert />}
           {__DEV__ && <Debug />}
-          {modalSmartOTP.smartOTP && (
+          {modalSmartOTP.smartOTPSuggestion && (
             <ModalCustom
               icon={Images.Modal.Lock}
-              visible={modalSmartOTP.smartOTP}
+              visible={modalSmartOTP.smartOTPSuggestion}
               onClose={() => setFirstLogin(false)}
               title="Nhanh và bảo mật hơn với smart OTP"
               content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
