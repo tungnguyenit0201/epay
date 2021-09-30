@@ -82,12 +82,11 @@ const TopUp = () => {
           <View style={base.boxShadow}>
             <Monney />
             <InputMoney onChange={setMoney} />
-            <Text>{money}</Text>
           </View>
           <SelectBank
             data={bankData}
             label={translation.source}
-            onPress={() => setClick(true)}
+            setClick={setClick}
           />
         </View>
         <ModalCustom
@@ -112,12 +111,19 @@ const TopUp = () => {
         </ModalCustom>
       </ScrollView>
       <FooterContainer>
-        <Pressable onPress={handlePress}>
+        {click === true && money ? (
+          <Pressable onPress={handlePress}>
+            <Image
+              source={Images.Gradient.B_Continue.default}
+              style={base.buttonSB}
+            />
+          </Pressable>
+        ) : (
           <Image
-            source={Images.Gradient.B_Continue.default}
+            source={Images.Gradient.B_continueDisable.default}
             style={base.buttonSB}
           />
-        </Pressable>
+        )}
       </FooterContainer>
     </Wrapper>
   );

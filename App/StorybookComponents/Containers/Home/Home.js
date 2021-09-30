@@ -7,6 +7,7 @@ import {
   StyleSheet,
   useWindowDimensions,
   ImageBase,
+  Pressable,
 } from 'react-native';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
@@ -31,10 +32,12 @@ import Banner from '../../Groups/Banner';
 import SlideIcon from '../../Groups/SlideIcon';
 import FooterNavigation from '../../Groups/FooterNavigation';
 import Wrapper from '../../Groups/Wrapper';
+import ModalCustom from '../../Groups/ModalCustom';
 const Home = () => {
   // TODO : translation
   const translation = require('../../../Context/Language/vi.json');
   const {width, height} = useWindowDimensions();
+  const [show, setShow] = useState(false);
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
@@ -132,9 +135,29 @@ const Home = () => {
           <DinhDanh />
           <Banner data={dataBanner} />
         </View>
-        <SlideIcon data={dataHome} />
+        <SlideIcon data={dataHome} setShow={setShow} />
       </View>
       <Image source={require('images/wave.png').default} style={styles.bgImg} />
+      <ModalCustom
+        visible={show}
+        onClose={() => setShow(false)}
+        /* onClose={() => setShow(false)} */
+        icon={require('images/storybook/user-tick.png').default}>
+        <Text
+          bold
+          style={{fontSize: 18, textAlign: 'center', marginBottom: 10}}>
+          Định danh tài khoản
+        </Text>
+        <Text centered mb={20} style={{fontSize: 13}}>
+          {`Bạn cần định danh tài khoản để tăng \ncường bảo mật tối đa trước khi \nsử dụng ví `}
+        </Text>
+        <Pressable onPress={() => setShow(false)}>
+          <Image
+            source={require('images/gradient/B_identify.png').default}
+            style={{height: 48, borderRadius: 8, cursor: 'pointer'}}
+          />
+        </Pressable>
+      </ModalCustom>
       <Image
         source={require('images/storybook/Footer.png').default}
         style={{

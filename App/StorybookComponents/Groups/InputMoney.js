@@ -67,7 +67,9 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
             <TouchableOpacity onPress={() => onPress(item.money)}>
-              <Text style={[styles.item]}>{formatMoney(item.money)}</Text>
+              <Text bold style={[styles.item]}>
+                {formatMoney(item.money)}
+              </Text>
             </TouchableOpacity>
           </Col>
         ))}
@@ -136,6 +138,7 @@ const styles = StyleSheet.create({
   warningText: {
     fontSize: Fonts.FONT_SMALL,
     marginBottom: Spacing.PADDING,
+    color: 'red',
   },
 });
 export default InputMoney;

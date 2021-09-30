@@ -10,7 +10,9 @@ import {
 import HeaderBg from '../../Atoms/HeaderBg';
 import Header from '../../Atoms/Header';
 import Button from '../../Atoms/Button';
-
+import Text from '../../Atoms/Text';
+import FooterContainer from '../../Atoms/FooterContainer';
+import Wrapper from '../../Groups/Wrapper';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 
 import InputMoney from '../../Groups/InputMoney';
@@ -20,43 +22,50 @@ const SelectMoney = () => {
   const translation = require('../../../Context/Language/vi.json');
   const [value, setValue] = useState();
   return (
-    <>
-      <ScrollView style={base.wrap}>
-        <HeaderBg style={{marginBottom: 50}}>
-          <Header title={translation.top_up} back style={{marginBottom: 20}} />
+    <Wrapper>
+      <ScrollView style={{backgroundColor: Colors.white, paddingBottom: 20}}>
+        <HeaderBg style={{marginBottom: 30}}>
+          <Header
+            title={translation.top_up}
+            back
+            style={{marginTop: 24, marginBottom: -15}}
+          />
         </HeaderBg>
         <View style={base.container}>
-          <InputMoney handleValue={setValue} />
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Button
-              label="Hủy"
-              onPress={() => console.log('hello')}
-              style={{
-                width: '45%',
-                borderWidth: 1,
-                borderColor: Colors.cl1,
-                backgroundColor: Colors.white,
-              }}
-              labelStyle={{color: Colors.BLACK}}
-            />
-            <Button
-              label="Xác nhận"
-              onPress={() => console.log('press')}
-              disabled={value ? false : true}
-              style={{
-                width: '45%',
-                borderWidth: 1,
-              }}
-            />
+          <View style={base.boxShadow}>
+            <Text bold style={{marginBottom: 15}}>
+              Nhập số tiền muốn nhận
+            </Text>
+            <InputMoney handleValue={setValue} />
           </View>
         </View>
       </ScrollView>
-    </>
+      <FooterContainer>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <Image
+            source={require('images/storybook/cancel.png').default}
+            style={{
+              width: 166,
+              height: 48,
+              cursor: 'pointer',
+            }}
+          />
+          <Image
+            source={require('images/gradient/B_confirm.png').default}
+            style={{
+              width: 166,
+              height: 48,
+              cursor: 'pointer',
+            }}
+          />
+        </View>
+      </FooterContainer>
+    </Wrapper>
   );
 };
 

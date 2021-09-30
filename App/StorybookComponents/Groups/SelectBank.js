@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
 
-const SelectBank = ({data, feeData, label, style, onChange}) => {
+const SelectBank = ({data, feeData, label, style, onChange, setClick}) => {
   const translation = require('../../Context/Language/vi.json');
   const [checked, setChecked] = useState(null);
 
@@ -36,7 +36,10 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
             <Col width="33.33%" space="10" key={index}>
               <Pressable
                 style={[styles.item]}
-                onPress={() => onChangeBank(index)}>
+                onPress={() => {
+                  onChangeBank(index);
+                  setClick && setClick(true);
+                }}>
                 <View style={[styles.wicon]}>
                   <Image source={{uri: item.icon}} style={[styles.icon]} />
                   {index == checked && (
@@ -55,7 +58,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
             </Col>
           );
         })}
-        <Pressable style={[styles.item, {marginLeft: 19}]}>
+        <Pressable style={[styles.item, {marginLeft: 22}]}>
           <View style={[styles.wicon]}>
             <Image
               source={Images.Bank.Plus.default}

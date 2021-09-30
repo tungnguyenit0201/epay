@@ -21,7 +21,7 @@ const VerifyEmailResult = ({route, success}) => {
   const {width} = useWindowDimensions();
   return (
     <Wrapper>
-      <ScrollView style={base.wrap}>
+      <ScrollView style={{backgroundColor: Colors.white, paddingBottom: 20}}>
         <HeaderBg style={{marginBottom: 50}}>
           <Header
             title={'Xác thực email'}

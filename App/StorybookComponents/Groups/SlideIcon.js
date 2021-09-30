@@ -24,7 +24,7 @@ import _ from 'lodash';
   </TouchableOpacity>
 ); */
 
-const SlideIcon = ({data}) => {
+const SlideIcon = ({data, setShow}) => {
   let [indexTab, setIndexTab] = useState(0);
   const width = 375;
   const flatlistRef = useRef();
@@ -66,9 +66,7 @@ const SlideIcon = ({data}) => {
         paddingHorizontal: Spacing.PADDING * 2,
       }}>
       {data.map((item, index) => (
-        <TouchableOpacity
-          style={[styles.item]}
-          onPress={() => console.log('hello')}>
+        <TouchableOpacity style={[styles.item]} onPress={() => setShow(true)}>
           <Image source={item.icon.default} style={styles.icon} />
 
           <Text centered bold mt={5}>

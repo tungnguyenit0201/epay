@@ -1,253 +1,197 @@
-import React, { useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
-// import {Text, Button, HeaderBg, TextInput, Icon} from 'components';
-import Text from '../../Atoms/Text';
-import Header from '../../Atoms/Header';
+import React from 'react';
+
+import {
+  ScrollView,
+  Pressable,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {scale} from 'utils/Functions';
+
 import Button from '../../Atoms/Button';
+import Text from '../../Atoms/Text';
 import Icon from '../../Atoms/Icon';
-import TextInput from '../../Atoms/TextInput';
+import Header from '../../Atoms/Header';
 import HeaderBg from '../../Atoms/HeaderBg';
-
-import { Colors, Fonts, Spacing, Images } from 'themes';
-import { scale } from 'utils/Functions';
-import Modal from 'react-native-modal';
-const Transfer = () => {
-  const [open, setOpen] = useState(false);
+import StatusUser from '../../Groups/StatusUser';
+import DinhDanh from '../../Groups/DinhDanh';
+import TextInput from '../../Atoms/TextInput';
+import Row from '../../Atoms/Row';
+import Col from '../../Atoms/Col';
+import Radio from '../../Atoms/Radio';
+import Bank from '../../Groups/Bank';
+import Wrapper from '../../Groups/Wrapper';
+import FooterContainer from '../../Atoms/FooterContainer';
+const TransferPhone = () => {
   const translation = require('../../../Context/Language/vi.json');
-  return (
-    <ScrollView style={styles.container}>
-      <HeaderBg>
-        <Header
-          title={translation.transaction_details}
-          bold
-          style={styles.headerTitle}>
-          {translation.transaction_details}
-        </Header>
-      </HeaderBg>
-      <View style={styles.mt_30}>
-        <View style={styles.flexBox}>
-          <View style={styles.wrap}>
-            {/* Input with Icon */}
-            <View style={styles.inputIcon}>
-              <TouchableOpacity style={styles.iconSearch}>
-                <Icon icon={Images.Search} tintColor={Colors.g4} style={styles.icon} />
-              </TouchableOpacity>
-              <TextInput
-                style={styles.inputSearch}
-                placeholder={translation.enter_name_or_phone_number}
-                placeholderTextColor={Colors.g4}
-              />
-            </View>
-            {/* Input with Icon */}
-            {/* Icon Rectangle */}
-            <Icon
-              style={styles.iconRectangle}
-              icon={Images.Transfer.Rectangle}
-              tintColor={Colors.g2}
-            />
-            {/* Icon Rectangle */}
-            {/* Text with Icon */}
-            <TouchableOpacity
-              onPress={() => setOpen(true)}
-              style={styles.inputNavigate}>
-              <Icon
-                style={styles.iconNav}
-                icon={Images.Transfer.Mobile}
-                tintColor={Colors.cl1}
-              />
-              <Text style={styles.arrowIcon}>
-                {translation.transfer_via_a_phone_number}
-              </Text>
-              <View style={styles.iconLocation}>
-                <Icon
-                  icon={Images.Transfer.ArrowRight}
-                  tintColor={Colors.black}
-                  style={styles.arrowRight}
-                />
-              </View>
-            </TouchableOpacity>
-            {/* Text with Icon */}
+  const data = [
+    {
+      name: 'Họ tên',
+      val: 'Phước Lộc',
+      icon: require('images/profile/User.png').default,
+    },
+    {
+      name: 'Ngày sinh',
+      val: '17/05/1998',
+      icon: require('images/storybook/calendar.png').default,
+    },
+    {
+      name: 'Giới tính',
+      val: 'Nam',
+      icon: require('images/storybook/sex.png').default,
+    },
+  ];
 
-            {/* Text with Icon */}
-            <TouchableOpacity
-              onPress={() => {
-                console.log('hello');
-              }}
-              style={styles.inputNavigate}>
-              <Icon
-                style={styles.iconNav}
-                icon={Images.Transfer.Bank}
-                tintColor={Colors.cl1}
-              />
-              <Text style={styles.arrowIcon}>
-                {translation.transfer_via_a_bank}
-              </Text>
-              <View style={styles.iconLocation}>
-                <Icon
-                  icon={Images.Transfer.ArrowRight}
-                  tintColor={Colors.black}
-                  style={styles.arrowRight}
+  return (
+    <Wrapper>
+      <HeaderBg mb={0}>
+        <Header
+          back
+          title="Chuyển tiền đến"
+          style={{marginTop: 25, marginBottom: -10}}
+        />
+      </HeaderBg>
+      <ScrollView style={base.wrap}>
+        <View style={[base.container]}>
+          <View style={{alignItems: 'center', marginBottom: 20}}>
+            <Pressable style={{marginBottom: 15}}>
+              <View style={styles.avatar}>
+                <Image
+                  style={{width: 120, height: 120}}
+                  source={Images.Kyc.Test.default}
+                  resizeMode="cover"
                 />
               </View>
-            </TouchableOpacity>
-            {/* Text with Icon */}
+            </Pressable>
+            <Text fs="h5" bold mb={5}>
+              Nguyễn Văn A
+            </Text>
+            <Text mb={10}>090****456</Text>
+            <Text
+              bold
+              style={{
+                fontSize: 30,
+                color: '#141212',
+                position: 'relative',
+                marginTop: 20,
+              }}>
+              100.000
+              <Text style={{position: 'absolute', bottom: 5}}>vnđ</Text>
+            </Text>
           </View>
+          <TextInput defaultValue={'Chuyen tien cho A'} />
+          <Row justify="space-between">
+            <Col
+              width="40%"
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: 35,
+              }}>
+              <Radio
+                items={[{label: '', value: 1}]}
+                selectedValue={1}
+                style={{marginTop: 18}}
+              />
+              <Text>Người gửi chịu phí</Text>
+            </Col>
+            <Col
+              width="40%"
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: 35,
+              }}>
+              <Radio items={[{label: '', value: 1}]} style={{marginTop: 18}} />
+              <Text>Người gửi chịu phí</Text>
+            </Col>
+          </Row>
         </View>
-      </View>
-      <Modal
-        isVisible={open}
-        animationIn="fadeIn"
-        animationOut="fadeOut"
-        style={{ flex: 1 }}
-        useNativeDriver
-        hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
-        <View style={styles.modal}>
-          <Text bold style={styles.textTitle}>
-            {translation.allow_access_to_contact_book}
-          </Text>
-          <Text style={styles.textDescription}>
-            {
-              translation.to_use_the_money_transfer_function_epay_needs_access_to_your_contact_book
-            }
-          </Text>
-          <View style={styles.blockButton}>
-            <Button
-              label="Không"
-              style={styles.buttonCancle}
-              color={Colors.cl1}
-              fs={Fonts.H6}
-              onPress={() => setOpen(false)}
-            />
-            <Button
-              label="Đồng ý"
-              style={styles.buttonAcp}
-              fs={Fonts.H6}
-              onPress={() =>
-                setOpen(false)
-              }
-            />
-          </View>
+        <View
+          style={{
+            height: 8,
+            backgroundColor: '#E7E7E7',
+            marginTop: 25,
+            marginBottom: 35,
+          }}></View>
+        <View style={base.container}>
+          <Bank />
         </View>
-      </Modal>
-    </ScrollView>
+      </ScrollView>
+      <FooterContainer>
+        <Image
+          source={Images.Gradient.B_Continue.default}
+          style={base.buttonSB}
+        />
+      </FooterContainer>
+    </Wrapper>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+  avatar: {
+    overflow: 'hidden',
+    height: 120,
+    width: 120,
+    borderRadius: 99,
+    backgroundColor: Colors.g4,
   },
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
-    paddingTop: Spacing.PADDING,
-  },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    color: Colors.white,
-    fontSize: Fonts.H6,
-    textAlign: 'center',
-  },
-  inputIcon: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: Colors.g2,
-    borderWidth: 1,
-    borderRadius: scale(5),
-    paddingVertical: 8,
-    width: scale(300)
-  },
-  iconNav: {
-    width: scale(18),
-    height: scale(22),
-    position: 'relative',
-    top: scale(2),
-    marginRight: scale(20),
-  },
-  iconSearch: {
-    paddingHorizontal: scale(10),
-    borderRightWidth: 1,
-    borderColor: Colors.g2,
-  },
-  inputSearch: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    fontSize: Fonts.H6,
-    borderColor: 'transparent',
-    outlineColor: 'transparent',
-  },
-  iconRectangle: {
-    height: scale(8),
-    width: '100%',
-    marginVertical: scale(24),
-  },
-  textTitle: {
-    fontSize: Fonts.H6,
-    textAlign: 'center',
-  },
-  textDescription: {
-    fontSize: Fonts.FONT_MEDIUM,
-    marginTop: scale(8),
-    textAlign: 'center',
-  },
-  buttonCancle: {
-    width: scale(120),
-    height: scale(42),
-    backgroundColor: 'transparent',
-    borderColor: Colors.cl1,
-    borderWidth: 1,
-  },
-  blockButton: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: scale(16),
-  },
-  buttonAcp: {
-    width: scale(120),
-    height: scale(42),
-  },
-  mt_30: {
-    marginBottom: scale(30),
-  },
-  flexBox: {
-    flex: 3,
-  },
-  iconLocation: {
+  wedit: {
+    overflow: 'hidden',
+    borderRadius: 99,
     position: 'absolute',
-    right: scale(15),
-    top: scale(15),
-  },
-  icon: {
-    width: scale(20),
-    height: scale(20),
-  },
-  inputNavigate: {
-    backgroundColor: '#DAE9F8',
-    padding: Spacing.PADDING,
-    marginBottom: scale(10),
-    flex: 1,
-    flexDirection: 'row',
     alignItems: 'center',
-  },
-  arrowIcon: {
-    color: Colors.black,
-    fontSize: Fonts.H6,
-  },
-  modal: {
-    height: scale(180),
+    justifyContent: 'center',
+    bottom: 0,
+    right: -10,
+    width: 35,
+    height: 35,
+
     backgroundColor: Colors.white,
-    paddingVertical: Spacing.PADDING,
-    paddingHorizontal: Spacing.PADDING + scale(20),
-    borderRadius: scale(5),
+    borderWidth: 1,
+    borderColor: Colors.cl4,
   },
-  arrowRight: {
-    position: 'relative',
-    top: scale(4),
+  heading: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+
+  editBox: {
+    width: scale(46),
+    height: scale(46),
+    marginTop: -10,
+    marginRight: -10,
+  },
+
+  rowItem: {
+    flexDirection: 'row',
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: Colors.g2,
+    marginHorizontal: -15,
+    paddingHorizontal: 15,
+    justifyContent: 'space-between',
+  },
+  rowFirst: {
+    borderTopWidth: 0,
+  },
+
+  rowIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 5,
+  },
+  rowTitle: {
+    fontSize: Fonts.H6,
+    fontWeight: '500',
+  },
+  rowVal: {
+    //color: Colors.g2,
   },
 });
-export default Transfer;
+export default TransferPhone;
