@@ -5,6 +5,8 @@ import useAsyncStorage from './asyncStorage';
 import useShowModal from './showModal';
 import useConfig from './config';
 import {usePermission, useModalPermission} from './permission';
+import useModalPassword from './password';
+
 export {
   useLoading,
   useOTP,
@@ -14,4 +16,5 @@ export {
   useConfig,
   usePermission,
   useModalPermission,
+  useModalPassword,
 };

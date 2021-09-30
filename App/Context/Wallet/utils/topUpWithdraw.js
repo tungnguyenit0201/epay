@@ -19,6 +19,7 @@ import {
   useLoading,
   useShowModal,
 } from 'context/Common/utils';
+import {useModalSmartOTP, useSmartOTP} from 'context/User/utils';
 
 const useTopUpWithdraw = ({transType}) => {
   const [isContinueEnabled, setContinueEnabled] = useState(false);
@@ -100,6 +101,8 @@ const useConfirmation = () => {
     fee,
     amount,
   } = transaction;
+  const {onShowModal} = useModalSmartOTP();
+  const {onTransaction} = useSmartOTP();
   const transTypeText =
     transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // TODO: translate
   const feeValue = calculateFee({cash: amount, feeData: fee});
@@ -126,9 +129,10 @@ const useConfirmation = () => {
 
   const onContinue = async () => {
     const result = await checkSmartOTP({phone});
-    const isSmartOTPActived = _.get(result, 'SmartOtpInfo', false);
+    const isSmartOTPActived = _.get(result, 'State', 0);
     if (isSmartOTPActived) {
-      Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'transaction'});
+      // Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'transaction'});
+      onShowModal(password => onTransaction({password}));
     } else {
       setError({ErrorCode: -1, ErrorMessage: 'Vui lòng kích hoạt smart otp.'}); // TODO: transalate
       // Navigator.push(SCREEN.OTP, {functionType: FUNCTION_TYPE.RECHARGE_BY_BANK});

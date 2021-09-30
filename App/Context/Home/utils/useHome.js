@@ -31,6 +31,7 @@ const useModalSmartOTP = () => {
   const {setModalSmartOTPDisabled} = useAsyncStorage();
 
   const onGoSmartOTP = () => {
+    onClose();
     Navigator.push(SCREEN.ACTIVE_SMART_OTP);
   };
 

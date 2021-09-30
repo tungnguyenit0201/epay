@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect, useCallback} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
@@ -22,6 +22,7 @@ import {
   useAsyncStorage,
   useError,
   useLoading,
+  useModalPassword,
   useShowModal,
 } from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
@@ -245,6 +246,7 @@ const useSmartOTP = params => {
     onBack,
     onGoPasswordSync,
     onGoSmartOTP,
+    onTransaction,
   };
 };
 
@@ -253,7 +255,8 @@ const useSmartOTPInfo = () => {
   const {phone} = useUser();
   const {setLoading} = useLoading();
   const [smartOTPInfo, setSmartOTPInfo] = useState({});
-  const {onShowModal} = useModalSmartOTP();
+  const {onShowModal: onShowModalSmartOTP} = useModalSmartOTP();
+  const {onShowModal: onShowModalPassword} = useModalPassword();
 
   useEffect(() => {
     const getOTPInfo = async () => {
@@ -266,7 +269,7 @@ const useSmartOTPInfo = () => {
   }, [phone, setLoading]);
 
   const onChangePassword = () => {
-    onShowModal(value =>
+    onShowModalSmartOTP(value =>
       Navigator.push(SCREEN.SMART_OTP_PASSWORD, {
         type: 'newPassword',
         oldPassword: value,
@@ -275,7 +278,7 @@ const useSmartOTPInfo = () => {
   };
 
   const onForgetPassword = () => {
-    onGoOTP();
+    onShowModalPassword(onGoOTP);
   };
 
   const onSyncSmartOTP = () => {
@@ -299,21 +302,31 @@ const useSyncSmartOTP = params => {
   const {phone} = useUser();
   const [status, setStatus] = useState(params?.type);
   const {setSmartOTPSharedKey} = useAsyncStorage();
+  const {onShowModal} = useModalSmartOTP();
 
-  const onSync = useCallback(async () => {
+  const onSync = async smartOTPPassword => {
+    setStatus('sync');
+    let passwordEncrypted = params?.passwordEncrypted;
+    if (smartOTPPassword) {
+      passwordEncrypted = await sha256(smartOTPPassword);
+    }
     const result = await syncSmartOTP({
       phone,
-      password: params?.passwordEncrypted,
+      password: passwordEncrypted,
     });
     setStatus(result?.ErrorCode === ERROR_CODE.SUCCESS ? 'success' : 'failure');
     result?.SharedKey && setSmartOTPSharedKey(result.SharedKey);
-  }, [phone, params?.passwordEncrypted, setSmartOTPSharedKey]);
+  }; // eslint-disable-line
 
-  useEffect(() => {
-    params?.type === 'sync' && onSync();
-  }, [params?.type, onSync]);
+  const onGoPasswordSync = () => {
+    onShowModal(onSync);
+  };
 
-  return {status, onSync};
+  // useEffect(() => {
+  //   params?.type === 'sync' && onSync();
+  // }, [params?.type, onSync]);
+
+  return {status, onSync, onGoPasswordSync};
 };
 
 const useModalSmartOTP = () => {
@@ -348,7 +361,6 @@ const useModalSmartOTP = () => {
       default:
         return showModalSmartOTPPassword({
           message: _.get(result, 'ErrorMessage', ''),
-          code: '',
           goBack,
         });
     }
