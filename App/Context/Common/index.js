@@ -11,7 +11,8 @@ export const CommonProvider = ({children}) => {
       KYC: false,
       connectBank: false,
       permissionCamera: false,
-      smartOTPPassword: false,
+      smartOTPPassword: null,
+      password: null,
     },
     config: {},
   });

@@ -22,6 +22,7 @@ import {
   useAsyncStorage,
   useError,
   useLoading,
+  useModalPassword,
   useShowModal,
 } from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
@@ -253,7 +254,8 @@ const useSmartOTPInfo = () => {
   const {phone} = useUser();
   const {setLoading} = useLoading();
   const [smartOTPInfo, setSmartOTPInfo] = useState({});
-  const {onShowModal} = useModalSmartOTP();
+  const {onShowModal: onShowModalSmartOTP} = useModalSmartOTP();
+  const {onShowModal: onShowModalPassword} = useModalPassword();
 
   useEffect(() => {
     const getOTPInfo = async () => {
@@ -266,7 +268,7 @@ const useSmartOTPInfo = () => {
   }, [phone, setLoading]);
 
   const onChangePassword = () => {
-    onShowModal(value =>
+    onShowModalSmartOTP(value =>
       Navigator.push(SCREEN.SMART_OTP_PASSWORD, {
         type: 'newPassword',
         oldPassword: value,
@@ -275,7 +277,7 @@ const useSmartOTPInfo = () => {
   };
 
   const onForgetPassword = () => {
-    onGoOTP();
+    onShowModalPassword(onGoOTP);
   };
 
   const onSyncSmartOTP = () => {
@@ -348,7 +350,6 @@ const useModalSmartOTP = () => {
       default:
         return showModalSmartOTPPassword({
           message: _.get(result, 'ErrorMessage', ''),
-          code: '',
           goBack,
         });
     }

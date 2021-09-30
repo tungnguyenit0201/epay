@@ -26,6 +26,7 @@ import {sha256} from 'react-native-sha256';
 import {useWallet} from 'context/Wallet';
 import ImagePicker from 'react-native-image-crop-picker';
 import {getAll} from 'utils/Functions';
+import Keychain from 'react-native-keychain';
 
 const useUserInfo = type => {
   let personalInfo = useRef({
@@ -252,6 +253,7 @@ const useUserInfo = type => {
     setLoading(false);
     if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
       setError({ErrorCode: -1, ErrorMessage: 'Đổi mật khẩu thành công'}); // TODO: translate
+      Keychain.setGenericPassword(phone, newPasswordEncrypted);
       Navigator.navigate(SCREEN.TAB_NAVIGATION);
       return;
     }

@@ -26,7 +26,6 @@ const useShowModal = () => {
 
   const showModalSmartOTPPassword = async ({
     show = true,
-    code = '',
     message = '',
     goBack = () => {},
   }) => {
@@ -34,13 +33,32 @@ const useShowModal = () => {
       type: 'SHOW_MODAL',
       modal: {
         type: 'smartOTPPassword',
-        value: {show, code, message},
+        value: {show, message},
       },
       goBack,
     });
   };
 
-  return {showModalSmartOTPSuggestion, showModalSmartOTPPassword};
+  const showModalPassword = async ({
+    show = true,
+    message = '',
+    goBack = () => {},
+  }) => {
+    dispatch({
+      type: 'SHOW_MODAL',
+      modal: {
+        type: 'password',
+        value: {show, message},
+      },
+      goBack,
+    });
+  };
+
+  return {
+    showModalSmartOTPSuggestion,
+    showModalSmartOTPPassword,
+    showModalPassword,
+  };
 };
 
 export default useShowModal;
