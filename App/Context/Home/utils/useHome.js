@@ -25,9 +25,9 @@ const useHome = () => {
 
 const useModalSmartOTP = () => {
   const {
-    showModal: {smartOTP},
+    showModal: {smartOTPSuggestion},
   } = useCommon();
-  const {showModalSmartOTP} = useShowModal();
+  const {showModalSmartOTPSuggestion} = useShowModal();
   const {setModalSmartOTPDisabled} = useAsyncStorage();
 
   const onGoSmartOTP = () => {
@@ -40,10 +40,10 @@ const useModalSmartOTP = () => {
   };
 
   const onClose = () => {
-    showModalSmartOTP(false);
+    showModalSmartOTPSuggestion(false);
   };
 
-  return {smartOTP, onGoSmartOTP, onPressNever, onClose};
+  return {smartOTPSuggestion, onGoSmartOTP, onPressNever, onClose};
 };
 const useIconConfig = () => {
   let iconList = {

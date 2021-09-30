@@ -221,7 +221,7 @@ const useOTPBySmartOTP = () => {
 const useTransactionResult = () => {
   const {transaction} = useWallet();
   const {amount, fee, bank, result, transType} = transaction;
-  const {showModalSmartOTP} = useShowModal();
+  const {showModalSmartOTPSuggestion} = useShowModal();
 
   const loadData = () => {
     // TODO: translate
@@ -242,7 +242,7 @@ const useTransactionResult = () => {
   };
 
   const onBackHome = () => {
-    showModalSmartOTP(true);
+    showModalSmartOTPSuggestion(true);
     Navigator.navigate(SCREEN.TAB_NAVIGATION);
     Navigator.navigate(SCREEN.HOME);
   };

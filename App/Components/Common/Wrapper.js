@@ -6,17 +6,33 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {Colors, Images, Spacing} from 'themes';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import {useCommon} from 'context/Common';
 import Debug from './Debug';
-import {useCheckInfo, useModalSmartOTP} from 'context/Home/utils';
+import {
+  useCheckInfo,
+  useModalSmartOTP as useModalSmartOTPSuggestion,
+} from 'context/Home/utils';
 import {useTranslation} from 'context/Language';
 import {SCREEN} from 'configs/Constants';
-import {Modal, Alert, FWLoading, Button, Text} from 'components';
+import {
+  Modal as ModalCustom,
+  Alert,
+  FWLoading,
+  Button,
+  Text,
+  Icon,
+} from 'components';
 import {useModalPermission} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
+import {useModalSmartOTP as useModalSmartOTPPassword} from 'context/User/utils';
+import Modal from 'react-native-modal';
+import {scale} from 'utils/Functions';
+import SmartOTPInput from 'components/User/SmartOTP/SmartOTPInput';
+
 const Wrapper = React.memo(
   ({
     barStyle = 'light-content',
@@ -25,12 +41,13 @@ const Wrapper = React.memo(
     avoidStatusBar = false,
   }) => {
     const {loading, error} = useCommon();
-    const modalSmartOTP = useModalSmartOTP();
+    const modalSmartOTP = useModalSmartOTPSuggestion();
     const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
     const translation = useTranslation();
     const {permissionCamera, showModalCamera, askPermission} =
       useModalPermission();
     const {setFirstLogin} = useRegister();
+    const smartOTPPassword = useModalSmartOTPPassword();
 
     return (
       // TODO: translate
@@ -38,7 +55,8 @@ const Wrapper = React.memo(
         <KeyboardAvoidingView
           style={styles.flexFill}
           behavior={'padding'}
-          enabled={Platform.OS === 'ios' && !disableAvoidKeyboard}>
+          enabled={Platform.OS === 'ios' && !disableAvoidKeyboard}
+        >
           <StatusBar
             barStyle={barStyle}
             translucent
@@ -50,7 +68,7 @@ const Wrapper = React.memo(
           {!!error?.errorCode && <Alert />}
           {__DEV__ && <Debug />}
           {modalSmartOTP.smartOTP && (
-            <Modal
+            <ModalCustom
               icon={Images.Modal.Lock}
               visible={modalSmartOTP.smartOTP}
               onClose={() => setFirstLogin(false)}
@@ -75,7 +93,7 @@ const Wrapper = React.memo(
             />
           )}
           {KYC && (
-            <Modal
+            <ModalCustom
               icon={Images.Modal.UserTick}
               visible={KYC}
               onClose={() => checkInfo({value: false})}
@@ -97,7 +115,7 @@ const Wrapper = React.memo(
             />
           )}
           {connectBank && (
-            <Modal
+            <ModalCustom
               visible={connectBank}
               onClose={() => checkInfo({value: false})}
               title={translation.notification}
@@ -118,7 +136,7 @@ const Wrapper = React.memo(
             />
           )}
           {permissionCamera && (
-            <Modal
+            <ModalCustom
               visible={permissionCamera}
               onClose={() => showModalCamera(false)}
               title={'Truy cập camera'}
@@ -137,6 +155,38 @@ const Wrapper = React.memo(
                 </View>
               )}
             />
+          )}
+          {smartOTPPassword.smartOTPPassword?.show && (
+            <View style={styles.backdrop}>
+              <Pressable
+                onPress={smartOTPPassword.onHideModal}
+                style={{flex: 1}}
+              />
+              <View style={styles.smartOTPPasswordContainer}>
+                <TouchableOpacity onPress={smartOTPPassword.onHideModal}>
+                  <Icon
+                    icon={Images.CloseThin}
+                    tintColor={Colors.black}
+                    size={scale(10)}
+                    style={styles.iconCloseSmartOTPPassword}
+                  />
+                </TouchableOpacity>
+                {/* TODO: translate */}
+                <Text bold style={styles.titleSmartOTPPassword}>
+                  Nhập mật khẩu Smart OTP hiện tại
+                </Text>
+                <SmartOTPInput
+                  onFilled={smartOTPPassword.onCodeFilled}
+                  message={smartOTPPassword.smartOTPPassword?.message}
+                />
+                <Text
+                  style={styles.textForgetSmartOTPPassword}
+                  onPress={smartOTPPassword.onForgetSmartOTPPassword}
+                >
+                  {translation.forgot_password}
+                </Text>
+              </View>
+            </View>
           )}
         </KeyboardAvoidingView>
       </View>
@@ -157,6 +207,33 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   btn: {width: '100%'},
+  backdrop: {
+    backgroundColor: '#00000099',
+    ...StyleSheet.absoluteFill,
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+  smartOTPPasswordContainer: {
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    backgroundColor: Colors.white,
+  },
+  iconCloseSmartOTPPassword: {
+    position: 'absolute',
+    right: scale(20),
+    top: Spacing.PADDING,
+  },
+  titleSmartOTPPassword: {
+    marginTop: scale(36),
+    marginBottom: scale(54),
+    textAlign: 'center',
+    fontSize: Fonts.H5,
+  },
+  textForgetSmartOTPPassword: {
+    marginTop: scale(130),
+    marginBottom: Spacing.PADDING,
+    textAlign: 'center',
+  },
 });
 
 export default Wrapper;
