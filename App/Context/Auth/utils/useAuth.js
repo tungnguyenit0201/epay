@@ -386,7 +386,8 @@ const useForgetPassword = () => {
       return;
     }
     setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
-    Navigator.popToTop();
+    Navigator.reset(SCREEN.AUTH);
+    Keychain.setGenericPassword(phone, passwordEncrypted);
   };
 
   const onSetActive = () => {

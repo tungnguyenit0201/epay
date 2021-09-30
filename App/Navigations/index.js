@@ -70,7 +70,6 @@ import SmartOTPPassword from 'containers/User/SmartOTP/SmartOTPPassword';
 import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
 import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
 import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
-import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
 import MapBankFlow from 'containers/Wallet/Bank/MapBankFlow';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
@@ -363,10 +362,6 @@ const AppNavigator = () => {
             component={SmartOTPFailure}
           />
           <Stack.Screen name={SCREEN.SYNC_SMART_OTP} component={SyncSmartOTP} />
-          <Stack.Screen
-            name={SCREEN.SYNC_SMART_OTP_RESULT}
-            component={SyncSmartOTPResult}
-          />
           <Stack.Screen name={SCREEN.SELECT_MONEY} component={SelectMoney} />
           <Stack.Screen
             name={SCREEN.OTP_BY_SMART_OTP}

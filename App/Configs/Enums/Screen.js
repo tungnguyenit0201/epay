@@ -63,7 +63,6 @@ const SCREEN = {
   BANK_DETAIL: 'BankDetail',
   SMART_OTP_FAILURE: 'SmartOTPFailure',
   SYNC_SMART_OTP: 'SyncSmartOTP',
-  SYNC_SMART_OTP_RESULT: 'SyncSmartOTPResult',
   SELECT_MONEY: 'SelectMoney',
   OTP_BY_SMART_OTP: 'OTPBySmartOTP',
   VERIFY_EMAIL_RESULT: 'VerifyEmailResult',

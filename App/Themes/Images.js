@@ -196,4 +196,5 @@ export default {
   warning: require('images/ic_warning.png'),
   primaryButton: require('images/Button.png'),
   borderButton: require('images/border_button.png'),
+  CloseThin: require('images/CloseThin.png'),
 };

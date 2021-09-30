@@ -7,10 +7,12 @@ export const CommonProvider = ({children}) => {
     loading: false,
     error: null,
     showModal: {
-      smartOTP: false,
+      smartOTPSuggestion: false,
       KYC: false,
       connectBank: false,
       permissionCamera: false,
+      smartOTPPassword: null,
+      password: null,
     },
     config: {},
   });
