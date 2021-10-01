@@ -12,11 +12,10 @@ const VerifyEmail = ({route}) => {
 
   return (
     <>
+      <HeaderBg>
+        <Header back title="Xác thực Email" />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title="Xác thực Email" />
-        </HeaderBg>
-
         <Formik
           initialValues={{
             email: '',
