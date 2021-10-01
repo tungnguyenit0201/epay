@@ -32,12 +32,12 @@ const TRANS_DETAIL = {
       label: 'bill_pay',
     },
   ],
-  STATUS: {
-    0: 'all',
-    1: 'successful',
-    2: 'failed',
-    3: 'processing',
-  },
+  STATUS: [
+    {value: 0, label: 'all'},
+    {value: 1, label: 'successful'},
+    {value: 3, label: 'processing'},
+    {value: 2, label: 'failed'},
+  ],
 };
 
 export default TRANS_DETAIL;

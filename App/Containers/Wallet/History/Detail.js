@@ -50,7 +50,8 @@ const ToggleRightText = ({text}) => {
         bold
         style={[styles.textRight]}
         onTextLayout={onTextLayout_1}
-        numberOfLines={numLines}>
+        numberOfLines={numLines}
+      >
         {text}
       </Text>
       {showMoreButton && (
@@ -58,7 +59,8 @@ const ToggleRightText = ({text}) => {
           onPress={toggleTextShown}
           style={[styles.textRight]}
           color={Colors.cl1}
-          bold>
+          bold
+        >
           {textShown ? 'Thu gọn' : 'Xem thêm'}
         </Text>
       )}
@@ -178,7 +180,9 @@ const DetailHistory = ({route}) => {
                 TRANS_DETAIL.SERVICE.find(x => x.value === TransType).label
               ] +
                 ' ' +
-                translation[TRANS_DETAIL.STATUS[Status]].toLowerCase()}
+                translation[
+                  TRANS_DETAIL.STATUS.find(x => x.value === Status).label
+                ].toLowerCase()}
             </Text>
 
             {!!TransAmount && (
@@ -187,7 +191,8 @@ const DetailHistory = ({route}) => {
                 bold
                 color={isIncome ? blue_1 : Colors.Highlight}
                 centered
-                style={styles.wrap}>
+                style={styles.wrap}
+              >
                 {isIncome ? '+' : '-'} {formatMoney(TransAmount, ' Vnđ')}
               </Text>
             )}
@@ -212,7 +217,8 @@ const DetailHistory = ({route}) => {
               styles.botZero,
               styles.rightZero,
               styles.absolute,
-            ]}>
+            ]}
+          >
             <Image
               source={Images.TransactionHistory.LogoBg}
               style={styles.logoBg}
@@ -224,7 +230,8 @@ const DetailHistory = ({route}) => {
             <>
               <View
                 style={[styles.flexRow, styles.pt2, styles.pb3]}
-                key={index}>
+                key={index}
+              >
                 <Text fs="h6" style={[styles.haftWidth, styles.pr1]}>
                   {item.title}
                 </Text>
@@ -232,7 +239,8 @@ const DetailHistory = ({route}) => {
                   fs="h6"
                   bold
                   color={Colors.gray}
-                  style={[styles.haftWidth, styles.textRight]}>
+                  style={[styles.haftWidth, styles.textRight]}
+                >
                   {item.value}
                 </Text>
               </View>
@@ -256,10 +264,12 @@ const DetailHistory = ({route}) => {
               styles.py1,
               styles.mt1,
               styles.mb2,
-            ]}>
+            ]}
+          >
             <TouchableOpacity
               style={[styles.flexRow]}
-              onPress={() => Linking.openURL('tel:19000000')}>
+              onPress={() => Linking.openURL('tel:19000000')}
+            >
               <View style={[styles.flexRow, styles.flex1, styles.pr1]}>
                 <Icon
                   icon={Images.Phone_1}
@@ -288,7 +298,8 @@ const DetailHistory = ({route}) => {
                   styles.mb2,
                   styles.px2,
                   styles.py2,
-                ]}>
+                ]}
+              >
                 {dataRowMoreInfo[TransType].map((item, index) => (
                   <View key={index}>
                     <View style={[styles.flexRow, styles.pt2, styles.pb3]}>

@@ -21,6 +21,7 @@ const useHistory = () => {
   const [historyData, setHistoryData] = useState(null);
   const {setError} = useError();
   const {setLoading} = useLoading();
+  const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({
     search: '',
     startDate: moment()
@@ -29,6 +30,7 @@ const useHistory = () => {
     endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
     serviceID: 0,
     stateID: 0,
+    tempFilter: {},
   });
 
   const parseHistory = data => {
@@ -101,10 +103,6 @@ const useHistory = () => {
     onGetHistory();
   }, []); // eslint-disable-line
 
-  const onFilter = () => {
-    onGetHistory();
-  };
-
   const onSearch = text => {
     contentRef.current.search = text;
     onSearchDebounce();
@@ -126,7 +124,39 @@ const useHistory = () => {
     });
   };
 
-  return {historyData, onFilter, onSearch, onDetail, onGetHistory};
+  const onToggleFilter = () => {
+    setShowFilter(showFilter ? 0 : 1);
+  };
+
+  const onFilter = () => {
+    contentRef.current = {
+      ...contentRef.current,
+      ...contentRef.current.tempFilter,
+    };
+    onGetHistory();
+  };
+
+  const onSetTempFilter = ({type, value}) => {
+    contentRef.current.tempFilter[type] = value;
+  };
+
+  const onResetTempFilter = () => {
+    contentRef.current.tempFilter = {};
+    setShowFilter(showFilter + 1); // to rerender filter modal
+  };
+
+  return {
+    historyData,
+    isFiltering: contentRef.current.search,
+    showFilter,
+    onFilter,
+    onSearch,
+    onDetail,
+    onGetHistory,
+    onToggleFilter,
+    onSetTempFilter,
+    onResetTempFilter,
+  };
 };
 
 export default useHistory;
