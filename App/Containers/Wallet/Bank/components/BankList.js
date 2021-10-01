@@ -23,6 +23,8 @@ import {useWallet} from 'context/Wallet';
 import {useBankInfo} from 'context/Wallet/utils';
 import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {useLoading} from 'context/Common/utils';
+import RadioICInfo from 'containers/Wallet/Bank/components/RadioICInfo';
+
 
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
@@ -53,38 +55,6 @@ const BankItem = ({title, icon, item, callback}) => (
     </Text>
   </TouchableOpacity>
 );
-
-const RadioICInfo = forwardRef(({kycInfo, selectedValue, style}, ref) => {
-  const data = kycInfo;
-  const [selectedItem, setSelectedItem] = useState(
-    selectedValue && selectedValue > 0 ? data?.[selectedValue - 1] : data?.[0],
-  );
-
-  useImperativeHandle(ref, () => ({getItem}));
-  const getItem = () => {
-    return selectedItem;
-  };
-  const handleChange = value => {
-    setSelectedItem(data?.[value - 1]);
-  };
-
-  return (
-    <View>
-      <Text style={{}}>
-        Thông tin giấy tờ tuỳ thân mà bạn chọn để liên kết phải trùng khớp với
-        thông tin giấy tờ tuỳ thân được khai báo tại ngân hàng.
-      </Text>
-      <Radio
-        onChange={handleChange}
-        items={data}
-        selectedValue={selectedItem?.value}
-        style={[styles.radio]}
-        wrapStyle={{flexDirection: 'column', flexWrap: ''}}
-        marginBottom={0}
-      />
-    </View>
-  );
-});
 
 const BankList = forwardRef((props, ref) => {
   const translation = useTranslation();

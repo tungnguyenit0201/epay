@@ -32,14 +32,15 @@ const OTP = props => {
     code,
     showModal,
     setShowModal,
-    onChange,
-    onConfirmOTP,
     resentOTP,
     label,
   } = useOTP({});
   const {onActiveUserOTP} = useBankInfo();
+  const [otp, setOtp] = useState('');
   const {BankConnectInfo} = useWallet();
   const translation = useTranslation();
+
+  const onConfirmOTP = ()=>{};
 
   const onSubmit = async () => {
     try {
@@ -67,18 +68,12 @@ const OTP = props => {
     }
   };
 
+  const onChange  = (otp)=>{
+    setOtp(otp);
+  };
+
   const renderOTP = () => {
-    //  <OTPInputView
-    //   style={styles.wrapOtp}
-    //   pinCount={6}
-    //   onCodeChanged={onChange}
-    //   autoFocusOnLoad
-    //   codeInputFieldStyle={styles.otp}
-    //   codeInputHighlightStyle={{}}
-    //   onCodeFilled={onCodeFilled}
-    //   clearInputs={message}
-    //   code={code}
-    // />
+
     return (
         <View>
         <Text
@@ -95,9 +90,10 @@ const OTP = props => {
         autoFocusOnLoad
         codeInputFieldStyle={styles.otp}
         codeInputHighlightStyle={{}}
-        onCodeFilled={onConfirmOTP}
+        onCodeFilled={onSubmit}
         clearInputs={errorMessage}
         code={code}
+        autoFocus={true}
     />
 
     <View style={styles.flexRow_1}>
