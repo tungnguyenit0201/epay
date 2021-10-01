@@ -87,7 +87,7 @@ class VnptEkycOption {
     
     option.isShowPreviewTitle = true
     option.isPreviewAnimation = false
-    option.isShowTutorial = true
+    option.isShowTutorial = config.bool(key: "isShowTutorial", defaultValue: true)
     option.isShowLogo = false
     option.isValidDocument = false
     return option

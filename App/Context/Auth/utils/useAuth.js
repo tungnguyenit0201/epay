@@ -23,12 +23,7 @@ import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
 
 const useTouchID = ({onSuccess}) => {
   const [biometryType, setBiometryType] = useState(null);
-  const {
-    getTouchIdEnabled,
-    getPhone,
-    getTouchIDAndroidData,
-    setTouchIDAndroidData,
-  } = useAsyncStorage();
+  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
   const {setError} = useError();
 
   const checkBiometry = async () => {
@@ -64,7 +59,7 @@ const useTouchID = ({onSuccess}) => {
 
     // TODO: translate
     const options = {
-      title: 'Authentication Required', // Android
+      title: 'Đăng nhập bằng Touch ID', // Android
       imageColor: '#e00606', // Android
       imageErrorColor: '#ff0000', // Android
       sensorDescription: 'Touch sensor', // Android
@@ -75,7 +70,14 @@ const useTouchID = ({onSuccess}) => {
       passcodeFallback: passcode, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     };
 
-    TouchID.authenticate('Đăng nhập bằng Touch ID', options)
+    TouchID.authenticate(
+      passcode
+        ? `Vui lòng nhập mật khẩu thiết bị để kích hoạt`
+        : `Đăng nhập bằng ${
+            biometryType === 'FaceID' ? 'Face ID' : 'Touch ID'
+          }`,
+      options,
+    )
       .then(success => {
         !passcode && onSuccess && onSuccess(success);
       })
@@ -115,9 +117,9 @@ const useTouchID = ({onSuccess}) => {
 
 const useAuth = () => {
   const {setLoading} = useLoading();
-  const {dispatch} = useUser();
+  const {dispatch, route} = useUser();
   const {setError} = useError();
-  const {setPhone, setToken} = useAsyncStorage();
+  const {setPhone, setToken, getPushToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
@@ -157,7 +159,8 @@ const useAuth = () => {
   }) => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
-    const result = await login(phone, passwordEncrypted);
+    const pushToken = await getPushToken();
+    const result = await login(phone, passwordEncrypted, pushToken);
     setLoading(false);
 
     switch (_.get(result, 'ErrorCode', '')) {
@@ -185,9 +188,14 @@ const useAuth = () => {
         });
         await setToken(result?.Token);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+
         Navigator.navigate(
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
+        if (!!route) {
+          Navigator.navigate(route?.screen, route?.params);
+          return dispatch({type: 'SET_ROUTE', route: null});
+        }
         onGetAllInfo();
         onGetWalletInfo();
         onGetConnectedBank();
@@ -378,7 +386,8 @@ const useForgetPassword = () => {
       return;
     }
     setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
-    Navigator.popToTop();
+    Navigator.reset(SCREEN.AUTH);
+    Keychain.setGenericPassword(phone, passwordEncrypted);
   };
 
   const onSetActive = () => {

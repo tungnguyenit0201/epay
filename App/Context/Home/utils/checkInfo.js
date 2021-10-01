@@ -20,12 +20,15 @@ const useCheckInfo = () => {
 
   const onCheckSmartOTP = async screen => {
     const result = await checkSmartOTP({phone});
-    const isSmartOTPActived = _.get(result, 'SmartOtpInfo', false);
+    const isSmartOTPActived = _.get(result, 'State', 0);
     if (isSmartOTPActived) {
       screen && Navigator.navigate(screen);
       return true;
     }
-    dispatch({type: 'SHOW_MODAL', modal: {type: 'smartOTP', value: true}});
+    dispatch({
+      type: 'SHOW_MODAL',
+      modal: {type: 'smartOTPSuggestion', value: true},
+    });
   };
 
   const checkInfo = ({screen, value = true}) => {

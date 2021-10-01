@@ -7,9 +7,10 @@ import {CommonProvider} from 'App/Context/Common';
 import {LanguageProvider} from 'App/Context/Language';
 import {Wrapper} from 'components';
 import messaging from '@react-native-firebase/messaging';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import {Platform, Alert} from 'react-native';
+import {ASYNC_STORAGE_KEY} from 'configs/Constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // import Storybook from './storybook';
 // import {MODE} from '@env';
 
@@ -17,61 +18,31 @@ const App = () => {
   const [queryClient] = useState(() => new QueryClient());
 
   const saveTokenToDatabase = async token => {
-    // Assume user is already signed in
-    const userId = auth().currentUser.uid;
-    console.log('userId :>> ', userId);
-    // Add the token to the users datastore
-    await firestore()
-      .collection('users')
-      .doc(userId)
-      .update({
-        tokens: firestore.FieldValue.arrayUnion(token),
-      });
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.PUSH_TOKEN, token);
   };
 
   const getFcmToken = async () => {
     let token = await messaging().getToken();
-    console.log('token :>> ', token);
-    // if (token) return saveTokenToDatabase(token);
+    if (token) return saveTokenToDatabase(token);
   };
 
   useEffect(() => {
-    // Get the device token
-
     const requestUserPermission = async () => {
       const authorizationStatus = await messaging().requestPermission();
-      // const x = await messaging().registerDeviceForRemoteMessages();
       if (
         authorizationStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authorizationStatus === messaging.AuthorizationStatus.PROVISIONAL
       ) {
-        console.log('Permission status:', authorizationStatus);
-
         getFcmToken();
       }
     };
     requestUserPermission();
-    // If using other push notification providers (ie Amazon SNS, etc)
-    // you may need to get the APNs token instead for iOS:
-    // if(Platform.OS == 'ios') { messaging().getAPNSToken().then(token => { return saveTokenToDatabase(token); }); }
 
-    // Listen to whether the token changes
     return messaging().onTokenRefresh(token => {
       saveTokenToDatabase(token);
     });
   }, []); // eslint-disable-line
 
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('message :>> ', remoteMessage);
-      Alert.alert(
-        remoteMessage?.notification?.title,
-        remoteMessage?.notification?.body,
-      );
-    });
-
-    return unsubscribe;
-  }, []); // eslint-disable-line
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>

@@ -22,6 +22,7 @@ import {
 import { useTranslation } from 'context/Language';
 
 const RANGE_MONEY = 2000000;
+import {useModalSmartOTP, useSmartOTP} from 'context/User/utils';
 
 const useTopUpWithdraw = ({transType}) => {
   const translation = useTranslation();
@@ -158,6 +159,8 @@ const useConfirmation = () => {
     fee,
     amount,
   } = transaction;
+  const {onShowModal} = useModalSmartOTP();
+  const {onTransaction} = useSmartOTP();
   const transTypeText =
     transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // TODO: translate
   const feeValue = calculateFee({cash: amount, feeData: fee});
@@ -203,29 +206,42 @@ const useConfirmation = () => {
 
   const onContinue = async () => {
     const result = await checkSmartOTP({phone});
-    const isSmartOTPActived = _.get(result, 'SmartOtpInfo', false);
-    if (!isSmartOTPActived) {
+    const isSmartOTPActived = _.get(result, 'State', 0);
+    if (isSmartOTPActived) {
+      // Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'transaction'});
+      onShowModal(password => onTransaction({password}));
+    } else {
       setError({ErrorCode: -1, ErrorMessage: 'Vui lòng kích hoạt smart otp.'}); // TODO: transalate
       // Navigator.push(SCREEN.OTP, {functionType: FUNCTION_TYPE.RECHARGE_BY_BANK});
     }
 
 
     
-    if (transType == TRANS_TYPE.CashIn) {
+    // if (transType == TRANS_TYPE.CashIn) {
 
-      if(amount > RANGE_MONEY) {
-        onCashIn();
-      } else {
-        Navigator.navigate(SCREEN.SMART_OTP_CONFIRM, {
-          test:",",
-          onSuccess: ()=>{
-              onCashIn();
-          }
-      });
-      }
-    }
+    //   if(amount > RANGE_MONEY) {
+    //     onCashIn();
+    //   } else {
+    //     Navigator.navigate(SCREEN.SMART_OTP_CONFIRM, {
+    //       test:",",
+    //       onSuccess: ()=>{
+    //           onCashIn();
+    //       }
+    //   });
+    //   }
+    // }
     
   };
+
+
+  const continueButtonTitle = () => {
+    switch(transType) {
+      case TRANS_TYPE.CashIn:
+        return translation.topup;
+      default:
+          return transaction.continue;
+    }
+  }
 
   return {
     transTypeText,
@@ -235,6 +251,7 @@ const useConfirmation = () => {
     total,
     data,
     onContinue,
+    continueButtonTitle
   };
 };
 
@@ -313,7 +330,7 @@ const useOTPBySmartOTP = () => {
 const useTransactionResult = () => {
   const {transaction} = useWallet();
   const {amount, fee, bank, result, transType} = transaction;
-  const {showModalSmartOTP} = useShowModal();
+  const {showModalSmartOTPSuggestion} = useShowModal();
 
   const loadData = () => {
     // TODO: translate
@@ -334,13 +351,14 @@ const useTransactionResult = () => {
   };
 
   const onBackHome = () => {
-    showModalSmartOTP(true);
+    showModalSmartOTPSuggestion(true);
     Navigator.navigate(SCREEN.TAB_NAVIGATION);
     Navigator.navigate(SCREEN.HOME);
   };
 
   return {data: loadData(), message: result?.ErrorMessage, onRetry, onBackHome};
 };
+
 
 export {
   useTopUpWithdraw,

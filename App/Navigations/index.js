@@ -8,9 +8,11 @@ import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import { Platform } from 'react-native';
-import { useConfig } from 'context/Common/utils';
+import {Platform, Alert} from 'react-native';
+import {useAsyncStorage, useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
+import {useNotify} from 'context/User/utils';
+import {useUser} from 'context/User';
 
 const Stack = createStackNavigator();
 
@@ -68,7 +70,6 @@ import SmartOTPPassword from 'containers/User/SmartOTP/SmartOTPPassword';
 import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
 import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
 import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
-import SyncSmartOTPResult from 'containers/User/SmartOTP/SyncSmartOTPResult';
 import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
@@ -89,47 +90,92 @@ import SmartOTPConfirm from 'containers/Wallet/SmartOTPConfirm';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
-  const { setLanguage } = useTranslation();
-  const { onGetConfig } = useConfig();
+  const {setLanguage} = useTranslation();
+  const {getToken} = useAsyncStorage();
+  const {onGetConfig} = useConfig();
+  const isReadyRef = React.useRef(false);
+  const {onPressNotify} = useNotify();
+  const {dispatch} = useUser();
+
+  const openNotificaiton = async remoteMessage => {
+    const token = await getToken();
+
+    if (isReadyRef.current) {
+      if (token) onPressNotify(remoteMessage?.data);
+      else {
+        dispatch({
+          type: 'SET_ROUTE',
+          route: {
+            screen: SCREEN.EPAY_SUCCESS,
+            params: {data: remoteMessage?.data},
+          },
+        });
+        Navigator.navigate(SCREEN.AUTH);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    const getConfig = async () => {
+      await onGetConfig();
+    };
+    getConfig();
+  }, []); // eslint-disable-line
 
   React.useEffect(() => {
     const getCurrentLanguage = async () => {
       let currentLanguage = await AsyncStorage.getItem(
         ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
       );
-      
-      if (!currentLanguage) Navigator.navigate(SCREEN.LANGUAGE);
+      if (!currentLanguage && isReadyRef.current)
+        Navigator.navigate(SCREEN.LANGUAGE);
       else setLanguage(currentLanguage);
     };
-    const getConfig = async () => {
-      await onGetConfig();
-    };
-    getConfig();
+
     getCurrentLanguage();
-  }, []); // eslint-disable-line
+  }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {
     Platform.OS == 'android' && SplashScreen.hide();
   }, []); // eslint-disable-line
 
   React.useEffect(() => {
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log(
-        'Notification caused app to open from background state:',
-        remoteMessage.notification,
-      );
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      await openNotificaiton(remoteMessage);
     });
 
     messaging()
       .getInitialNotification()
       .then(remoteMessage => {
-        if (remoteMessage) {
-          console.log(
-            'Notification caused app to open from quit state:',
-            remoteMessage.notification,
-          );
+        if (isReadyRef.current && remoteMessage) {
+          dispatch({
+            type: 'SET_ROUTE',
+            route: {
+              screen: SCREEN.EPAY_SUCCESS,
+              params: {data: remoteMessage?.data},
+            },
+          });
         }
       });
+  }, [isReadyRef.current]); // eslint-disable-line
+
+  React.useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert(
+        remoteMessage?.notification?.title,
+        remoteMessage?.notification?.body,
+        [
+          {
+            text: 'Huỷ',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Xem', onPress: () => openNotificaiton(remoteMessage)},
+        ],
+      );
+    });
+
+    return unsubscribe;
   }, []); // eslint-disable-line
 
   const modalOptions = {
@@ -161,7 +207,11 @@ const AppNavigator = () => {
     config: {},
   };
   return (
-    <NavigationContainer ref={Navigator.setContainer} linking={linking}>
+    <NavigationContainer
+      ref={Navigator.setContainer}
+      linking={linking}
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -308,10 +358,6 @@ const AppNavigator = () => {
             component={SmartOTPFailure}
           />
           <Stack.Screen name={SCREEN.SYNC_SMART_OTP} component={SyncSmartOTP} />
-          <Stack.Screen
-            name={SCREEN.SYNC_SMART_OTP_RESULT}
-            component={SyncSmartOTPResult}
-          />
           <Stack.Screen name={SCREEN.SELECT_MONEY} component={SelectMoney} />
           <Stack.Screen
             name={SCREEN.OTP_BY_SMART_OTP}

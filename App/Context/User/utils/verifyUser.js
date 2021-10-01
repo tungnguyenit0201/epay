@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Linking } from 'react-native';
 import Navigator from 'navigations/Navigator';
 import { ERROR_CODE, SCREEN } from 'configs/Constants';
 import {
@@ -23,6 +23,7 @@ import {
 } from 'services/ekyc';
 import { ConsoleUtils } from 'utils/Console';
 import useAlert from 'utils/Alert';
+import { Images } from 'themes';
 
 const {
   SDK_SCREEN: {
@@ -282,6 +283,7 @@ const useVerifyInfo = (initialValue = {}) => {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
         titleFront: backSide ? 'Mặt sau' : 'Mặt trước',
+        isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
 
@@ -312,6 +314,7 @@ const useVerifyInfo = (initialValue = {}) => {
         data,
         path: `data:image/jpeg;base64,${imageDisplay}`,
       });
+      onChange('eKYCTutorialShown', true);
     };
 
     const EKYC_PERMISSIONS = Platform.OS === 'android'
@@ -336,7 +339,18 @@ const useVerifyInfo = (initialValue = {}) => {
       if (isRequestPermissionsGranted) {
         openSDK();
       } else {
-        //Permission error
+        Navigator.showAlert({
+          icon: Images.warning,
+          title: strings?.kycPermissionTitle,
+          message: strings?.permissionDenied,
+          positiveButton: {
+            title: strings?.acceptRequested,
+            onPress: () => Linking.openSettings(),
+          },
+          negativeButton: {
+            title: strings?.cancelled,
+          },
+        });
       }
     }
   };

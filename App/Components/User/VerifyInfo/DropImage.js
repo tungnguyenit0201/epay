@@ -60,78 +60,53 @@ const DropImage = ({
     return () => setShowCamera(1);
   }, [eKYC, cameraType, type]);
 
-  const imagePath = useMemo(() => {
-    return eKYC ? SDKImage?.path : image?.path;
-  }, [SDKImage, image]);
+  const imageSource = useMemo(() => {
+    const imagePath = (eKYC ? SDKImage?.path : image?.path) || draft?.path;
+    if (imagePath) {
+      return { uri: imagePath };
+    }
+    return identify
+      ? identify === IC_TPYE.PASSPORT
+        ? Images.VerifyUserInfo.Passport
+        : Images.VerifyUserInfo.IdFront
+      : Images.VerifyUserInfo.IdBack;
+  }, [SDKImage, image, draft, eKYC]);
 
   return (
     // TODO: translate
     <>
       {!showCamera && (
         <View style={style}>
-          {imagePath || draft ? (
-            <View style={[styles.wrapImg, style]}>
-              <View style={styles.titleRow}>
-                <Text
-                  size={Fonts.H6}
-                  centered
-                  bold
-                  style={styles.textUppercase}>
-                  {title}
-                </Text>
-                <Button
-                  onPress={KYCFunction}
-                  label={translation?.take_a_photo}
-                  style={styles.smallButton}
-                  leftIcon={Images.VerifyUserInfo.camera}
-                  bold
-                />
-              </View>
-              <Image
-                style={[
-                  styles.img,
-                  cameraType !== 'back' && styles.imgFront,
-                  cameraType !== 'back' && {
-                    width: image?.widthImg || scale(150),
-                    height: image?.heightImg || scale(150),
-                  },
-                ]}
-                source={{ uri: imagePath ? imagePath : draft?.path }}
-                resizeMode={'contain'}
-              />
-            </View>
-          ) : (
-            <View style={styles.emptyHolder}>
+          <View style={[styles.wrapImg, style]}>
+            <View style={styles.titleRow}>
               <Text
                 size={Fonts.H6}
-                mb={10}
                 centered
                 bold
                 style={styles.textUppercase}>
                 {title}
               </Text>
-              <Image
-                style={[styles.img]}
-                source={
-                  identify
-                    ? identify === IC_TPYE.PASSPORT
-                      ? Images.VerifyUserInfo.Passport
-                      : Images.VerifyUserInfo.IdFront
-                    : Images.VerifyUserInfo.IdBack
-                }
-                resizeMode={'contain'}
+              <Button
+                onPress={KYCFunction}
+                label={translation?.take_a_photo}
+                style={styles.smallButton}
+                leftIcon={Images.VerifyUserInfo.camera}
+                bold
               />
-              <View style={styles.button}>
-                <Button
-                  onPress={KYCFunction}
-                  label={translation?.take_a_photo}
-                  style={styles.btn}
-                  leftIcon={Images.VerifyUserInfo.camera}
-                  bold
-                />
-              </View>
             </View>
-          )}
+            <Image
+              style={[
+                styles.img,
+                cameraType !== 'back' && styles.imgFront,
+                cameraType !== 'back' && {
+                  width: image?.widthImg || scale(150),
+                  height: image?.heightImg || scale(150),
+                },
+              ]}
+              source={imageSource}
+              resizeMode={'contain'}
+            />
+          </View>
         </View>
       )}
       {showCamera && (
@@ -249,8 +224,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   wrapImg: {
-    paddingVertical: Spacing.PADDING / 2,
+    paddingVertical: Spacing.PADDING,
     paddingHorizontal: Spacing.PADDING,
+    marginBottom: Spacing.PADDING,
     alignItems: 'center',
     borderRadius: 8,
     elevation: 3,
