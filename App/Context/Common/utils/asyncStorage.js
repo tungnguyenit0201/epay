@@ -77,6 +77,14 @@ const useAsyncStorage = () => {
     return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.PUSH_TOKEN);
   };
 
+  const setResend = async resend => {
+    await AsyncStorage.setItem(resend?.phone, JSON.stringify(resend));
+  };
+
+  const getResend = async phone => {
+    return await AsyncStorage.getItem(phone);
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -92,6 +100,8 @@ const useAsyncStorage = () => {
     getSmartOTPSharedKey,
     setSmartOTPSharedKey,
     getPushToken,
+    setResend,
+    getResend,
   };
 };
 

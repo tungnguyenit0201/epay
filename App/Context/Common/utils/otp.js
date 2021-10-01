@@ -9,10 +9,13 @@ import Navigator from 'navigations/Navigator';
 import useLoading from './loading';
 import useError from './error';
 import {useUserInfo} from 'context/User/utils';
+import {useAsyncStorage} from 'context/Common/utils';
+import {useCommon} from 'context/Common';
 
 const useOTP = ({functionType, phone, password, encrypted}) => {
+  const {config} = useCommon();
   const [errorMessage, setErrorMessage] = useState(null);
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setCountdown] = useState(config?.ResendOtpTime || 60);
   const [code, setCode] = useState('');
   const [showModal, setShowModal] = useState(false);
 
@@ -20,6 +23,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   const {setError} = useError();
   const {onLogin} = useAuth();
   const {onGetPersonalInfo} = useUserInfo();
+  const {setResend, getResend} = useAsyncStorage();
 
   const onChange = value => {
     setCode(value);
@@ -82,17 +86,54 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         return;
     }
   };
+  const checkResend = async () => {
+    let resend = await getResend(phone);
+    let resendObj = JSON.parse(resend);
 
-  const resentOTP = () => {
+    if (Date.now() >= resendObj?.time + 60000 * 30) {
+      return await setResend({
+        phone,
+        time: Date.now(),
+        times: 1,
+      });
+    }
+
+    if (
+      resendObj?.time <=
+        resendObj?.time + config?.LockWhenResendTooManyTime * 1000 &&
+      resendObj?.times >= config?.ResendOtpNo
+    ) {
+      let remain =
+        Math.round((60000 * 30 - (Date.now() - resendObj?.time)) / 60000) || 30;
+      setError({
+        ErrorCode: -1,
+        ErrorMessage: `Số lần gửi OTP quá ${config?.ResendOtpNo} lần/${config?.LockWhenResendTooManyTime} giây vui lòng quay lại sau ${remain} phút`,
+      }); // TODO: translate
+      return false;
+    }
+
+    return await setResend({
+      phone,
+      time: resendObj?.time ? resendObj?.time : Date.now(),
+      times: resendObj?.times + 1 || 1,
+    });
+  };
+
+  const resentOTP = async () => {
     try {
       setLoading(true);
-      let result = genOtp({
-        phone,
-        functionType,
-      });
-      let errorCode = _.get(result, 'ErrorCode', '');
-      if (errorCode == ERROR_CODE.SUCCESS) setCountdown(60);
-      else setError(result);
+      let canSend = await checkResend();
+      if (canSend) {
+        let result = genOtp({
+          phone,
+          functionType,
+        });
+        let errorCode = _.get(result, 'ErrorCode', '');
+        if (errorCode == ERROR_CODE.SUCCESS) {
+          setCountdown(config?.ResendOtpTime || 60);
+        } else setError(result);
+      }
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -113,12 +154,18 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
     }
   };
 
+  const onGenOtp = async () => {
+    let canSend = await checkResend();
+    canSend &&
+      (await genOtp({
+        phone,
+        functionType,
+      }));
+  };
+
   useEffect(() => {
-    genOtp({
-      phone,
-      functionType,
-    });
-  }, [phone, functionType]);
+    onGenOtp();
+  }, [phone, functionType]); // eslint-disable-line
 
   useEffect(() => {
     let timer = setInterval(() => setCountdown(countdown - 1), 1000);

@@ -47,16 +47,17 @@ const useModalSmartOTP = () => {
 };
 const useIconConfig = () => {
   let iconList = {
-    VDMS: {
-      icon: Images.Homes.BaoHiem,
-      name: 'Vaccine',
-      screen: SCREEN.TOP_UP,
-    },
     C08: {
-      icon: Images.Homes.GiaoThong,
-      name: 'Vi phạm giao thông',
+      icon: Images.Homes.NopPhat,
+      name: 'Nộp phạt',
       screen: SCREEN.TOP_UP,
     },
+    VDMS: {
+      icon: Images.Homes.YTe,
+      name: 'Y tế', // TODO: translate
+      screen: SCREEN.TOP_UP,
+    },
+
     // {
     //   icon: Images.Homes.GiaoThong,
     //   name: 'Giao thông',
