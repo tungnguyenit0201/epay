@@ -37,7 +37,7 @@ const TopUp = () => {
       <ScrollView style={base.wrap}>
         <HeaderBg style={{marginBottom: 50}}>
           <Header title="Nạp tiền tự động" back style={{marginBottom: 20}} />
-          <Money
+          {/* <Money
             style={[
               {
                 position: 'absolute',
@@ -46,7 +46,7 @@ const TopUp = () => {
                 right: Spacing.PADDING,
               },
             ]}
-          />
+          /> */}
         </HeaderBg>
         <View style={base.container}>
           <InputMoney />
