@@ -173,6 +173,17 @@ export default {
     Success: require('images/icons/success.png'),
     Fail: require('images/icons/fail.png'),
     LogoBg: require('images/LogoBG.png'),
+    CardReceive: require('images/icons/card-receive.png'),
+    CardEdit: require('images/icons/card-edit.png'),
+    CardSend: require('images/icons/card-send.png'),
+    ShieldTick: require('images/icons/shield-tick.png'),
+    Passport: require('images/icons/passport.png'),
+    Car: require('images/icons/car.png'),
+    Medic: require('images/icons/medic.png'),
+    BarCross: require('images/icons/bag-cross.png'),
+    SearchZoomOut: require('images/icons/search-zoom-out.png'),
+    EmptyWalletChange: require('images/icons/empty-wallet-change.png'),
+    Warning: require('images/icons/warning.png'),
   },
   Capture: require('images/Capture.png'),
   Camera: {
@@ -196,4 +207,5 @@ export default {
   warning: require('images/ic_warning.png'),
   primaryButton: require('images/Button.png'),
   borderButton: require('images/border_button.png'),
+  CloseThin: require('images/CloseThin.png'),
 };

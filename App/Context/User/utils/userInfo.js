@@ -26,6 +26,7 @@ import {sha256} from 'react-native-sha256';
 import {useWallet} from 'context/Wallet';
 import ImagePicker from 'react-native-image-crop-picker';
 import {getAll} from 'utils/Functions';
+import Keychain from 'react-native-keychain';
 
 const useUserInfo = type => {
   let personalInfo = useRef({
@@ -40,7 +41,7 @@ const useUserInfo = type => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useUser();
-  const {showModalSmartOTP} = useShowModal();
+  const {showModalSmartOTPSuggestion} = useShowModal();
   const {onChangeLimit} = useBankInfo();
   const {walletInfo} = useWallet();
   const [showModal, setShowModal] = useState(null);
@@ -78,7 +79,7 @@ const useUserInfo = type => {
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         await onGetAllInfo();
-        showModalSmartOTP(true);
+        showModalSmartOTPSuggestion(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else setError(result);
     } catch (error) {
@@ -252,6 +253,7 @@ const useUserInfo = type => {
     setLoading(false);
     if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
       setError({ErrorCode: -1, ErrorMessage: 'Đổi mật khẩu thành công'}); // TODO: translate
+      Keychain.setGenericPassword(phone, newPasswordEncrypted);
       Navigator.navigate(SCREEN.TAB_NAVIGATION);
       return;
     }

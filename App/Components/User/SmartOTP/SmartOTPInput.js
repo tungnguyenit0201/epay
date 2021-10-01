@@ -5,7 +5,13 @@ import {Colors, Spacing} from 'themes';
 import {useIsFocused} from '@react-navigation/native';
 
 const SmartOTPInput = ({onFilled, message, numDigits = 6}) => {
-  const isFocused = useIsFocused();
+  let isFocused;
+  try {
+    /* eslint-disable-next-line */
+    isFocused = useIsFocused();
+  } catch {
+    isFocused = true;
+  }
   const [code, setCode] = useState('');
   const textInputRef = useRef(null);
 
@@ -36,6 +42,7 @@ const SmartOTPInput = ({onFilled, message, numDigits = 6}) => {
       <Row>
         {[...Array(numDigits)].map((digit, index) => (
           <View
+            key={index}
             style={[
               styles.circle,
               index >= code.length ? styles.activeCirle : null,

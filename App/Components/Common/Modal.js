@@ -15,11 +15,12 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
   return (
     //TODO: Translate
     <Modal
-      animationType="slide"
+      animationIn="zoomIn"
       transparent={true}
       isVisible={visible}
       onBackdropPress={onClose}
-      style={styles.alignCenter}>
+      style={styles.alignCenter}
+    >
       <View
         style={[
           styles.bgWhite,
@@ -27,7 +28,8 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
           styles.w1,
           styles.borderRadius1,
           styles.pb1,
-        ]}>
+        ]}
+      >
         <View style={styles.header}>
           <Image
             source={Images.BgModal}
@@ -52,7 +54,8 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
             {!buttonGroup ? (
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={onClose}>
+                onPress={onClose}
+              >
                 <Text style={styles.textStyle}>Đóng</Text>
               </Pressable>
             ) : (

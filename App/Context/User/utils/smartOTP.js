@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect, useCallback} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import _ from 'lodash';
@@ -18,8 +18,15 @@ import {
   getSmartOTPInfo,
   syncSmartOTP,
 } from 'services/common';
-import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  useModalPassword,
+  useShowModal,
+} from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
+import {useCommon} from 'context/Common';
 
 const useSmartOTP = params => {
   const {phone} = useUser();
@@ -239,6 +246,7 @@ const useSmartOTP = params => {
     onBack,
     onGoPasswordSync,
     onGoSmartOTP,
+    onTransaction,
   };
 };
 
@@ -247,12 +255,13 @@ const useSmartOTPInfo = () => {
   const {phone} = useUser();
   const {setLoading} = useLoading();
   const [smartOTPInfo, setSmartOTPInfo] = useState({});
+  const {onShowModal: onShowModalSmartOTP} = useModalSmartOTP();
+  const {onShowModal: onShowModalPassword} = useModalPassword();
 
   useEffect(() => {
     const getOTPInfo = async () => {
       setLoading(true);
       const result = await getSmartOTPInfo({phone});
-      console.log('result', result);
       setLoading(false);
       setSmartOTPInfo(result?.SmartOtpInfo);
     };
@@ -260,11 +269,16 @@ const useSmartOTPInfo = () => {
   }, [phone, setLoading]);
 
   const onChangePassword = () => {
-    Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'changePassword'});
+    onShowModalSmartOTP(value =>
+      Navigator.push(SCREEN.SMART_OTP_PASSWORD, {
+        type: 'newPassword',
+        oldPassword: value,
+      }),
+    );
   };
 
   const onForgetPassword = () => {
-    onGoOTP();
+    onShowModalPassword(onGoOTP);
   };
 
   const onSyncSmartOTP = () => {
@@ -288,21 +302,82 @@ const useSyncSmartOTP = params => {
   const {phone} = useUser();
   const [status, setStatus] = useState(params?.type);
   const {setSmartOTPSharedKey} = useAsyncStorage();
+  const {onShowModal} = useModalSmartOTP();
 
-  const onSync = useCallback(async () => {
+  const onSync = async smartOTPPassword => {
+    setStatus('sync');
+    let passwordEncrypted = params?.passwordEncrypted;
+    if (smartOTPPassword) {
+      passwordEncrypted = await sha256(smartOTPPassword);
+    }
     const result = await syncSmartOTP({
       phone,
-      password: params?.passwordEncrypted,
+      password: passwordEncrypted,
     });
     setStatus(result?.ErrorCode === ERROR_CODE.SUCCESS ? 'success' : 'failure');
     result?.SharedKey && setSmartOTPSharedKey(result.SharedKey);
-  }, [phone, params?.passwordEncrypted, setSmartOTPSharedKey]);
+  }; // eslint-disable-line
 
-  useEffect(() => {
-    params?.type === 'sync' && onSync();
-  }, [params?.type, onSync]);
+  const onGoPasswordSync = () => {
+    onShowModal(onSync);
+  };
 
-  return {status, onSync};
+  // useEffect(() => {
+  //   params?.type === 'sync' && onSync();
+  // }, [params?.type, onSync]);
+
+  return {status, onSync, onGoPasswordSync};
 };
 
-export {useSmartOTP, useSmartOTPInfo, useSyncSmartOTP};
+const useModalSmartOTP = () => {
+  const {phone} = useUser();
+  const {
+    showModal: {smartOTPPassword, goBack},
+  } = useCommon();
+  const {showModalSmartOTPPassword} = useShowModal();
+  const {onGoOTP} = useSmartOTP();
+  const {setError} = useError();
+
+  const onShowModal = callback => {
+    showModalSmartOTPPassword({show: true, goBack: callback});
+  };
+
+  const onHideModal = () => {
+    showModalSmartOTPPassword({show: false});
+  };
+
+  const onCodeFilled = async value => {
+    const passwordEncrypted = await sha256(value);
+    const result = await checkSmartOTPKey({phone, password: passwordEncrypted});
+    switch (_.get(result, 'ErrorCode')) {
+      case ERROR_CODE.SUCCESS:
+        goBack && goBack(value);
+        showModalSmartOTPPassword({show: false});
+        return;
+      case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
+        setError(result);
+        onHideModal();
+        return;
+      default:
+        return showModalSmartOTPPassword({
+          message: _.get(result, 'ErrorMessage', ''),
+          goBack,
+        });
+    }
+  };
+
+  const onForgetSmartOTPPassword = () => {
+    onHideModal();
+    onGoOTP();
+  };
+
+  return {
+    smartOTPPassword,
+    onShowModal,
+    onHideModal,
+    onCodeFilled,
+    onForgetSmartOTPPassword,
+  };
+};
+
+export {useSmartOTP, useSmartOTPInfo, useSyncSmartOTP, useModalSmartOTP};
