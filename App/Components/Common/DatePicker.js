@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Pressable, Image } from 'react-native';
-import { Colors, Images, Fonts } from 'themes';
+import React, {useState} from 'react';
+import {View, StyleSheet, Pressable, Image} from 'react-native';
+import {Colors, Images, Fonts} from 'themes';
 import Text from './Text';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import dayjs from 'dayjs';
-import { scale } from 'utils/Functions';
+import {scale} from 'utils/Functions';
 import moment from 'moment';
 
 export default ({
@@ -18,6 +18,7 @@ export default ({
   required,
   showErrorLabel = true,
   type = 'date',
+  noIconBg,
   ...props
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -52,23 +53,16 @@ export default ({
       <Pressable
         onPress={showDatePicker}
         style={[styles.wrap, error && styles.error, style]}>
-        <View style={{flex: 1}}>
-          {!value && placeholder ? (
-            <Text color={Colors.l5} style={styles.pl1}>
-              {placeholder}
-            </Text>
-          ) : (
-            <Text color={value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
-              {value}
-            </Text>
-          )}
+        <View style={[styles.block1, styles.fullHeight, styles.flex1]}>
+          <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
+            {value}
+          </Text>
         </View>
         <View
           style={[
+            styles.blockIcon1,
             styles.fullHeight,
-            styles.justifyCenter,
-            styles.p1,
-            { backgroundColor: Colors.l4 },
+            {backgroundColor: noIconBg ? 'unset' : Colors.l4},
           ]}>
           <Image
             source={Images.Kyc.Calendar}
@@ -95,7 +89,7 @@ export default ({
         themeVariant={'light'}
         date={date}
       />
-      <View style={{ marginBottom }} />
+      <View style={{marginBottom}} />
     </>
   );
 };
@@ -107,26 +101,36 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     height: 48,
-    borderRadius: 6,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.cl4,
   },
   //----------------
-  fullHeight: { height: '100%' },
+  flex1: {flex: 1},
   //----------------
-  justifyCenter: { justifyContent: 'center' },
+  fullHeight: {height: '100%'},
   //----------------
-  p1: { padding: 12 },
-  //----------------
-  pl1: { paddingLeft: 10 },
+  pl1: {paddingLeft: 10},
   //----------------
   error: {
     borderColor: Colors.ALERT,
     borderWidth: 1,
   },
+  //-----------------
   icon: {
     width: 24,
     height: 24,
     tintColor: Colors.GRAY,
+  },
+  blockIcon1: {
+    justifyContent: 'center',
+    right: -1,
+    padding: 12,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  block1: {
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
   },
 });
