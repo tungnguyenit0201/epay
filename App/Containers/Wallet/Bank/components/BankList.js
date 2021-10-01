@@ -1,9 +1,9 @@
 import React, {
+  forwardRef,
   useEffect,
-  useState,
   useImperativeHandle,
   useRef,
-  forwardRef,
+  useState,
 } from 'react';
 import {
   ActivityIndicator,
@@ -12,8 +12,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors} from 'themes';
-import {Col, Row, Text, Radio} from 'components';
+import {Colors, Images} from 'themes';
+import {Col, Radio, Row, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
@@ -23,7 +23,6 @@ import {useWallet} from 'context/Wallet';
 import {useBankInfo} from 'context/Wallet/utils';
 import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {useLoading} from 'context/Common/utils';
-import {Images, Spacing} from 'themes';
 
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
@@ -95,6 +94,7 @@ const BankList = forwardRef((props, ref) => {
   const allBank = useRef([]);
   const isSearch = useRef(false);
   const radioButtonRef = useRef(null);
+  const timeoutRef = useRef(null);
   const {
     onGetDomesticBanks,
     onGetInternationalBanks,
@@ -158,6 +158,9 @@ const BankList = forwardRef((props, ref) => {
       }
     };
     checkData();
+    return ()=>{
+      if (timeoutRef.current){clearTimeout(timeoutRef.current);}
+    };
   }, []);
 
   const search = _keysearch => {
@@ -201,10 +204,11 @@ const BankList = forwardRef((props, ref) => {
   };
 
   const onPressSecondary = () => {
-    // props?.navigation?.push({screen: SCREEN.MAP_BANK_FLOW});
-    props.navigation.navigate(SCREEN.CHOOSE_IDENTITY_CARD, {
-      KYCFlow: 'bank',
-    });
+  // timeoutRef.current =  setTimeout(() => {
+      Navigator.navigate?.(SCREEN.CHOOSE_IDENTITY_CARD, {
+        KYCFlow: 'bank',
+      });
+    // }, 200);
   };
   const onPressBankLink = async (item, callback) => {
     onChange('Bank', item);
@@ -224,15 +228,12 @@ const BankList = forwardRef((props, ref) => {
 
         Navigator.showAlert({
           icon: Images.ConnectBank.BankLink,
-          renderBody: () => {
-            return (
-              <RadioICInfo
+          renderBody:()=> <RadioICInfo
                 ref={radioButtonRef}
                 kycInfo={formatIcInfo}
                 selectedValue={1}
               />
-            );
-          },
+          ,
           secondaryButton: {
             title: 'Dùng giấy tờ tùy thân khác',
             onPress: () => {

@@ -40,19 +40,6 @@ export const getPersonalInfo = async ({phone}) => {
   return response;
 };
 
-export const getIdentifyInfo = async ({phone,BankId}) => {
-  let response = null;
-  await request({
-    url: API.WALLET.GET_BANK_IC_INFO,
-    method: 'post',
-    params: {PhoneNumber: phone,BankId},
-    success: res => {
-      response = res;
-    },
-  });
-  return response;
-};
-
 export const getAllInfo = async ({phone}) => {
   let response = null;
   await request({

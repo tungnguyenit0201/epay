@@ -41,6 +41,17 @@ export default {
     UPDATE_AVATAR: 'account/update_avatar',
     UPDATE_PASSWORD: 'account/proactive_change_password',
   },
+  BANK:{
+    GET_BANK_IC_INFO: 'bank/get_ic_info',
+    ACTIVE_USER: 'bank/active_customer',
+    ACTIVE_USER_OTP: 'bank/active_customer_otp',
+    GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
+    GET_NAPAS_BANKS: 'bank/get_napas_banks',
+    GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
+    LINK_NAPAS:'bank/link_card',
+    CASH_IN_NAPAS:'bank/cash_in_napas',
+    CHECK_TRANS_NAPAS:'bank/check_trans_napas',
+  },
   WALLET: {
     GET_BANK_IC_INFO: 'bank/get_ic_info',
     ACTIVE_USER: 'bank/active_customer',

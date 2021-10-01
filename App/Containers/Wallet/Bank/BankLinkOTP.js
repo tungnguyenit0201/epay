@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ScrollView,
+  ScrollView, Pressable,
 } from 'react-native';
 import {Text, Header, Button, Icon, Modal, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -20,6 +20,8 @@ import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useWallet} from 'context/Wallet';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {scale} from 'utils/Functions';
 
 const OTP = props => {
   const {params} = useRoute() || {};
@@ -78,16 +80,52 @@ const OTP = props => {
     //   code={code}
     // />
     return (
-      <OTPContainer
-        onChange={onChange}
+        <View>
+        <Text
+            bold
+            fs="h3"
+            style={[styles.textWhite, styles.mb1]}>{'Nhập OTP'}</Text>
+    <Text fs="h6" style={[styles.textGray, styles.mb2]}>
+      {label}
+    </Text>
+    <OTPInputView
+        style={styles.wrapOtp}
+        pinCount={6}
+        onCodeChanged={onChange}
+        autoFocusOnLoad
+        codeInputFieldStyle={styles.otp}
+        codeInputHighlightStyle={{}}
         onCodeFilled={onConfirmOTP}
-        message={errorMessage}
+        clearInputs={errorMessage}
         code={code}
-        countdown={countdown}
-        resentOTP={resentOTP}
-        // onChangePhone={onChangePhone}
-        label={label}
-      />
+    />
+
+    <View style={styles.flexRow_1}>
+      <Text style={styles.fontSize_1}>
+        Gửi lại mã xác thực (OTP) sau:
+        <Pressable
+            style={{marginTop: -3}}
+            disabled={countdown > 0}
+            onPress={resentOTP}>
+          <Text
+              style={[
+                styles.fontSize_1,
+                {
+                  color: Colors.cl1,
+                },
+              ]}>
+            {countdown > 0
+                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                : ' Gửi lại'}
+          </Text>
+        </Pressable>
+      </Text>
+
+
+    </View>
+
+    <Text style={styles.message}>{errorMessage}</Text>
+    </View>
     );
   };
 
@@ -217,5 +255,35 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   text_gray: {color: '#666666'},
+  wrapOtp: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    marginBottom: 16,
+    width: '90%',
+  },
+  otp: {
+    width: scale(40),
+    backgroundColor: Colors.white,
+    fontSize: Fonts.H4,
+    color: Colors.BLACKTEXT,
+    textAlign: 'center',
+    borderBottomColor: Colors.cl4,
+    borderWidth: 0,
+    borderBottomWidth: 1,
+    borderRadius: 2,
+    // height: scale(28),
+  },
+  message: {
+    marginTop: 16,
+    color: Colors.Highlight,
+    textAlign: 'center',
+  },
+  fontSize_1: {fontSize: 14},
+  flexRow_1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
 });
 export default OTP;

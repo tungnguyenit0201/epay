@@ -7,6 +7,8 @@ import {useRoute} from '@react-navigation/native';
 import {useUser} from 'context/User';
 import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {mapBankNapas} from 'services/bank';
+import moment from 'moment';
 const INPUT_REF =  {
   CARD_NUMBER:'cardNumber',
   NAME:'name',
@@ -25,6 +27,7 @@ const BankCardInfo = (props) => {
   const [cardNumberErr, setCardNumberErr] = useState('');
   const [cardHolderName, setName] = useState(personalInfo?.FullName);
   const cardNumberRef = useRef();
+  const issueDaterRef = useRef();
   useEffect(() => {
     return () => {
     };
@@ -40,40 +43,39 @@ const BankCardInfo = (props) => {
     }
   };
 
-  const validateCard = () => {
+  const checkInvalidCard = () => {
     const {BinNumbers} = params?.item || {};
     if (Array.isArray(BinNumbers) && BinNumbers.length > 0) {
       BinNumbers.forEach((element, index) => {
             const prefix = String(element)?.slice(element.length - 2, element.length);
             const regex = new RegExp(`^9704 ${prefix}([0-9]{2})(\\\\s[0-9]{4}){2}`);
             const isValid = regex.test(cardNumber.current);
-            if (isValid ) {return true;
-            }
+            if (isValid ) {return null;}
           }
       );
+      return BinNumbers?.[0];
     }
-    return false;
+    return BinNumbers;
   };
   const onChangeCard = (number) => {
     const _number = formatBankCardNumber(number);
-    cardNumberRef.current = _number;
     setCardNumber(_number);
 
   };
 
   const onChangeDate = (date) => {
-    const formatDate = '0307';
-    setissueDate(formatDate);
+    const monthAndYear = moment(date,'DD-MM-YYYY').format('MM/YY');
+    setissueDate(monthAndYear);
   };
 
   const onBlur = (input) => {
     switch (input) {
       case INPUT_REF.CARD_NUMBER: {
         //check validate
-        const isValid = validateCard();
-        if (!isValid) {
+        const binInvalid = checkInvalidCard();
+        if (binInvalid) {
           //validate card
-          setCardNumberErr('Invalid card number');
+          setCardNumberErr('Invalid card number, please start with ' + binInvalid);
 
         }
         break;
@@ -90,18 +92,18 @@ const BankCardInfo = (props) => {
   };
   const onSubmit = async () => {
     const {item:Bank, ICAddress, optionKyc, BankAccount} = params || {};
-    const formatCardNumber = cardNumber?.replace('/s','')?.replace(' ','');
+    const formatCardNumber = cardNumber?.replaceAll('/s','')?.replaceAll(' ','');
+    const formatIssueDate = issueDate?.replace('/','');
     const BankConnectInfo = {
-      'MsgType': 'link_card',
       'CardNumber': formatCardNumber,
       'CardHolder': cardHolderName,
       'BankId': 1,
-      'CardIssueDate': '0307',
+      'CardIssueDate': formatIssueDate,
       'Amount': 10000,
     };
     try {
-      const res = await onActiveUser?.({BankConnectInfo});
-      // alert(res);
+      const res = await mapBankNapas(BankConnectInfo);
+      alert(res);
     } catch (e) {}
 
     props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
