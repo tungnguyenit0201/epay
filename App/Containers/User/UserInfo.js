@@ -167,7 +167,7 @@ const UserInfo = () => {
                 style={[styles.rowIcon]}
                 source={require('images/profile/Location.png')}
               />
-              <View>
+              <View style={styles.flex1}>
                 <Text mt={3} mb={5} style={styles.rowTitle}>
                   Địa chỉ
                 </Text>
@@ -374,5 +374,7 @@ const styles = StyleSheet.create({
   rowVal: {
     //color: Colors.g2,
   },
+  //tho------------
+  flex1: {flex: 1},
 });
 export default UserInfo;

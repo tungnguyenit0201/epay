@@ -53,7 +53,7 @@ const useUserStatus = () => {
       case PERSONAL_IC.REJECTED:
         return 'Xác thực bị từ chối';
       default:
-        return 'Đã xác thực tài khoản';
+        return 'Đã xác thực';
     }
   };
 

@@ -18,9 +18,9 @@ const User = ({data, style}) => {
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
-        style={styles.user}>
-        <Text bold fs="h6" style={styles.text}>
-          Xin chào {personalInfo?.FullName}
+        style={[styles.user, styles.flex1]}>
+        <Text bold style={[styles.text, styles.textSize1]}>
+          {personalInfo?.FullName}
         </Text>
         <Text style={styles.text}>{hidePhone(phone)}</Text>
       </TouchableOpacity>
@@ -88,6 +88,10 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 10,
   },
+  //tho-------------
+  flex1: {flex: 1},
+  //----------------
+  textSize1: {fontSize: Fonts.SM},
 });
 
 export default User;
