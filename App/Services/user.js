@@ -40,12 +40,12 @@ export const getPersonalInfo = async ({phone}) => {
   return response;
 };
 
-export const getIdentifyInfo = async ({phone}) => {
+export const getIdentifyInfo = async ({phone,BankId}) => {
   let response = null;
   await request({
-    url: API.USER.GET_ID_INFO,
+    url: API.WALLET.GET_BANK_IC_INFO,
     method: 'post',
-    params: {PhoneNumber: phone},
+    params: {PhoneNumber: phone,BankId},
     success: res => {
       response = res;
     },

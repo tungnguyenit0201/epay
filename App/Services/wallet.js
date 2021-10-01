@@ -1,6 +1,23 @@
 import {API} from 'configs';
 import {request} from 'utils/Request';
 
+export const mapBankNapas = async param => {
+  const {phone, BankConnectInfo} = param || {};
+  let response = null;
+  await request({
+    url: API.WALLET.ACTIVE_USER,
+    method: 'post',
+    params: {
+      BankConnectInfo: BankConnectInfo || {},
+      PhoneNumber: phone,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const activeUser = async param => {
   const {phone, BankConnectInfo} = param || {};
   let response = null;

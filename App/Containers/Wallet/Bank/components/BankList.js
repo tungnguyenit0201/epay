@@ -209,7 +209,7 @@ const BankList = forwardRef((props, ref) => {
   const onPressBankLink = async (item, callback) => {
     onChange('Bank', item);
     try {
-      const icInfor = await onGetIcInfor();
+      const icInfor = await onGetIcInfor(item?.BankId);
       // if (Array.isArray(icInfor?.result) && icInfor?.result.length > 0) {
       if (1) {
         let formatIcInfo = [];

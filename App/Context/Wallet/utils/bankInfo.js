@@ -217,10 +217,10 @@ const useBankInfo = (initialValue = {}) => {
     }
   };
 
-  const onGetIcInfor = async () => {
+  const onGetIcInfor = async (BankId) => {
     try {
       const phone = await getPhone();
-      const result = await getIdentifyInfo({phone});
+      const result = await getIdentifyInfo({phone,BankId});
       let mockresult = mockIc;
 
       dispatch({type: 'SET_IC_INFO', data: mockIc});
