@@ -14,18 +14,17 @@ const ChangePassword = ({route}) => {
   const {onConfirmPassword} = useUserInfo(route?.params?.type);
   return (
     <>
+      <HeaderBg>
+        <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
-        </HeaderBg>
         <View style={base.container}>
           <Formik
             initialValues={{
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}
-          >
+            validationSchema={passwordSchema}>
             {({
               handleChange: _handleChange,
               handleBlur,
