@@ -212,7 +212,7 @@ const useSmartOTP = params => {
             functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
           },
         });
-        Navigator.replaceLast(SCREEN.OTP_BY_SMART_OTP);
+        Navigator.navigate(SCREEN.OTP_BY_SMART_OTP);
         return;
       case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
         setError(result);
@@ -244,8 +244,8 @@ const useSmartOTP = params => {
     setLoading(false);
     switch (_.get(result, 'ErrorCode')) {
       case ERROR_CODE.SUCCESS:
-        onSuccess(true);
         Navigator.goBack();
+        onSuccess(true);
         return;
       case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
         result.ErrorMessage = result.ErrorMessage?.replace("%s",MAX_OTP_TIME);

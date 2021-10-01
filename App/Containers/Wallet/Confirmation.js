@@ -26,7 +26,7 @@ import SelectBank from 'components/QRPay/SelectBank';
 const Confirmation = () => {
   const translation = useTranslation();
   let [open, setOpen] = useState(false);
-  const {transTypeText, data, onContinue, bank, continueButtonTitle } = useConfirmation();
+  const {transTypeText, data, onContinue, bank, getContinueButtonTitle } = useConfirmation();
 
   const [showModal, setShowModal] = React.useState(false);
 
@@ -99,7 +99,7 @@ const Confirmation = () => {
         </Text>
       </View>
       <View style={base.boxBottom}>
-        <Button label={continueButtonTitle} onPress={onContinue} />
+        <Button label={getContinueButtonTitle()} onPress={onContinue} />
       </View>
       <Modal
         isVisible={open}

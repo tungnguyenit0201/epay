@@ -446,7 +446,8 @@
     "confirmTitle": "Xác nhận %",
     "detailTitle": "Chi tiết %",
     "currency": " vnd",
-    "moneySource": " Nguồn tiền"
+    "moneySource": " Nguồn tiền",
+    "milion": "triệu"
   },
   "acceptTerm": {
     "when": "Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với ",
@@ -454,6 +455,12 @@
     "topup": "Chính sách nạp tiền ",
     "and": " và ",
     "of": "của Epay"
+  },
+  "transaction": {
+    "confirm": "Xác nhận",
+    "confirmTransaction":"Xác nhận giao dịch",
+    "autoFillOTP": "Nhấn Xác nhận, mã OTP sẽ được điền tự động để xác thực giao dịch",
+    "timeOTP": "OTP tự động thay đổi sau "
   },
   "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
   "selectPersonalDocument": "Chọn giấy tờ tuỳ thân",

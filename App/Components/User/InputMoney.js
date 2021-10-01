@@ -30,6 +30,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
     },
     {
       id: '6',
+      label:`1 ${translation.topup.milion}`,
       money: '1000000',
     },
   ];
@@ -47,7 +48,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
           <Col width="33.33%" space="10" key={item.money}>
             <TouchableOpacity onPress={() => onPress(item.money)}>
               <Text bold style={styles.item}>
-                {formatMoney(item.money)}
+                {item.label || formatMoney(item.money)}
               </Text>
             </TouchableOpacity>
           </Col>

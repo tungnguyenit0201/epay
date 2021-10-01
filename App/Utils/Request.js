@@ -98,15 +98,18 @@ async function request({
   if (typeof requestMethod[method] === 'function') {
     try {
       let result;
+      let buildUrl;
       if (method === 'get' || method === 'delete') {
-        result = await requestMethod[method](buildURL(root + url, query), {
+        buildUrl = buildURL(root + url, query);
+        result = await requestMethod[method](buildUrl, {
           headers,
         });
         if (__DEV__) {
-          console.log(method, buildURL(root + url, query), params, result);
+          console.log(method, buildUrl, params, result);
         }
       } else {
         let postParams = await getEncryptParam(url, params);
+        buildUrl = buildURL(root + url, query);
         // console.log('postParams :>> ', postParams);
         if (form) {
           postParams = new FormData();
@@ -117,14 +120,14 @@ async function request({
           });
         }
         result = await requestMethod[method](
-          buildURL(root + url, query),
+          buildUrl,
           postParams,
           {
             headers,
           },
         );
         if (__DEV__) {
-          console.log(method, buildURL(root + url, query), postParams, result);
+          console.log(method, buildUrl, postParams, result);
           debugData.push(result);
         }
       }
@@ -132,6 +135,7 @@ async function request({
       let {data, status} = result || {};
       let {ResponseTime, Data, Signature, ErrorMessage, ErrorCode} = data || {};
 
+      console.log('[Request] URL: ' +buildUrl);
       console.log('[Request] Data: ' + JSON.stringify(result.data));
       //Verify signature
       const verified = rsa.Verify(ResponseTime, Data, Signature);

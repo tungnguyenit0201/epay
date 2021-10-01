@@ -1,20 +1,20 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import {
   Text,
-  InputBlock,
+  Row,
   Header,
   Button,
   FWLoading,
   TextInput,
   Icon,
 } from 'components';
-import {Colors, Fonts, Spacing, Images} from 'themes';
-import {scale} from 'utils/Functions';
-import {useTransactionResult} from 'context/Wallet/utils';
+import { Colors, Fonts, Spacing, Images, base } from 'themes';
+import { scale } from 'utils/Functions';
+import { useTransactionResult } from 'context/Wallet/utils';
 
 const TransactionFailure = () => {
-  const {data, message, onRetry, onBackHome} = useTransactionResult();
+  const { data, message, onRetry, onBackHome } = useTransactionResult();
 
   const renderItem = (key, value) => {
     return (
@@ -27,43 +27,50 @@ const TransactionFailure = () => {
     );
   };
   return (
-    <ScrollView style={styles.container}>
-      <Header
-        style={styles.blackColor}
-        titleStyle={styles.textWhite}
-        avoidStatusBar
-        back
-        title="Chi tiết giao dịch"
-      />
-      <View style={styles.mt_30}>
-        <View style={styles.contentAbove}>
-          <Icon
-            style={styles.icon}
-            icon={Images.WidthDraw.Close}
-            tintColor={Colors.white}
-          />
-          <Text style={styles.header}>Nạp tiền không thành công</Text>
-          <Text style={styles.textSub}>{message}</Text>
-        </View>
-        <View style={styles.flexBox}>
-          <View style={styles.wrap}>
-            {data.map(item => renderItem(item.label, item.value))}
-            <Button
-              label="Thực hiện lại"
-              style={styles.buttonBlock}
-              fs={Fonts.FONT_MEDIUM}
-              onPress={onRetry}
+    <>
+    <Header
+          style={styles.blackColor}
+          titleStyle={styles.textWhite}
+          avoidStatusBar
+          back
+          title="Chi tiết giao dịch"
+        />
+      <ScrollView>
+        
+        <View style={styles.mt_30}>
+          <View style={styles.contentAbove}>
+            <Icon
+              style={styles.icon}
+              icon={Images.WidthDraw.Close}
+              tintColor={Colors.white}
             />
-            <Button
-              label="Về trang chủ"
-              style={styles.buttonBlock}
-              fs={Fonts.FONT_MEDIUM}
-              onPress={onBackHome}
-            />
+            <Text style={styles.header}>Nạp tiền không thành công</Text>
+            <Text style={styles.textSub}>{message}</Text>
+          </View>
+          <View style={styles.flexBox}>
+            <View style={styles.wrap}>
+              {data.map(item => renderItem(item.label, item.value))}
+
+            </View>
           </View>
         </View>
+
+      </ScrollView>
+      <View style={[base.boxBottom,styles.bottomButtonContainer]}>
+        <Button
+          label="Thực hiện lại"
+          style={styles.buttonBlock}
+          fs={Fonts.FONT_MEDIUM}
+          onPress={onRetry}
+        />
+        <Button
+          label="Về trang chủ"
+          style={styles.buttonBlock}
+          fs={Fonts.FONT_MEDIUM}
+          onPress={onBackHome}
+        />
       </View>
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -108,9 +115,8 @@ const styles = StyleSheet.create({
     marginTop: scale(40),
   },
   buttonBlock: {
-    marginTop: Spacing.PADDING,
-    paddingVertical: Spacing.PADDING,
-    backgroundColor: Colors.g9,
+    flex:1,
+    marginHorizontal: 5,
   },
   mt_30: {
     marginBottom: scale(30),
@@ -129,5 +135,9 @@ const styles = StyleSheet.create({
     fontSize: Fonts.FONT_MEDIUM,
     textTransform: 'uppercase',
   },
+  bottomButtonContainer: {
+    flexDirection: 'row',
+    paddingVertical: scale(10),
+  }
 });
 export default TransactionFailure;

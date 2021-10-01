@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },  
   continue: {
-    height: 48,
+    height: scale(48),
   }
 });
 

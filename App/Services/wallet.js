@@ -206,9 +206,11 @@ export const cashIn = async ({phone, BankConnectId, BankId, amount}) => {
     method: 'post',
     params: {
       PhoneNumber: phone, 
-      BankConnectId: BankConnectId,
-      BankID: BankId,
-      Amount: amount
+      CashInInfo: {
+        BankConnectId: BankConnectId,
+        BankID: BankId,
+        Amount: amount
+      }
     },
     success: res => {
       response = res;
