@@ -8,13 +8,8 @@ import {
 } from 'react-native';
 import {Text, Header, Button, Icon, Modal, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
-import _ from 'lodash';
-import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
-import {useAuth} from 'context/Auth/utils';
 import {useOTP} from 'context/Common/utils';
-import {HelpModal} from 'components/Auth';
-import BlueHeader from 'components/Auth/BlueHeader';
 import {useRoute} from '@react-navigation/native';
 import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
