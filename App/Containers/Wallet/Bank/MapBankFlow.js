@@ -10,6 +10,7 @@ import BankLinkConfirm from './BankLinkConfirm';
 import BankLinkInfo from './BankLinkInfo';
 import BankCardInfo from './BankCardInfo';
 import BankLinkOTP from './BankLinkOTP';
+import BankWebConfirm from './BankWebConfirm';
 const Stack = createNativeStackNavigator();
 
 const MapBankFlow = () => {
@@ -69,6 +70,11 @@ const MapBankFlow = () => {
         component={BankCardInfo}
         options={{headerShown: false}}
       />
+         <Stack.Screen
+        name={MapBankRoutes.BankWebConfirm}
+        component={BankWebConfirm}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
@@ -86,4 +92,5 @@ export const MapBankRoutes = {
   BaseResultScreen: 'BaseResultScreen',
   BankLinkInfo: 'BankLinkInfo',
   BankLinkOTP: 'BankLinkOTP',
+  BankWebConfirm: 'BankWebConfirm',
 };
