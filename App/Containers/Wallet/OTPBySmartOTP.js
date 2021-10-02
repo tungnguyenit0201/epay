@@ -21,7 +21,7 @@ const OTPBySmartOTP = (props) => {
   const renderTime = useCallback(
     () => {
       return <Text centered mv={20}>
-        <Text centered>{translation.transaction.timeOTP}</Text>
+        <Text centered>{translation.otp.timeOTP}</Text>
         <Text centered bold color={Colors.blue}>{`${time}s`}</Text>
       </Text>
     },

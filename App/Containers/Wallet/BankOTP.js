@@ -1,114 +1,98 @@
-import React, { useRef, useState } from 'react';
-import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Text, Header, Button, Icon, Modal, HeaderBg } from 'components';
-import { Colors, Fonts, Images, Spacing } from 'themes';
-import _ from 'lodash';
-import OTPContainer from 'components/Auth/OTPContainer';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { StyleSheet, View, } from 'react-native';
+import { HeaderBg, Header, Button, Text } from 'components';
+import OTPBySmartOTPInput from 'components/User/SmartOTP/OTPBySmartOTPInput';
 import { useTranslation } from 'context/Language';
-import { useAuth } from 'context/Auth/utils';
-import BlueHeader from 'components/Auth/BlueHeader';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
+import { Fonts, base, Colors } from 'themes';
 import { scale } from 'utils/Functions';
+import { useOTPByBankOTP } from 'context/Wallet/utils/topUpWithdraw';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 
-const BankOTP = ({ route }) => {
-  const { onChangePhone } = useAuth();
+const OTPBySmartOTP = (props) => {
+  const { code, onConfirm, time, onCodeChanged, onCodeFilled } = useOTPByBankOTP();
   const translation = useTranslation();
 
-  const renderRightComponent = () => (
-    <TouchableOpacity
-      onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
-      <Icon
-        icon={Images.Register.Info}
-        tintColor={Colors.white}
-        style={styles.iconSize}
+  const renderOTP = useCallback(
+    () => {
+      return <OTPInputView
+        style={styles.inputContainer}
+        pinCount={6}
+        code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+        onCodeChanged={onCodeChanged}
+        autoFocusOnLoad
+        codeInputFieldStyle={styles.inputTextField}
+        onCodeFilled={onCodeFilled}
       />
-    </TouchableOpacity>
-  );
+
+    },
+    [code],
+  )
+
+  const renderTime = useCallback(
+    () => {
+      return <Text centered mv={10}>
+        <Text size={scale(16)} centered fw={'400'}>{translation.otp.timeOTP}</Text>
+        <Text centered bold >{`${time}s`}</Text>
+      </Text>
+    },
+    [time],
+  )
+
+  const renderHeader = useMemo(() => () => {
+    return <><Text mb={5} fs={'h3'} fw={'600'} color={Colors.l7} >
+      {translation.otp.enterOTP}
+    </Text>
+      <Text mt={10} mb={35} size={scale(16)} fw={'400'}>{translation.otp.bankOTP} </Text></>
+
+  }, [])
+
 
   return (
-    // TODO: translate
-    <>
+    <View style={styles.container}>
       <HeaderBg>
         <Header title={translation.common.authen} back />
       </HeaderBg>
+      <View style={styles.content}>
+        {
+          renderHeader()
+        }
+        {
+          renderOTP()
+        }
 
-      <View style={[styles.wrap, { paddingTop: Spacing.PADDING }]}>
-
-        <Text
-          bold
-          fs="h3">{translation.otp.enterOTP}</Text>
-        <Text style={{
-          fontSize: scale(16),
-          color: Colors.l8
-        }}>
-          {"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
-        </Text>
-        <OTPInputView
-          style={styles.wrapOtp}
-          pinCount={6}
-          onCodeChanged={()=>{
-
-          }}
-          autoFocusOnLoad
-          codeInputFieldStyle={styles.otp}
-          codeInputHighlightStyle={{}}
-          onCodeFilled={()=>{
-
-          }}
-          clearInputs={"message"}
-          code={"code"}
-        />
+        {
+          renderTime()
+        }
 
       </View>
-
-      <TouchableOpacity
-        style={[
-          styles.flexRow,
-          styles.justifyCenter,
-          styles.bgGray,
-          { paddingVertical: Spacing.PADDING - 5 },
-        ]}
-        onPress={() => setShowModal(true)}>
-        <View
-          style={[
-            styles.lineSize,
-            styles.absolute,
-            styles.bgGray1,
-            styles.top1,
-            styles.left1,
-          ]}></View>
-        <View
-          style={[
-            styles.lineSize,
-            styles.absolute,
-            styles.bgGray1,
-            styles.top1,
-            styles.right1,
-          ]}></View>
-        <Image source={Images.Phone} style={styles.iconPhone} />
-        <Text bold>Gọi cho tôi</Text>
-      </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
+export default OTPBySmartOTP;
+
 const styles = StyleSheet.create({
-  wrap: {
-    paddingHorizontal: Spacing.PADDING,
+  container: {
+    flex: 1,
     backgroundColor: Colors.BACKGROUNDCOLOR
   },
-  otp: {
+  content: {
+    flex: 1,
+    paddingHorizontal: scale(19),
+    paddingTop: 28,
+  },
+  inputContainer: {
+    height: scale(70),
+    marginHorizontal: scale(16)
+  },
+  inputTextField: {
     width: scale(40),
     backgroundColor: Colors.white,
-    fontSize: Fonts.H4,
-    color: Colors.BLACKTEXT,
-    textAlign: 'center',
     borderBottomColor: Colors.cl4,
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderRadius: 2,
-    height: scale(28),
+    color: Colors.BLACKTEXT,
+    fontSize: Fonts.H2,
   }
 });
-export default BankOTP;

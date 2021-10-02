@@ -461,7 +461,6 @@
     "confirm": "Xác nhận",
     "confirmTransaction":"Xác nhận giao dịch",
     "autoFillOTP": "Nhấn Xác nhận, mã OTP sẽ được điền tự động để xác thực giao dịch",
-    "timeOTP": "OTP tự động thay đổi sau ",
     "transactionDetail": "Chi tiết giao dịch",
     "failure": "không thành công",
     "success": "thành công",
@@ -481,7 +480,9 @@
   "otp": {
     "enterOTP": "Nhập OTP",
     "sendOtpAfter": "Gửi lại mã xác thực (OTP) sau:",
-    "resend": " Gửi lại"
+    "resend": " Gửi lại",
+    "timeOTP": "OTP tự động thay đổi sau ",
+    "bankOTP": "Nhập mã OTP được gửi từ ngân hàng"
   },
   "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
   "selectPersonalDocument": "Chọn giấy tờ tuỳ thân",
