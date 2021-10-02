@@ -25,7 +25,6 @@ import {BANK_TYPE, censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {useLoading} from 'context/Common/utils';
 import RadioICInfo from 'containers/Wallet/Bank/components/RadioICInfo';
 
-
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
     style={styles.item}
@@ -128,8 +127,10 @@ const BankList = forwardRef((props, ref) => {
       }
     };
     checkData();
-    return ()=>{
-      if (timeoutRef.current){clearTimeout(timeoutRef.current);}
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
   }, []);
 
@@ -174,18 +175,16 @@ const BankList = forwardRef((props, ref) => {
   };
 
   const onPressSecondary = () => {
-  // timeoutRef.current =  setTimeout(() => {
-      Navigator.navigate?.(SCREEN.CHOOSE_IDENTITY_CARD, {
-        KYCFlow: 'bank',
-      });
+    // timeoutRef.current =  setTimeout(() => {
+    Navigator.navigate?.(SCREEN.CHOOSE_IDENTITY_CARD, {
+      KYCFlow: 'bank',
+    });
     // }, 200);
   };
-  const onPressBankLink = async (item, callback) => {
-    onChange('Bank', item);
+  const onPressBankLink = async item => {
     try {
       const icInfor = await onGetIcInfor(item?.BankId);
-      // if (Array.isArray(icInfor?.result) && icInfor?.result.length > 0) {
-      if (1) {
+      if (Array.isArray(icInfor?.result) && icInfor?.result.length > 0) {
         let formatIcInfo = [];
 
         icInfor?.result?.forEach((item, index) => {
@@ -198,12 +197,13 @@ const BankList = forwardRef((props, ref) => {
 
         Navigator.showAlert({
           icon: Images.ConnectBank.BankLink,
-          renderBody:()=> <RadioICInfo
-                ref={radioButtonRef}
-                kycInfo={formatIcInfo}
-                selectedValue={1}
-              />
-          ,
+          renderBody: () => (
+            <RadioICInfo
+              ref={radioButtonRef}
+              kycInfo={formatIcInfo}
+              selectedItem={formatIcInfo?.[0]}
+            />
+          ),
           secondaryButton: {
             title: 'Dùng giấy tờ tùy thân khác',
             onPress: () => {

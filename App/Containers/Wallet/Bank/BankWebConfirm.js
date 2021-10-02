@@ -8,9 +8,11 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {HeaderBg, Header, Text, InputBlock, Button} from 'components';
 import {base, Colors, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {SCREEN} from 'configs/Constants';
 const samleUrl =
   'https://payment.momo.vn/service-napas-cashin-app-bank/napas/build_data_form?orderId=17160861262';
-const BankWebConfirm = ({navigator}) => {
+const BankWebConfirm = (props) => {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {url = samleUrl, orderId, onBackOtp, onDoneOtp, isSaveToken} = params;
@@ -95,10 +97,17 @@ const BankWebConfirm = ({navigator}) => {
     }
   };
 
+  const onGoBack = ()=>{
+    //call API check transaction state and then navigate
+    props?.navigation?.push(SCREEN.MAP_BANK_FLOW,{screen:MapBankRoutes.BaseResultScreen,params:{
+
+      }});
+  };
+
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
-        <Header back title={translation.connect_bank} />
+        <Header back title={translation.connect_bank} onPressBack={onGoBack} />
       </HeaderBg>
       <WebView source={{uri: url}} onMessage={onMessage} />
     </View>

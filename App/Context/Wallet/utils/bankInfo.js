@@ -256,8 +256,8 @@ const useBankInfo = (initialValue = {}) => {
       let mockresult = mockIc;
 
       dispatch({type: 'SET_IC_INFO', data: mockIc});
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        dispatch({type: 'SET_IC_INFO', data: result?.data});
+      if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
+        // dispatch({type: 'SET_IC_INFO', data: result?.data});
         return {result: mockresult};
       } else {
         setError(result);

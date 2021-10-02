@@ -14,7 +14,7 @@ const INPUT_REF = {
   NAME: 'name',
   DATE: 'date',
 };
-const CARD_MAX_LENGTH = 21;
+const CARD_MAX_LENGTH = 25;
 const BankCardInfo = props => {
   // TODO : translation
   const {params} = useRoute() || {};
@@ -26,14 +26,12 @@ const BankCardInfo = props => {
   const [issueDate, setissueDate] = useState('');
   const [cardNumberErr, setCardNumberErr] = useState('');
   const [cardHolderName, setName] = useState(personalInfo?.FullName);
-  const cardNumberRef = useRef();
-  const issueDaterRef = useRef();
 
   useEffect(() => {
     return () => {};
   }, []);
 
-  const formatBankCardNumber = (number, maxLength = 19) => {
+  const formatBankCardNumber = (number, maxLength = CARD_MAX_LENGTH) => {
     if (!number) {
       return '';
     }
@@ -120,10 +118,6 @@ const BankCardInfo = props => {
         params: {url, OrderId},
       });
     } catch (e) {}
-    props?.navigation?.push?.(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankWebConfirm,
-      params: {},
-    });
   };
   return (
     <ScrollView
@@ -145,7 +139,6 @@ const BankCardInfo = props => {
                 onBlur(INPUT_REF.CARD_NUMBER);
               }}
               onFocus={() => setCardNumberErr('')}
-              maxLength={CARD_MAX_LENGTH}
             />
             <InputBlock
               placeholder="Họ và Tên"
@@ -160,6 +153,8 @@ const BankCardInfo = props => {
               value={issueDate}
               required
               placeholder="mm/yy"
+              showErrorLabel={false}
+              style={{justifyContent: 'center', alignContent: 'center'}}
             />
           </View>
           <View style={{paddingBottom: Spacing.PADDING}}>

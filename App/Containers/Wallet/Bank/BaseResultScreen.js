@@ -9,114 +9,140 @@ import {
   SecondaryButton,
   Text,
 } from 'components';
-import {base, Colors} from 'themes';
-
-import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
-
+import {base, Colors, Images} from 'themes';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 import {useTransactionResult} from 'context/Wallet/utils';
 import {useRoute} from '@react-navigation/native';
 
+const TRANS_TYPE = {
+  BANK_LINK_ACCOUNT: 'BANK_LINK_ACCOUNT',
+  UPDATE_EKYC: 'UPDATE_EKYC',
+};
+
 const BaseResultScreen = props => {
   const {params} = useRoute() || {};
   const translation = useTranslation();
   const {message, onRetry, onBackHome} = useTransactionResult();
+  const {
+    result,
+    transTitle,
+    transDesc,
+    transType,
+    transBody,
+    secondaryButton,
+    positiveButton,
+  } = params || {};
 
-  const renderContent = () => {
-    // renderBody?.();
+  const renderBody = () => {
+    switch (transType) {
+      case TRANS_TYPE.BANK_LINK_ACCOUNT:
+        return renderBankBody();
+      case TRANS_TYPE.UPDATE_EKYC:
+        return renderEKYCBody();
+      default:
+        return null;
+    }
   };
 
-  const renderResult = () => {
-    const {result} = params || {};
-    let sourceImg = result ? Images.TransactionHistory.Success : Images.TransactionHistory.Fail;
+  const renderBankBody = () => {
+    return <View />;
+  };
+
+  const renderEKYCBody = () => {
+    return <View />;
+  };
+
+  const onPressPositive = () => {
+    positiveButton?.onPress?.();
+  };
+
+  const onPressSecondary = () => {
+    secondaryButton?.onPress?.();
+  };
+
+  const renderTransResult = () => {
+    let sourceImg = result
+      ? Images.TransactionHistory.Success
+      : Images.TransactionHistory.Fail;
     return (
-        <View style={styles.success}>
-          <Image
-              source={sourceImg}
-              style={styles.imgSuccess}
-          />
-          <Text bold fs="h5" color={Colors.cl1} mb={15}>
-            1.0005.000đ
-          </Text>
-          <Text centered>
-            Cho dịch vụ The Coffee House Nội dung: Thanh toán ly Cold Brew
-            Margarita
-          </Text>
-        </View>
+      <View style={styles.success}>
+        <Image source={sourceImg} style={styles.imgSuccess} />
+        <Text bold fs="h5" mb={15}>
+          {transTitle || ''}
+        </Text>
+        <Text centered color={Colors.gray}>
+          {transDesc}
+        </Text>
+      </View>
     );
   };
-  return (
-      <>
-        <HeaderBg>
-          <Header title="Kết quả giao dịch" back/>
-        </HeaderBg>
-        <ScrollView style={base.wrap}>
-          <View style={base.container}>
-            {renderResult()}
 
-            <View style={styles.block}>
-              <Image
-                  source={require('images/bgXacNhan.png')}
-                  style={styles.bgImg}
-              />
-              {renderContent()}
-              <View style={[base.row]}>
-                <View style={[base.row]}>
-                  <Image
-                      source={require('images/qrpay/Save.png')}
-                      style={[{width: 24, height: 24, marginRight: 5}]}
-                  />
-                  <Text bold color={Colors.cl1}>
-                    Lưu ảnh
-                  </Text>
-                </View>
+  const renderButtons = () => {
+    if (!secondaryButton && !positiveButton) {
+      return null;
+    }
 
-                <View style={[base.row, base.leftAuto]}>
-                  <Image
-                      source={require('images/qrpay/Share.png')}
-                      style={[{width: 24, height: 24}]}
-                  />
-                  <Text bold color={Colors.cl1}>
-                    {' '}
-                    Chia sẻ ảnh{' '}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-        </ScrollView>
-        <View
-            style={[
-              base.boxBottom,
-              {position: 'absolute', bottom: 0, left: 0, right: 0},
-            ]}>
-          <Row space={10}>
+    return (
+      <View
+        style={[
+          base.boxBottom,
+          {position: 'absolute', bottom: 0, left: 0, right: 0},
+        ]}>
+        <Row space={10}>
+          {!!secondaryButton && (
             <Col space={10} width="50%">
               <SecondaryButton
-                  bg={Colors.white}
-                  border={Colors.cl1}
-                  color={Colors.cl1}
-                  label="Về trang chủ"
-                  labelStyle={{fontSize: 14}}
-                  onPress={() => Navigator.navigate(SCREEN.HOME)}
+                bg={Colors.white}
+                border={Colors.cl1}
+                color={Colors.cl1}
+                label={secondaryButton?.title}
+                labelStyle={{fontSize: 14}}
+                onPress={onPressSecondary}
               />
             </Col>
+          )}
+
+          {!!positiveButton && (
             <Col space={10} width="50%">
               <Button
-                  type={1}
-                  label="Thực hiện lại"
-                  onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
+                type={1}
+                label={positiveButton?.title}
+                onPress={onPressPositive}
               />
             </Col>
-          </Row>
+          )}
+        </Row>
+      </View>
+    );
+  };
+
+  return (
+    <>
+      <HeaderBg>
+        <Header title="Kết quả giao dịch" back />
+      </HeaderBg>
+      <ScrollView style={base.wrap}>
+        <View style={base.container}>
+          {renderTransResult()}
+
+          {renderBody()}
         </View>
-      </>
+      </ScrollView>
+      <Image source={require('images/wave.png')} style={styles.bgImg} />
+      {renderButtons()}
+    </>
   );
 };
 const styles = StyleSheet.create({
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
   block: {
     marginBottom: 20,
     position: 'relative',
@@ -131,14 +157,7 @@ const styles = StyleSheet.create({
     height: 80,
     marginBottom: 10,
   },
-  bgImg: {
-    width: 128,
-    height: 128,
-    position: 'absolute',
-    top: 20,
-    left: '50%',
-    transform: [{translateX: scale(-64)}, {translateY: 0}],
-  },
+
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
