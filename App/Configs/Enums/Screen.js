@@ -19,8 +19,7 @@ const SCREEN = {
   LINKING_CONFIRM: 'LinkingComfirm',
   BANK_RESULT: 'BankResult',
   NOTIFICATION: 'Notification',
-  TRANSACTION_SUCCESS: 'TransactionSuccess',
-  TRANSACTION_FAILURE: 'TransactionFailure',
+  TRANSACTION_RESULT: 'TransactionResult',
   EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
@@ -71,6 +70,6 @@ const SCREEN = {
   ALERT_MODAL: 'AlerModal',
   QRPAY: 'QRPay',
   QR_TRANSFER: 'QRTransfer',
-  SMART_OTP_CONFIRM: 'SmartOTPConfirm',
+  BANK_OTP: 'BankOTP',
 };
 export default SCREEN;

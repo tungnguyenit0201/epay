@@ -445,9 +445,10 @@
     "cashInInputMoney": "Nhập số tiền nạp",
     "confirmTitle": "Xác nhận %",
     "detailTitle": "Chi tiết %",
-    "currency": " vnd",
+    "currency": " vnđ",
     "moneySource": " Nguồn tiền",
-    "milion": "triệu"
+    "milion": "triệu",
+    "confirm": "Xác nhận bằng"
   },
   "acceptTerm": {
     "when": "Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với ",
@@ -460,7 +461,27 @@
     "confirm": "Xác nhận",
     "confirmTransaction":"Xác nhận giao dịch",
     "autoFillOTP": "Nhấn Xác nhận, mã OTP sẽ được điền tự động để xác thực giao dịch",
-    "timeOTP": "OTP tự động thay đổi sau "
+    "timeOTP": "OTP tự động thay đổi sau ",
+    "transactionDetail": "Chi tiết giao dịch",
+    "failure": "không thành công",
+    "success": "thành công",
+    "cashInDescription": " Nạp tiền vào ví Epay từ tài khoản",
+    "transactionId" : "Mã giao dịch",
+    "time" : "Thời gian",
+    "support": "Hỗ trợ khiếu nại",
+    "supportPhone": "1900-00000"
+  },
+  "common": {
+    "retry": "Thực hiện lại",
+    "goBackHome": "Về trang chủ",
+    "createTransaction": "Thêm giao dịch",
+    "currencySign": "đ",
+    "authen": "Xác thực"
+  },
+  "otp": {
+    "enterOTP": "Nhập OTP",
+    "sendOtpAfter": "Gửi lại mã xác thực (OTP) sau:",
+    "resend": " Gửi lại"
   },
   "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
   "selectPersonalDocument": "Chọn giấy tờ tuỳ thân",

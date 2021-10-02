@@ -16,6 +16,8 @@ export default {
   l4: '#CCCCCC',
   l5: '#AAAAAA',
   l6: '#999999',
+  l7: '#141212',
+  l8: '#666666',
 
   g1: '#F3F4F6',
   g2: '#E5E7EB',

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   ScrollView,
@@ -12,9 +12,12 @@ import SelectBank from 'components/User/TopUp/SelectBank';
 import {useTranslation} from 'context/Language';
 import {formatMoney} from 'utils/Functions';
 import {useTopUp} from 'context/Wallet/utils';
+import { useIsFocused } from '@react-navigation/core';
 
 const TopUp = () => {
   const translation = useTranslation();
+  // const isFocused = useIsFocused();
+  const bankRef = useRef(null);
   const {
     inputRef,
     onSuggestMoney,
@@ -26,6 +29,11 @@ const TopUp = () => {
     onContinue,
   } = useTopUp();
 
+  // useEffect(() => {
+  //   inputRef.current.setValue("");
+  //   bankRef.current.reset();
+  // },[isFocused]);
+
   return (
     <>
       <HeaderBg>
@@ -34,13 +42,14 @@ const TopUp = () => {
       <ScrollView style={base.wrap} showsVerticalScrollIndicator={false}>
         <View style={[base.container,styles.mainContainer]}>
           <View style={base.boxShadow}>
-            <Monney title={translation.topup.walletAmount}/>
+            <Monney title={translation.topup.walletAmount} showing/>
             <InputMoney ref={inputRef} onChange={onChangeCash} errorStyle={{
               borderWidth: 0
             }}/>
           </View>
 
           <SelectBank
+            ref={bankRef}
             data={bankData}
             feeData={bankFeeData}
             label={translation.source}
