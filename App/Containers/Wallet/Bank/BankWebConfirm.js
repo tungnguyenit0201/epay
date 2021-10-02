@@ -17,7 +17,6 @@ const BankWebConfirm = props => {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {url = samleUrl, orderId, onBackOtp, onDoneOtp, isSaveToken} = params;
-  console.log('urlurlurlurl', url);
   const [shouldCancel, setShouldCancel] = useState(true);
   const {cancelTransaction} = useBankInfo();
   useFocusEffect(
