@@ -44,9 +44,7 @@ const Auth = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={()=>{
-          Navigator.navigate(SCREEN.BANK_OTP)
-        }}>
+        onSubmit={onCheckPhoneExist}>
         {({
           handleChange: _handleChange,
           handleBlur,
