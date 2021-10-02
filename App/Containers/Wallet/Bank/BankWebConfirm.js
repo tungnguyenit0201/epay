@@ -1,18 +1,19 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {BackHandler, View, ScrollView} from 'react-native';
+import {BackHandler, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
 import Navigator from 'navigations/Navigator';
 import {useBankInfo} from 'context/Wallet/utils';
 
-import {HeaderBg, Header, Text, InputBlock, Button} from 'components';
-import {base, Colors, Spacing} from 'themes';
+import {Header, HeaderBg} from 'components';
+import {Colors} from 'themes';
 import {useTranslation} from 'context/Language';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {SCREEN} from 'configs/Constants';
+
 const samleUrl =
   'https://payment.momo.vn/service-napas-cashin-app-bank/napas/build_data_form?orderId=17160861262';
-const BankWebConfirm = (props) => {
+const BankWebConfirm = props => {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {url = samleUrl, orderId, onBackOtp, onDoneOtp, isSaveToken} = params;
@@ -93,15 +94,22 @@ const BankWebConfirm = (props) => {
       onDoneOtp?.(transaction);
       let {error} = transaction;
       if (error === 0 && isSaveToken) {
+        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+          screen: MapBankRoutes.BaseResultScreen,
+          params: {
+            result: 'sucess',
+          },
+        });
       }
     }
   };
 
-  const onGoBack = ()=>{
+  const onGoBack = () => {
     //call API check transaction state and then navigate
-    props?.navigation?.push(SCREEN.MAP_BANK_FLOW,{screen:MapBankRoutes.BaseResultScreen,params:{
-
-      }});
+    props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BaseResultScreen,
+      params: {},
+    });
   };
 
   return (
