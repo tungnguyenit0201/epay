@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Navigator from 'navigations/Navigator';
 import {
   ERROR_CODE,
@@ -40,6 +40,12 @@ const useTopUpWithdraw = ({ transType }) => {
   });
   const { dispatch } = useWallet();
 
+  useEffect(() => {
+    inputRef?.current?.setError(translation.topup.cashInMinError.replace("%", formatCurrency(10000)))
+    return () => {
+      
+    } 
+  }, [])
 
   const onSuggestMoney = value => {
     onChangeMoney(value);
@@ -166,21 +172,13 @@ const useConfirmation = () => {
   ];
 
   const onContinue = async () => {
-    const result = await checkSmartOTP({ phone });
-    const isSmartOTPActived = _.get(result, 'State', 0);
-    if (isSmartOTPActived) {
-      switch (transType) {
-        case TRANS_TYPE.CashIn:
-          onCashIn();
-          break;
-        default:
-          break;
-      }
-    } else {
-      setError({ ErrorCode: -1, ErrorMessage: 'Vui lòng kích hoạt smart otp.' }); // TODO: transalate
-      // Navigator.push(SCREEN.OTP, {functionType: FUNCTION_TYPE.RECHARGE_BY_BANK});
+    switch (transType) {
+      case TRANS_TYPE.CashIn:
+        onCashIn();
+        break;
+      default:
+        break;
     }
-
   };
 
   const continueButtonTitle = () => {
@@ -283,55 +281,47 @@ const useOTPBySmartOTP = () => {
 };
 
 const useOTPByBankOTP = () => {
-  const { transaction, dispatch } = useWallet();
-  const { phone } = useUser();
+  const { transaction } = useWallet();
   const [code, setCode] = useState('');
-  const { setError } = useError();
   const [time, setTime] = useState(DEFAULT_TIMEOUT);
   const { transType } = transaction;
   const { onCashInConfirmOTP } = useCashIn();
   
   useEffect(() => {
     let interval = null;
-    if (!!code) {
-      interval = setInterval(() => {
-
-        if (time != 0) {
-          setTime(time - 1);
-        } else {
-          interval && clearInterval(interval);
-        }
-      }, 1000);
-    }
+    interval = setInterval(() => {
+      if (time != 0) {
+        setTime(time - 1);
+      } else {
+        onRetry();
+        interval && clearInterval(interval);
+      }
+    }, 1000);
     return () => {
       interval && clearInterval(interval);
     }
-  }, [code, time])
+  }, [time])
 
-  const onConfirm = async () => {
+  const onCodeFilled = async () => {
     let result = null;
     switch (transType) {
       case TRANS_TYPE.CashIn:
+        onCashInConfirmOTP(code)
         break;
       default:
     }
-
-
-    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-      setError(result);
-      return;
-    }
   };
+
+
+  const onRetry = () =>  {
+    setTime(DEFAULT_TIMEOUT);
+  }
 
   const onCodeChanged = async (value) => {
     setCode(value);
   }
 
-  const onCodeFilled = async (code) => {
-    onCashInConfirmOTP({password: code})
-  }
-
-  return { code, onConfirm, time, onCodeChanged, onCodeFilled };
+  return { code, time, onCodeChanged, onCodeFilled };
 };
 
 const useTransaction = () => {
@@ -408,22 +398,23 @@ const useConfirmMethod = ()=> {
           error?.name === 'LAErrorSystemCancel' ||
           error?.name === 'LAErrorAuthenticationFailed'
         ) {
-          return;
+          return Promise.reject(error);;
         }
         // supported touchID but not enabled by user
         if (error?.name === 'LAErrorTouchIDNotEnrolled') {
           setBiometryType(null);
-          return;
+          return Promise.reject(error);;
         }
         // user press show passcode
         if (
           error?.name === 'LAErrorUserFallback' ||
           error?.name === 'RCTTouchIDUnknownError'
         ) {
-          return;
+          return Promise.reject(error);;
         }
         // other errors
         setError({ErrorCode: -1, ErrorMessage: error});
+        return Promise.reject(error);;
       });
   }
 
@@ -438,8 +429,12 @@ const useCashIn = () => {
   const { setLoading } = useLoading();
   const { onTransaction } = useTransaction();
   const { confirmUsingBioID, checkBiometry } = useConfirmMethod({});
-  
-
+  const { bank, amount, transType, ConfirmType, TransCode } = transaction;
+  const { BankConnectId, BankId } = bank || {};
+  const cashInRef = useRef({
+    ConfirmType,
+    TransCode
+  });
   
   const onCashIn = async () => {
     const ConnectionType = transaction?.bank?.ConnectionType;
@@ -456,9 +451,6 @@ const useCashIn = () => {
   }
 
   const onCashInNormalBank = async ()=> {
-    const { transType, amount, bank } = transaction;
-    const { BankConnectId, BankId } = bank || {};
-
     setLoading(true);
     let result = await cashIn({
       phone,
@@ -471,10 +463,18 @@ const useCashIn = () => {
       console.log("CONFIRM METHOD:"+result.Data);
       const { ListConfirmMethod = [], TransCode } = JSON.parse(result.Data) || {};
       let { ConfirmType } = ListConfirmMethod.sort((lhs, rhs) => {
-        return lhs?.Priority > rhs?.Priority
+        return lhs?.Priority < rhs?.Priority
       })?.[0];
 
+
+      //Temporary
       // ConfirmType = 4
+      cashInRef.current = {
+        TransCode,
+        ConfirmType
+      }
+
+      
       dispatch({
         type: 'UPDATE_TRANSACTION_INFO',
         data: {
@@ -493,15 +493,15 @@ const useCashIn = () => {
             if(result){
               const credentials = await Keychain.getGenericPassword();
               const password = credentials?.password;
-              onCashInConfirmOTP({ password,TransCode, ConfirmType })
+              onCashInConfirmOTP(password)
             }
           } else {
-            onShowModal(password => onCashInConfirmOTP({ password, TransCode, ConfirmType}));
+            onShowModal(password => onCashInConfirmOTP(password));
           }
         case CONFIRM_METHODS.PASSWORD:
           break;
         case CONFIRM_METHODS.SMART_OTP:
-          onShowModal(password => onCashInConfirmOTP({ password, TransCode, ConfirmType}));
+          onShowModal(password => onCashInConfirmOTP(password));
           break;
         case CONFIRM_METHODS.BANK_OTP:
           Navigator.navigate(SCREEN.BANK_OTP);
@@ -516,13 +516,12 @@ const useCashIn = () => {
     }
   }
 
-  let onCashInConfirmOTP = async ({ password,TransCode, ConfirmType }) => {
-    const { transType,  } = transaction;
+  let onCashInConfirmOTP = async (password) => {
     let result = null;
     setLoading(true);
     switch (transType) {
       case TRANS_TYPE.CashIn:
-        result = await onCashInOTP({password,TransCode, ConfirmType});
+        result = await onCashInOTP(password);
         break;
       default:
     }
@@ -536,9 +535,8 @@ const useCashIn = () => {
   };
 
 
-  let onCashInOTP = async ({password, TransCode, ConfirmType}) => {
-    const { bank } = transaction;
-    const { BankConnectId, BankId } = bank || {};
+  let onCashInOTP = async (password) => {
+    let { TransCode, ConfirmType } = cashInRef.current || {};
     return cashInConfirm({
       phone,
       BankConnectId: BankConnectId,

@@ -8,8 +8,8 @@ import { scale } from 'utils/Functions';
 import { useOTPByBankOTP } from 'context/Wallet/utils/topUpWithdraw';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 
-const OTPBySmartOTP = (props) => {
-  const { code, onConfirm, time, onCodeChanged, onCodeFilled } = useOTPByBankOTP();
+const BankOTP = (props) => {
+  const { code, time, onCodeChanged, onCodeFilled } = useOTPByBankOTP();
   const translation = useTranslation();
 
   const renderOTP = useCallback(
@@ -69,7 +69,7 @@ const OTPBySmartOTP = (props) => {
   );
 };
 
-export default OTPBySmartOTP;
+export default BankOTP;
 
 const styles = StyleSheet.create({
   container: {

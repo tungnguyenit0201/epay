@@ -43,7 +43,7 @@ const useTopUp = () => {
     onGetConnectedBank();
     onGetDomesticBanks();
     onGetInternationalBanks();
-
+    
 
   }, []); // eslint-disable-line
 

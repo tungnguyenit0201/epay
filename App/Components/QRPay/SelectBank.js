@@ -8,11 +8,10 @@ import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
-const TransferBank = ({onPress, bankInfo}) => {
+const SelectBank = ({onPress, bankInfo}) => {
   const translation = useTranslation();
 
-  const { BankLogoUrl, CardNumber, BankName } = bankInfo || {};
-
+  const { BankLogoUrl, CardNumber, BankNumber, BankName } = bankInfo || {};
   return (
     //TODO : translation
     <>
@@ -29,7 +28,7 @@ const TransferBank = ({onPress, bankInfo}) => {
           }}>
             <Text fs="h6" bold>{BankName}</Text>
             {
-              !!CardNumber ? <Text>{CardNumber}</Text> : null
+              !!CardNumber || !!BankNumber ? <Text>{CardNumber || BankNumber}</Text> : null
             }
           </Col>
           <View style={styles.itemRight}>
@@ -79,4 +78,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-export default TransferBank;
+export default SelectBank;

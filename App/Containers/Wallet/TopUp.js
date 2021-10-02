@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Header, HeaderBg, KeyboardSuggestion} from 'components';
-import {base} from 'themes';
+import {base, Colors} from 'themes';
 import Monney from 'components/Home/Monney';
 import InputMoney from 'components/User/InputMoney';
 import SelectBank from 'components/User/TopUp/SelectBank';
@@ -44,7 +44,7 @@ const TopUp = () => {
           <View style={base.boxShadow}>
             <Monney title={translation.topup.walletAmount} showing/>
             <InputMoney ref={inputRef} onChange={onChangeCash} errorStyle={{
-              borderWidth: 0
+              borderColor: Colors.cl4,
             }}/>
           </View>
 

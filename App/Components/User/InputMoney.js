@@ -5,7 +5,7 @@ import {Colors, Fonts, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import {formatMoney} from 'utils/Functions';
 
-const InputMoney = forwardRef(({style, onChange}, ref) => {
+const InputMoney = forwardRef(({style, onChange, errorStyle}, ref) => {
   const translation = useTranslation();
   const moneyData = [
     {
@@ -42,7 +42,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
 
   return (
     <View style={[style]}>
-      <Input ref={ref} onChange={onChange}/>
+      <Input ref={ref} onChange={onChange} errorStyle={errorStyle}/>
       <Row space="10">
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
@@ -58,7 +58,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
   );
 });
 
-const Input = forwardRef(({onChange}, ref) => {
+const Input = forwardRef(({onChange, errorStyle}, ref) => {
   const [value, setValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const translation = useTranslation();
@@ -84,7 +84,8 @@ const Input = forwardRef(({onChange}, ref) => {
         <TextInput
           numeric
           placeholder={translation.topup.cashInInputMoney}
-          style={styles.input}
+          style={[styles.input]}
+          errorStyle={errorStyle}
           placeholderTextColor={Colors.l5}
           value={value}
           onChange={_onChange}
