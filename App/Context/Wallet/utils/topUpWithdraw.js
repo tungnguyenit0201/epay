@@ -572,7 +572,7 @@ const useCashIn = () => {
         if(!!ListConfirmMethod) {
             let { ConfirmType } = ListConfirmMethod?.shift();
     
-            //Temporary
+            //For Testing
             // ConfirmType = 2
     
             cashInRef.current = {
@@ -589,6 +589,10 @@ const useCashIn = () => {
                 },
             });
     
+
+            // Bank OTP là gửi lên luôn ở màn Bank SMS
+            // Smart OTP đi theo design ở bước cuối gửi số ở màn hình gen OTP
+            // BIO, password là gửi lên luôn theo flow ở màn confirm
             switch (ConfirmType) {
                 case CONFIRM_METHODS.BIO_ID:
                     const isTouchIDEnable = await checkBiometry();
