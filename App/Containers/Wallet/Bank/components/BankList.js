@@ -72,7 +72,7 @@ const BankList = forwardRef((props, ref) => {
     onChange,
     onContinue,
     onGetIcInfor,
-      getICLabel
+      getICLabel,
   } = useBankInfo();
   const {walletInfo} = useWallet();
   const {
@@ -190,9 +190,10 @@ const BankList = forwardRef((props, ref) => {
 
         icInfor?.result?.forEach((item, index) => {
           const {ICInfo} = item || {};
-          const {Number} = ICInfo || {};
+          const {Number,Type} = ICInfo || {};
           const IDNumber = censorCardNumber(Number);
-          const kycInfo = {label: IDNumber, value: index + 1, data: ICInfo};
+          const label = getICLabel(Type) || '' + IDNumber;
+          const kycInfo = {label: label, value: index + 1, data: ICInfo};
           formatIcInfo.push(kycInfo);
         });
 
