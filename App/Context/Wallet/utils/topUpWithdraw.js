@@ -12,6 +12,7 @@ import {useWallet} from '..';
 import {
   cashIn,
   cashInConfirm,
+  cashInNapas,
   cashOut,
   cashOutConfirm,
   checkAmountLimit,
@@ -279,7 +280,7 @@ const useOTPBySmartOTP = () => {
     const [time, setTime] = useState(DEFAULT_TIMEOUT);
     const {transType} = transaction;
     const {onCashInOTP} = useCashIn();
-    const {onTransaction} = useSmartOTP();
+    const {onTransaction} = useTransaction();
     useEffect(() => {
         let interval = null;
         if (code) {
@@ -316,7 +317,7 @@ const useOTPBySmartOTP = () => {
     }, []); // eslint-disable-line
 
     const onConfirm = async () => {
-        let result = null;
+        let result = null; 
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 result = await onCashInOTP(code);
@@ -366,7 +367,6 @@ const useOTPByBankOTP = () => {
     }, [time]);
 
     const onCodeFilled = async () => {
-        let result = null;
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 onCashInConfirmOTP(code);
@@ -480,13 +480,14 @@ const useConfirmMethod = () => {
 const useCashIn = () => {
     const {phone} = useUser();
     const {onShowModal} = useModalSmartOTP();
+    const { onTransaction: gotoSmartOTPConfirm } = useSmartOTP();
     const {transaction, dispatch} = useWallet();
     const {setError} = useError();
     const {setLoading} = useLoading();
     const {onTransaction} = useTransaction();
-    const {confirmUsingBioID, checkBiometry} = useConfirmMethod({});
+    const {confirmUsingBioID, checkBiometry} = useConfirmMethod();
     const {bank, amount, transType, ConfirmType, TransCode} = transaction;
-    const {BankConnectId, BankId} = bank || {};
+    const {BankConnectId, BankId, CardNumber, CardHolder, CardIssueDate,  } = bank || {};
     const cashInRef = useRef({
         ConfirmType,
         TransCode,
@@ -496,16 +497,40 @@ const useCashIn = () => {
         const ConnectionType = transaction?.bank?.ConnectionType;
 
         switch (ConnectionType) {
-            case BANK_LINKED_TYPE.NORMAL:
-                onCashInNormalBank();
+            case BANK_LINKED_TYPE.CONNECTED:
+                onCashInConnectedBank();
+                break;
             case BANK_LINKED_TYPE.DOMESTIC:
+                onCashInDomesticBank();
+                break;
         }
     };
 
     const onCashInDomesticBank = async () => {
+        
+        setLoading(true);
+        let result = await cashInNapas({
+            phone,
+            Amount:amount,
+            BankId,
+            CardNumber,
+             CardHolder, 
+             CardIssueDate, 
+             CardConnectId: BankConnectId, 
+             IsSaveCard: 0,
+              IsPayment: 0, 
+              PaymentPartnerCode:"", 
+              BusinessType: ""
+        });
+        setLoading(false);
+
+        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+            setError(result);
+            return;
+        }
     };
 
-    const onCashInNormalBank = async () => {
+    const onCashInConnectedBank = async () => {
         setLoading(true);
         let result = await cashIn({
             phone,
@@ -522,7 +547,7 @@ const useCashIn = () => {
             console.log('CONFIRM METHOD:' + result.Data);
             const {ListConfirmMethod = [], TransCode} = JSON.parse(result.Data) || {};
             let {ConfirmType} = ListConfirmMethod.sort((lhs, rhs) => {
-                return lhs?.Priority < rhs?.Priority;
+                return lhs?.Priority > rhs?.Priority;
             })?.[0];
 
             //Temporary
@@ -546,19 +571,24 @@ const useCashIn = () => {
                     const isTouchIDEnable = await checkBiometry();
 
                     if (isTouchIDEnable) {
-                        let result = await confirmUsingBioID();
-                        if (result) {
-                            const credentials = await Keychain.getGenericPassword();
-                            const password = credentials?.password;
-                            onCashInConfirmOTP(password);
+                        try {
+                            let bioResult = await confirmUsingBioID();
+                            if (bioResult) {
+                                const credentials = await Keychain.getGenericPassword();
+                                const password = credentials?.password;
+                                onCashInConfirmOTP(password);
+                            }
+                        } catch (error) {
+                            console.log(error);
+                            onShowModal(password => gotoSmartOTPConfirm({password}));       
                         }
                     } else {
-                        onShowModal(password => onCashInConfirmOTP(password));
+                        onShowModal(password => gotoSmartOTPConfirm({password}));
                     }
                 case CONFIRM_METHODS.PASSWORD:
                     break;
                 case CONFIRM_METHODS.SMART_OTP:
-                    onShowModal(password => onCashInConfirmOTP(password));
+                    onShowModal(password => gotoSmartOTPConfirm({password}));
                     break;
                 case CONFIRM_METHODS.BANK_OTP:
                     Navigator.navigate(SCREEN.BANK_OTP);
@@ -617,7 +647,6 @@ const useCashOut = () => {
     const {setError} = useError();
     const {setLoading} = useLoading();
     const {onTransaction} = useTransaction();
-    const {confirmUsingBioID, checkBiometry} = useConfirmMethod({});
     const {bank, amount, transType, ConfirmType, TransCode} = transaction;
     const transFormType = TRANS_FORM_TYPE.CONNECTED_BANK;
     const {BankConnectId, BankId} = bank || {};
@@ -634,8 +663,8 @@ const useCashOut = () => {
     const onCashOut = async () => {
         const ConnectionType = transaction?.bank?.ConnectionType;
         switch (ConnectionType) {
-            case BANK_LINKED_TYPE.NORMAL:
-                onCashOutNormalBank();
+            case BANK_LINKED_TYPE.CONNECTED:
+                onCashOutConnectedBank();
                 break;
             default:
                 break;
@@ -662,7 +691,7 @@ const useCashOut = () => {
       }
     };
 
-    const onCashOutNormalBank = async () => {
+    const onCashOutConnectedBank = async () => {
         setLoading(true);
         let result = await cashOut({
             phone,
@@ -735,10 +764,9 @@ const useCashOut = () => {
 const useTransactionResult = () => {
     const {transaction} = useWallet();
     const {showModalSmartOTPSuggestion} = useShowModal();
-    const {amount, fee, bank, result, transType, TransCode} = transaction || {};
+    const {amount, bank, result, transType, TransCode} = transaction || {};
     const {TransState} = result || {};
     const {BankName, BankNumber} = bank;
-    const {showModalSmartOTP} = useShowModal();
     const translation = useTranslation();
 
     const loadData = () => {

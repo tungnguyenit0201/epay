@@ -347,14 +347,19 @@ export const cashInConfirm = async ({ phone, BankConnectId, BankId, ConfirmValue
 export const cashInNapas = async ({ Amount, BankId, CardNumber, CardHolder, CardIssueDate, CardConnectId, IsSaveCard, IsPayment, PaymentPartnerCode, BusinessType }) => {
   let response = null;
   await request({
-    url: API.WALLET.CASH_IN_CONFIRM,
+    url: API.WALLET.CASH_IN_NAPAS,
     method: 'post',
     params: {
-      BankConnectId,
-      BankID: BankId,
-      ConfirmMethod,
-      ConfirmValue,
-      TransCode,
+      Amount,
+      BankId,
+      CardNumber,
+      CardHolder,
+      CardIssueDate,
+      CardConnectId,
+      IsSaveCard,
+      IsPayment,
+      PaymentPartnerCode,
+      BusinessType
     },
     success: res => {
       response = res;

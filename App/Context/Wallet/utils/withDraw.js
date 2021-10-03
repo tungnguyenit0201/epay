@@ -24,7 +24,7 @@ const useWithDraw = () => {
     const [bankFeeData, setBankFeeData] = useState({
         [TRANS_FORM_TYPE.CONNECTED_BANK]: null,
     });
-    const bankLinkedList = listConnectBank?.filter(item=> item?.ConnectionType === BANK_LINKED_TYPE.NORMAL);
+    const bankLinkedList = listConnectBank?.filter(item=> item?.ConnectionType === BANK_LINKED_TYPE.CONNECTED);
     const bankData = {
         [TRANS_FORM_TYPE.CONNECTED_BANK]: bankLinkedList,
     };
