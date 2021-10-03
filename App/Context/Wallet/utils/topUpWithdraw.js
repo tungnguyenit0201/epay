@@ -282,6 +282,7 @@ const useOTPBySmartOTP = () => {
     const [time, setTime] = useState(DEFAULT_TIMEOUT);
     const {transType} = transaction;
     const {onCashInOTP} = useCashIn();
+    const {onCashOutConnectedBank} = useCashOut();
     const {onTransaction} = useTransaction();
     useEffect(() => {
         let interval = null;
@@ -323,6 +324,9 @@ const useOTPBySmartOTP = () => {
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 result = await onCashInOTP(code);
+                break;
+            case TRANS_TYPE.CashOut:
+                result = await onCashOutConnectedBank(code);
                 break;
             default:
                 result = await onConfirmOTP();
@@ -549,14 +553,14 @@ const useCashIn = () => {
             result.Data
         ) {
             const { ListConfirmMethod = [], TransCode } = JSON.parse(result.Data) || {};
-            if(!!ListConfirmMethod) {
+            if (ListConfirmMethod) {
                 onConfirmCashInWithMethod(ListConfirmMethod.sort((lhs, rhs) => {
                     return lhs?.Priority > rhs?.Priority;
                 }), TransCode);
             } else {
                 setError({ ErrorCode: -1, ErrorMessage: translation.validate.confirmMethodInvalid }); // TODO: translate
             }
-            
+
             return;
         }
 
@@ -569,17 +573,17 @@ const useCashIn = () => {
     const onConfirmCashInWithMethod = async (ListConfirmMethod, TransCode) => {
 
         console.log('CONFIRM METHOD:' + JSON.stringify(ListConfirmMethod));
-        if(!!ListConfirmMethod) {
+        if (ListConfirmMethod) {
             let { ConfirmType } = ListConfirmMethod?.shift();
-    
+
             //For Testing
             // ConfirmType = 2
-    
+
             cashInRef.current = {
                 TransCode,
                 ConfirmType,
             };
-    
+
             dispatch({
                 type: 'UPDATE_TRANSACTION_INFO',
                 data: {
@@ -588,7 +592,7 @@ const useCashIn = () => {
                     functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
                 },
             });
-    
+
 
             // Bank OTP là gửi lên luôn ở màn Bank SMS
             // Smart OTP đi theo design ở bước cuối gửi số ở màn hình gen OTP
@@ -596,7 +600,7 @@ const useCashIn = () => {
             switch (ConfirmType) {
                 case CONFIRM_METHODS.BIO_ID:
                     const isTouchIDEnable = await checkBiometry();
-    
+
                     if (isTouchIDEnable) {
                         try {
                             let bioResult = await confirmUsingBioID();
@@ -606,11 +610,11 @@ const useCashIn = () => {
                                 onCashInConfirmOTP(password);
                             }
                         } catch (error) {
-                            console.log("Bio SDK Failed try another")
+                            console.log('Bio SDK Failed try another');
                             onConfirmCashInWithMethod(ListConfirmMethod, TransCode);
                         }
                     } else {
-                        console.log("Bio SDK Failed try another")
+                        console.log('Bio SDK Failed try another');
                         onConfirmCashInWithMethod(ListConfirmMethod, TransCode);
                     }
                     return;
@@ -628,7 +632,7 @@ const useCashIn = () => {
             //Default for error case --> Smart OTP
             onShowModal(password => gotoSmartOTPConfirm({ password }));
         }
-    }
+    };
 
     let onCashInConfirmOTP = async password => {
         let result = null;
@@ -677,6 +681,8 @@ const useCashOut = () => {
     const {bank, amount, transType, ConfirmType, TransCode} = transaction;
     const transFormType = TRANS_FORM_TYPE.CONNECTED_BANK;
     const {BankConnectId, BankId} = bank || {};
+    const { onTransaction: gotoSmartOTPConfirm } = useSmartOTP();
+    const {onShowModal: onShowModalPassword} = useModalPassword();
     const cashOutRef = useRef({
         ConfirmType,
         TransCode,
@@ -689,13 +695,12 @@ const useCashOut = () => {
 
     const onCashOut = async () => {
         const ConnectionType = transaction?.bank?.ConnectionType;
-        switch (ConnectionType) {
-            case BANK_LINKED_TYPE.CONNECTED:
-                onCashOutConnectedBank();
-                break;
-            default:
-                break;
+        if (ConnectionType !== BANK_LINKED_TYPE.CONNECTED){
+            Navigator.showAlert({
+                title:'Ngân hàng không hỗ trợ rút tiền',
+            });
         }
+        onShowModal(password => gotoSmartOTPConfirm({ password }));
     };
 
     const onCheckAmountLimit = async () => {
@@ -732,10 +737,6 @@ const useCashOut = () => {
                 result.ErrorCode == ERROR_CODE.SUCCESS) &&
             result.Data
         ) {
-            console.log('CONFIRM METHOD:' + result.Data);
-
-            //Temporary
-            // ConfirmType = 4
             cashOutRef.current = {
                 TransCode,
                 ConfirmType,
@@ -749,9 +750,7 @@ const useCashOut = () => {
                     functionType: FUNCTION_TYPE.WITHDRAW_BY_BANK,
                 },
             });
-
-            onCashOutConfirm();
-            return;
+            return result;
         }
 
         if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
@@ -760,13 +759,7 @@ const useCashOut = () => {
         }
     };
 
-    let onCashOutConfirm =  () => {
-        onShowModal(password =>{
-            setLoading(true);
-            onTransaction(password);
-        });
 
-    };
 
     let onCashOutOTP = async password => {
         let {TransCode, ConfirmType} = cashOutRef.current || {};
@@ -783,8 +776,8 @@ const useCashOut = () => {
     return {
         onCashOut,
         onCashOutOTP,
-        onCashOutConfirm,
         onCheckLimitCashOut,
+        onCashOutConnectedBank,
     };
 };
 
@@ -809,8 +802,13 @@ const useTransactionResult = () => {
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 statusTitle = translation.top_up;
+                break;
+            case TRANS_TYPE.CashOut:
+                statusTitle = 'Rút tiền';
+                break;
             case TRANS_TYPE.ActiveCustomer:
                 statusTitle = 'Liên kết ngân hàng';
+                break;
 
         }
 
@@ -863,6 +861,9 @@ const useTransactionResult = () => {
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 screen = SCREEN.TOP_UP;
+                break;
+            case TRANS_TYPE.CashOut:
+                screen = SCREEN.WITHDRAW;
                 break;
         }
         Navigator.navigate(screen);
