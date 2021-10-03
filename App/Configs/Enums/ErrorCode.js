@@ -225,6 +225,8 @@ const ERROR_CODE = {
   C08_REQUEST_ERROR: 523, //Gọi sang C08 bị lỗi
   C08_SYSTEM_ERROR_NEW: 524, //Mã lỗi mới của hệ thống
   C08_OTHER_ERROR: -1, //Lỗi không được định nghĩa
+
+  CASHIN_REQUIRED_AUTHENTICATION: 110, //Lỗi không được định nghĩa
 };
 
 export default ERROR_CODE;

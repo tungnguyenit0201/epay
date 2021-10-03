@@ -21,8 +21,7 @@ const SCREEN = {
   LINKING_CONFIRM: 'LinkingComfirm',
   BANK_RESULT: 'BankResult',
   NOTIFICATION: 'Notification',
-  TRANSACTION_SUCCESS: 'TransactionSuccess',
-  TRANSACTION_FAILURE: 'TransactionFailure',
+  TRANSACTION_RESULT: 'TransactionResult',
   EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
@@ -85,5 +84,6 @@ const SCREEN = {
   BankLinkOTP: 'BankLinkOTP',
   BANK_PICKER_SCREEN: 'BankPickerScreen',
   BANK_KYC_SCREEN: 'BankKYCInfo',
+  BANK_OTP: 'BankOTP',
 };
 export default SCREEN;

@@ -28,7 +28,10 @@ import {
 import {useWallet} from 'context/Wallet';
 import {useCommon} from 'context/Common';
 
+const MAX_OTP_TIME = 5;
+
 const useSmartOTP = params => {
+  const [remainingRetry, setRemainingRetry] = useState(MAX_OTP_TIME);
   const {phone} = useUser();
   const [isAccepted, setAccepted] = useState(false);
   const [message, setMessage] = useState('');
@@ -209,7 +212,7 @@ const useSmartOTP = params => {
             functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
           },
         });
-        Navigator.replaceLast(SCREEN.OTP_BY_SMART_OTP);
+        Navigator.navigate(SCREEN.OTP_BY_SMART_OTP);
         return;
       case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
         setError(result);
@@ -233,6 +236,29 @@ const useSmartOTP = params => {
     Navigator.push(SCREEN.ACTIVE_SMART_OTP);
   };
 
+  const checkValidSmartOTP = async ({otp,onSuccess}) => {
+    const otpEncrypted = await sha256(otp);
+    setLoading(true);
+    let result = await checkSmartOTPKey({phone, password: otpEncrypted});
+    console.log('Check Smart OTP: '+JSON.stringify(result));
+    setLoading(false);
+    switch (_.get(result, 'ErrorCode')) {
+      case ERROR_CODE.SUCCESS:
+        Navigator.goBack();
+        onSuccess(true);
+        return;
+      case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
+        result.ErrorMessage = result.ErrorMessage?.replace("%s",MAX_OTP_TIME);
+        setError(result);
+        Navigator.goBack();
+        return;
+      default:
+        result.ErrorMessage = result.ErrorMessage?.replace("%s",remainingRetry);
+        setRemainingRetry(remainingRetry-1);
+        return setMessage(result?.ErrorMessage);
+    }
+  };
+
   return {
     phone,
     isAccepted,
@@ -245,6 +271,7 @@ const useSmartOTP = params => {
     type: params?.type,
     onBack,
     onGoPasswordSync,
+    checkValidSmartOTP,
     onGoSmartOTP,
     onTransaction,
   };

@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
 import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useTranslation} from 'context/Language';
+import { useTranslation } from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform, Alert} from 'react-native';
 import {useAsyncStorage, useConfig} from 'context/Common/utils';
@@ -59,8 +59,7 @@ import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 import VerifyEmail from 'containers/User/VerifyInfo/VerifyEmail';
 import VerifySuccess from 'containers/User/VerifyInfo/VerifySuccess';
 import RegionSelect from 'containers/User/RegionSelect';
-import TransactionFailure from 'containers/Wallet/TransactionFailure';
-import TransactionSuccess from 'containers/Wallet/TransactionSuccess';
+import TransactionResult from 'containers/Wallet/TransactionResult';
 import LanguageSetting from 'containers/User/LanguageSetting';
 import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
@@ -88,6 +87,7 @@ import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferResults from 'containers/Wallet/QRPay/TransferResults';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
+import BankOTP from 'containers/Wallet/BankOTP';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -270,8 +270,8 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
           <Stack.Screen
-            name={SCREEN.TRANSACTION_SUCCESS}
-            component={TransactionSuccess}
+            name={SCREEN.TRANSACTION_RESULT}
+            component={TransactionResult}
           />
           <Stack.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
@@ -326,10 +326,6 @@ const AppNavigator = () => {
             name={SCREEN.VERIFY_SUCCESS}
             component={VerifySuccess}
           />
-          <Stack.Screen
-            name={SCREEN.TRANSACTION_FAILURE}
-            component={TransactionFailure}
-          />
           <Stack.Screen name={SCREEN.REGION_SELECT} component={RegionSelect} />
           <Stack.Screen
             name={SCREEN.LANGUAGE_SETTING}
@@ -382,6 +378,10 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
+          <Stack.Screen
+            name={SCREEN.BANK_OTP}
+            component={BankOTP}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

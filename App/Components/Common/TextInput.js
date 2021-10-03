@@ -25,6 +25,7 @@ export default React.forwardRef(
       marginBottom = scale(10),
       error,
       showErrorLabel = true,
+      errorStyle,
       label,
       required,
       rightComponent,
@@ -94,7 +95,7 @@ export default React.forwardRef(
 
           <View style={[
             styles.inputContainer,
-            error && styles.error,
+            error && [styles.error,errorStyle],
             Boolean(leftIcon) && { paddingLeft: 50 },
             (isDeleted || password) && { paddingRight: Spacing.PADDING * 2 },
             style,
@@ -111,6 +112,7 @@ export default React.forwardRef(
               style={[
                 styles.textStyle,
                 textStyle,
+                errorStyle
               ]}
               placeholderTextColor={placeholderTextColor || Colors.BOTTOMBORDER}
               onChangeText={onChangeText}

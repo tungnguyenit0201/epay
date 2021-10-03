@@ -434,6 +434,68 @@
     "524": "Mã lỗi mới của hệ thống",
     "-1": "Lỗi không được định nghĩa"
   },
+  "smartOTP": {
+    "enterOTP": "Nhập mật khẩu Smart OTP",
+    "forgotPassword": "Quên mật khẩu?"
+  },
+  "topup": {
+    "walletAmount": "Số dư ví",
+    "cashInMinError": "*Số tiền nạp tối thiểu là % vnđ",
+    "cashInMaxError": "*Số tiền nạp tối đa là % vnđ",
+    "cashInInputMoney": "Nhập số tiền nạp",
+    "confirmTitle": "Xác nhận %",
+    "detailTitle": "Chi tiết %",
+    "currency": " vnđ",
+    "moneySource": " Nguồn tiền",
+    "milion": "triệu",
+    "confirm": "Xác nhận bằng"
+  },
+  "cashout": {
+    "walletAmount": "Số dư ví",
+    "cashOutMinError": "*Số tiền rút tối thiểu là % vnđ",
+    "cashOutMaxError": "*Số tiền rút tối đa là % vnđ",
+    "cashOutInputMoney": "Nhập số tiền rút",
+    "confirmTitle": "Xác nhận %",
+    "detailTitle": "Chi tiết %",
+    "currency": " vnđ",
+    "moneySource": " Nguồn tiền",
+    "milion": "triệu",
+    "confirm": "Xác nhận bằng"
+  },
+  "acceptTerm": {
+    "when": "Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với ",
+    "contract": "Thoả thuận Người sử dụng, Chính sách quyền riêng tư",
+    "topup": "Chính sách nạp tiền ",
+    "and": " và ",
+    "of": "của Epay"
+  },
+  "transaction": {
+    "confirm": "Xác nhận",
+    "confirmTransaction":"Xác nhận giao dịch",
+    "autoFillOTP": "Nhấn Xác nhận, mã OTP sẽ được điền tự động để xác thực giao dịch",
+    "transactionDetail": "Chi tiết giao dịch",
+    "failure": "không thành công",
+    "success": "thành công",
+    "cashInDescription": " Nạp tiền vào ví Epay từ tài khoản",
+    "transactionId" : "Mã giao dịch",
+    "time" : "Thời gian",
+    "support": "Hỗ trợ khiếu nại",
+    "supportPhone": "1900-00000"
+  },
+  "common": {
+    "retry": "Thực hiện lại",
+    "goBackHome": "Về trang chủ",
+    "createTransaction": "Thêm giao dịch",
+    "currencySign": "đ",
+    "authen": "Xác thực"
+  },
+  "otp": {
+    "enterOTP": "Nhập OTP",
+    "sendOtpAfter": "Gửi lại mã xác thực (OTP) sau:",
+    "resend": " Gửi lại",
+    "timeOTP": "OTP tự động thay đổi sau ",
+    "bankOTP": "Nhập mã OTP được gửi từ ngân hàng"
+  },
   "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
   "selectPersonalDocument": "Chọn giấy tờ tuỳ thân",
   "unknownError": "Đã có lỗi trong quá trình xử lý. Vui lòng thử lại sau.",

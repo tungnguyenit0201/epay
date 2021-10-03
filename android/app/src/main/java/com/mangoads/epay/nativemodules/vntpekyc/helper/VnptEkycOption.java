@@ -33,7 +33,7 @@ public class VnptEkycOption {
         option.understoodTextColor = "#FFFFFF";
         option.textGuideImage = "";
 
-        option.isHasTutorial = configMap.getBool("isShowTutorial", true);;
+        option.isHasTutorial = configMap.getBool("isShowTutorial", true);
         option.isShowTradeMark = false;
         option.isSwitchCamera = false;
         option.isPreviewAnimation = false;
