@@ -59,7 +59,7 @@ const Confirmation = () => {
             onPress={() => {
               setShowModal(!showModal);
             }}
-            disabled={!enableSourcePicker}
+            // disabled={!enableSourcePicker}
             sourceTitle={sourceTitle}
             bankInfo={bank}
           />
