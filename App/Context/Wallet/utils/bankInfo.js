@@ -1,6 +1,11 @@
 import {useRef} from 'react';
 import Navigator from 'navigations/Navigator';
-import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import {
+  ERROR_CODE,
+  SCREEN,
+  TRANS_FORM_TYPE,
+  TRANS_TYPE,
+} from 'configs/Constants';
 
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
@@ -18,6 +23,7 @@ import {
   getNapasBank,
   mapBankNapas,
 } from 'services/bank';
+import {useUser} from 'context/User';
 
 const mockIc = [
   {
@@ -180,6 +186,7 @@ export const censorCardNumber = (
 
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
+  const {phone} = useUser();
   const {getPhone} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
@@ -191,12 +198,6 @@ const useBankInfo = (initialValue = {}) => {
 
   const onUpdate = (key, value) => {
     mapBankInfo.current[key] = {...mapBankInfo.current[key], ...value};
-  };
-
-  const goToBankLinked = () => {
-    Navigator.navigate(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankLinked,
-    });
   };
 
   const onContinue = (screen, params) => {
@@ -213,7 +214,28 @@ const useBankInfo = (initialValue = {}) => {
   };
 
   /* api uitils*/
-  const cancelTransaction = () => {};
+
+  const onCheckNapasTransStatus = async ({transCode}) => {
+    try {
+      const param = {
+        PhoneNumber: phone,
+        TransCode: transCode,
+        TransType: TRANS_TYPE.CashIn,
+        TransFormType: TRANS_FORM_TYPE.NAPAS_CARD,
+      };
+      const result = await mapBankNapas(param);
+
+      if (
+        _.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS &&
+        result?.TransState === 0
+      ) {
+        const {TransState, TransErrorCode, TransErrorMesage} = result || {};
+        return {tranStatus: TransState, errCode:TransErrorCode, errMessage: TransErrorMesage};
+      } else {
+        setError(result);
+      }
+    } catch (error) {}
+  };
 
   const onLinkCardNapas = async params => {
     const {
@@ -242,13 +264,33 @@ const useBankInfo = (initialValue = {}) => {
       };
       const result = await mapBankNapas(param);
 
-      if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-        return {result: result};
+      if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
+        const {
+          OrderId,
+          OrderAmount,
+          OrderReference,
+          DataKey,
+          NapasKey,
+          TransCode,
+          ApiOperation,
+        } = result || {};
+        return {
+          result: OrderId,
+          OrderAmount,
+          OrderReference,
+          DataKey,
+          NapasKey,
+          TransCode,
+          ApiOperation,
+        };
       } else {
         setError(result);
       }
-    } catch (error) {}
+    } catch (error) {
+      setError(error);
+    }
   };
+
   const onGetIcInfor = async BankId => {
     try {
       const phone = await getPhone();
@@ -256,27 +298,30 @@ const useBankInfo = (initialValue = {}) => {
       let mockresult = mockIc;
 
       dispatch({type: 'SET_IC_INFO', data: mockIc});
+      return {result: mockresult};
       if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
-        // dispatch({type: 'SET_IC_INFO', data: result?.data});
-        return {result: mockresult};
+        dispatch({type: 'SET_IC_INFO', data: result?.data?.IdentityCardInfor});
+        return {result: result?.data?.IdentityCardInfor};
       } else {
         setError(result);
       }
-    } catch (error) {}
+    } catch (error) {
+      setError(error);
+    }
   };
 
   const onActiveUser = async param => {
     setLoading(true);
     const {BankConnectInfo} = param || {};
-    let phone = await getPhone();
     const result = await activeUser({phone, BankConnectInfo});
     setLoading(false);
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      const {TransState:transState, TransCode:transCode} = result || {};
       dispatch({
         type: 'SET_TRAN_STATE',
         data: result?.TransState,
       });
-      return {result};
+      return {transState,transCode};
     } else {
       setError(result);
     }
@@ -413,7 +458,6 @@ const useBankInfo = (initialValue = {}) => {
   const onUpdateAllInfo = async value => {};
 
   return {
-    cancelTransaction,
     onLinkCardNapas,
     onActiveUser,
     onActiveUserOTP,
@@ -424,13 +468,13 @@ const useBankInfo = (initialValue = {}) => {
     onGetConnectedBankDetail,
     onChangeLimit,
     onGetNapasBanks,
-    goToBankLinked,
     onUpdateUserAddress,
     onChange,
     onContinue,
     onUpdateAllInfo,
     onGetIcInfor,
     onUpdate,
+    onCheckNapasTransStatus,
   };
 };
 

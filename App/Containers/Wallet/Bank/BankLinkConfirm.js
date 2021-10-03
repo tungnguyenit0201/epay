@@ -51,9 +51,9 @@ export default function (props) {
     };
     try {
       const res = await onActiveUser?.({BankConnectInfo});
-      // alert(res);
       props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BankLinkOTP,
+        params:{...params, ...res, bankconnectInfo:BankConnectInfo},
       });
     } catch (e) {}
   };
