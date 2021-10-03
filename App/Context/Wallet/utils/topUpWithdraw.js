@@ -29,6 +29,7 @@ import {
   useAsyncStorage,
   useError,
   useLoading,
+  useModalPassword,
   useShowModal,
 } from 'context/Common/utils';
 import {useTranslation} from 'context/Language';
@@ -37,6 +38,7 @@ import TRANS_STATUS from 'configs/Enums/TransStatus';
 import Keychain from 'react-native-keychain';
 import TouchID from 'react-native-touch-id';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
+import {sha256} from 'react-native-sha256';
 
 const DEFAULT_TIMEOUT = 60;
 
@@ -366,7 +368,7 @@ const useOTPByBankOTP = () => {
         };
     }, [time]);
 
-    const onCodeFilled = async () => {
+    const onCodeFilled = async (code) => {
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 onCashInConfirmOTP(code);
@@ -484,8 +486,10 @@ const useCashIn = () => {
     const {transaction, dispatch} = useWallet();
     const {setError} = useError();
     const {setLoading} = useLoading();
+    const translation = useTranslation();
     const {onTransaction} = useTransaction();
     const {confirmUsingBioID, checkBiometry} = useConfirmMethod();
+    const {onShowModal: onShowModalPassword} = useModalPassword();
     const {bank, amount, transType, ConfirmType, TransCode} = transaction;
     const {BankConnectId, BankId, CardNumber, CardHolder, CardIssueDate,  } = bank || {};
     const cashInRef = useRef({
@@ -544,19 +548,38 @@ const useCashIn = () => {
                 result.ErrorCode == ERROR_CODE.SUCCESS) &&
             result.Data
         ) {
-            console.log('CONFIRM METHOD:' + result.Data);
-            const {ListConfirmMethod = [], TransCode} = JSON.parse(result.Data) || {};
-            let {ConfirmType} = ListConfirmMethod.sort((lhs, rhs) => {
-                return lhs?.Priority > rhs?.Priority;
-            })?.[0];
+            const { ListConfirmMethod = [], TransCode } = JSON.parse(result.Data) || {};
+            if(!!ListConfirmMethod) {
+                onConfirmCashInWithMethod(ListConfirmMethod.sort((lhs, rhs) => {
+                    return lhs?.Priority > rhs?.Priority;
+                }), TransCode);
+            } else {
+                setError({ ErrorCode: -1, ErrorMessage: translation.validate.confirmMethodInvalid }); // TODO: translate
+            }
+            
+            return;
+        }
 
+        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+            setError(result);
+            return;
+        }
+    };
+
+    const onConfirmCashInWithMethod = async (ListConfirmMethod, TransCode) => {
+
+        console.log('CONFIRM METHOD:' + JSON.stringify(ListConfirmMethod));
+        if(!!ListConfirmMethod) {
+            let { ConfirmType } = ListConfirmMethod?.shift();
+    
             //Temporary
-            // ConfirmType = 4
+            // ConfirmType = 2
+    
             cashInRef.current = {
                 TransCode,
                 ConfirmType,
             };
-
+    
             dispatch({
                 type: 'UPDATE_TRANSACTION_INFO',
                 data: {
@@ -565,11 +588,11 @@ const useCashIn = () => {
                     functionType: FUNCTION_TYPE.RECHARGE_BY_BANK,
                 },
             });
-
+    
             switch (ConfirmType) {
                 case CONFIRM_METHODS.BIO_ID:
                     const isTouchIDEnable = await checkBiometry();
-
+    
                     if (isTouchIDEnable) {
                         try {
                             let bioResult = await confirmUsingBioID();
@@ -579,29 +602,31 @@ const useCashIn = () => {
                                 onCashInConfirmOTP(password);
                             }
                         } catch (error) {
-                            console.log(error);
-                            onShowModal(password => gotoSmartOTPConfirm({password}));       
+                            console.log("Bio SDK Failed try another")
+                            
+                            onConfirmCashInWithMethod(ListConfirmMethod, TransCode);
                         }
                     } else {
-                        onShowModal(password => gotoSmartOTPConfirm({password}));
+                        console.log("Bio SDK Failed try another")
+                        ListConfirmMethod?.shift();
+                        onConfirmCashInWithMethod(ListConfirmMethod, TransCode);
                     }
+                    return;
                 case CONFIRM_METHODS.PASSWORD:
-                    break;
-                case CONFIRM_METHODS.SMART_OTP:
-                    onShowModal(password => gotoSmartOTPConfirm({password}));
-                    break;
+                    onShowModalPassword(async password => onCashInConfirmOTP(await sha256(password)));
+                    return;
                 case CONFIRM_METHODS.BANK_OTP:
                     Navigator.navigate(SCREEN.BANK_OTP);
                     return;
+                case CONFIRM_METHODS.SMART_OTP:
+                    onShowModal(password => gotoSmartOTPConfirm({ password }));
+                    return;
             }
-            return;
+        } else {
+            //Default for error case --> Smart OTP
+            onShowModal(password => gotoSmartOTPConfirm({ password }));
         }
-
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-            setError(result);
-            return;
-        }
-    };
+    }
 
     let onCashInConfirmOTP = async password => {
         let result = null;
