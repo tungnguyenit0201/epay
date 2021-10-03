@@ -8,7 +8,7 @@ import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
-const SelectBank = ({onPress, bankInfo}) => {
+const SelectBank = ({onPress, bankInfo,sourceTitle,disabled}) => {
   const translation = useTranslation();
 
   const { BankLogoUrl, CardNumber, BankNumber, BankName } = bankInfo || {};
@@ -16,15 +16,15 @@ const SelectBank = ({onPress, bankInfo}) => {
     //TODO : translation
     <>
       <View style={styles.block}>
-        <Text bold fs="h6" mb={10}>{translation.topup.moneySource}</Text>
-        <Pressable onPress={onPress} style={[styles.itemBank]}>
+        <Text bold fs="h6" mb={10}>{sourceTitle || translation.topup.moneySource}</Text>
+        <Pressable disabled={disabled} onPress={onPress} style={[styles.itemBank]}>
           <Image
             style={[styles.iconBank]}
             source={BankLogoUrl ? { uri: BankLogoUrl} : require('images/qrpay/Wallet.png')}
             resizeMode={'contain'}
           />
           <Col style={{
-            alignItems: ""
+            alignItems: '',
           }}>
             <Text fs="h6" bold>{BankName}</Text>
             {
