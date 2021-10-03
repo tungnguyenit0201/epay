@@ -5,7 +5,7 @@ import {Colors, Fonts, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import {formatMoney} from 'utils/Functions';
 
-const InputMoney = forwardRef(({style, onChange, errorStyle}, ref) => {
+const InputMoney = forwardRef(({style, onChange, errorStyle,placeholder}, ref) => {
   const translation = useTranslation();
   const moneyData = [
     {
@@ -42,7 +42,7 @@ const InputMoney = forwardRef(({style, onChange, errorStyle}, ref) => {
 
   return (
     <View style={[style]}>
-      <Input ref={ref} onChange={onChange} errorStyle={errorStyle}/>
+      <Input ref={ref} onChange={onChange} errorStyle={errorStyle} placeholder={placeholder} />
       <Row space="10">
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
@@ -58,7 +58,7 @@ const InputMoney = forwardRef(({style, onChange, errorStyle}, ref) => {
   );
 });
 
-const Input = forwardRef(({onChange, errorStyle}, ref) => {
+const Input = forwardRef(({onChange, errorStyle,placeholder}, ref) => {
   const [value, setValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const translation = useTranslation();
@@ -66,7 +66,7 @@ const Input = forwardRef(({onChange, errorStyle}, ref) => {
   useImperativeHandle(ref, () => ({
     value,
     setValue,
-    setError
+    setError,
   }));
 
   const _onChange = value => {
@@ -76,14 +76,14 @@ const Input = forwardRef(({onChange, errorStyle}, ref) => {
 
   const setError = (message)=>{
     setErrorMessage(message);
-  }
+  };
 
   return (
     <View>
       <View style={styles.rowInput}>
         <TextInput
           numeric
-          placeholder={translation.topup.cashInInputMoney}
+          placeholder={placeholder || translation.topup.cashInInputMoney}
           style={[styles.input]}
           errorStyle={errorStyle}
           placeholderTextColor={Colors.l5}

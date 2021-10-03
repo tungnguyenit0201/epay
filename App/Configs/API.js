@@ -41,6 +41,7 @@ export default {
     UPDATE_PASSWORD: 'account/proactive_change_password',
   },
   WALLET: {
+    CHECK_AMOUNT_LIMIT:'wallet/check_amount_limit',
     GET_DOMESTIC_BANKS: 'bank/get_domestic_banks',
     GET_INTERNATIONAL_BANKS: 'bank/get_international_banks',
     GET_CONNECTED_BANK_DETAIL: 'wallet/get_connected_bank_detail',
@@ -49,6 +50,8 @@ export default {
     PAYIN_CONNECTED_BANK: 'bank/payin_connected_bank',
     GET_WALLET_INFO: 'account/get_wallet_info',
     GET_HISTORY: 'history/get_history',
+    CASH_OUT: 'bank/cashin',
+    CASH_OUT_CONFIRM: 'bank/cashin_confirm',
     GET_HISTORY_DETAIL: 'history/get_detail',
     GET_QRCODE_INFO: 'payment/check_trans_info',
     CASH_IN: 'bank/cashin',

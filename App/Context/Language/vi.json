@@ -450,6 +450,18 @@
     "milion": "triệu",
     "confirm": "Xác nhận bằng"
   },
+  "cashout": {
+    "walletAmount": "Số dư ví",
+    "cashOutMinError": "*Số tiền rút tối thiểu là % vnđ",
+    "cashOutMaxError": "*Số tiền rút tối đa là % vnđ",
+    "cashOutInputMoney": "Nhập số tiền rút",
+    "confirmTitle": "Xác nhận %",
+    "detailTitle": "Chi tiết %",
+    "currency": " vnđ",
+    "moneySource": " Nguồn tiền",
+    "milion": "triệu",
+    "confirm": "Xác nhận bằng"
+  },
   "acceptTerm": {
     "when": "Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với ",
     "contract": "Thoả thuận Người sử dụng, Chính sách quyền riêng tư",

@@ -34,6 +34,7 @@ const TopUp = () => {
   //   bankRef.current.reset();
   // },[isFocused]);
 
+
   return (
     <>
       <HeaderBg>
@@ -42,7 +43,7 @@ const TopUp = () => {
       <ScrollView style={base.wrap} showsVerticalScrollIndicator={false}>
         <View style={[base.container,styles.mainContainer]}>
           <View style={base.boxShadow}>
-            <Monney title={translation.topup.walletAmount} showing/>
+            <Monney title={translation.topup?.walletAmount} showing/>
             <InputMoney ref={inputRef} onChange={onChangeCash} errorStyle={{
               borderColor: Colors.cl4,
             }}/>
@@ -57,7 +58,7 @@ const TopUp = () => {
           />
         </View>
       </ScrollView>
-      
+
       <KeyboardSuggestion
         optionList={[30000, 300000, 3000000].map(x => ({
           value: x,
@@ -75,6 +76,6 @@ export default TopUp;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    marginBottom: 150
+    marginBottom: 150,
   },
 });

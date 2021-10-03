@@ -26,13 +26,14 @@ import SelectBank from 'components/QRPay/SelectBank';
 const Confirmation = () => {
   const translation = useTranslation();
   let [open, setOpen] = useState(false);
-  const {transTypeText, data, onContinue, bank, continueButtonTitle } = useConfirmation();
+  const {transTypeText, data, onContinue, bank, continueButtonTitle ,sourceTitle,enableSourcePicker} = useConfirmation();
 
   const [showModal, setShowModal] = React.useState(false);
 
   let forgotRef = useRef({
     phone: '',
   });
+
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
@@ -47,12 +48,24 @@ const Confirmation = () => {
   return (
     <>
       <HeaderBg>
-        <Header title={translation.topup.confirmTitle.replace("%",transTypeText)} back />
+        <Header
+          title={translation.topup.confirmTitle.replace('%', transTypeText)}
+          back
+        />
       </HeaderBg>
       <View style={base.wrap}>
         <View style={base.container}>
-          <SelectBank onPress={() => setShowModal(!showModal)} bankInfo={bank}/>
-          <Text bold fs="h6" mt={30} mb={20}>{translation.topup.detailTitle.replace("%",transTypeText)}</Text>
+          <SelectBank
+            onPress={() => {
+              setShowModal(!showModal);
+            }}
+            disabled={!enableSourcePicker}
+            sourceTitle={sourceTitle}
+            bankInfo={bank}
+          />
+          <Text bold fs="h6" mt={30} mb={20}>
+            {translation.topup.detailTitle.replace('%', transTypeText)}
+          </Text>
 
           <View style={styles.block}>
             <Image
@@ -70,12 +83,13 @@ const Confirmation = () => {
                         borderBottomWidth: 0,
                       },
                     ]}>
-                    <Text size={Fonts.H6} style={styles.textLeft}>{item.name}</Text>
+                    <Text size={Fonts.H6} style={styles.textLeft}>
+                      {item.name}
+                    </Text>
                     <Text
                       bold={item.bold}
                       size={Fonts.H6}
-                      style={styles.textRight}
-                    >
+                      style={styles.textRight}>
                       {item.value}
                     </Text>
                   </View>
@@ -87,8 +101,11 @@ const Confirmation = () => {
       </View>
       <View style={styles.confirmButtonContainer}>
         <Text size={Fonts.H4} mb={10}>
-            {translation.acceptTerm.when}
-          <Text underline>{translation.acceptTerm.contract}</Text>{translation.acceptTerm.and}<Text underline>{translation.acceptTerm.topup}</Text>{translation.acceptTerm.of}
+          {translation.acceptTerm.when}
+          <Text underline>{translation.acceptTerm.contract}</Text>
+          {translation.acceptTerm.and}
+          <Text underline>{translation.acceptTerm.topup}</Text>
+          {translation.acceptTerm.of}
         </Text>
       </View>
       <View style={base.boxBottom}>
@@ -163,6 +180,6 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'flex-end',
     paddingHorizontal: Spacing.PADDING,
-}
+},
 });
 export default Confirmation;

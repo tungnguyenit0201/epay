@@ -165,6 +165,64 @@ export const getHistoryDetail = async ({ phone, TransCode }) => {
   return response;
 };
 
+export const cashOut = async ({ phone, BankConnectId, BankId, amount }) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_OUT,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      CashOutInfo: {
+        BankConnectId: BankConnectId,
+        BankID: BankId,
+        Amount: amount,
+      },
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const cashOutConfirm = async ({ phone, BankConnectId, BankId, ConfirmValue, ConfirmMethod, TransCode }) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_OUT_CONFIRM,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      BankConnectId,
+      BankID: BankId,
+      ConfirmMethod,
+      ConfirmValue,
+      TransCode,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const checkAmountLimit = async ({ phone,amount ,transType,transFormType}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CHECK_AMOUNT_LIMIT,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      Amount: amount,
+      TransType:transType,
+      TransFormType:transFormType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const getQRCodeInfo = async ({ phone, QrCode }) => {
   let response = null;
   await request({
@@ -191,8 +249,8 @@ export const cashIn = async ({ phone, BankConnectId, BankId, amount }) => {
       CashInInfo: {
         BankConnectId: BankConnectId,
         BankID: BankId,
-        Amount: amount
-      }
+        Amount: amount,
+      },
     },
     success: res => {
       response = res;
@@ -212,7 +270,7 @@ export const cashInConfirm = async ({ phone, BankConnectId, BankId, ConfirmValue
       BankID: BankId,
       ConfirmMethod,
       ConfirmValue,
-      TransCode
+      TransCode,
     },
     success: res => {
       response = res;
@@ -231,7 +289,7 @@ export const cashInNapas = async ({ Amount, BankId, CardNumber, CardHolder, Card
       BankID: BankId,
       ConfirmMethod,
       ConfirmValue,
-      TransCode
+      TransCode,
     },
     success: res => {
       response = res;
