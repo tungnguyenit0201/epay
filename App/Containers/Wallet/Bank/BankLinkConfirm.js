@@ -21,7 +21,7 @@ import {
 import {ERROR_CODE, SCREEN, FUNCTION_TYPE, IC_TPYE} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'context/Language';
-import {base, Colors, Fonts, Spacing} from 'themes';
+import {base, Colors, Fonts, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {get} from 'lodash';
@@ -111,7 +111,7 @@ const iclabel = getICLabel(type);
       },
     ];
     return (
-      <View style={base.container}>
+      <View style={base.container} flex={1}>
         <View style={styles.block}>
           <Image
             source={require('images/bgXacNhan.png')}
@@ -142,6 +142,11 @@ const iclabel = getICLabel(type);
       </View>
     );
   };
+
+  const renderTnC  = ()=>{
+    return <Text fs={'md'} color={Colors.gray}>Khi nhấn Liên Kết, Quý khách đã xác nhận đồng ý với
+      Thỏa thuận người sử dụng của EPAY và Vietcombank</Text>;
+  };
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
@@ -152,13 +157,15 @@ const iclabel = getICLabel(type);
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
-        <View alignItems="center">
+        <View alignItems="center" marginBottom={16}>
+          <Image source={Images.ConnectBank.BankLink} style={{width:64, height:64, resizeMode:'contain', marginVertical:16}}/>
           <Text fs={'h4'} bold>
             {translation.connect_bank}
           </Text>
         </View>
 
         {renderContent()}
+        {renderTnC()}
       </ScrollView>
       {renderButton()}
     </View>

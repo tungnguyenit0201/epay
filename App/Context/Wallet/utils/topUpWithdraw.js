@@ -317,7 +317,7 @@ const useOTPBySmartOTP = () => {
     }, []); // eslint-disable-line
 
     const onConfirm = async () => {
-        let result = null; 
+        let result = null;
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 result = await onCashInOTP(code);
@@ -487,7 +487,7 @@ const useCashIn = () => {
     const {onTransaction} = useTransaction();
     const {confirmUsingBioID, checkBiometry} = useConfirmMethod();
     const {bank, amount, transType, ConfirmType, TransCode} = transaction;
-    const {BankConnectId, BankId, CardNumber, CardHolder, CardIssueDate,  } = bank || {};
+    const {BankConnectId, BankId, CardNumber, CardHolder, CardIssueDate  } = bank || {};
     const cashInRef = useRef({
         ConfirmType,
         TransCode,
@@ -507,20 +507,20 @@ const useCashIn = () => {
     };
 
     const onCashInDomesticBank = async () => {
-        
+
         setLoading(true);
         let result = await cashInNapas({
             phone,
             Amount:amount,
             BankId,
             CardNumber,
-             CardHolder, 
-             CardIssueDate, 
-             CardConnectId: BankConnectId, 
+             CardHolder,
+             CardIssueDate,
+             CardConnectId: BankConnectId,
              IsSaveCard: 0,
-              IsPayment: 0, 
-              PaymentPartnerCode:"", 
-              BusinessType: ""
+              IsPayment: 0,
+              PaymentPartnerCode:'',
+              BusinessType: '',
         });
         setLoading(false);
 
@@ -580,7 +580,7 @@ const useCashIn = () => {
                             }
                         } catch (error) {
                             console.log(error);
-                            onShowModal(password => gotoSmartOTPConfirm({password}));       
+                            onShowModal(password => gotoSmartOTPConfirm({password}));
                         }
                     } else {
                         onShowModal(password => gotoSmartOTPConfirm({password}));
@@ -701,7 +701,7 @@ const useCashOut = () => {
         });
         setLoading(false);
         if (
-            (result.ErrorCode === ERROR_CODE.CASHIN_REQUIRED_AUTHENTICATION ||
+            (result?.ErrorCode === ERROR_CODE.CASHIN_REQUIRED_AUTHENTICATION ||
                 result.ErrorCode == ERROR_CODE.SUCCESS) &&
             result.Data
         ) {
@@ -766,12 +766,11 @@ const useTransactionResult = () => {
     const {showModalSmartOTPSuggestion} = useShowModal();
     const {amount, bank, result, transType, TransCode} = transaction || {};
     const {TransState} = result || {};
-    const {BankName, BankNumber} = bank;
+    const {BankName, BankNumber} = bank || {};
     const translation = useTranslation();
 
     const loadData = () => {
         // TODO: translate
-
         return [
             {label: translation.transaction.transactionId, value: TransCode},
             {label: translation.transaction.time, value: result?.ResponseTime},
@@ -783,9 +782,26 @@ const useTransactionResult = () => {
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 statusTitle = translation.top_up;
+            case TRANS_TYPE.ActiveCustomer:
+                statusTitle = 'Liên kết ngân hàng';
+
         }
 
         return (statusTitle += ' ' + transactionStatusDescription());
+    };
+
+    const getTransactionDesc = () => {
+        let desc = '';
+        switch (transType) {
+            case TRANS_TYPE.CashIn:
+                desc = translation.top_up;
+            case TRANS_TYPE.ActiveCustomer:
+                desc = 'Ngân hàng {bankName}\n' +
+                    'số tài khoản {accNumber}';
+
+        }
+
+        return (desc);
     };
 
     const formatAmount = () => {

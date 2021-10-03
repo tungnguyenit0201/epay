@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView, Pressable,
 } from 'react-native';
-import {Text, Header, Button, Icon, Modal, HeaderBg} from 'components';
+import {Text, Header, Button, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useOTP} from 'context/Common/utils';
@@ -25,36 +25,26 @@ const OTP = props => {
     errorMessage,
     countdown,
     code,
-    showModal,
-    setShowModal,
     resentOTP,
     label,
   } = useOTP({});
   const {onActiveUserOTP} = useBankInfo();
   const [otp, setOtp] = useState('');
-  const {BankConnectInfo} = useWallet();
   const translation = useTranslation();
-
-  const onConfirmOTP = ()=>{};
+  const {bankConnectInfo, transCode} = params || {};
 
   const onSubmit = async () => {
     try {
       const params = {
-        'MsgType': 'link_card',
-        'MsgID': '1123123123',
-        'TransactionID': '',
-        'PhoneNumber': '0936898626',
-        'BankID': 1,
-        'TransCode': '123456789',
-        'OtpCode': '666666',
+        'BankID': bankConnectInfo?.BankId || bankConnectInfo?.BankID,
+        'TransCode': transCode,
+        'OtpCode': otp,
       };
       const result = await onActiveUserOTP(params);
        props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
          screen: MapBankRoutes.BaseResultScreen,
-         params: {result:result},
+         params: {result: 'success',...result},
        });
-
-
     } catch (e){
       props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BaseResultScreen,

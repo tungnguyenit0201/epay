@@ -1,5 +1,5 @@
-import React from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {Image, ScrollView, StyleSheet,Switch, View} from 'react-native';
 import {
   Button,
   Col,
@@ -13,44 +13,64 @@ import {base, Colors, Images} from 'themes';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
-import {useTransactionResult} from 'context/Wallet/utils';
+import {useBankInfo, useTransactionResult} from 'context/Wallet/utils';
 import {useRoute} from '@react-navigation/native';
+import {TRANS_TYPE} from 'configs/Constants';
 
-const TRANS_TYPE = {
+const result_bank_type = {
   BANK_LINK_ACCOUNT: 'BANK_LINK_ACCOUNT',
   UPDATE_EKYC: 'UPDATE_EKYC',
 };
 
 const BaseResultScreen = props => {
   const {params} = useRoute() || {};
-  const translation = useTranslation();
-  const {message, onRetry, onBackHome} = useTransactionResult();
   const {
     result,
-    transTitle,
-    transDesc,
-    transType,
     transBody,
     secondaryButton,
     positiveButton,
   } = params || {};
+  const transType = params?.transType || TRANS_TYPE.ActiveCustomer;
+  const translation = useTranslation();
+  const {onChange,onSetMoneySource, getResultButton } = useBankInfo(params);
+  const {message,onRetry, onBackHome,getTransactionStatusTitle:transTitle,getTransactionDesc:transDesc} = useTransactionResult(transType);
+
+  const [isEnableSource, setEnableSource] = useState(false);
+
 
   const renderBody = () => {
     switch (transType) {
-      case TRANS_TYPE.BANK_LINK_ACCOUNT:
+      case TRANS_TYPE.ActiveCustomer:
         return renderBankBody();
-      case TRANS_TYPE.UPDATE_EKYC:
-        return renderEKYCBody();
+      case result_bank_type.UPDATE_EKYC:
+        return renderIcBody();
       default:
         return null;
     }
   };
 
+  const toggleSwitch = async ()=>{
+    //"BankConnectId":1600,"BankCode":"VCB","BankName":"Vietcombank","CardNumber":"",
+    // "CardHolder":"NGUYEN THANH TAM","BankNumber":"666666","ConnectTime":"13-09-2021 18:17:05","IsDefault":true,
+    setEnableSource(prev=>!prev);
+    // const data= await
+  };
   const renderBankBody = () => {
-    return <View />;
+    //dat nguon tien mac dinh
+
+    return <View>
+      <View flexDirection={'row'}>
+        <Text style={{flex:1}}>Đặt làm nguồn tiền mặc định</Text>
+        <Switch trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={isEnableSource ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnableSource}/>
+      </View>
+    </View>;
   };
 
-  const renderEKYCBody = () => {
+  const renderIcBody = () => {
     return <View />;
   };
 
