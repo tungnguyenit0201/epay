@@ -72,6 +72,7 @@ const BankList = forwardRef((props, ref) => {
     onChange,
     onContinue,
     onGetIcInfor,
+      getICLabel
   } = useBankInfo();
   const {walletInfo} = useWallet();
   const {
@@ -184,7 +185,6 @@ const BankList = forwardRef((props, ref) => {
   const onPressBankLink = async item => {
     try {
       const icInfor = await onGetIcInfor(item?.BankId);
-      const mock = mockIc;
       if (Array.isArray(icInfor?.result) && icInfor?.result.length > 0) {
         let formatIcInfo = [];
 

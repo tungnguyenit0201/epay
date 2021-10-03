@@ -24,6 +24,8 @@ import {
   mapBankNapas,
 } from 'services/bank';
 import {useUser} from 'context/User';
+import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
+import {useTranslation} from 'context/Language';
 
 const mockIc = [
   {
@@ -184,6 +186,7 @@ export const censorCardNumber = (
   return result;
 };
 
+
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
   const {phone} = useUser();
@@ -191,6 +194,7 @@ const useBankInfo = (initialValue = {}) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
+  const translation = useTranslation();
 
   const onChange = (key, value) => {
     mapBankInfo.current[key] = value;
@@ -211,6 +215,16 @@ const useBankInfo = (initialValue = {}) => {
     } else {
       Navigator.navigate(screen, mapBankInfo.current);
     }
+  };
+
+
+   const getICLabel = (type)=>{
+    const cardList = {
+      [IC_TYPE_CHAR.CMND]: translation?.id_card,
+      [IC_TYPE_CHAR.CMNDQD]: translation?.militaryID,
+      [IC_TYPE_CHAR.PASSPORT]: translation?.passport,
+    };
+return cardList?.[type] || '';
   };
 
   /* api uitils*/
@@ -458,6 +472,7 @@ const useBankInfo = (initialValue = {}) => {
   const onUpdateAllInfo = async value => {};
 
   return {
+    getICLabel,
     onLinkCardNapas,
     onActiveUser,
     onActiveUserOTP,

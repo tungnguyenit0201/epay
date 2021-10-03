@@ -652,11 +652,11 @@ const useCashOut = () => {
       });
       setLoading(false);
       if (result.ErrorCode === ERROR_CODE.SUCCESS && result.Data) {
-        return result;
+        return {result:true};
       } else {
-        // Navigator.showAlert({
-        //   message: result.ErrorMessage,
-        // });
+        Navigator.showAlert({
+          message: result.ErrorMessage,
+        });
         setError(result.ErrorMessage);
         return {result:false};
       }

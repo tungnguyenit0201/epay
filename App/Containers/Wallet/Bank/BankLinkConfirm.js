@@ -32,7 +32,7 @@ import {useBankInfo} from 'context/Wallet/utils';
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
-  const {onActiveUser} = useBankInfo(params);
+  const {onActiveUser,getICLabel} = useBankInfo(params);
 
   const onSubmit = async () => {
     const {item: Bank, ICAddress, optionKyc, BankAccount} = params || {};
@@ -76,12 +76,7 @@ export default function (props) {
   };
 
   const renderContent = () => {
-    const cardList = {
-      [IC_TYPE_CHAR.CMND]: translation?.id_card,
-      [IC_TYPE_CHAR.CMNDQD]: translation?.militaryID,
-      [IC_TYPE_CHAR.PASSPORT]: translation?.passport,
-    };
-
+const iclabel = getICLabel(type);
     const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
     const BankName = get(Bank, 'BankName', 'Vietcombank');
     const Name = get(optionKyc, 'Name', '');
@@ -104,7 +99,7 @@ export default function (props) {
       },
       {
         label: 'Loại GTTT',
-        value: cardList[type],
+        value: iclabel,
       },
       {
         label: 'Số ID',
