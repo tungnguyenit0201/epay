@@ -45,7 +45,7 @@ const RadioICInfo = forwardRef(
     );
 
     useImperativeHandle(ref, () => ({getItem}));
-    const getItem = () => {b;
+    const getItem = () => {
       return selectedItem;
     };
     const handleChange = item => {

@@ -167,7 +167,7 @@ const BankList = forwardRef((props, ref) => {
     }
   };
 
-  const onPressPrimary = async item => {
+  const onPressPrimary =  item => {
     const optionKyc = radioButtonRef.current?.getItem?.() || {};
     Navigator.push(SCREEN.MAP_BANK_FLOW, {
       screen: MapBankRoutes.BankLinkInfo,
@@ -192,7 +192,7 @@ const BankList = forwardRef((props, ref) => {
           const {ICInfo} = item || {};
           const {Number,Type} = ICInfo || {};
           const IDNumber = censorCardNumber(Number);
-          const label = getICLabel(Type) || '' + IDNumber;
+          const label = getICLabel(Type) + IDNumber;
           const kycInfo = {label: label, value: index + 1, data: ICInfo};
           formatIcInfo.push(kycInfo);
         });

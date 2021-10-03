@@ -224,7 +224,7 @@ const useBankInfo = (initialValue = {}) => {
       [IC_TYPE_CHAR.CMNDQD]: translation?.militaryID,
       [IC_TYPE_CHAR.PASSPORT]: translation?.passport,
     };
-return cardList?.[type] || '';
+    return cardList?.[type] || '';
   };
 
   /* api uitils*/
