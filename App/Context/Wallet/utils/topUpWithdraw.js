@@ -612,7 +612,6 @@ const useCashIn = () => {
                         }
                     } else {
                         console.log("Bio SDK Failed try another")
-                        ListConfirmMethod?.shift();
                         onConfirmCashInWithMethod(ListConfirmMethod, TransCode);
                     }
                     return;
