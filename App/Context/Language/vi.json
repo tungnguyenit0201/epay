@@ -496,6 +496,9 @@
     "timeOTP": "OTP tự động thay đổi sau ",
     "bankOTP": "Nhập mã OTP được gửi từ ngân hàng"
   },
+  "validate": {
+    "confirmMethodInvalid": "Phương thức xác thực không hợp lệ vui lòng thử lại sau"
+  },
   "kycDescription": "Định danh tài khoản để bảo mật và nhận được nhiều ưu đãi hơn",
   "selectPersonalDocument": "Chọn giấy tờ tuỳ thân",
   "unknownError": "Đã có lỗi trong quá trình xử lý. Vui lòng thử lại sau.",
