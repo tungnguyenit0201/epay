@@ -43,7 +43,6 @@ const KeyboardSuggestion = ({optionList, onPress,onContinue,isContinueEnabled}) 
       </View>
 
       {isShow ? (<View style={{
-        backgroundColor: Colors.l2,
         paddingVertical: scale(8),
         justifyContent: 'space-evenly',
         flexDirection: 'row',
