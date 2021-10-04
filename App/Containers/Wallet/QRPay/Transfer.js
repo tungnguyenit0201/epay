@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   Pressable,
@@ -30,12 +30,15 @@ import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 
 import Modal from 'components/Common/ModalCustom';
 import Bank from 'components/QRPay/Bank';
+import {useQRTransfer} from 'context/Wallet/utils';
+const Transfer = ({route}) => {
+  console.log('route :>> ', route);
+  const {loading} = useQRTransfer(route?.params);
 
-const Transfer = () => {
   const {phone} = usePhone();
   const {userInfo} = useUser();
   const translation = useTranslation();
-  const [showModal, setShowModal] = React.useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const PersonalInfo = userInfo.personalInfo;
 
@@ -101,21 +104,24 @@ const Transfer = () => {
         />
       </View>
 
-      <Modal
-        visible={showModal}
-        onClose={() => setShowModal(false)}
-        icon={require('images/qrpay/MoneySend.png')}>
-        <Text centered mb={20}>
-          Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
-          trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
-        </Text>
-        <Button
-          type={1}
-          mb={10}
-          label="Đóng"
-          onPress={() => setShowModal(false)}
-        />
-      </Modal>
+      {showModal && (
+        <Modal
+          visible={showModal}
+          onClose={() => setShowModal(false)}
+          icon={require('images/qrpay/MoneySend.png')}
+        >
+          <Text centered mb={20}>
+            Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
+            trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
+          </Text>
+          <Button
+            type={1}
+            mb={10}
+            label="Đóng"
+            onPress={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 };

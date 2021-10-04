@@ -180,3 +180,19 @@ export const getQRCodeInfo = async ({phone, QrCode}) => {
   });
   return response;
 };
+
+export const getTransferUser = async ({phone, SearchPhoneNumber}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_TRANSFER_USER,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      AccountId: SearchPhoneNumber,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
