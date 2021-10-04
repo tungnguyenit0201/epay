@@ -7,6 +7,7 @@ import {
   getConnectedBank,
   getConnectedBankDetail,
   changeLimit,
+  getSourceMoney,
 } from 'services/wallet';
 import {
   useAsyncStorage,
@@ -124,6 +125,17 @@ const useBankInfo = () => {
     }
   };
 
+  const getListSourceMoney = async () => {
+    try {
+      setLoading(true);
+      const result = await getSourceMoney();
+      setLoading(false);
+      return {result};
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return {
     onGetConnectedBank,
     onGetDomesticBanks,
@@ -131,6 +143,7 @@ const useBankInfo = () => {
     onGetAllBank,
     onGetConnectedBankDetail,
     onChangeLimit,
+    getListSourceMoney,
   };
 };
 export default useBankInfo;

@@ -26,14 +26,14 @@ import {useBankInfo} from 'context/Wallet/utils';
 
 const TransactionDetails = ({route}) => {
   const translation = useTranslation();
-  const {onGetConnectedBank} = useBankInfo();
+  const walletContext = useWallet();
+  const {onGetConnectedBank, getListSourceMoney} = useBankInfo();
   const ePayUser = get(route, ['params', 'ePayUser'], null);
   const [feeId, setFeeId] = useState(1);
   const [listBank, setListBank] = useState([]);
   const sourceRef = useRef(null);
   const onChangeTransferFeeSource = value => {
     setFeeId(value);
-    console.log('Tuan Doan LOG value\n\n', JSON.stringify(value, null, 2));
   };
 
   useEffect(() => {
@@ -41,14 +41,16 @@ const TransactionDetails = ({route}) => {
       .then(bankList => {
         setListBank(bankList.result.ListBankConnect);
       })
-      .catch(e => {
-        console.log('Tuan Doan LOG e\n\n', JSON.stringify(e, null, 2));
-      });
+      .catch(e => {});
+    getListSourceMoney().then(res => {
+      console.log('Tuan Doan LOG res\n\n', JSON.stringify(res, null, 2));
+    });
   }, []);
 
-  // const onChangeMoneySource = source => {
-  //   sourceRef.current = source;
-  // };
+  const onChangeMoneySource = source => {
+    sourceRef.current = source;
+    console.log('Tuan Doan LOG source\n\n', JSON.stringify(source, null, 2));
+  };
 
   const renderInfoTransfer = () => {
     return (
@@ -100,14 +102,37 @@ const TransactionDetails = ({route}) => {
   const renderMoneySource = () => {
     return (
       <View style={styles.wrap}>
-        <MoneySource listSource={listBank} />
+        <MoneySource
+          listSource={listBank}
+          onSelectMoneySource={onChangeMoneySource}
+        />
       </View>
     );
   };
 
   const submitTransferMoney = () => {
-    //
-    Navigator.navigate(SCREEN.CONFIRMATION);
+    console.log(
+      'Tuan Doan LOG sourceRef.current\n\n',
+      JSON.stringify(sourceRef.current, null, 2),
+    );
+    walletContext.dispatch({
+      type: 'UPDATE_TRANSACTION_INFO',
+      data: {
+        transType: 3,
+        bank: {
+          BankNumber: sourceRef.current.BankNumber,
+          BankName: sourceRef.current.BankName,
+        },
+        fee: {
+          FixedFee: 1000,
+          BankFee: 0.5,
+        },
+        amount: 10000,
+      },
+    });
+    setTimeout(() => {
+      Navigator.navigate(SCREEN.CONFIRMATION);
+    }, 1000);
   };
 
   console.log('Tuan Doan LOG render\n\n');

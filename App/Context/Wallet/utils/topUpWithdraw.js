@@ -6,6 +6,7 @@ import {
   SCREEN,
   TRANS_FORM_TYPE,
   TRANS_TYPE,
+  TRANS_TYPE_NAME,
 } from 'configs/Constants';
 import _ from 'lodash';
 import {useWallet} from '..';
@@ -100,8 +101,7 @@ const useConfirmation = () => {
     fee,
     amount,
   } = transaction;
-  const transTypeText =
-    transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // TODO: translate
+  const transTypeText = TRANS_TYPE_NAME?.[transType] || '';
   const feeValue = calculateFee({cash: amount, feeData: fee});
   const total = feeValue + amount;
   const data = [

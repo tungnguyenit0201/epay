@@ -193,3 +193,16 @@ export const getRecentUsers = async () => {
 
   return response;
 };
+
+export const getSourceMoney = async () => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_SOURCE_MONEY,
+    method: 'post',
+    success: res => {
+      response = res;
+    },
+  });
+
+  return response;
+};
