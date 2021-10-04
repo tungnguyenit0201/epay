@@ -40,6 +40,7 @@ const History = () => {
     onGetHistory,
     isFiltering,
     showFilter,
+    filterData,
     onFilter,
     onToggleFilter,
     onSetTempFilter,
@@ -213,6 +214,7 @@ const History = () => {
       <View style={[styles.bottom, styles.bgWhite]} />
 
       <FilterModal
+        filterData={filterData}
         showModal={showFilter}
         onHideModal={onToggleFilter}
         renderRightComponent={renderRightComponent}

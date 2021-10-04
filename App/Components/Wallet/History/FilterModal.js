@@ -1,14 +1,11 @@
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useState} from 'react';
 import {
   ScrollView,
   View,
   StyleSheet,
   Image,
-  TextInput,
   TouchableOpacity,
   FlatList,
-  RefreshControl,
-  // useWindowDimensions,
 } from 'react-native';
 import {
   Header,
@@ -24,11 +21,11 @@ import {useTranslation} from 'context/Language';
 import {formatMoney, scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
-import {useHistory} from 'context/Wallet/utils';
 import Modal from 'react-native-modal';
 import moment from 'moment';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import FooterContainer from 'components/Auth/FooterContainer';
+import _ from 'lodash';
 
 // import {LocaleConfig} from 'react-native-calendars';
 
@@ -136,7 +133,87 @@ const StatusBtn = ({isChecked, title, onPress}) => (
   </TouchableOpacity>
 );
 
-const StatusGroup = memo(({translation, onSelect, selectedStatus}) => {
+const GroupFilter = memo(({translation, onSelect, selectedStatus}) => {
+  const [selectedData, setSelectedData] = useState({
+    type: 'serviceID',
+    list: [],
+  });
+
+  const _onSelect = ({value, type}) => {
+    // change type
+    if (type !== selectedData.type) {
+      setSelectedData({type, list: [value]});
+      onSelect &&
+        onSelect({type, value: `${value}`}) &&
+        onSelect({type: selectedData.type, value: ''});
+      return;
+    }
+    // same type
+    let list = [...selectedData.list];
+    if (list.findIndex(x => x == value) === -1) {
+      list.push(value);
+    } else {
+      list = _.difference(list, [value]);
+    }
+    setSelectedData({type, list});
+    onSelect && onSelect({type, value: list.join(',')});
+  };
+
+  return (
+    <View style={[styles.wrap, styles.pt2]}>
+      <Text bold mb={15} style={styles.textSize4}>
+        {translation.service_group}
+      </Text>
+      <Text bold mb={6} color={Colors.gray} style={styles.textSize5}>
+        Nhóm giao dịch
+      </Text>
+
+      <FlatList
+        data={TRANS_DETAIL.SERVICE}
+        renderItem={({item}) => (
+          <View style={[styles.w2, styles.mr1]}>
+            <ItemType1
+              title={translation[item.label] || item.label}
+              icon={item.icon}
+              isChecked={selectedData.list.includes(item.value)}
+              onChooseOption={() =>
+                _onSelect({value: item.value, type: 'serviceID'})
+              }
+            />
+          </View>
+        )}
+        keyExtractor={item => `${item.value}`}
+        horizontal={true}
+        style={[styles.flatList1, styles.mb2]}
+      />
+
+      <Text bold mb={6} style={styles.textSize5} color={Colors.gray}>
+        Nhóm dịch vụ
+      </Text>
+
+      <FlatList
+        data={TRANS_DETAIL.TYPE2}
+        renderItem={({item}) => (
+          <View style={[styles.w2, styles.mr1]}>
+            <ItemType2
+              title={translation[item.label] || item.label}
+              icon={item.icon}
+              isChecked={selectedData.list.includes(item.value)}
+              onChooseOption={() =>
+                _onSelect({value: item.value, type: 'type2'})
+              }
+            />
+          </View>
+        )}
+        keyExtractor={item => `${item.value}`}
+        horizontal={true}
+        style={styles.flatList1}
+      />
+    </View>
+  );
+});
+
+const StatusFilter = memo(({translation, onSelect, selectedStatus}) => {
   const [selectedValue, setSelectedValue] = useState(selectedStatus);
   return TRANS_DETAIL.STATUS.map(({label, value}) => (
     <Col space={16} width="50%" style={styles.mb2} key={value}>
@@ -156,12 +233,12 @@ const FilterModal = ({
   showModal,
   onHideModal,
   renderRightComponent,
+  filterData,
   onFilter,
   onSetTempFilter,
   onResetTempFilter,
 }) => {
   const translation = useTranslation();
-  // const {width} = useWindowDimensions();
   const [chooseService, setChooseService] = useState(false);
   const [transactionList, setTransactionList] = useState([
     {
@@ -290,7 +367,7 @@ const FilterModal = ({
       backdropTransitionOutTiming={0}
       onBackdropPress={onHideModal}
     >
-      <View style={[styles.flex1, styles.bgWhite]} key={showModal}>
+      <View style={[styles.flex1, styles.bgWhite]}>
         <HeaderBg>
           <Header
             title={translation?.transaction_history}
@@ -435,74 +512,26 @@ const FilterModal = ({
             }}
           />
 
-          <View style={[styles.grayLine2, styles.mt1]}></View>
+          <View style={[styles.grayLine2, styles.mt1]} />
 
-          <View style={[styles.wrap, styles.pt2]}>
-            <Text bold mb={15} style={styles.textSize4}>
-              {translation.service_group}
-            </Text>
-            <Text bold mb={6} color={Colors.gray} style={styles.textSize5}>
-              Nhóm giao dịch
-            </Text>
+          <GroupFilter
+            translation={translation}
+            onSelect={({type, value}) => onSetTempFilter({type, value})}
+            key={showModal}
+          />
 
-            <FlatList
-              data={transactionList}
-              renderItem={({item, index}) => (
-                <View style={[styles.w2, styles.mr1]}>
-                  <ItemType1
-                    title={item.name}
-                    icon={item.icon}
-                    iconHeight={item.iconHeight}
-                    iconWidth={item.iconWidth}
-                    isChecked={item.isChecked}
-                    onChooseOption={() => onChooseTransaction(item.id)}
-                  />
-                </View>
-              )}
-              keyExtractor={(item, index) =>
-                `${item.name}-${Math.random(0, 100)}`
-              }
-              horizontal={true}
-              style={[styles.flatList1, styles.mb2]}
-            />
-
-            <Text bold mb={6} style={styles.textSize5} color={Colors.gray}>
-              Nhóm dịch vụ
-            </Text>
-
-            <FlatList
-              data={serviceList}
-              renderItem={({item, index}) => (
-                <View style={[styles.w2, styles.mr1]}>
-                  <ItemType2
-                    title={item.name}
-                    icon={item.icon}
-                    iconHeight={item.iconHeight}
-                    iconWidth={item.iconWidth}
-                    isChecked={item.isChecked}
-                    onChooseOption={() => onChooseService(item.id)}
-                  />
-                </View>
-              )}
-              keyExtractor={(item, index) =>
-                `${item.name}-${Math.random(0, 100)}`
-              }
-              horizontal={true}
-              style={styles.flatList1}
-            />
-          </View>
-
-          <View style={[styles.grayLine2, styles.mt1]}></View>
+          <View style={[styles.grayLine2, styles.mt1]} />
 
           <View style={[styles.wrap, styles.pt2, styles.pb2]}>
             <Text bold mb={15} style={styles.textSize4}>
               {translation.status}
             </Text>
             <Row space={16}>
-              <StatusGroup
+              <StatusFilter
                 translation={translation}
                 onSelect={value => onSetTempFilter({type: 'stateID', value})}
-                selectedStatus={null}
+                selectedStatus={filterData?.stateID}
+                key={showModal}
               />
             </Row>
           </View>

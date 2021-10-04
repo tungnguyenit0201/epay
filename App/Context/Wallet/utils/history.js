@@ -100,6 +100,7 @@ const useHistory = () => {
   };
 
   useEffect(() => {
+    initTempFilter();
     onGetHistory();
   }, []); // eslint-disable-line
 
@@ -133,6 +134,7 @@ const useHistory = () => {
       ...contentRef.current,
       ...contentRef.current.tempFilter,
     };
+    onToggleFilter();
     onGetHistory();
   };
 
@@ -141,14 +143,26 @@ const useHistory = () => {
   };
 
   const onResetTempFilter = () => {
-    contentRef.current.tempFilter = {};
+    initTempFilter();
     setShowFilter(showFilter + 1); // to rerender filter modal
+  };
+
+  const initTempFilter = () => {
+    contentRef.current.tempFilter = {
+      startDate: moment()
+        .subtract(1, 'years')
+        .format(COMMON_ENUM.DATETIME_FORMAT),
+      endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
+      serviceID: 0,
+      stateID: 0,
+    };
   };
 
   return {
     historyData,
     isFiltering: contentRef.current.search,
     showFilter,
+    filterData: contentRef.current.tempFilter,
     onFilter,
     onSearch,
     onDetail,
