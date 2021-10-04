@@ -43,7 +43,8 @@ const KeyboardSuggestion = ({
           {
             paddingBottom: isShow ? 0 : 30,
           },
-        ]}>
+        ]}
+      >
         <Button
           style={styles.continue}
           size={'xss'}
@@ -56,18 +57,19 @@ const KeyboardSuggestion = ({
       {isShow ? (
         <View
           style={{
-            // backgroundColor: Colors.l2,
             paddingVertical: scale(8),
             justifyContent: 'space-evenly',
             flexDirection: 'row',
             backgroundColor: Colors.white,
-          }}>
+          }}
+        >
           {optionList &&
             optionList.map(option => {
               return (
                 <TouchableOpacity
                   onPress={() => onPressOption(option.value)}
-                  key={option.value}>
+                  key={option.value}
+                >
                   <Text bold style={styles.option}>
                     {option.label}
                   </Text>
