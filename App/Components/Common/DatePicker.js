@@ -24,7 +24,7 @@ export default ({
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const displayFormat = type === 'date' ? 'DD/MM/YYYY' : 'HH:mm DD/MM/YYYY';
   const valueFormat = type === 'date' ? 'DD-MM-YYYY' : 'YYYY-MM-DD HH:mm';
-  const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
+  // const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
   const [date, setDate] = useState(moment(value, valueFormat).toDate());
 
   const showDatePicker = () => {
@@ -87,7 +87,7 @@ export default ({
         headerTextIOS={'Vui lòng chọn ngày'}
         maximumDate={new Date()}
         themeVariant={'light'}
-        date={date}
+        // date={date}
       />
       <View style={{marginBottom}} />
     </>

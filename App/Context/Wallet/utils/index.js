@@ -1,5 +1,6 @@
 import useBankInfo from './bankInfo';
 import useTopUp from './topUp';
+import useWithDraw from './withDraw';
 import {
   useTopUpWithdraw,
   useConfirmation,
@@ -24,4 +25,5 @@ export {
   useHistory,
   useScanQR,
   useQRTransfer,
+  useWithDraw,
 };

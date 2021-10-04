@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
-    "prestorybook": "rnstl"
+    "prestorybook": "rnstl",
+    "port": "react-native start --reset-cache --port 8000",
+    "all": "watchman watch-del-all && rm -rf package-lock.json && rm -rf node_modules/ && rm -fr $TMPDIR/metro* && npm install && cd ios && rm -rf Pods && rm -rf Podfile.lock && pod install && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",

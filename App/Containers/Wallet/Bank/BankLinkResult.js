@@ -11,14 +11,23 @@ import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import {useTransactionResult} from 'context/Wallet/utils';
 
-const TransactionResult = () => {
+const BankLinkResult = () => {
   const translation = useTranslation();
-  const {data, message, onRetry, onBackHome} = useTransactionResult();
-
+  const {message, onRetry, onBackHome} = useTransactionResult();
+  const data = [
+    {
+      label: 'Mã giao dịch',
+      value: '123456789',
+    },
+    {
+      label: 'Thời gian',
+      value: '22-10-2021 20:10:09 ',
+    },
+  ];
   return (
     <>
       <HeaderBg>
-        <Header title={translation.transaction_details} back />
+        <Header title="Kết quả giao dịch" back />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={base.container}>
@@ -28,10 +37,13 @@ const TransactionResult = () => {
               source={require('images/noti/Success.png')}
               style={styles.imgSuccess}
             />
-            <Text bold fs="h5" mb={15}>
-              {translation.successful_transaction}
+            <Text bold fs="h5" color={Colors.cl1} mb={15}>
+              1.0005.000đ
             </Text>
-            <Text centered>{message}</Text>
+            <Text centered>
+              Cho dịch vụ The Coffee House Nội dung: Thanh toán ly Cold Brew
+              Margarita
+            </Text>
           </View>
 
           <View style={styles.block}>
@@ -58,33 +70,39 @@ const TransactionResult = () => {
                 </View>
               );
             })}
-
-            <View style={[styles.wtotal, base.shadow]}>
-              <Image
-                source={require('images/naptien/BgSupport.png')}
-                style={styles.bgToal}
-              />
-              <View style={[styles.total]}>
+            <View style={[base.row]}>
+              <View style={[base.row]}>
                 <Image
-                  source={require('images/naptien/Call.png')}
-                  style={[{width: 20, height: 20}]}
+                  source={require('images/qrpay/Save.png')}
+                  style={[{width: 24, height: 24, marginRight: 5}]}
                 />
-                <Text color={Colors.white} ml={10}>
-                  Hỗ trợ khiếu nại
+                <Text bold color={Colors.cl1}>
+                  Lưu ảnh
                 </Text>
-                <Text color={Colors.white} bold style={base.leftAuto}>
-                  Gọi 1900-0000
+              </View>
+
+              <View style={[base.row, base.leftAuto]}>
+                <Image
+                  source={require('images/qrpay/Share.png')}
+                  style={[{width: 24, height: 24}]}
+                />
+                <Text bold color={Colors.cl1}>
+                  {' '}
+                  Chia sẻ ảnh{' '}
                 </Text>
               </View>
             </View>
           </View>
         </View>
       </ScrollView>
-      <View style={base.boxBottom}>
+      <View
+        style={[
+          base.boxBottom,
+          {position: 'absolute', bottom: 0, left: 0, right: 0},
+        ]}>
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              bgImg={0}
               bg={Colors.white}
               border={Colors.cl1}
               color={Colors.cl1}
@@ -95,8 +113,9 @@ const TransactionResult = () => {
           </Col>
           <Col space={10} width="50%">
             <Button
-              label="Thêm giao dịch"
-              onPress={() => Navigator.navigate(SCREEN.TOP_UP)}
+              type={1}
+              label="Thực hiện lại"
+              onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
             />
           </Col>
         </Row>
@@ -134,28 +153,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
-  wtotal: {
-    position: 'relative',
-    marginTop: 20,
-  },
 
-  total: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    //paddingVertical: 10,
-    borderRadius: 10,
-    height: 44,
-  },
-  bgToal: {
-    width: scale(343),
-    height: scale(40),
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    maxWidth: '100%',
-  },
   textLeft: {
     color: Colors.cl3,
   },
@@ -164,4 +162,4 @@ const styles = StyleSheet.create({
     maxWidth: scale(160),
   },
 });
-export default TransactionResult;
+export default BankLinkResult;

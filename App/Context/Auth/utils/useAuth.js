@@ -70,7 +70,7 @@ const useTouchID = ({onSuccess}) => {
       passcodeFallback: passcode, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     };
 
-    TouchID.authenticate(
+    return TouchID.authenticate(
       passcode
         ? `Vui lòng nhập mật khẩu thiết bị để kích hoạt`
         : `Đăng nhập bằng ${
@@ -80,6 +80,7 @@ const useTouchID = ({onSuccess}) => {
     )
       .then(success => {
         !passcode && onSuccess && onSuccess(success);
+        return Promise.resolve(success);
       })
       .catch(error => {
         // user cancel
@@ -112,7 +113,7 @@ const useTouchID = ({onSuccess}) => {
     checkBiometry();
   }, []); // eslint-disable-line
 
-  return {biometryType, onTouchID};
+  return {biometryType, onTouchID, getTouchIdEnabled};
 };
 
 const useAuth = () => {

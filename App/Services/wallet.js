@@ -1,6 +1,59 @@
 import {API} from 'configs';
 import {request} from 'utils/Request';
 
+export const mapBankNapas = async param => {
+  const {phone, BankConnectInfo} = param || {};
+  let response = null;
+  await request({
+    url: API.WALLET.ACTIVE_USER,
+    method: 'post',
+    params: {
+      BankConnectInfo: BankConnectInfo || {},
+      PhoneNumber: phone,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const activeUser = async param => {
+  const {phone, BankConnectInfo} = param || {};
+  let response = null;
+  await request({
+    url: API.WALLET.ACTIVE_USER,
+    method: 'post',
+    params: {
+      MsgType: 'active_customer',
+      BankConnectInfo: BankConnectInfo || {},
+      PhoneNumber: phone,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const activeCustomerOtp = async param => {
+  const {phone, TransState, otp} = param || {};
+  let response = null;
+  await request({
+    url: API.WALLET.ACTIVE_USER_OTP,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      MsgType: 'link_card',
+      ...param,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const getConnectedBank = async ({phone}) => {
   let response = null;
   await request({
@@ -18,6 +71,18 @@ export const getDomesticBank = async ({phone}) => {
   let response = null;
   await request({
     url: API.WALLET.GET_DOMESTIC_BANKS,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+export const getNapasBank = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_NAPAS_BANKS,
     method: 'post',
     params: {PhoneNumber: phone},
     success: res => {
@@ -165,6 +230,76 @@ export const getHistoryDetail = async ({phone, TransCode}) => {
   return response;
 };
 
+export const cashOut = async ({phone, BankConnectId, BankId, amount}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_OUT,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      CashOutInfo: {
+        BankConnectId: BankConnectId,
+        BankID: BankId,
+        Amount: amount,
+      },
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const cashOutConfirm = async ({
+  phone,
+  BankConnectId,
+  BankId,
+  ConfirmValue,
+  ConfirmMethod,
+  TransCode,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_OUT_CONFIRM,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      BankConnectId,
+      BankID: BankId,
+      ConfirmMethod,
+      ConfirmValue,
+      TransCode,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const checkAmountLimit = async ({
+  phone,
+  amount,
+  transType,
+  transFormType,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CHECK_AMOUNT_LIMIT,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      Amount: amount,
+      TransType: transType,
+      TransFormType: transFormType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const getQRCodeInfo = async ({phone, QrCode}) => {
   let response = null;
   await request({
@@ -189,6 +324,109 @@ export const getTransferUser = async ({phone, SearchPhoneNumber}) => {
     params: {
       PhoneNumber: phone,
       AccountId: SearchPhoneNumber,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const cashIn = async ({phone, BankConnectId, BankId, amount}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_IN,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      CashInInfo: {
+        BankConnectId: BankConnectId,
+        BankID: BankId,
+        Amount: amount,
+      },
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const cashInConfirm = async ({
+  phone,
+  BankConnectId,
+  BankId,
+  ConfirmValue,
+  ConfirmMethod,
+  TransCode,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_IN_CONFIRM,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      BankConnectId,
+      BankID: BankId,
+      ConfirmMethod,
+      ConfirmValue,
+      TransCode,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const cashInNapas = async ({
+  Amount,
+  BankId,
+  CardNumber,
+  CardHolder,
+  CardIssueDate,
+  CardConnectId,
+  IsSaveCard,
+  IsPayment,
+  PaymentPartnerCode,
+  BusinessType,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.CASH_IN_NAPAS,
+    method: 'post',
+    params: {
+      Amount,
+      BankId,
+      CardNumber,
+      CardHolder,
+      CardIssueDate,
+      CardConnectId,
+      IsSaveCard,
+      IsPayment,
+      PaymentPartnerCode,
+      BusinessType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const setDefaultBank = async ({
+  BankConnectId,
+  BankId,
+  ConnectionType,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.DEFAULT_BANK_CONNECT,
+    method: 'post',
+    params: {
+      BankConnectId,
+      BankId,
+      ConnectionType,
     },
     success: res => {
       response = res;

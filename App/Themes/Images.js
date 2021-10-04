@@ -20,7 +20,7 @@ export default {
     Home: require('images/tabBar/home.png'),
     HomeGray: require('images/tabBar/HomeGray.png'),
     Category: require('images/Category.png'),
-    Search: require('images/Search.png'),
+    Search: require('images/bank/icon_search-2.png'),
     User: require('images/tabBar/user.png'),
     BottomTab: require('images/tabBar/BottomTab.png'),
     QR: require('images/tabBar/QR.png'),
@@ -125,6 +125,7 @@ export default {
     Exchange: require('images/icons/exchange.png'),
     Plus: require('images/icons/add.png'),
     Search: require('images/icons/search-normal.png'),
+    BankLink: require('images/icon_banklink-2.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
@@ -208,4 +209,10 @@ export default {
   primaryButton: require('images/Button.png'),
   borderButton: require('images/border_button.png'),
   CloseThin: require('images/CloseThin.png'),
+  Transaction:{
+    Success: require('images/icons/ic_transaction_success.png'),
+    Failure: require('images/icons/ic_transaction_failed.png'),
+    BGIcon: require('images/bgXacNhan.png'),
+    Call: require('images/icons/ic_call.png'),
+  }
 };

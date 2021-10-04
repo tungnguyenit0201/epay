@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {View, Keyboard, StyleSheet, Pressable} from 'react-native';
-import {Colors, Spacing} from 'themes';
+import {Button} from 'components';
+import {base, Colors, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {style} from 'dom-helpers';
 
 // optionList: [{label, value}]
-const KeyboardSuggestion = ({optionList, onPress}) => {
+const KeyboardSuggestion = ({
+  optionList,
+  onPress,
+  onContinue,
+  isContinueEnabled,
+}) => {
   const [isShow, setShow] = useState(false);
 
   useEffect(() => {
@@ -26,22 +34,50 @@ const KeyboardSuggestion = ({optionList, onPress}) => {
     Keyboard.dismiss();
   };
 
-  return isShow ? (
+  return (
     <View style={styles.container}>
-      {optionList &&
-        optionList.map(option => {
-          return (
-            <Pressable
-              key={option.value}
-              onPress={() => onPressOption(option.value)}>
-              <Text bold style={styles.option}>
-                {option.label}
-              </Text>
-            </Pressable>
-          );
-        })}
+      <View
+        style={[
+          base.boxBottom,
+          styles.continueContainer,
+          {
+            paddingBottom: isShow ? 0 : 30,
+          },
+        ]}>
+        <Button
+          style={styles.continue}
+          size={'xss'}
+          label="Tiếp tục"
+          onPress={onContinue}
+          disabled={!isContinueEnabled}
+        />
+      </View>
+
+      {isShow ? (
+        <View
+          style={{
+            // backgroundColor: Colors.l2,
+            paddingVertical: scale(8),
+            justifyContent: 'space-evenly',
+            flexDirection: 'row',
+            backgroundColor: Colors.white,
+          }}>
+          {optionList &&
+            optionList.map(option => {
+              return (
+                <TouchableOpacity
+                  onPress={() => onPressOption(option.value)}
+                  key={option.value}>
+                  <Text bold style={styles.option}>
+                    {option.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+        </View>
+      ) : null}
     </View>
-  ) : null;
+  );
 };
 
 const styles = StyleSheet.create({
@@ -49,16 +85,34 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    backgroundColor: Colors.l2,
-    paddingVertical: Spacing.PADDING,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
   },
   option: {
-    padding: scale(10),
-    borderWidth: 1,
-    borderColor: Colors.BLACKTEXT,
+    textAlign: 'center',
+    lineHeight: 40,
+    backgroundColor: Colors.moneyItem,
+    borderRadius: 8,
+    height: 40,
+    overflow: 'hidden',
+    color: Colors.cl1,
+    paddingHorizontal: 25,
+  },
+  continueContainer: {
+    padding: scale(16),
+    paddingBottom: 0,
+  },
+  continue: {
+    height: scale(48),
   },
 });
 
 export default React.memo(KeyboardSuggestion);
+
+{
+  /* <Pressable
+              key={option.value}
+              onPress={() => onPressOption(option.value)}>
+              <Text bold style={styles.option}>
+                {option.label}
+              </Text>
+            </Pressable> */
+}

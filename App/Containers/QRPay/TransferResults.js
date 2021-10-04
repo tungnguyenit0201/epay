@@ -91,7 +91,7 @@ const TransactionResult = () => {
             })}
           </View>
         </View>
-        <View style={{height: 50}}></View>
+        <View style={{height: 50}} />
       </ScrollView>
       <View style={[base.boxBottom]}>
         <Button

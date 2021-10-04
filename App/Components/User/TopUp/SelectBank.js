@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import {
   View,
   Image,
@@ -11,13 +11,30 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
+import {SCREEN} from 'configs/Constants';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import Navigator from 'navigations/Navigator';
 
-const SelectBank = ({data, feeData, label, style, onChange}) => {
+const SelectBank = forwardRef(({data, feeData, label, style, onChange},ref) => {
   const translation = useTranslation();
   const [checked, setChecked] = useState({
     type: null,
     index: null,
   });
+
+  useImperativeHandle(ref, () => ({
+    reset,
+  }));
+
+  const mapBank = () => {
+    Navigator.push(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankPickerScreen,
+    });
+  };
+
+  const reset = () => {
+    onChangeBank(null);
+  };
 
   const onChangeBank = value => {
     setChecked(value);
@@ -31,6 +48,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
       </Text>
 
       {_.map(data, (bankType, type) => (
+
         <Row space="10" key={type} style={styles.row}>
           {bankType.map((item, index) => {
             const {BankName, BankLogoUrl} = item;
@@ -41,7 +59,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
                   onPress={() => onChangeBank({index, type})}>
                   <View style={[styles.wicon]}>
                     <Image source={{uri: BankLogoUrl}} style={[styles.icon]} />
-                    {checked.type === type && checked.index === index && (
+                    {checked && checked.type === type && checked.index === index && (
                       <Image
                         source={require('images/qrpay/CircleDown.png')}
                         style={styles.activeImg}
@@ -59,7 +77,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
       ))}
       <Row space="10" style={styles.row}>
         <Col width="33.33%" space="10">
-          <Pressable style={[styles.item]}>
+          <Pressable style={[styles.item]} onPress={mapBank}>
             <View style={[styles.wicon]}>
               <Image
                 source={require('images/qrpay/plus.png')}
@@ -74,7 +92,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
       </Row>
     </View>
   );
-};
+});
 const styles = StyleSheet.create({
   row: {
     marginBottom: 0,
