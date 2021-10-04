@@ -72,6 +72,7 @@ const UserInfo = () => {
   ];
 
   return (
+    //TODO: Translate
     <>
       <HeaderBg mb={0}>
         <Header back title="Trang cá nhân" />
@@ -120,18 +121,18 @@ const UserInfo = () => {
                 </Text>
               </View>
 
-              {statusVerified == PERSONAL_IC.ACTIVED && (
-                <TouchableOpacity
-                  style={base.leftAuto}
-                  onPress={() => {
-                    Navigator.push(SCREEN.EDIT_INFO);
-                  }}>
-                  <Image
-                    style={[styles.editBox]}
-                    source={require('images/profile/Edit2.png')}
-                  />
-                </TouchableOpacity>
-              )}
+              {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
+              <TouchableOpacity
+                style={base.leftAuto}
+                onPress={() => {
+                  Navigator.push(SCREEN.EDIT_INFO);
+                }}>
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png')}
+                />
+              </TouchableOpacity>
+              {/* )} */}
             </View>
             {data.map((item, index) => {
               return (
@@ -243,21 +244,21 @@ const UserInfo = () => {
                 </Text>
               </View>
 
-              {PersonalInfo?.Email && (
-                <TouchableOpacity
-                  style={base.leftAuto}
-                  onPress={() => {
-                    Navigator.push(SCREEN.CHANGE_PASSWORD, {
-                      type: 'update_email',
-                      headerLabel: 'Nhập mật khẩu',
-                    });
-                  }}>
-                  <Image
-                    style={[styles.editBox]}
-                    source={require('images/profile/Edit2.png')}
-                  />
-                </TouchableOpacity>
-              )}
+              {/* {PersonalInfo?.Email && ( */}
+              <TouchableOpacity
+                style={base.leftAuto}
+                onPress={() => {
+                  Navigator.push(SCREEN.CHANGE_PASSWORD, {
+                    type: 'update_email',
+                    headerLabel: 'Nhập mật khẩu',
+                  });
+                }}>
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png')}
+                />
+              </TouchableOpacity>
+              {/* )} */}
             </View>
 
             <View style={[base.row]}>
