@@ -2,42 +2,39 @@ import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
-import {Button, Icon, Text} from 'components';
-import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import { Icon, Text} from 'components';
+import {Colors, Fonts, Images} from 'themes';
 import {useTranslation} from 'context/Language';
-import Navigator from 'navigations/Navigator';
-
-import {useUser} from 'context/User';
-import {formatMoney} from 'utils/Functions';
-const Monney = ({style}) => {
-  const {userInfo} = useUser();
+import { useWallet } from 'context/Wallet';
+import { formatCurrency } from 'utils/Functions';
+import { useMoney } from 'context/Wallet/utils';
+const Monney = ({style, title, showing}) => {
+  const {showMoney, setShowMoney} = useMoney(showing);
+  const {wallet} = useWallet();
   const translation = useTranslation();
-  const [isMoney, setIsMoney] = useState(false);
   return (
     <View style={[styles.item, style]}>
       <View style={[]}>
-        <Text fs="h6">{translation.my_wallet}</Text>
+        <Text fs="h6">{title || translation.my_wallet}</Text>
       </View>
       <View style={[styles.right]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {!isMoney ? (
+          {!showMoney ? (
             <Text size={Fonts.H2} style={[styles.text, {paddingTop: 3}]}>
               ******
             </Text>
           ) : (
             <Text bold size={Fonts.H5} style={styles.text}>
-              {formatMoney(userInfo?.myWallet)}
+              {formatCurrency(wallet?.AvailableBlance, translation.topup.currency)}
             </Text>
           )}
           <TouchableOpacity
             style={{marginLeft: 10}}
-            onPress={() => setIsMoney(!isMoney)}>
+            onPress={() => setShowMoney(!showMoney)}>
             <Icon
-              icon={isMoney ? Images.Eye : Images.EyeGray}
+              icon={showMoney ? Images.Eye : Images.EyeGray}
               //tintColor={isMoney ? Colors.l4 : ''}
               size={20}
             />

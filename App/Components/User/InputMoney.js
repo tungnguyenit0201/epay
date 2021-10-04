@@ -5,7 +5,7 @@ import {Colors, Fonts, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import {formatMoney} from 'utils/Functions';
 
-const InputMoney = forwardRef(({style, onChange}, ref) => {
+const InputMoney = forwardRef(({style, onChange, errorStyle,placeholder}, ref) => {
   const translation = useTranslation();
   const moneyData = [
     {
@@ -30,6 +30,7 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
     },
     {
       id: '6',
+      label:`1 ${translation.topup.milion}`,
       money: '1000000',
     },
   ];
@@ -41,13 +42,13 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
 
   return (
     <View style={[style]}>
-      <Input ref={ref} onChange={onChange} />
+      <Input ref={ref} onChange={onChange} errorStyle={errorStyle} placeholder={placeholder} />
       <Row space="10">
         {moneyData.map((item, index) => (
           <Col width="33.33%" space="10" key={item.money}>
             <TouchableOpacity onPress={() => onPress(item.money)}>
               <Text bold style={styles.item}>
-                {formatMoney(item.money)}
+                {item.label || formatMoney(item.money)}
               </Text>
             </TouchableOpacity>
           </Col>
@@ -57,12 +58,15 @@ const InputMoney = forwardRef(({style, onChange}, ref) => {
   );
 });
 
-const Input = forwardRef(({onChange}, ref) => {
+const Input = forwardRef(({onChange, errorStyle,placeholder}, ref) => {
   const [value, setValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const translation = useTranslation();
 
   useImperativeHandle(ref, () => ({
     value,
     setValue,
+    setError,
   }));
 
   const _onChange = value => {
@@ -70,24 +74,26 @@ const Input = forwardRef(({onChange}, ref) => {
     onChange && onChange(value);
   };
 
+  const setError = (message)=>{
+    setErrorMessage(message);
+  };
+
   return (
     <View>
       <View style={styles.rowInput}>
         <TextInput
           numeric
-          placeholder="Nhập số tiền nạp"
-          style={styles.input}
+          placeholder={placeholder || translation.topup.cashInInputMoney}
+          style={[styles.input]}
+          errorStyle={errorStyle}
           placeholderTextColor={Colors.l5}
           value={value}
           onChange={_onChange}
-          // showErrorLabel={error}
-          // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
+          showErrorLabel={!!errorMessage}
+          error={errorMessage}
         />
         <Text style={styles.subText}>vnđ</Text>
       </View>
-      <Text color={Colors.Highlight} style={styles.warningText}>
-        *Số tiền nạp tối thiểu là 10.000 vnđ
-      </Text>
     </View>
   );
 });

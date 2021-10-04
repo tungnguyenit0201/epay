@@ -6,4 +6,9 @@ const IC_TPYE = {
   PASSPORT: 2,
   CMNDQD: 3,
 };
+export const IC_TYPE_CHAR = {
+  CMND: 'IC',
+  PASSPORT: 'PP',
+  CMNDQD: 'SC',
+};
 export default IC_TPYE;

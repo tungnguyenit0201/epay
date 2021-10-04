@@ -98,6 +98,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  buttonBottom: {
+    height: 48,
+  },
   footer: {
     height: 100,
   },

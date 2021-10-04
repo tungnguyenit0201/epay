@@ -133,7 +133,7 @@ const Home = () => {
           <IconList />
         </View>
 
-        <View style={styles.bottom}></View>
+        <View style={styles.bottom} />
       </ScrollView>
       <Image source={require('images/wave.png')} style={styles.bgImg} />
 

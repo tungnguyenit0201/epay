@@ -1,7 +1,7 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import axios from './Axios';
-import {API} from 'configs';
-import {buildURL} from './Functions';
+import { API } from 'configs';
+import { buildURL } from './Functions';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -10,15 +10,9 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {debugData} from 'components/Common/Debug';
-import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
+import { debugData } from 'components/Common/Debug';
+import { ASYNC_STORAGE_KEY, COMMON_ENUM } from 'configs/Constants';
 import curlirize from 'axios-curlirize';
-
-import AES from './AES';
-import RSA from './RSA';
-import {signature} from './crypto';
-var aes = new AES();
-var rsa = new RSA();
 
 let transactionID = '';
 
@@ -32,10 +26,10 @@ const getRequestData = async (url, params) => {
       transactionID !== null && transactionID !== ''
         ? transactionID
         : (
-            new Date().getTime() +
-            '' +
-            Math.floor(Math.random() * 10000)
-          ).toString(),
+          new Date().getTime() +
+          '' +
+          Math.floor(Math.random() * 10000)
+        ).toString(),
     ...params,
   };
 };
@@ -49,9 +43,6 @@ const getEncryptParam = async (url, params) => {
   );
   let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
   let requestData = await getRequestData(url, params);
-  // let dataEncrypted = aes.Encrypt(JSON.stringify(requestData));
-  // let signature = rsa.Sign(requestTime, dataEncrypted);
-
   return {
     MsgType: urlPart[urlPart.length - 1],
     RequestTime: requestTime,
@@ -98,15 +89,18 @@ async function request({
   if (typeof requestMethod[method] === 'function') {
     try {
       let result;
+      let buildUrl;
       if (method === 'get' || method === 'delete') {
-        result = await requestMethod[method](buildURL(root + url, query), {
+        buildUrl = buildURL(root + url, query);
+        result = await requestMethod[method](buildUrl, {
           headers,
         });
         if (__DEV__) {
-          console.log(method, buildURL(root + url, query), params, result);
+          console.log(method, buildUrl, params, result);
         }
       } else {
         let postParams = await getEncryptParam(url, params);
+        buildUrl = buildURL(root + url, query);
         // console.log('postParams :>> ', postParams);
         if (form) {
           postParams = new FormData();
@@ -117,58 +111,39 @@ async function request({
           });
         }
         result = await requestMethod[method](
-          buildURL(root + url, query),
+          buildUrl,
           postParams,
           {
             headers,
           },
         );
         if (__DEV__) {
-          console.log(method, buildURL(root + url, query), postParams, result);
+          console.log(method, buildUrl, postParams, result);
           debugData.push(result);
         }
       }
 
-      let {data, status} = result || {};
-      let {ResponseTime, Data, Signature, ErrorMessage, ErrorCode} = data || {};
+      let { data, status } = result || {};
+      let { ResponseTime, Data, Signature, ErrorMessage, ErrorCode } = data || {};
 
-      // console.log('[Request] Data: ' + JSON.stringify(result.data));
-      //Verify signature
-      const verified = rsa.Verify(ResponseTime, Data, Signature);
-      if (!!verified) {
-        if (status === 200 || status === 201 || status === 203) {
-          if (_.get(result, 'data.TransactionID', '')) {
-            transactionID = _.get(result, 'data.TransactionID', '');
-          }
+      console.log('[Request] URL: ' + buildUrl);
+      console.log('[Request] Data: ' + JSON.stringify(result.data));
+      if (status === 200 || status === 201 || status === 203) {
+        if (_.get(result, 'data.TransactionID', '')) {
+          transactionID = _.get(result, 'data.TransactionID', '');
+        }
 
-          // console.log('[Request] Data text before decrypt: ' + Data);
-          // let deCryptedText = aes.Decrypt(Data);
-          // console.log('[Request] Data text after decrypt: ' + deCryptedText);
-
-          // const decryptedData = JSON.parse(deCryptedText);
-
-          // transactionID = decryptedData?.TransactionID || transactionID;
-
-          if (typeof success === 'function') {
-            // if (!ErrorCode) {
-            //   return success(decryptedData);
-            // } else {
-            //   return success(data);
-            // }
-            // return success({...result?.data, ...decryptedData} || result);
-            return success({...result?.data, ...JSON.parse(Data)} || result);
-          }
-        } else {
-          if (__DEV__) {
-            console.log(method, buildURL(url, query), params, result);
-          }
-          return failure({
-            status: status,
-            message: ErrorMessage || aes.Decrypt(Data),
-          });
+        if (typeof success === 'function') {
+          return success({ ...result?.data, ...JSON.parse(Data) } || result);
         }
       } else {
-        throw Error('WRONG_SIGNATURE');
+        if (__DEV__) {
+          console.log(method, buildURL(url, query), params, result);
+        }
+        return failure({
+          status: status,
+          message: ErrorMessage || aes.Decrypt(Data),
+        });
       }
     } catch (err) {
       if (__DEV__) {
@@ -182,7 +157,7 @@ async function request({
             ...err?.response?.data,
           });
         } else {
-          return failure({message: result?.message});
+          return failure({ message: result?.message });
         }
       }
     }
@@ -193,4 +168,4 @@ const defaultFailureHandle = error => {
   console.error(error);
 };
 
-export {request};
+export { request };

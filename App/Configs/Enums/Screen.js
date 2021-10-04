@@ -1,3 +1,5 @@
+import BankPickerScreen from 'containers/Wallet/Bank/BankPickerScreen';
+
 const SCREEN = {
   LANGUAGE: 'Language',
   HOME: 'Home',
@@ -19,8 +21,7 @@ const SCREEN = {
   LINKING_CONFIRM: 'LinkingComfirm',
   BANK_RESULT: 'BankResult',
   NOTIFICATION: 'Notification',
-  TRANSACTION_SUCCESS: 'TransactionSuccess',
-  TRANSACTION_FAILURE: 'TransactionFailure',
+  TRANSACTION_RESULT: 'TransactionResult',
   EPAY_SUCCESS: 'EpaySuccess',
   TOP_UP: 'TopUp',
   WITHDRAW: 'Withdraw',
@@ -71,5 +72,18 @@ const SCREEN = {
   ALERT_MODAL: 'AlerModal',
   QRPAY: 'QRPay',
   QR_TRANSFER: 'QRTransfer',
+  MAP_BANK_FLOW: 'MapBankFlow',
+  BankCardInfo: 'BankCardInfo',
+  BankLinked: 'BankLinked',
+  BankDetail: 'BankDetail',
+  BankPickerScreen: 'BankPickerScreen',
+  BankLinkKYCInfo: 'BankLinkKYCInfo',
+  BankLinkConfirm: 'BankLinkConfirm',
+  BankLinkResult: 'BankLinkResult',
+  BankLinkInfo: 'BankLinkInfo',
+  BankLinkOTP: 'BankLinkOTP',
+  BANK_PICKER_SCREEN: 'BankPickerScreen',
+  BANK_KYC_SCREEN: 'BankKYCInfo',
+  BANK_OTP: 'BankOTP',
 };
 export default SCREEN;

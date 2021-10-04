@@ -4,6 +4,7 @@ export default {
   cl3: '#969696',
   cl4: '#CCCCCB',
   cl5: '#EEF6FF',
+  c16: '#E7E7E7',
 
   white: '#fff',
   black: '#222',
@@ -15,6 +16,8 @@ export default {
   l4: '#CCCCCC',
   l5: '#AAAAAA',
   l6: '#999999',
+  l7: '#141212',
+  l8: '#666666',
 
   g1: '#F3F4F6',
   g2: '#E5E7EB',
@@ -49,6 +52,7 @@ export default {
   BACKGROUNDCOLOR: '#FFF',
   BACKGROUNDACCORDION: '#E4E4E4',
   BACKGROUNDCOMMENT: '#F2F2F2',
+  BACKGROUND_BLUE: '#EEF6FF',
   BLACK: '#000',
   BLACKTEXT: '#2A2A2A',
   WHITETEXT: 'white',

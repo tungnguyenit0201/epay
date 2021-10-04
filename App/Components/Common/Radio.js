@@ -8,6 +8,7 @@ export default ({
   items, // [{label, value}]
   onChange,
   style,
+  wrapStyle,
   marginBottom = 19,
   error,
   selectedValue,
@@ -38,7 +39,7 @@ export default ({
   return (
     <>
       <View style={[{marginBottom}, style]}>
-        <View style={styles.wrap}>{items?.map(renderRadio)}</View>
+        <View style={[styles.wrap, wrapStyle]}>{items?.map(renderRadio)}</View>
         {!!error && showErrorLabel && (
           <Text color={'#FF0600'} mt={3} size={12}>
             {error}

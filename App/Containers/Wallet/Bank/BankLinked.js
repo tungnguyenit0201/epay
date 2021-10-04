@@ -31,88 +31,19 @@ import {useMoney} from 'context/Wallet/utils';
 import ListBank from 'components/Wallet/Bank/ListBank';
 // import FooterContainer from 'components/Auth/FooterContainer';
 
-const BankLinked = () => {
+import {useBankInfo} from 'context/Wallet/utils';
+import BankList from 'containers/Wallet/Bank/components/BankList';
+import {BANK_TYPE} from 'context/Wallet/utils/bankInfo';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+const BankLinked = props => {
   const translation = useTranslation();
   const {walletInfo} = useWallet();
   const {listConnectBank, listDomesticBank, listInternationalBank} = walletInfo;
-
+  const {onGetAllBank, onContinue} = useBankInfo();
   const {onGetConnectedBank} = useUserInfo();
   const {showMoney, setShowMoney} = useMoney();
   const {userInfo} = useUser();
   let {width} = useWindowDimensions();
-
-  const dataTest_1 = [
-    {
-      icon: Images.ConnectBank.Deposit,
-      name: translation.top_up,
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.Withdraw,
-      name: translation.withdraw,
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.Exchange,
-      name: translation.transfer,
-      screen: SCREEN.BANK_LIST,
-    },
-  ];
-  const dataTest_2 = [
-    {
-      icon: Images.ConnectBank.logoAgribank,
-      name: 'Agribank',
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.logoBidv,
-      name: 'BIDV',
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.logoVcb,
-      name: 'Vietcombank',
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.logoVtb,
-      name: 'Vietinbank',
-      screen: SCREEN.TRANSFER_BANK,
-    },
-    {
-      icon: Images.ConnectBank.logoExb,
-      name: 'Eximbank',
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.logoHdb,
-      name: 'HDbank',
-      screen: SCREEN.BANK_LIST,
-    },
-    {
-      icon: Images.ConnectBank.logoMbb,
-      name: 'MBbank',
-      screen: SCREEN.BANK_LIST,
-      iconHeight: 13,
-    },
-    {
-      icon: Images.ConnectBank.logoScob,
-      name: 'Sacombank',
-      screen: SCREEN.BANK_LIST,
-    },
-    {icon: Images.ConnectBank.logoScb, name: 'SCB', screen: SCREEN.BANK_LIST},
-    {
-      icon: Images.ConnectBank.logoVbb,
-      name: 'VPbank',
-      screen: SCREEN.BANK_LIST,
-    },
-    {icon: Images.ConnectBank.logoShb, name: 'SHB', screen: SCREEN.BANK_LIST},
-    {
-      icon: Images.ConnectBank.logoTpb,
-      name: 'TPbank',
-      screen: SCREEN.BANK_LIST,
-    },
-  ];
 
   const Item = ({title, icon, screen, iconHeight, iconWidth}) => (
     <TouchableOpacity
@@ -136,58 +67,34 @@ const BankLinked = () => {
       </Text>
     </TouchableOpacity>
   );
+  const dataTest_1 = [
+    {
+      icon: Images.ConnectBank.Deposit,
+      name: translation.top_up,
+      screen: SCREEN.TOP_UP,
+    },
+    {
+      icon: Images.ConnectBank.Withdraw,
+      name: translation.withdraw,
+      screen: SCREEN.WITHDRAW,
+    },
+    {
+      icon: Images.ConnectBank.Exchange,
+      name: translation.transfer,
+      screen: SCREEN.TRANSFER,
+    },
+  ];
 
-  const renderListBank = banks => {
-    if (banks && banks.length !== 0) {
-      return (
-        <Row space={5}>
-          {banks.map((item, index) => {
-            return (
-              <Col width={`33.333%`} space={5} key={index} style={styles.mb2}>
-                <Pressable
-                  onPress={() => Navigator.navigate(SCREEN.BANK_DETAIL, item)}
-                  style={styles.alignCenter}>
-                  <Image
-                    source={Images.ConnectBank.logoAgribank}
-                    style={[
-                      styles.mb3,
-                      {
-                        width: scale(27),
-                        height: scale(32),
-                      },
-                    ]}
-                    resizeMode="contain"
-                  />
+  const mapBank = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankPickerScreen,
+    });
+  };
 
-                  <Text centered color={Colors.white} bold fs="h6">
-                    {item?.BankName}
-                  </Text>
-                </Pressable>
-              </Col>
-            );
-          })}
-        </Row>
-
-        // code logic of Tung,can not use because no img,data
-        // {banks.map((value, index) => (
-        // <Pressable
-        //   onPress={() => Navigator.navigate(SCREEN.BANK_DETAIL, value)}
-        //   key={index}
-        //   style={{
-        //     padding: 10,
-        //     borderWidth: 1,
-        //     borderColor: Colors.g6,
-        //   }}>
-        //   <Text bold style={{fontSize: Fonts.H6}}>
-        //     {value?.BankName}
-        //   </Text>
-        //   <Text style={{marginTop: 10}}>{value?.BinNumbers}</Text>
-        // </Pressable>
-        // ))}
-      );
-    } else {
-      return <Text>Chưa có</Text>;
-    }
+  const onPressBank = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankDetail,
+    });
   };
 
   return (
@@ -222,7 +129,7 @@ const BankLinked = () => {
         <Row space={1}>
           {dataTest_1.map((item, index) => (
             <Col
-              width={`33.333%`}
+              width={'33.333%'}
               space={1}
               key={index}
               style={[styles.mb4, styles.alignCenter]}>
@@ -245,7 +152,9 @@ const BankLinked = () => {
               Thêm ngân hàng nhận tiền
             </Text>
 
-            <TouchableOpacity style={[base.row, styles.btnAddBank]}>
+            <TouchableOpacity
+              style={[base.row, styles.btnAddBank]}
+              onPress={mapBank}>
               <View style={styles.flex1}>
                 <Text color={Colors.black} fs="h6">
                   {translation.add_bank_account}
@@ -257,31 +166,19 @@ const BankLinked = () => {
                 resizeMode="contain"
               />
             </TouchableOpacity>
-
-            <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
-              <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
-                {translation.bank_linking}
-              </Text>
-              {/* {renderListBank} */}
-
-              {/* use component ListBank to test layout,
-                delete when no use 
-                * component ListBank will not be use in future,
-                remember to delete it*/}
-              <ListBank listBank={dataTest_2} />
-            </View>
-
-            <View style={[styles.blockShadow, styles.ptb1]}>
-              <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
-                {translation.bank_linking}
-              </Text>
-              <ListBank listBank={dataTest_2} />
-            </View>
           </View>
+
+          <BankList
+            title={translation.bank_linking}
+            key={'ListBankConnect'}
+            type={BANK_TYPE.LIST_BANK_CONNECT}
+            callback={onPressBank}
+            navigation={props?.navigation}
+          />
         </ScrollView>
       </View>
 
-      {/* <FooterContainer 
+      {/* <FooterContainer
         style={{
           position: 'absolute',
           bottom: 0,
@@ -323,7 +220,7 @@ const styles = StyleSheet.create({
   pt1: {paddingTop: 30},
   pt2: {paddingTop: 12},
   //---------------
-  pb1: {paddingBottom: 40},
+  pb1: {paddingBottom: 8},
   //---------------
   pr1: {paddingRight: 7},
   //---------------
