@@ -142,7 +142,7 @@ async function request({
         }
         return failure({
           status: status,
-          message: ErrorMessage || aes.Decrypt(Data),
+          message: ErrorMessage,
         });
       }
     } catch (err) {
