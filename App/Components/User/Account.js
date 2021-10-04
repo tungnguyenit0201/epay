@@ -13,15 +13,27 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {useMoney} from 'context/Wallet/utils';
+import {SCREEN} from 'configs/Constants';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
 const Account = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onGetConnectedBank} = useUserInfo();
-  const {onGetAllBank} = useBankInfo();
+  const {onGetAllBank, onContinue} = useBankInfo();
   const {listConnectBank} = useWallet();
   const {showMoney, setShowMoney} = useMoney();
 
+  const mapBank = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankPickerScreen,
+    });
+  };
+  const goToBankLinked = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankLinked,
+    });
+  };
   // TODO: translate
   return (
     <View style={base.boxShadow}>
@@ -57,11 +69,11 @@ const Account = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.line}></View>
+      <View style={styles.line} />
 
       <TouchableOpacity
         style={[base.row, {marginBottom: 10}]}
-        onPress={onGetAllBank}>
+        onPress={goToBankLinked}>
         <Text semibold mr={5}>
           {translation.bank_linking}
           <Text>({listConnectBank?.length})</Text>
@@ -86,7 +98,7 @@ const Account = () => {
           </View>
         ))
       ) : (
-        <TouchableOpacity style={[base.row]} onPress={onGetAllBank}>
+        <TouchableOpacity style={[base.row]} onPress={mapBank}>
           <Image
             style={{width: 40, height: 40}}
             source={require('images/profile/plus2.png')}

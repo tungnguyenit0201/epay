@@ -5,6 +5,7 @@ import Text from './Text';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import dayjs from 'dayjs';
 import {scale} from 'utils/Functions';
+import moment from 'moment';
 
 export default ({
   placeholder,
@@ -17,12 +18,14 @@ export default ({
   required,
   showErrorLabel = true,
   type = 'date',
+  noIconBg,
   ...props
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const displayFormat = type === 'date' ? 'DD/MM/YYYY' : 'HH:mm DD/MM/YYYY';
   const valueFormat = type === 'date' ? 'DD-MM-YYYY' : 'YYYY-MM-DD HH:mm';
-  const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
+  // const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
+  const [date, setDate] = useState(moment(value, valueFormat).toDate());
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -32,8 +35,9 @@ export default ({
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = date => {
-    onChange?.(dayjs(date).format(valueFormat));
+  const handleConfirm = selectedDate => {
+    setDate(selectedDate);
+    onChange?.(dayjs(selectedDate).format(valueFormat));
     hideDatePicker();
   };
 
@@ -48,18 +52,17 @@ export default ({
 
       <Pressable
         onPress={showDatePicker}
-        style={[styles.wrap, error && styles.error]}>
-        <View style={{flex: 1}}>
+        style={[styles.wrap, error && styles.error, style]}>
+        <View style={[styles.block1, styles.fullHeight, styles.flex1]}>
           <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
             {value}
           </Text>
         </View>
         <View
           style={[
+            styles.blockIcon1,
             styles.fullHeight,
-            styles.justifyCenter,
-            styles.p1,
-            {backgroundColor: Colors.l4},
+            {backgroundColor: noIconBg ? 'unset' : Colors.l4},
           ]}>
           <Image
             source={Images.Kyc.Calendar}
@@ -84,6 +87,7 @@ export default ({
         headerTextIOS={'Vui lòng chọn ngày'}
         maximumDate={new Date()}
         themeVariant={'light'}
+        // date={date}
       />
       <View style={{marginBottom}} />
     </>
@@ -97,16 +101,14 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     height: 48,
-    borderRadius: 6,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.cl4,
   },
   //----------------
+  flex1: {flex: 1},
+  //----------------
   fullHeight: {height: '100%'},
-  //----------------
-  justifyCenter: {justifyContent: 'center'},
-  //----------------
-  p1: {padding: 12},
   //----------------
   pl1: {paddingLeft: 10},
   //----------------
@@ -114,9 +116,21 @@ const styles = StyleSheet.create({
     borderColor: Colors.ALERT,
     borderWidth: 1,
   },
+  //-----------------
   icon: {
     width: 24,
     height: 24,
     tintColor: Colors.GRAY,
+  },
+  blockIcon1: {
+    justifyContent: 'center',
+    right: -1,
+    padding: 12,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  block1: {
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
   },
 });

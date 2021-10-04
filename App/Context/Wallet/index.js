@@ -13,6 +13,7 @@ const defaultWalletInfo = {
   limit: '',
   transaction: {},
   wallet: {},
+  icInfo: {},
 };
 const WalletContext = createContext({});
 export const WalletProvider = ({children}) => {

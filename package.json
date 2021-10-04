@@ -6,12 +6,15 @@
     "clear": "rm -rf yarn.lock node_modules ios/Pods ios/Podfile.lock ios/epay.xcworkspace && yarn install && cd ios && pod install && cd ..",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios-11": "react-native run-ios --simulator 'iPhone 11 Pro'",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
     "storybook": "start-storybook -p 7007",
     "build-storybook": "build-storybook",
-    "prestorybook": "rnstl"
+    "prestorybook": "rnstl",
+    "port": "react-native start --reset-cache --port 8000",
+    "all": "watchman watch-del-all && rm -rf package-lock.json && rm -rf node_modules/ && rm -fr $TMPDIR/metro* && npm install && cd ios && rm -rf Pods && rm -rf Podfile.lock && pod install && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -28,6 +31,7 @@
     "@reduxjs/toolkit": "^1.6.0",
     "@twotalltotems/react-native-otp-input": "1.3.7",
     "axios": "^0.21.1",
+    "axios-curlirize": "^1.4.0",
     "base32-encode": "^2.0.0",
     "buffer": "^6.0.3",
     "dayjs": "^1.10.6",

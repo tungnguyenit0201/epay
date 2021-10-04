@@ -16,20 +16,14 @@ import {
 } from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
-import {updatePassword} from 'services/user';
+import {updateForgotPassword} from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
-import {useWalletInfo} from 'context/Wallet/utils';
-import moment from 'moment';
+import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
 
 const useTouchID = ({onSuccess}) => {
   const [biometryType, setBiometryType] = useState(null);
-  const {
-    getTouchIdEnabled,
-    getPhone,
-    getTouchIDAndroidData,
-    setTouchIDAndroidData,
-  } = useAsyncStorage();
+  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
   const {setError} = useError();
 
   const checkBiometry = async () => {
@@ -62,35 +56,10 @@ const useTouchID = ({onSuccess}) => {
     if (!_biometryType && !biometryType) {
       return;
     }
-    let touchIDAndroid = null;
-
-    // android check
-    if (Platform.OS === 'android') {
-      touchIDAndroid = await getTouchIDAndroidData();
-      !touchIDAndroid && (touchIDAndroid = {remaining: 5});
-      if (touchIDAndroid?.lockedTimestamp) {
-        if (
-          moment().diff(
-            moment(touchIDAndroid.lockedTimestamp),
-            'minutes',
-            true,
-          ) < 5
-        ) {
-          // TODO: translate
-          setError({
-            ErrorCode: -1,
-            ErrorMessage:
-              'Bạn đã nhập sai touch ID quá nhiều lần. Vui lòng thử lại sau ít phút.',
-          });
-        } else {
-          touchIDAndroid = {remaining: 5};
-        }
-      }
-    }
 
     // TODO: translate
     const options = {
-      title: 'Authentication Required', // Android
+      title: 'Đăng nhập bằng Touch ID', // Android
       imageColor: '#e00606', // Android
       imageErrorColor: '#ff0000', // Android
       sensorDescription: 'Touch sensor', // Android
@@ -101,9 +70,17 @@ const useTouchID = ({onSuccess}) => {
       passcodeFallback: passcode, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     };
 
-    TouchID.authenticate('Đăng nhập bằng Touch ID', options)
+    return TouchID.authenticate(
+      passcode
+        ? `Vui lòng nhập mật khẩu thiết bị để kích hoạt`
+        : `Đăng nhập bằng ${
+            biometryType === 'FaceID' ? 'Face ID' : 'Touch ID'
+          }`,
+      options,
+    )
       .then(success => {
         !passcode && onSuccess && onSuccess(success);
+        return Promise.resolve(success);
       })
       .catch(error => {
         // user cancel
@@ -127,21 +104,6 @@ const useTouchID = ({onSuccess}) => {
           onTouchID(_biometryType, true);
           return;
         }
-        // android user failed to authenticate
-        if (
-          error?.name === 'LAErrorAuthenticationFailed' &&
-          Platform.OS === 'android'
-        ) {
-          touchIDAndroid?.remaining > 1
-            ? setTouchIDAndroidData({
-                remaining: touchIDAndroid?.remaining - 1,
-              })
-            : setTouchIDAndroidData({
-                remaining: 0,
-                lockedTimestamp: moment().valueOf(),
-              });
-          return;
-        }
         // other errors
         setError({ErrorCode: -1, ErrorMessage: error});
       });
@@ -151,15 +113,16 @@ const useTouchID = ({onSuccess}) => {
     checkBiometry();
   }, []); // eslint-disable-line
 
-  return {biometryType, onTouchID};
+  return {biometryType, onTouchID, getTouchIdEnabled};
 };
 
 const useAuth = () => {
   const {setLoading} = useLoading();
-  const {dispatch} = useUser();
+  const {dispatch, route} = useUser();
   const {setError} = useError();
-  const {setPhone, setToken} = useAsyncStorage();
+  const {setPhone, setToken, getPushToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
+  const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
@@ -197,7 +160,8 @@ const useAuth = () => {
   }) => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
-    const result = await login(phone, passwordEncrypted);
+    const pushToken = await getPushToken();
+    const result = await login(phone, passwordEncrypted, pushToken);
     setLoading(false);
 
     switch (_.get(result, 'ErrorCode', '')) {
@@ -225,11 +189,17 @@ const useAuth = () => {
         });
         await setToken(result?.Token);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+
         Navigator.navigate(
           firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
         );
+        if (!!route) {
+          Navigator.navigate(route?.screen, route?.params);
+          return dispatch({type: 'SET_ROUTE', route: null});
+        }
         onGetAllInfo();
         onGetWalletInfo();
+        onGetConnectedBank();
         Navigator.reset(SCREEN.TAB_NAVIGATION);
         return;
     }
@@ -386,6 +356,7 @@ const usePhone = () => {
 const useForgetPassword = () => {
   const {setError} = useError();
   const {setLoading} = useLoading();
+  const [active, setActive] = useState(false);
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
@@ -406,17 +377,25 @@ const useForgetPassword = () => {
   const onNewPassword = async ({newPassword, phone}) => {
     setLoading(true);
     const passwordEncrypted = await sha256(newPassword);
-    const result = await updatePassword({password: passwordEncrypted, phone});
+    const result = await updateForgotPassword({
+      password: passwordEncrypted,
+      phone,
+    });
     setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
       setError(result);
       return;
     }
     setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
-    Navigator.popToTop();
+    Navigator.reset(SCREEN.AUTH);
+    Keychain.setGenericPassword(phone, passwordEncrypted);
   };
 
-  return {onSubmitPhone, onNewPassword};
+  const onSetActive = () => {
+    setActive(!active);
+  };
+
+  return {onSubmitPhone, onNewPassword, active, onSetActive};
 };
 
 export {useTouchID, useAuth, useRegister, usePhone, useForgetPassword};

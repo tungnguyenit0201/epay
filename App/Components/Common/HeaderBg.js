@@ -1,21 +1,22 @@
-import React, {useState} from 'react';
-import {View, Image, StyleSheet, SafeAreaView} from 'react-native';
-import {Colors, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
+import React, { useState } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
+import { Colors, Images, Spacing, base } from 'themes';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { scale } from 'utils/Functions';
 import StatusBar from './StatusBar';
-//import {getStatusBarHeight} from 'react-native-status-bar-height';
-//getStatusBarHeight()
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 
 const bgheader = require('images/home/homeHeader.jpg');
 
-const Header = ({children, bgimg, bgColor = Colors.white, mb = 0, style}) => {
+const Header = ({ children, bgimg, bgColor = Colors.white, mb = 0, style }) => {
+  const top = getStatusBarHeight();
   return (
-    <SafeAreaView
+    <View
       style={[
         base.container,
         styles.header,
         {
+          paddingTop: top + 10,
           marginBottom: mb,
           backgroundColor: bgColor,
         },
@@ -30,7 +31,7 @@ const Header = ({children, bgimg, bgColor = Colors.white, mb = 0, style}) => {
         <Image source={bgimg ? bgimg : bgheader} style={styles.img} />
       </View>
       {children}
-    </SafeAreaView>
+    </View>
   );
 };
 

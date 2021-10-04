@@ -13,7 +13,7 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Contacts from 'react-native-contacts';
 
-import ListItem from 'components/Common/ListItem';
+// import ListItem from 'components/Common/ListItem';
 import ListItemSimple from 'components/Common/ListItemSimple';
 import MonneySimple from 'components/Home/MonneySimple';
 import Banner from 'components/Home/Banner';
@@ -122,9 +122,9 @@ const Home = () => {
   return (
     <>
       <HeaderBg>
-        <View style={styles.rowHeader}>
+        <View style={[styles.rowHeader]}>
           <Image source={Images.Logo} style={[{width: 88, height: 32}]} />
-          <User style={{marginBottom: 20}} />
+          <User style={styles.flex1} />
         </View>
         <MonneySimple />
         <View style={{marginBottom: 20}}>
@@ -149,7 +149,7 @@ const Home = () => {
           <IconList />
         </View>
 
-        <View style={styles.bottom}></View>
+        <View style={styles.bottom} />
       </ScrollView>
       <Image source={require('images/wave.png')} style={styles.bgImg} />
 
@@ -181,11 +181,11 @@ const Home = () => {
 };
 const styles = StyleSheet.create({
   rowHeader: {
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap', hide to not break line
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 25,
   },
 
   buttonGroup: {
@@ -203,5 +203,7 @@ const styles = StyleSheet.create({
   bottom: {
     height: scale(80),
   },
+  //tho------------
+  flex1: {flex: 1},
 });
 export default Home;

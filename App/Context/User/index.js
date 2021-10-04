@@ -18,6 +18,8 @@ const defaultUserInfo = {
   },
   qrCode: '',
   listNotify: [],
+  kycType: undefined,
+  route: null,
 };
 
 export const UserProvider = ({children}) => {

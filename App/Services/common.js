@@ -47,6 +47,19 @@ export const checkSmartOTP = async ({phone}) => {
   return response;
 };
 
+export const getSmartOTPInfo = async ({phone}) => {
+  let response = null;
+  await request({
+    url: API.COMMON.GET_SMART_OTP_INFO,
+    method: 'post',
+    params: {PhoneNumber: phone},
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
 export const activateSmartOTP = async ({phone, password, active = true}) => {
   let response = null;
   await request({

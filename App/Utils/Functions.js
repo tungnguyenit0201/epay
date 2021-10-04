@@ -1,10 +1,10 @@
-import {Platform, Dimensions} from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import queryString from 'query-string';
 import dayjs from 'dayjs';
 import 'intl';
 import 'intl/locale-data/jsonp/vi';
-import {COMMON_ENUM} from 'configs/Constants';
-import {getUniqueId} from 'react-native-device-info';
+import { COMMON_ENUM } from 'configs/Constants';
+import { getUniqueId } from 'react-native-device-info';
 import base32Encode from 'base32-encode';
 import * as OTPAuth from 'otpauth';
 
@@ -106,18 +106,18 @@ const getYoutubeId = url => {
 
 function timeSince(date) {
   const intervals = [
-    {label: 'year', seconds: 31536000},
-    {label: 'month', seconds: 2592000},
-    {label: 'day', seconds: 86400},
-    {label: 'hour', seconds: 3600},
-    {label: 'minute', seconds: 60},
-    {label: 'second', seconds: 1},
+    { label: 'year', seconds: 31536000 },
+    { label: 'month', seconds: 2592000 },
+    { label: 'day', seconds: 86400 },
+    { label: 'hour', seconds: 3600 },
+    { label: 'minute', seconds: 60 },
+    { label: 'second', seconds: 1 },
   ];
   let seconds = 0;
   let now = new Date();
   seconds = Math.floor(
     (now.getTime() - date.getTime()) / 1000 -
-      (Platform.OS == 'ios' ? 3600 * 7 : 0),
+    (Platform.OS == 'ios' ? 3600 * 7 : 0),
   );
 
   if (Number.isNaN(seconds)) return 'long time ago';
@@ -200,7 +200,7 @@ const getAll = async (...functionList) => {
   });
 };
 
-const calculateFee = ({cash, feeData, fixedFee, bankFee, minFee, maxFee}) => {
+const calculateFee = ({ cash, feeData, fixedFee, bankFee, minFee, maxFee }) => {
   const _fixedFee = fixedFee || feeData?.FixedFee;
   const _bankFee = bankFee || feeData?.BankFee;
   const _minFee = minFee || feeData?.MinFee;
@@ -215,26 +215,89 @@ const stringToArrayBuffer = str => {
     throw new Error('this needs encoding, like UTF-8');
   }
   var arr = new Uint8Array(str.length);
-  for (var i = str.length; i--; ) arr[i] = str.charCodeAt(i);
+  for (var i = str.length; i--;) arr[i] = str.charCodeAt(i);
   return arr.buffer;
 };
 
-const generateTOTP = ({phone, smartOtpSharedKey}) => {
+const generateTOTP = ({ phone, smartOtpSharedKey }) => {
   const hash = COMMON_ENUM.TOTP_KEY + phone + getUniqueId() + smartOtpSharedKey;
   const buffer = stringToArrayBuffer(hash);
-  const hashToGenOtp = base32Encode(buffer, 'RFC4648', {padding: false});
+  const hashToGenOtp = base32Encode(buffer, 'RFC4648', { padding: false });
   const totp = new OTPAuth.TOTP({
     algorithm: 'SHA1',
     digits: 6,
     period: 60, // TODO: get config from server
     secret: hashToGenOtp,
   });
-  const code = totp.generate({timestamp: new Date().getTime()});
+  const code = totp.generate({ timestamp: new Date().getTime() });
   return code;
 };
 
 const hidePhone = phone =>
   phone?.slice(0, 3) + '****' + phone?.slice(phone?.length - 3, phone?.length);
+
+function formatCurrency(number, currency = "") {
+  if (!number || isNaN(number) || Number(number) == 0) {
+    return "0" + currency;
+  }
+
+  let array = [];
+  let result = "";
+  let isNegative = false;
+
+  if (number < 0) {
+    number = -number;
+    isNegative = true;
+  }
+
+  let numberString = number.toString();
+  if (numberString.length < 3) {
+    return numberString + currency;
+  }
+
+  let count = 0;
+  for (let i = numberString.length - 1; i >= 0; i--) {
+    count += 1;
+    if (numberString[i] == "." || numberString[i] == ",") {
+      array.push(",");
+      count = 0;
+    } else {
+      array.push(numberString[i]);
+    }
+    if (count == 3 && i >= 1) {
+      array.push(".");
+      count = 0;
+    }
+  }
+
+  for (let i = array.length - 1; i >= 0; i--) {
+    result += array[i];
+  }
+
+  if (isNegative) result = "-" + result;
+
+  return result + currency;
+}
+
+
+function fromCurrency(money) {
+  if (money) {
+    money = money.toString();
+    let moneyString = money
+      .replaceAll(",", "")
+      .replaceAll("đ", "")
+      .replaceAll("VND", "")
+      .replaceAll(".", "")
+      .replaceAll(" ", "");
+    let number = Number(moneyString);
+    if (isNaN(number)) {
+      return 0;
+    }
+    return number;
+  } else {
+    return money;
+  }
+}
 
 const maskText = (text, padLeft, padRight, maskedCharacter = '*') => {
   try {
@@ -271,5 +334,7 @@ export {
   calculateFee,
   generateTOTP,
   hidePhone,
+  fromCurrency,
+  formatCurrency,
   maskText,
 };

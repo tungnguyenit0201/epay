@@ -57,6 +57,10 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             type: 'failure',
             message: _.get(result, 'ErrorMessage', ''),
           });
+        case FUNCTION_TYPE.FORGOT_PASS:
+          setError(result);
+          Navigator.popToTop();
+          return;
       }
     }
     // success
@@ -64,7 +68,9 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
         return onLogin({phone, password, encrypted});
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
+        _.get(result, 'ErrorCode', '') === ERROR_CODE.SUCCESS &&
+          Navigator.navigate(SCREEN.REGISTER_PASSWORD, {phone});
+        return;
       case FUNCTION_TYPE.FORGOT_PASS:
         return Navigator.navigate(SCREEN.FORGET_NEW_PASSWORD, {phone});
       case FUNCTION_TYPE.REGISTER_SMART_OTP:

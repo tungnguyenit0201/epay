@@ -7,21 +7,24 @@ import {useTranslation} from 'context/Language';
 import {base} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
+import {passwordSchema} from 'utils/ValidationSchemas';
+
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
   const {onConfirmPassword} = useUserInfo(route?.params?.type);
   return (
     <>
+      <HeaderBg>
+        <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
-        </HeaderBg>
         <View style={base.container}>
           <Formik
             initialValues={{
               password: '',
             }}
-            onSubmit={({password}) => onConfirmPassword({password})}>
+            onSubmit={({password}) => onConfirmPassword({password})}
+            validationSchema={passwordSchema}>
             {({
               handleChange: _handleChange,
               handleBlur,
@@ -54,7 +57,12 @@ const ChangePassword = ({route}) => {
                     error={touched.password && errors.password}
                     value={values.password}
                   />
-                  <Button mb={10} label="Xác nhận" onPress={handleSubmit} />
+                  <Button
+                    mb={10}
+                    label="Xác nhận"
+                    onPress={handleSubmit}
+                    disabled={!values.password || errors.password}
+                  />
                 </View>
               );
             }}

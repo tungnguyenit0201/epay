@@ -35,6 +35,16 @@ export default function userReducer(state, action) {
         ...state,
         personalIC: action?.data,
       };
+    case 'SET_IC_INFO':
+      return {
+        ...state,
+        icInfo: action?.data,
+      };
+    case 'SET_BANK_LINK_INFO':
+      return {
+        ...state,
+        bankLinkInfo: action?.data,
+      };
     case 'SET_REGION':
       return {
         ...state,
@@ -49,6 +59,16 @@ export default function userReducer(state, action) {
       return {
         ...state,
         listNotify: action?.data,
+      };
+    case 'SET_KYC_TYPE':
+      return {
+        ...state,
+        kycType: action?.data,
+      };
+    case 'SET_ROUTE':
+      return {
+        ...state,
+        route: action?.route,
       };
     default:
       return state;

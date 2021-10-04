@@ -73,18 +73,8 @@ const useAsyncStorage = () => {
     );
   };
 
-  const getTouchIDAndroidData = async () => {
-    const value = await AsyncStorage.getItem(
-      ASYNC_STORAGE_KEY.USER.TOUCHID_ANDROID,
-    );
-    return JSON.parse(value);
-  };
-
-  const setTouchIDAndroidData = async ({remaining, lockedTimestamp = null}) => {
-    await AsyncStorage.setItem(
-      ASYNC_STORAGE_KEY.USER.TOUCHID_ANDROID,
-      JSON.stringify({remaining, lockedTimestamp}),
-    );
+  const getPushToken = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.PUSH_TOKEN);
   };
 
   return {
@@ -101,8 +91,7 @@ const useAsyncStorage = () => {
     setModalSmartOTPDisabled,
     getSmartOTPSharedKey,
     setSmartOTPSharedKey,
-    getTouchIDAndroidData,
-    setTouchIDAndroidData,
+    getPushToken,
   };
 };
 

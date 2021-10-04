@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import {
   View,
   Image,
@@ -12,12 +12,20 @@ import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
 
-const SelectBank = ({data, feeData, label, style, onChange}) => {
+const SelectBank = forwardRef(({data, feeData, label, style, onChange},ref) => {
   const translation = useTranslation();
   const [checked, setChecked] = useState({
     type: null,
     index: null,
   });
+
+  useImperativeHandle(ref, () => ({
+    reset
+  }));
+
+  const reset = () => {
+    onChangeBank(null)
+  };
 
   const onChangeBank = value => {
     setChecked(value);
@@ -31,6 +39,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
       </Text>
 
       {_.map(data, (bankType, type) => (
+        
         <Row space="10" key={type} style={styles.row}>
           {bankType.map((item, index) => {
             const {BankName, BankLogoUrl} = item;
@@ -41,7 +50,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
                   onPress={() => onChangeBank({index, type})}>
                   <View style={[styles.wicon]}>
                     <Image source={{uri: BankLogoUrl}} style={[styles.icon]} />
-                    {checked.type === type && checked.index === index && (
+                    {checked && checked.type === type && checked.index === index && (
                       <Image
                         source={require('images/qrpay/CircleDown.png')}
                         style={styles.activeImg}
@@ -74,7 +83,7 @@ const SelectBank = ({data, feeData, label, style, onChange}) => {
       </Row>
     </View>
   );
-};
+});
 const styles = StyleSheet.create({
   row: {
     marginBottom: 0,
