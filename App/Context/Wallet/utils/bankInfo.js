@@ -26,6 +26,7 @@ import {
 import {useUser} from 'context/User';
 import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
 import {useTranslation} from 'context/Language';
+import { changeLimit } from 'services/wallet';
 
 const mockIc = [
   {
@@ -334,12 +335,12 @@ const useBankInfo = (initialValue = {}) => {
 
       dispatch({type: 'SET_IC_INFO', data: mockIc});
       return {result: mockresult};
-      if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
-        dispatch({type: 'SET_IC_INFO', data: result?.data?.IdentityCardInfor});
-        return {result: result?.data?.IdentityCardInfor};
-      } else {
-        setError(result);
-      }
+      // if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
+      //   dispatch({type: 'SET_IC_INFO', data: result?.data?.IdentityCardInfor});
+      //   return {result: result?.data?.IdentityCardInfor};
+      // } else {
+      //   setError(result);
+      // }
     } catch (error) {
       setError(error);
     }
