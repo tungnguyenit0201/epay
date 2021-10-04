@@ -28,33 +28,36 @@ const OTP = props => {
     resentOTP,
     label,
   } = useOTP({});
-  const {onActiveUserOTP} = useBankInfo();
+  const {onActiveUserOTP,onBankTransaction} = useBankInfo();
   const [otp, setOtp] = useState('');
   const translation = useTranslation();
   const {bankConnectInfo, transCode} = params || {};
+      // alert(JSON.stringify(params));
 
   const onSubmit = async () => {
     try {
-      const params = {
+      const param = {
         'BankID': bankConnectInfo?.BankId || bankConnectInfo?.BankID,
         'TransCode': transCode,
         'OtpCode': otp,
       };
-      const result = await onActiveUserOTP(params);
-       props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-         screen: MapBankRoutes.BaseResultScreen,
-         params: {result: 'success',...result},
-       });
+      const result = await onActiveUserOTP(param);
+      onBankTransaction(true, params);
+       setOtp('');
     } catch (e){
-      props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
-        screen: MapBankRoutes.BaseResultScreen,
-        params: {result:false},
-      });
+      onBankTransaction(false, params);
+      // props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+      //   screen: MapBankRoutes.BaseResultScreen,
+      //   params: {result:false},
+      // });
+      setOtp('');
     }
   };
 
-  const onChange  = (otp)=>{
-    setOtp(otp);
+  const onChange  = (value)=>{
+    setOtp(value);
+    console.log(otp);
+
   };
 
   const renderOTP = () => {
@@ -72,12 +75,11 @@ const OTP = props => {
         style={styles.wrapOtp}
         pinCount={6}
         onCodeChanged={onChange}
-        autoFocusOnLoad
+        // autoFocusOnLoad
         codeInputFieldStyle={styles.otp}
-        codeInputHighlightStyle={{}}
         onCodeFilled={onSubmit}
         clearInputs={errorMessage}
-        code={code}
+        code={otp}
         autoFocus={true}
     />
 

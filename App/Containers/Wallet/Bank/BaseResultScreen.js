@@ -9,13 +9,14 @@ import {
   SecondaryButton,
   Text,
 } from 'components';
-import {base, Colors, Images} from 'themes';
+import {base, Colors, Fonts, Images} from 'themes';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 import {useBankInfo, useTransactionResult} from 'context/Wallet/utils';
 import {useRoute} from '@react-navigation/native';
 import {TRANS_TYPE} from 'configs/Constants';
+import {useWallet} from 'context/Wallet';
 
 const result_bank_type = {
   BANK_LINK_ACCOUNT: 'BANK_LINK_ACCOUNT',
@@ -30,13 +31,19 @@ const BaseResultScreen = props => {
     secondaryButton,
     positiveButton,
   } = params || {};
+  const {bankConnectInfo} = useWallet();
+
+  console.log(JSON.stringify(bankConnectInfo));
   const transType = params?.transType || TRANS_TYPE.ActiveCustomer;
   const translation = useTranslation();
   const {onChange,onSetMoneySource, getResultButton } = useBankInfo(params);
-  const {message,onRetry, onBackHome,getTransactionStatusTitle:transTitle,getTransactionDesc:transDesc} = useTransactionResult(transType);
+
+  const {message,onRetry, onBackHome,statusTitle,description} = useTransactionResult(TRANS_TYPE.ActiveCustomer);
 
   const [isEnableSource, setEnableSource] = useState(false);
-
+const transTitle = 'Liên kết ngân hàng';//statusTitle ||
+const transDesc = description || 'Ngân hàng {bankName}\n' +
+    'số tài khoản {accNumber}';
 
   const renderBody = () => {
     switch (transType) {
@@ -56,13 +63,11 @@ const BaseResultScreen = props => {
     // const data= await
   };
   const renderBankBody = () => {
-    //dat nguon tien mac dinh
-
     return <View>
-      <View flexDirection={'row'}>
+      <View flexDirection={'row'} style={{alignItems: 'center'}}>
         <Text style={{flex:1}}>Đặt làm nguồn tiền mặc định</Text>
         <Switch trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={isEnableSource ? '#f5dd4b' : '#f4f3f4'}
+                // thumbColor={isEnableSource ? '#f5dd4b' : '#f4f3f4'}
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={isEnableSource}/>
@@ -81,7 +86,6 @@ const BaseResultScreen = props => {
   const onPressSecondary = () => {
     secondaryButton?.onPress?.();
   };
-
   const renderTransResult = () => {
     let sourceImg = result
       ? Images.TransactionHistory.Success
@@ -93,16 +97,17 @@ const BaseResultScreen = props => {
           {transTitle || ''}
         </Text>
         <Text centered color={Colors.gray}>
-          {transDesc}
+          {`Ngân hàng ${params?.item?.BankName}\n`}
+          {`số tài khoản ${params?.bankConnectInfo?.BankAccount}`}
         </Text>
       </View>
     );
   };
 
   const renderButtons = () => {
-    if (!secondaryButton && !positiveButton) {
-      return null;
-    }
+    // if (!secondaryButton && !positiveButton) {
+    //   return null;
+    // }
 
     return (
       <View
@@ -111,25 +116,32 @@ const BaseResultScreen = props => {
           {position: 'absolute', bottom: 0, left: 0, right: 0},
         ]}>
         <Row space={10}>
-          {!!secondaryButton && (
+          {!!1 && (
             <Col space={10} width="50%">
               <SecondaryButton
                 bg={Colors.white}
                 border={Colors.cl1}
                 color={Colors.cl1}
-                label={secondaryButton?.title}
+                  label={translation.common.goBackHome}
+                // label={secondaryButton?.title}
                 labelStyle={{fontSize: 14}}
-                onPress={onPressSecondary}
+                onPress={onBackHome}
+                mode={'outline'}
               />
             </Col>
           )}
 
-          {!!positiveButton && (
+          {!!1 && (
             <Col space={10} width="50%">
               <Button
                 type={1}
-                label={positiveButton?.title}
-                onPress={onPressPositive}
+                // label={positiveButton?.title}
+                // onPress={onPressPositive}
+                label={translation.common.createTransaction}
+                // style={styles.retryButton}
+                // fs={Fonts.FONT_MEDIUM
+                onPress={onRetry}
+
               />
             </Col>
           )}
@@ -141,7 +153,7 @@ const BaseResultScreen = props => {
   return (
     <>
       <HeaderBg>
-        <Header title="Kết quả giao dịch" back />
+        <Header title="Kết quả giao dịch"  />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={base.container}>

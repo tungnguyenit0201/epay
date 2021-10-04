@@ -359,7 +359,22 @@ export const cashInNapas = async ({ Amount, BankId, CardNumber, CardHolder, Card
       IsSaveCard,
       IsPayment,
       PaymentPartnerCode,
-      BusinessType
+      BusinessType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const setDefaultBank = async ({ BankConnectId,BankId ,ConnectionType}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.DEFAULT_BANK_CONNECT,
+    method: 'post',
+    params: {
+      BankConnectId,BankId ,ConnectionType,
     },
     success: res => {
       response = res;

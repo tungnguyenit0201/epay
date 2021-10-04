@@ -217,6 +217,27 @@ const useBankInfo = (initialValue = {}) => {
     }
   };
 
+  const onBankTransaction =  (result, params) => {
+    const {bankConnectInfo} = params;
+    console.log(bankConnectInfo);
+    dispatch({
+      type: 'UPDATE_TRANSACTION_INFO',
+      data: {
+        result,
+        data:{
+          transType:TRANS_TYPE.ActiveCustomer,
+          bank:bankConnectInfo,
+          },
+      },
+    });
+
+    Navigator.replaceLast(SCREEN.MAP_BANK_FLOW,{screen:MapBankRoutes.BaseResultScreen,params});
+  };
+
+  const getResultButton = ()=>{
+    console.log(mapBankInfo);
+  };
+
 
    const getICLabel = (type)=>{
     const cardList = {
@@ -335,10 +356,16 @@ const useBankInfo = (initialValue = {}) => {
         type: 'SET_TRAN_STATE',
         data: result?.TransState,
       });
+      dispatch({
+        type:'SET_BANK_LINK_INFO',
+        data:BankConnectInfo,
+      });
       return {transState,transCode};
     } else {
-      setError(result);
+      //
+      // setError(result);
     }
+    return;
   };
   const onActiveUserOTP = async param => {
     setLoading(true);
@@ -472,6 +499,7 @@ const useBankInfo = (initialValue = {}) => {
   const onUpdateAllInfo = async value => {};
 
   return {
+    onBankTransaction,
     getICLabel,
     onLinkCardNapas,
     onActiveUser,

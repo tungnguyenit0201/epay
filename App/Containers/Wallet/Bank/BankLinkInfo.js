@@ -36,7 +36,7 @@ export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
   const {userInfo} = useUser();
-  const {onChange, onContinue} = useBankInfo(params);
+  const {onChange, onContinue, getICLabel} = useBankInfo(params);
   const {walletInfo, limit, icInfo} = useWallet();
   const {listNapasBank, icInfo: ICBankInfor} = walletInfo; //have
   const {item, optionKyc} = params || {};
@@ -125,8 +125,9 @@ export default function (props) {
     isSelected,
     callback,
     keyExtractor,
+                           icLabel,
   }) => {
-    const idText = 'CMND',
+    const idText = icLabel,
       nameText = 'Họ và tên ';
     return (
       <TouchableOpacity
@@ -178,8 +179,11 @@ export default function (props) {
       const info = {
         title: optionKyc?.data?.Name || personalIC.ICFullName,
         number: optionKyc?.data?.Number,
+        // type:
         isSelected: true,
       };
+
+
       return renderKYCCard(info);
     } else {
       return ICBankInfor?.map?.((item, index) => {
@@ -189,6 +193,7 @@ export default function (props) {
           title: ICInfo?.Name,
           number: ICInfo?.Number,
           isSelected: selectedIc?.ICInfo?.Number === ICInfo?.Number,
+          icLabel: getICLabel(ICInfo.Type),
           callback: () => setSelectedIc(item),
           keyExtractor: 'ic' + index,
         };

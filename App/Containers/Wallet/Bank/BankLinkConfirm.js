@@ -17,6 +17,7 @@ import {
   TextInput,
   Button,
 } from 'components';
+import Navigator from 'navigations/Navigator';
 
 import {ERROR_CODE, SCREEN, FUNCTION_TYPE, IC_TPYE} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
@@ -25,7 +26,6 @@ import {base, Colors, Fonts, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {get} from 'lodash';
-import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
 import {getFullAddress} from 'context/Wallet/utils/bankInfo';
 import {useBankInfo} from 'context/Wallet/utils';
 
@@ -51,11 +51,16 @@ export default function (props) {
     };
     try {
       const res = await onActiveUser?.({BankConnectInfo});
-      props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
+      console.log({...params, ...res, bankConnectInfo:BankConnectInfo});
+      Navigator?.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BankLinkOTP,
-        params:{...params, ...res, bankconnectInfo:BankConnectInfo},
+        params: {...params, ...res, bankConnectInfo: BankConnectInfo},
+
+
       });
-    } catch (e) {}
+    } catch (e) {
+
+    }
   };
 
   const renderButton = () => {
@@ -76,12 +81,13 @@ export default function (props) {
   };
 
   const renderContent = () => {
-const iclabel = getICLabel(type);
     const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
     const BankName = get(Bank, 'BankName', 'Vietcombank');
     const Name = get(optionKyc, 'Name', '');
     const type = get(optionKyc, 'Type', '');
     const idNumber = get(optionKyc, 'Number', '');
+    const iclabel = getICLabel(type);
+
     const address = getFullAddress(ICAddress);
 
     const data = [

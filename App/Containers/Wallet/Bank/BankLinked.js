@@ -71,17 +71,17 @@ const BankLinked = props => {
     {
       icon: Images.ConnectBank.Deposit,
       name: translation.top_up,
-      screen: SCREEN.BANK_LIST,
+      screen: SCREEN.TOP_UP,
     },
     {
       icon: Images.ConnectBank.Withdraw,
       name: translation.withdraw,
-      screen: SCREEN.BANK_LIST,
+      screen: SCREEN.WITHDRAW,
     },
     {
       icon: Images.ConnectBank.Exchange,
       name: translation.transfer,
-      screen: SCREEN.BANK_LIST,
+      screen: SCREEN.TRANSFER,
     },
   ];
 

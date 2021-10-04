@@ -738,8 +738,8 @@ const useCashOut = () => {
             result.Data
         ) {
             cashOutRef.current = {
-                TransCode,
-                ConfirmType,
+                TransCode:result.Data.TransCode,
+                // ConfirmType,
             };
 
             dispatch({
@@ -815,20 +815,6 @@ const useTransactionResult = () => {
         return (statusTitle += ' ' + transactionStatusDescription());
     };
 
-    const getTransactionDesc = () => {
-        let desc = '';
-        switch (transType) {
-            case TRANS_TYPE.CashIn:
-                desc = translation.top_up;
-            case TRANS_TYPE.ActiveCustomer:
-                desc = 'Ngân hàng {bankName}\n' +
-                    'số tài khoản {accNumber}';
-
-        }
-
-        return (desc);
-    };
-
     const formatAmount = () => {
         return formatCurrency(amount, translation.common.currencySign);
     };
@@ -851,6 +837,9 @@ const useTransactionResult = () => {
         switch (transType) {
             case TRANS_TYPE.CashIn:
                 description = translation.transaction.cashInDescription;
+            case TRANS_TYPE.ActiveCustomer:
+                description = 'Ngân hàng {bankName}\n' +
+                    'số tài khoản {accNumber}';
         }
 
         return `${description} \n ${BankName} ${'*'.repeat(BankNumber?.length)}`;
@@ -865,6 +854,13 @@ const useTransactionResult = () => {
             case TRANS_TYPE.CashOut:
                 screen = SCREEN.WITHDRAW;
                 break;
+            case TRANS_TYPE.ActiveCustomer:
+                screen = SCREEN.BANK_LINKED;
+                break;
+            default:
+                screen = SCREEN.BANK_LINKED;//todo: remove
+                break;
+
         }
         Navigator.navigate(screen);
     };

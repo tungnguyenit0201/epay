@@ -36,14 +36,12 @@ export default ({
   return (
     <Pressable disabled={disabled} onPress={onPress}>
       <LinearView
-        style={[{borderRadius: scale(8)}, style]}
-        linearColors={[Colors.primary, Colors.blue]}>
-        <View
-          style={[
+        // style={[{borderRadius: scale(8)}, style]}
+        style={[
             styles.button,
             mode == 'contain' && styles.contain,
             mode == 'outline' && styles.outline,
-            border && {borderColor: border, borderWidth: 1},
+            border && {borderColor: border },
             radius && {borderRadius: radius},
             bg && {backgroundColor: bg},
             mt && {marginTop: mt},
@@ -59,7 +57,11 @@ export default ({
             size == 'xl' ? styles.xl : '',
             disabled && {backgroundColor: Colors.g4},
             buttonStyle,
-          ]}>
+            {paddingVertical: 4},
+        ]}
+        linearColors={[Colors.primary, Colors.blue]}>
+        <View style={{...styles.button,flex:1, backgroundColor: Colors.white, borderColor: 'transparent'}}
+         >
           {!!leftIcon && (
             <Image
               source={leftIcon}
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     height: scale(48),
     position: 'relative',
     overflow: 'hidden',
-    paddingHorizontal: Spacing.PADDING,
+    // paddingHorizontal: Spacing.PADDING,
   },
   contain: {
     backgroundColor: Colors.white,
