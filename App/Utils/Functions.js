@@ -8,7 +8,7 @@ import {getUniqueId} from 'react-native-device-info';
 import base32Encode from 'base32-encode';
 import * as OTPAuth from 'otpauth';
 
-const _baseWidth = Platform.isTV || Platform.isPad ? 834 : 375;
+const _baseWidth = 375;
 const _screenWidth = Math.min(
   Dimensions.get('window').width,
   Dimensions.get('window').height,

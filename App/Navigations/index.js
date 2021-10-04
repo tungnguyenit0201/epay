@@ -8,11 +8,12 @@ import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform, Alert} from 'react-native';
+import {Platform, Alert, Linking} from 'react-native';
 import {useAsyncStorage, useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
 import {useNotify} from 'context/User/utils';
 import {useUser} from 'context/User';
+import {Text} from 'components';
 
 const Stack = createStackNavigator();
 
@@ -201,14 +202,26 @@ const AppNavigator = () => {
       };
     },
   };
+
   const linking = {
     prefixes: ['epay://'],
-    config: {},
+    config: {
+      [SCREEN.QR_TRANSFER]: {path: ':id', parse: {id: id => `${id}`}},
+    },
+    // getStateFromPath: (path, options) => {
+    //   console.log('path, options :> ', path, options);
+    // },
+    getInitialURL: async () => {
+      let url = await Linking.getInitialURL();
+      console.log('Linking.getInitialURL() :>> ', url);
+      // Alert.alert('', url);
+    },
   };
   return (
     <NavigationContainer
       ref={Navigator.setContainer}
       linking={linking}
+      fallback={<Text></Text>}
       onReady={() => (isReadyRef.current = true)}
     >
       <KeyboardStateProvider>
