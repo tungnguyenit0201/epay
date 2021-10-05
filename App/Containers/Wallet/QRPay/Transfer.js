@@ -33,7 +33,7 @@ import Bank from 'components/QRPay/Bank';
 import {useQRTransfer} from 'context/Wallet/utils';
 const Transfer = ({route}) => {
   console.log('route :>> ', route);
-  const {loading} = useQRTransfer(route?.params);
+  const x = useQRTransfer(route?.params);
 
   const {phone} = usePhone();
   const {userInfo} = useUser();
@@ -96,7 +96,7 @@ const Transfer = ({route}) => {
       <View style={styles.boxBottom}>
         <Button
           onPress={() => {
-            Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+            Navigator.navigate(SCREEN.QR_PROMOTION);
           }}
           type={1}
           label="Tiếp tục"

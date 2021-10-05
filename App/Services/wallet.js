@@ -300,14 +300,14 @@ export const checkAmountLimit = async ({
   return response;
 };
 
-export const getQRCodeInfo = async ({phone, QrCode}) => {
+export const getQRCodeInfo = async ({phone, QRCode}) => {
   let response = null;
   await request({
     url: API.WALLET.GET_QRCODE_INFO,
     method: 'post',
     params: {
       PhoneNumber: phone,
-      QrCode,
+      QRCode,
     },
     success: res => {
       response = res;
@@ -427,6 +427,69 @@ export const setDefaultBank = async ({
       BankConnectId,
       BankId,
       ConnectionType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const moneyTransfer = async ({
+  Amount,
+  DesAccountId,
+  Payoneer,
+  Content,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.MONEY_TRANSFER,
+    method: 'post',
+    params: {
+      Amount,
+      DesAccountId,
+      Payoneer,
+      Content,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const applyPromo = async ({
+  phone,
+  MerchantCode,
+  AgencyCode,
+  PromoCode,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.PROMO_APPLY,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      MerchantCode,
+      AgencyCode,
+      PromoCode,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const payment = async ({phone, MerchantCode, OrderId}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.PAYMENT,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      MerchantCode,
+      OrderId,
     },
     success: res => {
       response = res;

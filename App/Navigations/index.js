@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Navigator from './Navigator';
 import KeyboardStateProvider from 'utils/KeyboardStateProvider';
 import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useTranslation } from 'context/Language';
+import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
 import {Platform, Alert, Linking} from 'react-native';
 import {useAsyncStorage, useConfig} from 'context/Common/utils';
@@ -88,6 +88,7 @@ import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferResults from 'containers/Wallet/QRPay/TransferResults';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
+import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 
 const AppNavigator = () => {
@@ -391,10 +392,9 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
-          <Stack.Screen
-            name={SCREEN.BANK_OTP}
-            component={BankOTP}
-          />
+          <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
+
+          <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

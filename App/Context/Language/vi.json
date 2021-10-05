@@ -471,14 +471,14 @@
   },
   "transaction": {
     "confirm": "Xác nhận",
-    "confirmTransaction":"Xác nhận giao dịch",
+    "confirmTransaction": "Xác nhận giao dịch",
     "autoFillOTP": "Nhấn Xác nhận, mã OTP sẽ được điền tự động để xác thực giao dịch",
     "transactionDetail": "Chi tiết giao dịch",
     "failure": "không thành công",
     "success": "thành công",
     "cashInDescription": " Nạp tiền vào ví Epay từ tài khoản",
-    "transactionId" : "Mã giao dịch",
-    "time" : "Thời gian",
+    "transactionId": "Mã giao dịch",
+    "time": "Thời gian",
     "support": "Hỗ trợ khiếu nại",
     "supportPhone": "1900-00000"
   },
@@ -530,5 +530,8 @@
   "permissionRequested": "Quý khách vui lòng cho phép Epay truy cập máy ảnh và thư viện để có thể sử dụng tính năng này.",
   "permissionDenied": "Quý khách vui lòng bật lại quyền truy cập máy ảnh và thư viện trong cài đặt ứng dụng để có thể sử dụng tính năng này.",
   "acceptRequested": "Cho phép truy cập",
-  "cancelled": "Huỷ bỏ"
+  "cancelled": "Huỷ bỏ",
+  "addPromoCode": "Thêm mã khuyến mãi",
+  "fillPromoCode": "Nhập mã khuyến mãi",
+  "use": "Sử dụng"
 }

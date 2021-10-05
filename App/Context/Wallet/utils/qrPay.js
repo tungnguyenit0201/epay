@@ -17,11 +17,14 @@ const useScanQR = () => {
   const {setError} = useError();
   const {checkPermission} = usePermission();
 
-  const onGetQRCodeInfo = async QrCode => {
+  const onGetQRCodeInfo = async qrCode => {
     if (loading) return;
     setLoading(true);
     const phone = await getPhone();
-    let result = await getQRCodeInfo({phone, QrCode});
+    let result = await getQRCodeInfo({
+      phone,
+      QRCode: qrCode?.replace('epay://', ''),
+    });
     console.log('result :>> ', result);
 
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
@@ -29,8 +32,9 @@ const useScanQR = () => {
       setLoading(false);
 
       return {result};
-    } else setError(result);
-    setLoading(false);
+    } else {
+      setError({...result, onClose: () => setLoading(false)});
+    }
   };
 
   const detectQRCode = async () => {
