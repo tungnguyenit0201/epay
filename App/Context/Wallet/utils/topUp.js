@@ -69,12 +69,20 @@ const useTopUp = () => {
   }, [bankData]); // eslint-disable-line
 
   const onSelectBank = data => {
-    const {index, type} = data;
-    onSetBank({
-      bank: bankData[type][index],
-      transFormType: type,
-      fee: bankFeeData[type][index],
-    });
+    if (!data) {
+      onSetBank(null);
+      return;
+    }
+    const {index, type} = data || {};
+    let bank = bankData?.[type]?.[index];
+    let fee = bankFeeData?.[type]?.[index];
+    if (!!bank && fee) {
+      onSetBank({
+        bank: bank,
+        transFormType: type,
+        fee: fee,
+      });
+    }
   };
 
   return {

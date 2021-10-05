@@ -26,30 +26,33 @@ const EditInfo = () => {
   }, []); // eslint-disable-line
 
   return (
-    <ScrollView style={{backgroundColor: Colors.white}}>
+    <>
       <HeaderBg>
         <Header title="Thông tin cá nhân" back />
       </HeaderBg>
-      <View style={[base.container, {paddingTop: 20}]}>
-        <Formik
-          initialValues={{
-            Address: personalAddress?.Address,
-            Ward: personalAddress?.Ward,
-            County: personalAddress?.County,
-            Provincial: personalAddress?.Provincial,
-            SexType: personalInfo?.SexType,
-          }}
-          validationSchema={addressSchema}
-          onSubmit={onUpdateUserInfo}>
-          <FormikContent
-            region={region}
-            goRegionSelect={goRegionSelect}
-            personalInfo={personalInfo}
-            personalIC={personalIC}
-          />
-        </Formik>
-      </View>
-    </ScrollView>
+      <ScrollView style={{backgroundColor: Colors.white}}>
+        <View style={[base.container, {paddingTop: 20}]}>
+          <Formik
+            initialValues={{
+              Address: personalAddress?.Address,
+              Ward: personalAddress?.Ward,
+              County: personalAddress?.County,
+              Provincial: personalAddress?.Provincial,
+              SexType: personalInfo?.SexType,
+            }}
+            validationSchema={addressSchema}
+            onSubmit={onUpdateUserInfo}
+          >
+            <FormikContent
+              region={region}
+              goRegionSelect={goRegionSelect}
+              personalInfo={personalInfo}
+              personalIC={personalIC}
+            />
+          </Formik>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import curlirize from 'axios-curlirize';
 const {TIMEOUT, ROOT} = API;
 const instance = axios.create({
   withCredentials: false,
-  baseURL: ROOT,
   timeout: TIMEOUT,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',

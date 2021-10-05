@@ -37,7 +37,8 @@ const RegisterPassword = ({route}) => {
         renderRightComponent={() => (
           <TouchableOpacity
             style={{paddingRight: Spacing.PADDING}}
-            onPress={() => setShowModal(true)}>
+            onPress={() => setShowModal(true)}
+          >
             <Icon
               icon={Images.Register.Info}
               style={styles.iconSize}
@@ -53,7 +54,8 @@ const RegisterPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -77,7 +79,8 @@ const RegisterPassword = ({route}) => {
                 contentContainerStyle={[
                   {paddingVertical: scale(24)},
                   styles.wrap,
-                ]}>
+                ]}
+              >
                 <Content
                   title="Tạo mật khẩu"
                   text={
@@ -92,7 +95,7 @@ const RegisterPassword = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                 />
                 <TextInput
                   password
@@ -102,7 +105,7 @@ const RegisterPassword = ({route}) => {
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                 />
                 <Text style={styles.textNote}>
                   {
@@ -118,7 +121,8 @@ const RegisterPassword = ({route}) => {
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}
+                    >
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -126,7 +130,8 @@ const RegisterPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}>
+                      onPress={() => onGoTerm(SCREEN.POLICY)}
+                    >
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
@@ -138,7 +143,7 @@ const RegisterPassword = ({route}) => {
                 <Button
                   disabled={!active}
                   mt={10}
-                  label={translation?.continue}
+                  label={translation?.sign_up}
                   onPress={handleSubmit}
                 />
               </FooterContainer>

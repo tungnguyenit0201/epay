@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable, View, Image, StyleSheet} from 'react-native';
-import {Text} from 'components';
+import {Col, Text} from 'components';
 
 import Navigator from 'navigations/Navigator';
 import {Colors} from 'themes';
@@ -8,27 +8,43 @@ import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
-const TransferBank = ({onPress}) => {
+const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
   const translation = useTranslation();
 
+  const {BankLogoUrl, CardNumber, BankNumber, BankName} = bankInfo || {};
   return (
     //TODO : translation
     <>
       <View style={styles.block}>
         <Text bold fs="h6" mb={10}>
-          Nguồn tiền
+          {sourceTitle || translation.topup.moneySource}
         </Text>
-        <Pressable onPress={onPress} style={[styles.itemBank]}>
+        <Pressable
+          disabled={disabled}
+          onPress={onPress}
+          style={[styles.itemBank]}
+        >
           <Image
             style={[styles.iconBank]}
-            source={require('images/qrpay/Wallet.png')}
+            source={
+              BankLogoUrl
+                ? {uri: BankLogoUrl}
+                : require('images/qrpay/Wallet.png')
+            }
+            resizeMode={'contain'}
           />
-          <View>
+          <Col
+            style={{
+              alignItems: '',
+            }}
+          >
             <Text fs="h6" bold>
-              Ví của tôi
+              {BankName}
             </Text>
-            <Text>9704 45********678</Text>
-          </View>
+            {!!CardNumber || !!BankNumber ? (
+              <Text>{CardNumber || BankNumber}</Text>
+            ) : null}
+          </Col>
           <View style={styles.itemRight}>
             <Image
               style={[styles.iconCircle]}
@@ -42,11 +58,10 @@ const TransferBank = ({onPress}) => {
 };
 const styles = StyleSheet.create({
   block: {
-    marginBottom: 20,
+    height: scale(120),
   },
   itemBank: {
-    position: 'relative',
-    marginBottom: 20,
+    flex: 1,
     backgroundColor: Colors.cl5,
     borderRadius: 10,
     shadowColor: Colors.black,
@@ -77,4 +92,4 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-export default TransferBank;
+export default SelectBank;

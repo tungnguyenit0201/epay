@@ -52,7 +52,8 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}>
+                }}
+              >
                 <Text style={[type === item.title && styles.textWhite]}>
                   {item.title}
                 </Text>
@@ -70,7 +71,8 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }>
+          }
+        >
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -78,7 +80,8 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}>
+                    onPress={() => onPressNotify(item)}
+                  >
                     <View style={styles.head}>
                       <Image
                         source={require('images/favicon.png')}
@@ -174,8 +177,8 @@ const styles = StyleSheet.create({
     marginRight: scale(5),
   },
   tagActive: {
-    backgroundColor: Colors.cl1,
-    borderColor: Colors.cl1,
+    backgroundColor: Colors.blue,
+    borderColor: Colors.blue,
   },
 
   flexRow: {flexDirection: 'row', paddingBottom: 15},

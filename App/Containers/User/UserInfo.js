@@ -20,7 +20,7 @@ import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
+import {scale, hideCMND} from 'utils/Functions';
 
 import DinhDanh from 'components/User/DinhDanh';
 import StatusUser from 'components/Common/StatusUser';
@@ -53,7 +53,7 @@ const UserInfo = () => {
     AddressInfo?.Provincial;
   const data = [
     {
-      icon: require('images/profile/NapVI.png'),
+      icon: require('images/profile/User.png'),
       name: 'Họ tên',
       val: PersonalInfo?.FullName || <Text color={Colors.g4}>Chưa có</Text>,
     },
@@ -72,6 +72,7 @@ const UserInfo = () => {
   ];
 
   return (
+    //TODO: Translate
     <>
       <HeaderBg mb={0}>
         <Header back title="Trang cá nhân" />
@@ -120,18 +121,19 @@ const UserInfo = () => {
                 </Text>
               </View>
 
-              {statusVerified == PERSONAL_IC.ACTIVED && (
-                <TouchableOpacity
-                  style={base.leftAuto}
-                  onPress={() => {
-                    Navigator.push(SCREEN.EDIT_INFO);
-                  }}>
-                  <Image
-                    style={[styles.editBox]}
-                    source={require('images/profile/Edit2.png')}
-                  />
-                </TouchableOpacity>
-              )}
+              {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
+              <TouchableOpacity
+                style={base.leftAuto}
+                onPress={() => {
+                  Navigator.push(SCREEN.EDIT_INFO);
+                }}
+              >
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png')}
+                />
+              </TouchableOpacity>
+              {/* )} */}
             </View>
             {data.map((item, index) => {
               return (
@@ -141,7 +143,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.rowTitle}>{item.name}</Text>
                   <Text style={base.leftAuto}>{item.val}</Text>
@@ -158,7 +161,11 @@ const UserInfo = () => {
                   CMND/CCCD/Hộ chiếu
                 </Text>
                 <Text style={[styles.rowVal]}>
-                  {ICInfor?.ICNumber || <Text color={Colors.g4}>Chưa có</Text>}
+                  {ICInfor?.ICNumber ? (
+                    hideCMND(ICInfor?.ICNumber)
+                  ) : (
+                    <Text color={Colors.g4}>Chưa có</Text>
+                  )}
                 </Text>
               </View>
             </View>
@@ -167,7 +174,7 @@ const UserInfo = () => {
                 style={[styles.rowIcon]}
                 source={require('images/profile/Location.png')}
               />
-              <View>
+              <View style={styles.flex1}>
                 <Text mt={3} mb={5} style={styles.rowTitle}>
                   Địa chỉ
                 </Text>
@@ -197,7 +204,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.push(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -220,7 +228,8 @@ const UserInfo = () => {
                         statusVerified == PERSONAL_IC.INACTIVE
                           ? onVerify
                           : () => onReVerify('showModal')
-                      }>
+                      }
+                    >
                       <Text style={styles.link}>
                         {statusVerified == PERSONAL_IC.INACTIVE
                           ? 'Xác thực tài khoản'
@@ -243,21 +252,22 @@ const UserInfo = () => {
                 </Text>
               </View>
 
-              {PersonalInfo?.Email && (
-                <TouchableOpacity
-                  style={base.leftAuto}
-                  onPress={() => {
-                    Navigator.push(SCREEN.CHANGE_PASSWORD, {
-                      type: 'update_email',
-                      headerLabel: 'Nhập mật khẩu',
-                    });
-                  }}>
-                  <Image
-                    style={[styles.editBox]}
-                    source={require('images/profile/Edit2.png')}
-                  />
-                </TouchableOpacity>
-              )}
+              {/* {PersonalInfo?.Email && ( */}
+              <TouchableOpacity
+                style={base.leftAuto}
+                onPress={() => {
+                  Navigator.push(SCREEN.CHANGE_PASSWORD, {
+                    type: 'update_email',
+                    headerLabel: 'Nhập mật khẩu',
+                  });
+                }}
+              >
+                <Image
+                  style={[styles.editBox]}
+                  source={require('images/profile/Edit2.png')}
+                />
+              </TouchableOpacity>
+              {/* )} */}
             </View>
 
             <View style={[base.row]}>
@@ -276,7 +286,8 @@ const UserInfo = () => {
                       Navigator.push(SCREEN.VERIFY_EMAIL, {
                         functionType: FUNCTION_TYPE.AUTH_EMAIL,
                       });
-                    }}>
+                    }}
+                  >
                     <Text style={styles.link}>Thêm email</Text>
                   </TouchableOpacity>
                 </>
@@ -374,5 +385,7 @@ const styles = StyleSheet.create({
   rowVal: {
     //color: Colors.g2,
   },
+  //tho------------
+  flex1: {flex: 1},
 });
 export default UserInfo;

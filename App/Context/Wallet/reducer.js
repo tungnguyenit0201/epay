@@ -26,6 +26,11 @@ export default function userReducer(state, action) {
         ...state,
         listDomesticBank: action?.data,
       };
+    case 'LIST_NAPAS_BANK':
+      return {
+        ...state,
+        listNapasBank: action?.data,
+      };
     case 'LIST_INTERNATIONAL_BANK':
       return {
         ...state,
@@ -35,6 +40,11 @@ export default function userReducer(state, action) {
       return {
         ...state,
         limit: action?.data,
+      };
+    case 'SET_IC_INFO':
+      return {
+        ...state,
+        icInfo: action?.data,
       };
     case 'UPDATE_TRANSACTION_INFO':
       return {

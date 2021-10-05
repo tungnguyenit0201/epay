@@ -126,7 +126,7 @@ const TabNavigation = () => {
                 />
                 <Text
                   style={{
-                    color: isFocused ? Colors.cl1 : Colors.graycused,
+                    color: isFocused ? Colors.cl1 : Colors.gray,
                   }}
                 >
                   {TabLabels[label]}
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   tabImage: {
     height: scale(80),
-    zIndex: 1,
+    // zIndex: 1,
   },
   tab: {
     alignItems: 'center',
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: scale(2),
     width: scale(27),
     height: scale(27),
+    zIndex: 10,
   },
   wrapQR: {
     position: 'absolute',

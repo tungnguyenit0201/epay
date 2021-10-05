@@ -8,6 +8,7 @@ export default ({
   items, // [{label, value}]
   onChange,
   style,
+  wrapStyle,
   marginBottom = 19,
   error,
   selectedValue,
@@ -26,7 +27,8 @@ export default ({
       <Pressable
         onPress={() => onPress(item)}
         key={item?.value}
-        style={[styles.radio, index + 1 === items.length && styles.radioEnd]}>
+        style={[styles.radio, index + 1 === items.length && styles.radioEnd]}
+      >
         <View style={styles.tickWrap}>
           {checked === item?.value && <View style={styles.tick} />}
         </View>
@@ -38,7 +40,7 @@ export default ({
   return (
     <>
       <View style={[{marginBottom}, style]}>
-        <View style={styles.wrap}>{items?.map(renderRadio)}</View>
+        <View style={[styles.wrap, wrapStyle]}>{items?.map(renderRadio)}</View>
         {!!error && showErrorLabel && (
           <Text color={'#FF0600'} mt={3} size={12}>
             {error}

@@ -5,64 +5,75 @@ import {Colors, Fonts, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import {formatMoney} from 'utils/Functions';
 
-const InputMoney = forwardRef(({style, onChange}, ref) => {
-  const translation = useTranslation();
-  const moneyData = [
-    {
-      id: '1',
-      money: '10000',
-    },
-    {
-      id: '2',
-      money: '20000',
-    },
-    {
-      id: '3',
-      money: '50000',
-    },
-    {
-      id: '4',
-      money: '100000',
-    },
-    {
-      id: '5',
-      money: '200000',
-    },
-    {
-      id: '6',
-      money: '1000000',
-    },
-  ];
+const InputMoney = forwardRef(
+  ({style, onChange, errorStyle, placeholder}, ref) => {
+    const translation = useTranslation();
+    const moneyData = [
+      {
+        id: '1',
+        money: '10000',
+      },
+      {
+        id: '2',
+        money: '20000',
+      },
+      {
+        id: '3',
+        money: '50000',
+      },
+      {
+        id: '4',
+        money: '100000',
+      },
+      {
+        id: '5',
+        money: '200000',
+      },
+      {
+        id: '6',
+        label: `1 ${translation.topup.milion}`,
+        money: '1000000',
+      },
+    ];
 
-  const onPress = value => {
-    ref.current.setValue(value);
-    onChange && onChange(value);
-  };
+    const onPress = value => {
+      ref.current.setValue(value);
+      onChange && onChange(value);
+    };
 
-  return (
-    <View style={[style]}>
-      <Input ref={ref} onChange={onChange} />
-      <Row space="10">
-        {moneyData.map((item, index) => (
-          <Col width="33.33%" space="10" key={item.money}>
-            <TouchableOpacity onPress={() => onPress(item.money)}>
-              <Text bold style={styles.item}>
-                {formatMoney(item.money)}
-              </Text>
-            </TouchableOpacity>
-          </Col>
-        ))}
-      </Row>
-    </View>
-  );
-});
+    return (
+      <View style={[style]}>
+        <Input
+          ref={ref}
+          onChange={onChange}
+          errorStyle={errorStyle}
+          placeholder={placeholder}
+        />
+        <Row space="10">
+          {moneyData.map((item, index) => (
+            <Col width="33.33%" space="10" key={item.money}>
+              <TouchableOpacity onPress={() => onPress(item.money)}>
+                <Text bold style={styles.item}>
+                  {item.label || formatMoney(item.money)}
+                </Text>
+              </TouchableOpacity>
+            </Col>
+          ))}
+        </Row>
+      </View>
+    );
+  },
+);
 
-const Input = forwardRef(({onChange}, ref) => {
+const Input = forwardRef(({onChange, errorStyle, placeholder}, ref) => {
   const [value, setValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const translation = useTranslation();
 
   useImperativeHandle(ref, () => ({
     value,
     setValue,
+    setError,
   }));
 
   const _onChange = value => {
@@ -70,24 +81,26 @@ const Input = forwardRef(({onChange}, ref) => {
     onChange && onChange(value);
   };
 
+  const setError = message => {
+    setErrorMessage(message);
+  };
+
   return (
     <View>
       <View style={styles.rowInput}>
         <TextInput
           numeric
-          placeholder="Nhập số tiền nạp"
-          style={styles.input}
+          placeholder={placeholder || translation.topup.cashInInputMoney}
+          style={[styles.input]}
+          errorStyle={errorStyle}
           placeholderTextColor={Colors.l5}
           value={value}
           onChange={_onChange}
-          // showErrorLabel={error}
-          // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
+          showErrorLabel={!!errorMessage}
+          error={errorMessage}
         />
         <Text style={styles.subText}>vnđ</Text>
       </View>
-      <Text color={Colors.Highlight} style={styles.warningText}>
-        *Số tiền nạp tối thiểu là 10.000 vnđ
-      </Text>
     </View>
   );
 });

@@ -24,7 +24,7 @@ export default ({
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const displayFormat = type === 'date' ? 'DD/MM/YYYY' : 'HH:mm DD/MM/YYYY';
   const valueFormat = type === 'date' ? 'DD-MM-YYYY' : 'YYYY-MM-DD HH:mm';
-  const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
+  // const formatedDate = value ? dayjs(value).format(displayFormat) : placeholder;
   const [date, setDate] = useState(moment(value, valueFormat).toDate());
 
   const showDatePicker = () => {
@@ -52,7 +52,8 @@ export default ({
 
       <Pressable
         onPress={showDatePicker}
-        style={[styles.wrap, error && styles.error, style]}>
+        style={[styles.wrap, error && styles.error, style]}
+      >
         <View style={[styles.block1, styles.fullHeight, styles.flex1]}>
           <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
             {value}
@@ -63,7 +64,8 @@ export default ({
             styles.blockIcon1,
             styles.fullHeight,
             {backgroundColor: noIconBg ? 'unset' : Colors.l4},
-          ]}>
+          ]}
+        >
           <Image
             source={Images.Kyc.Calendar}
             style={styles.icon}
@@ -87,7 +89,7 @@ export default ({
         headerTextIOS={'Vui lòng chọn ngày'}
         maximumDate={new Date()}
         themeVariant={'light'}
-        date={date}
+        // date={date}
       />
       <View style={{marginBottom}} />
     </>

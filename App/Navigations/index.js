@@ -8,11 +8,12 @@ import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform, Alert} from 'react-native';
+import {Platform, Alert, Linking} from 'react-native';
 import {useAsyncStorage, useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
 import {useNotify} from 'context/User/utils';
 import {useUser} from 'context/User';
+import {Text} from 'components';
 
 const Stack = createStackNavigator();
 
@@ -59,8 +60,7 @@ import VerifyUserPortrait from 'containers/User/VerifyInfo/VerifyUserPortrait';
 import VerifyEmail from 'containers/User/VerifyInfo/VerifyEmail';
 import VerifySuccess from 'containers/User/VerifyInfo/VerifySuccess';
 import RegionSelect from 'containers/User/RegionSelect';
-import TransactionFailure from 'containers/Wallet/TransactionFailure';
-import TransactionSuccess from 'containers/Wallet/TransactionSuccess';
+import TransactionResult from 'containers/Wallet/TransactionResult';
 import LanguageSetting from 'containers/User/LanguageSetting';
 import MyWallet from 'containers/Home/MyWallet';
 import TransferPhone from 'containers/Wallet/TransferPhone';
@@ -71,7 +71,9 @@ import SmartOTPResult from 'containers/User/SmartOTP/SmartOTPResult';
 import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
 import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
 import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
+import MapBankFlow from 'containers/Wallet/Bank/MapBankFlow';
 import BankLinked from 'containers/Wallet/Bank/BankLinked';
+import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
 import SelectMoney from 'containers/Wallet/SelectMoney';
@@ -86,6 +88,7 @@ import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferResults from 'containers/Wallet/QRPay/TransferResults';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
+import BankOTP from 'containers/Wallet/BankOTP';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -201,14 +204,26 @@ const AppNavigator = () => {
       };
     },
   };
+
   const linking = {
     prefixes: ['epay://'],
-    config: {},
+    config: {
+      [SCREEN.QR_TRANSFER]: {path: ':id', parse: {id: id => `${id}`}},
+    },
+    // getStateFromPath: (path, options) => {
+    //   console.log('path, options :> ', path, options);
+    // },
+    getInitialURL: async () => {
+      let url = await Linking.getInitialURL();
+      console.log('Linking.getInitialURL() :>> ', url);
+      // Alert.alert('', url);
+    },
   };
   return (
     <NavigationContainer
       ref={Navigator.setContainer}
       linking={linking}
+      fallback={<Text></Text>}
       onReady={() => (isReadyRef.current = true)}
     >
       <KeyboardStateProvider>
@@ -268,8 +283,8 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.BANK_RESULT} component={BankResult} />
           <Stack.Screen name={SCREEN.NOTIFICATION} component={Notification} />
           <Stack.Screen
-            name={SCREEN.TRANSACTION_SUCCESS}
-            component={TransactionSuccess}
+            name={SCREEN.TRANSACTION_RESULT}
+            component={TransactionResult}
           />
           <Stack.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
           <Stack.Screen name={SCREEN.TOP_UP} component={TopUp} />
@@ -324,10 +339,6 @@ const AppNavigator = () => {
             name={SCREEN.VERIFY_SUCCESS}
             component={VerifySuccess}
           />
-          <Stack.Screen
-            name={SCREEN.TRANSACTION_FAILURE}
-            component={TransactionFailure}
-          />
           <Stack.Screen name={SCREEN.REGION_SELECT} component={RegionSelect} />
           <Stack.Screen
             name={SCREEN.LANGUAGE_SETTING}
@@ -348,7 +359,11 @@ const AppNavigator = () => {
             name={SCREEN.SMART_OTP_RESULT}
             component={SmartOTPResult}
           />
-          <Stack.Screen name={SCREEN.BANK_LINKED} component={BankLinked} />
+          <Stack.Screen name={SCREEN.MAP_BANK_FLOW} component={MapBankFlow} />
+          <Stack.Screen
+            name={SCREEN.BANK_KYC_SCREEN}
+            component={BankLinkKYCInfo}
+          />
           <Stack.Screen name={SCREEN.BANK_DETAIL} component={BankDetail} />
           <Stack.Screen name={SCREEN.LIMIT_SETTING} component={LimitSetting} />
           <Stack.Screen
@@ -376,6 +391,7 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
+          <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

@@ -25,29 +25,29 @@ import SelectBank from 'components/QRPay/SelectBank';
 
 const Confirmation = () => {
   const translation = useTranslation();
-  let {height} = useWindowDimensions();
-  let [loading, setLoading] = useState(false);
   let [open, setOpen] = useState(false);
-  const {transTypeText, data, onContinue} = useConfirmation();
+  const {
+    transTypeText,
+    data,
+    onContinue,
+    bank,
+    continueButtonTitle,
+    sourceTitle,
+    enableSourcePicker,
+  } = useConfirmation();
 
   const [showModal, setShowModal] = React.useState(false);
 
   let forgotRef = useRef({
     phone: '',
   });
+
   const onChange = (key, val) => {
     forgotRef.current[key] = val;
   };
 
   const handleChange = e => {
-    if (e === '1') {
-      setOpen(false);
-      Navigator.navigate(SCREEN.TRANSACTION_SUCCESS);
-    }
-    if (e === '0') {
-      setOpen(!open);
-      //Navigator.navigate(SCREEN.TRANSACTION_FAILURE);
-    }
+    Navigator.navigate(SCREEN.TRANSACTION_RESULT);
   };
   const toggleModal = () => {
     setOpen(!open);
@@ -56,13 +56,23 @@ const Confirmation = () => {
   return (
     <>
       <HeaderBg>
-        <Header title={'Xác nhận ' + transTypeText} back />
+        <Header
+          title={translation.topup.confirmTitle.replace('%', transTypeText)}
+          back
+        />
       </HeaderBg>
-      <ScrollView style={base.wrap}>
+      <View style={base.wrap}>
         <View style={base.container}>
-          <SelectBank onPress={() => setShowModal(!showModal)} />
-          <Text bold fs="h6" mb={20}>
-            Thông tin {transTypeText}
+          <SelectBank
+            onPress={() => {
+              setShowModal(!showModal);
+            }}
+            // disabled={!enableSourcePicker}
+            sourceTitle={sourceTitle}
+            bankInfo={bank}
+          />
+          <Text bold fs="h6" mt={30} mb={20}>
+            {translation.topup.detailTitle.replace('%', transTypeText)}
           </Text>
 
           <View style={styles.block}>
@@ -82,7 +92,9 @@ const Confirmation = () => {
                       },
                     ]}
                   >
-                    <Text style={styles.textLeft}>{item.name}</Text>
+                    <Text size={Fonts.H6} style={styles.textLeft}>
+                      {item.name}
+                    </Text>
                     <Text
                       bold={item.bold}
                       size={Fonts.H6}
@@ -96,18 +108,18 @@ const Confirmation = () => {
             })}
           </View>
         </View>
-      </ScrollView>
-      <View style={[base.wrap, base.container]}>
-        <Text>
-          Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với{' '}
-          <Text underline>
-            Thoả thuận Người sử dụng, Chính sách quyền riêng tư{' '}
-          </Text>
-          và <Text underline>Chính sách rút tiền</Text> của Epay
+      </View>
+      <View style={styles.confirmButtonContainer}>
+        <Text size={Fonts.H4} mb={10}>
+          {translation.acceptTerm.when}
+          <Text underline>{translation.acceptTerm.contract}</Text>
+          {translation.acceptTerm.and}
+          <Text underline>{translation.acceptTerm.topup}</Text>
+          {translation.acceptTerm.of}
         </Text>
       </View>
       <View style={base.boxBottom}>
-        <Button label="Tiếp tục" onPress={onContinue} />
+        <Button label={continueButtonTitle} onPress={onContinue} />
       </View>
       <Modal
         isVisible={open}
@@ -173,6 +185,11 @@ const styles = StyleSheet.create({
   textRight: {
     fontSize: Fonts.H6,
     color: Colors.black,
+  },
+  confirmButtonContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingHorizontal: Spacing.PADDING,
   },
 });
 export default Confirmation;

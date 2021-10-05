@@ -30,12 +30,17 @@ const SmartOTPInput = ({onFilled, message, numDigits = 6}) => {
     textInputRef.current && textInputRef.current.focus();
   }, [isFocused]);
 
+  useEffect(() => {
+    if (!!message) {
+      setCode('');
+    }
+  }, [message]);
   return (
     <View style={styles.container}>
       <TextInput
         ref={textInputRef}
         value={code}
-        keyboardType="numeric"
+        keyboardType="number-pad"
         style={styles.textInput}
         onChangeText={onChange}
       />
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
   },
   message: {
     color: Colors.Highlight,
+    textAlign: 'center',
   },
   textInput: {
     display: 'none',

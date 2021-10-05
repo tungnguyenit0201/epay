@@ -81,7 +81,8 @@ const TransactionResult = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text style={styles.textLeft}>{item.label}</Text>
 
                     <Text style={styles.textRight}>{item.value}</Text>
@@ -91,7 +92,7 @@ const TransactionResult = () => {
             })}
           </View>
         </View>
-        <View style={{height: 50}}></View>
+        <View style={{height: 50}} />
       </ScrollView>
       <View style={[base.boxBottom]}>
         <Button

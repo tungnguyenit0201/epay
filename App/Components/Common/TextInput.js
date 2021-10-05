@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -6,11 +6,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { Icon } from 'components';
-import { Colors, Fonts, Images, Spacing } from 'themes';
+import {Icon} from 'components';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import Text from './Text';
-import { View } from 'react-native-ui-lib';
-import { scale } from 'utils/Functions';
+import {View} from 'react-native-ui-lib';
+import {scale} from 'utils/Functions';
 
 export default React.forwardRef(
   (
@@ -25,6 +25,7 @@ export default React.forwardRef(
       marginBottom = scale(10),
       error,
       showErrorLabel = true,
+      errorStyle,
       label,
       required,
       rightComponent,
@@ -46,16 +47,16 @@ export default React.forwardRef(
     const keyboardType = email
       ? 'email-address'
       : numeric
-        ? 'number-pad'
-        : phone
-          ? 'phone-pad'
-          : 'default';
+      ? 'number-pad'
+      : phone
+      ? 'phone-pad'
+      : 'default';
 
     const [showPassword, setShowPassword] = useState(false);
 
     const onChangeText = text => {
       if (alphanumeric) {
-        const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/ug);
+        const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
         onChange?.(text.replace(regexForNonAlphaNum, ''));
       } else {
         const regexValid = new RegExp(regex).test(text);
@@ -87,18 +88,21 @@ export default React.forwardRef(
                   top: 14,
                   left: 14,
                 },
-              ]}>
+              ]}
+            >
               <Image source={leftIcon} style={styles.icon_lock_img} />
             </View>
           )}
 
-          <View style={[
-            styles.inputContainer,
-            error && styles.error,
-            Boolean(leftIcon) && { paddingLeft: 50 },
-            (isDeleted || password) && { paddingRight: Spacing.PADDING * 2 },
-            style,
-          ]}>
+          <View
+            style={[
+              styles.inputContainer,
+              error && [styles.error, errorStyle],
+              Boolean(leftIcon) && {paddingLeft: 50},
+              (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
+              style,
+            ]}
+          >
             <TextInput
               ref={ref}
               autoCapitalize={'none'}
@@ -108,22 +112,20 @@ export default React.forwardRef(
               textContentType={textContentType}
               importantForAutofill={'yes'}
               placeholder={placeholder}
-              style={[
-                styles.textStyle,
-                textStyle,
-              ]}
+              style={[styles.textStyle, textStyle, errorStyle]}
               placeholderTextColor={placeholderTextColor || Colors.BOTTOMBORDER}
               onChangeText={onChangeText}
               keyboardType={keyboardType}
               secureTextEntry={password && !showPassword}
               value={value}
-              onBlur={(event) => {
+              onBlur={event => {
                 if (value && trimOnBlur) {
                   onChangeText?.(value.trim?.());
                 }
                 onBlur?.(event);
               }}
-              {...props} />
+              {...props}
+            />
           </View>
           {!!password && (
             <Pressable
@@ -132,10 +134,11 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: scale(12),
                 top: scale(12),
-              }}>
+              }}
+            >
               <Image
                 source={showPassword ? Images.Eye : Images.EyeGray}
-                style={{ width: scale(20), height: scale(20) }}
+                style={{width: scale(20), height: scale(20)}}
                 resizeMode="contain"
               />
             </Pressable>
@@ -147,13 +150,14 @@ export default React.forwardRef(
               style={{
                 position: 'absolute',
                 right: 15,
-                top: 14,
-              }}>
+                top: 18,
+              }}
+            >
               <Icon
-                icon={Images.Transfer.CloseCircle}
+                icon={Images.CloseThin}
                 style={{
-                  width: scale(17),
-                  height: scale(17),
+                  width: scale(12),
+                  height: scale(12),
                 }}
               />
             </TouchableOpacity>
@@ -165,7 +169,7 @@ export default React.forwardRef(
             {error}
           </Text>
         )}
-        <View style={{ marginBottom }} />
+        <View style={{marginBottom}} />
       </>
     );
   },
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingHorizontal: scale(10),
     paddingVertical: scale(2),
-    minHeight: 48,
+    height: 48,
     borderRadius: scale(8),
     backgroundColor: Colors.white,
     borderWidth: 1,

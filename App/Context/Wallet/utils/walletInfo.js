@@ -29,9 +29,9 @@ const useWalletInfo = () => {
   return {onGetWalletInfo};
 };
 
-const useMoney = () => {
+const useMoney = (showing = false) => {
   const isFocused = useIsFocused();
-  let [showMoney, setShowMoney] = useState(false);
+  let [showMoney, setShowMoney] = useState(showing);
   const {onGetWalletInfo} = useWalletInfo();
 
   useEffect(() => {

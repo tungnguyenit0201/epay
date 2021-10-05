@@ -16,6 +16,7 @@ import GENDER from './Enums/Gender';
 import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
+import CONFIRM_METHODS from './Enums/ConfirmMethod';
 
 export {
   TEXT,
@@ -36,4 +37,5 @@ export {
   KYCType,
   TERM_TYPE,
   TRANS_DETAIL,
+  CONFIRM_METHODS,
 };
