@@ -18,7 +18,8 @@ const Banner = ({
       style={[styles.item, styleItem]}
       onPress={() => {
         Navigator.push(item.screen);
-      }}>
+      }}
+    >
       <Image source={item.img} style={[styles.img, styleImg]} />
     </TouchableOpacity>
   );
@@ -31,7 +32,8 @@ const Banner = ({
         {
           width: scale(width),
         },
-      ]}>
+      ]}
+    >
       <Item item={item} styleItem={styleItem} styleImg={styleImg} />
     </View>
   );
@@ -41,7 +43,7 @@ const Banner = ({
       data={data}
       renderItem={renderItem}
       keyExtractor={(item, index) => `${item.name}-${Math.random(0, 100)}`}
-      //showsHorizontalScrollIndicator={true}
+      showsHorizontalScrollIndicator={false}
       horizontal={true}
       style={[styles.list, style]}
     />

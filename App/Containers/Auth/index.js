@@ -44,7 +44,8 @@ const Auth = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onCheckPhoneExist}>
+        onSubmit={onCheckPhoneExist}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -69,12 +70,13 @@ const Auth = () => {
                 onBlur={handleBlur('phone')}
                 error={touched.phone && errors.phone}
                 value={values.phone}
-                leftIcon={Images.Phone_1}
+                //leftIcon={Images.Phone_1}
                 isDeleted={values.phone}
               />
 
               <FooterContainer
-                style={[styles.absolute, styles.botZero, {width: width}]}>
+                style={[styles.absolute, styles.botZero, {width: width}]}
+              >
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}

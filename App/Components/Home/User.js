@@ -18,7 +18,8 @@ const User = ({data, style}) => {
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
-        style={[styles.user, styles.flex1]}>
+        style={[styles.user, styles.flex1]}
+      >
         <Text bold style={[styles.text, styles.textSize1]}>
           {personalInfo?.FullName}
         </Text>
@@ -44,7 +45,8 @@ const User = ({data, style}) => {
           style={styles.noti}
           onPress={() => {
             Navigator.navigate(SCREEN.NOTIFICATION);
-          }}>
+          }}
+        >
           <Text style={styles.notiText}>10</Text>
         </TouchableOpacity>
       </View>
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 10,
   },
-  //tho-------------
+  //----------------
   flex1: {flex: 1},
   //----------------
   textSize1: {fontSize: Fonts.SM},

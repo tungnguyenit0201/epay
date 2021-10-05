@@ -58,13 +58,14 @@ const Account = () => {
         ) : (
           <TouchableOpacity onPress={onGetConnectedBank} style={styles.item}>
             <Text style={styles.number} bold>
-              {formatMoney(userInfo?.myWallet, true)}
+              {`${formatMoney(userInfo?.myWallet)} đ`}
             </Text>
           </TouchableOpacity>
         )}
         <TouchableOpacity
           style={base.leftAuto}
-          onPress={() => setShowMoney(!showMoney)}>
+          onPress={() => setShowMoney(!showMoney)}
+        >
           <Icon icon={showMoney ? Images.Eye : Images.EyeGray} size={20} />
         </TouchableOpacity>
       </View>
@@ -73,7 +74,8 @@ const Account = () => {
 
       <TouchableOpacity
         style={[base.row, {marginBottom: 10}]}
-        onPress={goToBankLinked}>
+        onPress={goToBankLinked}
+      >
         <Text semibold mr={5}>
           {translation.bank_linking}
           <Text>({listConnectBank?.length})</Text>

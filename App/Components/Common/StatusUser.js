@@ -39,11 +39,12 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
     <>
       <Button
         radius={radius}
+        bgImg={0}
         bg={setBg}
         size={size}
         color={Colors.white}
         label={getStatusVerifiedText()}
-        style={[{minWidth: 120}, style]}
+        style={[{minWidth: 93}, style]}
         onPress={() => {
           statusVerified == PERSONAL_IC.INACTIVE && onVerify();
         }}

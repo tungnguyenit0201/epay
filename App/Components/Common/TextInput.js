@@ -150,14 +150,14 @@ export default React.forwardRef(
               style={{
                 position: 'absolute',
                 right: 15,
-                top: 14,
+                top: 18,
               }}
             >
               <Icon
-                icon={Images.Transfer.CloseCircle}
+                icon={Images.CloseThin}
                 style={{
-                  width: scale(17),
-                  height: scale(17),
+                  width: scale(12),
+                  height: scale(12),
                 }}
               />
             </TouchableOpacity>

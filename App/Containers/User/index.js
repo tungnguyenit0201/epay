@@ -183,8 +183,11 @@ const User = () => {
           <Button
             onPress={onLogout}
             type={1}
-            label={translation.log_out}
+            label={'Đăng xuất'} //TODO: translate
             bold
+            style={base.boxShadow}
+            bgImg={0}
+            color={Colors.black}
           />
         </View>
       </ScrollView>
