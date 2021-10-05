@@ -174,8 +174,8 @@ const styles = StyleSheet.create({
     marginRight: scale(5),
   },
   tagActive: {
-    backgroundColor: Colors.cl1,
-    borderColor: Colors.cl1,
+    backgroundColor: Colors.blue,
+    borderColor: Colors.blue,
   },
 
   flexRow: {flexDirection: 'row', paddingBottom: 15},

@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 10,
   },
-  //tho-------------
+  //----------------
   flex1: {flex: 1},
   //----------------
   textSize1: {fontSize: Fonts.SM},

@@ -123,19 +123,19 @@ const Home = () => {
           />
         </View>
       </HeaderBg>
-      <ScrollView style={base.wrap}>
-        <View style={base.container}>
-          <DinhDanh />
-
-          <Banner data={dataBanner} />
-        </View>
-        <View style={base.container}>
-          <IconList />
-        </View>
-
-        <View style={styles.bottom} />
-      </ScrollView>
-      <Image source={require('images/wave.png')} style={styles.bgImg} />
+      <View style={[base.wrap, styles.flex1]}>
+        <Image source={require('images/wave.png')} style={styles.bgImg} />
+        <ScrollView>
+          <View style={base.container}>
+            <DinhDanh />
+            <Banner data={dataBanner} />
+          </View>
+          <View style={base.container}>
+            <IconList />
+          </View>
+          <View style={styles.bottom} />
+        </ScrollView>
+      </View>
 
       {firstLogin && (
         <Modal
