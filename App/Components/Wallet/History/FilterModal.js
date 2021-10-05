@@ -7,39 +7,15 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {
-  Header,
-  HeaderBg,
-  Text,
-  Button,
-  Icon,
-  DatePicker,
-  Row,
-  Col,
-} from 'components';
+import {Header, HeaderBg, Text, Button, DatePicker, Row, Col} from 'components';
 import {useTranslation} from 'context/Language';
-import {formatMoney, scale} from 'utils/Functions';
+import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
-import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
+import {TRANS_DETAIL} from 'configs/Constants';
 import Modal from 'react-native-modal';
-import moment from 'moment';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import FooterContainer from 'components/Auth/FooterContainer';
+import Calendar from 'components/Wallet/History/Calendar';
 import _ from 'lodash';
-
-// import {LocaleConfig} from 'react-native-calendars';
-
-//use to change day name,month name, must to set all,
-//can not set each orther@@
-// LocaleConfig.locales['fr'] = {
-//   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-//   monthNamesShort: ['Janv.','Févr.','Mars','Avril','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
-//   dayNames: ['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'],
-//   dayNamesShort: ['CN','T2','T3','T4','T5','T6','T7'],
-//   today: 'Aujourd\'hui'
-// };
-
-// LocaleConfig.defaultLocale = 'fr';
 
 const ItemType1 = ({
   title,
@@ -242,122 +218,6 @@ const FilterModal = ({
   onResetTempFilter,
 }) => {
   const translation = useTranslation();
-  const [chooseService, setChooseService] = useState(false);
-  const [transactionList, setTransactionList] = useState([
-    {
-      id: `id1-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.CardReceive,
-      name: 'Chuyển tiền',
-      isChecked: false,
-    },
-    {
-      id: `id2-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.CardSend,
-      name: 'Nhận tiền',
-      isChecked: false,
-    },
-    {
-      id: `id3-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.CardEdit,
-      name: 'Nạp tiền',
-      isChecked: false,
-    },
-    {
-      id: `id4-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.CardTick,
-      name: 'Thanh toán',
-      isChecked: false,
-    },
-    {
-      id: `id5-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.EmptyWalletChange,
-      name: 'Hoàn tiền',
-      isChecked: false,
-    },
-  ]);
-
-  const [serviceList, setServiceList] = useState([
-    {
-      id: `id1-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.Car,
-      name: 'Giao thông',
-      isChecked: false,
-    },
-    {
-      id: `id2-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.ShieldTick,
-      name: 'Bảo hiểm',
-      isChecked: false,
-    },
-    {
-      id: `id3-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.Passport,
-      name: 'Sân bay',
-      isChecked: false,
-    },
-    {
-      id: `id4-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.Medic,
-      name: 'Vaccine',
-      isChecked: false,
-    },
-    {
-      id: `id5-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.Warning,
-      name: 'Công an',
-      isChecked: false,
-    },
-    {
-      id: `id6-${Math.random(0, 100)}`,
-      icon: Images.TransactionHistory.Passport,
-      name: 'Giao thông',
-      isChecked: false,
-    },
-  ]);
-
-  const onChooseTransaction = id => {
-    // console.log(transactionList);
-    if (chooseService) {
-      setChooseService(false);
-      setServiceList(
-        serviceList.map((item, index) => {
-          item.isChecked = false;
-          return {...item};
-        }),
-      );
-    }
-
-    setTransactionList(
-      transactionList.map((item, index) => {
-        if (item.id === id) {
-          item.isChecked = !item.isChecked;
-        }
-        return {...item};
-      }),
-    );
-  };
-
-  const onChooseService = id => {
-    // console.log(serviceList);
-    if (!chooseService) {
-      setChooseService(true);
-      setTransactionList(
-        transactionList.map((item, index) => {
-          item.isChecked = false;
-          return {...item};
-        }),
-      );
-    }
-
-    setServiceList(
-      serviceList.map((item, index) => {
-        if (item.id === id) {
-          item.isChecked = !item.isChecked;
-        }
-        return {...item};
-      }),
-    );
-  };
 
   return (
     //TODO: Translate
@@ -385,133 +245,13 @@ const FilterModal = ({
               Lọc theo ngày tháng
             </Text>
 
-            <Row space={24}>
-              <Col width="50%" space={24}>
-                <View style={[styles.flexRow, styles.alignCenter]}>
-                  <Text fs="md" mr={10}>
-                    Từ:
-                  </Text>
-                  <DatePicker
-                    // label={translation.date_of_birth_ddmmyyyy}
-                    // value={info.DateOfBirth}
-                    // value={''}
-                    // required
-                    placeholder="dd/mm/yyyy"
-                    noIconBg
-                    style={[styles.flex1, styles.h1]}
-                  />
-                </View>
-              </Col>
-
-              <Col width="50%" space={24}>
-                <View style={[styles.flexRow, styles.alignCenter]}>
-                  <Text fs="md" mr={10}>
-                    Đến:
-                  </Text>
-                  <DatePicker
-                    placeholder="dd/mm/yyyy"
-                    noIconBg
-                    style={[styles.flex1, styles.h1]}
-                  />
-                </View>
-              </Col>
-            </Row>
-            <View style={styles.grayLine1}></View>
+            {/* <View style={styles.grayLine1} /> */}
           </View>
 
           <Calendar
-            // Handler which gets executed on day press. Default = undefined
-            onDayPress={day => {
-              console.log('selected day', day);
-            }}
-            // Handler which gets executed on day long press. Default = undefined
-            // onDayLongPress={(day) => {console.log('selected day', day)}}
-            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-            // monthFormat={'MM/yyyy'}
-            // Hide month navigation arrows. Default = false
-            // hideArrows={true}
-            // Replace default arrows with custom ones (direction can be 'left' or 'right')
-            renderArrow={direction => {
-              if (direction === 'left') {
-                return (
-                  <Icon
-                    icon={Images.ArrowLeft}
-                    tintColor={Colors.gray}
-                    style={[styles.iconArrow1, styles.left2]}
-                    resizeMode="contain"
-                  />
-                );
-              }
-              if (direction === 'right') {
-                return (
-                  <Icon
-                    icon={Images.ArrowRight}
-                    style={[styles.iconArrow1, styles.right1]}
-                    tintColor={Colors.gray}
-                    resizeMode="contain"
-                  />
-                );
-              }
-            }}
-            // If hideArrows = false and hideExtraDays = false do not switch month when tapping on greyed out
-            // day from another month that is visible in calendar page. Default = false
-            // disableMonthChange={true}
-            // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday
-            firstDay={1}
-            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-            // onPressArrowLeft={subtractMonth => subtractMonth()}
-            // Handler which gets executed when press arrow icon right. It receive a callback can go next month
-            // onPressArrowRight={addMonth => addMonth()}
-            // Disable left arrow. Default = false
-            // disableArrowLeft={true}
-            // Disable right arrow. Default = false
-            // disableArrowRight={true}
-            // Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates
-            // disableAllTouchEventsForDisabledDays={true}
-            // Replace default month and year title with custom one. the function receive a date as parameter
-            renderHeader={date => {
-              return (
-                <Text centered fs="h6" bold>
-                  Tháng {date.toString('MM/yyyy')}
-                </Text>
-              );
-            }}
-            markingType={'period'}
-            markedDates={{
-              '2021-09-19': {
-                startingDay: true,
-                color: Colors.blue,
-                textColor: Colors.white,
-              },
-              '2021-09-20': {color: Colors.cl5},
-              // '2021-09-21': {color: '#70d7c7', textColor: 'white', marked: true, dotColor: 'white'},
-              '2021-09-21': {color: Colors.cl5},
-              '2021-09-22': {color: Colors.cl5},
-              '2021-09-23': {
-                endingDay: true,
-                color: Colors.blue,
-                textColor: Colors.white,
-              },
-            }}
-            enableSwipeMonths={true}
-            // dayComponent={({date, state,marking}) => {
-            //   console.log(marking);
-            //   return (
-            //     <View>
-            //       <Text style={{textAlign: 'center', color: state === 'disabled' ? 'gray' : 'black'}}>
-            //         {date.day}
-            //       </Text>
-            //     </View>
-            //   );
-            // }}
-            theme={{
-              //rememder to delete comment no use
-              // selectedDayBackgroundColor: '#00adf5',
-              // selectedDayTextColor: 'red',
-              textSectionTitleColor: Colors.BLACK,
-              // 'stylesheet.calendar.header': {
-              //   backgroundColor: 'red'
-              // }
+            onSelectRange={([startDate, endDate]) => {
+              onSetTempFilter({type: 'startDate', value: startDate});
+              onSetTempFilter({type: 'endDate', value: endDate});
             }}
           />
 
