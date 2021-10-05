@@ -190,17 +190,17 @@ const useAuth = () => {
         await setToken(result?.Token);
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
 
-        Navigator.navigate(
-          firstLogin ? SCREEN.REGISTER_NAME : SCREEN.TAB_NAVIGATION,
-        );
-        if (!!route) {
-          Navigator.navigate(route?.screen, route?.params);
-          return dispatch({type: 'SET_ROUTE', route: null});
-        }
         onGetAllInfo();
         onGetWalletInfo();
         onGetConnectedBank();
-        Navigator.reset(SCREEN.TAB_NAVIGATION);
+        if (!!route) {
+          Navigator.navigate(route?.screen, route?.params);
+          return dispatch({type: 'SET_ROUTE', route: null});
+        } else {
+          firstLogin
+            ? Navigator.navigate(SCREEN.REGISTER_NAME)
+            : Navigator.reset(SCREEN.TAB_NAVIGATION);
+        }
         return;
     }
   };

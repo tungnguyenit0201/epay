@@ -11,6 +11,7 @@ import {useWalletInfo, useMoney} from './walletInfo';
 import useContacts from './contacts';
 import useHistory from './history';
 import useScanQR from './qrPay';
+import {useQRTransfer} from './qrTransfer';
 export {
   useBankInfo,
   useTopUp,
@@ -23,5 +24,6 @@ export {
   useContacts,
   useHistory,
   useScanQR,
+  useQRTransfer,
   useWithDraw,
 };

@@ -19,7 +19,8 @@ const AlertCustom = () => {
         animationType="slide"
         transparent={true}
         visible={!!error?.errorCode}
-        onBackdropPress={() => setError(null)}>
+        onBackdropPress={() => setError(null)}
+      >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             {!!error?.title && (
@@ -34,7 +35,11 @@ const AlertCustom = () => {
             {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setError(null)}>
+              onPress={() => {
+                setError(null);
+                error?.onClose && error?.onClose();
+              }}
+            >
               <Text style={styles.textStyle}>Đóng</Text>
             </Pressable>
           </View>

@@ -72,6 +72,7 @@ const SCREEN = {
   ALERT_MODAL: 'AlerModal',
   QRPAY: 'QRPay',
   QR_TRANSFER: 'QRTransfer',
+  QR_PROMOTION: 'QRPromotion',
   MAP_BANK_FLOW: 'MapBankFlow',
   BankCardInfo: 'BankCardInfo',
   BankLinked: 'BankLinked',
