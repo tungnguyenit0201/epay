@@ -53,7 +53,7 @@ const UserInfo = () => {
     AddressInfo?.Provincial;
   const data = [
     {
-      icon: require('images/profile/NapVI.png'),
+      icon: require('images/profile/User.png'),
       name: 'Họ tên',
       val: PersonalInfo?.FullName || <Text color={Colors.g4}>Chưa có</Text>,
     },
