@@ -22,6 +22,7 @@ import User from 'containers/User';
 import Home from 'containers/Home';
 import Notification from 'containers/Notification';
 import EpaySuccess from 'containers/Notification/EpaySuccess';
+import History from 'containers/Wallet/History';
 
 import {useTranslation} from 'context/Language';
 import {useCheckInfo} from 'context/Home/utils';
@@ -157,6 +158,7 @@ const TabNavigation = () => {
         <Tab.Screen name={SCREEN.USER} component={User} />
         <Tab.Screen name={SCREEN.NOTIFICATION} component={Notification} />
         <Tab.Screen name={SCREEN.EPAY_SUCCESS} component={EpaySuccess} />
+        <Tab.Screen name={SCREEN.HISTORY} component={History} />
       </Tab.Navigator>
     </View>
   );

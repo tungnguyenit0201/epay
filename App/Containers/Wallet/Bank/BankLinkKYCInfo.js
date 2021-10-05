@@ -52,7 +52,8 @@ const BankLinkKYCInfo = props => {
           District: ICInfo?.District,
           Province: ICInfo?.Province,
         }}
-        validationSchema={addressSchema}>
+        validationSchema={addressSchema}
+      >
         <FormikContent
           region={ICInfo}
           goRegionSelect={goRegionSelect}
@@ -93,7 +94,8 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
       <ScrollView
         style={{paddingHorizontal: Spacing.PADDING}}
         flex={1}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+      >
         <InputBlock
           label="Tỉnh / Thành phố"
           error={touched.Province && errors.Province}

@@ -109,7 +109,8 @@ const BankPickerScreen = props => {
 
       <ScrollView
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderContent()}
       </ScrollView>
     </View>

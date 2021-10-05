@@ -72,7 +72,8 @@ const PopUpBankLink = props => {
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 16,
-      }}>
+      }}
+    >
       <Image
         source={require('../images/bg-popup.png')}
         style={{
@@ -86,14 +87,16 @@ const PopUpBankLink = props => {
           padding: Spacing.PADDING,
           alignItems: 'center',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         <Text
           style={{
             fontSize: 16,
             fontWeight: 'bold',
             alignItems: 'center',
             marginTop: Spacing.PADDING,
-          }}>
+          }}
+        >
           {translation.connect_bank}
         </Text>
         <Text style={{}}>

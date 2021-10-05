@@ -125,7 +125,7 @@ export default function (props) {
     isSelected,
     callback,
     keyExtractor,
-                           icLabel,
+    icLabel,
   }) => {
     const idText = icLabel,
       nameText = 'Họ và tên ';
@@ -137,7 +137,8 @@ export default function (props) {
         style={[
           styles.shadow,
           {backgroundColor: isSelected ? Colors.BACKGROUND_BLUE : Colors.white},
-        ]}>
+        ]}
+      >
         <View style={{flexDirection: 'row'}}>
           <View flex={1}>
             <Text style={styles.subTitle}>{nameText}</Text>
@@ -182,7 +183,6 @@ export default function (props) {
         // type:
         isSelected: true,
       };
-
 
       return renderKYCCard(info);
     } else {
@@ -253,7 +253,8 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderBankInfo()}
         {renderBankInput()}
         {renderListKYCOptions(icInfo)}

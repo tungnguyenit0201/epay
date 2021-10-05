@@ -1,7 +1,7 @@
-import { Platform } from 'react-native';
+import {Platform} from 'react-native';
 import axios from './Axios';
-import { API } from 'configs';
-import { buildURL } from './Functions';
+import {API} from 'configs';
+import {buildURL} from './Functions';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -10,8 +10,8 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { debugData } from 'components/Common/Debug';
-import { ASYNC_STORAGE_KEY, COMMON_ENUM } from 'configs/Constants';
+import {debugData} from 'components/Common/Debug';
+import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
 import curlirize from 'axios-curlirize';
 
 let transactionID = '';
@@ -26,10 +26,10 @@ const getRequestData = async (url, params) => {
       transactionID !== null && transactionID !== ''
         ? transactionID
         : (
-          new Date().getTime() +
-          '' +
-          Math.floor(Math.random() * 10000)
-        ).toString(),
+            new Date().getTime() +
+            '' +
+            Math.floor(Math.random() * 10000)
+          ).toString(),
     ...params,
   };
 };
@@ -110,21 +110,17 @@ async function request({
             else postParams.append(key, value);
           });
         }
-        result = await requestMethod[method](
-          buildUrl,
-          postParams,
-          {
-            headers,
-          },
-        );
+        result = await requestMethod[method](buildUrl, postParams, {
+          headers,
+        });
         if (__DEV__) {
           console.log(method, buildUrl, postParams, result);
           debugData.push(result);
         }
       }
 
-      let { data, status } = result || {};
-      let { ResponseTime, Data, Signature, ErrorMessage, ErrorCode } = data || {};
+      let {data, status} = result || {};
+      let {ResponseTime, Data, Signature, ErrorMessage, ErrorCode} = data || {};
 
       console.log('[Request] URL: ' + buildUrl);
       console.log('[Request] Data: ' + JSON.stringify(result.data));
@@ -134,7 +130,7 @@ async function request({
         }
 
         if (typeof success === 'function') {
-          return success({ ...result?.data, ...JSON.parse(Data) } || result);
+          return success({...result?.data, ...JSON.parse(Data)} || result);
         }
       } else {
         if (__DEV__) {
@@ -157,7 +153,7 @@ async function request({
             ...err?.response?.data,
           });
         } else {
-          return failure({ message: result?.message });
+          return failure({message: result?.message});
         }
       }
     }
@@ -168,4 +164,4 @@ const defaultFailureHandle = error => {
   console.error(error);
 };
 
-export { request };
+export {request};

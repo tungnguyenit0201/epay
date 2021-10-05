@@ -21,14 +21,17 @@ const useHistory = () => {
   const [historyData, setHistoryData] = useState(null);
   const {setError} = useError();
   const {setLoading} = useLoading();
+  const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({
     search: '',
     startDate: moment()
       .subtract(1, 'years')
       .format(COMMON_ENUM.DATETIME_FORMAT),
     endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
-    serviceID: 0,
+    serviceID: [],
     stateID: 0,
+    type2: [],
+    tempFilter: {},
   });
 
   const parseHistory = data => {
@@ -81,7 +84,7 @@ const useHistory = () => {
       StartDate: startDate,
       EndDate: endDate,
       CodeFilter: search || '',
-      ServiceId: serviceID,
+      ServiceId: serviceID.join(',') || 0,
       StateId: stateID,
     });
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
@@ -98,12 +101,9 @@ const useHistory = () => {
   };
 
   useEffect(() => {
+    initTempFilter();
     onGetHistory();
   }, []); // eslint-disable-line
-
-  const onFilter = () => {
-    onGetHistory();
-  };
 
   const onSearch = text => {
     contentRef.current.search = text;
@@ -126,7 +126,53 @@ const useHistory = () => {
     });
   };
 
-  return {historyData, onFilter, onSearch, onDetail, onGetHistory};
+  const onToggleFilter = () => {
+    setShowFilter(showFilter ? 0 : 1);
+  };
+
+  const onFilter = () => {
+    contentRef.current = {
+      ...contentRef.current,
+      ...contentRef.current.tempFilter,
+    };
+    onToggleFilter();
+    onGetHistory();
+  };
+
+  const onSetTempFilter = ({type, value}) => {
+    contentRef.current.tempFilter[type] = value;
+  };
+
+  const onResetTempFilter = () => {
+    initTempFilter();
+    setShowFilter(showFilter + 1); // to rerender filter modal
+  };
+
+  const initTempFilter = () => {
+    contentRef.current.tempFilter = {
+      startDate: moment()
+        .subtract(1, 'years')
+        .format(COMMON_ENUM.DATETIME_FORMAT),
+      endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
+      serviceID: [],
+      stateID: 0,
+      type2: [],
+    };
+  };
+
+  return {
+    historyData,
+    isFiltering: contentRef.current.search,
+    showFilter,
+    filterData: contentRef.current.tempFilter,
+    onFilter,
+    onSearch,
+    onDetail,
+    onGetHistory,
+    onToggleFilter,
+    onSetTempFilter,
+    onResetTempFilter,
+  };
 };
 
 export default useHistory;

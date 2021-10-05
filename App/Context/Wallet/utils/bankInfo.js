@@ -26,7 +26,7 @@ import {
 import {useUser} from 'context/User';
 import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
 import {useTranslation} from 'context/Language';
-import { changeLimit } from 'services/wallet';
+import {changeLimit} from 'services/wallet';
 
 const mockIc = [
   {
@@ -187,7 +187,6 @@ export const censorCardNumber = (
   return result;
 };
 
-
 const useBankInfo = (initialValue = {}) => {
   const mapBankInfo = useRef(initialValue);
   const {phone} = useUser();
@@ -218,29 +217,31 @@ const useBankInfo = (initialValue = {}) => {
     }
   };
 
-  const onBankTransaction =  (result, params) => {
+  const onBankTransaction = (result, params) => {
     const {bankConnectInfo} = params;
     console.log(bankConnectInfo);
     dispatch({
       type: 'UPDATE_TRANSACTION_INFO',
       data: {
         result,
-        data:{
-          transType:TRANS_TYPE.ActiveCustomer,
-          bank:bankConnectInfo,
-          },
+        data: {
+          transType: TRANS_TYPE.ActiveCustomer,
+          bank: bankConnectInfo,
+        },
       },
     });
 
-    Navigator.replaceLast(SCREEN.MAP_BANK_FLOW,{screen:MapBankRoutes.BaseResultScreen,params});
+    Navigator.replaceLast(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BaseResultScreen,
+      params,
+    });
   };
 
-  const getResultButton = ()=>{
+  const getResultButton = () => {
     console.log(mapBankInfo);
   };
 
-
-   const getICLabel = (type)=>{
+  const getICLabel = type => {
     const cardList = {
       [IC_TYPE_CHAR.CMND]: translation?.id_card,
       [IC_TYPE_CHAR.CMNDQD]: translation?.militaryID,
@@ -266,7 +267,11 @@ const useBankInfo = (initialValue = {}) => {
         result?.TransState === 0
       ) {
         const {TransState, TransErrorCode, TransErrorMesage} = result || {};
-        return {tranStatus: TransState, errCode:TransErrorCode, errMessage: TransErrorMesage};
+        return {
+          tranStatus: TransState,
+          errCode: TransErrorCode,
+          errMessage: TransErrorMesage,
+        };
       } else {
         setError(result);
       }
@@ -352,16 +357,16 @@ const useBankInfo = (initialValue = {}) => {
     const result = await activeUser({phone, BankConnectInfo});
     setLoading(false);
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-      const {TransState:transState, TransCode:transCode} = result || {};
+      const {TransState: transState, TransCode: transCode} = result || {};
       dispatch({
         type: 'SET_TRAN_STATE',
         data: result?.TransState,
       });
       dispatch({
-        type:'SET_BANK_LINK_INFO',
-        data:BankConnectInfo,
+        type: 'SET_BANK_LINK_INFO',
+        data: BankConnectInfo,
       });
-      return {transState,transCode};
+      return {transState, transCode};
     } else {
       //
       // setError(result);

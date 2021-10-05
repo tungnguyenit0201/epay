@@ -30,7 +30,8 @@ const BankItem = ({title, icon, item, callback}) => (
     style={styles.item}
     onPress={() => {
       callback?.(item);
-    }}>
+    }}
+  >
     <View
       style={{
         width: 48,
@@ -39,7 +40,8 @@ const BankItem = ({title, icon, item, callback}) => (
         backgroundColor: Colors.BORDER,
         alignItems: 'center',
         justifyContent: 'center',
-      }}>
+      }}
+    >
       <Image
         source={icon}
         style={{
@@ -72,7 +74,7 @@ const BankList = forwardRef((props, ref) => {
     onChange,
     onContinue,
     onGetIcInfor,
-      getICLabel,
+    getICLabel,
   } = useBankInfo();
   const {walletInfo} = useWallet();
   const {
@@ -167,7 +169,7 @@ const BankList = forwardRef((props, ref) => {
     }
   };
 
-  const onPressPrimary =  item => {
+  const onPressPrimary = item => {
     const optionKyc = radioButtonRef.current?.getItem?.() || {};
     Navigator.push(SCREEN.MAP_BANK_FLOW, {
       screen: MapBankRoutes.BankLinkInfo,
@@ -190,7 +192,7 @@ const BankList = forwardRef((props, ref) => {
 
         icInfor?.result?.forEach((item, index) => {
           const {ICInfo} = item || {};
-          const {Number,Type} = ICInfo || {};
+          const {Number, Type} = ICInfo || {};
           const IDNumber = censorCardNumber(Number);
           const label = getICLabel(Type) + IDNumber;
           const kycInfo = {label: label, value: index + 1, data: ICInfo};
@@ -259,7 +261,8 @@ const BankList = forwardRef((props, ref) => {
             marginVertical: 8,
           },
           style,
-        ]}>
+        ]}
+      >
         <Text
           size={18}
           style={{
@@ -267,7 +270,8 @@ const BankList = forwardRef((props, ref) => {
             marginBottom: 16,
             fontSize: 18,
             marginTop: 8,
-          }}>
+          }}
+        >
           {title || translation.bank_linking}
         </Text>
         <Row>
@@ -277,7 +281,8 @@ const BankList = forwardRef((props, ref) => {
                 width={'33.333%'}
                 space={10}
                 key={index}
-                style={{marginBottom: 16}}>
+                style={{marginBottom: 16}}
+              >
                 <BankItem
                   callback={onPress}
                   bankInfo={bankInfo}

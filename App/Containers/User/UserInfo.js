@@ -126,7 +126,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.push(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -142,7 +143,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.rowTitle}>{item.name}</Text>
                   <Text style={base.leftAuto}>{item.val}</Text>
@@ -202,7 +204,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.push(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -225,7 +228,8 @@ const UserInfo = () => {
                         statusVerified == PERSONAL_IC.INACTIVE
                           ? onVerify
                           : () => onReVerify('showModal')
-                      }>
+                      }
+                    >
                       <Text style={styles.link}>
                         {statusVerified == PERSONAL_IC.INACTIVE
                           ? 'Xác thực tài khoản'
@@ -256,7 +260,8 @@ const UserInfo = () => {
                     type: 'update_email',
                     headerLabel: 'Nhập mật khẩu',
                   });
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -281,7 +286,8 @@ const UserInfo = () => {
                       Navigator.push(SCREEN.VERIFY_EMAIL, {
                         functionType: FUNCTION_TYPE.AUTH_EMAIL,
                       });
-                    }}>
+                    }}
+                  >
                     <Text style={styles.link}>Thêm email</Text>
                   </TouchableOpacity>
                 </>

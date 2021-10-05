@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Text, Header, Button, Icon, Modal} from 'components';
-import {Colors, Fonts, Images, Spacing} from 'themes';
+import {Text, Header, Button, Icon, Modal, HeaderBg} from 'components';
+import {base, Colors, Fonts, Images, Spacing} from 'themes';
 import _ from 'lodash';
 import OTPContainer from 'components/Auth/OTPContainer';
 import {useTranslation} from 'context/Language';
@@ -9,9 +9,13 @@ import {useAuth} from 'context/Auth/utils';
 import {useOTP} from 'context/Common/utils';
 import {HelpModal} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
+import {useUser} from 'context/User';
+import {scale} from 'utils/Functions';
 
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
+  const {token: isLoggedIn} = useUser();
+
   const {
     errorMessage,
     countdown,
@@ -29,7 +33,8 @@ const OTP = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -38,31 +43,53 @@ const OTP = ({route}) => {
     </TouchableOpacity>
   );
 
+  const renderOTPContainer = () => (
+    <OTPContainer
+      onChange={onChange}
+      onCodeFilled={onConfirmOTP}
+      message={errorMessage}
+      code={code}
+      countdown={countdown}
+      resentOTP={resentOTP}
+      onChangePhone={isLoggedIn ? null : onChangePhone}
+      label={label}
+      titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
+    />
+  );
+
   return (
     // TODO: translate
     <>
-      <BlueHeader>
-        <Header
-          back
-          // blackIcon
-          // avoidStatusBar
-          renderRightComponent={() => renderRightComponent()}
-          logo={Images.logoEpay}
-        />
-
-        <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
-          <OTPContainer
-            onChange={onChange}
-            onCodeFilled={onConfirmOTP}
-            message={errorMessage}
-            code={code}
-            countdown={countdown}
-            resentOTP={resentOTP}
-            onChangePhone={onChangePhone}
-            label={label}
+      {isLoggedIn ? (
+        <>
+          <HeaderBg>
+            <Header back title="Xác thực" />
+          </HeaderBg>
+          <View
+            style={[
+              styles.wrap,
+              base.bgWhite,
+              {paddingTop: scale(28), flex: 1},
+            ]}
+          >
+            {renderOTPContainer()}
+          </View>
+        </>
+      ) : (
+        <BlueHeader>
+          <Header
+            back
+            // blackIcon
+            // avoidStatusBar
+            renderRightComponent={() => renderRightComponent()}
+            logo={Images.logoEpay}
           />
-        </View>
-      </BlueHeader>
+
+          <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
+            {renderOTPContainer()}
+          </View>
+        </BlueHeader>
+      )}
 
       <TouchableOpacity
         style={[
@@ -71,7 +98,8 @@ const OTP = ({route}) => {
           styles.bgGray,
           {paddingVertical: Spacing.PADDING - 5},
         ]}
-        onPress={() => setShowModal(true)}>
+        onPress={() => setShowModal(true)}
+      >
         <View
           style={[
             styles.lineSize,
@@ -79,7 +107,8 @@ const OTP = ({route}) => {
             styles.bgGray1,
             styles.top1,
             styles.left1,
-          ]}></View>
+          ]}
+        ></View>
         <View
           style={[
             styles.lineSize,
@@ -87,7 +116,8 @@ const OTP = ({route}) => {
             styles.bgGray1,
             styles.top1,
             styles.right1,
-          ]}></View>
+          ]}
+        ></View>
         <Image source={Images.Phone} style={styles.iconPhone} />
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>

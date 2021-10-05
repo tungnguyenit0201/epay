@@ -19,7 +19,8 @@ const MapBankFlow = () => {
       initialRouteName={MapBankRoutes.BankLinked}
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Stack.Screen
         name={MapBankRoutes.BankLinked}
         component={BankLinked}
@@ -70,7 +71,7 @@ const MapBankFlow = () => {
         component={BankCardInfo}
         options={{headerShown: false}}
       />
-         <Stack.Screen
+      <Stack.Screen
         name={MapBankRoutes.BankWebConfirm}
         component={BankWebConfirm}
         options={{headerShown: false}}

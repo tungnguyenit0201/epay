@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text, Row} from 'components';
 import {Colors, Spacing} from 'themes';
-import { scale } from 'utils/Functions';
+import {scale} from 'utils/Functions';
 
 const OTPBySmartOTPInput = ({code}) => {
   return (
@@ -21,7 +21,7 @@ export default OTPBySmartOTPInput;
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
-    marginHorizontal: scale(5)
+    marginHorizontal: scale(5),
   },
   digitContainer: {
     borderBottomColor: Colors.c16,
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
     marginLeft: Spacing.PADDING / 2,
     marginRight: Spacing.PADDING / 2,
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });

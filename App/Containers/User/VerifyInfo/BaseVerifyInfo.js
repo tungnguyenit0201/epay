@@ -102,7 +102,8 @@ const VerifyUserInfo = ({
         style={styles.modalContainer}
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}>
+        onBackdropPress={onHideModal}
+      >
         <View style={styles.modalContentContainer}>
           <ScrollView style={styles.modalScroll}>
             <View style={styles.modalTitleContainer}>
@@ -111,7 +112,8 @@ const VerifyUserInfo = ({
                 fs="h4"
                 centered
                 color={Colors.cl1}
-                style={styles.modalTitle}>
+                style={styles.modalTitle}
+              >
                 Hướng dẫn chụp hình 2 mặt chứng từ
               </Text>
             </View>

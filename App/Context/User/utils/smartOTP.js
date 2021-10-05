@@ -236,11 +236,11 @@ const useSmartOTP = params => {
     Navigator.push(SCREEN.ACTIVE_SMART_OTP);
   };
 
-  const checkValidSmartOTP = async ({otp,onSuccess}) => {
+  const checkValidSmartOTP = async ({otp, onSuccess}) => {
     const otpEncrypted = await sha256(otp);
     setLoading(true);
     let result = await checkSmartOTPKey({phone, password: otpEncrypted});
-    console.log('Check Smart OTP: '+JSON.stringify(result));
+    console.log('Check Smart OTP: ' + JSON.stringify(result));
     setLoading(false);
     switch (_.get(result, 'ErrorCode')) {
       case ERROR_CODE.SUCCESS:
@@ -248,13 +248,16 @@ const useSmartOTP = params => {
         onSuccess(true);
         return;
       case ERROR_CODE.FEATURE_SMART_OTP_PIN_WRONG_OVER_TIME:
-        result.ErrorMessage = result.ErrorMessage?.replace("%s",MAX_OTP_TIME);
+        result.ErrorMessage = result.ErrorMessage?.replace('%s', MAX_OTP_TIME);
         setError(result);
         Navigator.goBack();
         return;
       default:
-        result.ErrorMessage = result.ErrorMessage?.replace("%s",remainingRetry);
-        setRemainingRetry(remainingRetry-1);
+        result.ErrorMessage = result.ErrorMessage?.replace(
+          '%s',
+          remainingRetry,
+        );
+        setRemainingRetry(remainingRetry - 1);
         return setMessage(result?.ErrorMessage);
     }
   };

@@ -70,8 +70,6 @@ const useUserInfo = type => {
     }
   };
 
-
-
   const onUpdatePersonalInfo = async ({FullName}) => {
     try {
       setLoading(true);
