@@ -1,5 +1,5 @@
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   getTransferUser,
   getBankFee,
@@ -15,18 +15,30 @@ import {ERROR_CODE} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
+import {hidePhone} from 'utils/Functions';
 
-const useQRTransfer = () => {
+export const useQRTransfer = () => {
   const {error} = useCommon();
   const {getPhone} = useAsyncStorage();
+
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {phone} = useUser();
   const {listConnectBank} = useWallet();
+  const bankFee = useRef({});
+  const transfer = useRef({});
+  const sourceMoney = [
+    {BankId: 0, BankName: 'Ví của tôi', CardNumber: hidePhone(phone)},
+    ...listConnectBank,
+  ]; // TODO: translate
+  console.log('listConnectBank :>> ', listConnectBank);
 
+  const onChange = (key, value) => {
+    console.log('key, value :>> ', key, value);
+    transfer.current[key] = value;
+  };
   const onGetTransferUser = async () => {
     setLoading(true);
-    // await onGetBankFee();
     let result = await getTransferUser({
       phone,
       SearchPhoneNumber: '0347019930',
@@ -47,7 +59,8 @@ const useQRTransfer = () => {
       transType: TRANS_TYPE.CashTransfer,
       transFormType: transFormType || TRANS_FORM_TYPE.WALLET,
     });
-    // console.log('fee :>> ', fee, listConnectBank);
+    bankFee.current = {...bankFee.current, [bankID]: fee?.FeeInfo};
+    console.log('fee :>> ', fee);
   };
 
   const onCheckAmountLimit = async ({amount, transFormType}) => {
@@ -84,16 +97,24 @@ const useQRTransfer = () => {
       MerchantCode: 'MBG',
     });
   };
+  const onMount = async () => {
+    setLoading(true);
+
+    await Promise.all(onGetBankFee({bankID: 0, transFormType: ''}));
+    setLoading(false);
+  };
   useEffect(() => {
+    onMount();
     // onGetTransferUser();
-    // onGetBankFee({bankID: 0, transFormType: ''});
     // onCheckAmountLimit({amount: 10000000, transFormType: 3});
     // onMoneyTransfer({amount: 100000});
     // onApplyPromo();
     // onPayment();
   }, []); // eslint-disable-line
-  // return {
-  //   loading,
-  // };
+  return {
+    bankFee: bankFee.current,
+    sourceMoney,
+    transfer: transfer.current,
+    onChange,
+  };
 };
-export default useQRTransfer;

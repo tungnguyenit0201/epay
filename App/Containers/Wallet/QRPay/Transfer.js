@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   ScrollView,
-  Pressable,
   View,
   Image,
   StyleSheet,
@@ -10,30 +9,29 @@ import {
 import {
   Button,
   Text,
-  Icon,
   Header,
   HeaderBg,
-  ActionSheet,
   TextInput,
   Radio,
+  KeyboardSuggestion,
 } from 'components';
 import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
+import {scale, formatMoney} from 'utils/Functions';
 
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
-import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 
 import Modal from 'components/Common/ModalCustom';
 import Bank from 'components/QRPay/Bank';
 import {useQRTransfer} from 'context/Wallet/utils';
 const Transfer = ({route}) => {
   console.log('route :>> ', route);
-  const x = useQRTransfer(route?.params);
+  const {bankFee, sourceMoney, transfer, onChange} = useQRTransfer(
+    route?.params,
+  );
 
   const {phone} = usePhone();
   const {userInfo} = useUser();
@@ -43,6 +41,8 @@ const Transfer = ({route}) => {
   const PersonalInfo = userInfo.personalInfo;
 
   return (
+    // TODO: translate
+
     <>
       <HeaderBg mb={0}>
         <Header back title="Chuyển tiền số điện thoại" />
@@ -72,12 +72,15 @@ const Transfer = ({route}) => {
             placeholder="Nhập tiền"
             maxLength={100}
             selectTextOnFocus
+            numeric
+            onChange={text => onChange('amount', text)}
           />
 
           <TextInput
             placeholder="Nhập lời nhắn"
             maxLength={100}
             selectTextOnFocus
+            onChange={text => onChange('content', text)}
           />
           <Radio
             //onChange={onAcceptTermConditions}
@@ -89,21 +92,32 @@ const Transfer = ({route}) => {
           />
         </View>
         <View style={[base.container, {paddingTop: 20}]}>
-          <Bank myPay={0} />
+          <Bank bankFee={bankFee} sourceMoney={sourceMoney} />
         </View>
         <View style={{height: 50}}></View>
       </ScrollView>
-      <View style={styles.boxBottom}>
-        <Button
-          onPress={() => {
-            Navigator.navigate(SCREEN.QR_PROMOTION);
-          }}
-          type={1}
-          label="Tiếp tục"
-          bold
-        />
-      </View>
+      {/* <View style={base.bgWhite}>
+        <View style={styles.boxBottom}>
+          <Button
+            onPress={() => {
+              Navigator.navigate(SCREEN.QR_PROMOTION);
+            }}
+            type={1}
+            label="Tiếp tục"
+            bold
+          />
+        </View>
+      </View> */}
 
+      <KeyboardSuggestion
+        optionList={[30000, 300000, 3000000].map(x => ({
+          value: x,
+          label: formatMoney(x),
+        }))}
+        onPress={() => true}
+        onContinue={() => true}
+        isContinueEnabled={true}
+      />
       {showModal && (
         <Modal
           visible={showModal}
