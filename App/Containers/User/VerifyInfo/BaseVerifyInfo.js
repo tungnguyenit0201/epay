@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -6,14 +6,14 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import { Text, Header, Button, HeaderBg } from 'components';
-import { Images, Colors, Spacing } from 'themes';
+import {Text, Header, Button, HeaderBg} from 'components';
+import {Images, Colors, Spacing} from 'themes';
 import Progress from 'components/User/VerifyInfo/Progress';
-import { useTranslation } from 'context/Language';
+import {useTranslation} from 'context/Language';
 import Modal from 'react-native-modal';
 import Row from 'components/Common/Row';
 import Col from 'components/Common/Col';
-import { scale } from 'utils/Functions';
+import {scale} from 'utils/Functions';
 
 const VerifyUserInfo = ({
   children,
@@ -24,7 +24,6 @@ const VerifyUserInfo = ({
   showButton = true,
   showInstruction = true,
 }) => {
-
   const translation = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const ruleTexts = [
@@ -33,9 +32,9 @@ const VerifyUserInfo = ({
     'Chứng từ là bản gốc, còn hạn sử dụng.',
   ];
   const listFailedIndetityCard = [
-    { img: Images.VerifyUserInfo.cmndBlur, title: 'Chụp bị mờ' },
-    { img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng' },
-    { img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc' },
+    {img: Images.VerifyUserInfo.cmndBlur, title: 'Chụp bị mờ'},
+    {img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng'},
+    {img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc'},
   ];
 
   const onShowModal = () => {
@@ -47,10 +46,12 @@ const VerifyUserInfo = ({
   };
 
   /**
-     * RENDER CHILD VIEWS
-     */
+   * RENDER CHILD VIEWS
+   */
   const renderChildren = () =>
-    React.Children.map(React.Children.toArray(children), child => React.cloneElement(child));
+    React.Children.map(React.Children.toArray(children), child =>
+      React.cloneElement(child),
+    );
 
   return (
     <>
@@ -60,14 +61,17 @@ const VerifyUserInfo = ({
           title={translation?.account_verification}
           renderRightComponent={() => {
             if (showInstruction) {
-              return <TouchableOpacity onPress={onShowModal}>
-                <Text fs="md" color={Colors.white}>
-                  Hướng dẫn
-                </Text>
-              </TouchableOpacity>;
+              return (
+                <TouchableOpacity onPress={onShowModal}>
+                  <Text fs="md" color={Colors.white} style={styles.help}>
+                    Hướng dẫn
+                  </Text>
+                </TouchableOpacity>
+              );
             }
             return <View />;
-          }} />
+          }}
+        />
         <Progress step={step} />
         <Image
           source={Images.VerifyUserInfo.iconDown}
@@ -79,9 +83,8 @@ const VerifyUserInfo = ({
       <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
         {renderChildren()}
       </ScrollView>
-      {
-        !!showButton &&
-        <View style={styles.bottom} >
+      {!!showButton && (
+        <View style={styles.bottom}>
           <View style={styles.modalBottomButton}>
             <Button
               disabled={disableButton}
@@ -91,7 +94,7 @@ const VerifyUserInfo = ({
             />
           </View>
         </View>
-      }
+      )}
       <Modal
         isVisible={showModal}
         animationIn="slideInUp"
@@ -118,9 +121,7 @@ const VerifyUserInfo = ({
             </Text>
 
             {ruleTexts.map((e, index) => (
-              <View
-                key={index}
-                style={styles.rulesContainer}>
+              <View key={index} style={styles.rulesContainer}>
                 <Image
                   source={Images.VerifyUserInfo.tick}
                   style={styles.tickIcon}
@@ -277,6 +278,10 @@ const styles = StyleSheet.create({
   },
   bottom: {
     backgroundColor: Colors.white,
+  },
+  help: {
+    position: 'relative',
+    bottom: scale(2),
   },
 });
 

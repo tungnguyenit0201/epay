@@ -58,7 +58,7 @@ const Account = () => {
         ) : (
           <TouchableOpacity onPress={onGetConnectedBank} style={styles.item}>
             <Text style={styles.number} bold>
-              {formatMoney(userInfo?.myWallet, true)}
+              {`${formatMoney(userInfo?.myWallet)} đ`}
             </Text>
           </TouchableOpacity>
         )}
