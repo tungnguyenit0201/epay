@@ -429,6 +429,7 @@ export const setDefaultBank = async ({
       BankConnectId,
       BankId,
       ConnectionType,
+<<<<<<< App/Services/wallet.js
     },
     success: res => {
       response = res;
@@ -492,6 +493,8 @@ export const payment = async ({phone, MerchantCode, OrderId}) => {
       PhoneNumber: phone,
       MerchantCode,
       OrderId,
+=======
+>>>>>>> App/Services/wallet.js
     },
     success: res => {
       response = res;
