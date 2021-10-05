@@ -43,8 +43,6 @@ const useTopUp = () => {
     onGetConnectedBank();
     onGetDomesticBanks();
     onGetInternationalBanks();
-    
-
   }, []); // eslint-disable-line
 
   useEffect(() => {
@@ -71,14 +69,14 @@ const useTopUp = () => {
   }, [bankData]); // eslint-disable-line
 
   const onSelectBank = data => {
-    if(!data) {
+    if (!data) {
       onSetBank(null);
       return;
     }
     const {index, type} = data || {};
     let bank = bankData?.[type]?.[index];
-    let fee = bankFeeData?.[type]?.[index]
-    if(!!bank && fee) {
+    let fee = bankFeeData?.[type]?.[index];
+    if (!!bank && fee) {
       onSetBank({
         bank: bank,
         transFormType: type,

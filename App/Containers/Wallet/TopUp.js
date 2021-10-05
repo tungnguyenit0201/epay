@@ -1,9 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {Header, HeaderBg, KeyboardSuggestion} from 'components';
 import {base, Colors} from 'themes';
 import Monney from 'components/Home/Monney';
@@ -12,7 +8,7 @@ import SelectBank from 'components/User/TopUp/SelectBank';
 import {useTranslation} from 'context/Language';
 import {formatMoney} from 'utils/Functions';
 import {useTopUp} from 'context/Wallet/utils';
-import { useIsFocused } from '@react-navigation/core';
+import {useIsFocused} from '@react-navigation/core';
 
 const TopUp = () => {
   const translation = useTranslation();
@@ -34,19 +30,22 @@ const TopUp = () => {
   //   bankRef.current.reset();
   // },[isFocused]);
 
-
   return (
     <>
       <HeaderBg>
         <Header title={translation.top_up} back />
       </HeaderBg>
       <ScrollView style={base.wrap} showsVerticalScrollIndicator={false}>
-        <View style={[base.container,styles.mainContainer]}>
+        <View style={[base.container, styles.mainContainer]}>
           <View style={base.boxShadow}>
-            <Monney title={translation.topup?.walletAmount} showing/>
-            <InputMoney ref={inputRef} onChange={onChangeCash} errorStyle={{
-              borderColor: Colors.cl4,
-            }}/>
+            <Monney title={translation.topup?.walletAmount} showing />
+            <InputMoney
+              ref={inputRef}
+              onChange={onChangeCash}
+              errorStyle={{
+                borderColor: Colors.cl4,
+              }}
+            />
           </View>
 
           <SelectBank

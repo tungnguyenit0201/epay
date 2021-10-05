@@ -26,7 +26,15 @@ import SelectBank from 'components/QRPay/SelectBank';
 const Confirmation = () => {
   const translation = useTranslation();
   let [open, setOpen] = useState(false);
-  const {transTypeText, data, onContinue, bank, continueButtonTitle ,sourceTitle,enableSourcePicker} = useConfirmation();
+  const {
+    transTypeText,
+    data,
+    onContinue,
+    bank,
+    continueButtonTitle,
+    sourceTitle,
+    enableSourcePicker,
+  } = useConfirmation();
 
   const [showModal, setShowModal] = React.useState(false);
 
@@ -82,14 +90,16 @@ const Confirmation = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text size={Fonts.H6} style={styles.textLeft}>
                       {item.name}
                     </Text>
                     <Text
                       bold={item.bold}
                       size={Fonts.H6}
-                      style={styles.textRight}>
+                      style={styles.textRight}
+                    >
                       {item.value}
                     </Text>
                   </View>
@@ -177,9 +187,9 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   confirmButtonContainer: {
-    flex:1,
-    justifyContent:'flex-end',
+    flex: 1,
+    justifyContent: 'flex-end',
     paddingHorizontal: Spacing.PADDING,
-},
+  },
 });
 export default Confirmation;

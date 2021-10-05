@@ -4,7 +4,8 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  ScrollView, Pressable,
+  ScrollView,
+  Pressable,
 } from 'react-native';
 import {Text, Header, Button, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -21,30 +22,24 @@ import {scale} from 'utils/Functions';
 const OTP = props => {
   const {params} = useRoute() || {};
   const {item} = params || {};
-  const {
-    errorMessage,
-    countdown,
-    code,
-    resentOTP,
-    label,
-  } = useOTP({});
-  const {onActiveUserOTP,onBankTransaction} = useBankInfo();
+  const {errorMessage, countdown, code, resentOTP, label} = useOTP({});
+  const {onActiveUserOTP, onBankTransaction} = useBankInfo();
   const [otp, setOtp] = useState('');
   const translation = useTranslation();
   const {bankConnectInfo, transCode} = params || {};
-      // alert(JSON.stringify(params));
+  // alert(JSON.stringify(params));
 
   const onSubmit = async () => {
     try {
       const param = {
-        'BankID': bankConnectInfo?.BankId || bankConnectInfo?.BankID,
-        'TransCode': transCode,
-        'OtpCode': otp,
+        BankID: bankConnectInfo?.BankId || bankConnectInfo?.BankID,
+        TransCode: transCode,
+        OtpCode: otp,
       };
       const result = await onActiveUserOTP(param);
       onBankTransaction(true, params);
-       setOtp('');
-    } catch (e){
+      setOtp('');
+    } catch (e) {
       onBankTransaction(false, params);
       // props?.navigation?.push(SCREEN.MAP_BANK_FLOW, {
       //   screen: MapBankRoutes.BaseResultScreen,
@@ -54,61 +49,58 @@ const OTP = props => {
     }
   };
 
-  const onChange  = (value)=>{
+  const onChange = value => {
     setOtp(value);
     console.log(otp);
-
   };
 
   const renderOTP = () => {
-
     return (
-        <View>
-        <Text
-            bold
-            fs="h3"
-            style={[styles.textWhite, styles.mb1]}>{'Nhập OTP'}</Text>
-    <Text fs="h6" style={[styles.textGray, styles.mb2]}>
-      {label}
-    </Text>
-    <OTPInputView
-        style={styles.wrapOtp}
-        pinCount={6}
-        onCodeChanged={onChange}
-        // autoFocusOnLoad
-        codeInputFieldStyle={styles.otp}
-        onCodeFilled={onSubmit}
-        clearInputs={errorMessage}
-        code={otp}
-        autoFocus={true}
-    />
+      <View>
+        <Text bold fs="h3" style={[styles.textWhite, styles.mb1]}>
+          {'Nhập OTP'}
+        </Text>
+        <Text fs="h6" style={[styles.textGray, styles.mb2]}>
+          {label}
+        </Text>
+        <OTPInputView
+          style={styles.wrapOtp}
+          pinCount={6}
+          onCodeChanged={onChange}
+          // autoFocusOnLoad
+          codeInputFieldStyle={styles.otp}
+          onCodeFilled={onSubmit}
+          clearInputs={errorMessage}
+          code={otp}
+          autoFocus={true}
+        />
 
-    <View style={styles.flexRow_1}>
-      <Text style={styles.fontSize_1}>
-        Gửi lại mã xác thực (OTP) sau:
-        <Pressable
-            style={{marginTop: -3}}
-            disabled={countdown > 0}
-            onPress={resentOTP}>
-          <Text
-              style={[
-                styles.fontSize_1,
-                {
-                  color: Colors.cl1,
-                },
-              ]}>
-            {countdown > 0
-                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
-                : ' Gửi lại'}
+        <View style={styles.flexRow_1}>
+          <Text style={styles.fontSize_1}>
+            Gửi lại mã xác thực (OTP) sau:
+            <Pressable
+              style={{marginTop: -3}}
+              disabled={countdown > 0}
+              onPress={resentOTP}
+            >
+              <Text
+                style={[
+                  styles.fontSize_1,
+                  {
+                    color: Colors.cl1,
+                  },
+                ]}
+              >
+                {countdown > 0
+                  ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                  : ' Gửi lại'}
+              </Text>
+            </Pressable>
           </Text>
-        </Pressable>
-      </Text>
+        </View>
 
-
-    </View>
-
-    <Text style={styles.message}>{errorMessage}</Text>
-    </View>
+        <Text style={styles.message}>{errorMessage}</Text>
+      </View>
     );
   };
 
@@ -137,7 +129,8 @@ const OTP = props => {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderOTP()}
       </ScrollView>
       {renderButton()}

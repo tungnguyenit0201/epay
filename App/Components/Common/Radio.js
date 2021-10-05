@@ -27,7 +27,8 @@ export default ({
       <Pressable
         onPress={() => onPress(item)}
         key={item?.value}
-        style={[styles.radio, index + 1 === items.length && styles.radioEnd]}>
+        style={[styles.radio, index + 1 === items.length && styles.radioEnd]}
+      >
         <View style={styles.tickWrap}>
           {checked === item?.value && <View style={styles.tick} />}
         </View>

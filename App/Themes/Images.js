@@ -209,10 +209,10 @@ export default {
   primaryButton: require('images/Button.png'),
   borderButton: require('images/border_button.png'),
   CloseThin: require('images/CloseThin.png'),
-  Transaction:{
+  Transaction: {
     Success: require('images/icons/ic_transaction_success.png'),
     Failure: require('images/icons/ic_transaction_failed.png'),
     BGIcon: require('images/bgXacNhan.png'),
     Call: require('images/icons/ic_call.png'),
-  }
+  },
 };

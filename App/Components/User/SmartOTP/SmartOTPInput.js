@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   message: {
     color: Colors.Highlight,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   textInput: {
     display: 'none',

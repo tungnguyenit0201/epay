@@ -38,30 +38,37 @@ export default ({
       <LinearView
         // style={[{borderRadius: scale(8)}, style]}
         style={[
-            styles.button,
-            mode == 'contain' && styles.contain,
-            mode == 'outline' && styles.outline,
-            border && {borderColor: border },
-            radius && {borderRadius: radius},
-            bg && {backgroundColor: bg},
-            mt && {marginTop: mt},
-            mb && {marginBottom: mb},
-            ml && {marginLeft: ml},
-            mr && {marginRight: mr},
-            mv && {marginVertical: mv},
-            mh && {marginHorizontal: mh},
-            size == 'xxs' ? styles.xxs : '',
-            size == 'xs' ? styles.xs : '',
-            size == 'sm' ? styles.sm : '',
-            size == 'lg' ? styles.lg : '',
-            size == 'xl' ? styles.xl : '',
-            disabled && {backgroundColor: Colors.g4},
-            buttonStyle,
-            {paddingVertical: 4},
+          styles.button,
+          mode == 'contain' && styles.contain,
+          mode == 'outline' && styles.outline,
+          border && {borderColor: border},
+          radius && {borderRadius: radius},
+          bg && {backgroundColor: bg},
+          mt && {marginTop: mt},
+          mb && {marginBottom: mb},
+          ml && {marginLeft: ml},
+          mr && {marginRight: mr},
+          mv && {marginVertical: mv},
+          mh && {marginHorizontal: mh},
+          size == 'xxs' ? styles.xxs : '',
+          size == 'xs' ? styles.xs : '',
+          size == 'sm' ? styles.sm : '',
+          size == 'lg' ? styles.lg : '',
+          size == 'xl' ? styles.xl : '',
+          disabled && {backgroundColor: Colors.g4},
+          buttonStyle,
+          {paddingVertical: 4},
         ]}
-        linearColors={[Colors.primary, Colors.blue]}>
-        <View style={{...styles.button,flex:1, backgroundColor: Colors.white, borderColor: 'transparent'}}
-         >
+        linearColors={[Colors.primary, Colors.blue]}
+      >
+        <View
+          style={{
+            ...styles.button,
+            flex: 1,
+            backgroundColor: Colors.white,
+            borderColor: 'transparent',
+          }}
+        >
           {!!leftIcon && (
             <Image
               source={leftIcon}
@@ -86,7 +93,8 @@ export default ({
                 lineHeight: 20,
               },
               labelStyle,
-            ]}>
+            ]}
+          >
             {label}
             {label2 && [
               <>

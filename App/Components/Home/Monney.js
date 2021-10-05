@@ -1,15 +1,11 @@
 import React, {useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import { Icon, Text} from 'components';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Icon, Text} from 'components';
 import {Colors, Fonts, Images} from 'themes';
 import {useTranslation} from 'context/Language';
-import { useWallet } from 'context/Wallet';
-import { formatCurrency } from 'utils/Functions';
-import { useMoney } from 'context/Wallet/utils';
+import {useWallet} from 'context/Wallet';
+import {formatCurrency} from 'utils/Functions';
+import {useMoney} from 'context/Wallet/utils';
 const Monney = ({style, title, showing}) => {
   const {showMoney, setShowMoney} = useMoney(showing);
   const {wallet} = useWallet();
@@ -27,12 +23,16 @@ const Monney = ({style, title, showing}) => {
             </Text>
           ) : (
             <Text bold size={Fonts.H5} style={styles.text}>
-              {formatCurrency(wallet?.AvailableBlance, translation.topup.currency)}
+              {formatCurrency(
+                wallet?.AvailableBlance,
+                translation.topup.currency,
+              )}
             </Text>
           )}
           <TouchableOpacity
             style={{marginLeft: 10}}
-            onPress={() => setShowMoney(!showMoney)}>
+            onPress={() => setShowMoney(!showMoney)}
+          >
             <Icon
               icon={showMoney ? Images.Eye : Images.EyeGray}
               //tintColor={isMoney ? Colors.l4 : ''}
