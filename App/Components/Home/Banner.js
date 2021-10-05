@@ -41,7 +41,7 @@ const Banner = ({
       data={data}
       renderItem={renderItem}
       keyExtractor={(item, index) => `${item.name}-${Math.random(0, 100)}`}
-      //showsHorizontalScrollIndicator={true}
+      showsHorizontalScrollIndicator={false}
       horizontal={true}
       style={[styles.list, style]}
     />
