@@ -59,11 +59,11 @@ const useIconConfig = () => {
       screen: SCREEN.TOP_UP,
     },
 
-    // {
-    //   icon: Images.Homes.GiaoThong,
-    //   name: 'Giao thông',
-    //   screen: SCREEN.TOP_UP,
-    // },
+    TRAFFIC: {
+      icon: Images.Homes.GiaoThong,
+      name: 'Giao thông',
+      screen: SCREEN.TOP_UP,
+    },
     // {
     //   icon: Images.Homes.BaoHiem,
     //   name: 'Bảo hiểm',
