@@ -133,19 +133,22 @@ const StatusBtn = ({isChecked, title, onPress}) => (
   </TouchableOpacity>
 );
 
-const GroupFilter = memo(({translation, onSelect, selectedStatus}) => {
+const GroupFilter = memo(({translation, onSelect, initialData}) => {
+  const type = initialData?.serviceID ? 'serviceID' : 'type2';
   const [selectedData, setSelectedData] = useState({
-    type: 'serviceID',
-    list: [],
+    type,
+    list: initialData[type] || [],
   });
 
   const _onSelect = ({value, type}) => {
     // change type
     if (type !== selectedData.type) {
       setSelectedData({type, list: [value]});
-      onSelect &&
-        onSelect({type, value: `${value}`}) &&
-        onSelect({type: selectedData.type, value: ''});
+      if (!onSelect) {
+        return;
+      }
+      onSelect({type, value});
+      onSelect({type: selectedData.type, value: []});
       return;
     }
     // same type
@@ -156,7 +159,7 @@ const GroupFilter = memo(({translation, onSelect, selectedStatus}) => {
       list = _.difference(list, [value]);
     }
     setSelectedData({type, list});
-    onSelect && onSelect({type, value: list.join(',')});
+    onSelect && onSelect({type, value: list});
   };
 
   return (
@@ -517,6 +520,7 @@ const FilterModal = ({
           <GroupFilter
             translation={translation}
             onSelect={({type, value}) => onSetTempFilter({type, value})}
+            initialData={filterData}
             key={showModal}
           />
 

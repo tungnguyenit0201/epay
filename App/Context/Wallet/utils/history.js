@@ -28,8 +28,9 @@ const useHistory = () => {
       .subtract(1, 'years')
       .format(COMMON_ENUM.DATETIME_FORMAT),
     endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
-    serviceID: 0,
+    serviceID: [],
     stateID: 0,
+    type2: [],
     tempFilter: {},
   });
 
@@ -83,7 +84,7 @@ const useHistory = () => {
       StartDate: startDate,
       EndDate: endDate,
       CodeFilter: search || '',
-      ServiceId: serviceID,
+      ServiceId: serviceID.join(',') || 0,
       StateId: stateID,
     });
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
@@ -153,8 +154,9 @@ const useHistory = () => {
         .subtract(1, 'years')
         .format(COMMON_ENUM.DATETIME_FORMAT),
       endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
-      serviceID: 0,
+      serviceID: [],
       stateID: 0,
+      type2: [],
     };
   };
 
