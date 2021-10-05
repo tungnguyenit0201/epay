@@ -20,7 +20,7 @@ import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
+import {scale, hideCMND} from 'utils/Functions';
 
 import DinhDanh from 'components/User/DinhDanh';
 import StatusUser from 'components/Common/StatusUser';
@@ -159,7 +159,11 @@ const UserInfo = () => {
                   CMND/CCCD/Hộ chiếu
                 </Text>
                 <Text style={[styles.rowVal]}>
-                  {ICInfor?.ICNumber || <Text color={Colors.g4}>Chưa có</Text>}
+                  {ICInfor?.ICNumber ? (
+                    hideCMND(ICInfor?.ICNumber)
+                  ) : (
+                    <Text color={Colors.g4}>Chưa có</Text>
+                  )}
                 </Text>
               </View>
             </View>

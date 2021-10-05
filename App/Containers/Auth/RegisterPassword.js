@@ -92,7 +92,7 @@ const RegisterPassword = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                 />
                 <TextInput
                   password
@@ -102,7 +102,7 @@ const RegisterPassword = ({route}) => {
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                 />
                 <Text style={styles.textNote}>
                   {
@@ -138,7 +138,7 @@ const RegisterPassword = ({route}) => {
                 <Button
                   disabled={!active}
                   mt={10}
-                  label={translation?.continue}
+                  label={translation?.sign_up}
                   onPress={handleSubmit}
                 />
               </FooterContainer>
