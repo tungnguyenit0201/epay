@@ -1,5 +1,5 @@
 const COMMON_ENUM = {
   TOTP_KEY: 'R5MB5FAQNX5UIPWL',
-  DATETIME_FORMAT: 'DD-MM-YYYY hh:mm:ss',
+  DATETIME_FORMAT: 'DD-MM-YYYY HH:mm:ss',
 };
 export default COMMON_ENUM;

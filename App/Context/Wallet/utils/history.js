@@ -24,13 +24,12 @@ const useHistory = () => {
   const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({
     search: '',
-    startDate: moment()
-      .subtract(1, 'years')
-      .format(COMMON_ENUM.DATETIME_FORMAT),
+    startDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
     endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
     serviceID: [],
     stateID: 0,
     type2: [],
+    datetimeFilter: 0,
     tempFilter: {},
   });
 
@@ -77,7 +76,8 @@ const useHistory = () => {
   };
 
   const onGetHistory = async () => {
-    const {search, startDate, endDate, serviceID, stateID} = contentRef.current;
+    const {search, startDate, endDate, serviceID, stateID, datetimeFilter} =
+      contentRef.current;
     setHistoryData(null);
     const result = await getHistory({
       phone,
@@ -86,6 +86,7 @@ const useHistory = () => {
       CodeFilter: search || '',
       ServiceId: serviceID.join(',') || 0,
       StateId: stateID,
+      DatetimeFilter: datetimeFilter,
     });
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
       setError(result);
@@ -131,6 +132,7 @@ const useHistory = () => {
   };
 
   const onFilter = () => {
+    contentRef.current.tempFilter.datetimeFilter = 1;
     contentRef.current = {
       ...contentRef.current,
       ...contentRef.current.tempFilter,
@@ -157,6 +159,7 @@ const useHistory = () => {
       serviceID: [],
       stateID: 0,
       type2: [],
+      datetimeFilter: 0,
     };
   };
 

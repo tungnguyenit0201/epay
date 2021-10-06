@@ -253,6 +253,12 @@ const FilterModal = ({
               onSetTempFilter({type: 'startDate', value: startDate});
               onSetTempFilter({type: 'endDate', value: endDate});
             }}
+            {...(filterData.datetimeFilter
+              ? {
+                  initialStạrtDate: filterData.startDate,
+                  initialEndDate: filterData.endDate,
+                }
+              : {})}
           />
 
           <View style={[styles.grayLine2, styles.mt1]} />
