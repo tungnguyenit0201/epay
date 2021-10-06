@@ -209,10 +209,17 @@ export default {
   primaryButton: require('images/Button.png'),
   borderButton: require('images/border_button.png'),
   CloseThin: require('images/CloseThin.png'),
-  Transaction:{
+  Transaction: {
     Success: require('images/icons/ic_transaction_success.png'),
     Failure: require('images/icons/ic_transaction_failed.png'),
     BGIcon: require('images/bgXacNhan.png'),
     Call: require('images/icons/ic_call.png'),
-  }
+  },
+  TrafficFee: {
+    Moneys: require('images/icons/moneys.png'),
+    Station: require('images/icons/station.png'),
+    Ticket: require('images/icons/ticket.png'),
+    ArrowRight: require('images/icons/arrow-right.png'),
+    BigCar: require('images/icons/big-car.png'),
+  },
 };
