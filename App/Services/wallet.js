@@ -194,6 +194,7 @@ export const getHistory = async ({
   StartDate,
   EndDate,
   CodeFilter = '',
+  DatetimeFilter = 0,
 }) => {
   let response = null;
   await request({
@@ -206,6 +207,7 @@ export const getHistory = async ({
       StartDate,
       EndDate,
       CodeFilter,
+      DatetimeFilter,
     },
     success: res => {
       response = res;
