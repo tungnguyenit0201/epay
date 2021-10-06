@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     marginHorizontal: scale(5),
   },
   digitContainer: {
-    borderBottomColor: Colors.c16,
+    borderBottomColor: Colors.cl6,
     borderBottomWidth: 3,
     paddingTop: Spacing.PADDING / 2,
     marginLeft: Spacing.PADDING / 2,

@@ -88,6 +88,7 @@ import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferResults from 'containers/Wallet/QRPay/TransferResults';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
+import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 
 const AppNavigator = () => {
@@ -391,6 +392,8 @@ const AppNavigator = () => {
           />
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
+          <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
+
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
         </Stack.Navigator>
       </KeyboardStateProvider>
