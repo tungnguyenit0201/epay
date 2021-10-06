@@ -33,7 +33,8 @@ const Login = ({route}) => {
           style={styles.wrap}
           title={translation.enter_your_password}
           text={
-            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+            //translation.password_for_account_security_and_transaction_confirmation_at_checkout
+            _.get(route, 'params.phone', '')
           }
         />
       </View>
@@ -72,7 +73,7 @@ const Login = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.password && errors.password}
                   value={values.password}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                   autoFocus
                   style={styles.wrap}
                 />
@@ -85,7 +86,7 @@ const Login = ({route}) => {
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.linkText]}>Đổi số điện thoại</Text>
+                    <Text style={[styles.linkText]}>Đổi SĐT</Text>
                   </Pressable>
                 </View>
               </View>

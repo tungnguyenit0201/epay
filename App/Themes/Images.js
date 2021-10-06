@@ -10,8 +10,10 @@ export default {
   Up: require('images/Up.png'),
   Down: require('images/Down.png'),
   Right: require('images/right.png'),
-  Eye: require('images/Eye.png'),
-  EyeGray: require('images/EyeGray.png'),
+  Eye2: require('images/Eye.png'),
+  EyeGray2: require('images/EyeGray.png'),
+  Eye: require('images/Eye-2.png'),
+  EyeGray: require('images/Eye-slash-2.png'),
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),
@@ -209,10 +211,10 @@ export default {
   primaryButton: require('images/Button.png'),
   borderButton: require('images/border_button.png'),
   CloseThin: require('images/CloseThin.png'),
-  Transaction:{
+  Transaction: {
     Success: require('images/icons/ic_transaction_success.png'),
     Failure: require('images/icons/ic_transaction_failed.png'),
     BGIcon: require('images/bgXacNhan.png'),
     Call: require('images/icons/ic_call.png'),
-  }
+  },
 };
