@@ -65,6 +65,10 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
           setError(result);
           Navigator.popToTop();
           return;
+        default:
+          setError(result);
+          Navigator.goBack();
+          return;
       }
     }
     // success
@@ -164,7 +168,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   };
 
   useEffect(() => {
-    onGenOtp();
+    functionType !== FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL && onGenOtp();
   }, [phone, functionType]); // eslint-disable-line
 
   useEffect(() => {

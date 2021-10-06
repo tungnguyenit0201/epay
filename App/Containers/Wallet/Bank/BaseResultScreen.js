@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Image, ScrollView, StyleSheet,Switch, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Switch, View} from 'react-native';
 import {
   Button,
   Col,
@@ -25,25 +25,21 @@ const result_bank_type = {
 
 const BaseResultScreen = props => {
   const {params} = useRoute() || {};
-  const {
-    result,
-    transBody,
-    secondaryButton,
-    positiveButton,
-  } = params || {};
+  const {result, transBody, secondaryButton, positiveButton} = params || {};
   const {bankConnectInfo} = useWallet();
 
   console.log(JSON.stringify(bankConnectInfo));
   const transType = params?.transType || TRANS_TYPE.ActiveCustomer;
   const translation = useTranslation();
-  const {onChange,onSetMoneySource, getResultButton } = useBankInfo(params);
+  const {onChange, onSetMoneySource, getResultButton} = useBankInfo(params);
 
-  const {message,onRetry, onBackHome,statusTitle,description} = useTransactionResult(TRANS_TYPE.ActiveCustomer);
+  const {message, onRetry, onBackHome, statusTitle, description} =
+    useTransactionResult(TRANS_TYPE.ActiveCustomer);
 
   const [isEnableSource, setEnableSource] = useState(false);
-const transTitle = 'Liên kết ngân hàng';//statusTitle ||
-const transDesc = description || 'Ngân hàng {bankName}\n' +
-    'số tài khoản {accNumber}';
+  const transTitle = 'Liên kết ngân hàng'; //statusTitle ||
+  const transDesc =
+    description || 'Ngân hàng {bankName}\n' + 'số tài khoản {accNumber}';
 
   const renderBody = () => {
     switch (transType) {
@@ -56,23 +52,27 @@ const transDesc = description || 'Ngân hàng {bankName}\n' +
     }
   };
 
-  const toggleSwitch = async ()=>{
+  const toggleSwitch = async () => {
     //"BankConnectId":1600,"BankCode":"VCB","BankName":"Vietcombank","CardNumber":"",
     // "CardHolder":"NGUYEN THANH TAM","BankNumber":"666666","ConnectTime":"13-09-2021 18:17:05","IsDefault":true,
-    setEnableSource(prev=>!prev);
+    setEnableSource(prev => !prev);
     // const data= await
   };
   const renderBankBody = () => {
-    return <View>
-      <View flexDirection={'row'} style={{alignItems: 'center'}}>
-        <Text style={{flex:1}}>Đặt làm nguồn tiền mặc định</Text>
-        <Switch trackColor={{ false: '#767577', true: '#81b0ff' }}
-                // thumbColor={isEnableSource ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnableSource}/>
+    return (
+      <View>
+        <View flexDirection={'row'} style={{alignItems: 'center'}}>
+          <Text style={{flex: 1}}>Đặt làm nguồn tiền mặc định</Text>
+          <Switch
+            trackColor={{false: '#767577', true: '#81b0ff'}}
+            // thumbColor={isEnableSource ? '#f5dd4b' : '#f4f3f4'}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnableSource}
+          />
+        </View>
       </View>
-    </View>;
+    );
   };
 
   const renderIcBody = () => {
@@ -122,7 +122,7 @@ const transDesc = description || 'Ngân hàng {bankName}\n' +
                 bg={Colors.white}
                 border={Colors.cl1}
                 color={Colors.cl1}
-                  label={translation.common.goBackHome}
+                label={translation.common.goBackHome}
                 // label={secondaryButton?.title}
                 labelStyle={{fontSize: 14}}
                 onPress={onBackHome}
@@ -141,7 +141,6 @@ const transDesc = description || 'Ngân hàng {bankName}\n' +
                 // style={styles.retryButton}
                 // fs={Fonts.FONT_MEDIUM
                 onPress={onRetry}
-
               />
             </Col>
           )}
@@ -153,7 +152,7 @@ const transDesc = description || 'Ngân hàng {bankName}\n' +
   return (
     <>
       <HeaderBg>
-        <Header title="Kết quả giao dịch"  />
+        <Header title="Kết quả giao dịch" />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={base.container}>

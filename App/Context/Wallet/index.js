@@ -14,6 +14,7 @@ const defaultWalletInfo = {
   transaction: {},
   wallet: {},
   icInfo: {},
+  qrTransaction: {},
 };
 const WalletContext = createContext({});
 export const WalletProvider = ({children}) => {

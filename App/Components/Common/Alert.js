@@ -34,7 +34,10 @@ const AlertCustom = () => {
             {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setError(null)}>
+              onPress={() => {
+                setError(null);
+                error?.onClose && error?.onClose();
+              }}>
               <Text style={styles.textStyle}>Đóng</Text>
             </Pressable>
           </View>

@@ -8,28 +8,40 @@ import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
-const SelectBank = ({onPress, bankInfo,sourceTitle,disabled}) => {
+const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
   const translation = useTranslation();
 
-  const { BankLogoUrl, CardNumber, BankNumber, BankName } = bankInfo || {};
+  const {BankLogoUrl, CardNumber, BankNumber, BankName} = bankInfo || {};
   return (
     //TODO : translation
     <>
       <View style={styles.block}>
-        <Text bold fs="h6" mb={10}>{sourceTitle || translation.topup.moneySource}</Text>
-        <Pressable disabled={disabled} onPress={onPress} style={[styles.itemBank]}>
+        <Text bold fs="h6" mb={10}>
+          {sourceTitle || translation.topup.moneySource}
+        </Text>
+        <Pressable
+          disabled={disabled}
+          onPress={onPress}
+          style={[styles.itemBank]}>
           <Image
             style={[styles.iconBank]}
-            source={BankLogoUrl ? { uri: BankLogoUrl} : require('images/qrpay/Wallet.png')}
+            source={
+              BankLogoUrl
+                ? {uri: BankLogoUrl}
+                : require('images/qrpay/Wallet.png')
+            }
             resizeMode={'contain'}
           />
-          <Col style={{
-            alignItems: '',
-          }}>
-            <Text fs="h6" bold>{BankName}</Text>
-            {
-              !!CardNumber || !!BankNumber ? <Text>{CardNumber || BankNumber}</Text> : null
-            }
+          <Col
+            style={{
+              alignItems: '',
+            }}>
+            <Text fs="h6" bold>
+              {BankName}
+            </Text>
+            {!!CardNumber || !!BankNumber ? (
+              <Text>{CardNumber || BankNumber}</Text>
+            ) : null}
           </Col>
           <View style={styles.itemRight}>
             <Image
@@ -47,7 +59,7 @@ const styles = StyleSheet.create({
     height: scale(120),
   },
   itemBank: {
-    flex:1,
+    flex: 1,
     backgroundColor: Colors.cl5,
     borderRadius: 10,
     shadowColor: Colors.black,

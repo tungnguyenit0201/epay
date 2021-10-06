@@ -50,7 +50,7 @@ export const passwordSchema = yup.object().shape({
     .string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
       'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
     )
     .label('Mật khẩu'),
@@ -61,7 +61,7 @@ export const newPasswordSchema = yup.object().shape({
     .string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
       'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
     )
     .label('Mật khẩu'),

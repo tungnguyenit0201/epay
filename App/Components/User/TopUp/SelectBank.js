@@ -15,84 +15,90 @@ import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import Navigator from 'navigations/Navigator';
 
-const SelectBank = forwardRef(({data, feeData, label, style, onChange},ref) => {
-  const translation = useTranslation();
-  const [checked, setChecked] = useState({
-    type: null,
-    index: null,
-  });
-
-  useImperativeHandle(ref, () => ({
-    reset,
-  }));
-
-  const mapBank = () => {
-    Navigator.push(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankPickerScreen,
+const SelectBank = forwardRef(
+  ({data, feeData, label, style, onChange}, ref) => {
+    const translation = useTranslation();
+    const [checked, setChecked] = useState({
+      type: null,
+      index: null,
     });
-  };
 
-  const reset = () => {
-    onChangeBank(null);
-  };
+    useImperativeHandle(ref, () => ({
+      reset,
+    }));
 
-  const onChangeBank = value => {
-    setChecked(value);
-    onChange && onChange(value);
-  };
+    const mapBank = () => {
+      Navigator.push(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankPickerScreen,
+      });
+    };
 
-  return (
-    <View style={[styles.block, style]}>
-      <Text bold fs="h6" mb={20}>
-        {label}
-      </Text>
+    const reset = () => {
+      onChangeBank(null);
+    };
 
-      {_.map(data, (bankType, type) => (
+    const onChangeBank = value => {
+      setChecked(value);
+      onChange && onChange(value);
+    };
 
-        <Row space="10" key={type} style={styles.row}>
-          {bankType.map((item, index) => {
-            const {BankName, BankLogoUrl} = item;
-            return (
-              <Col width="33.33%" space="10" key={index}>
-                <Pressable
-                  style={[styles.item]}
-                  onPress={() => onChangeBank({index, type})}>
-                  <View style={[styles.wicon]}>
-                    <Image source={{uri: BankLogoUrl}} style={[styles.icon]} />
-                    {checked && checked.type === type && checked.index === index && (
+    return (
+      <View style={[styles.block, style]}>
+        <Text bold fs="h6" mb={20}>
+          {label}
+        </Text>
+
+        {_.map(data, (bankType, type) => (
+          <Row space="10" key={type} style={styles.row}>
+            {bankType.map((item, index) => {
+              const {BankName, BankLogoUrl} = item;
+              return (
+                <Col width="33.33%" space="10" key={index}>
+                  <Pressable
+                    style={[styles.item]}
+                    onPress={() => onChangeBank({index, type})}>
+                    <View style={[styles.wicon]}>
                       <Image
-                        source={require('images/qrpay/CircleDown.png')}
-                        style={styles.activeImg}
+                        source={{uri: BankLogoUrl}}
+                        style={[styles.icon]}
                       />
-                    )}
-                  </View>
-                  <Text centered size={12} mt={5}>
-                    {BankName}
-                  </Text>
-                </Pressable>
-              </Col>
-            );
-          })}
+                      {checked &&
+                        checked.type === type &&
+                        checked.index === index && (
+                          <Image
+                            source={require('images/qrpay/CircleDown.png')}
+                            style={styles.activeImg}
+                          />
+                        )}
+                    </View>
+                    <Text centered size={12} mt={5}>
+                      {BankName}
+                    </Text>
+                  </Pressable>
+                </Col>
+              );
+            })}
+          </Row>
+        ))}
+        <Row space="10" style={styles.row}>
+          <Col width="33.33%" space="10">
+            <Pressable style={[styles.item]} onPress={mapBank}>
+              <View style={[styles.wicon]}>
+                <Image
+                  source={require('images/qrpay/plus.png')}
+                  style={[styles.icon]}
+                />
+              </View>
+              <Text centered size={12} mt={5}>
+                Liên kết NH
+              </Text>
+            </Pressable>
+          </Col>
         </Row>
-      ))}
-      <Row space="10" style={styles.row}>
-        <Col width="33.33%" space="10">
-          <Pressable style={[styles.item]} onPress={mapBank}>
-            <View style={[styles.wicon]}>
-              <Image
-                source={require('images/qrpay/plus.png')}
-                style={[styles.icon]}
-              />
-            </View>
-            <Text centered size={12} mt={5}>
-              Liên kết NH
-            </Text>
-          </Pressable>
-        </Col>
-      </Row>
-    </View>
-  );
-});
+      </View>
+    );
+  },
+);
 const styles = StyleSheet.create({
   row: {
     marginBottom: 0,

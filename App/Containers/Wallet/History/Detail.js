@@ -178,7 +178,9 @@ const DetailHistory = ({route}) => {
                 TRANS_DETAIL.SERVICE.find(x => x.value === TransType).label
               ] +
                 ' ' +
-                translation[TRANS_DETAIL.STATUS[Status]].toLowerCase()}
+                translation[
+                  TRANS_DETAIL.STATUS.find(x => x.value === Status).label
+                ].toLowerCase()}
             </Text>
 
             {!!TransAmount && (

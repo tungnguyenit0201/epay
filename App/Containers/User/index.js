@@ -34,7 +34,7 @@ const User = () => {
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={base.wrap}>
+      <ScrollView style={[base.wrap, {backgroundColor: Colors.l1}]}>
         <View style={[base.container]}>
           <UserInfo style={[{marginBottom: 20}]} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
@@ -171,13 +171,13 @@ const User = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.boxLogout}>
+        <View style={[base.shadow, styles.boxLogout]}>
           <Button
             onPress={onLogout}
             type={1}
             label={'Đăng xuất'} //TODO: translate
-            bold
-            style={base.boxShadow}
+            fw="600"
+            style={base.bgWhite}
             bgImg={0}
             color={Colors.black}
           />
@@ -222,17 +222,6 @@ const styles = StyleSheet.create({
     paddingTop: scale(20),
     paddingHorizontal: scale(20),
     paddingBottom: scale(260),
-    backgroundColor: Colors.white,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
 });
 export default User;

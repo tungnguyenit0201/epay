@@ -26,7 +26,15 @@ import SelectBank from 'components/QRPay/SelectBank';
 const Confirmation = () => {
   const translation = useTranslation();
   let [open, setOpen] = useState(false);
-  const {transTypeText, data, onContinue, bank, continueButtonTitle ,sourceTitle,enableSourcePicker} = useConfirmation();
+  const {
+    transTypeText,
+    data,
+    onContinue,
+    bank,
+    continueButtonTitle,
+    sourceTitle,
+    enableSourcePicker,
+  } = useConfirmation();
 
   const [showModal, setShowModal] = React.useState(false);
 
@@ -118,8 +126,7 @@ const Confirmation = () => {
         //style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}
-      >
+        backdropTransitionOutTiming={0}>
         <View style={base.modal}>
           <Text style={base.modalTitle}>Nhập mật khẩu</Text>
           <TextInput
@@ -177,9 +184,9 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   confirmButtonContainer: {
-    flex:1,
-    justifyContent:'flex-end',
+    flex: 1,
+    justifyContent: 'flex-end',
     paddingHorizontal: Spacing.PADDING,
-},
+  },
 });
 export default Confirmation;

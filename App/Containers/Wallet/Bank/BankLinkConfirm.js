@@ -32,7 +32,7 @@ import {useBankInfo} from 'context/Wallet/utils';
 export default function (props) {
   const translation = useTranslation();
   const {params} = useRoute() || {};
-  const {onActiveUser,getICLabel} = useBankInfo(params);
+  const {onActiveUser, getICLabel} = useBankInfo(params);
 
   const onSubmit = async () => {
     const {item: Bank, ICAddress, optionKyc, BankAccount} = params || {};
@@ -51,16 +51,12 @@ export default function (props) {
     };
     try {
       const res = await onActiveUser?.({BankConnectInfo});
-      console.log({...params, ...res, bankConnectInfo:BankConnectInfo});
+      console.log({...params, ...res, bankConnectInfo: BankConnectInfo});
       Navigator?.push(SCREEN.MAP_BANK_FLOW, {
         screen: MapBankRoutes.BankLinkOTP,
         params: {...params, ...res, bankConnectInfo: BankConnectInfo},
-
-
       });
-    } catch (e) {
-
-    }
+    } catch (e) {}
   };
 
   const renderButton = () => {
@@ -149,9 +145,13 @@ export default function (props) {
     );
   };
 
-  const renderTnC  = ()=>{
-    return <Text fs={'md'} color={Colors.gray}>Khi nhấn Liên Kết, Quý khách đã xác nhận đồng ý với
-      Thỏa thuận người sử dụng của EPAY và Vietcombank</Text>;
+  const renderTnC = () => {
+    return (
+      <Text fs={'md'} color={Colors.gray}>
+        Khi nhấn Liên Kết, Quý khách đã xác nhận đồng ý với Thỏa thuận người sử
+        dụng của EPAY và Vietcombank
+      </Text>
+    );
   };
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
@@ -164,7 +164,15 @@ export default function (props) {
         contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}>
         <View alignItems="center" marginBottom={16}>
-          <Image source={Images.ConnectBank.BankLink} style={{width:64, height:64, resizeMode:'contain', marginVertical:16}}/>
+          <Image
+            source={Images.ConnectBank.BankLink}
+            style={{
+              width: 64,
+              height: 64,
+              resizeMode: 'contain',
+              marginVertical: 16,
+            }}
+          />
           <Text fs={'h4'} bold>
             {translation.connect_bank}
           </Text>

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
-  Pressable,
   View,
   Image,
   StyleSheet,
@@ -10,36 +9,40 @@ import {
 import {
   Button,
   Text,
-  Icon,
   Header,
   HeaderBg,
-  ActionSheet,
   TextInput,
   Radio,
+  KeyboardSuggestion,
 } from 'components';
 import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale} from 'utils/Functions';
+import {scale, formatMoney} from 'utils/Functions';
 
 import {useUser} from 'context/User';
 import {usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
-import {useUserStatus, useUserInfo, useVerifyInfo} from 'context/User/utils';
 
 import Modal from 'components/Common/ModalCustom';
 import Bank from 'components/QRPay/Bank';
+import {useQRTransfer} from 'context/Wallet/utils';
+const Transfer = ({route}) => {
+  console.log('route :>> ', route);
+  const {bankFee, sourceMoney, transfer, onChange} = useQRTransfer(
+    route?.params,
+  );
 
-const Transfer = () => {
   const {phone} = usePhone();
   const {userInfo} = useUser();
   const translation = useTranslation();
-  const [showModal, setShowModal] = React.useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const PersonalInfo = userInfo.personalInfo;
 
   return (
+    // TODO: translate
+
     <>
       <HeaderBg mb={0}>
         <Header back title="Chuyển tiền số điện thoại" />
@@ -69,12 +72,15 @@ const Transfer = () => {
             placeholder="Nhập tiền"
             maxLength={100}
             selectTextOnFocus
+            numeric
+            onChange={text => onChange('amount', text)}
           />
 
           <TextInput
             placeholder="Nhập lời nhắn"
             maxLength={100}
             selectTextOnFocus
+            onChange={text => onChange('content', text)}
           />
           <Radio
             //onChange={onAcceptTermConditions}
@@ -86,36 +92,49 @@ const Transfer = () => {
           />
         </View>
         <View style={[base.container, {paddingTop: 20}]}>
-          <Bank myPay={0} />
+          <Bank bankFee={bankFee} sourceMoney={sourceMoney} />
         </View>
         <View style={{height: 50}}></View>
       </ScrollView>
-      <View style={styles.boxBottom}>
-        <Button
-          onPress={() => {
-            Navigator.navigate(SCREEN.TRANSFER_RESULTS);
-          }}
-          type={1}
-          label="Tiếp tục"
-          bold
-        />
-      </View>
+      {/* <View style={base.bgWhite}>
+        <View style={styles.boxBottom}>
+          <Button
+            onPress={() => {
+              Navigator.navigate(SCREEN.QR_PROMOTION);
+            }}
+            type={1}
+            label="Tiếp tục"
+            bold
+          />
+        </View>
+      </View> */}
 
-      <Modal
-        visible={showModal}
-        onClose={() => setShowModal(false)}
-        icon={require('images/qrpay/MoneySend.png')}>
-        <Text centered mb={20}>
-          Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
-          trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
-        </Text>
-        <Button
-          type={1}
-          mb={10}
-          label="Đóng"
-          onPress={() => setShowModal(false)}
-        />
-      </Modal>
+      <KeyboardSuggestion
+        optionList={[30000, 300000, 3000000].map(x => ({
+          value: x,
+          label: formatMoney(x),
+        }))}
+        onPress={() => true}
+        onContinue={() => true}
+        isContinueEnabled={true}
+      />
+      {showModal && (
+        <Modal
+          visible={showModal}
+          onClose={() => setShowModal(false)}
+          icon={require('images/qrpay/MoneySend.png')}>
+          <Text centered mb={20}>
+            Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
+            trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
+          </Text>
+          <Button
+            type={1}
+            mb={10}
+            label="Đóng"
+            onPress={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
     </>
   );
 };

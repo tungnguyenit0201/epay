@@ -125,7 +125,7 @@ export default function (props) {
     isSelected,
     callback,
     keyExtractor,
-                           icLabel,
+    icLabel,
   }) => {
     const idText = icLabel,
       nameText = 'Họ và tên ';
@@ -182,7 +182,6 @@ export default function (props) {
         // type:
         isSelected: true,
       };
-
 
       return renderKYCCard(info);
     } else {
