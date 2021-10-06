@@ -32,11 +32,11 @@ const useUserStatus = () => {
   };
 
   const onVerify = () => {
-    Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+    Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
   };
 
   const onLinkBank = () => {
-    Navigator.push(SCREEN.BANK_LIST);
+    Navigator.navigate(SCREEN.BANK_LIST);
   };
 
   const getStatusVerifiedText = () => {

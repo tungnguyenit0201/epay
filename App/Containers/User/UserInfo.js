@@ -20,7 +20,7 @@ import {SCREEN, PERSONAL_IC, GENDER, FUNCTION_TYPE} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {scale, hideCMND} from 'utils/Functions';
+import {scale, hideCMND, hidePhone} from 'utils/Functions';
 
 import DinhDanh from 'components/User/DinhDanh';
 import StatusUser from 'components/Common/StatusUser';
@@ -103,12 +103,12 @@ const UserInfo = () => {
             <Text fs="h5" bold mb={5}>
               {PersonalInfo?.FullName}
             </Text>
-            <Text mb={10}>{phone}</Text>
+            <Text mb={10}>{hidePhone(phone)}</Text>
 
             <StatusUser />
           </View>
 
-          <DinhDanh />
+          {statusVerified === PERSONAL_IC.INACTIVE && <DinhDanh />}
 
           <View style={[base.boxShadow]}>
             <View style={styles.heading}>
@@ -125,7 +125,7 @@ const UserInfo = () => {
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.push(SCREEN.EDIT_INFO);
+                  Navigator.navigate(SCREEN.EDIT_INFO);
                 }}
               >
                 <Image
@@ -200,17 +200,23 @@ const UserInfo = () => {
                 </Text>
               </View>
 
-              <TouchableOpacity
-                style={base.leftAuto}
-                onPress={() => {
-                  Navigator.push(SCREEN.EDIT_INFO);
-                }}
-              >
-                <Image
-                  style={[styles.editBox]}
-                  source={require('images/profile/Edit2.png')}
-                />
-              </TouchableOpacity>
+              {![PERSONAL_IC.VERIFYING, PERSONAL_IC.RE_VERIFYING].includes(
+                statusVerified,
+              ) && (
+                <TouchableOpacity
+                  style={base.leftAuto}
+                  onPress={
+                    statusVerified == PERSONAL_IC.INACTIVE
+                      ? onVerify
+                      : () => onReVerify('showModal')
+                  }
+                >
+                  <Image
+                    style={[styles.editBox]}
+                    source={require('images/profile/Edit2.png')}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={[base.row]}>
@@ -220,23 +226,6 @@ const UserInfo = () => {
               />
               <View>
                 <Text style={styles.rowVal}>{getStatusVerifiedText()}</Text>
-                {statusVerified != PERSONAL_IC.VERIFYING &&
-                  statusVerified != PERSONAL_IC.RE_VERIFYING && (
-                    <TouchableOpacity
-                      style={styles.itemRight}
-                      onPress={
-                        statusVerified == PERSONAL_IC.INACTIVE
-                          ? onVerify
-                          : () => onReVerify('showModal')
-                      }
-                    >
-                      <Text style={styles.link}>
-                        {statusVerified == PERSONAL_IC.INACTIVE
-                          ? 'Xác thực tài khoản'
-                          : 'Đổi giấy tờ tùy thân'}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
               </View>
             </View>
           </View>
@@ -256,7 +245,7 @@ const UserInfo = () => {
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.push(SCREEN.CHANGE_PASSWORD, {
+                  Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
                     type: 'update_email',
                     headerLabel: 'Nhập mật khẩu',
                   });
@@ -283,7 +272,7 @@ const UserInfo = () => {
                   <TouchableOpacity
                     style={base.leftAuto}
                     onPress={() => {
-                      Navigator.push(SCREEN.VERIFY_EMAIL, {
+                      Navigator.navigate(SCREEN.VERIFY_EMAIL, {
                         functionType: FUNCTION_TYPE.AUTH_EMAIL,
                       });
                     }}
