@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   bottom: {
     height: scale(80),
   },
-  //tho------------
+  //------------
   flex1: {flex: 1},
 });
 export default Home;

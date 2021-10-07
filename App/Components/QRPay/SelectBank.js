@@ -37,6 +37,7 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
             style={{
               alignItems: '',
             }}
+            width="70%"
           >
             <Text fs="h6" bold>
               {BankName}

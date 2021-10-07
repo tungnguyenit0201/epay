@@ -7,6 +7,7 @@ import {
   moneyTransfer,
   applyPromo,
   payment,
+  getSourceMoney,
 } from 'services/wallet';
 import Navigator from 'navigations/Navigator';
 import {SCREEN, TRANS_FORM_TYPE, TRANS_TYPE} from 'configs/Constants';
@@ -16,42 +17,30 @@ import {useCommon} from 'context/Common';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {hidePhone} from 'utils/Functions';
+import Images from 'themes/Images';
 
-export const useQRTransfer = () => {
-  const {error} = useCommon();
-  const {getPhone} = useAsyncStorage();
-
+export const useQRTransfer = (mount = true) => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {phone} = useUser();
-  const {listConnectBank} = useWallet();
+  const {qrTransaction, dispatch} = useWallet();
   const bankFee = useRef({});
-  const transfer = useRef({});
-  const sourceMoney = [
-    {BankId: 0, BankName: 'Ví của tôi', CardNumber: hidePhone(phone)},
-    ...listConnectBank,
-  ]; // TODO: translate
-  console.log('listConnectBank :>> ', listConnectBank);
+  const transfer = useRef({
+    amount: null,
+    payoneer: 0,
+    content: '',
+  });
+  let [suggestion, setSuggestion] = useState([]);
+  let [check, setCheck] = useState(false);
+  let [showModal, setShowModal] = useState(false);
 
   const onChange = (key, value) => {
-    console.log('key, value :>> ', key, value);
     transfer.current[key] = value;
+    if (key == 'amount') {
+      if (value) setSuggestion([value * 1000, value * 10000, value * 100000]);
+    }
   };
-  const onGetTransferUser = async () => {
-    setLoading(true);
-    let result = await getTransferUser({
-      phone,
-      SearchPhoneNumber: '0347019930',
-    });
-    console.log('result :>> ', result);
 
-    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-      setLoading(false);
-
-      return {result};
-    } else setError(result);
-    setLoading(false);
-  };
   const onGetBankFee = async ({bankID, transFormType}) => {
     const fee = await getBankFee({
       phone,
@@ -60,24 +49,35 @@ export const useQRTransfer = () => {
       transFormType: transFormType || TRANS_FORM_TYPE.WALLET,
     });
     bankFee.current = {...bankFee.current, [bankID]: fee?.FeeInfo};
-    console.log('fee :>> ', fee);
+    // console.log('fee :>> ', fee);
   };
 
-  const onCheckAmountLimit = async ({amount, transFormType}) => {
+  const onCheckAmountLimit = async () => {
+    setSuggestion([]);
     let result = await checkAmountLimit({
       phone,
-      amount,
+      amount: transfer.current?.amount,
       transType: TRANS_TYPE.CashTransfer,
-      transFormType: transFormType || TRANS_FORM_TYPE.WALLET,
+      transFormType: transfer.current?.transFormType || TRANS_FORM_TYPE.WALLET,
     });
-    // console.log('result :>> ', result);
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      setCheck(true);
+    } else {
+      setError({
+        ...result,
+        title: 'Số tiền vượt hạn mức',
+        icon: Images.Modal.MoneySend,
+      });
+      setCheck(false);
+    }
   };
-  const onMoneyTransfer = async ({amount}) => {
+  const onMoneyTransfer = async () => {
+    console.log('transfer :>> ', transfer, qrTransaction);
     let result = await moneyTransfer({
-      Amount: amount,
-      DesAccountId: 'EA8000000927',
-      Payoneer: 0,
-      Content: 'hi',
+      Amount: transfer.current?.amount,
+      DesAccountId: qrTransaction?.AccountId,
+      Payoneer: transfer.current?.payoneer,
+      Content: transfer.current?.content,
     });
     console.log('transfer :>> ', result);
   };
@@ -97,15 +97,34 @@ export const useQRTransfer = () => {
       MerchantCode: 'MBG',
     });
   };
+
+  const onGetSourceMoney = async () => {
+    let result = await getSourceMoney({
+      phone,
+      TransType: TRANS_TYPE.CashTransfer,
+    });
+    console.log('result :>> ', result);
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      dispatch({type: 'SET_SOURCE_MONEY', sourceMoney: result?.MoneySources});
+    } else setError(result);
+  };
+
+  const onContinue = async () => {
+    console.log('onContinue');
+    await onMoneyTransfer();
+    dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: transfer.current});
+    Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+  };
+
   const onMount = async () => {
     setLoading(true);
 
-    await Promise.all(onGetBankFee({bankID: 0, transFormType: ''}));
+    await Promise.all([onGetSourceMoney()]);
     setLoading(false);
   };
+
   useEffect(() => {
-    onMount();
-    // onGetTransferUser();
+    mount && onMount();
     // onCheckAmountLimit({amount: 10000000, transFormType: 3});
     // onMoneyTransfer({amount: 100000});
     // onApplyPromo();
@@ -113,8 +132,12 @@ export const useQRTransfer = () => {
   }, []); // eslint-disable-line
   return {
     bankFee: bankFee.current,
-    sourceMoney,
     transfer: transfer.current,
+    suggestion,
+    check,
+    setSuggestion,
     onChange,
+    onCheckAmountLimit,
+    onContinue,
   };
 };

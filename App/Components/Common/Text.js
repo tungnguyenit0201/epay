@@ -15,7 +15,8 @@ const CustomText = ({
   bold,
   children,
   size,
-  fs = 'md',
+  fs,
+  // fs = 'md',
   fw,
   lineHeight,
   mt,
@@ -58,6 +59,7 @@ const CustomText = ({
         underline && {textDecorationLine: 'underline'},
         fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 48},
         fs === 'md' && {fontSize: Fonts.MD, lineHeight: 20},
+        fs === 'lg' && {fontSize: Fonts.LG, lineHeight: 26},
         fs === 'h1' && {fontSize: Fonts.H1, lineHeight: 44},
         fs === 'h2' && {fontSize: Fonts.H2, lineHeight: 40},
         fs === 'h3' && {fontSize: Fonts.H3, lineHeight: 36},
@@ -68,7 +70,8 @@ const CustomText = ({
 
         style,
       ]}
-      {...props}>
+      {...props}
+    >
       {children}
     </Text>
   );

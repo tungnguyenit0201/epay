@@ -318,14 +318,19 @@ export const getQRCodeInfo = async ({phone, QRCode}) => {
   return response;
 };
 
-export const getTransferUser = async ({phone, SearchPhoneNumber}) => {
+export const getTransferUser = async ({
+  phone,
+  SearchPhoneNumber,
+  AccountId,
+}) => {
   let response = null;
   await request({
     url: API.WALLET.GET_TRANSFER_USER,
     method: 'post',
     params: {
       PhoneNumber: phone,
-      AccountId: SearchPhoneNumber,
+      SearchPhoneNumber,
+      AccountId,
     },
     success: res => {
       response = res;
@@ -494,6 +499,22 @@ export const payment = async ({phone, MerchantCode, OrderId}) => {
       PhoneNumber: phone,
       MerchantCode,
       OrderId,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const getSourceMoney = async ({phone, TransType}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_SOURCE_MONEY,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      TransType,
     },
     success: res => {
       response = res;

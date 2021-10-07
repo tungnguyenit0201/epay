@@ -9,7 +9,7 @@ const useLanguage = () => {
       return;
     }
     setLanguage(lang);
-    Navigator.navigate(SCREEN.AUTH);
+    Navigator.navigate(SCREEN.BOADRING);
   };
   return {chooseLanguage};
 };
