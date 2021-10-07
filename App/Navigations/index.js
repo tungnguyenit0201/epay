@@ -86,10 +86,11 @@ import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferResults from 'containers/Wallet/QRPay/TransferConfirm';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
+import Boarding from 'containers/Boarding';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -247,6 +248,7 @@ const AppNavigator = () => {
             component={TabNavigation}
           />
           <Stack.Screen name={SCREEN.LANGUAGE} component={Language} />
+          <Stack.Screen name={SCREEN.BOADRING} component={Boarding} />
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />

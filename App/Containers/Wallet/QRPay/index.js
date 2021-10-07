@@ -32,7 +32,7 @@ const QRPay = () => {
     onGetQRCodeInfo,
     detectQRCode,
   } = useScanQR();
-  const {onPhoto} = useImagePicker(setImage);
+  const {onPhoto} = useImagePicker(detectQRCode);
   return (
     // TODO: translate
     isFocused ? (
@@ -146,7 +146,7 @@ const QRPay = () => {
                     bgImg={0}
                     label="Quét mã QR"
                     leftIcon={Images.Camera.Scan}
-                    onPress={detectQRCode}
+                    // onPress={detectQRCode}
                   />
                 </View>
               </View>
