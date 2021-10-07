@@ -41,14 +41,14 @@ const User = ({data, style}) => {
             />
           )}
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* TODO: show notifications count */}
+        {/* <TouchableOpacity
           style={styles.noti}
           onPress={() => {
             Navigator.navigate(SCREEN.NOTIFICATION);
-          }}
-        >
+          }}>
           <Text style={styles.notiText}>10</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
