@@ -221,5 +221,6 @@ export default {
     Ticket: require('images/icons/ticket.png'),
     ArrowRight: require('images/icons/arrow-right.png'),
     BigCar: require('images/icons/big-car.png'),
+    BigCamera: require('images/icons/big-camera.png'),
   },
 };

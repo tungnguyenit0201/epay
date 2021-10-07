@@ -263,7 +263,9 @@ const styles = StyleSheet.create({
   },
   modalBottomButton: {
     paddingHorizontal: Spacing.PADDING,
-    paddingVertical: Spacing.PADDING,
+    // paddingVertical: Spacing.PADDING,
+    paddingTop: Spacing.PADDING,
+    paddingBottom: Spacing.PADDING * 2,
     backgroundColor: Colors.white,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,

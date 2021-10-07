@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -6,18 +6,19 @@ import {
   Image,
   Modal,
   Pressable,
+  ImageBackground,
 } from 'react-native';
-import { Button, Text, FWLoading, Header } from 'components';
-import { RNCamera } from 'react-native-camera';
-import { Colors, Fonts, Images, Spacing } from 'themes';
-import { scale } from 'utils/Functions';
-import { useDropImage } from 'context/User/utils';
-import { useIsFocused } from '@react-navigation/native';
+import {Button, Text, FWLoading, Header} from 'components';
+import {RNCamera} from 'react-native-camera';
+import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {scale} from 'utils/Functions';
+import {useDropImage} from 'context/User/utils';
+import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
 import KYCType from 'configs/Enums/KYCType';
-import { useVerifyInfo } from 'context/User/utils';
-import { useTranslation } from 'context/Language';
-import { IC_TPYE } from 'configs/Constants';
+import {useVerifyInfo} from 'context/User/utils';
+import {useTranslation} from 'context/Language';
+import {IC_TPYE} from 'configs/Constants';
 
 const DropImage = ({
   onDropImage,
@@ -29,8 +30,9 @@ const DropImage = ({
   verifyParams,
   identify,
 }) => {
-  const { width, height } = useWindowDimensions();
-  const { image, camera, showCamera, loading, setShowCamera, capturePicture } = useDropImage();
+  const {width, height} = useWindowDimensions();
+  const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
+    useDropImage();
   const isFocused = useIsFocused();
   const translation = useTranslation();
   const {
@@ -53,9 +55,7 @@ const DropImage = ({
       if (cameraType === 'front') {
         return () => captureFaceImage();
       }
-      return () => type === 'back'
-        ? captureBackImage()
-        : captureFrontImage();
+      return () => (type === 'back' ? captureBackImage() : captureFrontImage());
     }
     return () => setShowCamera(1);
   }, [eKYC, cameraType, type]);
@@ -63,7 +63,7 @@ const DropImage = ({
   const imageSource = useMemo(() => {
     const imagePath = (eKYC ? SDKImage?.path : image?.path) || draft?.path;
     if (imagePath) {
-      return { uri: imagePath };
+      return {uri: imagePath};
     }
     return identify
       ? identify === IC_TPYE.PASSPORT
@@ -76,25 +76,26 @@ const DropImage = ({
     // TODO: translate
     <>
       {!showCamera && (
-        <View style={style}>
-          <View style={[styles.wrapImg, style]}>
-            <View style={styles.titleRow}>
-              <Text
-                size={Fonts.H6}
-                centered
-                bold
-                style={styles.textUppercase}>
-                {title}
-              </Text>
-              <Button
-                onPress={KYCFunction}
-                label={translation?.take_a_photo}
-                style={styles.smallButton}
-                leftIcon={Images.VerifyUserInfo.camera}
-                bold
-              />
-            </View>
-            <Image
+        <View style={[styles.wrapImg, styles.blockShadow, style]}>
+          <Text
+            // size={Fonts.H6} can not use, please check Text Component!
+            fs="h6"
+            bold
+            style={styles.title1}>
+            {title}
+          </Text>
+
+          {/* remember to delete when no use
+          <Button
+            onPress={KYCFunction}
+            label={translation?.take_a_photo}
+            style={styles.smallButton}
+            leftIcon={Images.VerifyUserInfo.camera}
+            bold
+          /> */}
+
+          <View style={styles.alignCenter}>
+            <Pressable
               style={[
                 styles.img,
                 cameraType !== 'back' && styles.imgFront,
@@ -103,9 +104,31 @@ const DropImage = ({
                   height: image?.heightImg || scale(150),
                 },
               ]}
-              source={imageSource}
-              resizeMode={'contain'}
-            />
+              onPress={KYCFunction}>
+              <Image
+                style={[
+                  styles.radius1,
+                  styles.img,
+                  cameraType !== 'back' && styles.imgFront,
+                  cameraType !== 'back' && {
+                    width: image?.widthImg || scale(150),
+                    height: image?.heightImg || scale(150),
+                  },
+                ]}
+                source={imageSource}
+                resizeMode={'stretch'}
+              />
+              <View style={[styles.pos1, styles.blockBlurBlack]}>
+                <Image
+                  style={styles.iconBigCamera}
+                  source={Images.TrafficFee.BigCamera}
+                  resizeMode={'contain'}
+                />
+                <Text color={Colors.white} bold centered mt={10} fs="h6">
+                  Chụp ảnh GTTT
+                </Text>
+              </View>
+            </Pressable>
           </View>
         </View>
       )}
@@ -129,8 +152,10 @@ const DropImage = ({
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}>
-              {({ camera, status, recordAudioPermissionStatus }) => {
-                if (status !== 'READY') { return <FWLoading />; }
+              {({camera, status, recordAudioPermissionStatus}) => {
+                if (status !== 'READY') {
+                  return <FWLoading />;
+                }
                 return (
                   <View
                     style={{
@@ -142,7 +167,7 @@ const DropImage = ({
                       avoidStatusBar
                       title={title}
                       onPressBack={() => setShowCamera(false)}
-                      style={{ zIndex: 10 }}
+                      style={{zIndex: 10}}
                     />
                     <View
                       style={{
@@ -152,7 +177,7 @@ const DropImage = ({
                       }}>
                       <Image
                         source={Images.Camera.CameraSquare}
-                        style={{ width: width, height: height }}
+                        style={{width: width, height: height}}
                       />
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>
@@ -198,6 +223,10 @@ const DropImage = ({
   );
 };
 const styles = StyleSheet.create({
+  alignCenter: {alignItems: 'center'},
+  //---------------
+  radius1: {borderRadius: 8},
+  //---------------
   wrap: {
     paddingVertical: scale(16),
     backgroundColor: Colors.white,
@@ -224,15 +253,8 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   wrapImg: {
-    paddingVertical: Spacing.PADDING,
-    paddingHorizontal: Spacing.PADDING,
-    marginBottom: Spacing.PADDING,
-    alignItems: 'center',
-    borderRadius: 8,
-    elevation: 3,
-    shadowRadius: 8,
-    shadowColor: Colors.gray,
-    shadowOpacity: 0.3,
+    paddingVertical: Spacing.PADDING + 3,
+    paddingHorizontal: Spacing.PADDING + 12,
     backgroundColor: Colors.white,
   },
   img: {
@@ -248,7 +270,7 @@ const styles = StyleSheet.create({
     width: scale(64),
     height: scale(64),
   },
-  textUppercase: { textTransform: 'uppercase', fontWeight: '600' },
+  textUppercase: {textTransform: 'uppercase'},
   bgImg: {
     position: 'absolute',
     bottom: 0,
@@ -277,17 +299,47 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.l2,
     borderRadius: 8,
   },
-  titleRow: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  title1: {
     marginBottom: Spacing.PADDING / 2,
     marginTop: 4,
   },
   smallButton: {
     height: scale(32),
     paddingHorizontal: 16,
+  },
+  //------------------
+  pos1: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  //------------------
+  iconBigCamera: {
+    width: 60,
+    height: 48,
+  },
+  //------------------
+  blockShadow: {
+    borderRadius: 8,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
+  },
+  //------------------
+  blockBlurBlack: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: Colors.BLACK,
+    opacity: 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    zIndex: 1,
   },
 });
 export default DropImage;
