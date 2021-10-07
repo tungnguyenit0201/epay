@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomWidth: 1,
     borderRadius: 2,
-    height: scale(28),
+    height: scale(50),
   },
   message: {
     marginTop: 16,
