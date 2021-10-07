@@ -61,7 +61,7 @@ const BankWebConfirm = props => {
   const {url, onBackOtp, onDoneOtp, isSaveToken, item: Bank} = params;
   const [shouldCancel, setShouldCancel] = useState(true);
   const {onCheckNapasTransStatus} = useBankInfo();
-  const {napasInfo = MOCK_BANK_INFO} = params || {};
+  const {napasInfo = MOCK_BANK_INFO, title} = params || {};
   const {phone} = useUser();
   let deviceId = 'CC2304FD-3149-4F4A-BD05-3C9A900D075C';
   let ipAddress = '222.252.17.214';
@@ -317,7 +317,11 @@ const BankWebConfirm = props => {
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
-        <Header back title={translation.connect_bank} onPressBack={back} />
+        <Header
+          back
+          title={title || translation.connect_bank}
+          onPressBack={back}
+        />
       </HeaderBg>
       {/*<WebView source={{uri: url}} onMessage={onMessage}/>*/}
       <WebView
