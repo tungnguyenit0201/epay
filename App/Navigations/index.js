@@ -45,6 +45,7 @@ import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
+import RegisterFee from 'containers/Service/TrafficFee/Register';
 import Confirmation from 'containers/Wallet/Confirmation';
 import Security from 'containers/User/Security';
 import ChangePassword from 'containers/User/ChangePassword';
@@ -303,6 +304,10 @@ const AppNavigator = () => {
             component={TransferSuccess}
           />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER}
+            component={RegisterFee}
+          />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
@@ -395,7 +400,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
-
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
         </Stack.Navigator>
       </KeyboardStateProvider>

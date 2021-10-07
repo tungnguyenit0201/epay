@@ -222,4 +222,12 @@ export default {
     1: require('images/boarding/boarding2.png'),
     2: require('images/boarding/boarding3.png'),
   },
+  TrafficFee: {
+    Moneys: require('images/icons/moneys.png'),
+    Station: require('images/icons/station.png'),
+    Ticket: require('images/icons/ticket.png'),
+    ArrowRight: require('images/icons/arrow-right.png'),
+    BigCar: require('images/icons/big-car.png'),
+    BigCamera: require('images/icons/big-camera.png'),
+  },
 };
