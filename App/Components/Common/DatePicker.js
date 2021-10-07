@@ -53,9 +53,14 @@ export default ({
 
       <Pressable
         onPress={showDatePicker}
-        style={[styles.wrap, error && styles.error, style]}
-      >
-        <View style={[styles.block1, styles.fullHeight, styles.flex1]}>
+        style={[styles.wrap, error && styles.error, style]}>
+        <View
+          style={[
+            styles.block1,
+            styles.fullHeight,
+            styles.flex1,
+            styles.justifyCenter,
+          ]}>
           <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
             {value}
           </Text>
@@ -65,8 +70,7 @@ export default ({
             styles.blockIcon1,
             styles.fullHeight,
             {backgroundColor: noIconBg ? 'unset' : Colors.l4},
-          ]}
-        >
+          ]}>
           <Image
             source={Images.Kyc.Calendar}
             style={styles.icon}
@@ -110,6 +114,7 @@ const styles = StyleSheet.create({
   },
   //----------------
   flex1: {flex: 1},
+  justifyCenter: {justifyContent: 'center'},
   //----------------
   fullHeight: {height: '100%'},
   //----------------
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
   blockIcon1: {
     justifyContent: 'center',
     right: -1,
-    padding: 12,
+    padding: 8,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },

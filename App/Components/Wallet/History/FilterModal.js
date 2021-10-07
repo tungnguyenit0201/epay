@@ -34,8 +34,7 @@ const ItemType1 = ({
           styles.blockShadow,
           styles.blockStatus1,
           isChecked && {backgroundColor: blurBlue},
-        ]}
-      >
+        ]}>
         <Image
           source={icon}
           style={{
@@ -95,8 +94,7 @@ const StatusBtn = ({isChecked, title, onPress}) => (
       centered
       semibold
       fs="md"
-      style={[styles.textSize1, styles.px1, styles.py2]}
-    >
+      style={[styles.textSize1, styles.px1, styles.py2]}>
       {title}
     </Text>
     {isChecked && (
@@ -228,8 +226,7 @@ const FilterModal = ({
       style={[styles.fullWidth, styles.mlZero, styles.mbZero, styles.mtZero]}
       hideModalContentWhileAnimating
       backdropTransitionOutTiming={0}
-      onBackdropPress={onHideModal}
-    >
+      onBackdropPress={onHideModal}>
       <View style={[styles.flex1, styles.bgWhite]}>
         <HeaderBg>
           <Header
@@ -382,11 +379,9 @@ const styles = StyleSheet.create({
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
   //------------------
-  textSize1: {fontSize: 12},
-  textSize2: {fontSize: 14},
-  textSize3: {fontSize: 10},
-  textSize4: {fontSize: 18},
-  textSize5: {fontSize: 16},
+  textSize1: {fontSize: Fonts.SM},
+  textSize4: {fontSize: Fonts.LG},
+  textSize5: {fontSize: Fonts.H6},
   //------------------
   cirle: {borderRadius: 100},
   //------------------
