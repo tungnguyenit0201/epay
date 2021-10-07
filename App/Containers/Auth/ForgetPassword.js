@@ -63,7 +63,7 @@ const ForgetPassword = () => {
                   onBlur={handleBlur('phone')}
                   error={touched.phone && errors.phone}
                   value={values.phone}
-                  leftIcon={Images.Phone_1}
+                  /* leftIcon={Images.Phone_1} */
                   isDeleted={values.phone}
                 />
               </View>
