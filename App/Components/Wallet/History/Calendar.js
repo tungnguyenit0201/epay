@@ -170,8 +170,7 @@ const CalendarCustom = ({
           styles.fullWidth,
           styles.justifyCenter,
           styles.mb2,
-        ]}
-      >
+        ]}>
         <TouchableOpacity onPress={() => calendarRef.current.addMonth(-1)}>
           <Icon
             icon={Images.ArrowLeft}
@@ -320,12 +319,6 @@ const styles = StyleSheet.create({
   //------------------
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
-  //------------------
-  textSize1: {fontSize: 12},
-  textSize2: {fontSize: 14},
-  textSize3: {fontSize: 10},
-  textSize4: {fontSize: 18},
-  textSize5: {fontSize: 16},
   //------------------
   cirle: {borderRadius: 100},
   //------------------

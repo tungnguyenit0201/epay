@@ -30,6 +30,7 @@ export default {
   FONT_500,
   FONT_SMALL,
   FONT_MEDIUM,
+  SX,
   SM,
   MD,
   LG,
