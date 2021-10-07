@@ -32,6 +32,7 @@ const SCREEN = {
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
   TRAFFIC_REGISTER: 'RegisterFee',
+  TRAFFIC_REGISTER_RESULT: 'RegisterResult',
   CONFIRMATION: 'Confirmation',
   USER: 'User',
   HISTORY: 'History',

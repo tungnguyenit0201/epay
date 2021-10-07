@@ -222,5 +222,6 @@ export default {
     ArrowRight: require('images/icons/arrow-right.png'),
     BigCar: require('images/icons/big-car.png'),
     BigCamera: require('images/icons/big-camera.png'),
+    Wave: require('images/wave.png'),
   },
 };

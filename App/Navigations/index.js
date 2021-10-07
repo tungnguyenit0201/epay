@@ -44,8 +44,9 @@ import Withdraw from 'containers/Wallet/Withdraw';
 import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
-import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
+import RegisterResult from 'containers/Service/TrafficFee/RegisterResult';
 import RegisterFee from 'containers/Service/TrafficFee/Register';
+import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
 import Confirmation from 'containers/Wallet/Confirmation';
 import Security from 'containers/User/Security';
 import ChangePassword from 'containers/User/ChangePassword';
@@ -303,6 +304,10 @@ const AppNavigator = () => {
           <Stack.Screen
             name={SCREEN.TRAFFIC_REGISTER}
             component={RegisterFee}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER_RESULT}
+            component={RegisterResult}
           />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
