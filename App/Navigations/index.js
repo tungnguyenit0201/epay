@@ -87,10 +87,11 @@ import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferResults from 'containers/Wallet/QRPay/TransferConfirm';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
+import Boarding from 'containers/Boarding';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -226,7 +227,8 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}>
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -235,7 +237,8 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -246,6 +249,7 @@ const AppNavigator = () => {
             component={TabNavigation}
           />
           <Stack.Screen name={SCREEN.LANGUAGE} component={Language} />
+          <Stack.Screen name={SCREEN.BOADRING} component={Boarding} />
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
@@ -415,7 +419,8 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}>
+      }}
+    >
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />

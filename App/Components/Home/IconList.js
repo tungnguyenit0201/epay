@@ -47,7 +47,8 @@ const IconList = ({data}) => {
             // borderWidth: 1,
           },
         ]}
-        onPress={() => Alert.alert('', 'Coming soon')}>
+        onPress={() => Alert.alert('', 'Coming soon')}
+      >
         <Image source={item.icon} style={styles.icon} />
 
         <Text centered bold mt={5}>
@@ -72,7 +73,8 @@ const IconList = ({data}) => {
                     width: width / 2 - Spacing.PADDING,
                   },
                 ]}
-                onPress={() => Alert.alert('', 'Coming soon')}>
+                onPress={() => Alert.alert('', 'Coming soon')}
+              >
                 <Image source={item.icon} style={styles.icon} />
 
                 <Text centered bold mt={5}>
@@ -97,7 +99,8 @@ const IconList = ({data}) => {
                 onPress={() => {
                   // Alert.alert('', 'Coming soon')
                   Navigator.navigate(SCREEN.TRAFFIC_FEE);
-                }}>
+                }}
+              >
                 <Image source={item.icon} style={styles.icon} />
 
                 <Text centered bold mt={5}>
@@ -135,7 +138,8 @@ const IconList = ({data}) => {
                   backgroundColor: Colors.cl1,
                 },
               ]}
-              onPress={() => onPressSwitch(index)}></TouchableOpacity>
+              onPress={() => onPressSwitch(index)}
+            ></TouchableOpacity>
           ))}
         </View>
       )}

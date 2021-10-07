@@ -80,7 +80,8 @@ const AlertModal = (props = {}) => {
           <ImageBackground
             source={Images.BgModal}
             style={[styles.headerBackground]}
-            resizeMode="contain">
+            resizeMode="contain"
+          >
             {!!icon && (
               <View style={styles.iconContainer}>
                 <Image
@@ -96,11 +97,13 @@ const AlertModal = (props = {}) => {
           {renderContent()}
           <TouchableOpacity
             style={[styles.buttonContainer, styles.positiveButtonContainer]}
-            onPress={onPressPositive}>
+            onPress={onPressPositive}
+          >
             <ImageBackground
               source={Images.primaryButton}
               resizeMode="cover"
-              style={styles.positiveButton}>
+              style={styles.positiveButton}
+            >
               <Text style={styles.positiveText}>
                 {positiveButton?.title || strings?.agree}
               </Text>
@@ -109,11 +112,13 @@ const AlertModal = (props = {}) => {
           {!!secondaryButton && (
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={onPressSecondary}>
+              onPress={onPressSecondary}
+            >
               <ImageBackground
                 source={Images.borderButton}
                 resizeMode="stretch"
-                style={styles.positiveButton}>
+                style={styles.positiveButton}
+              >
                 <Text style={styles.secondaryText}>
                   {secondaryButton.title}
                 </Text>
@@ -123,7 +128,8 @@ const AlertModal = (props = {}) => {
           {!!negativeButton && (
             <TouchableOpacity
               style={styles.negativeButton}
-              onPress={onPressNegative}>
+              onPress={onPressNegative}
+            >
               <Text style={styles.negativeText}>{negativeButton.title}</Text>
             </TouchableOpacity>
           )}

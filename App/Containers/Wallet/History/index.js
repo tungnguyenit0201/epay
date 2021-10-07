@@ -74,7 +74,8 @@ const History = () => {
           styles.alignCenter,
           styles.blockTransaction,
         ]}
-        onPress={() => onDetail(item)}>
+        onPress={() => onDetail(item)}
+      >
         <View style={styles.blockCardTick}>
           <Image
             source={Images.TransactionHistory.CardTick}
@@ -92,9 +93,8 @@ const History = () => {
             <Text
               fs="md"
               bold
-              style={
-                item?.isIncome ? {color: blue} : {color: Colors.Highlight}
-              }>
+              style={item?.isIncome ? {color: blue} : {color: Colors.Highlight}}
+            >
               {(item?.isIncome ? '+' : '-') +
                 formatMoney(item?.TransAmount, 'đ')}
             </Text>
@@ -136,7 +136,8 @@ const History = () => {
 
             <TouchableOpacity
               style={[styles.pr1, styles.w1]}
-              onPress={onToggleFilter}>
+              onPress={onToggleFilter}
+            >
               <Text bold>{translation.filter}</Text>
 
               <View style={[styles.absolute, styles.topZero, styles.rightZero]}>
@@ -152,14 +153,16 @@ const History = () => {
                     styles.iconPrimary,
                     styles.cirle,
                     {backgroundColor: red},
-                  ]}>
+                  ]}
+                >
                   <Text
                     style={[
                       styles.textCenter,
                       styles.textSize3,
                       styles.textWhite,
                       styles.lineHeight1,
-                    ]}>
+                    ]}
+                  >
                     3
                   </Text>
                 </View>
@@ -190,7 +193,8 @@ const History = () => {
               styles.alignCenter,
               styles.flex1,
               {justifyContent: 'center'},
-            ]}>
+            ]}
+          >
             <Image
               style={styles.iconBarCross}
               source={

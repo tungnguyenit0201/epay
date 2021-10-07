@@ -59,7 +59,12 @@ export default function userReducer(state, action) {
     case 'SET_QR_TRANSACTION':
       return {
         ...state,
-        qrTransaction: action?.qrTransaction,
+        qrTransaction: {...state.qrTransaction, ...action?.qrTransaction},
+      };
+    case 'SET_SOURCE_MONEY':
+      return {
+        ...state,
+        sourceMoney: action?.sourceMoney,
       };
     default:
       return state;

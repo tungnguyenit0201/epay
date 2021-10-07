@@ -137,7 +137,8 @@ export default function (props) {
         style={[
           styles.shadow,
           {backgroundColor: isSelected ? Colors.BACKGROUND_BLUE : Colors.white},
-        ]}>
+        ]}
+      >
         <View style={{flexDirection: 'row'}}>
           <View flex={1}>
             <Text style={styles.subTitle}>{nameText}</Text>
@@ -252,7 +253,8 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderBankInfo()}
         {renderBankInput()}
         {renderListKYCOptions(icInfo)}

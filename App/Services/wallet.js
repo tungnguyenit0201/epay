@@ -506,3 +506,19 @@ export const payment = async ({phone, MerchantCode, OrderId}) => {
   });
   return response;
 };
+
+export const getSourceMoney = async ({phone, TransType}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_SOURCE_MONEY,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      TransType,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};

@@ -6,15 +6,16 @@ import {scale} from 'utils/Functions';
 import _ from 'lodash';
 import {useTranslation} from 'context/Language';
 
-const TransferBank = ({sourceMoney = [], bankFee = {}}) => {
+const TransferBank = ({sourceMoney = []}) => {
+  console.log('sourceMoney :>> ', sourceMoney);
   const translation = useTranslation();
   const renderItem = (item, index) => {
-    const fee = _.get(bankFee, `[${item?.BankId}]`, 0);
-    console.log('fee :>> ', fee, sourceMoney);
+    const fee = item?.StaticFee;
     return (
       <View
-        style={[styles.itemBank, !item?.BankId && styles.itemBankActive]}
-        key={`${Math.random(1, 100)}-sourceMoney`}>
+        style={[styles.itemBank, !item?.SourceId && styles.itemBankActive]}
+        key={`${Math.random(1, 100)}-sourceMoney`}
+      >
         <Image
           style={[styles.iconBank]}
           source={
@@ -24,21 +25,35 @@ const TransferBank = ({sourceMoney = [], bankFee = {}}) => {
         />
         <View>
           <Text fs="h6" bold>
-            {item?.BankName}
+            {item?.SourceName}
           </Text>
-          <Text>{item?.CardNumber}</Text>
+          <Text>{item?.SourceAccount}</Text>
         </View>
         <View style={styles.itemRight}>
           <Image
             style={[styles.iconCircle]}
             source={
-              !item?.BankId
+              !item?.SourceId
                 ? require('images/qrpay/CircleDown.png')
                 : require('images/qrpay/Circle.png')
             }
           />
-          {!!fee && <Text>{`Phí giao dịch: ${fee?.BankFee}đ`}</Text>}
+          {Number.isInteger(fee) && (
+            <Text>{`Phí giao dịch: ${fee == 0 ? 'Miễn phí' : `${fee}đ`}`}</Text>
+          )}
         </View>
+        {/* {!item?.BankId && (
+          <>
+            <Button
+              //onPress={onLogout}
+              style={styles.pushMoney}
+              size="sm"
+              type={1}
+              label="Nạp tiền "
+              bold
+            />
+          </>
+        )} */}
       </View>
     );
   };
@@ -58,7 +73,8 @@ const TransferBank = ({sourceMoney = [], bankFee = {}}) => {
 
         <Pressable
           //onPress={() => onPress(item)}
-          style={styles.addBank}>
+          style={styles.addBank}
+        >
           <Text fs="h6">Thêm tài khoản ngân hàng</Text>
           <Image
             style={[styles.iconAddBank]}
@@ -66,15 +82,6 @@ const TransferBank = ({sourceMoney = [], bankFee = {}}) => {
           />
         </Pressable>
       </View>
-      {/* <Text style={styles.opaciy}>opaciy</Text>
-    <Button
-      //onPress={onLogout}
-      style={styles.pushMoney}
-      size="sm"
-      type={1}
-      label="Nạp tiền "
-      bold
-    />  */}
     </>
   );
 };

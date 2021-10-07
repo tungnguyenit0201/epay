@@ -122,7 +122,8 @@ const BankCardInfo = props => {
   return (
     <ScrollView
       style={{backgroundColor: Colors.white}}
-      contentContainerStyle={{flex: 1}}>
+      contentContainerStyle={{flex: 1}}
+    >
       <HeaderBg>
         <Header title="Thông tin cá nhân" back />
       </HeaderBg>

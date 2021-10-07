@@ -81,14 +81,16 @@ const OTP = props => {
             <Pressable
               style={{marginTop: -3}}
               disabled={countdown > 0}
-              onPress={resentOTP}>
+              onPress={resentOTP}
+            >
               <Text
                 style={[
                   styles.fontSize_1,
                   {
                     color: Colors.cl1,
                   },
-                ]}>
+                ]}
+              >
                 {countdown > 0
                   ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
                   : ' Gửi lại'}
@@ -127,7 +129,8 @@ const OTP = props => {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderOTP()}
       </ScrollView>
       {renderButton()}
