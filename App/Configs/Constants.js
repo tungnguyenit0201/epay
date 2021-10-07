@@ -17,8 +17,10 @@ import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
 import CONFIRM_METHODS from './Enums/ConfirmMethod';
+import APP_CONFIG from 'configs/Enums/AppConfig';
 
 export {
+  APP_CONFIG,
   TEXT,
   SCREEN,
   ERROR_CODE,
