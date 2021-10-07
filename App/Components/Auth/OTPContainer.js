@@ -44,7 +44,7 @@ const OTPContainer = ({
 
       <View style={styles.flexRow_1}>
         <View style={styles.flexRow_1}>
-          <Text style={styles.fontSize_1}>Gửi lại mã xác thực (OTP) sau:</Text>
+          <Text style={styles.fontSize_1}>Gửi lại mã xác thực (OTP) </Text>
 
           <Pressable
             //style={{marginTop: -3}}
@@ -58,7 +58,7 @@ const OTPContainer = ({
                 },
               ]}>
               {countdown > 0
-                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
                 : ` Gửi lại`}
             </Text>
           </Pressable>
