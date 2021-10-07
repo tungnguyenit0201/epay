@@ -2,7 +2,7 @@ import {TEXT} from 'configs/Constants';
 import * as yup from 'yup';
 
 const FULLNAME_REGEX =
-  /^[aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
+  /^([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
 export const bankCardRegex = /^[a-zA-Z0-9]+$/;
 export const registerSchema = yup.object().shape({
   username: yup.string().required(TEXT.USERNAME_NOT_BLANK),
@@ -108,5 +108,9 @@ export const verifyUserSchema = yup.object().shape({
 });
 
 export const nameSchema = yup.object().shape({
-  FullName: yup.string().required('Tên không được bỏ trống.').max(100),
+  FullName: yup
+    .string()
+    .required('Tên không được bỏ trống.')
+    .max(100)
+    .matches(FULLNAME_REGEX, 'Tên không hợp lệ.'),
 });
