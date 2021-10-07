@@ -53,7 +53,7 @@ const InputBlock = ({
           textContentType={'oneTimeCode'}
           style={[
             styles.input,
-            { borderColor: isFocused ? Colors.cl1 : Colors.BORDER },
+            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
             inputStyle,
           ]}
           placeholderTextColor={Colors.l5}
@@ -73,7 +73,7 @@ const InputBlock = ({
           <TouchableOpacity
             style={[styles.select, !!error && styles.error]}
             onPress={onPress}>
-            <Text style={{ color: Colors.TEXT }}>
+            <Text style={{color: Colors.TEXT}}>
               {value ? value : props?.defaultValue}
             </Text>
           </TouchableOpacity>
@@ -113,7 +113,7 @@ const InputBlock = ({
           />
         </TouchableOpacity>
       )}
-      {!!password && (
+      {/* {!!password && (
         <Pressable
           onPress={() => setShowPassword(!showPassword)}
           style={[styles.absolute, styles.top1, styles.right1]}>
@@ -123,7 +123,7 @@ const InputBlock = ({
             resizeMode="contain"
           />
         </Pressable>
-      )}
+      )} */}
     </View>
   );
 };

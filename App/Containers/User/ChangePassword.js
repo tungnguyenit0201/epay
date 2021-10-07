@@ -15,6 +15,7 @@ const ChangePassword = ({route}) => {
   return (
     <>
       <HeaderBg>
+        {console.log('route?.params', route?.params)}
         <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
       </HeaderBg>
       <ScrollView style={base.wrap}>
@@ -24,8 +25,7 @@ const ChangePassword = ({route}) => {
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}
-          >
+            validationSchema={passwordSchema}>
             {({
               handleChange: _handleChange,
               handleBlur,
@@ -43,7 +43,7 @@ const ChangePassword = ({route}) => {
 
               return (
                 <View style={styles.wrap}>
-                  <Text style={[styles.title]} mb={20}>
+                  <Text style={[styles.title]} fs="h3" bold>
                     Nhập mật khẩu
                   </Text>
                   <Text mb={10}>
