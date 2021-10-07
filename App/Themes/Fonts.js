@@ -11,6 +11,7 @@ export const FONT_BOLD = FONT_NAME + 'Bold';
 const FONT_SMALL = scale(12);
 const FONT_MEDIUM = scale(14);
 
+const SX = scale(10);
 const SM = scale(12);
 const MD = scale(14);
 const H7 = scale(18);
