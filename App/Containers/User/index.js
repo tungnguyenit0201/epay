@@ -45,7 +45,8 @@ const User = () => {
             <Col space={10}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.MaThanhToan}
@@ -56,7 +57,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.ThanhToan}
@@ -67,7 +69,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.SECURITY);
-                }}>
+                }}
+              >
                 <Image style={[styles.icon]} source={Images.Profile.BaoMat} />
                 <Text semibold>{translation.password_and_security} </Text>
               </TouchableOpacity>
@@ -78,7 +81,8 @@ const User = () => {
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                   Alert.alert('', 'Coming soon');
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/NapVI.png')}
@@ -97,7 +101,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.Translate}
@@ -109,7 +114,8 @@ const User = () => {
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
                   Alert.alert('', 'Coming soon');
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/Noti.png')}
@@ -138,7 +144,8 @@ const User = () => {
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
               Alert.alert('', 'Coming soon');
-            }}>
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
@@ -153,7 +160,8 @@ const User = () => {
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
               Alert.alert('', 'Coming soon');
-            }}>
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}

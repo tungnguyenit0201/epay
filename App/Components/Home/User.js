@@ -46,7 +46,8 @@ const User = ({data, style}) => {
           style={styles.noti}
           onPress={() => {
             Navigator.navigate(SCREEN.NOTIFICATION);
-          }}>
+          }}
+        >
           <Text style={styles.notiText}>10</Text>
         </TouchableOpacity> */}
       </View>

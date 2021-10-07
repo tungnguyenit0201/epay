@@ -205,6 +205,8 @@ export default {
     Camera: require('images/modal/camera.png'),
     Lock: require('images/modal/lock.png'),
     UserTick: require('images/modal/userTick.png'),
+    Danger: require('images/modal/danger.png'),
+    MoneySend: require('images/qrpay/MoneySend.png'),
   },
   warning: require('images/ic_warning.png'),
   primaryButton: require('images/Button.png'),
@@ -215,6 +217,11 @@ export default {
     Failure: require('images/icons/ic_transaction_failed.png'),
     BGIcon: require('images/bgXacNhan.png'),
     Call: require('images/icons/ic_call.png'),
+  },
+  Boarding: {
+    0: require('images/boarding/boarding1.png'),
+    1: require('images/boarding/boarding2.png'),
+    2: require('images/boarding/boarding3.png'),
   },
   TrafficFee: {
     Moneys: require('images/icons/moneys.png'),
