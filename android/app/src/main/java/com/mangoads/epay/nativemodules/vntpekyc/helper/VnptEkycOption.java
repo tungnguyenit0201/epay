@@ -29,7 +29,7 @@ public class VnptEkycOption {
         option.doneButtonBackgroundColor = "#FFFFFF";
         option.frameCornerColor = "#FFFFFF";
 
-        option.understoodButtonBackgroundColor = "#6FC3EA";
+        option.understoodButtonBackgroundColor = "#1F5CAB";
         option.understoodTextColor = "#FFFFFF";
         option.textGuideImage = "";
 
@@ -69,7 +69,7 @@ public class VnptEkycOption {
         option.doneButtonBackgroundColor = "#FFFFFF";
         option.frameCornerColor = "#FFFFFF";
 
-        option.understoodButtonBackgroundColor = "#6FC3EA";
+        option.understoodButtonBackgroundColor = "#1F5CAB";
         option.understoodTextColor = "#FFFFFF";
         option.backTextGuideImage = configMap.getString("titleBack", "MẶT SAU");// Chụp mặt sau
         option.textGuideImage = configMap.getString("titleFront", "MẶT TRƯỚC");// Chụp mặt  trước

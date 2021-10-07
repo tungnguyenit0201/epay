@@ -1,31 +1,12 @@
-import React, {useState, useRef} from 'react';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  Pressable,
-} from 'react-native';
-import {
-  Header,
-  HeaderBg,
-  Text,
-  Button,
-  Icon,
-  DatePicker,
-  Row,
-  Col,
-} from 'components';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, Icon, DatePicker, Row, Col} from 'components';
 import {useTranslation} from 'context/Language';
-import {formatMoney, scale} from 'utils/Functions';
+import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
-import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
-import Modal from 'react-native-modal';
+import {COMMON_ENUM} from 'configs/Constants';
 import moment from 'moment';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import FooterContainer from 'components/Auth/FooterContainer';
+import {Calendar} from 'react-native-calendars';
 import _ from 'lodash';
 
 // import {LocaleConfig} from 'react-native-calendars';
@@ -42,25 +23,17 @@ import _ from 'lodash';
 
 // LocaleConfig.defaultLocale = 'fr';
 
-const CalendarCustom = ({onSelectRange}) => {
+const calendarFormat = 'yyyy-MM-DD';
+
+const CalendarCustom = ({
+  onSelectRange,
+  initialStạrtDate,
+  initialEndDate,
+  format = COMMON_ENUM.DATETIME_FORMAT,
+}) => {
   const translation = useTranslation();
   const calendarRef = useRef(null);
-  const [markedDates, setMarkedDates] = useState({
-    '2021-09-19': {
-      startingDay: true,
-      color: Colors.blue,
-      textColor: Colors.white,
-    },
-    '2021-09-20': {color: Colors.cl5},
-    // '2021-09-21': {color: '#70d7c7', textColor: 'white', marked: true, dotColor: 'white'},
-    '2021-09-21': {color: Colors.cl5},
-    '2021-09-22': {color: Colors.cl5},
-    '2021-09-23': {
-      endingDay: true,
-      color: Colors.blue,
-      textColor: Colors.white,
-    },
-  });
+  const [markedDates, setMarkedDates] = useState({});
 
   const onDayPress = date => {
     let newMarkedDates = {};
@@ -77,10 +50,8 @@ const CalendarCustom = ({onSelectRange}) => {
         newMarkedDates = {[startDateKey]: {...startDate, endingDay: true}};
         onSelectRange &&
           onSelectRange([
-            moment(startDateKey).format(COMMON_ENUM.DATETIME_FORMAT),
-            moment(startDateKey + ' 23:59:59').format(
-              COMMON_ENUM.DATETIME_FORMAT,
-            ),
+            moment(startDateKey + ' 00:00:00').format(format),
+            moment(startDateKey + ' 23:59:59').format(format),
           ]);
       } else {
         // not the same day
@@ -98,29 +69,12 @@ const CalendarCustom = ({onSelectRange}) => {
         };
         // mark all days between startingDay & endingDay
         isReversed && ([startDateKey, endDateKey] = [endDateKey, startDateKey]);
-        let iterativeDate = moment(startDateKey);
-        let isReached = false;
-        while (!isReached) {
-          iterativeDate.add(1, 'days');
-          const iterativeDateFormatted = iterativeDate.format('yyyy-MM-DD');
-          if (iterativeDateFormatted === endDateKey) {
-            // reach endingDay
-            isReached = true;
-          } else {
-            // not reach
-            newMarkedDates[iterativeDateFormatted] = {color: Colors.cl5};
-          }
-        }
+        newMarkedDates = onMarkRange(newMarkedDates, startDateKey, endDateKey);
         // parent component's callback
-        console.log(
-          '->',
-          moment(startDateKey).format(COMMON_ENUM.DATETIME_FORMAT),
-          moment(endDateKey).format(COMMON_ENUM.DATETIME_FORMAT),
-        );
         onSelectRange &&
           onSelectRange([
-            moment(startDateKey).format(COMMON_ENUM.DATETIME_FORMAT),
-            moment(endDateKey).format(COMMON_ENUM.DATETIME_FORMAT),
+            moment(startDateKey + ' 00:00:00').format(format),
+            moment(endDateKey + ' 23:59:59').format(format),
           ]);
       }
     } else {
@@ -133,6 +87,78 @@ const CalendarCustom = ({onSelectRange}) => {
     }
     setMarkedDates(newMarkedDates);
   };
+
+  const onMarkRange = (range, startDate, endDate) => {
+    const result = {...range};
+    let iterativeDate = moment(startDate);
+    let isReached = false;
+    while (!isReached) {
+      iterativeDate.add(1, 'days');
+      const iterativeDateFormatted = iterativeDate.format(calendarFormat);
+      if (iterativeDateFormatted === endDate) {
+        // reach endingDay
+        isReached = true;
+      } else {
+        // not reach
+        result[iterativeDateFormatted] = {color: Colors.cl5};
+      }
+    }
+    return result;
+  };
+
+  const getDateText = key => {
+    const dateData = Object.entries(markedDates).find(
+      ([date, value]) => value[key],
+    );
+    return dateData
+      ? moment(dateData[0], calendarFormat).format('DD/MM/YY')
+      : '';
+  };
+
+  const onChangeMonth = date => {
+    const currentMonth = moment(calendarRef.current?.state?.currentMonth);
+    const diff = moment(date, 'DD-MM-yyyy').diff(currentMonth, 'months');
+    console.log('diff', diff);
+    calendarRef.current.addMonth(diff);
+  };
+
+  useEffect(() => {
+    if (!initialStạrtDate || !initialEndDate) {
+      return;
+    }
+    const startDate = moment(initialStạrtDate, format).format(calendarFormat);
+    const endDate = moment(initialEndDate, format).format(calendarFormat);
+    if (startDate === endDate) {
+      // same day
+      setMarkedDates({
+        [startDate]: {
+          endingDay: true,
+          startingDay: true,
+          color: Colors.blue,
+          textColor: Colors.white,
+        },
+      });
+      return;
+    }
+    setMarkedDates(
+      onMarkRange(
+        {
+          [startDate]: {
+            startingDay: true,
+            color: Colors.blue,
+            textColor: Colors.white,
+          },
+          [endDate]: {
+            endingDay: true,
+            color: Colors.blue,
+            textColor: Colors.white,
+          },
+        },
+        startDate,
+        endDate,
+      ),
+    );
+  }, []);
 
   const renderHeader = date => {
     return (
@@ -178,13 +204,12 @@ const CalendarCustom = ({onSelectRange}) => {
               Từ:
             </Text>
             <DatePicker
-              // label={translation.date_of_birth_ddmmyyyy}
-              // value={info.DateOfBirth}
-              // value={''}
-              // required
+              value={getDateText('startingDay')}
               placeholder="dd/mm/yyyy"
               noIconBg
               style={[styles.flex1, styles.h1]}
+              // onChange={date => onChangeMonth(date)}
+              disabled
             />
           </View>
         </Col>
@@ -195,9 +220,12 @@ const CalendarCustom = ({onSelectRange}) => {
               Đến:
             </Text>
             <DatePicker
+              value={getDateText('endingDay')}
               placeholder="dd/mm/yyyy"
               noIconBg
               style={[styles.flex1, styles.h1]}
+              // onChange={date => onChangeMonth(date)}
+              disabled
             />
           </View>
         </Col>

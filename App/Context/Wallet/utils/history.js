@@ -24,10 +24,8 @@ const useHistory = () => {
   const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({
     search: '',
-    startDate: moment()
-      .subtract(1, 'years')
-      .format(COMMON_ENUM.DATETIME_FORMAT),
-    endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
+    startDate: null,
+    endDate: null,
     serviceID: [],
     stateID: 0,
     type2: [],
@@ -81,11 +79,12 @@ const useHistory = () => {
     setHistoryData(null);
     const result = await getHistory({
       phone,
-      StartDate: startDate,
-      EndDate: endDate,
+      StartDate: startDate || moment().format(COMMON_ENUM.DATETIME_FORMAT),
+      EndDate: endDate || moment().format(COMMON_ENUM.DATETIME_FORMAT),
       CodeFilter: search || '',
       ServiceId: serviceID.join(',') || 0,
       StateId: stateID,
+      DatetimeFilter: startDate && endDate ? 1 : 0,
     });
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
       setError(result);
@@ -150,10 +149,8 @@ const useHistory = () => {
 
   const initTempFilter = () => {
     contentRef.current.tempFilter = {
-      startDate: moment()
-        .subtract(1, 'years')
-        .format(COMMON_ENUM.DATETIME_FORMAT),
-      endDate: moment().format(COMMON_ENUM.DATETIME_FORMAT),
+      startDate: null,
+      endDate: null,
       serviceID: [],
       stateID: 0,
       type2: [],

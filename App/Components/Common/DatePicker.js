@@ -19,6 +19,7 @@ export default ({
   showErrorLabel = true,
   type = 'date',
   noIconBg,
+  disabled,
   ...props
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -28,7 +29,7 @@ export default ({
   const [date, setDate] = useState(moment(value, valueFormat).toDate());
 
   const showDatePicker = () => {
-    setDatePickerVisibility(true);
+    !disabled && setDatePickerVisibility(true);
   };
 
   const hideDatePicker = () => {
