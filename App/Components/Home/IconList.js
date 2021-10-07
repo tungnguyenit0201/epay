@@ -13,6 +13,8 @@ import {
 import {Spacing, Images, Colors} from 'themes';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
+import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 import {useIconConfig} from 'context/Home/utils';
 import {ListItemSimple, Row, Col, Text} from 'components';
 
@@ -92,7 +94,10 @@ const IconList = ({data}) => {
                     width: width / 2 - Spacing.PADDING,
                   },
                 ]}
-                onPress={() => Alert.alert('', 'Coming soon')}>
+                onPress={() => {
+                  // Alert.alert('', 'Coming soon')
+                  Navigator.navigate(SCREEN.TRAFFIC_FEE);
+                }}>
                 <Image source={item.icon} style={styles.icon} />
 
                 <Text centered bold mt={5}>

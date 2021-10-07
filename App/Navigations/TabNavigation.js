@@ -106,8 +106,7 @@ const TabNavigation = () => {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={styles.tab}
-              >
+                style={styles.tab}>
                 <Image
                   source={
                     // !isFocused
@@ -127,8 +126,7 @@ const TabNavigation = () => {
                 <Text
                   style={{
                     color: isFocused ? Colors.cl1 : Colors.gray,
-                  }}
-                >
+                  }}>
                   {TabLabels[label]}
                 </Text>
               </TouchableOpacity>
@@ -143,8 +141,7 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={onCheck}
-        >
+          onPress={onCheck}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>

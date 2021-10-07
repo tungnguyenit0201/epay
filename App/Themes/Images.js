@@ -215,4 +215,12 @@ export default {
     BGIcon: require('images/bgXacNhan.png'),
     Call: require('images/icons/ic_call.png'),
   },
+  TrafficFee: {
+    Moneys: require('images/icons/moneys.png'),
+    Station: require('images/icons/station.png'),
+    Ticket: require('images/icons/ticket.png'),
+    ArrowRight: require('images/icons/arrow-right.png'),
+    BigCar: require('images/icons/big-car.png'),
+    BigCamera: require('images/icons/big-camera.png'),
+  },
 };

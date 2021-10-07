@@ -45,6 +45,7 @@ import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
+import RegisterFee from 'containers/Service/TrafficFee/Register';
 import Confirmation from 'containers/Wallet/Confirmation';
 import Security from 'containers/User/Security';
 import ChangePassword from 'containers/User/ChangePassword';
@@ -225,8 +226,7 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}
-    >
+      onReady={() => (isReadyRef.current = true)}>
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -235,8 +235,7 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}
-        >
+          }}>
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -301,6 +300,10 @@ const AppNavigator = () => {
             component={TransferSuccess}
           />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER}
+            component={RegisterFee}
+          />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
@@ -393,7 +396,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
-
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
         </Stack.Navigator>
       </KeyboardStateProvider>
@@ -413,8 +415,7 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}
-    >
+      }}>
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />

@@ -41,8 +41,7 @@ const EditInfo = () => {
               SexType: personalInfo?.SexType,
             }}
             validationSchema={addressSchema}
-            onSubmit={onUpdateUserInfo}
-          >
+            onSubmit={onUpdateUserInfo}>
             <FormikContent
               region={region}
               goRegionSelect={goRegionSelect}

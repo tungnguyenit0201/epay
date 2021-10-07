@@ -14,8 +14,7 @@ const TransferBank = ({sourceMoney = [], bankFee = {}}) => {
     return (
       <View
         style={[styles.itemBank, !item?.BankId && styles.itemBankActive]}
-        key={`${Math.random(1, 100)}-sourceMoney`}
-      >
+        key={`${Math.random(1, 100)}-sourceMoney`}>
         <Image
           style={[styles.iconBank]}
           source={
@@ -59,8 +58,7 @@ const TransferBank = ({sourceMoney = [], bankFee = {}}) => {
 
         <Pressable
           //onPress={() => onPress(item)}
-          style={styles.addBank}
-        >
+          style={styles.addBank}>
           <Text fs="h6">Thêm tài khoản ngân hàng</Text>
           <Image
             style={[styles.iconAddBank]}
