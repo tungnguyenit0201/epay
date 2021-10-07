@@ -228,7 +228,7 @@ const useAuth = () => {
     });
     await setToken('');
     // Navigator.popToTop();
-    Navigator.navigate(SCREEN.AUTH);
+    Navigator.reset(SCREEN.AUTH);
   };
 
   return {
