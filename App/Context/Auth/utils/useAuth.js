@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
-import {checkPhone, login, register} from 'services/auth';
+import useServiceAuth from 'services/auth';
 import {getTerm} from 'services/common';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN, TERM_TYPE} from 'configs/Constants';
 import _ from 'lodash';
@@ -124,9 +124,11 @@ const useAuth = () => {
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
+  const {checkPhone, login} = useServiceAuth();
+
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
-    const result = await checkPhone(phone);
+    const result = await checkPhone({phone});
     setLoading(false);
     phone && setPhone(phone);
 
@@ -161,7 +163,11 @@ const useAuth = () => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
     const pushToken = await getPushToken();
-    const result = await login(phone, passwordEncrypted, pushToken);
+    const result = await login({
+      phone,
+      password: passwordEncrypted,
+      PushToken: pushToken,
+    });
     setLoading(false);
 
     switch (_.get(result, 'ErrorCode', '')) {
@@ -253,6 +259,7 @@ const useRegister = () => {
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
   const {setPhone, getPhone} = useAsyncStorage();
+  const {register} = useServiceAuth();
 
   let [active, setActive] = useState(false);
   let [showModal, setShowModal] = useState(false);
@@ -357,6 +364,7 @@ const useForgetPassword = () => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
+  const {checkPhone} = useServiceAuth();
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);

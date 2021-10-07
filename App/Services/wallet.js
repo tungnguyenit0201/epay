@@ -1,4 +1,5 @@
 import {API} from 'configs';
+import {useError} from 'context/Common/utils';
 import {request} from 'utils/Request';
 
 export const mapBankNapas = async param => {
@@ -501,3 +502,28 @@ export const payment = async ({phone, MerchantCode, OrderId}) => {
   });
   return response;
 };
+
+const useServiceWallet = () => {
+  const {checkDifferentDevice} = useError();
+
+  const getQRCodeInfo = async ({phone, QRCode}) => {
+    let response = null;
+    await request({
+      url: API.WALLET.GET_QRCODE_INFO,
+      method: 'post',
+      params: {
+        PhoneNumber: phone,
+        QRCode,
+      },
+      success: res => {
+        response = res;
+      },
+      failure: checkDifferentDevice,
+    });
+    return response;
+  };
+
+  return {getQRCodeInfo};
+};
+
+export default useServiceWallet;
