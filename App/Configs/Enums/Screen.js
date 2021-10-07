@@ -2,6 +2,7 @@ import BankPickerScreen from 'containers/Wallet/Bank/BankPickerScreen';
 
 const SCREEN = {
   LANGUAGE: 'Language',
+  BOADRING: 'Boarding',
   HOME: 'Home',
   AUTH: 'Auth',
   LOGIN: 'Login',

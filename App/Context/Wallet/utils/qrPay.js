@@ -1,6 +1,6 @@
 import {useAsyncStorage, useError, usePermission} from 'context/Common/utils';
 import {useEffect, useState} from 'react';
-import {getQRCodeInfo} from 'services/wallet';
+import {getQRCodeInfo, getTransferUser} from 'services/wallet';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import _ from 'lodash';
@@ -8,6 +8,7 @@ import {ERROR_CODE} from 'configs/Constants';
 import RNQRGenerator from 'rn-qr-generator';
 import {useCommon} from 'context/Common';
 import {RESULTS} from 'react-native-permissions';
+import {useWallet} from 'context/Wallet';
 const useScanQR = () => {
   let [flash, setFlash] = useState(false);
   let [loading, setLoading] = useState(false);
@@ -16,6 +17,7 @@ const useScanQR = () => {
   const {getPhone} = useAsyncStorage();
   const {setError} = useError();
   const {checkPermission} = usePermission();
+  const {dispatch} = useWallet();
 
   const onGetQRCodeInfo = async qrCode => {
     if (loading) return;
@@ -28,7 +30,19 @@ const useScanQR = () => {
     console.log('result :>> ', result);
 
     if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
-      Navigator.navigate(SCREEN.QR_TRANSFER, result);
+      let userTransfer;
+      if (result?.Payload?.AccountId)
+        userTransfer = await onGetTransferUser(result?.Payload?.AccountId);
+      // if (result?.Payload?.MerchantCode && result?.Payload?.TransAmount)
+      //   Navigator.navigate(SCREEN.TRANSFER_RESULTS, result?.Payload);
+      // else Navigator.navigate(SCREEN.QR_TRANSFER, result?.Payload);
+      console.log('userTransfer :>> ', userTransfer);
+      dispatch({
+        type: 'SET_QR_TRANSACTION',
+        qrTransaction: {...result?.Payload, ...userTransfer},
+      });
+
+      Navigator.navigate(SCREEN.QR_TRANSFER);
       setLoading(false);
 
       return {result};
@@ -37,11 +51,28 @@ const useScanQR = () => {
     }
   };
 
-  const detectQRCode = async () => {
+  const onGetTransferUser = async AccountId => {
+    setLoading(true);
+    const phone = await getPhone();
+
+    let result = await getTransferUser({
+      phone,
+      AccountId,
+    });
+    console.log('result :>> ', result);
+
+    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+      setLoading(false);
+
+      return result?.UserInfo;
+    } else setError(result);
+    setLoading(false);
+  };
+
+  const detectQRCode = async image => {
     try {
       console.log('image?.path :>> ', image);
-      if (!image?.sourceURL)
-        return setError({ErrorMessage: 'Bạn chưa chọn hình!', ErrorCode: -1}); // TODO: translate
+      if (!image?.sourceURL) return;
       let qrCode = await RNQRGenerator.detect({
         uri: image?.sourceURL,
       });
@@ -56,6 +87,8 @@ const useScanQR = () => {
   };
 
   useEffect(() => {
+    dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: {}});
+
     checkPermission('', () => Navigator.goBack());
   }, []); // eslint-disable-line
   return {

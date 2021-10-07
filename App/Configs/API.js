@@ -78,6 +78,7 @@ export default {
     PROMO_APPLY: 'payment/promo_apply',
     PAYMENT: 'payment/payment',
     MONEY_TRANSFER: 'wallet/money_transfer',
+    GET_SOURCE_MONEY: 'wallet/get_source_money',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',
