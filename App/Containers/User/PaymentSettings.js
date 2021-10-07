@@ -16,6 +16,7 @@ import {useTranslation} from 'context/Language';
 
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {useUserInfo} from 'context/User/utils';
+import {formatMoney} from 'utils/Functions';
 const PaymentSettings = () => {
   const translation = useTranslation();
   const [xacNhan, isXacNhan] = useState(false);
@@ -93,7 +94,7 @@ const PaymentSettings = () => {
       </TouchableOpacity>
 
       <View style={[base.container]}>
-        <Text>Cài đặt hạn mức: 50000000đ</Text>
+        <Text>{`Cài đặt hạn mức: ${formatMoney(50000000)}đ`}</Text>
       </View>
     </ScrollView>
   );
