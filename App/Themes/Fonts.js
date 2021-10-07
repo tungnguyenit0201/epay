@@ -11,9 +11,10 @@ export const FONT_BOLD = FONT_NAME + 'Bold';
 const FONT_SMALL = scale(12);
 const FONT_MEDIUM = scale(14);
 
+const SX = scale(10);
 const SM = scale(12);
 const MD = scale(14);
-const H7 = scale(18);
+const LG = scale(18);
 const H6 = scale(16);
 const H5 = scale(20);
 const H4 = scale(24);
@@ -29,9 +30,10 @@ export default {
   FONT_500,
   FONT_SMALL,
   FONT_MEDIUM,
+  SX,
   SM,
   MD,
-  H7,
+  LG,
   H6,
   H5,
   H4,

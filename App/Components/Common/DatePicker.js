@@ -54,7 +54,13 @@ export default ({
       <Pressable
         onPress={showDatePicker}
         style={[styles.wrap, error && styles.error, style]}>
-        <View style={[styles.block1, styles.fullHeight, styles.flex1]}>
+        <View
+          style={[
+            styles.block1,
+            styles.fullHeight,
+            styles.flex1,
+            styles.justifyCenter,
+          ]}>
           <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
             {value}
           </Text>
@@ -108,6 +114,7 @@ const styles = StyleSheet.create({
   },
   //----------------
   flex1: {flex: 1},
+  justifyCenter: {justifyContent: 'center'},
   //----------------
   fullHeight: {height: '100%'},
   //----------------
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
   blockIcon1: {
     justifyContent: 'center',
     right: -1,
-    padding: 12,
+    padding: 8,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },
