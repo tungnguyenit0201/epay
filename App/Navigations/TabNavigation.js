@@ -106,7 +106,7 @@ const TabNavigation = () => {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={styles.tab}
+                style={label === 'Home' ? styles.tabH : styles.tabU} // TODO: translate
               >
                 <Image
                   source={
@@ -127,8 +127,7 @@ const TabNavigation = () => {
                 <Text
                   style={{
                     color: isFocused ? Colors.cl1 : Colors.gray,
-                  }}
-                >
+                  }}>
                   {TabLabels[label]}
                 </Text>
               </TouchableOpacity>
@@ -143,8 +142,7 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={onCheck}
-        >
+          onPress={onCheck}>
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>
@@ -187,10 +185,19 @@ const styles = StyleSheet.create({
     height: scale(80),
     // zIndex: 1,
   },
-  tab: {
+  tabH: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingVertical: scale(12),
+    marginRight: scale(40),
+  },
+  tabU: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingVertical: scale(12),
+    /* marginLeft: scale(15), */
   },
   icon: {
     marginTop: Spacing.PADDING / 2,
