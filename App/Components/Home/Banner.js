@@ -16,9 +16,9 @@ const Banner = ({
   const Item = ({item}) => (
     <TouchableOpacity
       style={[styles.item, styleItem]}
-      onPress={() => {
-        Navigator.push(item.screen);
-      }}
+      // onPress={() => {
+      //   Navigator.push(item.screen);
+      // }}
     >
       <Image source={item.img} style={[styles.img, styleImg]} />
     </TouchableOpacity>
