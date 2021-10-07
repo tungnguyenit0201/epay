@@ -64,12 +64,14 @@ export const newPasswordSchema = yup.object().shape({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
       'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
     )
-    .label('Mật khẩu'),
+    .label('Mật khẩu')
+    .max(20, 'Mật khẩu tối đa 20 ký tự'),
   passwordConfirm: yup
     .string()
     .required()
     .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
-    .label('Xác nhận mật khẩu'),
+    .label('Xác nhận mật khẩu')
+    .max(20, 'Mật khẩu tối đa 20 ký tự'),
 });
 
 export const napasSchema = yup.object().shape({
