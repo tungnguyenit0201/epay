@@ -72,6 +72,7 @@ const Auth = () => {
                 value={values.phone}
                 //leftIcon={Images.Phone_1}
                 isDeleted={values.phone}
+                maxLength={10}
               />
 
               <FooterContainer
