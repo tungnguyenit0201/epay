@@ -113,6 +113,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         ErrorCode: -1,
         ErrorMessage: `Số lần gửi OTP quá ${config?.ResendOtpNo} lần/${config?.LockWhenResendTooManyTime} giây vui lòng quay lại sau ${remain} phút`,
       }); // TODO: translate
+      Navigator.goBack();
       return false;
     }
 
