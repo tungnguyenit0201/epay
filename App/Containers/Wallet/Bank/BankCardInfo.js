@@ -54,7 +54,7 @@ const BankCardInfo = props => {
           element.length,
         );
         const regex = new RegExp(`^9704 ${prefix}([0-9]{2})(\\\\s[0-9]{4}){2}`);
-        const isValid = regex.test(cardNumber.current);
+        const isValid = regex.test(cardNumber);
         if (isValid) {
           return null;
         }
@@ -122,8 +122,7 @@ const BankCardInfo = props => {
   return (
     <ScrollView
       style={{backgroundColor: Colors.white}}
-      contentContainerStyle={{flex: 1}}
-    >
+      contentContainerStyle={{flex: 1}}>
       <HeaderBg>
         <Header title="Thông tin cá nhân" back />
       </HeaderBg>

@@ -50,7 +50,7 @@ const useTopUp = () => {
       if (bankFeeData[transFormType]) {
         return;
       }
-      banks.forEach(async (bank, index) => {
+      banks?.forEach?.(async (bank, index) => {
         const result = await getBankFee({
           phone,
           bankID: bank.BankId,

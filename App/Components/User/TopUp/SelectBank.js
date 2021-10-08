@@ -47,17 +47,15 @@ const SelectBank = forwardRef(
         <Text bold fs="h6" mb={20}>
           {label}
         </Text>
-
         {_.map(data, (bankType, type) => (
           <Row space="10" key={type} style={styles.row}>
-            {bankType.map((item, index) => {
+            {bankType?.map?.((item, index) => {
               const {BankName, BankLogoUrl} = item;
               return (
                 <Col width="33.33%" space="10" key={index}>
                   <Pressable
                     style={[styles.item]}
-                    onPress={() => onChangeBank({index, type})}
-                  >
+                    onPress={() => onChangeBank({index, type})}>
                     <View style={[styles.wicon]}>
                       <Image
                         source={{uri: BankLogoUrl}}
