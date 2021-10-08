@@ -33,8 +33,7 @@ const OTP = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -70,8 +69,7 @@ const OTP = ({route}) => {
               styles.wrap,
               base.bgWhite,
               {paddingTop: scale(28), flex: 1},
-            ]}
-          >
+            ]}>
             {renderOTPContainer()}
           </View>
         </>
@@ -98,8 +96,7 @@ const OTP = ({route}) => {
           styles.bgGray,
           {paddingVertical: Spacing.PADDING - 5},
         ]}
-        onPress={() => setShowModal(true)}
-      >
+        onPress={() => setShowModal(true)}>
         <View
           style={[
             styles.lineSize,
@@ -107,8 +104,7 @@ const OTP = ({route}) => {
             styles.bgGray1,
             styles.top1,
             styles.left1,
-          ]}
-        ></View>
+          ]}></View>
         <View
           style={[
             styles.lineSize,
@@ -116,8 +112,7 @@ const OTP = ({route}) => {
             styles.bgGray1,
             styles.top1,
             styles.right1,
-          ]}
-        ></View>
+          ]}></View>
         <Image source={Images.Phone} style={styles.iconPhone} />
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>
@@ -131,8 +126,7 @@ const OTP = ({route}) => {
         visible={showModal}
         onClose={() => setShowModal(false)}
         title="Gọi tổng đài"
-        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, 
-          vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
+        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
         buttonGroup={() => (
           <>
             <Button mb={15} label="Gọi 1900-0000" bold onPress={() => {}} />
