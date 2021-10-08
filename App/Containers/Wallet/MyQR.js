@@ -34,7 +34,10 @@ const QRPay = ({route}) => {
     // TODO: translate
     <View style={{flex: 1, backgroundColor: Colors.white}}>
       <HeaderBg>
-        <Header title={translation.payment_code} back />
+        <Header
+          title="Mã của tôi" // TODO: translate
+          back
+        />
       </HeaderBg>
       <ScrollView style={[base.wrap]}>
         <View style={[base.container, styles.flexCenter]}>

@@ -28,7 +28,7 @@ const SelectMoney = () => {
       <HeaderBg>
         <Header
           //title={translation.top_up}
-          title={translation.payment_code}
+          title="Mã của tôi" // TODO: translate
           back
           style={{marginBottom: 20}}
         />
