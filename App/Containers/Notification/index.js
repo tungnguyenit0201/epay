@@ -87,9 +87,10 @@ const Notification = () => {
                       <Text style={styles.date}>{item?.Time}</Text>
                     </View>
 
-                    <Text style={styles.title}>{item?.Title}</Text>
-
-                    <Text style={styles.content}>{item?.Content}</Text>
+                    <Text bold fs="h6" mb={10}>
+                      {item?.Title}
+                    </Text>
+                    <Text>{item?.Content}</Text>
                     {/* {item?.ContentImgUrl && (
                       <Image
                         source={{uri: `${item?.ContentImgUrl}`}}
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
     height: 24,
     position: 'absolute',
     right: Spacing.PADDING,
-    bottom: 20,
+    bottom: 23,
   },
   bgImg: {
     width: scale(375),
@@ -190,8 +191,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     fontSize: 12,
   },
-
-  title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
 
   icon: {
     width: 20,

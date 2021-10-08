@@ -146,7 +146,7 @@ const TransactionResult = () => {
                   <View style={[styles.row, {paddingTop: 0}]}>
                     <Button
                       label={translation?.addPromoCode}
-                      size="sm"
+                      // size="sm"
                       bgImg={false}
                       bg={Colors.white}
                       border={Colors.cl4}
@@ -176,7 +176,6 @@ const TransactionResult = () => {
           }}
           type={1}
           label="Chuyển tiền"
-          bold
         />
       </View>
 

@@ -20,7 +20,7 @@ const TrafficFee = () => {
     {
       img: Images.TrafficFee.Moneys,
       title: 'Phí giao thông',
-      screen: SCREEN.TRAFFIC_REGISTER,
+      screen: SCREEN.LANGUAGE,
     },
     {
       img: Images.TransactionHistory.Warning,

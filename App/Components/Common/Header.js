@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Pressable, Image, StyleSheet, Platform } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { Text, Icon } from 'components';
-import { Colors, Fonts, Images, Spacing } from 'themes';
+import React, {useState, useEffect} from 'react';
+import {View, Pressable, Image, StyleSheet, Platform} from 'react-native';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {Text, Icon} from 'components';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
-import { scale } from 'utils/Functions';
+import {scale} from 'utils/Functions';
 import _ from 'lodash';
-import { SCREEN } from 'configs/Constants';
+import {SCREEN} from 'configs/Constants';
 
 const Header = ({
   title,
@@ -28,7 +28,7 @@ const Header = ({
     <View
       style={[
         styles.wrap,
-        blackIcon && { backgroundColor: Colors.white },
+        blackIcon && {backgroundColor: Colors.white},
         style,
       ]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
@@ -37,10 +37,11 @@ const Header = ({
           {!!title && (
             <Text
               fw="700"
-              fs="h6"
+              // fs="h6"
+              size={Fonts.H6}
               color={Colors.white}
               centered
-              style={[titleStyle, blackIcon && { color: Colors.black }]}>
+              style={[titleStyle, blackIcon && {color: Colors.black}]}>
               {title}
             </Text>
           )}
@@ -74,14 +75,13 @@ const Header = ({
             {!!renderRightComponent && renderRightComponent()}
           </View>
         </View>
-
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  wrap: { paddingVertical: scale(10) },
+  wrap: {paddingVertical: scale(10)},
 
   header: {
     flexDirection: 'row',
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
     minHeight: scale(24),
   },
 
-  avoidStatusBar: { height: getStatusBarHeight() },
+  avoidStatusBar: {height: getStatusBarHeight()},
 
-  back: { paddingHorizontal: Spacing.PADDING / 2 },
+  back: {paddingHorizontal: Spacing.PADDING / 2},
   wrapCenter: {
     alignItems: 'center',
     flex: 1,

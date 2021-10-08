@@ -90,10 +90,11 @@ export default ({
           size == 'lg' && {fontSize: scale(18)},
           size == 'xl' && {fontSize: scale(20)},
           fs && {fontSize: fs},
-          bold && {fontWeight: 'bold'},
+          // bold && {fontWeight: 'bold'},
+          fw ? {fontWeight: fw} : {fontWeight: 'bold'},
           {
             color: color ? color : Colors.white,
-            lineHeight: 20,
+            // lineHeight: 20,
           },
           labelStyle,
         ]}>

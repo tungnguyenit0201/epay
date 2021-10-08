@@ -24,7 +24,6 @@ const DinhDanh = () => {
       <Button
         type="img"
         label="Định danh ngay"
-        bold
         onPress={() => {
           Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         }}

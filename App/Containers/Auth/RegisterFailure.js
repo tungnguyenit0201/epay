@@ -25,8 +25,7 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       // onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -60,7 +59,6 @@ const RegisterFailure = ({route}) => {
           style={styles.btn}
           onPress={openCallDialog}
           mb={Spacing.PADDING - 10}
-          bold
         />
         <Button
           label="Quay lại sau"
@@ -69,7 +67,6 @@ const RegisterFailure = ({route}) => {
           color={Colors.black}
           border={Colors.cl4}
           onPress={() => onNavigate(SCREEN.AUTH)}
-          bold
           bgImg={0}
         />
       </FooterContainer>

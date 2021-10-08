@@ -20,7 +20,7 @@ const Promotion = () => {
           style={styles.input}
           placeholder={translation.fillPromoCode}
         />
-        <Button label={translation.apply} style={styles.btn} />
+        <Button label={translation.apply} />
       </View>
       <FooterContainer style={[styles.bottomBtn, {width: width}]}>
         <Button label={translation.use} />
@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   input: {
     width: scale(240),
   },
-  btn: {},
   bottomBtn: {
     position: 'absolute',
     bottom: 0,

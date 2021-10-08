@@ -34,7 +34,7 @@ const User = () => {
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.l1}]}>
+      <ScrollView style={[base.wrap, {backgroundColor: Colors.white}]}>
         <View style={[base.container]}>
           <UserInfo style={[{marginBottom: 20}]} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
@@ -176,7 +176,7 @@ const User = () => {
             onPress={onLogout}
             type={1}
             label={'Đăng xuất'} //TODO: translate
-            fw="600"
+            // fw="600"
             style={base.bgWhite}
             bgImg={0}
             color={Colors.black}

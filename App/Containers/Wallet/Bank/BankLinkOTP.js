@@ -107,8 +107,7 @@ const OTP = props => {
       <View style={styles.shadowButton}>
         <Button
           label={'Liên kết'}
-          bold
-          size="lg"
+          // size="lg"
           style={{
             alignItems: 'center',
             justifyContent: 'center',

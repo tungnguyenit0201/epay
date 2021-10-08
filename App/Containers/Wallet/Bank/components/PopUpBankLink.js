@@ -33,8 +33,7 @@ const PopUpBankLink = props => {
       <View>
         <Button
           label={translation.continue}
-          bold
-          size="lg"
+          // size="lg"
           style={{
             paddingTop: 15,
             paddingBottom: 15,

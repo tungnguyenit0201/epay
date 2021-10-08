@@ -75,8 +75,8 @@ const RegisterResult = () => {
           </View>
         </ScrollView>
 
-        <FooterContainer pb={40}>
-          <Button label={translation.homePage} bold />
+        <FooterContainer>
+          <Button label={translation.homePage} />
         </FooterContainer>
       </View>
     </>

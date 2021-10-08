@@ -75,7 +75,7 @@ const BankResult = () => {
           bg={blue_color}
           color={Colors.white}
           label={translation.back}
-          style={{width: '100%'}}
+          // style={{width: '100%'}}
           onPress={() => Navigator.navigate(SCREEN.MY_WALLET)}
         />
       </View>

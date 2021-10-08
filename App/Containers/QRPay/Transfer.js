@@ -117,7 +117,6 @@ const Transfer = () => {
           }}
           type={1}
           label="Tiếp tục"
-          bold
         />
       </View>
 
