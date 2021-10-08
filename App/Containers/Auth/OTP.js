@@ -122,27 +122,10 @@ const OTP = ({route}) => {
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>
 
-      {/* <HelpModal
+      <HelpModal
         showModal={showModal}
         setShowModal={setShowModal}
         onPress={openCallDialog}
-      /> */}
-      <Modal
-        visible={showModal}
-        onClose={() => setShowModal(false)}
-        title="Gọi tổng đài"
-        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, 
-          vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
-        buttonGroup={() => (
-          <>
-            <Button mb={15} label="Gọi 1900-0000" bold onPress={() => {}} />
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <Text style={styles.textCenter}>Không, cảm ơn</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        icon={Images.SignUp.BigPhone}
-        // icon={Images.SignUp.BigPhone}
       />
     </>
   );
