@@ -4,8 +4,10 @@ import {View, Image, StyleSheet} from 'react-native';
 import {Colors, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
+import {useTranslation} from 'context/Language';
 const DinhDanh = () => {
   //TODO : translation
+  const translation = useTranslation();
   return (
     <View style={base.boxShadow}>
       <View style={styles.ico}>
@@ -18,8 +20,7 @@ const DinhDanh = () => {
         Định danh tài khoản
       </Text>
       <Text centered mb={20}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry.
+        {translation?.kycDescription}
       </Text>
       <Button
         type="img"
