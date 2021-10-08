@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   absolute: {position: 'absolute'},
   topZero: {top: 0},
   leftZero: {left: 0},
-  pt1: {paddingTop: 58},
+  pt1: {paddingTop: 43},
   //-------------------------
   bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
 });
