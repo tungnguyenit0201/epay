@@ -294,10 +294,14 @@ const UserInfo = () => {
           content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
         GTTT cũ. Bạn có chắc chắn muốn 
         đổi không?" // TODO: translate
+          icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button mb={10} label="Có" onPress={onReVerify} />
-              <TouchableOpacity onPress={() => onReVerify('hideModal')}>
+              <TouchableOpacity
+                onPress={() => onReVerify('hideModal')}
+                style={styles.textCenter}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
@@ -368,5 +372,7 @@ const styles = StyleSheet.create({
   },
   //tho------------
   flex1: {flex: 1},
+
+  textCenter: {alignSelf: 'center'},
 });
 export default UserInfo;
