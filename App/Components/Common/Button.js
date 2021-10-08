@@ -19,7 +19,7 @@ export default ({
   bg,
   radius,
   fs,
-  fw,
+  fw = '700',
   size,
   mt,
   mb,

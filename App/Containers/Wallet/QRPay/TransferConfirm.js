@@ -32,7 +32,6 @@ const TransactionResult = () => {
   // TODO: translate
   const {qrTransaction, sourceMoney} = useWallet();
   const {bankFee} = useQRTransfer();
-  console.log('qrTransaction :>> ', qrTransaction);
 
   const translation = useTranslation();
   const [showModal, setShowModal] = React.useState(false);
@@ -146,13 +145,14 @@ const TransactionResult = () => {
                   <View style={[styles.row, {paddingTop: 0}]}>
                     <Button
                       label={translation?.addPromoCode}
-                      // size="sm"
+                      size="sm"
+                      fs={Fonts.SM}
+                      fw="400"
                       bgImg={false}
                       bg={Colors.white}
                       border={Colors.cl4}
                       color={Colors.black}
-                      style={{width: scale(144)}}
-                      // mb={Spacing.PADDING}
+                      onPress={() => Navigator.navigate(SCREEN.QR_PROMOTION)}
                     />
                     <Text style={styles.textRight}>-</Text>
                   </View>

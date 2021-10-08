@@ -1,14 +1,49 @@
-import {Header, HeaderBg, Button, TextInput} from 'components';
+import {Header, HeaderBg, Button, TextInput, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import React from 'react';
-import {View, StyleSheet, useWindowDimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+} from 'react-native';
 import FooterContainer from 'components/Auth/FooterContainer';
-import {Colors, Spacing} from 'themes';
+import {base, Colors, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
+import {useQRPromo} from 'context/Wallet/utils';
 
 const Promotion = () => {
   const translation = useTranslation();
   const {width} = useWindowDimensions();
+  const {promoCode, promotions, onGetPromo, onChange, onApplyPromo} =
+    useQRPromo();
+  const renderItem = (item, index) => {
+    // TODO: translate
+    return (
+      <TouchableOpacity
+        onPress={() => onChange('promoCode', item?.PromoCode)}
+        key={`${Math.random(1, 100)}-promo`}
+        style={[
+          styles.wrapPromo,
+          base.shadow,
+          promoCode == item?.PromoCode && styles.active,
+        ]}>
+        <View style={[styles.row, styles.title]}>
+          <Text fw="700" fs="h6">
+            {item?.PromoCode}
+          </Text>
+          <Text fw="700" fs="h6">
+            {item?.Title}
+          </Text>
+        </View>
+        <View style={[styles.row, styles.content]}>
+          <Text>{item?.Content}</Text>
+          <Text color={Colors.cl1}>Điều kiện</Text>
+        </View>
+        <Text color={Colors.l8}>HSD: {item?.ExpireDate}</Text>
+      </TouchableOpacity>
+    );
+  };
   return (
     <View style={styles.container}>
       <HeaderBg>
@@ -19,11 +54,25 @@ const Promotion = () => {
           isDeleted
           style={styles.input}
           placeholder={translation.fillPromoCode}
+          onChange={value => onChange('promoCode', value)}
         />
-        <Button label={translation.apply} />
+        <Button
+          label={translation.apply}
+          ml={12}
+          bgImg={0}
+          bg={Colors.cl1}
+          onPress={onGetPromo}
+        />
+      </View>
+      <View style={styles.wrapPromoList}>
+        {promotions?.map((item, index) => renderItem(item, index))}
       </View>
       <FooterContainer style={[styles.bottomBtn, {width: width}]}>
-        <Button label={translation.use} />
+        <Button
+          label={translation.use}
+          disabled={!promoCode}
+          onPress={onApplyPromo}
+        />
       </FooterContainer>
     </View>
   );
@@ -42,9 +91,34 @@ const styles = StyleSheet.create({
   input: {
     width: scale(240),
   },
+  btn: {
+    marginLeft: scale(12),
+  },
+  wrapPromoList: {
+    paddingHorizontal: Spacing.PADDING,
+    paddingTop: scale(24),
+  },
+  wrapPromo: {
+    backgroundColor: Colors.white,
+    padding: scale(12),
+    borderRadius: 8,
+  },
+  active: {
+    backgroundColor: Colors.cl5,
+  },
   bottomBtn: {
     position: 'absolute',
     bottom: 0,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    paddingBottom: scale(14),
+  },
+  content: {
+    paddingBottom: scale(4),
   },
 });
 export default Promotion;
