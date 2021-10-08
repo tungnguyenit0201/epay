@@ -52,7 +52,11 @@ const OTP = ({route}) => {
       countdown={countdown}
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
-      label={label}
+      label={
+        'Mã xác thực gửi về mail ' +
+        route?.params.email +
+        '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
+      }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
   );
@@ -70,8 +74,7 @@ const OTP = ({route}) => {
               styles.wrap,
               base.bgWhite,
               {paddingTop: scale(28), flex: 1},
-            ]}
-          >
+            ]}>
             {renderOTPContainer()}
           </View>
         </>
@@ -98,8 +101,7 @@ const OTP = ({route}) => {
           styles.bgGray,
           {paddingVertical: Spacing.PADDING - 5},
         ]}
-        onPress={() => setShowModal(true)}
-      >
+        onPress={() => setShowModal(true)}>
         <View
           style={[
             styles.lineSize,
@@ -107,8 +109,7 @@ const OTP = ({route}) => {
             styles.bgGray1,
             styles.top1,
             styles.left1,
-          ]}
-        ></View>
+          ]}></View>
         <View
           style={[
             styles.lineSize,
@@ -116,8 +117,7 @@ const OTP = ({route}) => {
             styles.bgGray1,
             styles.top1,
             styles.right1,
-          ]}
-        ></View>
+          ]}></View>
         <Image source={Images.Phone} style={styles.iconPhone} />
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>
