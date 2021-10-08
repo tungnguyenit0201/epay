@@ -148,6 +148,22 @@ const User = () => {
           >
             <Image
               style={[styles.iconMenu]}
+              source={require('images/profile/Support.png')}
+            />
+            <Text fs="h6" semibold ml={10}>
+              Trung tâm trợ giúp
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[base.row, styles.itemMenu]}
+            onPress={() => {
+              // Navigator.navigate(SCREEN.NOTIFICATION);
+              Alert.alert('', 'Coming soon');
+            }}
+          >
+            <Image
+              style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}
             />
             <Text fs="h6" semibold ml={10}>
@@ -161,30 +177,15 @@ const User = () => {
               tintColor={Colors.g3}
             />
           </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[base.row, styles.itemMenu]}
-            onPress={() => {
-              // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
-            }}
-          >
-            <Image
-              style={[styles.iconMenu]}
-              source={require('images/profile/Support.png')}
-            />
-            <Text fs="h6" semibold ml={10}>
-              Trung tâm trợ giúp
-            </Text>
-          </TouchableOpacity>
         </View>
 
         <View style={[base.shadow, styles.boxLogout]}>
           <Button
+            size="lg"
             onPress={onLogout}
             type={1}
             label={'Đăng xuất'} //TODO: translate
-            fw="600"
+            fw="bold"
             style={base.bgWhite}
             bgImg={0}
             color={Colors.black}

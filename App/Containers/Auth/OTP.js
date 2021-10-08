@@ -141,7 +141,7 @@ const OTP = ({route}) => {
             </TouchableOpacity>
           </>
         )}
-        icon={Images.SignUp.TouchId}
+        icon={Images.SignUp.BigPhone}
         // icon={Images.SignUp.BigPhone}
       />
     </>

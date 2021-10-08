@@ -73,6 +73,7 @@ export default {
     BaoHiem: require('images/home/baoHiem.png'),
     GiaoThong: require('images/home/giaoThong.png'),
     NopPhat: require('images/home/NopPhat.png'),
+    Setting: require('images/home/Setting.png'),
   },
   Transfer: {
     Ellipse: require('images/Ellipse.png'),

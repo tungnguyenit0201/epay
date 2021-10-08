@@ -55,7 +55,7 @@ const Notification = () => {
                 }}
               >
                 <Text style={[type === item.title && styles.textWhite]}>
-                  {item.title}
+                  {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
               </Pressable>
             )}
