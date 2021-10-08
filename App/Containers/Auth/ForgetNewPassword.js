@@ -114,13 +114,14 @@ const ForgetNewPassword = ({route}) => {
               </ScrollView>
 
               <FooterContainer>
-                {/* <View style={styles.flexRow}>
+                <View style={styles.flexRow}>
                   <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}>
+                      onPress={() => {}}
+                    >
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -128,14 +129,15 @@ const ForgetNewPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}>
+                      onPress={() => {}}
+                    >
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
                     </TouchableOpacity>
                     của Epay Services
                   </Text>
-                </View> */}
+                </View>
 
                 <Button
                   mt={10}
