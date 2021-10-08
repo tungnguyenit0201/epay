@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Text, HeaderBg, Icon, Header, Row, Col, Button} from 'components';
+import {
+  Text,
+  HeaderBg,
+  Icon,
+  Header,
+  Row,
+  Col,
+  Button,
+  Modal,
+} from 'components';
 import {
   ScrollView,
   View,
@@ -21,11 +30,12 @@ import DinhDanh from 'components/User/DinhDanh';
 import {useSmartOTP} from 'context/User/utils';
 import {useUser} from 'context/User';
 import {useAuth} from 'context/Auth/utils';
-
+import {useError} from 'context/Common/utils';
 const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
+  const [open, setOpen] = useState(false);
   const {onGoSmartOTP} = useSmartOTP();
 
   // TODO: translate
@@ -45,8 +55,7 @@ const User = () => {
             <Col space={10}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
-              >
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.MaThanhToan}
@@ -57,8 +66,7 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}
-              >
+                }}>
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.ThanhToan}
@@ -69,8 +77,7 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.SECURITY);
-                }}
-              >
+                }}>
                 <Image style={[styles.icon]} source={Images.Profile.BaoMat} />
                 <Text semibold>{translation.password_and_security} </Text>
               </TouchableOpacity>
@@ -80,9 +87,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  Alert.alert('', 'Coming soon');
-                }}
-              >
+                  setOpen(true);
+                }}>
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/NapVI.png')}
@@ -101,8 +107,7 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                }}
-              >
+                }}>
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.Translate}
@@ -113,9 +118,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
-                  Alert.alert('', 'Coming soon');
-                }}
-              >
+                  setOpen(true);
+                }}>
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/Noti.png')}
@@ -143,9 +147,8 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
-            }}
-          >
+              setOpen(true);
+            }}>
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
@@ -166,9 +169,8 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
-            }}
-          >
+              setOpen(true);
+            }}>
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}
@@ -199,6 +201,18 @@ const User = () => {
           />
         </View>
       </ScrollView>
+      <Modal
+        visible={open}
+        onClose={() => setOpen(false)}
+        content="Comming soon"
+        buttonGroup={() => (
+          <View>
+            <Text></Text>
+          </View>
+        )}
+        icon={Images.Homes.Setting}
+        // icon={Images.SignUp.BigPhone}
+      />
     </View>
   );
 };
