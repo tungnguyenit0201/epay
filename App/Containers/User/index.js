@@ -44,7 +44,7 @@ const User = () => {
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.l1}]}>
+      <ScrollView style={[base.wrap, {backgroundColor: Colors.white}]}>
         <View style={[base.container]}>
           <UserInfo style={[{marginBottom: 20}]} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
@@ -55,7 +55,8 @@ const User = () => {
             <Col space={10}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.MaThanhToan}
@@ -66,7 +67,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.ThanhToan}
@@ -77,7 +79,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.SECURITY);
-                }}>
+                }}
+              >
                 <Image style={[styles.icon]} source={Images.Profile.BaoMat} />
                 <Text semibold>{translation.password_and_security} </Text>
               </TouchableOpacity>
@@ -88,7 +91,8 @@ const User = () => {
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                   setOpen(true);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/NapVI.png')}
@@ -107,7 +111,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={Images.Profile.Translate}
@@ -119,7 +124,8 @@ const User = () => {
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
                   setOpen(true);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon]}
                   source={require('images/profile/Noti.png')}
@@ -148,7 +154,8 @@ const User = () => {
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
               setOpen(true);
-            }}>
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
@@ -170,7 +177,8 @@ const User = () => {
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
               setOpen(true);
-            }}>
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}
@@ -194,7 +202,7 @@ const User = () => {
             onPress={onLogout}
             type={1}
             label={'Đăng xuất'} //TODO: translate
-            fw="bold"
+            // fw="600"
             style={base.bgWhite}
             bgImg={0}
             color={Colors.black}

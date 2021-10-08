@@ -36,20 +36,19 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
   }
 
   return (
-    <>
-      <Button
-        radius={radius}
-        bgImg={0}
-        bg={setBg}
-        size={size}
-        color={Colors.white}
-        label={getStatusVerifiedText()}
-        style={[{minWidth: 93}, style]}
-        onPress={() => {
-          statusVerified == PERSONAL_IC.INACTIVE && onVerify();
-        }}
-      />
-    </>
+    <Button
+      radius={radius}
+      bgImg={0}
+      bg={setBg}
+      size={size}
+      fw={'500'}
+      color={Colors.white}
+      label={getStatusVerifiedText()}
+      style={[{minWidth: 93}, style]}
+      onPress={() => {
+        statusVerified == PERSONAL_IC.INACTIVE && onVerify();
+      }}
+    />
   );
 };
 
