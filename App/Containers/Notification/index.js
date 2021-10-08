@@ -11,14 +11,13 @@ import {
 import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
-import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
+import {SCREEN, NOTIFY} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
 // import FooterNotification from 'components/Home/FooterNotification';
 import {useNotify} from 'context/User/utils';
-import moment from 'moment';
 
 const Notification = () => {
   const translation = useTranslation();
@@ -88,11 +87,7 @@ const Notification = () => {
                         source={require('images/favicon.png')}
                         style={styles.icon}
                       />
-                      <Text style={styles.date}>
-                        {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
-                          'hh:MMA | DD/MM/YYYY',
-                        )}
-                      </Text>
+                      <Text style={styles.date}>{item?.Time}</Text>
                     </View>
 
                     <Text style={styles.title}>{item?.Title}</Text>
