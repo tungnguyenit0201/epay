@@ -113,6 +113,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         ErrorCode: -1,
         ErrorMessage: `Số lần gửi OTP quá ${config?.ResendOtpNo} lần/${config?.LockWhenResendTooManyTime} giây vui lòng quay lại sau ${remain} phút`,
       }); // TODO: translate
+      Navigator.goBack();
       return false;
     }
 
@@ -152,9 +153,9 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   const getLabel = () => {
     switch (functionType) {
       case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
-      default:
         return `Nhập mã OTP xác thực`;
+      default:
+        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
     }
   };
 

@@ -125,7 +125,7 @@ const UserInfo = () => {
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.push(SCREEN.EDIT_INFO);
+                  Navigator.navigate(SCREEN.EDIT_INFO);
                 }}
               >
                 <Image
@@ -241,14 +241,19 @@ const UserInfo = () => {
                 </Text>
               </View>
 
-              {/* {PersonalInfo?.Email && ( */}
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
-                    type: 'update_email',
-                    headerLabel: 'Nhập mật khẩu',
-                  });
+                  if (PersonalInfo?.Email) {
+                    Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
+                      type: 'update_email',
+                      headerLabel: 'Nhập mật khẩu',
+                    });
+                  } else {
+                    Navigator.navigate(SCREEN.VERIFY_EMAIL, {
+                      functionType: FUNCTION_TYPE.AUTH_EMAIL,
+                    });
+                  }
                 }}
               >
                 <Image
@@ -256,7 +261,6 @@ const UserInfo = () => {
                   source={require('images/profile/Edit2.png')}
                 />
               </TouchableOpacity>
-              {/* )} */}
             </View>
 
             <View style={[base.row]}>
@@ -267,19 +271,7 @@ const UserInfo = () => {
               {PersonalInfo?.Email ? (
                 <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
               ) : (
-                <>
-                  <Text color={Colors.g4}>Chưa có</Text>
-                  <TouchableOpacity
-                    style={base.leftAuto}
-                    onPress={() => {
-                      Navigator.navigate(SCREEN.VERIFY_EMAIL, {
-                        functionType: FUNCTION_TYPE.AUTH_EMAIL,
-                      });
-                    }}
-                  >
-                    <Text style={styles.link}>Thêm email</Text>
-                  </TouchableOpacity>
-                </>
+                <Text color={Colors.g4}>Chưa có</Text>
               )}
             </View>
           </View>
