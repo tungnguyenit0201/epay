@@ -93,7 +93,7 @@ const PaymentSettings = () => {
           />
         </TouchableOpacity>
 
-        <View style={[base.container]}>
+        <View style={[base.container, styles.mt]}>
           <Text>{`Cài đặt hạn mức: ${formatMoney(50000000)}đ`}</Text>
         </View>
       </ScrollView>
@@ -113,6 +113,9 @@ const styles = StyleSheet.create({
   text: {
     marginRight: 80,
     fontSize: Fonts.H6,
+  },
+  mt: {
+    marginTop: 10,
   },
 });
 export default PaymentSettings;
