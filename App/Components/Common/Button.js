@@ -19,7 +19,7 @@ export default ({
   bg,
   radius,
   fs,
-  fw,
+  fw = '700',
   size,
   mt,
   mb,
@@ -57,7 +57,8 @@ export default ({
         size == 'xl' ? styles.xl : '',
         style,
         disabled && {backgroundColor: Colors.g4},
-      ]}>
+      ]}
+    >
       {bgImg === 1 && (
         <>
           <Image source={require('images/Button.png')} style={styles.bgImg} />
@@ -96,7 +97,8 @@ export default ({
             lineHeight: 20,
           },
           labelStyle,
-        ]}>
+        ]}
+      >
         {label}
         {
           label2 && [

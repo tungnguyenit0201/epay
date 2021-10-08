@@ -5,9 +5,10 @@ import {Colors, Images} from 'themes';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
 import {useTranslation} from 'context/Language';
+import {SCREEN} from 'configs/Constants';
+import Navigator from 'navigations/Navigator';
 
 const TransferBank = ({sourceMoney = []}) => {
-  console.log('sourceMoney :>> ', sourceMoney);
   const translation = useTranslation();
   const renderItem = (item, index) => {
     const fee = item?.StaticFee;
@@ -19,7 +20,9 @@ const TransferBank = ({sourceMoney = []}) => {
         <Image
           style={[styles.iconBank]}
           source={
-            item?.BankLogoUrl ? {uri: item?.BankLogoUrl} : Images.TabBar.Home
+            item?.LogoUrl && item?.SourceId
+              ? {uri: item?.LogoUrl}
+              : Images.TabBar.Home
           }
           resizeMode="contain"
         />
@@ -72,7 +75,7 @@ const TransferBank = ({sourceMoney = []}) => {
         </Text>
 
         <Pressable
-          //onPress={() => onPress(item)}
+          onPress={() => Navigator.navigate(SCREEN.MAP_BANK_FLOW)}
           style={styles.addBank}
         >
           <Text fs="h6">Thêm tài khoản ngân hàng</Text>
