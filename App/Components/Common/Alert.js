@@ -19,8 +19,7 @@ const AlertCustom = () => {
         animationIn="zoomIn"
         transparent={true}
         visible={!!error?.errorCode}
-        onBackdropPress={() => setError(null)}
-      >
+        onBackdropPress={() => setError(null)}>
         <View style={styles.centeredView}>
           <View style={styles.header}>
             <Image
@@ -48,7 +47,7 @@ const AlertCustom = () => {
 
             {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
             <Button
-              label="Đóng"
+              label={error?.label || 'Đóng'}
               onPress={() => {
                 setError(null);
                 error?.onClose && error?.onClose();
