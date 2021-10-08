@@ -156,6 +156,13 @@ const User = () => {
             <Text fs="h6" semibold ml={10}>
               Trung tâm trợ giúp
             </Text>
+
+            <Icon
+              style={[base.leftAuto]}
+              size={24}
+              icon={Images.ArrowRight}
+              tintColor={Colors.g5}
+            />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -176,7 +183,7 @@ const User = () => {
               style={[base.leftAuto]}
               size={24}
               icon={Images.ArrowRight}
-              tintColor={Colors.g3}
+              tintColor={Colors.g5}
             />
           </TouchableOpacity>
         </View>
@@ -241,10 +248,10 @@ const styles = StyleSheet.create({
   },
 
   boxLogout: {
-    marginTop: 30,
+    //marginTop: 30,
     paddingTop: scale(20),
     paddingHorizontal: scale(20),
-    paddingBottom: scale(260),
+    paddingBottom: scale(230),
   },
 });
 export default User;
