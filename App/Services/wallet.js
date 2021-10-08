@@ -445,20 +445,61 @@ export const setDefaultBank = async ({
 };
 
 export const moneyTransfer = async ({
+  phone,
   Amount,
   DesAccountId,
   Payoneer,
   Content,
+  TransFormType,
+  BankId,
+  CardNumber,
+  CardHolder,
+  CardIssueDate,
+  CardConnectId,
+  BankConnectId,
 }) => {
   let response = null;
   await request({
     url: API.WALLET.MONEY_TRANSFER,
     method: 'post',
     params: {
+      PhoneNumber: phone,
       Amount,
       DesAccountId,
       Payoneer,
       Content,
+      TransFormType,
+      BankId,
+      CardNumber,
+      CardHolder,
+      CardIssueDate,
+      CardConnectId,
+      BankConnectId,
+    },
+    success: res => {
+      response = res;
+    },
+  });
+  return response;
+};
+
+export const getPromotion = async ({
+  phone,
+  MerchantCode,
+  AgencyCode,
+  PromoCode,
+  Amount,
+}) => {
+  let response = null;
+  await request({
+    url: API.WALLET.GET_PROMOTION,
+    method: 'post',
+    params: {
+      PhoneNumber: phone,
+      MerchantCode,
+      AgencyCode,
+      PromoCode,
+      Amount,
     },
     success: res => {
       response = res;

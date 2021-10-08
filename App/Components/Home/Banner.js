@@ -1,8 +1,15 @@
 import React from 'react';
-import {FlatList, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {View} from 'react-native-ui-lib';
+import {
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Linking,
+  View,
+} from 'react-native';
 import {scale} from 'utils/Functions';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import {Text} from 'components';
 import Navigator from 'navigations/Navigator';
 
 const Banner = ({
@@ -13,20 +20,17 @@ const Banner = ({
   styleItem,
   styleImg,
 }) => {
-  const Item = ({item}) => (
-    <TouchableOpacity
-      style={[styles.item, styleItem]}
-      // onPress={() => {
-      //   Navigator.push(item.screen);
-      // }}
-    >
-      <Image source={item.img} style={[styles.img, styleImg]} />
-    </TouchableOpacity>
-  );
+  const openLink = async url => {
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      await Linking.openURL(url);
+    }
+  };
 
   const renderItem = ({item, index}) => (
     <View
-      key={index}
+      key={`${Math.random(1, 100)}-banner`}
       style={[
         index && {marginLeft: scale(space)},
         {
@@ -34,7 +38,20 @@ const Banner = ({
         },
       ]}
     >
-      <Item item={item} styleItem={styleItem} styleImg={styleImg} />
+      <TouchableOpacity
+        style={[styles.item, styleItem]}
+        onPress={() => openLink(item?.RedirectUrl)}
+      >
+        <Image source={{uri: item?.ImageUrl}} style={[styles.img, styleImg]} />
+        <View style={styles.wrapText}>
+          <Text fs="h6" fw="900" color={Colors.white}>
+            {item?.Title?.toUpperCase()}
+          </Text>
+          <Text numberOfLines={2} color={Colors.white}>
+            {item?.Content}
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 
@@ -56,10 +73,16 @@ const styles = StyleSheet.create({
     marginRight: -Spacing.PADDING,
   },
   item: {},
+  wrapText: {
+    position: 'absolute',
+    left: scale(18),
+    top: 30,
+    width: '65%',
+  },
   img: {
     width: '100%',
     height: scale(112),
-    resizeMode: 'contain',
+    borderRadius: 8,
   },
 });
 

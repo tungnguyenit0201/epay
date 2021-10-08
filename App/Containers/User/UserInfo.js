@@ -125,7 +125,7 @@ const UserInfo = () => {
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.push(SCREEN.EDIT_INFO);
+                  Navigator.navigate(SCREEN.EDIT_INFO);
                 }}
               >
                 <Image
