@@ -49,27 +49,25 @@ const InputBlock = ({
         {label} {required && <Text color={'red'}>* </Text>}
       </Text>
       {!isSelect ? (
-        <View>
-          <TextInput
-            textContentType={'oneTimeCode'}
-            style={[
-              styles.input,
-              {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
-              inputStyle,
-            ]}
-            placeholderTextColor={Colors.l5}
-            password={password && !showPassword}
-            email={email}
-            numeric={numeric}
-            error={error}
-            value={value}
-            required={required}
-            onChange={onChange}
-            onFocus={_onFocus}
-            onBlur={_onBlur}
-            {...props}
-          />
-        </View>
+        <TextInput
+          textContentType={'oneTimeCode'}
+          style={[
+            styles.input,
+            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
+            inputStyle,
+          ]}
+          placeholderTextColor={Colors.l5}
+          password={password && !showPassword}
+          email={email}
+          numeric={numeric}
+          error={error}
+          value={value}
+          required={required}
+          onChange={onChange}
+          onFocus={_onFocus}
+          onBlur={_onBlur}
+          {...props}
+        />
       ) : (
         <View style={styles.mb1}>
           <TouchableOpacity

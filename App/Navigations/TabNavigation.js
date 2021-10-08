@@ -106,7 +106,8 @@ const TabNavigation = () => {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={styles.tab}>
+                style={label === 'Home' ? styles.tabH : styles.tabU} // TODO: translate
+              >
                 <Image
                   source={
                     // !isFocused
@@ -184,10 +185,19 @@ const styles = StyleSheet.create({
     height: scale(80),
     // zIndex: 1,
   },
-  tab: {
+  tabH: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingVertical: scale(12),
+    marginRight: scale(40),
+  },
+  tabU: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingVertical: scale(12),
+    /* marginLeft: scale(15), */
   },
   icon: {
     marginTop: Spacing.PADDING / 2,

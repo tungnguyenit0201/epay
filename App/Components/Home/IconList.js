@@ -16,11 +16,12 @@ import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useIconConfig} from 'context/Home/utils';
-import {ListItemSimple, Row, Col, Text} from 'components';
+import {ListItemSimple, Row, Col, Text, Modal} from 'components';
 
 const IconList = ({data}) => {
   const {width} = useWindowDimensions();
   let [indexTab, setIndexTab] = useState(0);
+  const [open, setOpen] = useState(false);
   const {iconHome} = useIconConfig();
 
   const flatlistRef = useRef();
@@ -72,7 +73,7 @@ const IconList = ({data}) => {
                     width: width / 2 - Spacing.PADDING,
                   },
                 ]}
-                onPress={() => Alert.alert('', 'Coming soon')}>
+                onPress={() => setOpen(true)}>
                 <Image source={item.icon} style={styles.icon} />
 
                 <Text centered bold mt={5}>
@@ -139,6 +140,18 @@ const IconList = ({data}) => {
           ))}
         </View>
       )}
+      <Modal
+        visible={open}
+        onClose={() => setOpen(false)}
+        content="Comming soon"
+        buttonGroup={() => (
+          <View>
+            <Text></Text>
+          </View>
+        )}
+        icon={Images.Homes.Setting}
+        // icon={Images.SignUp.BigPhone}
+      />
     </View>
   );
 };
