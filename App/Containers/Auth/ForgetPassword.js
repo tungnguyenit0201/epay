@@ -32,7 +32,8 @@ const ForgetPassword = () => {
       <Formik
         key={phone}
         initialValues={{
-          phone: phone || '',
+          //phone: phone || '',
+          phone: '',
         }}
         validationSchema={phoneSchema}
         onSubmit={onSubmitPhone}>
@@ -72,6 +73,7 @@ const ForgetPassword = () => {
                   label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
+                  bold
                   fs={Fonts.FONT_MEDIUM}
                 />
               </FooterContainer>
