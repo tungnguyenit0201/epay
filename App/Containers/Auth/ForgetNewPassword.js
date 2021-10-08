@@ -52,7 +52,8 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -73,7 +74,8 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}>
+                contentContainerStyle={[styles.wrap, styles.py1]}
+              >
                 <Content
                   title="Đặt lại mật khẩu"
                   text={
