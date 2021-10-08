@@ -72,6 +72,7 @@ const ForgetPassword = () => {
                   label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
+                  bold
                   fs={Fonts.FONT_MEDIUM}
                 />
               </FooterContainer>
