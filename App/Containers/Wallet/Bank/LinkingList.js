@@ -81,7 +81,7 @@ const BankList = () => {
             // value={value}
             // onChange={_onChange}
             // showErrorLabel={error}
-            // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
+            // error={'*Số tiền nạp tối thiểu là 10.000đ'}
           />
         </View>
       </HeaderBg>

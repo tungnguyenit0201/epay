@@ -99,7 +99,7 @@ const Input = forwardRef(({onChange, errorStyle, placeholder}, ref) => {
           showErrorLabel={!!errorMessage}
           error={errorMessage}
         />
-        <Text style={styles.subText}>vnđ</Text>
+        <Text style={styles.subText}>đ</Text>
       </View>
     </View>
   );
