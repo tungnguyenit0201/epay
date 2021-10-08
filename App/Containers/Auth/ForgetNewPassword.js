@@ -79,7 +79,7 @@ const ForgetNewPassword = ({route}) => {
                 <Content
                   title="Đặt lại mật khẩu"
                   text={
-                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                    'Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa & số'
                   }
                 />
                 <TextInput
@@ -90,7 +90,7 @@ const ForgetNewPassword = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
-                  leftIcon={Images.Transfer.Lock}
+                  /* leftIcon={Images.Transfer.Lock} */
                 />
                 <TextInput
                   password
@@ -100,24 +100,21 @@ const ForgetNewPassword = ({route}) => {
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
-                  leftIcon={Images.Transfer.Lock}
+                  /* leftIcon={Images.Transfer.Lock} */
                 />
                 <Text style={styles.note}>
-                  {
-                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
-                  }
+                  {`Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa và số`}
                 </Text>
               </ScrollView>
 
               <FooterContainer>
-                <View style={styles.flexRow}>
+                {/* <View style={styles.flexRow}>
                   <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}
-                    >
+                      onPress={() => {}}>
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -125,15 +122,14 @@ const ForgetNewPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}
-                    >
+                      onPress={() => {}}>
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
                     </TouchableOpacity>
                     của Epay Services
                   </Text>
-                </View>
+                </View> */}
 
                 <Button
                   mt={10}

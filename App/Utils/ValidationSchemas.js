@@ -2,7 +2,7 @@ import {TEXT} from 'configs/Constants';
 import * as yup from 'yup';
 
 const FULLNAME_REGEX =
-  /^[aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
+  /^([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
 export const bankCardRegex = /^[a-zA-Z0-9]+$/;
 export const registerSchema = yup.object().shape({
   username: yup.string().required(TEXT.USERNAME_NOT_BLANK),
@@ -37,10 +37,10 @@ export const emailSchema = yup.object().shape({
 export const phoneSchema = yup.object().shape({
   phone: yup
     .string()
-    .required('Số điện thoại không hợp lệ')
+    .required('*Số điện thoại không hợp lệ')
     .matches(
       /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
-      'Số điện thoại không hợp lệ',
+      '*Số điện thoại không hợp lệ',
     )
     .label(TEXT.PHONE),
 });
@@ -64,12 +64,14 @@ export const newPasswordSchema = yup.object().shape({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
       'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
     )
-    .label('Mật khẩu'),
+    .label('Mật khẩu')
+    .max(20, 'Mật khẩu tối đa 20 ký tự'),
   passwordConfirm: yup
     .string()
     .required()
     .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
-    .label('Xác nhận mật khẩu'),
+    .label('Xác nhận mật khẩu')
+    .max(20, 'Mật khẩu tối đa 20 ký tự'),
 });
 
 export const napasSchema = yup.object().shape({
@@ -106,5 +108,9 @@ export const verifyUserSchema = yup.object().shape({
 });
 
 export const nameSchema = yup.object().shape({
-  FullName: yup.string().required('Tên không được bỏ trống.').max(100),
+  FullName: yup
+    .string()
+    .required('Tên không được bỏ trống.')
+    .max(100)
+    .matches(FULLNAME_REGEX, 'Tên không hợp lệ.'),
 });
