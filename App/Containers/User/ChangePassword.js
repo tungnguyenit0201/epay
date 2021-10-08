@@ -58,14 +58,6 @@ const ChangePassword = ({route}) => {
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry.
                     </Text>
-                    {/* <InputBlock
-                      password
-                      placeholder="Nhập mật khẩu"
-                      onChange={handleChange('password')}
-                      onBlur={handleBlur('password')}
-                      error={touched.password && errors.password}
-                      value={values.password}
-                    /> */}
                     <TextInput
                       placeholder="Nhập mật khẩu "
                       placeholderTextColor={Colors.l5}
