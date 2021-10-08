@@ -106,7 +106,7 @@ const ForgetNewPassword = ({route}) => {
               </ScrollView>
 
               <FooterContainer>
-                <View style={styles.flexRow}>
+                {/* <View style={styles.flexRow}>
                   <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
@@ -127,7 +127,7 @@ const ForgetNewPassword = ({route}) => {
                     </TouchableOpacity>
                     của Epay Services
                   </Text>
-                </View>
+                </View> */}
 
                 <Button
                   mt={10}

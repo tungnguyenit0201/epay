@@ -11,14 +11,13 @@ import {
 import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
-import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
+import {SCREEN, NOTIFY} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 
 // import FooterNotification from 'components/Home/FooterNotification';
 import {useNotify} from 'context/User/utils';
-import moment from 'moment';
 
 const Notification = () => {
   const translation = useTranslation();
@@ -53,7 +52,8 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}>
+                }}
+              >
                 <Text style={[type === item.title && styles.textWhite]}>
                   {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
@@ -71,7 +71,8 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }>
+          }
+        >
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -79,17 +80,14 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}>
+                    onPress={() => onPressNotify(item)}
+                  >
                     <View style={styles.head}>
                       <Image
                         source={require('images/favicon.png')}
                         style={styles.icon}
                       />
-                      <Text style={styles.date}>
-                        {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
-                          'hh:MMA | DD/MM/YYYY',
-                        )}
-                      </Text>
+                      <Text style={styles.date}>{item?.Time}</Text>
                     </View>
 
                     <Text style={styles.title}>{item?.Title}</Text>
@@ -112,7 +110,7 @@ const Notification = () => {
                     source={require('images/noti/Noti.png')}
                     style={styles.imgSuccess}
                   />
-                  <Text>Chưa có thông báo mới</Text>
+                  <Text>Không có thông báo nào</Text>
                 </View>
               </>
             )}

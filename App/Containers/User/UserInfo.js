@@ -116,7 +116,9 @@ const UserInfo = () => {
                 <Text bold fs="h5" mb={5}>
                   Thông tin cá nhân
                 </Text>
-                <Text style={styles.headingDesc}>Nhập giới thiệu về bạn</Text>
+                <Text style={styles.headingDesc}>
+                  TLorem Ipsum is simply dummy...
+                </Text>
               </View>
 
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
@@ -124,7 +126,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.push(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -140,7 +143,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.rowTitle}>{item.name}</Text>
                   <Text style={base.leftAuto}>{item.val}</Text>
@@ -192,7 +196,7 @@ const UserInfo = () => {
                   Thông tin tài khoản
                 </Text>
                 <Text style={styles.headingDesc}>
-                  Cập nhật thông tin giấy tờ tùy thân
+                  TLorem Ipsum is simply dummy...
                 </Text>
               </View>
 
@@ -205,7 +209,8 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }>
+                  }
+                >
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -232,7 +237,7 @@ const UserInfo = () => {
                   Thông tin Email
                 </Text>
                 <Text style={styles.headingDesc}>
-                  Cập nhật thông tin liên hệ
+                  TLorem Ipsum is simply dummy...
                 </Text>
               </View>
 
@@ -249,7 +254,8 @@ const UserInfo = () => {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
