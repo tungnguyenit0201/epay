@@ -64,8 +64,7 @@ export default function (props) {
       <View style={styles.shadowButton}>
         <Button
           label={'Liên kết'}
-          bold
-          size="lg"
+          // size="lg"
           style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -162,8 +161,7 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         <View alignItems="center" marginBottom={16}>
           <Image
             source={Images.ConnectBank.BankLink}

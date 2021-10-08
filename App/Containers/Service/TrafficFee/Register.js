@@ -48,8 +48,8 @@ const RegisterFee = () => {
           </View>
         </ScrollView>
 
-        <FooterContainer pb={Spacing.PADDING * 2.5}>
-          <Button label={`Thêm đăng ký xe`} bold />
+        <FooterContainer>
+          <Button label={`Thêm đăng ký xe`} />
         </FooterContainer>
       </View>
     </>

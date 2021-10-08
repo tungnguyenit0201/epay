@@ -90,7 +90,6 @@ const VerifyUserInfo = ({
               disabled={disableButton}
               label={buttonTitle}
               onPress={onPressButton}
-              bold
             />
           </View>
         </View>
@@ -102,8 +101,7 @@ const VerifyUserInfo = ({
         style={styles.modalContainer}
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}
-      >
+        onBackdropPress={onHideModal}>
         <View style={styles.modalContentContainer}>
           <ScrollView style={styles.modalScroll}>
             <View style={styles.modalTitleContainer}>
@@ -112,8 +110,7 @@ const VerifyUserInfo = ({
                 fs="h4"
                 centered
                 color={Colors.cl1}
-                style={styles.modalTitle}
-              >
+                style={styles.modalTitle}>
                 Hướng dẫn chụp hình 2 mặt chứng từ
               </Text>
             </View>
@@ -198,7 +195,8 @@ const styles = StyleSheet.create({
   },
   triangle: {
     position: 'absolute',
-    left: Spacing.PADDING * 2 + 10 / 2,
+    // left: Spacing.PADDING * 2 + 10 / 2,
+    left: Spacing.PADDING * 2 + 30 / 2,
     bottom: -9,
     width: 20,
     height: 10,

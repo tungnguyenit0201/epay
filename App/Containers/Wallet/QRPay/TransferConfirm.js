@@ -176,7 +176,6 @@ const TransactionResult = () => {
           }}
           type={1}
           label="Chuyển tiền"
-          bold
         />
       </View>
 

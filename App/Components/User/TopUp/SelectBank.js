@@ -56,8 +56,7 @@ const SelectBank = forwardRef(
                 <Col width="33.33%" space="10" key={index}>
                   <Pressable
                     style={[styles.item]}
-                    onPress={() => onChangeBank({index, type})}
-                  >
+                    onPress={() => onChangeBank({index, type})}>
                     <View style={[styles.wicon]}>
                       <Image
                         source={{uri: BankLogoUrl}}

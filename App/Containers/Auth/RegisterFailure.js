@@ -25,8 +25,7 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       // onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -47,7 +46,7 @@ const RegisterFailure = ({route}) => {
       />
 
       <Content
-        title={'Đăng ký \nkhông thành công!'}
+        title={'Đăng ký \nkhông thành công'}
         text="Bạn đã nhập sai OTP quá 5 lần, 
           vui lòng quay lại sau 30 phút."
         styleText={{color: Colors.white}}
@@ -60,7 +59,6 @@ const RegisterFailure = ({route}) => {
           style={styles.btn}
           onPress={openCallDialog}
           mb={Spacing.PADDING - 10}
-          bold
         />
         <Button
           label="Quay lại sau"
@@ -69,7 +67,6 @@ const RegisterFailure = ({route}) => {
           color={Colors.black}
           border={Colors.cl4}
           onPress={() => onNavigate(SCREEN.AUTH)}
-          bold
           bgImg={0}
         />
       </FooterContainer>

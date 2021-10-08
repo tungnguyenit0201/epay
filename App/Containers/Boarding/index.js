@@ -40,8 +40,10 @@ const Boarding = ({route}) => {
         {[0, 1, 2].map(index => (
           <View
             key={Math.random(1, 100)}
-            style={[styles.circle, indexScreen == index && styles.active]}
-          ></View>
+            style={[
+              styles.circle,
+              indexScreen == index && styles.active,
+            ]}></View>
         ))}
       </View>
       <View style={styles.wrapText}>
@@ -53,7 +55,7 @@ const Boarding = ({route}) => {
         </Text>
       </View>
       <FooterContainer style={[styles.bottomBtn, {width: width}]}>
-        <Button label={'Bỏ qua'} fw="700" onPress={onPress} />
+        <Button label={'Bỏ qua'} onPress={onPress} />
       </FooterContainer>
     </View>
   );

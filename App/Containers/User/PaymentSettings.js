@@ -32,8 +32,7 @@ const PaymentSettings = () => {
         onPress={() => {
           // Navigator.navigate(SCREEN.AUTOPAYMENT);
           Alert.alert('', 'Coming soon');
-        }}
-      >
+        }}>
         <Icon
           mr={8}
           icon={Images.Profile.MaThanhToan}
@@ -78,8 +77,7 @@ const PaymentSettings = () => {
         onPress={() => {
           // Navigator.navigate(SCREEN.NOTIFICATION);
           Alert.alert('', 'Coming soon');
-        }}
-      >
+        }}>
         <Icon
           mr={8}
           icon={Images.Profile.MaThanhToan}

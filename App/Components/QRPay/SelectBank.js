@@ -22,8 +22,7 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
         <Pressable
           disabled={disabled}
           onPress={onPress}
-          style={[styles.itemBank]}
-        >
+          style={[styles.itemBank]}>
           <Image
             style={[styles.iconBank]}
             source={
@@ -37,8 +36,7 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
             style={{
               alignItems: '',
             }}
-            width="70%"
-          >
+            width="70%">
             <Text fs="h6" bold>
               {BankName}
             </Text>

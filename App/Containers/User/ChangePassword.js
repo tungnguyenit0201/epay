@@ -25,8 +25,7 @@ const ChangePassword = ({route}) => {
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}
-          >
+            validationSchema={passwordSchema}>
             {({
               handleChange: _handleChange,
               handleBlur,

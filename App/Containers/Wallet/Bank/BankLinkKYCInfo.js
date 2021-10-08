@@ -52,8 +52,7 @@ const BankLinkKYCInfo = props => {
           District: ICInfo?.District,
           Province: ICInfo?.Province,
         }}
-        validationSchema={addressSchema}
-      >
+        validationSchema={addressSchema}>
         <FormikContent
           region={ICInfo}
           goRegionSelect={goRegionSelect}
@@ -94,8 +93,7 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
       <ScrollView
         style={{paddingHorizontal: Spacing.PADDING}}
         flex={1}
-        keyboardShouldPersistTaps="handled"
-      >
+        keyboardShouldPersistTaps="handled">
         <InputBlock
           label="Tỉnh / Thành phố"
           error={touched.Province && errors.Province}
@@ -136,8 +134,7 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
       <View style={styles.shadowButton}>
         <Button
           label={'Liên kết'}
-          bold
-          size="lg"
+          // size="lg"
           style={{
             alignItems: 'center',
             justifyContent: 'center',

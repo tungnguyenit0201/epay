@@ -78,8 +78,6 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
         <View style={styles.groupButton}>
           <Button
             label={translation.continue}
-            bold
-            size="lg"
             onPress={() => setShowCamera(false)}
           />
         </View>

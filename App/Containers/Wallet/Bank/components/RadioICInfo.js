@@ -23,8 +23,7 @@ const Radio = ({
           <TouchableOpacity
             onPress={() => onPress?.(item)}
             key={index}
-            style={[styles.radio]}
-          >
+            style={[styles.radio]}>
             <View style={styles.tickWrap}>
               {item?.value === selectedItem?.value ? (
                 <View style={styles.tick} />

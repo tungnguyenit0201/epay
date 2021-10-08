@@ -92,13 +92,13 @@ const Transfer = () => {
               label="Không"
               style={styles.buttonCancle}
               color={Colors.cl1}
-              fs={Fonts.H6}
+              // fs={Fonts.H6}
               onPress={() => setOpen(false)}
             />
             <Button
               label="Đồng ý"
               style={styles.buttonAcp}
-              fs={Fonts.H6}
+              // fs={Fonts.H6}
               onPress={() =>
                 setOpen(false) & Navigator.navigate(SCREEN.CONTACTS)
               }

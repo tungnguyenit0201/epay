@@ -19,8 +19,7 @@ const AlertCustom = () => {
         animationIn="zoomIn"
         transparent={true}
         visible={!!error?.errorCode}
-        onBackdropPress={() => setError(null)}
-      >
+        onBackdropPress={() => setError(null)}>
         <View style={styles.centeredView}>
           <View style={styles.header}>
             <Image

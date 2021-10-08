@@ -39,8 +39,7 @@ const OTPBySmartOTP = props => {
           fs={'h5'}
           fw={'600'}
           color={'#141212'}
-          style={{lineHeight: 34}}
-        >
+          style={{lineHeight: 34}}>
           {translation.transaction.confirmTransaction}
         </Text>
         <Text mb={35}>{translation.transaction.autoFillOTP} </Text>
@@ -50,11 +49,7 @@ const OTPBySmartOTP = props => {
         {renderTime()}
       </View>
       <View style={base.boxBottom}>
-        <Button
-          label={translation.transaction.confirm}
-          bold
-          onPress={onConfirm}
-        />
+        <Button label={translation.transaction.confirm} onPress={onConfirm} />
       </View>
     </View>
   );

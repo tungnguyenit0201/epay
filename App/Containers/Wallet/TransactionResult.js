@@ -75,8 +75,7 @@ const TransactionResult = () => {
                 start={{x: 0, y: 0.75}}
                 end={{x: 1, y: 0.25}}
                 colors={[Colors.barLeft, Colors.barRight]}
-                style={styles.supportLinear}
-              >
+                style={styles.supportLinear}>
                 <View style={styles.row}>
                   <Image
                     style={styles.supportIcon}
@@ -97,19 +96,17 @@ const TransactionResult = () => {
       </ScrollView>
       <View style={[base.boxBottom, styles.bottomButtonContainer]}>
         <Button
-          bold
           bgImg={0}
           color={Colors.blue}
           label={translation.common.goBackHome}
           style={styles.goBackHomeButton}
-          fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.FONT_MEDIUM}
           onPress={onBackHome}
         />
         <Button
-          bold
           label={translation.common.createTransaction}
           style={styles.retryButton}
-          fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.FONT_MEDIUM}
           onPress={onRetry}
         />
       </View>
