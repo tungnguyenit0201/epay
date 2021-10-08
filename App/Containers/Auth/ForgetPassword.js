@@ -32,8 +32,7 @@ const ForgetPassword = () => {
       <Formik
         key={phone}
         initialValues={{
-          //phone: phone || '',
-          phone: '',
+          phone: phone || '',
         }}
         validationSchema={phoneSchema}
         onSubmit={onSubmitPhone}>
