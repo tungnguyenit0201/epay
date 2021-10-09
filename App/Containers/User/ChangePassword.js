@@ -43,28 +43,31 @@ const ChangePassword = ({route}) => {
               };
 
               return (
-                <View style={styles.wrap}>
-                  <Text style={[styles.title]} fs="h3" bold>
-                    Nhập mật khẩu
-                  </Text>
-                  <Text mb={10}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                  </Text>
-                  <InputBlock
-                    password
-                    placeholder="Nhập mật khẩu"
-                    onChange={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    error={touched.password && errors.password}
-                    value={values.password}
-                  />
-                  <Button
-                    mb={10}
-                    label="Xác nhận"
-                    onPress={handleSubmit}
-                    disabled={!values.password || errors.password}
-                  />
+                <View>
+                  <View style={[styles.wrap, {paddingTop: 20}]}>
+                    <Text fs="h5" mb={10} bold>
+                      Nhập mật khẩu
+                    </Text>
+                    <Text mb={20}>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </Text>
+                    <TextInput
+                      placeholder="Nhập mật khẩu "
+                      placeholderTextColor={Colors.l5}
+                      onChange={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      error={touched.password && errors.password}
+                      value={values.password}
+                    />
+                    <Button
+                      mb={10}
+                      label="Xác nhận"
+                      onPress={handleSubmit}
+                      disabled={!values.password || errors.password}
+                    />
+                  </View>
+
                 </View>
               );
             }}
