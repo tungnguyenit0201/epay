@@ -1,18 +1,15 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-} from 'react-native';
-import { base } from 'themes';
-import { IC_TPYE } from 'configs/Constants';
-import { useVerifyInfo } from 'context/User/utils';
+import {StyleSheet, View} from 'react-native';
+import {base} from 'themes';
+import {IC_TPYE} from 'configs/Constants';
+import {useVerifyInfo} from 'context/User/utils';
 import DropImage from 'components/User/VerifyInfo/DropImage';
-import { useTranslation } from 'context/Language';
+import {useTranslation} from 'context/Language';
 import _ from 'lodash';
 import BaseVerifyInfo from './BaseVerifyInfo';
 
-const VerifyUserInfo = ({ route }) => {
-  const { onDoneIdentityCard, onChange, verifyInfo } = useVerifyInfo(
+const VerifyUserInfo = ({route}) => {
+  const {onDoneIdentityCard, onChange, verifyInfo} = useVerifyInfo(
     route?.params,
   );
   const translation = useTranslation();
@@ -38,6 +35,7 @@ const VerifyUserInfo = ({ route }) => {
           draft={verifyInfo?.ICFrontPhoto}
           documentType={documentType}
           verifyParams={route?.params}
+          style={styles.mb1}
         />
         {identityCard !== IC_TPYE.PASSPORT && (
           <DropImage
@@ -46,7 +44,7 @@ const VerifyUserInfo = ({ route }) => {
               onChange('ICBackPhoto', value);
             }}
             draft={verifyInfo?.ICBackPhoto}
-            style={styles.mb1}
+            style={styles.mb2}
             type={'back'}
             documentType={documentType}
             verifyParams={route?.params}
@@ -58,8 +56,11 @@ const VerifyUserInfo = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-  pt1: { paddingTop: 48 },
-  mb1: { marginBottom: 32 },
+  pt1: {paddingTop: 17},
+  //------------------
+  mb1: {marginBottom: 10},
+  //------------------
+  mb2: {marginBottom: 32},
 });
 
 export default VerifyUserInfo;

@@ -237,8 +237,7 @@ export default function (props) {
       <View style={styles.shadowButton}>
         <Button
           label={translation.continue}
-          bold
-          size="lg"
+          // size="lg"
           style={styles.button}
           onPress={onSubmit}
         />

@@ -16,8 +16,8 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
     //TODO : translation
     <>
       <View style={styles.block}>
-        <Text bold fs="h6" mb={10}>
-          {sourceTitle || translation.topup.moneySource}
+        <Text fw="700" fs="lg" mb={10}>
+          {sourceTitle || translation?.topup?.moneySource}
         </Text>
         <Pressable
           disabled={disabled}
@@ -37,6 +37,7 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
             style={{
               alignItems: '',
             }}
+            width="70%"
           >
             <Text fs="h6" bold>
               {BankName}

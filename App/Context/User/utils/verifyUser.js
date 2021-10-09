@@ -1,18 +1,28 @@
-import { useState, useEffect, useRef } from 'react';
-import { Platform, Linking } from 'react-native';
+import {useState, useEffect, useRef} from 'react';
+import {Platform, Linking} from 'react-native';
 import Navigator from 'navigations/Navigator';
-import { ERROR_CODE, SCREEN } from 'configs/Constants';
+import {ERROR_CODE, SCREEN} from 'configs/Constants';
 import {
   updatePersonalInfo,
   updateUserAddress,
   updateIdentify,
 } from 'services/user';
-import { useAsyncStorage, useError, useLoading } from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  useModalPassword,
+} from 'context/Common/utils';
 import _ from 'lodash';
-import { useUser } from '..';
-import { useTranslation } from 'context/Language';
-import { useSelectRegion, useUserInfo } from 'context/User/utils';
-import { PERMISSIONS, RESULTS, checkMultiple, requestMultiple } from 'react-native-permissions';
+import {useUser} from '..';
+import {useTranslation} from 'context/Language';
+import {useSelectRegion, useUserInfo} from 'context/User/utils';
+import {
+  PERMISSIONS,
+  RESULTS,
+  checkMultiple,
+  requestMultiple,
+} from 'react-native-permissions';
 import Ekyc from 'utils/Ekyc';
 import EKYC_ERROR from 'configs/Enums/EkycError';
 import KYCType from 'configs/Enums/KYCType';
@@ -21,15 +31,12 @@ import {
   compareFace,
   identityCardVerify,
 } from 'services/ekyc';
-import { ConsoleUtils } from 'utils/Console';
+import {ConsoleUtils} from 'utils/Console';
 import useAlert from 'utils/Alert';
-import { Images } from 'themes';
+import {Images} from 'themes';
 
 const {
-  SDK_SCREEN: {
-    EKYC_ORC,
-    EKYC_FACE,
-  },
+  SDK_SCREEN: {EKYC_ORC, EKYC_FACE},
   KYC_DOCUMENT_TYPE,
 } = KYCType;
 const KYC_FLOW = {
@@ -38,19 +45,20 @@ const KYC_FLOW = {
 
 const useVerifyInfo = (initialValue = {}) => {
   const contentRef = useRef(initialValue);
-  const { setLoading } = useLoading();
-  const { setError } = useError();
-  const { dispatch, userInfo } = useUser();
-  const { getPhone } = useAsyncStorage();
-  const { onGetAllInfo } = useUserInfo();
+  const {setLoading} = useLoading();
+  const {setError} = useError();
+  const {dispatch, userInfo} = useUser();
+  const {getPhone} = useAsyncStorage();
+  const {onGetAllInfo} = useUserInfo();
   let [disabledIdentify, setDisabledIdentify] = useState(true);
   let [disabledAvatar, setDisabledAvatar] = useState(true);
   const [showModalReVerify, setShowModalReVerify] = useState(false);
-  const { onClearRegionData } = useSelectRegion();
-  const { kycType } = userInfo;
+  const {onClearRegionData} = useSelectRegion();
+  const {kycType} = userInfo;
   const [SDKImage, setSDKImage] = useState();
   const strings = useTranslation() || {};
-  const { showError } = useAlert();
+  const {showError} = useAlert();
+  const {onShowModal: onShowModalPassword} = useModalPassword();
   const documentType = contentRef.current?.identifyCard?.ICType;
   const eKYC = kycType === KYCType.EKYC;
   const bank = contentRef.current?.KYCFlow === KYC_FLOW.BANK;
@@ -62,11 +70,11 @@ const useVerifyInfo = (initialValue = {}) => {
         !contentRef.current?.ICFrontPhoto || !contentRef.current?.ICBackPhoto,
       ),
     );
-    (key === 'Avatar') && setDisabledAvatar(Boolean(!value));
+    key === 'Avatar' && setDisabledAvatar(Boolean(!value));
   };
 
   const onContinue = (screen, params) => {
-    Navigator.navigate(screen, { ...contentRef.current, ...params, kycType });
+    Navigator.navigate(screen, {...contentRef.current, ...params, kycType});
   };
 
   const onUpdateIdentify = ({
@@ -102,13 +110,10 @@ const useVerifyInfo = (initialValue = {}) => {
     });
   };
 
-  const onUpdatePersonalInfo = ({
-    ICFullName,
-    Avatar,
-    DateOfBirth,
-    Email,
-    SexType,
-  }, showErrorMessage = true) => {
+  const onUpdatePersonalInfo = (
+    {ICFullName, Avatar, DateOfBirth, Email, SexType},
+    showErrorMessage = true,
+  ) => {
     return new Promise(async (resolve, reject) => {
       setLoading(true);
       let phone = await getPhone();
@@ -132,7 +137,10 @@ const useVerifyInfo = (initialValue = {}) => {
     });
   };
 
-  const onUpdateUserAddress = ({ Address, Ward, County, Provincial }, showErrorMessage = true) => {
+  const onUpdateUserAddress = (
+    {Address, Ward, County, Provincial},
+    showErrorMessage = true,
+  ) => {
     return new Promise(async (resolve, reject) => {
       setLoading(true);
       let phone = await getPhone();
@@ -147,11 +155,11 @@ const useVerifyInfo = (initialValue = {}) => {
       if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
         dispatch({
           type: 'SET_PERSONAL_ADDRESS',
-          data: { Address, Ward, County, Provincial },
+          data: {Address, Ward, County, Provincial},
         });
         dispatch({
           type: 'SET_REGION',
-          data: { Ward: '', County: '', Provincial: '' },
+          data: {Ward: '', County: '', Provincial: ''},
         });
         resolve();
       } else {
@@ -163,12 +171,14 @@ const useVerifyInfo = (initialValue = {}) => {
 
   const onUpdateAllInfo = async value => {
     let resultContent;
+    let result = null;
     try {
-      const updateInfo = { ...contentRef.current, ...value };
+      const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
-        const { extractCardInfo } = contentRef.current;
-        const { CardID, CardNumber, Step, ICType, ValidDate, Verified } = extractCardInfo || {};
-        await verifyIdentityCard({
+        const {extractCardInfo} = contentRef.current;
+        const {CardID, CardNumber, Step, ICType, ValidDate, Verified} =
+          extractCardInfo || {};
+        result = await verifyIdentityCard({
           Address: value.Address,
           BirthDay: value.DateOfBirth,
           CardID,
@@ -185,11 +195,17 @@ const useVerifyInfo = (initialValue = {}) => {
           Verified,
           Ward: value.Ward,
         });
+        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+          throw result;
+        }
         resultContent = {
           title: strings.verifySuccess,
         };
       } else {
-        await onUpdateIdentify(updateInfo);
+        result = await onUpdateIdentify(updateInfo);
+        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+          throw result;
+        }
         resultContent = {
           title: strings.kycPendingVerify,
         };
@@ -201,13 +217,13 @@ const useVerifyInfo = (initialValue = {}) => {
         onClearRegionData(),
       ]);
     } catch (e) {
-      const { ErrorMessage = strings?.unknownError } = e || {};
+      const {ErrorMessage = strings?.unknownError} = e || {};
       resultContent = {
         title: strings.verifyFailed,
         message: ErrorMessage,
       };
     } finally {
-      onContinue(SCREEN.VERIFY_SUCCESS, { resultContent });
+      onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
     }
   };
 
@@ -219,16 +235,18 @@ const useVerifyInfo = (initialValue = {}) => {
         return setShowModalReVerify(false);
       default:
         setShowModalReVerify(false);
-        Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+        onShowModalPassword(() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD));
     }
   };
 
   const onDoneIdentityCard = async () => {
-    const screen = bank ? SCREEN.VERIFY_USER_PORTRAIT : SCREEN.VERIFY_IDENTITY_CARD;
+    const screen = bank
+      ? SCREEN.VERIFY_USER_PORTRAIT
+      : SCREEN.VERIFY_IDENTITY_CARD;
     if (eKYC) {
       const result = await extractCardInfo();
       if (result) {
-        onChange('extractCardInfo', { ...result });
+        onChange('extractCardInfo', {...result});
         onContinue(screen);
       }
     } else {
@@ -238,7 +256,7 @@ const useVerifyInfo = (initialValue = {}) => {
 
   const onDoneCaptureFace = async () => {
     if (eKYC) {
-      const { extractCardInfo: cardInfo, Avatar } = contentRef.current;
+      const {extractCardInfo: cardInfo, Avatar} = contentRef.current;
       const result = await compareUserFace({
         Avatar,
         CardId: cardInfo?.CardID,
@@ -254,7 +272,7 @@ const useVerifyInfo = (initialValue = {}) => {
   useEffect(() => {
     const getKYCConfig = async () => {
       // Call api to get config
-      dispatch({ type: 'SET_KYC_TYPE', data: 'EKYC' });
+      dispatch({type: 'SET_KYC_TYPE', data: 'EKYC'});
     };
 
     userInfo.kycType === undefined && getKYCConfig();
@@ -287,8 +305,8 @@ const useVerifyInfo = (initialValue = {}) => {
       };
     };
 
-    const onSDKOrcResult = async (sdkResult) => {
-      const { errorCode } = sdkResult || {};
+    const onSDKOrcResult = async sdkResult => {
+      const {errorCode} = sdkResult || {};
 
       const {
         imageBase64,
@@ -303,13 +321,16 @@ const useVerifyInfo = (initialValue = {}) => {
             ConsoleUtils.warn('User cancelled');
             break;
           case EKYC_ERROR.SDK_ERROR:
-            ConsoleUtils.warn('SDK error like permission or save data error by outofmemory...etc');
+            ConsoleUtils.warn(
+              'SDK error like permission or save data error by outofmemory...etc',
+            );
             break;
         }
         return;
       }
       const data = screen === EKYC_ORC ? imageBase64 : nearImageBase64;
-      const imageDisplay = screen === EKYC_ORC ? imageCropBase64 : nearImageBase64;
+      const imageDisplay =
+        screen === EKYC_ORC ? imageCropBase64 : nearImageBase64;
       setSDKImage({
         data,
         path: `data:image/jpeg;base64,${imageDisplay}`,
@@ -317,25 +338,26 @@ const useVerifyInfo = (initialValue = {}) => {
       onChange('eKYCTutorialShown', true);
     };
 
-    const EKYC_PERMISSIONS = Platform.OS === 'android'
-      ? [
-        PERMISSIONS.ANDROID.CAMERA,
-        PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-        PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-      ]
-      : [
-        PERMISSIONS.IOS.CAMERA,
-        PERMISSIONS.IOS.PHOTO_LIBRARY,
-      ];
-
+    const EKYC_PERMISSIONS =
+      Platform.OS === 'android'
+        ? [
+            PERMISSIONS.ANDROID.CAMERA,
+            PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+            PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+          ]
+        : [PERMISSIONS.IOS.CAMERA, PERMISSIONS.IOS.PHOTO_LIBRARY];
 
     const checkPermissionsResult = await checkMultiple(EKYC_PERMISSIONS);
-    const isCheckPermissionsGranted = EKYC_PERMISSIONS.every(permission => checkPermissionsResult[permission] === RESULTS.GRANTED);
+    const isCheckPermissionsGranted = EKYC_PERMISSIONS.every(
+      permission => checkPermissionsResult[permission] === RESULTS.GRANTED,
+    );
     if (isCheckPermissionsGranted) {
       openSDK();
     } else {
       const requestPermissionsResult = await requestMultiple(EKYC_PERMISSIONS);
-      const isRequestPermissionsGranted = EKYC_PERMISSIONS.every(permission => requestPermissionsResult[permission] === RESULTS.GRANTED);
+      const isRequestPermissionsGranted = EKYC_PERMISSIONS.every(
+        permission => requestPermissionsResult[permission] === RESULTS.GRANTED,
+      );
       if (isRequestPermissionsGranted) {
         openSDK();
       } else {
@@ -368,13 +390,11 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const extractCardInfo = async () => {
-    const { identifyCard, ICBackPhoto, ICFrontPhoto } = contentRef.current;
-    if (identifyCard
-      && ICFrontPhoto?.data
-      && (documentType === KYC_DOCUMENT_TYPE.PASSPORT
-        ? true
-        : ICBackPhoto?.data
-      )
+    const {identifyCard, ICBackPhoto, ICFrontPhoto} = contentRef.current;
+    if (
+      identifyCard &&
+      ICFrontPhoto?.data &&
+      (documentType === KYC_DOCUMENT_TYPE.PASSPORT ? true : ICBackPhoto?.data)
     ) {
       try {
         setLoading(true);
@@ -392,8 +412,8 @@ const useVerifyInfo = (initialValue = {}) => {
       } catch (e) {
         setLoading(false);
         ConsoleUtils.log('ERROR [extractCardInfo]', e);
-        const { ErrorMessage = strings?.unknownError } = e || {};
-        showError({ message: ErrorMessage });
+        const {ErrorMessage = strings?.unknownError} = e || {};
+        showError({message: ErrorMessage});
       }
     } else {
       ConsoleUtils.warn('[extractCardInfo] Missing Data!');
@@ -402,8 +422,8 @@ const useVerifyInfo = (initialValue = {}) => {
   };
 
   const compareUserFace = async () => {
-    const { Avatar, extractCardInfo: _extractCardInfo = {} } = contentRef.current;
-    const { CardID } = _extractCardInfo;
+    const {Avatar, extractCardInfo: _extractCardInfo = {}} = contentRef.current;
+    const {CardID} = _extractCardInfo;
     if (CardID && Avatar?.data) {
       try {
         setLoading(true);
@@ -420,8 +440,8 @@ const useVerifyInfo = (initialValue = {}) => {
       } catch (e) {
         setLoading(false);
         ConsoleUtils.log('ERROR [compareUserFace]', e);
-        const { ErrorMessage = strings?.unknownError } = e || {};
-        showError({ message: ErrorMessage });
+        const {ErrorMessage = strings?.unknownError} = e || {};
+        showError({message: ErrorMessage});
       }
     } else {
       ConsoleUtils.warn('[compareUserFace] Missing Data!');
@@ -429,7 +449,7 @@ const useVerifyInfo = (initialValue = {}) => {
     }
   };
 
-  const verifyIdentityCard = (info) => {
+  const verifyIdentityCard = info => {
     return new Promise(async (resolve, reject) => {
       if (info) {
         try {
@@ -443,8 +463,8 @@ const useVerifyInfo = (initialValue = {}) => {
           resolve(result);
         } catch (e) {
           ConsoleUtils.log('ERROR [verifyIdentityCard]', e);
-          const { ErrorMessage = strings?.unknownError } = e || {};
-          showError({ message: ErrorMessage });
+          const {ErrorMessage = strings?.unknownError} = e || {};
+          showError({message: ErrorMessage});
           reject(e);
         }
       } else {

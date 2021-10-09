@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, useWindowDimensions} from 'react-native';
 import {Text, Row, Col} from 'components';
-import {Colors, Spacing} from 'themes';
+import {Colors, Fonts, Spacing} from 'themes';
 import LinearGradient from 'react-native-linear-gradient';
 
 const data = [
@@ -24,10 +24,8 @@ const Progress = ({step}) => {
           start={{x: 0, y: 0.75}}
           end={{x: 1, y: 0.25}}
           colors={[Colors.barLeft, Colors.barRight]}
-          style={[
-            styles.bar,
-            {width: (widthBar / 6) * stepColor + num},
-          ]}></LinearGradient>
+          style={[styles.bar, {width: (widthBar / 6) * stepColor + num}]}
+        ></LinearGradient>
       </View>
 
       <Row justify="space-between" space={1} style={{marginBottom: 20}}>
@@ -39,15 +37,24 @@ const Progress = ({step}) => {
                   {alignItems: 'center'},
                   index == 0 && {marginLeft: -Spacing.PADDING * 2},
                   index == 2 && {paddingLeft: Spacing.PADDING * 2},
-                ]}>
+                ]}
+              >
                 <View style={[styles.circle]}>
                   <View
                     style={[
                       styles.circleInner,
                       index + 1 <= step && styles.circleInnerActive,
-                    ]}></View>
+                    ]}
+                  ></View>
                 </View>
-                <Text style={[styles.text]}>{item.name}</Text>
+                <Text
+                  style={[styles.text]}
+                  color={Colors.WHITETEXT}
+                  centered
+                  size={Fonts.SM}
+                >
+                  {item.name}
+                </Text>
               </View>
             </Col>
           );
@@ -84,9 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.barRight,
   },
   text: {
-    width: 80,
-    color: Colors.white,
-    textAlign: 'center',
+    width: 75,
+    lineHeight: 18,
   },
 });
 export default Progress;

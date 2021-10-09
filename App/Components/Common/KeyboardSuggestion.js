@@ -47,7 +47,7 @@ const KeyboardSuggestion = ({
       >
         <Button
           style={styles.continue}
-          size={'xss'}
+          // size={'xss'}
           label="Tiếp tục"
           onPress={onContinue}
           disabled={!isContinueEnabled}
@@ -68,7 +68,7 @@ const KeyboardSuggestion = ({
               return (
                 <TouchableOpacity
                   onPress={() => onPressOption(option.value)}
-                  key={option.value}
+                  key={`${option.value}-${Math.random(1, 100)}`}
                 >
                   <Text bold style={styles.option}>
                     {option.label}

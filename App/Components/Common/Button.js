@@ -19,7 +19,7 @@ export default ({
   bg,
   radius,
   fs,
-  fw,
+  fw = '700',
   size,
   mt,
   mb,
@@ -57,7 +57,8 @@ export default ({
         size == 'xl' ? styles.xl : '',
         style,
         disabled && {backgroundColor: Colors.g4},
-      ]}>
+      ]}
+    >
       {bgImg === 1 && (
         <>
           <Image source={require('images/Button.png')} style={styles.bgImg} />
@@ -90,13 +91,15 @@ export default ({
           size == 'lg' && {fontSize: scale(18)},
           size == 'xl' && {fontSize: scale(20)},
           fs && {fontSize: fs},
-          bold && {fontWeight: 'bold'},
+          // bold && {fontWeight: 'bold'},
+          fw ? {fontWeight: fw} : {fontWeight: 'bold'},
           {
             color: color ? color : Colors.white,
-            lineHeight: 20,
+            // lineHeight: 20,
           },
           labelStyle,
-        ]}>
+        ]}
+      >
         {label}
         {
           label2 && [

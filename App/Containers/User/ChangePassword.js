@@ -1,17 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import {
-  Button,
-  Header,
-  InputBlock,
-  Text,
-  HeaderBg,
-  TextInput,
-} from 'components';
+import {Button, Header, InputBlock, Text, HeaderBg} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
-import {base, Colors} from 'themes';
+import {base} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
@@ -32,7 +25,8 @@ const ChangePassword = ({route}) => {
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}>
+            validationSchema={passwordSchema}
+          >
             {({
               handleChange: _handleChange,
               handleBlur,
@@ -73,6 +67,7 @@ const ChangePassword = ({route}) => {
                       disabled={!values.password || errors.password}
                     />
                   </View>
+
                 </View>
               );
             }}

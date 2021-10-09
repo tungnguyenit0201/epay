@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Text, HeaderBg, Icon, Header, Row, Col, Button} from 'components';
+import {
+  Text,
+  HeaderBg,
+  Icon,
+  Header,
+  Row,
+  Col,
+  Button,
+  Modal,
+} from 'components';
 import {
   ScrollView,
   View,
@@ -21,11 +30,12 @@ import DinhDanh from 'components/User/DinhDanh';
 import {useSmartOTP} from 'context/User/utils';
 import {useUser} from 'context/User';
 import {useAuth} from 'context/Auth/utils';
-
+import {useError} from 'context/Common/utils';
 const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
+  const [open, setOpen] = useState(false);
   const {onGoSmartOTP} = useSmartOTP();
 
   // TODO: translate
@@ -34,7 +44,7 @@ const User = () => {
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.l1}]}>
+      <ScrollView style={[base.wrap, {backgroundColor: Colors.white}]}>
         <View style={[base.container]}>
           <UserInfo style={[{marginBottom: 20}]} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
@@ -80,7 +90,7 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  Alert.alert('', 'Coming soon');
+                  setOpen(true);
                 }}
               >
                 <Image
@@ -113,7 +123,7 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
-                  Alert.alert('', 'Coming soon');
+                  setOpen(true);
                 }}
               >
                 <Image
@@ -143,7 +153,30 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
+              setOpen(true);
+            }}
+          >
+            <Image
+              style={[styles.iconMenu]}
+              source={require('images/profile/Support.png')}
+            />
+            <Text fs="h6" semibold ml={10}>
+              Trung tâm trợ giúp
+            </Text>
+
+            <Icon
+              style={[base.leftAuto]}
+              size={24}
+              icon={Images.ArrowRight}
+              tintColor={Colors.g5}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[base.row, styles.itemMenu]}
+            onPress={() => {
+              // Navigator.navigate(SCREEN.NOTIFICATION);
+              setOpen(true);
             }}
           >
             <Image
@@ -158,39 +191,36 @@ const User = () => {
               style={[base.leftAuto]}
               size={24}
               icon={Images.ArrowRight}
-              tintColor={Colors.g3}
+              tintColor={Colors.g5}
             />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[base.row, styles.itemMenu]}
-            onPress={() => {
-              // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
-            }}
-          >
-            <Image
-              style={[styles.iconMenu]}
-              source={require('images/profile/Support.png')}
-            />
-            <Text fs="h6" semibold ml={10}>
-              Trung tâm trợ giúp
-            </Text>
           </TouchableOpacity>
         </View>
 
         <View style={[base.shadow, styles.boxLogout]}>
           <Button
+            size="lg"
             onPress={onLogout}
             type={1}
             label={'Đăng xuất'} //TODO: translate
-            fw="600"
+            // fw="600"
             style={base.bgWhite}
             bgImg={0}
             color={Colors.black}
           />
         </View>
       </ScrollView>
+      <Modal
+        visible={open}
+        onClose={() => setOpen(false)}
+        content="Comming soon"
+        buttonGroup={() => (
+          <View>
+            <Text></Text>
+          </View>
+        )}
+        icon={Images.Homes.Setting}
+        // icon={Images.SignUp.BigPhone}
+      />
     </View>
   );
 };
@@ -226,10 +256,10 @@ const styles = StyleSheet.create({
   },
 
   boxLogout: {
-    marginTop: 30,
+    //marginTop: 30,
     paddingTop: scale(20),
     paddingHorizontal: scale(20),
-    paddingBottom: scale(260),
+    paddingBottom: scale(230),
   },
 });
 export default User;

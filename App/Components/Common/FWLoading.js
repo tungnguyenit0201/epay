@@ -7,13 +7,13 @@ import {scale} from 'utils/Functions';
 const FWLoading = ({
   wrapStyle,
   color = Colors.cl1,
-  size = scale(20),
+  size = scale(25),
   loadingStyle,
 }) => (
   <View style={[styles.wrap, wrapStyle]}>
-    <View style={[styles.background, loadingStyle]}>
-      <UIActivityIndicator color={color} size={size} />
-    </View>
+    {/* <View style={[styles.background, loadingStyle]}> */}
+    <UIActivityIndicator color={color} size={size} />
+    {/* </View> */}
   </View>
 );
 

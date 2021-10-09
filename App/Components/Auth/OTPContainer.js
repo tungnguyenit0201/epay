@@ -25,8 +25,7 @@ const OTPContainer = ({
       <Text
         bold
         fs="h3"
-        style={[styles.textWhite, styles.mb1, titleStyle]}
-      >{`Nhập OTP`}</Text>
+        style={[styles.textWhite, styles.mb1, titleStyle]}>{`Nhập OTP`}</Text>
       <Text fs="h6" style={[styles.textGray, styles.mb2]}>
         {label}
       </Text>
@@ -44,27 +43,26 @@ const OTPContainer = ({
       {/* <OTP onChange={onChange} message={message} /> */}
 
       <View style={styles.flexRow_1}>
-        <Text style={styles.fontSize_1}>
-          Gửi lại mã xác thực (OTP) sau:
+        <View style={styles.flexRow_1}>
+          <Text style={styles.fontSize_1}>Gửi lại mã xác thực (OTP) </Text>
+
           <Pressable
-            style={{marginTop: -3}}
+            //style={{marginTop: -3}}
             disabled={countdown > 0}
-            onPress={resentOTP}
-          >
+            onPress={resentOTP}>
             <Text
               style={[
                 styles.fontSize_1,
                 {
                   color: Colors.cl1,
                 },
-              ]}
-            >
+              ]}>
               {countdown > 0
-                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
                 : ` Gửi lại`}
             </Text>
           </Pressable>
-        </Text>
+        </View>
 
         {onChangePhone && (
           <Pressable onPress={onChangePhone}>
@@ -113,9 +111,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderBottomColor: Colors.cl4,
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: 3,
     borderRadius: 2,
-    height: scale(28),
+    height: scale(50),
   },
   message: {
     marginTop: 16,

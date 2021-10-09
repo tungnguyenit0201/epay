@@ -28,7 +28,7 @@ const Home = () => {
   // TODO : translation
   const {top} = useSafeAreaInsets();
   const translation = useTranslation();
-  const {goSecurity} = useHome();
+  const {banner, goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
 
@@ -60,49 +60,13 @@ const Home = () => {
   ];
   const dataBanner = [
     {
-      img: require('images/home/banner-1.jpg'),
-      screen: SCREEN.TOP_UP,
+      ImageUrl: require('images/home/banner-1.jpg'),
     },
     {
-      img: require('images/home/banner-2.jpg'),
-      screen: SCREEN.TOP_UP,
+      ImageUrl: require('images/home/banner-2.jpg'),
     },
   ];
 
-  const dataEpay = [
-    {
-      icon: Images.Homes.NapViTuDong,
-      name: translation.vehicle_list,
-      screen: SCREEN.TRANSFER,
-    },
-    {
-      icon: Images.Homes.ThanhToanGt,
-      name: translation.pay_traffic_fines,
-      screen: SCREEN.WITHDRAW,
-    },
-    {
-      icon: Images.Homes.DichVuGt,
-      name: translation.traffic_fee_service,
-      screen: SCREEN.MY_QR,
-    },
-  ];
-  const dataGT = [
-    {
-      icon: Images.Homes.DanhSachXe,
-      name: translation.vehicle_list,
-      screen: SCREEN.TRANSFER,
-    },
-    {
-      icon: Images.Homes.MuaVe,
-      name: translation.traffic_fee_service,
-      screen: SCREEN.WITHDRAW,
-    },
-    {
-      icon: Images.Homes.LichSuXe,
-      name: translation.history_of_passed_stations,
-      screen: SCREEN.MY_QR,
-    },
-  ];
   return (
     <>
       <HeaderBg>
@@ -128,7 +92,7 @@ const Home = () => {
         <ScrollView>
           <View style={base.container}>
             <DinhDanh />
-            <Banner data={dataBanner} />
+            <Banner data={banner} />
           </View>
           <View style={base.container}>
             <IconList />
@@ -187,7 +151,7 @@ const styles = StyleSheet.create({
   bottom: {
     height: scale(80),
   },
-  //tho------------
+  //------------
   flex1: {flex: 1},
 });
 export default Home;

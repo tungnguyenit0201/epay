@@ -10,6 +10,11 @@ export default {
   black: '#222',
   gray: '#666',
 
+  bg1: '#07006A',
+  bg2: '#4D0094',
+  bg3: '#6B45FF',
+  bg4: '#5066CF',
+
   l1: '#F8F8F8',
   l2: '#EEEEEE',
   l3: '#DCDCDC',

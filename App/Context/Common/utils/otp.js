@@ -62,8 +62,12 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             message: _.get(result, 'ErrorMessage', ''),
           });
         case FUNCTION_TYPE.FORGOT_PASS:
-          setError(result);
-          Navigator.popToTop();
+          setError({
+            ErrorCode: -1,
+            ErrorMessage: `Quý khách đã nhâp sai OTP 5 lần liên tiếp cho phép. Vui lòng thực hiện lại`,
+            label: 'Đồng ý',
+            onClose: Navigator.popToTop(),
+          });
           return;
         default:
           setError(result);
@@ -113,6 +117,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         ErrorCode: -1,
         ErrorMessage: `Số lần gửi OTP quá ${config?.ResendOtpNo} lần/${config?.LockWhenResendTooManyTime} giây vui lòng quay lại sau ${remain} phút`,
       }); // TODO: translate
+      Navigator.goBack();
       return false;
     }
 
@@ -151,8 +156,8 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
 
   const getLabel = () => {
     switch (functionType) {
-      case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
+      /* case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`; */
       default:
         return `Nhập mã OTP xác thực`;
     }

@@ -52,7 +52,11 @@ const OTP = ({route}) => {
       countdown={countdown}
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
-      label={label}
+      label={
+        'Mã xác thực gửi về mail ' +
+        route?.params.email +
+        '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
+      }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
   );
@@ -122,27 +126,10 @@ const OTP = ({route}) => {
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>
 
-      {/* <HelpModal
+      <HelpModal
         showModal={showModal}
         setShowModal={setShowModal}
         onPress={openCallDialog}
-      /> */}
-      <Modal
-        visible={showModal}
-        onClose={() => setShowModal(false)}
-        title="Gọi tổng đài"
-        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, 
-          vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
-        buttonGroup={() => (
-          <>
-            <Button mb={15} label="Gọi 1900-0000" bold onPress={() => {}} />
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <Text style={styles.textCenter}>Không, cảm ơn</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        icon={Images.SignUp.TouchId}
-        // icon={Images.SignUp.BigPhone}
       />
     </>
   );

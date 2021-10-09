@@ -64,7 +64,7 @@ const Auth = () => {
           return (
             <>
               <TextInput
-                placeholder={translation.enter_your_phone_number}
+                placeholder={'Nhập số điện thoại'} //TODO: translate
                 numeric
                 onChange={handleChange('phone')}
                 onBlur={handleBlur('phone')}
@@ -72,6 +72,7 @@ const Auth = () => {
                 value={values.phone}
                 //leftIcon={Images.Phone_1}
                 isDeleted={values.phone}
+                maxLength={10}
               />
 
               <FooterContainer
@@ -80,7 +81,7 @@ const Auth = () => {
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}
-                  disabled={!_.isEmpty(errors)}
+                  disabled={!_.isEmpty(errors) || !values.phone}
                 />
               </FooterContainer>
             </>
