@@ -12,23 +12,19 @@ const ActiveSmartOtp = () => {
 
   return (
     <>
+      <HeaderBg>
+        <Header back title="Kích hoạt smart OTP" />
+      </HeaderBg>
       <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title="Kích hoạt smart OTP" />
-        </HeaderBg>
         <View style={base.container}>
-          <Text mb={20}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centurie
+          <Text fs="h4" bold mt={20}>
+            Khai báo thông tin
           </Text>
-          <Text fs="h6" mb={10}>
-            Khai báo thông tin Smart OTP
+          <Text fs="h4" bold mb={20}>
+            Smart OTP
           </Text>
-          <Text mb={5}>Số điện thoại</Text>
-          <Text fs="h5" bold mb={20}>
+          <Text mb={10}>Số điện thoại</Text>
+          <Text fs="h4" bold mb={20}>
             {phone}
           </Text>
           <Text>
@@ -50,18 +46,18 @@ const ActiveSmartOtp = () => {
             <Text
               style={[{textDecorationLine: 'underline'}]}
               onPress={() => alert('Điều khoản điều kiện')}>
-              điều khoản điều kiện
-            </Text>
-          </View>
+              {' '}
+              điều khoản điều kiện{' '}
+            </Text>{' '}
+            đăng ký dịch vụ của Epay
+          </Text>
         </View>
-      </ScrollView>
-      <View style={base.bottom}>
         <Button
           label="Kích hoạt" // TODO: translate
           disabled={!isAccepted}
           onPress={onGoOTP}
         />
-      </View>
+      </FooterContainer>
     </>
   );
 };
