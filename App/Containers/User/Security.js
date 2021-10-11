@@ -14,84 +14,85 @@ const PaymentSettings = () => {
   const {touchIdEnabled} = settings;
 
   return (
-    <ScrollView style={base.wrap}>
+    <>
       <HeaderBg>
         <Header back title={translation.password_and_security} />
       </HeaderBg>
+      <ScrollView style={base.wrap}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            Navigator.push(SCREEN.CHANGE_PASSWORD, {
+              type: 'confirm_password_response',
+              headerLabel: 'Đổi mật khẩu',
+            });
+          }}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text style={styles.text}>Đổi mật khẩu</Text>
+          <Icon
+            style={[base.leftAuto]}
+            icon={Images.ArrowRight}
+            size={24}
+            tintColor="#000"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.item} onPress={onSmartOTP}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text style={styles.text}> Smart OTP</Text>
+          <Icon
+            style={[base.leftAuto]}
+            icon={Images.ArrowRight}
+            size={24}
+            tintColor="#000"
+          />
+        </TouchableOpacity>
+        <View style={styles.item}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text style={styles.text}> Cài đặt Touch id / Face id</Text>
+          <Switch
+            key={touchIdEnabled}
+            initialValue={touchIdEnabled}
+            onChange={onTouchId}
+          />
+        </View>
+        <View style={styles.item}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text style={styles.text}>Cảnh báo đăng nhập trên thiết bị khác</Text>
+          <Switch />
+        </View>
 
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          Navigator.push(SCREEN.CHANGE_PASSWORD, {
-            type: 'confirm_password_response',
-            headerLabel: 'Đổi mật khẩu',
-          });
-        }}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}>Đổi mật khẩu</Text>
-        <Icon
-          style={[base.leftAuto]}
-          icon={Images.ArrowRight}
-          size={24}
-          tintColor="#000"
-        />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.item} onPress={onSmartOTP}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Smart OTP</Text>
-        <Icon
-          style={[base.leftAuto]}
-          icon={Images.ArrowRight}
-          size={24}
-          tintColor="#000"
-        />
-      </TouchableOpacity>
-      <View style={styles.item}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Cài đặt Touch id / Face id</Text>
-        <Switch
-          key={touchIdEnabled}
-          initialValue={touchIdEnabled}
-          onChange={onTouchId}
-        />
-      </View>
-      <View style={styles.item}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}>Cảnh báo đăng nhập trên thiết bị khác</Text>
-        <Switch />
-      </View>
-
-      <View style={styles.item}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Lưu phiên đăng nhập</Text>
-        <Switch />
-      </View>
-    </ScrollView>
+        <View style={styles.item}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.cl1}
+          />
+          <Text style={styles.text}> Lưu phiên đăng nhập</Text>
+          <Switch />
+        </View>
+      </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
