@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 
-import {Text, Button, Icon, Header, HeaderBg} from 'components';
+import {Text, Button, Icon, Header, HeaderBg, Modal} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
@@ -21,6 +21,7 @@ const PaymentSettings = () => {
   const translation = useTranslation();
   const [xacNhan, isXacNhan] = useState(false);
   const {onGetLimit} = useUserInfo();
+  const [open, setOpen] = useState(false);
   return (
     <>
       <HeaderBg>
@@ -32,8 +33,7 @@ const PaymentSettings = () => {
           onPress={() => {
             // Navigator.navigate(SCREEN.AUTOPAYMENT);
             Alert.alert('', 'Coming soon');
-          }}
-        >
+          }}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
@@ -73,13 +73,7 @@ const PaymentSettings = () => {
           />
           <Text style={styles.text}> Hạn mức trong ngày</Text>
         </Pressable>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            // Navigator.navigate(SCREEN.NOTIFICATION);
-            Alert.alert('', 'Coming soon');
-          }}
-        >
+        <TouchableOpacity style={styles.item} onPress={() => setOpen(true)}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
@@ -99,6 +93,17 @@ const PaymentSettings = () => {
           <Text>{`Cài đặt hạn mức: ${formatMoney(50000000)}đ`}</Text>
         </View>
       </ScrollView>
+      <Modal
+        visible={open}
+        onClose={() => setOpen(false)}
+        content="Comming soon"
+        buttonGroup={() => (
+          <View>
+            <Text></Text>
+          </View>
+        )}
+        icon={Images.Homes.Setting}
+      />
     </>
   );
 };
