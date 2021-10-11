@@ -124,8 +124,7 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
-                }}
-              >
+                }}>
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -141,8 +140,7 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}
-                >
+                  key={index}>
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.rowTitle}>{item.name}</Text>
                   <Text style={base.leftAuto}>{item.val}</Text>
@@ -207,8 +205,7 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }
-                >
+                  }>
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -252,8 +249,7 @@ const UserInfo = () => {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}
-              >
+                }}>
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -292,14 +288,13 @@ const UserInfo = () => {
           content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
         GTTT cũ. Bạn có chắc chắn muốn 
         đổi không?" // TODO: translate
-          //icon={Images.Profile.ReVerify}
+          icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
-              <Button mb={10} label="Có" onPress={onReVerify} />
+              <Button mb={10} bold label="Có" onPress={onReVerify} />
               <TouchableOpacity
                 style={styles.textCenter}
-                onPress={() => onReVerify('hideModal')}
-              >
+                onPress={() => onReVerify('hideModal')}>
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
@@ -317,6 +312,8 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     backgroundColor: Colors.g4,
   },
+
+  buttonGroup: {alignItems: 'center'},
   wedit: {
     overflow: 'hidden',
     borderRadius: 99,
