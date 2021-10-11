@@ -1,10 +1,17 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import {Button, Header, InputBlock, Text, HeaderBg} from 'components';
+import {
+  Button,
+  Header,
+  InputBlock,
+  Text,
+  HeaderBg,
+  TextInput,
+} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
-import {base} from 'themes';
+import {base, Colors} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
@@ -59,6 +66,7 @@ const ChangePassword = ({route}) => {
                       onBlur={handleBlur('password')}
                       error={touched.password && errors.password}
                       value={values.password}
+                      password
                     />
                     <Button
                       mb={10}
@@ -67,7 +75,6 @@ const ChangePassword = ({route}) => {
                       disabled={!values.password || errors.password}
                     />
                   </View>
-
                 </View>
               );
             }}

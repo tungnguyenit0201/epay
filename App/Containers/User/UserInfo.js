@@ -124,7 +124,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.push(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -140,7 +141,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.rowTitle}>{item.name}</Text>
                   <Text style={base.leftAuto}>{item.val}</Text>
@@ -205,7 +207,8 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }>
+                  }
+                >
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -249,7 +252,8 @@ const UserInfo = () => {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -293,8 +297,9 @@ const UserInfo = () => {
             <View style={styles.buttonGroup}>
               <Button mb={10} label="Có" onPress={onReVerify} />
               <TouchableOpacity
-                //style={styles.textCenter}
-                onPress={() => onReVerify('hideModal')}>
+                style={styles.textCenter}
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
