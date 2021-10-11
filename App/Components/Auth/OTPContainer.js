@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: Fonts.H4,
     color: Colors.BLACKTEXT,
     textAlign: 'center',
-    borderBottomColor: Colors.cl4,
+    borderBottomColor: Colors.g2,
     borderWidth: 0,
     borderBottomWidth: 3,
     borderRadius: 2,
