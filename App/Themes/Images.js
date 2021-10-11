@@ -12,6 +12,8 @@ export default {
   Right: require('images/right.png'),
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
+  Eye2: require('images/Eye2.png'),
+  EyeGray2: require('images/EyeGray2.png'),
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),

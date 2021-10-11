@@ -110,15 +110,14 @@ const TabNavigation = () => {
               >
                 <Image
                   source={
-                    // !isFocused
-                    //   ? TabIcons[route.name]
-                    //   : TabIconsActive[route.name]
-                    TabIcons[route.name]
+                    !isFocused
+                      ? TabIcons[route.name]
+                      : TabIconsActive[route.name]
+                    // TabIconsActive[route.name]
                   }
                   style={[
                     styles.icon,
-                    // route.name != 'Home' &&
-                    {
+                    route.name != 'Home' && {
                       tintColor: isFocused ? Colors.cl1 : Colors.gray,
                     },
                   ]}
@@ -127,8 +126,7 @@ const TabNavigation = () => {
                 <Text
                   style={{
                     color: isFocused ? Colors.cl1 : Colors.gray,
-                  }}
-                >
+                  }}>
                   {TabLabels[label]}
                 </Text>
               </TouchableOpacity>

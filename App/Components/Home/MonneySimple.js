@@ -17,7 +17,7 @@ const Monney = ({style}) => {
     <View style={[styles.item, base.shadow, style]}>
       <View style={[]}>
         <Text fs="h6" style={styles.title}>
-          {translation.my_wallet} :
+          {translation.my_wallet}
         </Text>
       </View>
       <View style={[styles.right]}>
@@ -35,7 +35,7 @@ const Monney = ({style}) => {
             style={{marginLeft: 10}}
             onPress={() => setShowMoney(!showMoney)}>
             <Icon
-              icon={showMoney ? Images.Eye : Images.EyeGray}
+              icon={showMoney ? Images.Eye2 : Images.EyeGray2}
               tintColor={Colors.white}
               size={20}
             />
