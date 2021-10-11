@@ -32,8 +32,7 @@ const ChangePassword = ({route}) => {
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}
-          >
+            validationSchema={passwordSchema}>
             {({
               handleChange: _handleChange,
               handleBlur,
@@ -51,8 +50,8 @@ const ChangePassword = ({route}) => {
 
               return (
                 <View>
-                  <View style={[styles.wrap, {paddingTop: 20}]}>
-                    <Text fs="h5" mb={10} bold>
+                  <View style={{paddingTop: 20}}>
+                    <Text fs="h5" bold mb={10}>
                       Nhập mật khẩu
                     </Text>
                     <Text mb={20}>
@@ -60,13 +59,13 @@ const ChangePassword = ({route}) => {
                       typesetting industry.
                     </Text>
                     <TextInput
-                      placeholder="Nhập mật khẩu "
+                      password
+                      placeholder="Nhập mật khẩu"
                       placeholderTextColor={Colors.l5}
                       onChange={handleChange('password')}
                       onBlur={handleBlur('password')}
                       error={touched.password && errors.password}
                       value={values.password}
-                      password
                     />
                     <Button
                       mb={10}

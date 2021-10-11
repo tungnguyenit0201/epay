@@ -11,7 +11,7 @@ import {HelpModal} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {useUser} from 'context/User';
 import {scale} from 'utils/Functions';
-
+import {FUNCTION_TYPE} from 'configs/Constants';
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
   const {token: isLoggedIn} = useUser();
@@ -27,14 +27,14 @@ const OTP = ({route}) => {
     resentOTP,
     openCallDialog,
     label,
+    functionType,
   } = useOTP(route?.params);
   const translation = useTranslation();
 
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -53,9 +53,12 @@ const OTP = ({route}) => {
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
       label={
-        'Mã xác thực gửi về mail ' +
-        route?.params.email +
-        '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
+        functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL ||
+        functionType === FUNCTION_TYPE.AUTH_EMAIL
+          ? 'Mã xác thực gửi về mail ' +
+            route?.params.email +
+            '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
+          : 'Nhập mã OTP xác thực'
       }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
