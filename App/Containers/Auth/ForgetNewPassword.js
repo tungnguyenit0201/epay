@@ -40,8 +40,7 @@ const ForgetNewPassword = ({route}) => {
         renderRightComponent={() => (
           <TouchableOpacity
             style={styles.pr1}
-            onPress={() => setShowModal(true)}
-          >
+            onPress={() => setShowModal(true)}>
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -58,8 +57,7 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -80,8 +78,7 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}
-              >
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
                   title="Đặt lại mật khẩu"
                   text={
@@ -97,6 +94,7 @@ const ForgetNewPassword = ({route}) => {
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
                   /* leftIcon={Images.Transfer.Lock} */
+                  maxLength={20}
                 />
                 <TextInput
                   password
@@ -107,6 +105,7 @@ const ForgetNewPassword = ({route}) => {
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
                   /* leftIcon={Images.Transfer.Lock} */
+                  maxLength={20}
                 />
                 <Text style={styles.note}>
                   {`Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa và số`}
@@ -120,8 +119,7 @@ const ForgetNewPassword = ({route}) => {
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}
-                    >
+                      onPress={() => {}}>
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -129,8 +127,7 @@ const ForgetNewPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}
-                    >
+                      onPress={() => {}}>
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
