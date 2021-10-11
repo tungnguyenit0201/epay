@@ -30,12 +30,11 @@ const SelectMoney = () => {
           //title={translation.top_up}
           title="Mã của tôi" // TODO: translate
           back
-          style={{marginBottom: 20}}
         />
       </HeaderBg>
       <ScrollView style={base.wrap}>
-        <View style={base.container}>
-          <Text fs="h6" mb={12} bold>
+        <View style={[base.container, styles.shadow]}>
+          <Text fs="h6" mb={15} bold>
             Nhập số tiền muốn nhận
           </Text>
           <InputMoney handleValue={setValue} />
@@ -73,5 +72,22 @@ const SelectMoney = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 8,
+    margin: 10,
+    paddingVertical: 15,
+    backgroundColor: Colors.white,
+    borderRadius: 8,
+  },
+});
 
 export default SelectMoney;
