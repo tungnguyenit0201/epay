@@ -60,6 +60,7 @@ const RegisterName = () => {
                 error={touched.FullName && errors.FullName}
                 value={values.FullName}
                 isDeleted={values.FullName}
+                maxLength={100}
               />
             </View>
 

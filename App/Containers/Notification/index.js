@@ -11,8 +11,9 @@ import {
 import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
-import {SCREEN, NOTIFY} from 'configs/Constants';
+import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
 import {scale} from 'utils/Functions';
+import moment from 'moment';
 
 import {useTranslation} from 'context/Language';
 
@@ -84,7 +85,11 @@ const Notification = () => {
                         source={require('images/favicon.png')}
                         style={styles.icon}
                       />
-                      <Text style={styles.date}>{item?.Time}</Text>
+                      <Text style={styles.date}>
+                        {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
+                          'hh:MMA | DD/MM/YYYY',
+                        )}
+                      </Text>
                     </View>
 
                     <Text bold fs="h6" mb={10}>
@@ -108,7 +113,7 @@ const Notification = () => {
                     source={require('images/noti/Noti.png')}
                     style={styles.imgSuccess}
                   />
-                  <Text>Không có thông báo nào</Text>
+                  <Text>Chưa có thông báo mới</Text>
                 </View>
               </>
             )}

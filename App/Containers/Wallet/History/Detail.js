@@ -122,7 +122,7 @@ const DetailHistory = ({route}) => {
       {title: 'Số quyết định ', value: '51G-5678, Loại 1 < 12 chỗ biển trắng'},
       {title: 'Họ tên người vi phạm ', value: 'Nguyen Van A'},
       {title: 'CMND/CCCD/Hộ chiếu ', value: '12******678'},
-      {title: 'Số tiền ', value: '1.000.000 Vnd '},
+      {title: 'Số tiền ', value: '1.000.000đ'},
       {
         title: 'Hành vi vi phạm ',
         value:
@@ -190,7 +190,7 @@ const DetailHistory = ({route}) => {
                 color={isIncome ? blue_1 : Colors.Highlight}
                 centered
                 style={styles.wrap}>
-                {isIncome ? '+' : '-'} {formatMoney(TransAmount, ' Vnđ')}
+                {isIncome ? '+' : '-'} {formatMoney(TransAmount, true)}
               </Text>
             )}
 

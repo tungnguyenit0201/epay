@@ -72,7 +72,7 @@ const Login = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.password && errors.password}
                   value={values.password}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                   autoFocus
                   style={styles.wrap}
                 />
@@ -80,12 +80,12 @@ const Login = ({route}) => {
                 <View style={[styles.box, {marginTop: 5}]}>
                   <Pressable onPress={onForgetPassword}>
                     <Text style={[styles.linkText]}>
-                      {translation.forgot_password}
+                      {translation.forgot_password}?
                     </Text>
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.linkText]}>Đổi số điện thoại</Text>
+                    <Text style={[styles.linkText]}>Đổi SĐT</Text>
                   </Pressable>
                 </View>
               </View>

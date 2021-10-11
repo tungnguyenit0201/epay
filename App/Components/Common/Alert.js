@@ -47,7 +47,7 @@ const AlertCustom = () => {
 
             {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
             <Button
-              label="Đóng"
+              label={error?.label || 'Đóng'}
               onPress={() => {
                 setError(null);
                 error?.onClose && error?.onClose();

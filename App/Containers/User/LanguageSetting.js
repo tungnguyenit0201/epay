@@ -7,7 +7,7 @@ import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useLanguage} from 'context/Language/utils';
 
-const PaymentSettings = () => {
+const LanguageSettings = () => {
   const translation = useTranslation();
   const {chooseLanguage} = useLanguage();
 
@@ -25,7 +25,7 @@ const PaymentSettings = () => {
             key={item.value}
             label={item.label}
             // size="lg"
-            {...(item.value !== translation.selectedLanguage && {
+            {...(item.value === translation.selectedLanguage && {
               // bold: true,
               bg: Colors.white,
               color: Colors.cl1,
@@ -40,4 +40,4 @@ const PaymentSettings = () => {
   );
 };
 const styles = StyleSheet.create({});
-export default PaymentSettings;
+export default LanguageSettings;

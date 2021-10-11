@@ -45,7 +45,7 @@ const Banner = ({
           <Text fs="h6" fw="900" color={Colors.white}>
             {item?.Title?.toUpperCase()}
           </Text>
-          <Text numberOfLines={2} color={Colors.white}>
+          <Text numberOfLines={2} fs="sm" color={Colors.white}>
             {item?.Content}
           </Text>
         </View>

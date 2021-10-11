@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Keyboard,
   // useWindowDimensions,
 } from 'react-native';
 import {
@@ -27,6 +28,7 @@ import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {useHistory} from 'context/Wallet/utils';
 import moment from 'moment';
 import FilterModal from 'components/Wallet/History/FilterModal';
+import Navigator from 'navigations/Navigator';
 
 const History = () => {
   const translation = useTranslation();
@@ -108,7 +110,14 @@ const History = () => {
     <>
       <View style={[styles.bgWhite]}>
         <HeaderBg>
-          <Header back title={translation?.transaction_history} />
+          <Header
+            back
+            title={translation?.transaction_history}
+            onPressBack={() => {
+              Keyboard.dismiss();
+              Navigator.goBack();
+            }}
+          />
         </HeaderBg>
 
         <View style={[styles.wrap, styles.ptb1]}>

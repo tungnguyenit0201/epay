@@ -136,7 +136,7 @@ const BankTransferInfo = () => {
               fontWeight: 'bold',
               fontSize: 18,
             }}>
-            vnđ
+            đ
           </Text>
         </View>
 

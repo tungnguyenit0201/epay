@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 99,
     backgroundColor: Colors.black,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: Colors.white,
   },
   user: {
