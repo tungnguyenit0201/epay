@@ -96,6 +96,7 @@ const ForgetNewPassword = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
+                  maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
                 />
                 <TextInput
@@ -106,6 +107,7 @@ const ForgetNewPassword = ({route}) => {
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
+                  maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
                 />
                 <Text style={styles.note}>
