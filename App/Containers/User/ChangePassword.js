@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import {Button, Header, InputBlock, Text, HeaderBg} from 'components';
+import {Button, Header, TextInput, Text, HeaderBg} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
-import {base} from 'themes';
+import {base, Colors} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
@@ -25,8 +25,7 @@ const ChangePassword = ({route}) => {
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}
-          >
+            validationSchema={passwordSchema}>
             {({
               handleChange: _handleChange,
               handleBlur,
@@ -43,28 +42,30 @@ const ChangePassword = ({route}) => {
               };
 
               return (
-                <View style={styles.wrap}>
-                  <Text style={[styles.title]} fs="h3" bold>
-                    Nhập mật khẩu
-                  </Text>
-                  <Text mb={10}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
-                  </Text>
-                  <InputBlock
-                    password
-                    placeholder="Nhập mật khẩu"
-                    onChange={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    error={touched.password && errors.password}
-                    value={values.password}
-                  />
-                  <Button
-                    mb={10}
-                    label="Xác nhận"
-                    onPress={handleSubmit}
-                    disabled={!values.password || errors.password}
-                  />
+                <View>
+                  <View style={{paddingTop: 20}}>
+                    <Text fs="h5" bold mb={10}>
+                      Nhập mật khẩu
+                    </Text>
+                    <Text mb={20}>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </Text>
+                    <TextInput
+                      password
+                      placeholder="Nhập mật khẩu"
+                      onChange={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                      error={touched.password && errors.password}
+                      value={values.password}
+                    />
+                    <Button
+                      mb={10}
+                      label="Xác nhận"
+                      onPress={handleSubmit}
+                      disabled={!values.password || errors.password}
+                    />
+                  </View>
                 </View>
               );
             }}
