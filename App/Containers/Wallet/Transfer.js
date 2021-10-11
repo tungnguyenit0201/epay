@@ -91,7 +91,7 @@ const Transfer = () => {
             <Button
               label="Không"
               style={styles.buttonCancle}
-              color={Colors.cl1}
+              // color={Colors.cl1}
               // fs={Fonts.H6}
               onPress={() => setOpen(false)}
             />
