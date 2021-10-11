@@ -88,8 +88,7 @@ export default React.forwardRef(
                   top: 14,
                   left: 14,
                 },
-              ]}
-            >
+              ]}>
               <Image source={leftIcon} style={styles.icon_lock_img} />
             </View>
           )}
@@ -101,8 +100,7 @@ export default React.forwardRef(
               Boolean(leftIcon) && {paddingLeft: 50},
               (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
               style,
-            ]}
-          >
+            ]}>
             <TextInput
               ref={ref}
               autoCapitalize={'none'}
@@ -134,10 +132,9 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: scale(12),
                 top: scale(12),
-              }}
-            >
+              }}>
               <Image
-                source={showPassword ? Images.Eye : Images.EyeGray}
+                source={showPassword ? Images.Eye2 : Images.EyeGray2}
                 style={{width: scale(20), height: scale(20)}}
                 resizeMode="contain"
               />
@@ -151,8 +148,7 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: 15,
                 top: 18,
-              }}
-            >
+              }}>
               <Icon
                 icon={Images.CloseThin}
                 style={{
