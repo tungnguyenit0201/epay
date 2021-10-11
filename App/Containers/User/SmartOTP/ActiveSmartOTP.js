@@ -46,8 +46,7 @@ const ActiveSmartOtp = () => {
             <Text
               style={[{textDecorationLine: 'underline'}]}
               onPress={() => alert('Điều khoản điều kiện')}>
-              {' '}
-              điều khoản điều kiện{' '}
+              điều khoản điều kiện
             </Text>
             đăng ký dịch vụ của Epay
           </Text>
