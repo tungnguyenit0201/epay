@@ -105,12 +105,14 @@ const Home = () => {
         <Modal
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
+          icon={require('images/icons/touch-id.png')}
           title="Đăng nhập vân tay"
           content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button
                 mb={10}
+                bold
                 label="Cài đặt vân tay"
                 onPress={() => {
                   setFirstLogin(false);
@@ -118,7 +120,7 @@ const Home = () => {
                 }}
               />
               <TouchableOpacity onPress={() => setFirstLogin(false)}>
-                <Text>Để sau</Text>
+                <Text>Nhắc tôi sau</Text>
               </TouchableOpacity>
             </View>
           )}
