@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     height: Spacing.PADDING,
     width: Spacing.PADDING,
     marginRight: 10,
-    top: 1,
+    top: 3,
   },
   lineSize: {
     width: 1,
