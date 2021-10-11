@@ -1,14 +1,16 @@
 import {useAsyncStorage, useError, usePermission} from 'context/Common/utils';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import RNQRGenerator from 'rn-qr-generator';
 import {getQRCodeInfo, getTransferUser} from 'services/wallet';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import {ERROR_CODE} from 'configs/Constants';
-import RNQRGenerator from 'rn-qr-generator';
 import {useCommon} from 'context/Common';
 import {RESULTS} from 'react-native-permissions';
 import {useWallet} from 'context/Wallet';
+
 const useScanQR = () => {
   let [flash, setFlash] = useState(false);
   let [loading, setLoading] = useState(false);
@@ -85,10 +87,12 @@ const useScanQR = () => {
       console.log('detectQRCode error :>> ', error);
     }
   };
-
+  useFocusEffect(
+    useCallback(() => {
+      dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: {}});
+    }, []),
+  );
   useEffect(() => {
-    dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: {}});
-
     checkPermission('', () => Navigator.goBack());
   }, []); // eslint-disable-line
   return {

@@ -20,18 +20,22 @@ const TrafficFee = () => {
     {
       img: Images.TrafficFee.Moneys,
       title: 'Phí giao thông',
+      screen: SCREEN.LANGUAGE,
     },
     {
       img: Images.TransactionHistory.Warning,
       title: 'Vi phạm giao thông',
+      screen: SCREEN.TRAFFIC_REGISTER_RESULT,
     },
     {
       img: Images.TrafficFee.Station,
       title: 'Mua vé xe',
+      screen: SCREEN.TRAFFIC_REGISTER,
     },
     {
       img: Images.TrafficFee.Ticket,
       title: 'Trạm xe',
+      screen: SCREEN.TRAFFIC_REGISTER,
     },
   ];
 
@@ -41,7 +45,7 @@ const TrafficFee = () => {
       <TouchableOpacity
         // key={item?.TransCode}
         style={styles.blockTransaction}
-        onPress={() => Navigator.navigate(SCREEN.TRAFFIC_REGISTER)}
+        onPress={() => Navigator.navigate(item.screen)}
       >
         <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
           <Image
@@ -69,7 +73,11 @@ const TrafficFee = () => {
       </HeaderBg>
 
       <View style={[base.wrap, styles.flex1, styles.pt1]}>
-        <Image source={require('images/wave.png')} style={styles.bgImg} />
+        <Image
+          source={require('images/wave.png')}
+          style={styles.bgImg}
+          resizeMode="stretch"
+        />
         <View style={[base.container]}>
           <View style={[styles.blockShadow]}>
             <FlatList
@@ -104,7 +112,7 @@ const styles = StyleSheet.create({
     height: 20,
   },
   bgImg: {
-    width: scale(375),
+    width: '100%',
     height: scale(375),
     position: 'absolute',
     bottom: 0,

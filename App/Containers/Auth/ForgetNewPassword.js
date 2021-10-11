@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
 import {Colors, Spacing, Images} from 'themes';
-import {useForgetPassword} from 'context/Auth/utils';
+import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
@@ -19,11 +19,14 @@ import _ from 'lodash';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import {HelpModal} from 'components/Auth';
 
 const ForgetNewPassword = ({route}) => {
   const {phone} = route?.params;
   const {onNewPassword, active, onSetActive} = useForgetPassword();
   const translation = useTranslation();
+  const {showModal, setShowModal, openCallDialog} = useRegister();
+
   const onSubmit = values => {
     onNewPassword({...values, phone});
   };
@@ -35,7 +38,10 @@ const ForgetNewPassword = ({route}) => {
         // blackIcon
         // avoidStatusBar
         renderRightComponent={() => (
-          <TouchableOpacity style={styles.pr1}>
+          <TouchableOpacity
+            style={styles.pr1}
+            onPress={() => setShowModal(true)}
+          >
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -52,7 +58,8 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -73,7 +80,8 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}>
+                contentContainerStyle={[styles.wrap, styles.py1]}
+              >
                 <Content
                   title="Đặt lại mật khẩu"
                   text={
@@ -106,13 +114,14 @@ const ForgetNewPassword = ({route}) => {
               </ScrollView>
 
               <FooterContainer>
-                {/* <View style={styles.flexRow}>
+                <View style={styles.flexRow}>
                   <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}>
+                      onPress={() => {}}
+                    >
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -120,14 +129,15 @@ const ForgetNewPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}>
+                      onPress={() => {}}
+                    >
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
                     </TouchableOpacity>
                     của Epay Services
                   </Text>
-                </View> */}
+                </View>
 
                 <Button
                   mt={10}
@@ -140,6 +150,11 @@ const ForgetNewPassword = ({route}) => {
           );
         }}
       </Formik>
+      <HelpModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPress={openCallDialog}
+      />
     </BlueHeader>
   );
 };

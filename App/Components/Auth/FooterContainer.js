@@ -8,7 +8,7 @@ const FooterContainer = ({children, pb, style}) => {
   return (
     <View
       style={[
-        {paddingBottom: !!pb ? pb : Spacing.PADDING},
+        {paddingBottom: !!pb ? pb : 45},
         styles.pt1,
         styles.blockBtn,
         styles.wrap,

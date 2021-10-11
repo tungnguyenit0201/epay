@@ -9,7 +9,7 @@ import {Header, HeaderBg, Button, Col, Row} from 'components';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
 import {useQRCode} from 'context/User/utils';
-
+import FooterContainer from 'components/Auth/FooterContainer';
 const QRPay = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
@@ -32,63 +32,79 @@ const QRPay = ({route}) => {
   }; */
   return (
     // TODO: translate
-    <ScrollView style={base.wrap}>
+    <View style={{flex: 1, backgroundColor: Colors.white}}>
       <HeaderBg>
-        <Header title={translation.payment_code} back />
-      </HeaderBg>
-      <View style={[base.container, styles.flexCenter]}>
-        <Text
-          bold
-          style={{
-            fontSize: 15,
-            paddingHorizontal: 80,
-            textAlign: 'center',
-            lineHeight: 25,
-            marginBottom: 25,
-          }}>
-          Nhận tiền từ bạn bè nhanh hơn bằng mã QR của bạn
-        </Text>
-        <QRCode
-          getRef={myQRCode}
-          value={userInfo?.qrCode ? userInfo?.qrCode : 'epay'}
-          size={250}
-          color="black"
-          backgroundColor="white"
+        <Header
+          title="Mã của tôi" // TODO: translate
+          back
         />
-        {route?.params?.value ? (
-          <Text style={{paddingTop: Spacing.PADDING, fontSize: Fonts.H6}}>
-            {route?.params?.value}
+      </HeaderBg>
+      <ScrollView style={[base.wrap]}>
+        <View style={[base.container, styles.flexCenter]}>
+          <Text
+            bold
+            style={{
+              fontSize: 15,
+              paddingHorizontal: 30,
+              textAlign: 'center',
+              lineHeight: 25,
+              marginBottom: 25,
+            }}>
+            Nhận tiền từ bạn bè nhanh hơn bằng mã QR của bạn
           </Text>
-        ) : (
-          <View></View>
-        )}
+          <QRCode
+            getRef={myQRCode}
+            value={userInfo?.qrCode ? userInfo?.qrCode : 'epay'}
+            size={250}
+            color="black"
+            backgroundColor="white"
+          />
+          {route?.params?.value ? (
+            <Text style={{paddingTop: Spacing.PADDING, fontSize: Fonts.H6}}>
+              {route?.params?.value}
+            </Text>
+          ) : (
+            <View></View>
+          )}
+        </View>
+      </ScrollView>
+
+      <View style={[base.container, styles.flexCenter]}>
         <Button
           bg={Colors.white}
           border={Colors.cl1}
-          color={Colors.cl1}
-          label={'Nhập số tiền'} // TODO: translate
+          color={Colors.white}
+          mb={20}
+          bold
+          label={'Nhập số tiền bạn muốn nhận'} // TODO: translate
           onPress={() => {
             Navigator.navigate(SCREEN.SELECT_MONEY);
           }}
           style={styles.buttonSelect}
         />
-        <View style={base.bottom}>
-          <Row>
-            <Col width="50%">
-              <Button
-                bg={Colors.white}
-                border={Colors.cl1}
-                color={Colors.cl1}
-                label={translation.save_photo}
-              />
-            </Col>
-            <Col width="50%">
-              <Button label={translation.share_photo} onPress={shareQRCode} />
-            </Col>
-          </Row>
-        </View>
       </View>
-    </ScrollView>
+      <FooterContainer>
+        <Row>
+          <Col width="50%">
+            <Button
+              mode={'outline'}
+              bg={Colors.white}
+              border={Colors.cl1}
+              color={Colors.white}
+              label={translation.save_photo}
+              bold
+            />
+          </Col>
+          <Col width="50%">
+            <Button
+              label={translation.share_photo}
+              onPress={shareQRCode}
+              bold
+            />
+          </Col>
+        </Row>
+      </FooterContainer>
+    </View>
   );
 };
 export default QRPay;

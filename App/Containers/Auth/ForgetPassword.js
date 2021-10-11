@@ -35,7 +35,8 @@ const ForgetPassword = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onSubmitPhone}>
+        onSubmit={onSubmitPhone}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -72,7 +73,7 @@ const ForgetPassword = () => {
                   label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
-                  fs={Fonts.FONT_MEDIUM}
+                  // fs={Fonts.FONT_MEDIUM}
                 />
               </FooterContainer>
             </>

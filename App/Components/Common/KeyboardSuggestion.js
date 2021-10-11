@@ -47,7 +47,7 @@ const KeyboardSuggestion = ({
       >
         <Button
           style={styles.continue}
-          size={'xss'}
+          // size={'xss'}
           label="Tiếp tục"
           onPress={onContinue}
           disabled={!isContinueEnabled}

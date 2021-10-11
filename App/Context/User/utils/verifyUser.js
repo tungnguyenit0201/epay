@@ -7,7 +7,12 @@ import {
   updateUserAddress,
   updateIdentify,
 } from 'services/user';
-import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  useModalPassword,
+} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
 import {useTranslation} from 'context/Language';
@@ -53,6 +58,7 @@ const useVerifyInfo = (initialValue = {}) => {
   const [SDKImage, setSDKImage] = useState();
   const strings = useTranslation() || {};
   const {showError} = useAlert();
+  const {onShowModal: onShowModalPassword} = useModalPassword();
   const documentType = contentRef.current?.identifyCard?.ICType;
   const eKYC = kycType === KYCType.EKYC;
   const bank = contentRef.current?.KYCFlow === KYC_FLOW.BANK;
@@ -229,7 +235,7 @@ const useVerifyInfo = (initialValue = {}) => {
         return setShowModalReVerify(false);
       default:
         setShowModalReVerify(false);
-        Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+        onShowModalPassword(() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD));
     }
   };
 
