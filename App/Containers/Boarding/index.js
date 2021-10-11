@@ -40,8 +40,10 @@ const Boarding = ({route}) => {
         {[0, 1, 2].map(index => (
           <View
             key={Math.random(1, 100)}
-            style={[styles.circle, indexScreen == index && styles.active]}
-          ></View>
+            style={[
+              styles.circle,
+              indexScreen == index && styles.active,
+            ]}></View>
         ))}
       </View>
       <View style={styles.wrapText}>

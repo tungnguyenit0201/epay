@@ -114,8 +114,7 @@ const BaseResultScreen = props => {
         style={[
           base.boxBottom,
           {position: 'absolute', bottom: 0, left: 0, right: 0},
-        ]}
-      >
+        ]}>
         <Row space={10}>
           {!!1 && (
             <Col space={10} width="50%">

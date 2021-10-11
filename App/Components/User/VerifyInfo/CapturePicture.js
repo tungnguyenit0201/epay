@@ -73,8 +73,7 @@ const CapturePicture = ({
                   size={Fonts.H6}
                   centered
                   bold
-                  style={styles.textUppercase}
-                >
+                  style={styles.textUppercase}>
                   {title}
                 </Text>
                 <Button
@@ -105,8 +104,7 @@ const CapturePicture = ({
                 mb={10}
                 centered
                 bold
-                style={styles.textUppercase}
-              >
+                style={styles.textUppercase}>
                 {title}
               </Text>
               <Image
@@ -149,8 +147,7 @@ const CapturePicture = ({
                 message: 'We need your permission to use your audio',
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
-              }}
-            >
+              }}>
               {({camera, status, recordAudioPermissionStatus}) => {
                 if (status !== 'READY') return <FWLoading />;
                 return (
@@ -158,8 +155,7 @@ const CapturePicture = ({
                     style={{
                       width: width,
                       height: height,
-                    }}
-                  >
+                    }}>
                     <Header
                       back
                       avoidStatusBar
@@ -172,8 +168,7 @@ const CapturePicture = ({
                         position: 'absolute',
                         width: width,
                         height: height,
-                      }}
-                    >
+                      }}>
                       <Image
                         source={
                           cameraType == 'back'
@@ -190,8 +185,7 @@ const CapturePicture = ({
                           centered
                           ml={Spacing.PADDING}
                           mr={Spacing.PADDING}
-                          mt={Spacing.PADDING * 2}
-                        >
+                          mt={Spacing.PADDING * 2}>
                           Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
                           chụp đủ sáng và rõ nét
                         </Text>
@@ -202,8 +196,7 @@ const CapturePicture = ({
                         style={styles.wrapBtn}
                         onPress={() =>
                           capturePicture(onDropImage, cameraType == 'back')
-                        }
-                      >
+                        }>
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}

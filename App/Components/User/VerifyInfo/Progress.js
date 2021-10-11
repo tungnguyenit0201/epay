@@ -24,8 +24,10 @@ const Progress = ({step}) => {
           start={{x: 0, y: 0.75}}
           end={{x: 1, y: 0.25}}
           colors={[Colors.barLeft, Colors.barRight]}
-          style={[styles.bar, {width: (widthBar / 6) * stepColor + num}]}
-        ></LinearGradient>
+          style={[
+            styles.bar,
+            {width: (widthBar / 6) * stepColor + num},
+          ]}></LinearGradient>
       </View>
 
       <Row justify="space-between" space={1} style={{marginBottom: 20}}>
@@ -37,22 +39,19 @@ const Progress = ({step}) => {
                   {alignItems: 'center'},
                   index == 0 && {marginLeft: -Spacing.PADDING * 2},
                   index == 2 && {paddingLeft: Spacing.PADDING * 2},
-                ]}
-              >
+                ]}>
                 <View style={[styles.circle]}>
                   <View
                     style={[
                       styles.circleInner,
                       index + 1 <= step && styles.circleInnerActive,
-                    ]}
-                  ></View>
+                    ]}></View>
                 </View>
                 <Text
                   style={[styles.text]}
                   color={Colors.WHITETEXT}
                   centered
-                  size={Fonts.SM}
-                >
+                  size={Fonts.SM}>
                   {item.name}
                 </Text>
               </View>

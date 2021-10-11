@@ -26,8 +26,11 @@ const Header = ({
   };
   return (
     <View
-      style={[styles.wrap, blackIcon && {backgroundColor: Colors.white}, style]}
-    >
+      style={[
+        styles.wrap,
+        blackIcon && {backgroundColor: Colors.white},
+        style,
+      ]}>
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={styles.header}>
         <View style={styles.wrapCenter}>
@@ -38,8 +41,7 @@ const Header = ({
               size={Fonts.H6}
               color={Colors.white}
               centered
-              style={[titleStyle, blackIcon && {color: Colors.black}]}
-            >
+              style={[titleStyle, blackIcon && {color: Colors.black}]}>
               {title}
             </Text>
           )}
@@ -58,8 +60,7 @@ const Header = ({
                 top: scale(20),
                 bottom: scale(20),
                 left: scale(30),
-              }}
-            >
+              }}>
               <View style={styles.back}>
                 <Icon
                   icon={Images.ArrowLeft}

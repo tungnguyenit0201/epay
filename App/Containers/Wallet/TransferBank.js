@@ -62,8 +62,7 @@ const BankTransferInfo = () => {
               marginTop: 28,
               marginBottom: 10,
             },
-          ]}
-        >
+          ]}>
           {translation.transfer_to}
         </Text>
 
@@ -73,8 +72,7 @@ const BankTransferInfo = () => {
             {
               alignItems: 'center',
             },
-          ]}
-        >
+          ]}>
           <View
             style={{
               width: 48,
@@ -84,8 +82,7 @@ const BankTransferInfo = () => {
               backgroundColor: Colors.BORDER,
               alignItems: 'center',
               justifyContent: 'center',
-            }}
-          >
+            }}>
             <Image
               source={Images.ConnectBank.logoVtb}
               style={{
@@ -104,8 +101,7 @@ const BankTransferInfo = () => {
                   fontWeight: '500',
                   fontSize: Fonts.H6,
                 },
-              ]}
-            >
+              ]}>
               Vietinbank
             </Text>
             <Text style={styles.text_white}>{translation.free}</Text>
@@ -139,8 +135,7 @@ const BankTransferInfo = () => {
               top: 10,
               fontWeight: 'bold',
               fontSize: 18,
-            }}
-          >
+            }}>
             đ
           </Text>
         </View>
@@ -163,8 +158,7 @@ const BankTransferInfo = () => {
             {
               marginBottom: 20,
             },
-          ]}
-        >
+          ]}>
           {translation.transfer_by_epay_wallet}
         </Text>
 
@@ -173,8 +167,7 @@ const BankTransferInfo = () => {
             <Col width="33.33%" space="10" key={index}>
               <Pressable
                 style={[styles.item]}
-                onPress={() => setChecked(index)}
-              >
+                onPress={() => setChecked(index)}>
                 <View style={[styles.wicon]}>
                   <Image source={item.icon} style={[styles.icon]} />
                   {checkedBank === index && (
@@ -211,23 +204,20 @@ const BankTransferInfo = () => {
         useNativeDriver
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}
-      >
+        onBackdropPress={onHideModal}>
         <View
           style={{
             paddingVertical: 24,
             paddingHorizontal: 16,
             backgroundColor: Colors.BACKGROUNDCOLOR,
-          }}
-        >
+          }}>
           <Text
             style={{
               textAlign: 'center',
               fontWeight: 'bold',
               fontSize: 20,
               marginBottom: 22,
-            }}
-          >
+            }}>
             {translation.password}
           </Text>
 
@@ -250,8 +240,7 @@ const BankTransferInfo = () => {
               style={{
                 textAlign: 'center',
                 fontSize: 14,
-              }}
-            >
+              }}>
               {translation.forgot_password}?
             </Text>
           </TouchableOpacity>

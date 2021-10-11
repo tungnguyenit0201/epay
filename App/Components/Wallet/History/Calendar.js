@@ -170,8 +170,7 @@ const CalendarCustom = ({
           styles.fullWidth,
           styles.justifyCenter,
           styles.mb2,
-        ]}
-      >
+        ]}>
         <TouchableOpacity onPress={() => calendarRef.current.addMonth(-1)}>
           <Icon
             icon={Images.ArrowLeft}

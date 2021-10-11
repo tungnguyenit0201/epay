@@ -31,15 +31,13 @@ const BankResult = () => {
               textAlign: 'center',
               width: '100%',
               fontSize: Fonts.H5,
-            }}
-          >
+            }}>
             {translation.successfully_connect}
           </Text>
 
           <Pressable
             onPress={() => Navigator.navigate(SCREEN.TAB_NAVIGATION)}
-            style={styles.items_center}
-          >
+            style={styles.items_center}>
             <Image
               source={Images.Avatar}
               style={{
@@ -59,8 +57,7 @@ const BankResult = () => {
             padding: Spacing.PADDING,
             backgroundColor: Colors.BACKGROUNDCOLOR,
           },
-        ]}
-      >
+        ]}>
         {/* <View style={[styles.flex_row,styles.justify_between]}>
           <Button bg={Colors.white}
             color={blue_color}

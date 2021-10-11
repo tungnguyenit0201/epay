@@ -25,8 +25,7 @@ const User = ({style}) => {
         style={styles.wicon}
         onPress={() => {
           Navigator.navigate(SCREEN.USER_INFO);
-        }}
-      >
+        }}>
         <Image
           style={styles.userPortrait}
           source={

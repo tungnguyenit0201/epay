@@ -71,8 +71,7 @@ const CustomText = ({
 
         style,
       ]}
-      {...props}
-    >
+      {...props}>
       {children}
     </Text>
   );

@@ -123,8 +123,7 @@ const Transfer = () => {
       <Modal
         visible={showModal}
         onClose={() => setShowModal(false)}
-        icon={require('images/qrpay/MoneySend.png')}
-      >
+        icon={require('images/qrpay/MoneySend.png')}>
         <Text centered mb={20}>
           Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
           trong ngày, hạn mức hiện tại của bạn là X0.000.000đ

@@ -27,8 +27,7 @@ const Promotion = () => {
           styles.wrapPromo,
           base.shadow,
           promoCode == item?.PromoCode && styles.active,
-        ]}
-      >
+        ]}>
         <View style={[styles.row, styles.title]}>
           <Text fw="700" fs="h6">
             {item?.PromoCode}

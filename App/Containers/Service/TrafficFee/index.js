@@ -45,8 +45,7 @@ const TrafficFee = () => {
       <TouchableOpacity
         // key={item?.TransCode}
         style={styles.blockTransaction}
-        onPress={() => Navigator.navigate(item.screen)}
-      >
+        onPress={() => Navigator.navigate(item.screen)}>
         <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
           <Image
             source={item.img}

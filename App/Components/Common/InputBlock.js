@@ -72,8 +72,7 @@ const InputBlock = ({
         <View style={styles.mb1}>
           <TouchableOpacity
             style={[styles.select, !!error && styles.error]}
-            onPress={onPress}
-          >
+            onPress={onPress}>
             <Text style={{color: Colors.TEXT}}>
               {value ? value : props?.defaultValue}
             </Text>
@@ -81,8 +80,7 @@ const InputBlock = ({
           {rightIconBgGray && (
             <TouchableOpacity
               onPress={onPress}
-              style={[styles.blockArrowRight, styles.pos1]}
-            >
+              style={[styles.blockArrowRight, styles.pos1]}>
               <Image
                 source={rightIconBgGray}
                 resizeMode="contain"
@@ -100,8 +98,7 @@ const InputBlock = ({
       {rightIcon && (
         <TouchableOpacity
           onPress={onPress}
-          style={[styles.absolute, styles.top1, styles.right1]}
-        >
+          style={[styles.absolute, styles.top1, styles.right1]}>
           <Icon icon={rightIcon} resizeMode="contain" tintColor={Colors.gray} />
         </TouchableOpacity>
       )}
@@ -109,8 +106,7 @@ const InputBlock = ({
       {!!password && (
         <Pressable
           onPress={() => setShowPassword(!showPassword)}
-          style={[styles.absolute, styles.top1, styles.right1]}
-        >
+          style={[styles.absolute, styles.top1, styles.right1]}>
           <Image
             source={showPassword ? Images.Eye : Images.EyeGray}
             style={[styles.w2, styles.h2]}

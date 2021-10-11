@@ -81,8 +81,7 @@ const TransactionResult = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}
-                  >
+                    ]}>
                     <Text style={styles.textLeft}>{item.label}</Text>
 
                     <Text style={styles.textRight}>{item.value}</Text>

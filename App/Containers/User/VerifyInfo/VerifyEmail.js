@@ -21,8 +21,7 @@ const VerifyEmail = ({route}) => {
             email: '',
           }}
           validationSchema={emailSchema}
-          onSubmit={onEmailAuth}
-        >
+          onSubmit={onEmailAuth}>
           {({
             handleChange: _handleChange,
             handleBlur,

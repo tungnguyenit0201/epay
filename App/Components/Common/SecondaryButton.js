@@ -59,16 +59,14 @@ export default ({
           buttonStyle,
           {paddingVertical: 4},
         ]}
-        linearColors={[Colors.primary, Colors.blue]}
-      >
+        linearColors={[Colors.primary, Colors.blue]}>
         <View
           style={{
             ...styles.button,
             flex: 1,
             backgroundColor: Colors.white,
             borderColor: 'transparent',
-          }}
-        >
+          }}>
           {!!leftIcon && (
             <Image
               source={leftIcon}
@@ -93,8 +91,7 @@ export default ({
                 lineHeight: 20,
               },
               labelStyle,
-            ]}
-          >
+            ]}>
             {label}
             {label2 && [
               <>

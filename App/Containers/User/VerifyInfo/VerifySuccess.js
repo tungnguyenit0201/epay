@@ -114,8 +114,7 @@ const VerifySuccess = ({route}) => {
             mt={25}
             mb={Spacing.PADDING - 4}
             bold
-            style={styles.maxWidth1}
-          >
+            style={styles.maxWidth1}>
             {title}
           </Text>
           {!!message && (
