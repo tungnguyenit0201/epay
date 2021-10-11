@@ -80,7 +80,7 @@ const Transfer = () => {
           />
           <Radio
             onChange={value => onChange('payoneer', value)}
-            selectedValue={1}
+            selectedValue={0}
             items={[
               {label: 'Người gửi chịu phí', value: 0},
               {label: 'Người nhận chịu phí ', value: 1},

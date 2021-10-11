@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   text: {
     height: 25,
     color: Colors.white,
+    marginBottom: 5,
   },
 });
 

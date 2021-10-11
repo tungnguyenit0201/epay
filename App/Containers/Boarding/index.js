@@ -53,7 +53,7 @@ const Boarding = ({route}) => {
         </Text>
       </View>
       <FooterContainer style={[styles.bottomBtn, {width: width}]}>
-        <Button label={'Bỏ qua'} fw="700" onPress={onPress} />
+        <Button label={'Bỏ qua'} onPress={onPress} />
       </FooterContainer>
     </View>
   );

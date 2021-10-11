@@ -32,7 +32,6 @@ const TransactionResult = () => {
   // TODO: translate
   const {qrTransaction, sourceMoney} = useWallet();
   const {bankFee} = useQRTransfer();
-  console.log('qrTransaction :>> ', qrTransaction);
 
   const translation = useTranslation();
   const [showModal, setShowModal] = React.useState(false);
@@ -60,11 +59,11 @@ const TransactionResult = () => {
     },
     {
       label: 'Thực chuyển ',
-      value: '1.000.000 vnd',
+      value: '1.000.000đ',
     },
     {
       label: 'Tổng số tiền',
-      value: <Text bold>1.005.000 vnđ</Text>,
+      value: <Text bold>1.005.000đ</Text>,
     },
   ];
   const paymentData = [
@@ -147,12 +146,13 @@ const TransactionResult = () => {
                     <Button
                       label={translation?.addPromoCode}
                       size="sm"
+                      fs={Fonts.SM}
+                      fw="400"
                       bgImg={false}
                       bg={Colors.white}
                       border={Colors.cl4}
                       color={Colors.black}
-                      style={{width: scale(144)}}
-                      // mb={Spacing.PADDING}
+                      onPress={() => Navigator.navigate(SCREEN.QR_PROMOTION)}
                     />
                     <Text style={styles.textRight}>-</Text>
                   </View>
@@ -176,7 +176,6 @@ const TransactionResult = () => {
           }}
           type={1}
           label="Chuyển tiền"
-          bold
         />
       </View>
 

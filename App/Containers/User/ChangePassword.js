@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
-import {Button, Header, TextInput, Text, HeaderBg} from 'components';
+import {
+  Button,
+  Header,
+  InputBlock,
+  Text,
+  HeaderBg,
+  TextInput,
+} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
@@ -54,6 +61,7 @@ const ChangePassword = ({route}) => {
                     <TextInput
                       password
                       placeholder="Nhập mật khẩu"
+                      placeholderTextColor={Colors.l5}
                       onChange={handleChange('password')}
                       onBlur={handleBlur('password')}
                       error={touched.password && errors.password}

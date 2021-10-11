@@ -103,14 +103,16 @@ const BankPickerScreen = props => {
   return (
     <View flex={1} backgroundColor={Colors.WHITETEXT}>
       <HeaderBg>
-        <Header back title={translation.connect_bank} />
+        <Header
+          back
+          title="Chọn ngân hàng" //TODO: Translate
+        />
         {renderSearchView()}
       </HeaderBg>
 
       <ScrollView
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {renderContent()}
       </ScrollView>
     </View>
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    top: 48,
+    top: 52,
     left: 10,
     paddingRight: 10,
     borderRightWidth: 1,
