@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   bgImg: {
     width: scale(375),
     height: scale(375),
+    bottom: 0,
   },
 });
 export default ActiveSmartOtp;
