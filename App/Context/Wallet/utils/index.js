@@ -12,6 +12,7 @@ import useContacts from './contacts';
 import useHistory from './history';
 import useScanQR from './qrPay';
 import {useQRTransfer} from './qrTransfer';
+import useQRPromo from './qrPromotion';
 export {
   useBankInfo,
   useTopUp,
@@ -26,4 +27,5 @@ export {
   useScanQR,
   useQRTransfer,
   useWithDraw,
+  useQRPromo,
 };

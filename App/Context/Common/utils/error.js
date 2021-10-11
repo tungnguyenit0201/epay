@@ -17,6 +17,7 @@ const useError = () => {
           title: error?.title,
           onClose: error?.onClose,
           icon: error?.icon,
+          label: error?.label,
         },
       });
     },

@@ -284,12 +284,11 @@ const FilterModal = ({
           </View>
         </ScrollView>
 
-        <FooterContainer style={styles.pb3}>
+        <FooterContainer>
           <Row space={8}>
             <Col space={8} width="50%">
               <Button
                 label={translation.clear_filter}
-                bold
                 bgImg={0}
                 bg={'white'}
                 color={Colors.blue}
@@ -299,7 +298,7 @@ const FilterModal = ({
             </Col>
 
             <Col space={8} width="50%">
-              <Button label={translation.apply} bold onPress={onFilter} />
+              <Button label={translation.apply} onPress={onFilter} />
             </Col>
           </Row>
         </FooterContainer>
@@ -375,7 +374,6 @@ const styles = StyleSheet.create({
   //------------------
   pb1: {paddingBottom: Spacing.PADDING * 1.5},
   pb2: {paddingBottom: 45},
-  pb3: {paddingBottom: 40},
   //end
   bgWhite: {backgroundColor: Colors.white},
   //------------------

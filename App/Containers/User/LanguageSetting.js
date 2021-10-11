@@ -24,9 +24,9 @@ const PaymentSettings = () => {
           <Button
             key={item.value}
             label={item.label}
-            size="lg"
+            // size="lg"
             {...(item.value !== translation.selectedLanguage && {
-              bold: true,
+              // bold: true,
               bg: Colors.white,
               color: Colors.cl1,
               border: Colors.cl1,

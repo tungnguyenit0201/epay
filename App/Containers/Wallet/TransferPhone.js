@@ -65,7 +65,7 @@ const TransactionDetails = () => {
               placeholderTextColor={Colors.BLACK}
             />
             <Text bold style={styles.textCurrent}>
-              vnđ
+              đ
             </Text>
           </View>
           {/* Input with Text */}
