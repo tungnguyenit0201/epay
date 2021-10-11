@@ -41,7 +41,7 @@ const Withdraw = () => {
             <Monney title={translation.topup?.walletAmount} showing />
             <InputMoney
               placeholder={'Nhập số tiền rút'}
-              errorMessage={'*Số tiền rút tối thiểu là 10.000 vnđ'}
+              errorMessage={'*Số tiền rút tối thiểu là 10.000đ'}
               ref={inputRef}
               onChange={onChangeCash}
               errorStyle={{

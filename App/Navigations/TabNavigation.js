@@ -110,15 +110,14 @@ const TabNavigation = () => {
               >
                 <Image
                   source={
-                    // !isFocused
-                    //   ? TabIcons[route.name]
-                    //   : TabIconsActive[route.name]
-                    TabIcons[route.name]
+                    !isFocused
+                      ? TabIcons[route.name]
+                      : TabIconsActive[route.name]
+                    // TabIconsActive[route.name]
                   }
                   style={[
                     styles.icon,
-                    // route.name != 'Home' &&
-                    {
+                    route.name != 'Home' && {
                       tintColor: isFocused ? Colors.cl1 : Colors.gray,
                     },
                   ]}
@@ -142,7 +141,8 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={onCheck}>
+          onPress={onCheck}
+        >
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>

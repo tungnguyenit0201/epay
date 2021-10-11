@@ -97,19 +97,17 @@ const TransactionResult = () => {
       </ScrollView>
       <View style={[base.boxBottom, styles.bottomButtonContainer]}>
         <Button
-          bold
           bgImg={0}
           color={Colors.blue}
           label={translation.common.goBackHome}
           style={styles.goBackHomeButton}
-          fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.FONT_MEDIUM}
           onPress={onBackHome}
         />
         <Button
-          bold
           label={translation.common.createTransaction}
           style={styles.retryButton}
-          fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.FONT_MEDIUM}
           onPress={onRetry}
         />
       </View>

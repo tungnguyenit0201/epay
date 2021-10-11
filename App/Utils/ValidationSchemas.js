@@ -111,6 +111,6 @@ export const nameSchema = yup.object().shape({
   FullName: yup
     .string()
     .required('Tên không được bỏ trống.')
-    .max(100)
+    .max(100, 'Tên không được quá 100 ký tự')
     .matches(FULLNAME_REGEX, 'Tên không hợp lệ.'),
 });

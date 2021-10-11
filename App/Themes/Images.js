@@ -12,6 +12,8 @@ export default {
   Right: require('images/right.png'),
   Eye: require('images/Eye.png'),
   EyeGray: require('images/EyeGray.png'),
+  Eye2: require('images/Eye2.png'),
+  EyeGray2: require('images/EyeGray2.png'),
   DefaultUser: require('images/default_user.png'),
   Splash: require('images/Splash.png'),
   Background: require('images/Background.png'),
@@ -106,6 +108,7 @@ export default {
     MaThanhToan: require('images/profile/MaThanhToan.png'),
     ThanhToan: require('images/profile/ThanhToan.png'),
     Translate: require('images/profile/Translate.png'),
+    ReVerify: require('images/profile/ReVerify.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),
@@ -230,5 +233,6 @@ export default {
     ArrowRight: require('images/icons/arrow-right.png'),
     BigCar: require('images/icons/big-car.png'),
     BigCamera: require('images/icons/big-camera.png'),
+    Wave: require('images/wave.png'),
   },
 };

@@ -116,16 +116,14 @@ const UserInfo = () => {
                 <Text bold fs="h5" mb={5}>
                   Thông tin cá nhân
                 </Text>
-                <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
-                </Text>
+                <Text style={styles.headingDesc}>Nhập giới thiệu về bạn</Text>
               </View>
 
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.push(SCREEN.EDIT_INFO);
+                  Navigator.navigate(SCREEN.EDIT_INFO);
                 }}
               >
                 <Image
@@ -196,7 +194,7 @@ const UserInfo = () => {
                   Thông tin tài khoản
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  Cập nhật thông tin giấy tờ tùy thân
                 </Text>
               </View>
 
@@ -237,7 +235,7 @@ const UserInfo = () => {
                   Thông tin Email
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  Cập nhật thông tin liên hệ
                 </Text>
               </View>
 
@@ -294,10 +292,14 @@ const UserInfo = () => {
           content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
         GTTT cũ. Bạn có chắc chắn muốn 
         đổi không?" // TODO: translate
+          //icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button mb={10} label="Có" onPress={onReVerify} />
-              <TouchableOpacity onPress={() => onReVerify('hideModal')}>
+              <TouchableOpacity
+                style={styles.textCenter}
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
@@ -368,5 +370,7 @@ const styles = StyleSheet.create({
   },
   //tho------------
   flex1: {flex: 1},
+
+  textCenter: {alignSelf: 'center'},
 });
 export default UserInfo;

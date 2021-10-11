@@ -90,7 +90,6 @@ const VerifyUserInfo = ({
               disabled={disableButton}
               label={buttonTitle}
               onPress={onPressButton}
-              bold
             />
           </View>
         </View>
@@ -198,7 +197,8 @@ const styles = StyleSheet.create({
   },
   triangle: {
     position: 'absolute',
-    left: Spacing.PADDING * 2 + 10 / 2,
+    // left: Spacing.PADDING * 2 + 10 / 2,
+    left: Spacing.PADDING * 2 + 30 / 2,
     bottom: -9,
     width: 20,
     height: 10,

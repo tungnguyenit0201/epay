@@ -45,8 +45,7 @@ const VerifyEmail = ({route}) => {
                     Nhập email
                   </Text>
                   <Text mb={20}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry.
+                    Cập nhật emai để nhận thông báo và ưu đãi mới nhất từ EPAY
                   </Text>
 
                   <TextInput
@@ -59,7 +58,7 @@ const VerifyEmail = ({route}) => {
                 </View>
 
                 <View style={base.bottom}>
-                  <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
+                  <Button label={TEXT.CONTINUE} bold onPress={handleSubmit} />
                 </View>
               </View>
             );

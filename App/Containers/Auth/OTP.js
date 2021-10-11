@@ -11,7 +11,7 @@ import {HelpModal} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {useUser} from 'context/User';
 import {scale} from 'utils/Functions';
-
+import {FUNCTION_TYPE} from 'configs/Constants';
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
   const {token: isLoggedIn} = useUser();
@@ -27,14 +27,14 @@ const OTP = ({route}) => {
     resentOTP,
     openCallDialog,
     label,
+    functionType,
   } = useOTP(route?.params);
   const translation = useTranslation();
 
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -52,7 +52,14 @@ const OTP = ({route}) => {
       countdown={countdown}
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
-      label={label}
+      label={
+        functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL ||
+        functionType === FUNCTION_TYPE.AUTH_EMAIL
+          ? 'Mã xác thực gửi về mail ' +
+            route?.params.email +
+            '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
+          : 'Nhập mã OTP xác thực'
+      }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
   );
@@ -122,27 +129,10 @@ const OTP = ({route}) => {
         <Text bold>Gọi cho tôi</Text>
       </TouchableOpacity>
 
-      {/* <HelpModal
+      <HelpModal
         showModal={showModal}
         setShowModal={setShowModal}
         onPress={openCallDialog}
-      /> */}
-      <Modal
-        visible={showModal}
-        onClose={() => setShowModal(false)}
-        title="Gọi tổng đài"
-        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, 
-          vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
-        buttonGroup={() => (
-          <>
-            <Button mb={15} label="Gọi 1900-0000" bold onPress={() => {}} />
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <Text style={styles.textCenter}>Không, cảm ơn</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        icon={Images.SignUp.BigPhone}
-        // icon={Images.SignUp.BigPhone}
       />
     </>
   );
