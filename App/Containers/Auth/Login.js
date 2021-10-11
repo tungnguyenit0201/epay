@@ -15,13 +15,13 @@ import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
 
 const Login = ({route}) => {
+  const {phone, name} = _.get(route, 'params', {});
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
     useAuth();
   const translation = useTranslation();
 
   const {biometryType, onTouchID} = useTouchID({
-    onSuccess: () =>
-      onLoginByTouchID({phone: _.get(route, 'params.phone', '')}),
+    onSuccess: () => onLoginByTouchID({phone}),
   });
 
   return (
@@ -31,9 +31,11 @@ const Login = ({route}) => {
         <BigLogo style={{marginBottom: 30}} />
         <Content
           style={styles.wrap}
-          title={translation.enter_your_password}
+          title={name ? `Xin chào ${name}` : translation.enter_your_password}
           text={
-            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+            name
+              ? phone
+              : translation.password_for_account_security_and_transaction_confirmation_at_checkout
           }
         />
       </View>
@@ -42,10 +44,9 @@ const Login = ({route}) => {
         initialValues={{
           password: '',
         }}
-        onSubmit={({password}) =>
-          onLogin({phone: _.get(route, 'params.phone', ''), password})
-        }
-        validationSchema={passwordSchema}>
+        onSubmit={({password}) => onLogin({phone, password})}
+        validationSchema={passwordSchema}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
