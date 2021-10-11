@@ -23,8 +23,7 @@ const RegisterName = () => {
         FullName: '',
       }}
       validationSchema={nameSchema}
-      onSubmit={onUpdatePersonalInfo}
-    >
+      onSubmit={onUpdatePersonalInfo}>
       {({
         handleChange: _handleChange,
         handleBlur,
@@ -61,6 +60,7 @@ const RegisterName = () => {
                 error={touched.FullName && errors.FullName}
                 value={values.FullName}
                 isDeleted={values.FullName}
+                maxLength={100}
               />
             </View>
 
