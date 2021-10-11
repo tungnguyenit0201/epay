@@ -149,8 +149,8 @@ const VerifySuccess = ({route}) => {
               label={action.backTitle}
               style={[styles.buttonHalf, styles.homeButton]}
               onPress={onPressBack}
-              bgImg={0}
-              labelStyle={styles.homeText}
+              mode="outline"
+              // labelStyle={styles.homeText}
             />
             <Button
               label={translation?.verifyAgain}

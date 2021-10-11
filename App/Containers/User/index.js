@@ -200,12 +200,12 @@ const User = () => {
           <Button
             size="lg"
             onPress={onLogout}
-            type={1}
             label={'Đăng xuất'} //TODO: translate
-            // fw="600"
-            style={base.bgWhite}
-            bgImg={0}
+            // style={base.bgWhite}
+            // bgImg={0}
             color={Colors.black}
+            mode="outline"
+            style={{borderWidth: 0}}
           />
         </View>
       </ScrollView>

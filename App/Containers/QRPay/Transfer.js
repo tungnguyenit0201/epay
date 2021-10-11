@@ -115,7 +115,6 @@ const Transfer = () => {
           onPress={() => {
             Navigator.navigate(SCREEN.TRANSFER_RESULTS);
           }}
-          type={1}
           label="Tiếp tục"
         />
       </View>
@@ -129,12 +128,7 @@ const Transfer = () => {
           Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
           trong ngày, hạn mức hiện tại của bạn là X0.000.000đ
         </Text>
-        <Button
-          type={1}
-          mb={10}
-          label="Đóng"
-          onPress={() => setShowModal(false)}
-        />
+        <Button mb={10} label="Đóng" onPress={() => setShowModal(false)} />
       </Modal>
     </>
   );

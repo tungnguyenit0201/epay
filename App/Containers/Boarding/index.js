@@ -35,7 +35,10 @@ const Boarding = ({route}) => {
   };
   return (
     <View style={[styles.container, {height: height}]}>
-      <Image source={Images.Boarding[indexScreen]} style={styles.img} />
+      <Image
+        source={Images.Boarding[indexScreen]}
+        style={[styles.img, {height: height < 812 ? '60%' : '67%'}]}
+      />
       <View style={styles.slide}>
         {[0, 1, 2].map(index => (
           <View
@@ -52,7 +55,13 @@ const Boarding = ({route}) => {
           {data[indexScreen].content}
         </Text>
       </View>
-      <FooterContainer style={[styles.bottomBtn, {width: width}]}>
+      <FooterContainer
+        style={[
+          styles.bottomBtn,
+          {width: width},
+          height < 812 && {paddingBottom: Spacing.PADDING},
+        ]}
+      >
         <Button label={'Bỏ qua'} onPress={onPress} />
       </FooterContainer>
     </View>
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
-  img: {width: '100%', height: '67%'},
+  img: {width: '100%'},
   slide: {
     paddingTop: Spacing.PADDING,
     paddingBottom: scale(36),

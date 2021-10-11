@@ -76,7 +76,7 @@ const useUserInfo = type => {
       let phone = await getPhone();
       let result = await updatePersonalInfo({
         phone,
-        personalInfo: personalInfo.current,
+        personalInfo: {FullName: personalInfo.current?.FullName},
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {

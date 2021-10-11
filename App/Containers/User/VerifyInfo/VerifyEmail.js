@@ -58,7 +58,7 @@ const VerifyEmail = ({route}) => {
                 </View>
 
                 <View style={base.bottom}>
-                  <Button label={TEXT.CONTINUE} bold onPress={handleSubmit} />
+                  <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
                 </View>
               </View>
             );

@@ -85,12 +85,12 @@ const Wrapper = React.memo(
                     label="Cài smart OTP ngay"
                     onPress={modalSmartOTP.onGoSmartOTP}
                   />
-                  <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
+                  {/* <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
                     <Text style={styles.underline}>Không, cảm ơn</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={modalSmartOTP.onClose}>
                     <Text style={styles.underline}>Nhắc tôi sau</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               )}
             />

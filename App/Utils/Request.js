@@ -12,7 +12,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {debugData} from 'components/Common/Debug';
 import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
-// import curlirize from 'axios-curlirize';
+import curlirize from 'axios-curlirize';
 
 let transactionID = '';
 
@@ -75,7 +75,7 @@ async function request({
 }) {
   let root = API.ROOT;
   const requestMethod = axios;
-  // __DEV__ && curlirize(requestMethod);
+  __DEV__ && curlirize(requestMethod);
 
   const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
   if (token) {

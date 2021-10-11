@@ -289,10 +289,7 @@ const FilterModal = ({
             <Col space={8} width="50%">
               <Button
                 label={translation.clear_filter}
-                bgImg={0}
-                bg={'white'}
-                color={Colors.blue}
-                border={Colors.blue}
+                mode="outline"
                 onPress={onResetTempFilter}
               />
             </Col>

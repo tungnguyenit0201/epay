@@ -95,7 +95,7 @@ import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
 
 const AppNavigator = () => {
-  let initialRoute = SCREEN.AUTH;
+  let initialRoute = SCREEN.LANGUAGE;
   const {setLanguage} = useTranslation();
   const {getToken} = useAsyncStorage();
   const {onGetConfig} = useConfig();

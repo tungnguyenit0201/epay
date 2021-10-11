@@ -46,8 +46,6 @@ const KeyboardSuggestion = ({
         ]}
       >
         <Button
-          style={styles.continue}
-          // size={'xss'}
           label="Tiếp tục"
           onPress={onContinue}
           disabled={!isContinueEnabled}
@@ -101,9 +99,6 @@ const styles = StyleSheet.create({
   continueContainer: {
     padding: scale(16),
     paddingBottom: 0,
-  },
-  continue: {
-    height: scale(48),
   },
 });
 

@@ -64,9 +64,10 @@ const RegisterFailure = ({route}) => {
         <Button
           label="Quay lại sau"
           style={styles.btn}
-          bg={Colors.white}
-          color={Colors.black}
-          border={Colors.cl4}
+          // bg={Colors.white}
+          // color={Colors.black}
+          // border={Colors.cl4}
+          mode="outline"
           onPress={() => onNavigate(SCREEN.AUTH)}
           bgImg={0}
         />

@@ -99,7 +99,6 @@ const TransactionResult = () => {
           onPress={() => {
             Navigator.navigate(SCREEN.TRANSFER_SUCCESS);
           }}
-          type={1}
           label="Chuyển tiền"
         />
       </View>

@@ -14,7 +14,7 @@ const HelpModal = ({showModal, setShowModal, onPress}) => {
       content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
       buttonGroup={() => (
         <>
-          <Button mb={15} label="Gọi 1900-0000" bold onPress={onPress} />
+          <Button mb={15} label="Gọi 1900-0000" onPress={onPress} />
           <TouchableOpacity onPress={() => setShowModal(false)}>
             <Text style={styles.textSecondary}>Không, cảm ơn</Text>
           </TouchableOpacity>
