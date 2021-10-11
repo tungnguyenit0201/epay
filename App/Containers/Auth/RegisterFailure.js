@@ -36,7 +36,7 @@ const RegisterFailure = ({route}) => {
   );
   return (
     // TODO: translate
-    <BlueHeader heightBg="100%">
+    <BlueHeader heightBg="100%" style={styles.pt1}>
       <Header
         back
         // blackIcon
@@ -48,7 +48,7 @@ const RegisterFailure = ({route}) => {
 
       <Content
         title={'Đăng ký \nkhông thành công'}
-        text="Bạn đã nhập sai OTP quá 5 lần, 
+        text="Bạn đã nhập sai OTP quá 3 lần, 
           vui lòng quay lại sau 30 phút."
         styleText={{color: Colors.white}}
         style={[styles.wrap, styles.flex1, styles.mt1]}
@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   //--------------------
   mt1: {marginTop: 56},
+  //--------------------
+  pt1: {paddingTop: 40},
   //--------------------
   btn: {
     paddingTop: 15,

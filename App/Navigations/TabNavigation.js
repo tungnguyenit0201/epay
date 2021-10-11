@@ -30,7 +30,7 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {usePermission} from 'context/Common/utils';
 
 const TabIcons = {
-  Home: Images.TabBar.HomeGray,
+  Home: Images.TabBar.Home,
   User: Images.TabBar.User,
 };
 const TabIconsActive = {
@@ -117,16 +117,21 @@ const TabNavigation = () => {
                   }
                   style={[
                     styles.icon,
-                    route.name != 'Home' && {
-                      tintColor: isFocused ? Colors.cl1 : Colors.gray,
-                    },
+                    // route.name != 'Home' &&
+                    // {
+                    //   tintColor: isFocused ? Colors.cl1 : Colors.gray,
+                    // },
+                    isFocused || {tintColor: Colors.gray},
                   ]}
-                  resizeMode={'cover'}
+                  // resizeMode={'cover'}
+                  resizeMode={'contain'}
                 />
                 <Text
                   style={{
                     color: isFocused ? Colors.cl1 : Colors.gray,
-                  }}>
+                  }}
+                  centered
+                >
                   {TabLabels[label]}
                 </Text>
               </TouchableOpacity>
