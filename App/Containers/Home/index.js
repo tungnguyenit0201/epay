@@ -105,7 +105,7 @@ const Home = () => {
         <Modal
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
-          icon={require('images/icons/touch-id.png')}
+          icon={Images.SignUp.TouchId}
           title="Đăng nhập vân tay"
           content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
           buttonGroup={() => (
