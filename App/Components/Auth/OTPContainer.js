@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   otp: {
     width: scale(40),
     backgroundColor: Colors.white,
+    fontWeight: '700',
     fontSize: Fonts.H4,
     color: Colors.BLACKTEXT,
     textAlign: 'center',
