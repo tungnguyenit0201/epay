@@ -17,12 +17,13 @@ import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useIconConfig} from 'context/Home/utils';
 import {ListItemSimple, Row, Col, Text, Modal} from 'components';
+import {useError} from 'context/Common/utils';
 
 const IconList = ({data}) => {
   const {width} = useWindowDimensions();
   let [indexTab, setIndexTab] = useState(0);
-  const [open, setOpen] = useState(false);
   const {iconHome} = useIconConfig();
+  const {setError} = useError();
 
   const flatlistRef = useRef();
   const viewConfigRef = useRef({
@@ -74,7 +75,12 @@ const IconList = ({data}) => {
                     width: width / 2 - Spacing.PADDING,
                   },
                 ]}
-                onPress={() => setOpen(true)}
+                onPress={() =>
+                  setError({
+                    ErrorMessage: 'Comming soon',
+                    icon: Images.Homes.Setting,
+                  })
+                }
               >
                 <Image source={item.icon} style={styles.icon} />
 
@@ -144,18 +150,6 @@ const IconList = ({data}) => {
           ))}
         </View>
       )}
-      <Modal
-        visible={open}
-        onClose={() => setOpen(false)}
-        content="Comming soon"
-        buttonGroup={() => (
-          <View>
-            <Text></Text>
-          </View>
-        )}
-        icon={Images.Homes.Setting}
-        // icon={Images.SignUp.BigPhone}
-      />
     </View>
   );
 };
