@@ -45,7 +45,8 @@ const ActiveSmartOtp = () => {
       <FooterContainer>
         <View style={[{paddingLeft: 22, paddingBottom: 15}]}>
           <View
-            style={[{marginRight: 0, position: 'absolute', let: 0, top: 1}]}>
+            style={[{marginRight: 0, position: 'absolute', let: 0, top: 1}]}
+          >
             <Checkbox onPress={onAcceptTermConditions} />
           </View>
           <View style={{marginLeft: 8}}>
@@ -53,7 +54,8 @@ const ActiveSmartOtp = () => {
               Tôi đồng ý với
               <Text
                 color={Colors.cl1}
-                onPress={() => alert('Điều khoản điều kiện')}>
+                onPress={() => alert('Điều khoản điều kiện')}
+              >
                 {' '}
                 điều khoản điều kiện{' '}
               </Text>
