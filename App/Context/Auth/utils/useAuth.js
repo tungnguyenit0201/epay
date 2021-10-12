@@ -173,10 +173,18 @@ const useAuth = () => {
         return setError(result);
 
       case ERROR_CODE.FEATURE_PASSWORD_WRONG_OVER_TIME:
-        setError(result);
+        /* setError(result);
         Navigator.goBack();
-        return;
-
+        return; */
+        return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+          phone,
+          functionType: FUNCTION_TYPE.FORGOT_PASS,
+          content: {
+            title: 'Đăng nhập \nkhông thành công',
+            text: 'Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lai sau 15 phút',
+            hotline: '1900-0000',
+          },
+        });
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
         return Navigator.push(SCREEN.OTP, {
           phone,
