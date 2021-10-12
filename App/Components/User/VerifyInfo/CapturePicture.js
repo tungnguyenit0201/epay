@@ -81,6 +81,7 @@ const CapturePicture = ({
                   onPress={KYCFunction}
                   label={translation?.take_a_photo}
                   style={styles.smallButton}
+                  size="sm"
                   leftIcon={Images.VerifyUserInfo.camera}
                 />
               </View>
@@ -298,8 +299,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   smallButton: {
-    height: scale(32),
     paddingHorizontal: 16,
+    marginLeft: Spacing.PADDING,
+    flex: 1,
   },
   emptyHolder: {
     paddingVertical: Spacing.PADDING * 3,

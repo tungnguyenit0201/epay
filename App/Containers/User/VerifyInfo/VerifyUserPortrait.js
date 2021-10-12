@@ -153,8 +153,7 @@ const VerifyUserPortrait = ({route}) => {
       showInstruction={false}
       onPressButton={onUpdateAllInfo}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}
-    >
+      buttonTitle={translation.updateInfo}>
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -179,7 +178,12 @@ const VerifyUserPortrait = ({route}) => {
             {translation.gender}
           </Text>
           <Radio
-            items={GENDERS}
+            items={Object.entries(GENDER)
+              .filter(x => x[0] !== '3')
+              .map(([key, value]) => ({
+                label: value,
+                value: parseInt(key),
+              }))}
             onChange={value => handleChange('SexType', value)}
             selectedValue={info.SexType}
           />
@@ -281,8 +285,7 @@ const VerifyUserPortrait = ({route}) => {
           color={Colors.Highlight}
           bold
           mb={48}
-          fs="h6"
-        >
+          fs="h6">
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>
@@ -315,6 +318,7 @@ const styles = StyleSheet.create({
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
+    marginBottom: -3,
   },
   address: {
     marginBottom: 0,

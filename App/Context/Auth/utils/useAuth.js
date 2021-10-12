@@ -174,10 +174,18 @@ const useAuth = () => {
         return setMessage(result?.ErrorMessage);
 
       case ERROR_CODE.FEATURE_PASSWORD_WRONG_OVER_TIME:
-        setError(result);
+        /* setError(result);
         Navigator.goBack();
-        return;
-
+        return; */
+        return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+          phone,
+          functionType: FUNCTION_TYPE.FORGOT_PASS,
+          content: {
+            title: 'Đăng nhập \nkhông thành công',
+            text: 'Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lai sau 15 phút',
+            hotline: '1900-0000',
+          },
+        });
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
         return Navigator.push(SCREEN.OTP, {
           phone,
@@ -387,9 +395,17 @@ const useForgetPassword = () => {
     });
     setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
-      setError(result);
-      return;
+      console.log('result :>> ', result);
+
+      if (result?.ErrorCode === ERROR_CODE.NEW_PASSWORD_SIMILAR_TO_LAST_ONE) {
+        return setError({
+          ...result,
+          action: [{onPress: () => Navigator.navigate(SCREEN.AUTH)}],
+        });
+      }
+      return setError(result);
     }
+
     setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
     Navigator.reset(SCREEN.AUTH);
     Keychain.setGenericPassword(phone, passwordEncrypted);
