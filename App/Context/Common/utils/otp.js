@@ -121,7 +121,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
       return false;
     }
 
-    return await setResend({
+    return setResend({
       phone,
       time: resendObj?.time ? resendObj?.time : Date.now(),
       times: resendObj?.times + 1 || 1,
@@ -132,7 +132,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
     try {
       setLoading(true);
       let canSend = await checkResend();
-      if (canSend) {
+      if (canSend !== false) {
         let result = genOtp({
           phone,
           functionType,
