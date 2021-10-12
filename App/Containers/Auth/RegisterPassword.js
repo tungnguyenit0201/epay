@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
   //-----------------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginTop: -2.5},
   mt: {marginTop: -10},
   //-----------------------
   iconSize: {
