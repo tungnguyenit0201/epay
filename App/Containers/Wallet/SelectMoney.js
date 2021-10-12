@@ -48,6 +48,7 @@ const SelectMoney = () => {
             justifyContent: 'space-between',
           }}>
           <Button
+            mode="outline"
             label="Hủy"
             onPress={() => Navigator.goBack()}
             style={{
