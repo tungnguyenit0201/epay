@@ -37,9 +37,6 @@ export default {
   red: '#D80000',
   green: '#1EC84E',
 
-  OtpGray_1: '#D1D5DB',
-  OtpGray_2: '#BEC2C9',
-
   barLeft: '#A389FF',
   barRight: '#3AD3E8',
 
