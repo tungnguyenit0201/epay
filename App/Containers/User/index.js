@@ -106,7 +106,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
+                  Navigator.navigate(SCREEN.LANGUAGE);
                 }}>
                 <Image
                   style={[styles.icon]}
