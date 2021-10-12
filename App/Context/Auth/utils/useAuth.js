@@ -385,9 +385,17 @@ const useForgetPassword = () => {
     });
     setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
-      setError(result);
-      return;
+      console.log('result :>> ', result);
+
+      if (result?.ErrorCode === ERROR_CODE.NEW_PASSWORD_SIMILAR_TO_LAST_ONE) {
+        return setError({
+          ...result,
+          action: [{onPress: () => Navigator.navigate(SCREEN.AUTH)}],
+        });
+      }
+      return setError(result);
     }
+
     setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
     Navigator.reset(SCREEN.AUTH);
     Keychain.setGenericPassword(phone, passwordEncrypted);
