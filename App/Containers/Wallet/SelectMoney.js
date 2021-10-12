@@ -65,7 +65,6 @@ const SelectMoney = () => {
             disabled={value ? false : true}
             style={{
               width: '45%',
-              borderWidth: 1,
             }}
           />
         </View>
