@@ -132,7 +132,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
     try {
       setLoading(true);
       let canSend = await checkResend();
-      if (canSend) {
+      if (canSend !== false) {
         let result = genOtp({
           phone,
           functionType,
