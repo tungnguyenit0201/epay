@@ -1,7 +1,15 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, Image} from 'react-native';
-import {Text, Button, Icon, Header, Radio, HeaderBg} from 'components';
-import {base} from 'themes';
+import {
+  Text,
+  Button,
+  Icon,
+  Header,
+  Radio,
+  Checkbox,
+  HeaderBg,
+} from 'components';
+import {base, Colors} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useSmartOTP} from 'context/User/utils';
 import FooterContainer from 'components/Auth/FooterContainer';
@@ -36,21 +44,24 @@ const ActiveSmartOtp = () => {
       </ScrollView>
       <FooterContainer>
         <View style={[{paddingLeft: 22, paddingBottom: 15}]}>
-          <Radio
-            onChange={onAcceptTermConditions}
-            items={[{label: '', value: 1}]}
+          <View
             style={[{marginRight: 0, position: 'absolute', let: 0, top: 1}]}
-          />
-          <Text>
-            Tôi đồng ý với
-            <Text
-              style={[{textDecorationLine: 'underline'}]}
-              onPress={() => alert('Điều khoản điều kiện')}>
-              {' '}
-              điều khoản điều kiện{' '}
-            </Text>{' '}
-            đăng ký dịch vụ của Epay
-          </Text>
+          >
+            <Checkbox onPress={onAcceptTermConditions} />
+          </View>
+          <View style={{marginLeft: 8}}>
+            <Text>
+              Tôi đồng ý với
+              <Text
+                color={Colors.cl1}
+                onPress={() => alert('Điều khoản điều kiện')}
+              >
+                {' '}
+                điều khoản điều kiện{' '}
+              </Text>
+              đăng ký dịch vụ của Epay
+            </Text>
+          </View>
         </View>
         <Button
           label="Kích hoạt" // TODO: translate

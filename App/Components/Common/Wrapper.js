@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   View,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
+  BackHandler,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -27,7 +28,11 @@ import {
   Icon,
   InputBlock,
 } from 'components';
-import {useModalPassword, useModalPermission} from 'context/Common/utils';
+import {
+  useError,
+  useModalPassword,
+  useModalPermission,
+} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
 import {useModalSmartOTP as useModalSmartOTPPassword} from 'context/User/utils';
 import {scale} from 'utils/Functions';
@@ -51,6 +56,33 @@ const Wrapper = React.memo(
     const {setFirstLogin} = useRegister();
     const smartOTPPassword = useModalSmartOTPPassword();
     const modalPassword = useModalPassword();
+    const {setError} = useError();
+
+    useEffect(() => {
+      modalSmartOTP.smartOTPSuggestion &&
+        setError({
+          title: 'Nhanh và bảo mật hơn với smart OTP',
+          ErrorCode: -1,
+          ErrorMessage:
+            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+          onClose: () => setFirstLogin(false),
+          action: [
+            {
+              label: 'Cài smart OTP ngay',
+              onPress: modalSmartOTP?.onGoSmartOTP,
+            },
+          ],
+          icon: Images.Modal.Lock,
+        });
+    }, [modalSmartOTP?.smartOTPSuggestion]);
+
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true,
+      );
+      return () => backHandler.remove();
+    }, []);
 
     return (
       // TODO: translate
@@ -68,9 +100,9 @@ const Wrapper = React.memo(
           {avoidStatusBar && <View style={styles.avoidStatusBar} />}
           <View style={styles.flexFill}>{children}</View>
           {loading && <FWLoading />}
-          {!!error?.errorCode && <Alert />}
+          {!!error?.errorMessage && <Alert />}
           {__DEV__ && <Debug />}
-          {modalSmartOTP.smartOTPSuggestion && (
+          {/* {modalSmartOTP.smartOTPSuggestion && (
             <ModalCustom
               icon={Images.Modal.Lock}
               visible={modalSmartOTP.smartOTPSuggestion}
@@ -85,17 +117,11 @@ const Wrapper = React.memo(
                     label="Cài smart OTP ngay"
                     onPress={modalSmartOTP.onGoSmartOTP}
                   />
-                  <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
-                    <Text style={styles.underline}>Không, cảm ơn</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={modalSmartOTP.onClose}>
-                    <Text style={styles.underline}>Nhắc tôi sau</Text>
-                  </TouchableOpacity>
                 </View>
               )}
             />
-          )}
-          {KYC && (
+          )} */}
+          {/* {KYC && (
             <ModalCustom
               icon={Images.Modal.UserTick}
               visible={KYC}
@@ -110,14 +136,12 @@ const Wrapper = React.memo(
                     label="Định danh"
                     onPress={() => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD)}
                   />
-                  {/* <TouchableOpacity onPress={() => checkInfo({value: false})}>
-                    <Text style={styles.underline}>Nhắc tôi sau</Text>
-                  </TouchableOpacity> */}
+                  
                 </View>
               )}
             />
-          )}
-          {connectBank && (
+          )} */}
+          {/* {connectBank && (
             <ModalCustom
               visible={connectBank}
               onClose={() => checkInfo({value: false})}
@@ -137,8 +161,8 @@ const Wrapper = React.memo(
                 </View>
               )}
             />
-          )}
-          {permissionCamera && (
+          )} */}
+          {/* {permissionCamera && (
             <ModalCustom
               visible={permissionCamera}
               onClose={() => showModalCamera(false)}
@@ -158,7 +182,7 @@ const Wrapper = React.memo(
                 </View>
               )}
             />
-          )}
+          )}  */}
           {smartOTPPassword.smartOTPPassword?.show && (
             <View style={styles.backdrop}>
               <Pressable

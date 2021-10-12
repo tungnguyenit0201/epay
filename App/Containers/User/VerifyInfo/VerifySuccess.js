@@ -114,7 +114,8 @@ const VerifySuccess = ({route}) => {
             mt={25}
             mb={Spacing.PADDING - 4}
             bold
-            style={styles.maxWidth1}>
+            style={styles.maxWidth1}
+          >
             {title}
           </Text>
           {!!message && (
@@ -148,8 +149,8 @@ const VerifySuccess = ({route}) => {
               label={action.backTitle}
               style={[styles.buttonHalf, styles.homeButton]}
               onPress={onPressBack}
-              bgImg={0}
-              labelStyle={styles.homeText}
+              mode="outline"
+              // labelStyle={styles.homeText}
             />
             <Button
               label={translation?.verifyAgain}

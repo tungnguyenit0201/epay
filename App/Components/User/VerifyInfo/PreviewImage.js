@@ -24,7 +24,8 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
         style={{
           width: width,
           height: height,
-        }}>
+        }}
+      >
         <Pressable
           style={[styles.left, {width: width}]}
           onPress={() => setShowCamera(1)}
@@ -33,7 +34,8 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
             top: scale(20),
             bottom: scale(20),
             left: scale(30),
-          }}>
+          }}
+        >
           <View style={styles.back}>
             <Icon icon={Images.ArrowLeft} tintColor={Colors.white} />
           </View>
@@ -50,7 +52,8 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
               cameraType != 'back' && {
                 left: width / 2 - image?.widthImg + scale(38),
               },
-            ]}>
+            ]}
+          >
             <Image
               source={{uri: image?.path}}
               style={[
@@ -63,13 +66,15 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
             />
             <Pressable
               style={{alignItems: 'center'}}
-              onPress={() => setShowCamera(1)}>
+              onPress={() => setShowCamera(1)}
+            >
               <Text
                 mt={Spacing.PADDING}
                 fs="h6"
                 bold
                 color={Colors.white}
-                style={styles.underLine}>
+                style={styles.underLine}
+              >
                 Chụp lại
               </Text>
             </Pressable>

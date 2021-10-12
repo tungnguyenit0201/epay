@@ -10,7 +10,6 @@ import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
 import {useTransactionResult} from 'context/Wallet/utils';
-import {ScaleFromCenterAndroid} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 const TransactionResult = () => {
   const translation = useTranslation();

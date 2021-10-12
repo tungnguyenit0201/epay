@@ -112,7 +112,6 @@ const Home = () => {
             <View style={styles.buttonGroup}>
               <Button
                 mb={10}
-                bold
                 label="Cài đặt vân tay"
                 onPress={() => {
                   setFirstLogin(false);

@@ -53,7 +53,8 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}>
+                }}
+              >
                 <Text style={[type === item.title && styles.textWhite]}>
                   {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
@@ -71,7 +72,8 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }>
+          }
+        >
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -79,22 +81,27 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}>
+                    onPress={() => onPressNotify(item)}
+                  >
                     <View style={styles.head}>
-                      <Image
-                        source={require('images/favicon.png')}
-                        style={styles.icon}
-                      />
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}
+                      >
+                        <Image
+                          source={require('images/favicon.png')}
+                          style={styles.icon}
+                        />
+
+                        <Text bold fs="h6" ml={10} centered>
+                          {item?.Title}
+                        </Text>
+                      </View>
                       <Text style={styles.date}>
                         {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
                           'hh:MMA | DD/MM/YYYY',
                         )}
                       </Text>
                     </View>
-
-                    <Text bold fs="h6" mb={10}>
-                      {item?.Title}
-                    </Text>
                     <Text>{item?.Content}</Text>
                     {/* {item?.ContentImgUrl && (
                       <Image

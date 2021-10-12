@@ -29,9 +29,9 @@ const useScanQR = () => {
       phone,
       QRCode: qrCode?.replace('epay://', ''),
     });
-    console.log('result :>> ', result);
+    console.log('onGetQRCodeInfo :>> ', result, _.get(result, 'ErrorCode'));
 
-    if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
       let userTransfer;
       if (result?.Payload?.AccountId)
         userTransfer = await onGetTransferUser(result?.Payload?.AccountId);
@@ -73,12 +73,10 @@ const useScanQR = () => {
 
   const detectQRCode = async image => {
     try {
-      console.log('image?.path :>> ', image);
       if (!image?.sourceURL) return;
       let qrCode = await RNQRGenerator.detect({
         uri: image?.sourceURL,
       });
-      console.log('qrCode :>> ', qrCode);
 
       if (qrCode?.values?.length > 0) {
         onGetQRCodeInfo(qrCode?.values[0]);

@@ -24,13 +24,11 @@ const LanguageSettings = () => {
           <Button
             key={item.value}
             label={item.label}
-            // size="lg"
-            {...(item.value === translation.selectedLanguage && {
-              // bold: true,
-              bg: Colors.white,
-              color: Colors.cl1,
-              border: Colors.cl1,
-            })}
+            mode={
+              item.value !== translation.selectedLanguage
+                ? 'outline'
+                : 'contain'
+            }
             mb={Spacing.PADDING}
             onPress={() => chooseLanguage(item.value)}
           />

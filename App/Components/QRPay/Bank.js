@@ -15,7 +15,8 @@ const TransferBank = ({sourceMoney = []}) => {
     return (
       <View
         style={[styles.itemBank, !item?.SourceId && styles.itemBankActive]}
-        key={`${Math.random(1, 100)}-sourceMoney`}>
+        key={`${Math.random(1, 100)}-sourceMoney`}
+      >
         <Image
           style={[styles.iconBank]}
           source={
@@ -75,7 +76,8 @@ const TransferBank = ({sourceMoney = []}) => {
 
         <Pressable
           onPress={() => Navigator.navigate(SCREEN.MAP_BANK_FLOW)}
-          style={styles.addBank}>
+          style={styles.addBank}
+        >
           <Text fs="h6">Thêm tài khoản ngân hàng</Text>
           <Image
             style={[styles.iconAddBank]}

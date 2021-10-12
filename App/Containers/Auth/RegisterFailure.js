@@ -25,7 +25,8 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       // onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -63,9 +64,10 @@ const RegisterFailure = ({route}) => {
         <Button
           label="Quay lại sau"
           style={styles.btn}
-          bg={Colors.white}
-          color={Colors.black}
-          border={Colors.cl4}
+          // bg={Colors.white}
+          // color={Colors.black}
+          // border={Colors.cl4}
+          mode="outline"
           onPress={() => onNavigate(SCREEN.AUTH)}
           bgImg={0}
         />
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
   //--------------------
   btn: {
     paddingTop: 15,
-    paddingBottom: 15,
+    paddingBottom: 10,
   },
   iconRight: {paddingRight: Spacing.PADDING},
 });

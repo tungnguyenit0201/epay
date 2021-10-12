@@ -44,7 +44,8 @@ const Auth = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onCheckPhoneExist}>
+        onSubmit={onCheckPhoneExist}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -75,7 +76,8 @@ const Auth = () => {
               />
 
               <FooterContainer
-                style={[styles.absolute, styles.botZero, {width: width}]}>
+                style={[styles.absolute, styles.botZero, {width: width}]}
+              >
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}

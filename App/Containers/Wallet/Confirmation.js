@@ -90,14 +90,16 @@ const Confirmation = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text size={Fonts.H6} style={styles.textLeft}>
                       {item.name}
                     </Text>
                     <Text
                       bold={item.bold}
                       size={Fonts.H6}
-                      style={styles.textRight}>
+                      style={styles.textRight}
+                    >
                       {item.value}
                     </Text>
                   </View>
@@ -126,7 +128,8 @@ const Confirmation = () => {
         //style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
+        backdropTransitionOutTiming={0}
+      >
         <View style={base.modal}>
           <Text style={base.modalTitle}>Nhập mật khẩu</Text>
           <TextInput

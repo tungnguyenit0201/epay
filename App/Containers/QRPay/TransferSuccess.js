@@ -61,7 +61,8 @@ const TransactionResult = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text style={styles.textLeft}>{item.label}</Text>
 
                     <Text bold style={styles.textRight}>
@@ -100,21 +101,18 @@ const TransactionResult = () => {
         style={[
           base.boxBottom,
           {position: 'absolute', bottom: 0, left: 0, right: 0},
-        ]}>
+        ]}
+      >
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              bg={Colors.white}
-              border={Colors.cl1}
-              color={Colors.cl1}
+              mode="outline"
               label="Về trang chủ"
-              labelStyle={{fontSize: 14}}
               onPress={() => Navigator.navigate(SCREEN.HOME)}
             />
           </Col>
           <Col space={10} width="50%">
             <Button
-              type={1}
               label="Thực hiện lại"
               onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
             />

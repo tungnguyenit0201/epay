@@ -65,8 +65,12 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
           setError({
             ErrorCode: -1,
             ErrorMessage: `Quý khách đã nhâp sai OTP 5 lần liên tiếp cho phép. Vui lòng thực hiện lại`,
-            label: 'Đồng ý',
             onClose: Navigator.popToTop(),
+            action: [
+              {
+                label: 'Đồng ý',
+              },
+            ],
           });
           return;
         default:
@@ -132,7 +136,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
     try {
       setLoading(true);
       let canSend = await checkResend();
-      if (canSend) {
+      if (canSend !== false) {
         let result = genOtp({
           phone,
           functionType,

@@ -93,11 +93,12 @@ import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
+import {getAll} from 'utils/Functions';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
-  const {getToken} = useAsyncStorage();
+  const {getToken, getName, getPhone} = useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
   const {onPressNotify} = useNotify();
@@ -138,7 +139,14 @@ const AppNavigator = () => {
       else setLanguage(currentLanguage);
     };
 
+    const checkWelcomeBack = async () => {
+      // const name = await getName();
+      const [name, phone] = await getAll(getName, getPhone);
+      name && phone && Navigator.navigate(SCREEN.LOGIN, {phone, name});
+    };
+
     getCurrentLanguage();
+    checkWelcomeBack();
   }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {
@@ -228,7 +236,8 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}>
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -237,7 +246,8 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -422,7 +432,8 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}>
+      }}
+    >
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />

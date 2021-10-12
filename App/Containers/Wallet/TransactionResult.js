@@ -75,7 +75,8 @@ const TransactionResult = () => {
                 start={{x: 0, y: 0.75}}
                 end={{x: 1, y: 0.25}}
                 colors={[Colors.barLeft, Colors.barRight]}
-                style={styles.supportLinear}>
+                style={styles.supportLinear}
+              >
                 <View style={styles.row}>
                   <Image
                     style={styles.supportIcon}

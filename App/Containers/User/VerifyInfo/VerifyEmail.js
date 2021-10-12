@@ -21,7 +21,8 @@ const VerifyEmail = ({route}) => {
             email: '',
           }}
           validationSchema={emailSchema}
-          onSubmit={onEmailAuth}>
+          onSubmit={onEmailAuth}
+        >
           {({
             handleChange: _handleChange,
             handleBlur,
@@ -44,7 +45,7 @@ const VerifyEmail = ({route}) => {
                     Nhập email
                   </Text>
                   <Text mb={20}>
-                    Cập nhật emai để nhận thông báo và ưu đãi mới nhất từ EPAY
+                    Cập nhật email để nhận thông báo và ưu đãi mới nhất từ EPAY
                   </Text>
 
                   <TextInput
@@ -57,7 +58,7 @@ const VerifyEmail = ({route}) => {
                 </View>
 
                 <View style={base.bottom}>
-                  <Button label={TEXT.CONTINUE} bold onPress={handleSubmit} />
+                  <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
                 </View>
               </View>
             );

@@ -71,7 +71,8 @@ const MyWallet = ({route}) => {
           style={{
             backgroundColor: Colors.BORDER,
             height: 8,
-          }}></View>
+          }}
+        ></View>
 
         <View style={[styles.wrap, styles.py_1]}>
           {listBankConnect ? (
@@ -81,7 +82,8 @@ const MyWallet = ({route}) => {
                   marginBottom: 10,
                   fontSize: Fonts.H6,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 {translation.connect_cardbank_account}
               </Text>
               <Text style={styles.text}>
@@ -128,10 +130,9 @@ const MyWallet = ({route}) => {
             padding: Spacing.PADDING,
             backgroundColor: Colors.BACKGROUNDCOLOR,
           },
-        ]}>
+        ]}
+      >
         <Button
-          bg={Colors.cl1}
-          color={Colors.white}
           label={translation.add_bank}
           onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
         />

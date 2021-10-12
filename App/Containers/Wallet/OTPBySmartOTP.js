@@ -39,7 +39,8 @@ const OTPBySmartOTP = props => {
           fs={'h5'}
           fw={'600'}
           color={'#141212'}
-          style={{lineHeight: 34}}>
+          style={{lineHeight: 34}}
+        >
           {translation.transaction.confirmTransaction}
         </Text>
         <Text mb={35}>{translation.transaction.autoFillOTP} </Text>

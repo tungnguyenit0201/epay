@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {View, ScrollView, StyleSheet, Image} from 'react-native';
-import {HeaderBg, Header, InputBlock} from 'components';
+import {HeaderBg, Header, InputBlock, TextInput} from 'components';
 import {Colors, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {debounce, isEmpty} from 'lodash';
@@ -46,8 +46,8 @@ const BankPickerScreen = props => {
   };
   const renderSearchView = () => {
     return (
-      <View style={[{marginTop: -20}]}>
-        <View style={styles.icon}>
+      <View style={[{marginTop: 10}]}>
+        {/* <View style={styles.icon}>
           <Image source={Images.TabBar.Search} style={styles.image} />
         </View>
         <InputBlock
@@ -56,6 +56,14 @@ const BankPickerScreen = props => {
           placeholder={translation.which_back_are_you_looking_for}
           style={styles.input_text}
           onChange={onChange}
+        /> */}
+        <TextInput
+          onBlur={onBlur}
+          onFocus={onFocus}
+          placeholder={translation.which_back_are_you_looking_for}
+          style={styles.input_text}
+          onChange={onChange}
+          leftIcon={Images.TabBar.Search}
         />
       </View>
     );
@@ -112,7 +120,8 @@ const BankPickerScreen = props => {
 
       <ScrollView
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderContent()}
       </ScrollView>
     </View>

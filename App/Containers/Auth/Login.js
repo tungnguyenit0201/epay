@@ -13,15 +13,17 @@ import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import * as LocalAuthentication from 'expo-local-authentication';
 
 const Login = ({route}) => {
+  const {phone, name} = _.get(route, 'params', {});
   const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
     useAuth();
   const translation = useTranslation();
 
   const {biometryType, onTouchID} = useTouchID({
-    onSuccess: () =>
-      onLoginByTouchID({phone: _.get(route, 'params.phone', '')}),
+    autoShow: !name,
+    onSuccess: () => onLoginByTouchID({phone}),
   });
 
   return (
@@ -31,9 +33,15 @@ const Login = ({route}) => {
         <BigLogo style={{marginBottom: 30}} />
         <Content
           style={styles.wrap}
-          title={translation.enter_your_password}
+          title={
+            name
+              ? `Xin chào ${_.last(name.split(' '))}`
+              : translation.enter_your_password
+          }
           text={
-            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+            name
+              ? phone
+              : translation.password_for_account_security_and_transaction_confirmation_at_checkout
           }
         />
       </View>
@@ -42,10 +50,9 @@ const Login = ({route}) => {
         initialValues={{
           password: '',
         }}
-        onSubmit={({password}) =>
-          onLogin({phone: _.get(route, 'params.phone', ''), password})
-        }
-        validationSchema={passwordSchema}>
+        onSubmit={({password}) => onLogin({phone, password})}
+        validationSchema={passwordSchema}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -103,7 +110,9 @@ const Login = ({route}) => {
                     <Pressable onPress={onTouchID} style={styles.btn}>
                       <Icon
                         icon={
-                          biometryType === 'FaceID'
+                          biometryType ===
+                          LocalAuthentication.AuthenticationType
+                            .FACIAL_RECOGNITION
                             ? Images.SignIn.Face
                             : Images.SignIn.FingerPrint
                         }

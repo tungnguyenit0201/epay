@@ -14,7 +14,8 @@ const FooterContainer = ({children, pb, style}) => {
         styles.wrap,
         styles.bgWhite,
         style,
-      ]}>
+      ]}
+    >
       {children}
     </View>
   );

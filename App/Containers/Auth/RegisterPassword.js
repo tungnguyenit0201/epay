@@ -33,11 +33,13 @@ const RegisterPassword = ({route}) => {
     // TODO: translate
     <BlueHeader>
       <Header
+        style={styles.mt}
         back
         renderRightComponent={() => (
           <TouchableOpacity
             style={{paddingRight: Spacing.PADDING}}
-            onPress={() => setShowModal(true)}>
+            onPress={() => setShowModal(true)}
+          >
             <Icon
               icon={Images.Register.Info}
               style={styles.iconSize}
@@ -53,7 +55,8 @@ const RegisterPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -77,7 +80,8 @@ const RegisterPassword = ({route}) => {
                 contentContainerStyle={[
                   {paddingVertical: scale(24)},
                   styles.wrap,
-                ]}>
+                ]}
+              >
                 <Content
                   title="Tạo mật khẩu"
                   text={
@@ -118,7 +122,8 @@ const RegisterPassword = ({route}) => {
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}
+                    >
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
                       </Text>
@@ -126,7 +131,8 @@ const RegisterPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}>
+                      onPress={() => onGoTerm(SCREEN.POLICY)}
+                    >
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
                       </Text>
@@ -162,6 +168,7 @@ const styles = StyleSheet.create({
   flexRow: {flexDirection: 'row'},
   //-----------------------
   mtMinus1: {marginTop: -3},
+  mt: {marginTop: -10},
   //-----------------------
   iconSize: {
     width: scale(20),

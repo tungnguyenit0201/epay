@@ -60,7 +60,8 @@ const BankLinkResult = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text style={styles.textLeft}>{item.label}</Text>
 
                     <Text bold style={styles.textRight}>
@@ -99,7 +100,8 @@ const BankLinkResult = () => {
         style={[
           base.boxBottom,
           {position: 'absolute', bottom: 0, left: 0, right: 0},
-        ]}>
+        ]}
+      >
         <Row space={10}>
           <Col space={10} width="50%">
             <Button

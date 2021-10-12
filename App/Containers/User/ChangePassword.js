@@ -32,7 +32,8 @@ const ChangePassword = ({route}) => {
               password: '',
             }}
             onSubmit={({password}) => onConfirmPassword({password})}
-            validationSchema={passwordSchema}>
+            validationSchema={passwordSchema}
+          >
             {({
               handleChange: _handleChange,
               handleBlur,
@@ -55,8 +56,9 @@ const ChangePassword = ({route}) => {
                       Nhập mật khẩu
                     </Text>
                     <Text mb={20}>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
+                      {
+                        translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                      }
                     </Text>
                     <TextInput
                       password

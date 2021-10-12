@@ -34,7 +34,8 @@ const ItemType1 = ({
           styles.blockShadow,
           styles.blockStatus1,
           isChecked && {backgroundColor: blurBlue},
-        ]}>
+        ]}
+      >
         <Image
           source={icon}
           style={{
@@ -94,7 +95,8 @@ const StatusBtn = ({isChecked, title, onPress}) => (
       centered
       semibold
       fs="md"
-      style={[styles.textSize1, styles.px1, styles.py2]}>
+      style={[styles.textSize1, styles.px1, styles.py2]}
+    >
       {title}
     </Text>
     {isChecked && (
@@ -226,7 +228,8 @@ const FilterModal = ({
       style={[styles.fullWidth, styles.mlZero, styles.mbZero, styles.mtZero]}
       hideModalContentWhileAnimating
       backdropTransitionOutTiming={0}
-      onBackdropPress={onHideModal}>
+      onBackdropPress={onHideModal}
+    >
       <View style={[styles.flex1, styles.bgWhite]}>
         <HeaderBg>
           <Header
@@ -286,10 +289,7 @@ const FilterModal = ({
             <Col space={8} width="50%">
               <Button
                 label={translation.clear_filter}
-                bgImg={0}
-                bg={'white'}
-                color={Colors.blue}
-                border={Colors.blue}
+                mode="outline"
                 onPress={onResetTempFilter}
               />
             </Col>

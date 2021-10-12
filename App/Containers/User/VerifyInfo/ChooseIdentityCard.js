@@ -82,7 +82,8 @@ const DocumentTypeSelector = (props = {}) => {
               onPress={() => {
                 onPress(item);
                 requestClose?.();
-              }}>
+              }}
+            >
               <Text fs="md" style={styles.selectorText}>
                 {item?.label}
               </Text>

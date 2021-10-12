@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Pressable, Image, StyleSheet, Platform} from 'react-native';
+import {View, Pressable, Image, StyleSheet, BackHandler} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Text, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -24,13 +24,21 @@ const Header = ({
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        back && goBack();
+      },
+    );
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <View
-      style={[
-        styles.wrap,
-        blackIcon && {backgroundColor: Colors.white},
-        style,
-      ]}>
+      style={[styles.wrap, blackIcon && {backgroundColor: Colors.white}, style]}
+    >
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={styles.header}>
         <View style={styles.wrapCenter}>
@@ -41,7 +49,8 @@ const Header = ({
               size={Fonts.H6}
               color={Colors.white}
               centered
-              style={[titleStyle, blackIcon && {color: Colors.black}]}>
+              style={[titleStyle, blackIcon && {color: Colors.black}]}
+            >
               {title}
             </Text>
           )}
@@ -60,7 +69,8 @@ const Header = ({
                 top: scale(20),
                 bottom: scale(20),
                 left: scale(30),
-              }}>
+              }}
+            >
               <View style={styles.back}>
                 <Icon
                   icon={Images.ArrowLeft}

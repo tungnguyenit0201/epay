@@ -25,7 +25,8 @@ const Transfer = () => {
             {/* Text with Icon */}
             <TouchableOpacity
               onPress={() => setOpen(true)}
-              style={styles.inputNavigate}>
+              style={styles.inputNavigate}
+            >
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Mobile}
@@ -49,7 +50,8 @@ const Transfer = () => {
               onPress={() => {
                 Navigator.navigate(SCREEN.BANK_LIST);
               }}
-              style={styles.inputNavigate}>
+              style={styles.inputNavigate}
+            >
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Bank}
@@ -77,7 +79,8 @@ const Transfer = () => {
         style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
+        backdropTransitionOutTiming={0}
+      >
         <View style={styles.modal}>
           <Text bold style={styles.textTitle}>
             {translation.allow_access_to_contact_book}
