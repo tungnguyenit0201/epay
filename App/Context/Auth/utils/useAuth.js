@@ -119,6 +119,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
 };
 
 const useAuth = () => {
+  const [message, setMessage] = useState('');
   const {setLoading} = useLoading();
   const {dispatch, route} = useUser();
   const {setError} = useError();
@@ -170,7 +171,7 @@ const useAuth = () => {
     switch (_.get(result, 'ErrorCode', '')) {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
       case ERROR_CODE.FEATURE_LOCK_BY_PASSWORD_WRONG:
-        return setError(result);
+        return setMessage(result?.ErrorMessage);
 
       case ERROR_CODE.FEATURE_PASSWORD_WRONG_OVER_TIME:
         setError(result);
@@ -241,6 +242,7 @@ const useAuth = () => {
     onLogin,
     onLoginByTouchID,
     onLogout,
+    message,
   };
 };
 
