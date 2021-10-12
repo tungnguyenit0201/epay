@@ -75,7 +75,7 @@ async function request({
 }) {
   let root = API.ROOT;
   const requestMethod = axios;
-  __DEV__ && curlirize(requestMethod);
+  // __DEV__ && curlirize(requestMethod);
 
   const token = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.TOKEN);
   if (token) {

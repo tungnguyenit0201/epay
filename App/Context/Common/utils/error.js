@@ -18,6 +18,8 @@ const useError = () => {
           onClose: error?.onClose,
           icon: error?.icon,
           label: error?.label,
+          action: error?.action,
+          renderContent: error?.renderContent,
         },
       });
     },

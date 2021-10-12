@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Pressable, View, Platform, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
@@ -11,15 +11,20 @@ import WebView from 'components/WebView/Partial';
 const AlertCustom = () => {
   const {error} = useCommon();
   const {setError} = useError();
-
+  const onPressAction = action => {
+    action?.();
+    error?.onClose?.();
+    setError(null);
+  };
   return (
     // TODO: translate
     <View style={styles.container}>
       <Modal
         animationIn="zoomIn"
         transparent={true}
-        visible={!!error?.errorCode}
-        onBackdropPress={() => setError(null)}>
+        visible={!!error?.errorMessage}
+        onBackdropPress={() => setError(null)}
+      >
         <View style={styles.centeredView}>
           <View style={styles.header}>
             <Image
@@ -44,15 +49,27 @@ const AlertCustom = () => {
                 source={{html: ` ${error?.errorMessage}`}}
               />
             </View>
-
-            {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
-            <Button
-              label={error?.label || 'Đóng'}
-              onPress={() => {
-                setError(null);
-                error?.onClose && error?.onClose();
-              }}
-            />
+            {error?.renderContent?.()}
+            {error?.action?.length > 0 &&
+              error?.action?.map((item, index) => {
+                return (
+                  <View key={`${Math.random(1, 100)}-action`}>
+                    {index == 0 ? (
+                      <Button
+                        label={item?.label || 'Đóng'}
+                        onPress={() => onPressAction(item?.onPress)}
+                      />
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.btnOutline}
+                        onPress={() => onPressAction(item?.onPress)}
+                      >
+                        <Text>{item?.label}</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                );
+              })}
           </View>
         </View>
       </Modal>
@@ -107,6 +124,11 @@ const styles = StyleSheet.create({
   icon: {
     width: 64,
     height: 64,
+  },
+  btnOutline: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Spacing.PADDING,
   },
 });
 

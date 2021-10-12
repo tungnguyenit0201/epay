@@ -148,7 +148,7 @@ const useAuth = () => {
   };
 
   const onChangePhone = () => {
-    Navigator.goBack();
+    Navigator.navigate(SCREEN.AUTH);
   };
 
   const onForgetPassword = () => {
@@ -373,13 +373,7 @@ const useForgetPassword = () => {
         functionType: FUNCTION_TYPE.FORGOT_PASS,
       });
       return;
-    }
-    setError({
-      ErrorCode: -1,
-      ErrorMessage: `Số điện thoại chưa đăng ký ví điện tử Epay. Quý khách vui lòng đăng ký trước khi sử dụng`,
-      label: 'Đồng ý',
-      onClose: () => {},
-    });
+    } else setError(result);
   };
 
   const onNewPassword = async ({newPassword, phone}) => {
