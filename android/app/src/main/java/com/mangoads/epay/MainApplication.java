@@ -1,6 +1,6 @@
 package com.mangoads.epay;
 
-import com.myapp.generated.BasePackageList;
+import com.mangoads.epay.generated.BasePackageList;
 
 import android.app.Application;
 import android.content.Context;
@@ -44,7 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new ReactNativeContacts());
           packages.add(new VnptEkycPackage());
 
-           // Add unimodules
+          // Add unimodules
           List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
             new ModuleRegistryAdapter(mModuleRegistryProvider)
           );
