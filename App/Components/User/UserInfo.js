@@ -25,7 +25,8 @@ const User = ({style}) => {
         style={styles.wicon}
         onPress={() => {
           Navigator.navigate(SCREEN.USER_INFO);
-        }}>
+        }}
+      >
         <Image
           style={styles.userPortrait}
           source={
@@ -35,14 +36,16 @@ const User = ({style}) => {
           }
         />
       </TouchableOpacity>
+
       <View style={styles.flex1}>
-        <Text bold size={Fonts.MD} mb={5}>
+        <Text bold size={Fonts.MD} mb={2} style={styles.lh1}>
           {userInfo?.personalInfo?.FullName}
         </Text>
-        <Text>{hidePhone(phone)}</Text>
-      </View>
-      <View style={{marginLeft: 'auto'}}>
-        <StatusUser size="xxs" />
+
+        <View style={[styles.flexRow, styles.alignCenter]}>
+          <Text style={styles.flex1}>{hidePhone(phone)}</Text>
+          <StatusUser size="xxs" />
+        </View>
       </View>
     </View>
   );
@@ -50,6 +53,11 @@ const User = ({style}) => {
 
 const styles = StyleSheet.create({
   flex1: {flex: 1},
+  //-------------
+  flexRow: {flexDirection: 'row'},
+  alignCenter: {alignItems: 'center'},
+  //-------------
+  lh1: {lineHeight: 24},
   //-------------
   item: {
     flexDirection: 'row',
