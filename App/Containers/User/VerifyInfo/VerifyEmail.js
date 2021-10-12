@@ -45,7 +45,7 @@ const VerifyEmail = ({route}) => {
                     Nhập email
                   </Text>
                   <Text mb={20}>
-                    Cập nhật emai để nhận thông báo và ưu đãi mới nhất từ EPAY
+                    Cập nhật email để nhận thông báo và ưu đãi mới nhất từ EPAY
                   </Text>
 
                   <TextInput
