@@ -93,11 +93,12 @@ import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
+import {getAll} from 'utils/Functions';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
-  const {getToken} = useAsyncStorage();
+  const {getToken, getName, getPhone} = useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
   const {onPressNotify} = useNotify();
@@ -138,7 +139,14 @@ const AppNavigator = () => {
       else setLanguage(currentLanguage);
     };
 
+    const checkWelcomeBack = async () => {
+      // const name = await getName();
+      const [name, phone] = await getAll(getName, getPhone);
+      name && phone && Navigator.navigate(SCREEN.LOGIN, {phone, name});
+    };
+
     getCurrentLanguage();
+    checkWelcomeBack();
   }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {

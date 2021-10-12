@@ -37,7 +37,7 @@ const useUserInfo = type => {
     Email: '',
   });
 
-  const {getPhone} = useAsyncStorage();
+  const {getPhone, setName} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useUser();
@@ -113,6 +113,7 @@ const useUserInfo = type => {
           personalInfo: result?.PersonalInfo,
         });
         dispatch({type: 'SET_PHONE', phone});
+        result?.PersonalInfo?.FullName && setName(result.PersonalInfo.FullName);
     }
   };
 

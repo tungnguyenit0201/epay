@@ -85,6 +85,14 @@ const useAsyncStorage = () => {
     return await AsyncStorage.getItem(phone);
   };
 
+  const setName = async name => {
+    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.NAME, name);
+  };
+
+  const getName = async () => {
+    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.NAME);
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -102,6 +110,8 @@ const useAsyncStorage = () => {
     getPushToken,
     setResend,
     getResend,
+    setName,
+    getName,
   };
 };
 
