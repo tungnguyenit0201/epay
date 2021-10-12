@@ -37,7 +37,11 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
 
   return (
     <Pressable
-      style={[styles.container, style]}
+      style={[
+        styles.container,
+        style,
+        {borderRadius: radius, backgroundColor: setBg},
+      ]}
       // radius={radius}
       // bgImg={0}
       // bg={setBg}
@@ -46,11 +50,13 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
       // color={Colors.white}
       // label={getStatusVerifiedText()}
       // style={[{minWidth: 93}, style]}
-      // onPress={() => {
-      //   statusVerified == PERSONAL_IC.INACTIVE && onVerify();
-      // }}
+      onPress={() => {
+        statusVerified == PERSONAL_IC.INACTIVE && onVerify();
+      }}
     >
-      {/* <Text>{getStatusVerifiedText()}</Text> */}
+      <Text color={Colors.white} fs="sx" centered>
+        {getStatusVerifiedText()}
+      </Text>
     </Pressable>
   );
 };
@@ -58,6 +64,8 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
 const styles = StyleSheet.create({
   container: {
     minWidth: 93,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
   },
 });
 export default StatusUser;
