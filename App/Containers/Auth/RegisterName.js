@@ -23,7 +23,8 @@ const RegisterName = () => {
         FullName: '',
       }}
       validationSchema={nameSchema}
-      onSubmit={onUpdatePersonalInfo}>
+      onSubmit={onUpdatePersonalInfo}
+    >
       {({
         handleChange: _handleChange,
         handleBlur,

@@ -18,7 +18,8 @@ const User = () => {
         status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK &&
           Navigator.navigate(SCREEN.MAP_BANK_FLOW);
       }}
-      style={[styles.item]}>
+      style={[styles.item]}
+    >
       <Image
         style={styles.img}
         resizeMode={'contain'}
