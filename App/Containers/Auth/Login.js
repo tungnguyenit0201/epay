@@ -13,7 +13,7 @@ import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
-import * as LocalAuthentication from 'expo-local-authentication';
+/* import * as LocalAuthentication from 'expo-local-authentication'; */
 
 const Login = ({route}) => {
   const {phone, name} = _.get(route, 'params', {});
@@ -51,8 +51,7 @@ const Login = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) => onLogin({phone, password})}
-        validationSchema={passwordSchema}
-      >
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
