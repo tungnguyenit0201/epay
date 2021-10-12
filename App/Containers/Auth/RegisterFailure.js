@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   //--------------------
   btn: {
     paddingTop: 15,
-    paddingBottom: 15,
+    paddingBottom: 10,
   },
   iconRight: {paddingRight: Spacing.PADDING},
 });
