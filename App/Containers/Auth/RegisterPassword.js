@@ -33,6 +33,7 @@ const RegisterPassword = ({route}) => {
     // TODO: translate
     <BlueHeader>
       <Header
+        style={styles.mt}
         back
         renderRightComponent={() => (
           <TouchableOpacity
@@ -162,6 +163,7 @@ const styles = StyleSheet.create({
   flexRow: {flexDirection: 'row'},
   //-----------------------
   mtMinus1: {marginTop: -3},
+  mt: {marginTop: -10},
   //-----------------------
   iconSize: {
     width: scale(20),
