@@ -28,12 +28,7 @@ const PaymentSettings = () => {
         <Header back title={translation.payment_setting} />
       </HeaderBg>
       <ScrollView style={base.wrap}>
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
-            // Navigator.navigate(SCREEN.AUTOPAYMENT);
-            Alert.alert('', 'Coming soon');
-          }}>
+        <TouchableOpacity style={styles.item} onPress={() => setOpen(true)}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
