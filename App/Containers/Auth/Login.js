@@ -13,6 +13,7 @@ import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import * as LocalAuthentication from 'expo-local-authentication';
 
 const Login = ({route}) => {
   const {phone, name} = _.get(route, 'params', {});
@@ -21,6 +22,7 @@ const Login = ({route}) => {
   const translation = useTranslation();
 
   const {biometryType, onTouchID} = useTouchID({
+    autoShow: !name,
     onSuccess: () => onLoginByTouchID({phone}),
   });
 
@@ -31,7 +33,11 @@ const Login = ({route}) => {
         <BigLogo style={{marginBottom: 30}} />
         <Content
           style={styles.wrap}
-          title={name ? `Xin chào ${name}` : translation.enter_your_password}
+          title={
+            name
+              ? `Xin chào ${_.last(name.split(' '))}`
+              : translation.enter_your_password
+          }
           text={
             name
               ? phone
@@ -104,7 +110,9 @@ const Login = ({route}) => {
                     <Pressable onPress={onTouchID} style={styles.btn}>
                       <Icon
                         icon={
-                          biometryType === 'FaceID'
+                          biometryType ===
+                          LocalAuthentication.AuthenticationType
+                            .FACIAL_RECOGNITION
                             ? Images.SignIn.Face
                             : Images.SignIn.FingerPrint
                         }
