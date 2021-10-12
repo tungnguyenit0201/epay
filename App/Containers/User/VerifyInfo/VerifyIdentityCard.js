@@ -26,12 +26,11 @@ const VerifyIdentityCard = ({ route }) => {
       step={2}
       disableButton={!verifyInfo?.Avatar}
       buttonTitle={translation?.continue}
-      onPressButton={onDoneCaptureFace}
-    >
-      <ScrollView style={{ backgroundColor: Colors.white }}>
+      onPressButton={onDoneCaptureFace}>
+      <ScrollView style={{backgroundColor: Colors.white}}>
         <View style={[base.container, styles.main]}>
           <CapturePicture
-            title={translation?.portrait_photo}
+            title={translation?.portrait_photo.toUpperCase()}
             onDropImage={value => onChange('Avatar', value)}
             cameraType="front"
             style={styles.drop}
