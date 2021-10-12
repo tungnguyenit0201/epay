@@ -47,7 +47,7 @@ export default React.forwardRef(
     const keyboardType = email
       ? 'email-address'
       : numeric
-      ? 'numeric'
+      ? 'number-pad'
       : phone
       ? 'phone-pad'
       : 'default';
