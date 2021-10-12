@@ -53,7 +53,8 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}>
+                }}
+              >
                 <Text style={[type === item.title && styles.textWhite]}>
                   {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
@@ -71,7 +72,8 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }>
+          }
+        >
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -79,10 +81,12 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}>
+                    onPress={() => onPressNotify(item)}
+                  >
                     <View style={styles.head}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{flexDirection: 'row', alignItems: 'center'}}
+                      >
                         <Image
                           source={require('images/favicon.png')}
                           style={styles.icon}
