@@ -62,17 +62,15 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             message: _.get(result, 'ErrorMessage', ''),
           });
         case FUNCTION_TYPE.FORGOT_PASS:
-          setError({
-            ErrorCode: -1,
-            ErrorMessage: `Quý khách đã nhâp sai OTP 5 lần liên tiếp cho phép. Vui lòng thực hiện lại`,
-            onClose: Navigator.popToTop(),
-            action: [
-              {
-                label: 'Đồng ý',
-              },
-            ],
+          return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+            phone,
+            functionType,
+            content: {
+              title: 'Đổi mật khẩu \nkhông thành công',
+              text: 'Thông tin nhập không đúng. Vui lòng gọi đến tổng đài nếu cần được hỗ trợ.',
+              hotline: '1900-0000',
+            },
           });
-          return;
         default:
           setError(result);
           Navigator.goBack();
