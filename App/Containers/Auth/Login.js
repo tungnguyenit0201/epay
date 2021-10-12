@@ -14,10 +14,10 @@ import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
 import * as LocalAuthentication from 'expo-local-authentication';
-
+import WebView from 'components/WebView/Partial';
 const Login = ({route}) => {
   const {phone, name} = _.get(route, 'params', {});
-  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
+  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID, message} =
     useAuth();
   const translation = useTranslation();
 
@@ -51,8 +51,7 @@ const Login = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) => onLogin({phone, password})}
-        validationSchema={passwordSchema}
-      >
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -95,8 +94,11 @@ const Login = ({route}) => {
                     <Text style={[styles.linkText]}>Đổi SĐT</Text>
                   </Pressable>
                 </View>
+                <WebView
+                  style={styles.textError}
+                  source={{html: ` ${message}`}}
+                />
               </View>
-
               <FooterContainer>
                 <View style={[styles.flexRow]}>
                   <Button
@@ -170,6 +172,12 @@ const styles = StyleSheet.create({
   iconSize: {
     width: scale(17),
     height: scale(17),
+  },
+  textError: {
+    marginTop: 50,
+    color: Colors.Highlight,
+    textAlign: 'center',
+    minHeight: 200,
   },
 });
 export default Login;
