@@ -10,9 +10,9 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {debugData} from 'components/Common/Debug';
+// import {debugData} from 'components/Common/Debug';
 import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
-// import curlirize from 'axios-curlirize';
+import curlirize from 'axios-curlirize';
 
 let transactionID = '';
 
@@ -115,7 +115,7 @@ async function request({
         });
         if (__DEV__) {
           console.log(method, buildUrl, postParams, result);
-          debugData.push(result);
+          // debugData.push(result);
         }
       }
 

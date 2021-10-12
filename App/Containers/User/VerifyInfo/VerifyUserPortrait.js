@@ -1,36 +1,28 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  InputBlock,
-  Radio,
-  DatePicker,
-  Text,
-  Checkbox,
-} from 'components';
-import { Colors, Spacing, Images } from 'themes';
-import { useVerifyInfo, useSelectRegion } from 'context/User/utils';
-import { useTranslation } from 'context/Language';
-import { useUser } from 'context/User';
-import { SCREEN } from 'configs/Constants';
+import React, {useEffect, useState, useMemo} from 'react';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {InputBlock, Radio, DatePicker, Text, Checkbox} from 'components';
+import {Colors, Spacing, Images} from 'themes';
+import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
+import {useTranslation} from 'context/Language';
+import {useUser} from 'context/User';
+import {GENDER, SCREEN} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 
-const VerifyUserPortrait = ({ route }) => {
-  const { onUpdateAllInfo, onContinue, verifyInfo } = useVerifyInfo(route?.params);
-  const { extractCardInfo = {} } = verifyInfo || {};
+const VerifyUserPortrait = ({route}) => {
+  const {onUpdateAllInfo, onContinue, verifyInfo} = useVerifyInfo(
+    route?.params,
+  );
+  const {extractCardInfo = {}} = verifyInfo || {};
   const translation = useTranslation() || {};
   const [acceptPolicy, setAcceptPolicy] = useState();
   const [error, setError] = useState({});
-  const { goRegionSelect } = useSelectRegion({
+  const {goRegionSelect} = useSelectRegion({
     callbackScreen: SCREEN.VERIFY_USER_PORTRAIT,
   });
-  const { region } = useUser();
-  const { wardEmpty } = region || {};
-  const { identifyCard } = route?.params || {};
-  const { ICType, label } = identifyCard || {};
+  const {region} = useUser();
+  const {wardEmpty} = region || {};
+  const {identifyCard} = route?.params || {};
+  const {ICType, label} = identifyCard || {};
   const [info, setInfo] = useState({
     ICFullName: extractCardInfo.FullName,
     DateOfBirth: extractCardInfo.BirthDay,
@@ -45,9 +37,9 @@ const VerifyUserPortrait = ({ route }) => {
   });
 
   const GENDERS = [
-    { label: translation.male, value: 1 },
-    { label: translation.female, value: 2 },
-    { label: translation.others, value: 3 },
+    {label: translation.male, value: 1},
+    {label: translation.female, value: 2},
+    {label: translation.others, value: 3},
   ];
 
   const CARD_RULE = useMemo(() => {
@@ -78,7 +70,7 @@ const VerifyUserPortrait = ({ route }) => {
   }, [translation]);
 
   useEffect(() => {
-    const { Provincial, County, Ward } = region;
+    const {Provincial, County, Ward} = region;
     setInfo({
       ...info,
       Provincial,
@@ -95,48 +87,63 @@ const VerifyUserPortrait = ({ route }) => {
     return CARD_RULE[ICType] || {};
   }, [ICType, CARD_RULE]);
 
-  const validateID = (value) => {
-    const { regex, title, fixedLength, minLength, maxLength } = cardRule || {};
+  const validateID = value => {
+    const {regex, title, fixedLength, minLength, maxLength} = cardRule || {};
     const cardNumber = value || info.ICNumber || '';
     const regexValid = new RegExp(regex).test(cardNumber);
-    if (cardNumber.length === 0) { return { valid: true, error: '' }; }
+    if (cardNumber.length === 0) {
+      return {valid: true, error: ''};
+    }
     if (!regexValid) {
-      return { valid: false, error: translation.inputRegexError?.replace?.('$type', title) };
+      return {
+        valid: false,
+        error: translation.inputRegexError?.replace?.('$type', title),
+      };
     } else {
       if (fixedLength) {
-        if (cardNumber.length !== minLength && cardNumber.length !== maxLength) {
-          return { valid: false, error: translation.inputRegexError?.replace?.('$type', title) };
+        if (
+          cardNumber.length !== minLength &&
+          cardNumber.length !== maxLength
+        ) {
+          return {
+            valid: false,
+            error: translation.inputRegexError?.replace?.('$type', title),
+          };
         }
       } else if (cardNumber.length < minLength) {
-        return { valid: false, error: translation.inputRegexError?.replace?.('$type', title) };
+        return {
+          valid: false,
+          error: translation.inputRegexError?.replace?.('$type', title),
+        };
       }
     }
-    return { valid: true, error: '' };
+    return {valid: true, error: ''};
   };
 
   const onBlurCardNumber = () => {
-    const { error: _error } = validateID();
-    setError({ ...error, ICNumber: _error });
+    const {error: _error} = validateID();
+    setError({...error, ICNumber: _error});
   };
 
   const handleChange = (key, value) => {
-    setInfo({ ...info, [key]: value });
+    setInfo({...info, [key]: value});
   };
 
   const buttonEnabled = useMemo(() => {
     return (
-      info.ICFullName
-      && (!error.ICNumber && info.ICNumber)
-      && info.DateOfBirth
-      && GENDERS.find(gender => gender.value === info.SexType)
-      && info.ICIssuedDate
-      && info.ICIssuedPlace
+      info.ICFullName &&
+      !error.ICNumber &&
+      info.ICNumber &&
+      info.DateOfBirth &&
+      GENDERS.find(gender => gender.value === info.SexType) &&
+      info.ICIssuedDate &&
+      info.ICIssuedPlace &&
       // && (originalInfo?.ValidDate ? info.ValidDate : true)
-      && info.Provincial
-      && info.County
-      && (wardEmpty ? true : info.Ward)
-      && info.Address
-      && acceptPolicy
+      info.Provincial &&
+      info.County &&
+      (wardEmpty ? true : info.Ward) &&
+      info.Address &&
+      acceptPolicy
     );
   }, [info, acceptPolicy, error]);
 
@@ -146,7 +153,8 @@ const VerifyUserPortrait = ({ route }) => {
       showInstruction={false}
       onPressButton={onUpdateAllInfo}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}>
+      buttonTitle={translation.updateInfo}
+    >
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -158,20 +166,28 @@ const VerifyUserPortrait = ({ route }) => {
           placeholder={translation?.inputFullName}
           alphanumeric
           trimOnBlur
-          multiline />
+          multiline
+        />
         <DatePicker
           label={translation.date_of_birth_ddmmyyyy}
           value={info.DateOfBirth}
           required
-          placeholder="dd/mm/yyyy" />
+          placeholder="dd/mm/yyyy"
+        />
         <View>
           <Text medium mb={10}>
             {translation.gender}
           </Text>
           <Radio
-            items={GENDERS}
+            items={Object.entries(GENDER)
+              .filter(x => x[0] !== '3')
+              .map(([key, value]) => ({
+                label: value,
+                value: parseInt(key),
+              }))}
             onChange={value => handleChange('SexType', value)}
-            selectedValue={info.SexType} />
+            selectedValue={info.SexType}
+          />
         </View>
         <InputBlock
           label={label || translation.enter_id_code}
@@ -183,13 +199,15 @@ const VerifyUserPortrait = ({ route }) => {
           numeric
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
-          trimOnBlur />
+          trimOnBlur
+        />
         <DatePicker
           label={translation.valid_date}
           onChange={value => handleChange('ICIssuedDate', value)}
           value={info.ICIssuedDate}
           required
-          placeholder="dd/mm/yyyy" />
+          placeholder="dd/mm/yyyy"
+        />
         <InputBlock
           label={translation?.issuedPlace}
           onChange={value => handleChange('ICIssuedPlace', value)}
@@ -199,7 +217,9 @@ const VerifyUserPortrait = ({ route }) => {
           required
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
-          multiline />
+          multiline
+          maxLength={200}
+        />
       </View>
       <View style={[styles.bgGray, styles.h1]} />
       <View style={[styles.wrap, styles.pt1]}>
@@ -212,7 +232,9 @@ const VerifyUserPortrait = ({ route }) => {
           required
           placeholder={translation?.inputAddress}
           trimOnBlur
-          multiline />
+          multiline
+          maxLength={200}
+        />
         <InputBlock
           label={translation.provice}
           rightIconBgGray={Images.Right}
@@ -221,7 +243,8 @@ const VerifyUserPortrait = ({ route }) => {
           value={info?.Provincial}
           error={error.Provincial}
           onPress={() => goRegionSelect('cites')}
-          defaultValue={translation.provice} />
+          defaultValue={translation.provice}
+        />
         <InputBlock
           label={translation.district}
           rightIconBgGray={Images.Right}
@@ -230,7 +253,8 @@ const VerifyUserPortrait = ({ route }) => {
           value={info?.County}
           error={error.County}
           onPress={() => goRegionSelect('districts')}
-          defaultValue={translation.district} />
+          defaultValue={translation.district}
+        />
         <InputBlock
           label={translation.town}
           rightIconBgGray={Images.Right}
@@ -239,22 +263,19 @@ const VerifyUserPortrait = ({ route }) => {
           value={info?.Ward}
           error={error.Ward}
           onPress={() => !wardEmpty && goRegionSelect('wards')}
-          defaultValue={translation.town} />
+          defaultValue={translation.town}
+        />
         <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
             {translation?.iAgreeWith}
             <TouchableOpacity style={styles.mtMinus1}>
               <Text style={styles.firstLink}>{translation?.userAgreement}</Text>
-            </TouchableOpacity>
-            {' '}
+            </TouchableOpacity>{' '}
             {translation?.and}
             <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>
-                {translation?.privacyPolicy}
-              </Text>
-            </TouchableOpacity>
-            {' '}
+              <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>
+            </TouchableOpacity>{' '}
             {translation?.ofEPAY}
           </Text>
         </View>
@@ -265,7 +286,8 @@ const VerifyUserPortrait = ({ route }) => {
           color={Colors.Highlight}
           bold
           mb={48}
-          fs="h6">
+          fs="h6"
+        >
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>
@@ -277,27 +299,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     marginTop: Spacing.PADDING,
   },
-  wrap: { paddingHorizontal: Spacing.PADDING },
+  wrap: {paddingHorizontal: Spacing.PADDING},
   //---------------
-  flexRow: { flexDirection: 'row' },
+  flexRow: {flexDirection: 'row'},
   //---------------
-  h1: { height: 8 },
+  h1: {height: 8},
   //---------------
-  mtMinus1: { marginTop: -3 },
+  mtMinus1: {marginTop: -3},
   //---------------
-  mb1: { marginBottom: 10 },
+  mb1: {marginBottom: 10},
   //---------------
-  pt1: { paddingTop: 20 },
-  pt2: { paddingTop: 10 },
+  pt1: {paddingTop: 20},
+  pt2: {paddingTop: 10},
   //---------------
-  pb1: { paddingBottom: 24 },
+  pb1: {paddingBottom: 24},
   //---------------
-  underline: { textDecorationLine: 'underline' },
-  bgGray: { backgroundColor: Colors.l4 },
+  underline: {textDecorationLine: 'underline'},
+  bgGray: {backgroundColor: Colors.l4},
   //---------------
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
+    marginBottom: -3,
   },
   address: {
     marginBottom: 0,

@@ -23,7 +23,8 @@ const RegisterName = () => {
         FullName: '',
       }}
       validationSchema={nameSchema}
-      onSubmit={onUpdatePersonalInfo}>
+      onSubmit={onUpdatePersonalInfo}
+    >
       {({
         handleChange: _handleChange,
         handleBlur,
@@ -47,7 +48,7 @@ const RegisterName = () => {
             <Content
               style={styles.wrap}
               title="Nhập tên"
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+              text="Nhập họ và tên để tạo tài khoản trên ví EPAY"
             />
 
             <View style={[styles.wrap, styles.flex1]}>
@@ -60,6 +61,7 @@ const RegisterName = () => {
                 error={touched.FullName && errors.FullName}
                 value={values.FullName}
                 isDeleted={values.FullName}
+                maxLength={100}
               />
             </View>
 

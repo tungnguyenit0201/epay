@@ -10,6 +10,11 @@ export default {
   black: '#222',
   gray: '#666',
 
+  bg1: '#07006A',
+  bg2: '#4D0094',
+  bg3: '#6B45FF',
+  bg4: '#5066CF',
+
   l1: '#F8F8F8',
   l2: '#EEEEEE',
   l3: '#DCDCDC',
@@ -31,9 +36,6 @@ export default {
 
   red: '#D80000',
   green: '#1EC84E',
-
-  OtpGray_1: '#D1D5DB',
-  OtpGray_2: '#BEC2C9',
 
   barLeft: '#A389FF',
   barRight: '#3AD3E8',

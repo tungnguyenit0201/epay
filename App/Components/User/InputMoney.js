@@ -99,7 +99,7 @@ const Input = forwardRef(({onChange, errorStyle, placeholder}, ref) => {
           showErrorLabel={!!errorMessage}
           error={errorMessage}
         />
-        <Text style={styles.subText}>vnđ</Text>
+        <Text style={styles.subText}>đ</Text>
       </View>
     </View>
   );
@@ -108,13 +108,15 @@ const Input = forwardRef(({onChange, errorStyle, placeholder}, ref) => {
 const styles = StyleSheet.create({
   rowInput: {
     position: 'relative',
+    marginBottom: 18,
   },
   input: {width: '100%', paddingRight: 50},
   subText: {
     fontWeight: '700',
     position: 'absolute',
-    right: 10,
+    right: 12,
     top: 12,
+    fontSize: 18,
   },
   item: {
     textAlign: 'center',

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Keyboard,
   // useWindowDimensions,
 } from 'react-native';
 import {
@@ -27,6 +28,7 @@ import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {useHistory} from 'context/Wallet/utils';
 import moment from 'moment';
 import FilterModal from 'components/Wallet/History/FilterModal';
+import Navigator from 'navigations/Navigator';
 
 const History = () => {
   const translation = useTranslation();
@@ -74,7 +76,8 @@ const History = () => {
           styles.alignCenter,
           styles.blockTransaction,
         ]}
-        onPress={() => onDetail(item)}>
+        onPress={() => onDetail(item)}
+      >
         <View style={styles.blockCardTick}>
           <Image
             source={Images.TransactionHistory.CardTick}
@@ -92,9 +95,8 @@ const History = () => {
             <Text
               fs="md"
               bold
-              style={
-                item?.isIncome ? {color: blue} : {color: Colors.Highlight}
-              }>
+              style={item?.isIncome ? {color: blue} : {color: Colors.Highlight}}
+            >
               {(item?.isIncome ? '+' : '-') +
                 formatMoney(item?.TransAmount, 'đ')}
             </Text>
@@ -108,7 +110,14 @@ const History = () => {
     <>
       <View style={[styles.bgWhite]}>
         <HeaderBg>
-          <Header back title={translation?.transaction_history} />
+          <Header
+            back
+            title={translation?.transaction_history}
+            onPressBack={() => {
+              Keyboard.dismiss();
+              Navigator.goBack();
+            }}
+          />
         </HeaderBg>
 
         <View style={[styles.wrap, styles.ptb1]}>
@@ -136,7 +145,8 @@ const History = () => {
 
             <TouchableOpacity
               style={[styles.pr1, styles.w1]}
-              onPress={onToggleFilter}>
+              onPress={onToggleFilter}
+            >
               <Text bold>{translation.filter}</Text>
 
               <View style={[styles.absolute, styles.topZero, styles.rightZero]}>
@@ -152,14 +162,16 @@ const History = () => {
                     styles.iconPrimary,
                     styles.cirle,
                     {backgroundColor: red},
-                  ]}>
+                  ]}
+                >
                   <Text
                     style={[
                       styles.textCenter,
                       styles.textSize3,
                       styles.textWhite,
                       styles.lineHeight1,
-                    ]}>
+                    ]}
+                  >
                     3
                   </Text>
                 </View>
@@ -190,7 +202,8 @@ const History = () => {
               styles.alignCenter,
               styles.flex1,
               {justifyContent: 'center'},
-            ]}>
+            ]}
+          >
             <Image
               style={styles.iconBarCross}
               source={

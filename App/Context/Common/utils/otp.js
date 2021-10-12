@@ -62,9 +62,15 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             message: _.get(result, 'ErrorMessage', ''),
           });
         case FUNCTION_TYPE.FORGOT_PASS:
-          setError(result);
-          Navigator.popToTop();
-          return;
+          return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+            phone,
+            functionType,
+            content: {
+              title: 'Đổi mật khẩu \nkhông thành công',
+              text: 'Thông tin nhập không đúng. Vui lòng gọi đến tổng đài nếu cần được hỗ trợ.',
+              hotline: '1900-0000',
+            },
+          });
         default:
           setError(result);
           Navigator.goBack();
@@ -115,6 +121,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         onClose: Navigator.goBack,
         action: [{onPress: Navigator.goBack}],
       }); // TODO: translate
+      Navigator.goBack();
       return false;
     }
 
@@ -129,7 +136,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
     try {
       setLoading(true);
       let canSend = await checkResend();
-      if (canSend) {
+      if (canSend !== false) {
         let result = genOtp({
           phone,
           functionType,
@@ -153,8 +160,8 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
 
   const getLabel = () => {
     switch (functionType) {
-      case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
+      /* case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`; */
       default:
         return `Nhập mã OTP xác thực`;
     }

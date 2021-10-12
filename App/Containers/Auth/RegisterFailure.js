@@ -36,7 +36,7 @@ const RegisterFailure = ({route}) => {
   );
   return (
     // TODO: translate
-    <BlueHeader heightBg="100%">
+    <BlueHeader heightBg="100%" style={styles.pt1}>
       <Header
         back
         // blackIcon
@@ -47,29 +47,30 @@ const RegisterFailure = ({route}) => {
       />
 
       <Content
-        title={'Đăng ký \nkhông thành công!'}
-        text="Bạn đã nhập sai OTP quá 5 lần, 
-          vui lòng quay lại sau ít phút."
+        title={route?.params?.content?.title || 'Đăng ký \nkhông thành công'}
+        text={
+          route?.params?.content?.text ||
+          'Bạn đã nhập sai OTP quá 3 lần, vui lòng quay lại sau 30 phút.'
+        }
         styleText={{color: Colors.white}}
         style={[styles.wrap, styles.flex1, styles.mt1]}
       />
 
       <FooterContainer>
         <Button
-          label="Gọi 024 32252336"
+          label={`Gọi ${route?.params?.content?.hotline || '024 32252336'}`}
           style={styles.btn}
           onPress={openCallDialog}
           mb={Spacing.PADDING - 10}
-          bold
         />
         <Button
           label="Quay lại sau"
           style={styles.btn}
-          bg={Colors.white}
-          color={Colors.black}
-          border={Colors.cl4}
+          // bg={Colors.white}
+          // color={Colors.black}
+          // border={Colors.cl4}
+          mode="outline"
           onPress={() => onNavigate(SCREEN.AUTH)}
-          bold
           bgImg={0}
         />
       </FooterContainer>
@@ -83,9 +84,11 @@ const styles = StyleSheet.create({
   //--------------------
   mt1: {marginTop: 56},
   //--------------------
+  pt1: {paddingTop: 40},
+  //--------------------
   btn: {
     paddingTop: 15,
-    paddingBottom: 15,
+    paddingBottom: 10,
   },
   iconRight: {paddingRight: Spacing.PADDING},
 });

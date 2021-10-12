@@ -2,12 +2,20 @@ import React, {useState} from 'react';
 import {View, Image, StyleSheet, useWindowDimensions} from 'react-native';
 import {Colors, Images, Spacing, base} from 'themes';
 
-const FooterContainer = ({children, style}) => {
+const FooterContainer = ({children, pb, style}) => {
   // const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
   return (
     <View
-      style={[styles.py1, styles.blockBtn, styles.wrap, styles.bgWhite, style]}>
+      style={[
+        {paddingBottom: !!pb ? pb : 35},
+        styles.pt1,
+        styles.blockBtn,
+        styles.wrap,
+        styles.bgWhite,
+        style,
+      ]}
+    >
       {children}
     </View>
   );
@@ -16,7 +24,7 @@ const FooterContainer = ({children, style}) => {
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //------------------
-  py1: {paddingVertical: Spacing.PADDING},
+  pt1: {paddingTop: Spacing.PADDING},
   //------------------
   bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
   //------------------

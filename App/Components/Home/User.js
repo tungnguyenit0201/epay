@@ -20,7 +20,14 @@ const User = ({data, style}) => {
         onPress={() => Navigator.navigate(SCREEN.USER)}
         style={[styles.user, styles.flex1]}
       >
-        <Text bold style={[styles.text, styles.textSize1]}>
+        <Text
+          bold
+          size={Fonts.SM}
+          right
+          color={Colors.white}
+          style={styles.lh1}
+          mb={3}
+        >
           {personalInfo?.FullName}
         </Text>
         <Text style={styles.text}>{hidePhone(phone)}</Text>
@@ -41,22 +48,26 @@ const User = ({data, style}) => {
             />
           )}
         </TouchableOpacity>
-        <TouchableOpacity
+
+        {/* TODO: show notifications count */}
+        {/* <TouchableOpacity
           style={styles.noti}
           onPress={() => {
             Navigator.navigate(SCREEN.NOTIFICATION);
-          }}
-        >
+          }}>
           <Text style={styles.notiText}>10</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  lh1: {lineHeight: 18},
+  //-------------
   item: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   wicon: {
     overflow: 'hidden',
@@ -64,7 +75,7 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 99,
     backgroundColor: Colors.black,
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: Colors.white,
   },
   user: {
@@ -74,7 +85,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: Colors.white,
   },
-
   noti: {
     width: 16,
     height: 16,
@@ -92,8 +102,6 @@ const styles = StyleSheet.create({
   },
   //----------------
   flex1: {flex: 1},
-  //----------------
-  textSize1: {fontSize: Fonts.SM},
 });
 
 export default User;

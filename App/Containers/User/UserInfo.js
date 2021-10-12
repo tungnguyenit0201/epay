@@ -116,9 +116,7 @@ const UserInfo = () => {
                 <Text bold fs="h5" mb={5}>
                   Thông tin cá nhân
                 </Text>
-                <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
-                </Text>
+                <Text style={styles.headingDesc}>Nhập giới thiệu về bạn</Text>
               </View>
 
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
@@ -196,7 +194,7 @@ const UserInfo = () => {
                   Thông tin tài khoản
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  Cập nhật thông tin giấy tờ tùy thân
                 </Text>
               </View>
 
@@ -237,18 +235,23 @@ const UserInfo = () => {
                   Thông tin Email
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  Cập nhật thông tin liên hệ
                 </Text>
               </View>
 
-              {/* {PersonalInfo?.Email && ( */}
               <TouchableOpacity
                 style={base.leftAuto}
                 onPress={() => {
-                  Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
-                    type: 'update_email',
-                    headerLabel: 'Nhập mật khẩu',
-                  });
+                  if (PersonalInfo?.Email) {
+                    Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
+                      type: 'update_email',
+                      headerLabel: 'Nhập mật khẩu',
+                    });
+                  } else {
+                    Navigator.navigate(SCREEN.VERIFY_EMAIL, {
+                      functionType: FUNCTION_TYPE.AUTH_EMAIL,
+                    });
+                  }
                 }}
               >
                 <Image
@@ -256,7 +259,6 @@ const UserInfo = () => {
                   source={require('images/profile/Edit2.png')}
                 />
               </TouchableOpacity>
-              {/* )} */}
             </View>
 
             <View style={[base.row]}>
@@ -267,19 +269,7 @@ const UserInfo = () => {
               {PersonalInfo?.Email ? (
                 <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
               ) : (
-                <>
-                  <Text color={Colors.g4}>Chưa có</Text>
-                  <TouchableOpacity
-                    style={base.leftAuto}
-                    onPress={() => {
-                      Navigator.navigate(SCREEN.VERIFY_EMAIL, {
-                        functionType: FUNCTION_TYPE.AUTH_EMAIL,
-                      });
-                    }}
-                  >
-                    <Text style={styles.link}>Thêm email</Text>
-                  </TouchableOpacity>
-                </>
+                <Text color={Colors.g4}>Chưa có</Text>
               )}
             </View>
           </View>
@@ -302,10 +292,14 @@ const UserInfo = () => {
           content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
         GTTT cũ. Bạn có chắc chắn muốn 
         đổi không?" // TODO: translate
+          icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
-              <Button mb={10} label="Có" onPress={onReVerify} />
-              <TouchableOpacity onPress={() => onReVerify('hideModal')}>
+              <Button mb={10} bold label="Có" onPress={onReVerify} />
+              <TouchableOpacity
+                style={styles.textCenter}
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
@@ -323,6 +317,8 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     backgroundColor: Colors.g4,
   },
+
+  buttonGroup: {alignItems: 'center'},
   wedit: {
     overflow: 'hidden',
     borderRadius: 99,
@@ -376,5 +372,7 @@ const styles = StyleSheet.create({
   },
   //tho------------
   flex1: {flex: 1},
+
+  textCenter: {alignSelf: 'center'},
 });
 export default UserInfo;

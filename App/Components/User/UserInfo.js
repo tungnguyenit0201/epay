@@ -20,14 +20,15 @@ const User = ({style}) => {
   const translation = useTranslation();
 
   return (
-    <View style={[base.shadow, styles.item, style]}>
+    <View style={[styles.item, style]}>
       <TouchableOpacity
         style={styles.wicon}
         onPress={() => {
           Navigator.navigate(SCREEN.USER_INFO);
-        }}>
+        }}
+      >
         <Image
-          style={{width: 56, height: 56}}
+          style={styles.userPortrait}
           source={
             userInfo?.personalInfo?.Avatar
               ? {uri: userInfo.personalInfo.Avatar}
@@ -35,20 +36,29 @@ const User = ({style}) => {
           }
         />
       </TouchableOpacity>
-      <View>
-        <Text bold size={Fonts.H6} mb={5}>
+
+      <View style={styles.flex1}>
+        <Text bold size={Fonts.MD} mb={2} style={styles.lh1}>
           {userInfo?.personalInfo?.FullName}
         </Text>
-        <Text>{hidePhone(phone)}</Text>
-      </View>
-      <View style={{marginLeft: 'auto'}}>
-        <StatusUser size="xxs" />
+
+        <View style={[styles.flexRow, styles.alignCenter]}>
+          <Text style={styles.flex1}>{hidePhone(phone)}</Text>
+          <StatusUser size="xxs" />
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
+  //-------------
+  flexRow: {flexDirection: 'row'},
+  alignCenter: {alignItems: 'center'},
+  //-------------
+  lh1: {lineHeight: 24},
+  //-------------
   item: {
     flexDirection: 'row',
     marginBottom: 10,
@@ -62,6 +72,8 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     backgroundColor: Colors.black,
   },
+  //-------------
+  userPortrait: {width: 56, height: 56},
 });
 
 export default User;

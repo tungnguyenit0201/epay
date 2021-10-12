@@ -1,47 +1,75 @@
 import React, {useState} from 'react';
-import {StyleSheet, Pressable, View, Platform} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
 import {scale} from 'utils/Functions';
-import {Colors, Spacing, Fonts} from 'themes';
-import {Text} from 'components';
+import {Colors, Spacing, Fonts, Images} from 'themes';
+import {Text, Button} from 'components';
 import WebView from 'components/WebView/Partial';
 
 const AlertCustom = () => {
   const {error} = useCommon();
   const {setError} = useError();
-
+  const onPressAction = action => {
+    action?.();
+    error?.onClose?.();
+    setError(null);
+  };
   return (
     // TODO: translate
     <View style={styles.container}>
       <Modal
-        animationType="slide"
+        animationIn="zoomIn"
         transparent={true}
-        visible={!!error?.errorCode}
+        visible={!!error?.errorMessage}
         onBackdropPress={() => setError(null)}
       >
         <View style={styles.centeredView}>
+          <View style={styles.header}>
+            <Image
+              source={Images.BgModal}
+              style={styles.bgImg}
+              resizeMode="contain"
+            />
+            <Image
+              source={error?.icon ? error?.icon : Images.Modal.Danger}
+              style={styles.icon}
+            />
+          </View>
           <View style={styles.modalView}>
             {!!error?.title && (
-              <Text style={[styles.modalText, styles.title]}>
+              <Text bold fs="h6" centered mb={8}>
                 {error?.title}
               </Text>
             )}
-            <WebView
-              style={{minHeight: 70}}
-              source={{html: ` ${error?.errorMessage}`}}
-            />
-            {/* <Text style={styles.modalText}>{error?.errorMessage}</Text> */}
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => {
-                setError(null);
-                error?.onClose && error?.onClose();
-              }}
-            >
-              <Text style={styles.textStyle}>Đóng</Text>
-            </Pressable>
+            <View style={{paddingVertical: Spacing.PADDING}}>
+              <WebView
+                style={{minHeight: 70}}
+                source={{html: ` ${error?.errorMessage}`}}
+              />
+            </View>
+            {error?.renderContent?.()}
+            {error?.action?.length > 0 &&
+              error?.action?.map((item, index) => {
+                return (
+                  <View key={`${Math.random(1, 100)}-action`}>
+                    {index == 0 ? (
+                      <Button
+                        label={item?.label || 'Đóng'}
+                        onPress={() => onPressAction(item?.onPress)}
+                      />
+                    ) : (
+                      <TouchableOpacity
+                        style={styles.btnOutline}
+                        onPress={() => onPressAction(item?.onPress)}
+                      >
+                        <Text>{item?.label}</Text>
+                      </TouchableOpacity>
+                    )}
+                  </View>
+                );
+              })}
           </View>
         </View>
       </Modal>
@@ -58,37 +86,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   centeredView: {
-    // alignItems: 'center',
     justifyContent: 'center',
-  },
-  modalView: {
     backgroundColor: Colors.white,
     borderRadius: scale(20),
+    width: scale(311),
+    alignSelf: 'center',
+    paddingBottom: Spacing.PADDING,
+  },
+  modalView: {
     paddingHorizontal: Spacing.PADDING * 2,
     paddingVertical: Spacing.PADDING,
-    // alignItems: 'center',
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   title: {
     fontSize: Fonts.H5,
     fontWeight: 'bold',
-  },
-  button: {
-    borderRadius: scale(20),
-    paddingVertical: Spacing.PADDING / 2,
-    paddingHorizontal: Spacing.PADDING,
-    elevation: 2,
-  },
-
-  buttonClose: {
-    backgroundColor: Colors.cl1,
   },
   textStyle: {
     color: Colors.white,
@@ -98,6 +109,26 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: Spacing.PADDING,
     textAlign: 'center',
+  },
+  header: {
+    height: 124,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  bgImg: {
+    width: '100%',
+    position: 'absolute',
+  },
+
+  icon: {
+    width: 64,
+    height: 64,
+  },
+  btnOutline: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Spacing.PADDING,
   },
 });
 

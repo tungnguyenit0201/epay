@@ -11,7 +11,7 @@ import {HelpModal} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {useUser} from 'context/User';
 import {scale} from 'utils/Functions';
-
+import {FUNCTION_TYPE} from 'configs/Constants';
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
   const {token: isLoggedIn} = useUser();
@@ -27,6 +27,7 @@ const OTP = ({route}) => {
     resentOTP,
     openCallDialog,
     label,
+    functionType,
   } = useOTP(route?.params);
   const translation = useTranslation();
 
@@ -52,7 +53,14 @@ const OTP = ({route}) => {
       countdown={countdown}
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
-      label={label}
+      label={
+        functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL ||
+        functionType === FUNCTION_TYPE.AUTH_EMAIL
+          ? 'Mã xác thực gửi về mail ' +
+            route?.params.email +
+            '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
+          : 'Nhập mã OTP xác thực'
+      }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
   );
@@ -83,6 +91,7 @@ const OTP = ({route}) => {
             // avoidStatusBar
             renderRightComponent={() => renderRightComponent()}
             logo={Images.logoEpay}
+            style={styles.mt}
           />
 
           <View style={[styles.wrap, {paddingTop: Spacing.PADDING}]}>
@@ -90,59 +99,22 @@ const OTP = ({route}) => {
           </View>
         </BlueHeader>
       )}
+      <View style={styles.wrapCalMe}>
+        <TouchableOpacity
+          style={styles.callMe}
+          onPress={() => setShowModal(true)}
+        >
+          <Image source={Images.Phone} style={styles.iconPhone} />
+          <Text mb={-3} centered fw="700">
+            Gọi cho tôi
+          </Text>
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity
-        style={[
-          styles.flexRow,
-          styles.justifyCenter,
-          styles.bgGray,
-          {paddingVertical: Spacing.PADDING - 5},
-        ]}
-        onPress={() => setShowModal(true)}
-      >
-        <View
-          style={[
-            styles.lineSize,
-            styles.absolute,
-            styles.bgGray1,
-            styles.top1,
-            styles.left1,
-          ]}
-        ></View>
-        <View
-          style={[
-            styles.lineSize,
-            styles.absolute,
-            styles.bgGray1,
-            styles.top1,
-            styles.right1,
-          ]}
-        ></View>
-        <Image source={Images.Phone} style={styles.iconPhone} />
-        <Text bold>Gọi cho tôi</Text>
-      </TouchableOpacity>
-
-      {/* <HelpModal
+      <HelpModal
         showModal={showModal}
         setShowModal={setShowModal}
         onPress={openCallDialog}
-      /> */}
-      <Modal
-        visible={showModal}
-        onClose={() => setShowModal(false)}
-        title="Gọi tổng đài"
-        content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, 
-          vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
-        buttonGroup={() => (
-          <>
-            <Button mb={15} label="Gọi 1900-0000" bold onPress={() => {}} />
-            <TouchableOpacity onPress={() => setShowModal(false)}>
-              <Text style={styles.textCenter}>Không, cảm ơn</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        icon={Images.SignUp.TouchId}
-        // icon={Images.SignUp.BigPhone}
       />
     </>
   );
@@ -161,15 +133,14 @@ const styles = StyleSheet.create({
   //-----------------------------
   textCenter: {textAlign: 'center'},
   //-----------------------------
-  bgGray: {backgroundColor: Colors.OtpGray_1},
-  bgGray1: {backgroundColor: Colors.OtpGray_2},
+  bgGray: {backgroundColor: Colors.g3},
+  bgGray1: {backgroundColor: Colors.g4},
   //-----------------------------
   iconRight: {paddingRight: Spacing.PADDING},
   iconPhone: {
     height: Spacing.PADDING,
     width: Spacing.PADDING,
     marginRight: 10,
-    top: 1,
   },
   lineSize: {
     width: 1,
@@ -178,6 +149,23 @@ const styles = StyleSheet.create({
   iconSize: {
     width: 20,
     height: 20,
+  },
+  mt: {
+    marginTop: -10,
+  },
+  wrapCalMe: {
+    paddingVertical: scale(10),
+    backgroundColor: Colors.g3,
+  },
+  callMe: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: Colors.g4,
+    marginHorizontal: scale(30),
+    height: 25,
   },
 });
 export default OTP;

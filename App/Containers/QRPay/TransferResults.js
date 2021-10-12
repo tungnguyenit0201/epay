@@ -52,11 +52,11 @@ const TransactionResult = () => {
     },
     {
       label: 'Thực chuyển ',
-      value: '1.000.000 vnd',
+      value: '1.000.000đ',
     },
     {
       label: 'Tổng số tiền',
-      value: <Text bold>1.005.000 vnđ</Text>,
+      value: <Text bold>1.005.000đ</Text>,
     },
   ];
   return (
@@ -99,9 +99,7 @@ const TransactionResult = () => {
           onPress={() => {
             Navigator.navigate(SCREEN.TRANSFER_SUCCESS);
           }}
-          type={1}
           label="Chuyển tiền"
-          bold
         />
       </View>
 

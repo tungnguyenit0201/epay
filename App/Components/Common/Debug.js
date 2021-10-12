@@ -21,7 +21,7 @@ const Debug = () => {
       <Pressable
         style={styles.container}
         onPress={async () => {
-          Navigator.getCurrentRoute().name === 'Auth' &&
+          ['Auth', 'Login'].includes(Navigator.getCurrentRoute().name) &&
             onLoginByTouchID({phone: await getPhone()});
         }}
         onLongPress={() => {
@@ -32,7 +32,8 @@ const Debug = () => {
         <SafeAreaView style={styles.modalContainer}>
           <Pressable
             onPress={() => setShow(false)}
-            style={{alignSelf: 'flex-end'}}>
+            style={{alignSelf: 'flex-end'}}
+          >
             <Text>Close</Text>
           </Pressable>
           <FlatList

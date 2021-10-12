@@ -109,8 +109,7 @@ const OTP = props => {
       <View style={styles.shadowButton}>
         <Button
           label={'Liên kết'}
-          bold
-          size="lg"
+          // size="lg"
           style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -149,8 +148,8 @@ const styles = StyleSheet.create({
   //-----------------------------
   textCenter: {textAlign: 'center'},
   //-----------------------------
-  bgGray: {backgroundColor: Colors.OtpGray_1},
-  bgGray1: {backgroundColor: Colors.OtpGray_2},
+  bgGray: {backgroundColor: Colors.g3},
+  bgGray1: {backgroundColor: Colors.g4},
   //-----------------------------
   iconRight: {paddingRight: Spacing.PADDING},
   iconPhone: {

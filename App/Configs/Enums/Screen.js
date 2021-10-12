@@ -2,6 +2,7 @@ import BankPickerScreen from 'containers/Wallet/Bank/BankPickerScreen';
 
 const SCREEN = {
   LANGUAGE: 'Language',
+  BOADRING: 'Boarding',
   HOME: 'Home',
   AUTH: 'Auth',
   LOGIN: 'Login',
@@ -31,6 +32,8 @@ const SCREEN = {
   TRANSFER_SUCCESS: 'TransferSuccess',
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
+  TRAFFIC_REGISTER: 'RegisterFee',
+  TRAFFIC_REGISTER_RESULT: 'RegisterResult',
   CONFIRMATION: 'Confirmation',
   USER: 'User',
   HISTORY: 'History',

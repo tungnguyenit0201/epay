@@ -37,7 +37,7 @@ const useUserInfo = type => {
     Email: '',
   });
 
-  const {getPhone} = useAsyncStorage();
+  const {getPhone, setName} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useUser();
@@ -76,12 +76,12 @@ const useUserInfo = type => {
       let phone = await getPhone();
       let result = await updatePersonalInfo({
         phone,
-        personalInfo: personalInfo.current,
+        personalInfo: {FullName: personalInfo.current?.FullName},
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         await onGetAllInfo();
-        showModalSmartOTPSuggestion(true);
+        // showModalSmartOTPSuggestion(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else {
         setError(result);
@@ -113,6 +113,7 @@ const useUserInfo = type => {
           personalInfo: result?.PersonalInfo,
         });
         dispatch({type: 'SET_PHONE', phone});
+        result?.PersonalInfo?.FullName && setName(result.PersonalInfo.FullName);
     }
   };
 

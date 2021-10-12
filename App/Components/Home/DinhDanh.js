@@ -20,7 +20,11 @@ const User = () => {
       }}
       style={[styles.item]}
     >
-      <Image style={styles.img} source={Images.Homes.Avatar} />
+      <Image
+        style={styles.img}
+        resizeMode={'contain'}
+        source={Images.Homes.Avatar}
+      />
       <Text style={styles.text}>
         {status == USER_STATUS.INACTIVE_KYC
           ? 'Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.'

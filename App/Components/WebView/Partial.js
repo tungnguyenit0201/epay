@@ -6,7 +6,7 @@ import {Colors, Fonts} from 'themes';
 
 var css = `
   *{
-    font-family: UTM Neo Sans Intel !important;
+    font-family: SVN-Gilroy !important;
     font-size: ${Fonts.FONT_MEDIUM} !important;
     color: ${Colors.TEXT} !important
   }
@@ -15,6 +15,7 @@ var css = `
   }
   body {
     // white-space: pre-wrap; 
+    text-align: center;
    }
   p { max-width: 100% !important }
   .content{ padding: 5px 10px 40px !important }
@@ -35,6 +36,8 @@ const formatHTML = (content, isFormat) => `<html>
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
     />
     <link href="https://lms-fonts.internal.mangoads.com.vn/stylesheet.css" rel="stylesheet">
+    <link href="https://api.epayservices.com.vn/font/averta/stylesheet.css" rel="stylesheet">
+    
     <style>
    ${css}
     </style>

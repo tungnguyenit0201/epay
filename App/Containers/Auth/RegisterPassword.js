@@ -11,7 +11,7 @@ import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
-
+import _ from 'lodash';
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
   const {
@@ -33,6 +33,7 @@ const RegisterPassword = ({route}) => {
     // TODO: translate
     <BlueHeader>
       <Header
+        style={styles.mt}
         back
         renderRightComponent={() => (
           <TouchableOpacity
@@ -141,7 +142,9 @@ const RegisterPassword = ({route}) => {
                 </View>
 
                 <Button
-                  disabled={!active}
+                  disabled={
+                    !active || !_.isEmpty(errors) || !values.passwordConfirm
+                  }
                   mt={10}
                   label={translation?.sign_up}
                   onPress={handleSubmit}
@@ -164,7 +167,8 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
   //-----------------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginTop: -2.5},
+  mt: {marginTop: -10},
   //-----------------------
   iconSize: {
     width: scale(20),

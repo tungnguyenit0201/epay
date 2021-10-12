@@ -70,17 +70,17 @@ const BankLinked = props => {
   );
   const dataTest_1 = [
     {
-      icon: Images.ConnectBank.Deposit,
+      icon: Images.Homes.NapTien,
       name: translation.top_up,
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: Images.ConnectBank.Withdraw,
+      icon: Images.Homes.RutTien,
       name: translation.withdraw,
       screen: SCREEN.WITHDRAW,
     },
     {
-      icon: Images.ConnectBank.Exchange,
+      icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
       screen: SCREEN.TRANSFER,
     },
@@ -102,7 +102,7 @@ const BankLinked = props => {
     //TODO: Translate
     <>
       <HeaderBg>
-        <Header back title={'Ví của tôi'} />
+        <Header back title={'Ví của tôi'} style={styles.mb} />
 
         <View style={[base.row, styles.block1]}>
           {!showMoney ? (
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   //---------------
   pt1: {paddingTop: 30},
-  pt2: {paddingTop: 12},
+  pt2: {paddingTop: 2},
   //---------------
   pb1: {paddingBottom: 8},
   //---------------
@@ -268,6 +268,9 @@ const styles = StyleSheet.create({
   iconPlus: {
     width: scale(24),
     height: scale(24),
+  },
+  mb: {
+    marginBottom: 28,
   },
 });
 

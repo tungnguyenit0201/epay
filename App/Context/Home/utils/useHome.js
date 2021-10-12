@@ -1,26 +1,27 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import Navigator from 'navigations/Navigator';
-import {MENU, SCREEN} from 'configs/Constants';
+import {ERROR_CODE, MENU, SCREEN} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import {getBanner} from 'services/common';
 import {useAsyncStorage, useShowModal} from 'context/Common/utils';
 import {Images} from 'themes';
 
 const useHome = () => {
+  const {getPhone} = useAsyncStorage();
   let [banner, setBanner] = useState();
   const goSecurity = () => {
     Navigator.navigate(SCREEN.SECURITY);
   };
   const onGetBanner = async () => {
-    let result = await getBanner();
-    console.log('result :>> ', result);
-    setBanner(result);
+    let phone = await getPhone();
+    let result = await getBanner({phone});
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) setBanner(result?.Banners);
   };
-  // useEffect(() => {
-  //   onGetBanner();
-  // }, []);
+  useEffect(() => {
+    onGetBanner();
+  }, []);
 
-  return {goSecurity};
+  return {banner, goSecurity};
 };
 
 const useModalSmartOTP = () => {
@@ -59,11 +60,11 @@ const useIconConfig = () => {
       screen: SCREEN.TOP_UP,
     },
 
-    // {
-    //   icon: Images.Homes.GiaoThong,
-    //   name: 'Giao thông',
-    //   screen: SCREEN.TOP_UP,
-    // },
+    TRAFFIC: {
+      icon: Images.Homes.GiaoThong,
+      name: 'Giao thông',
+      screen: SCREEN.TOP_UP,
+    },
     // {
     //   icon: Images.Homes.BaoHiem,
     //   name: 'Bảo hiểm',

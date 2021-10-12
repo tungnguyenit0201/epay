@@ -30,7 +30,7 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {usePermission} from 'context/Common/utils';
 
 const TabIcons = {
-  Home: Images.TabBar.HomeGray,
+  Home: Images.TabBar.Home,
   User: Images.TabBar.User,
 };
 const TabIconsActive = {
@@ -106,28 +106,31 @@ const TabNavigation = () => {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={styles.tab}
+                style={label === 'Home' ? styles.tabH : styles.tabU} // TODO: translate
               >
                 <Image
                   source={
-                    // !isFocused
-                    //   ? TabIcons[route.name]
-                    //   : TabIconsActive[route.name]
-                    TabIcons[route.name]
+                    !isFocused
+                      ? TabIcons[route.name]
+                      : TabIconsActive[route.name]
+                    // TabIconsActive[route.name]
                   }
                   style={[
                     styles.icon,
                     // route.name != 'Home' &&
-                    {
-                      tintColor: isFocused ? Colors.cl1 : Colors.gray,
-                    },
+                    // {
+                    //   tintColor: isFocused ? Colors.cl1 : Colors.gray,
+                    // },
+                    isFocused || {tintColor: Colors.gray},
                   ]}
-                  resizeMode={'cover'}
+                  // resizeMode={'cover'}
+                  resizeMode={'contain'}
                 />
                 <Text
                   style={{
                     color: isFocused ? Colors.cl1 : Colors.gray,
                   }}
+                  centered
                 >
                   {TabLabels[label]}
                 </Text>
@@ -187,10 +190,19 @@ const styles = StyleSheet.create({
     height: scale(80),
     // zIndex: 1,
   },
-  tab: {
+  tabH: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingVertical: scale(12),
+    marginRight: scale(40),
+  },
+  tabU: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingVertical: scale(12),
+    /* marginLeft: scale(15), */
   },
   icon: {
     marginTop: Spacing.PADDING / 2,

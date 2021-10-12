@@ -78,7 +78,7 @@ const Transfer = () => {
               onChange={handleChange}
             />
             <Text mr={5} ml={5}>
-              VNĐ
+              đ
             </Text>
             {showClose && (
               <TouchableOpacity>
@@ -115,26 +115,20 @@ const Transfer = () => {
           onPress={() => {
             Navigator.navigate(SCREEN.TRANSFER_RESULTS);
           }}
-          type={1}
           label="Tiếp tục"
-          bold
         />
       </View>
 
       <Modal
         visible={showModal}
         onClose={() => setShowModal(false)}
-        icon={require('images/qrpay/MoneySend.png')}>
+        icon={require('images/qrpay/MoneySend.png')}
+      >
         <Text centered mb={20}>
           Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
-          trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
+          trong ngày, hạn mức hiện tại của bạn là X0.000.000đ
         </Text>
-        <Button
-          type={1}
-          mb={10}
-          label="Đóng"
-          onPress={() => setShowModal(false)}
-        />
+        <Button mb={10} label="Đóng" onPress={() => setShowModal(false)} />
       </Modal>
     </>
   );

@@ -50,11 +50,7 @@ const OTPBySmartOTP = props => {
         {renderTime()}
       </View>
       <View style={base.boxBottom}>
-        <Button
-          label={translation.transaction.confirm}
-          bold
-          onPress={onConfirm}
-        />
+        <Button label={translation.transaction.confirm} onPress={onConfirm} />
       </View>
     </View>
   );

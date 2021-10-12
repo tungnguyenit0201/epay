@@ -137,7 +137,7 @@ export default React.forwardRef(
               }}
             >
               <Image
-                source={showPassword ? Images.Eye : Images.EyeGray}
+                source={showPassword ? Images.Eye2 : Images.EyeGray2}
                 style={{width: scale(20), height: scale(20)}}
                 resizeMode="contain"
               />

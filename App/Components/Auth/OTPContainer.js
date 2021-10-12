@@ -44,10 +44,11 @@ const OTPContainer = ({
       {/* <OTP onChange={onChange} message={message} /> */}
 
       <View style={styles.flexRow_1}>
-        <Text style={styles.fontSize_1}>
-          Gửi lại mã xác thực (OTP) sau:
+        <View style={styles.flexRow_1}>
+          <Text style={styles.fontSize_1}>Gửi lại mã xác thực (OTP) </Text>
+
           <Pressable
-            style={{marginTop: -3}}
+            //style={{marginTop: -3}}
             disabled={countdown > 0}
             onPress={resentOTP}
           >
@@ -60,11 +61,11 @@ const OTPContainer = ({
               ]}
             >
               {countdown > 0
-                ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
+                ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
                 : ` Gửi lại`}
             </Text>
           </Pressable>
-        </Text>
+        </View>
 
         {onChangePhone && (
           <Pressable onPress={onChangePhone}>
@@ -108,14 +109,15 @@ const styles = StyleSheet.create({
   otp: {
     width: scale(40),
     backgroundColor: Colors.white,
+    fontWeight: '700',
     fontSize: Fonts.H4,
     color: Colors.BLACKTEXT,
     textAlign: 'center',
-    borderBottomColor: Colors.cl4,
+    borderBottomColor: Colors.g2,
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: 3,
     borderRadius: 2,
-    height: scale(28),
+    height: scale(50),
   },
   message: {
     marginTop: 16,

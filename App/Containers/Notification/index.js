@@ -11,8 +11,9 @@ import {
 import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
-import {SCREEN, NOTIFY} from 'configs/Constants';
+import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
 import {scale} from 'utils/Functions';
+import moment from 'moment';
 
 import {useTranslation} from 'context/Language';
 
@@ -55,7 +56,7 @@ const Notification = () => {
                 }}
               >
                 <Text style={[type === item.title && styles.textWhite]}>
-                  {item.title}
+                  {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
               </Pressable>
             )}
@@ -83,16 +84,25 @@ const Notification = () => {
                     onPress={() => onPressNotify(item)}
                   >
                     <View style={styles.head}>
-                      <Image
-                        source={require('images/favicon.png')}
-                        style={styles.icon}
-                      />
-                      <Text style={styles.date}>{item?.Time}</Text>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}
+                      >
+                        <Image
+                          source={require('images/favicon.png')}
+                          style={styles.icon}
+                        />
+
+                        <Text bold fs="h6" ml={10} centered>
+                          {item?.Title}
+                        </Text>
+                      </View>
+                      <Text style={styles.date}>
+                        {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
+                          'hh:MMA | DD/MM/YYYY',
+                        )}
+                      </Text>
                     </View>
-
-                    <Text style={styles.title}>{item?.Title}</Text>
-
-                    <Text style={styles.content}>{item?.Content}</Text>
+                    <Text>{item?.Content}</Text>
                     {/* {item?.ContentImgUrl && (
                       <Image
                         source={{uri: `${item?.ContentImgUrl}`}}
@@ -110,7 +120,7 @@ const Notification = () => {
                     source={require('images/noti/Noti.png')}
                     style={styles.imgSuccess}
                   />
-                  <Text>Không có thông báo nào</Text>
+                  <Text>Chưa có thông báo mới</Text>
                 </View>
               </>
             )}
@@ -151,7 +161,7 @@ const styles = StyleSheet.create({
     height: 24,
     position: 'absolute',
     right: Spacing.PADDING,
-    bottom: 20,
+    bottom: 23,
   },
   bgImg: {
     width: scale(375),
@@ -193,8 +203,6 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     fontSize: 12,
   },
-
-  title: {fontWeight: 'bold', fontSize: Fonts.H6, marginBottom: 10},
 
   icon: {
     width: 20,

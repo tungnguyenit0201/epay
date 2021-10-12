@@ -76,8 +76,10 @@ export default {
     CASH_IN_NAPAS: 'bank/cash_in_napas',
     DEFAULT_BANK_CONNECT: 'default_bank_connect',
     PROMO_APPLY: 'payment/promo_apply',
+    GET_PROMOTION: 'payment/get_promotions',
     PAYMENT: 'payment/payment',
     MONEY_TRANSFER: 'wallet/money_transfer',
+    GET_SOURCE_MONEY: 'wallet/get_source_money',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

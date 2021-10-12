@@ -1,5 +1,7 @@
 package com.mangoads.epay;
 
+import com.mangoads.epay.generated.BasePackageList;
+
 import android.app.Application;
 import android.content.Context;
 
@@ -16,7 +18,14 @@ import com.mangoads.epay.nativemodules.vntpekyc.VnptEkycPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
+import java.util.Arrays;
+
+import org.unimodules.adapters.react.ModuleRegistryAdapter;
+import org.unimodules.adapters.react.ReactModuleRegistryProvider;
+
 public class MainApplication extends Application implements ReactApplication {
+
+  private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
@@ -33,7 +42,13 @@ public class MainApplication extends Application implements ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           // packages.add(new ReactNativeContacts());
-           packages.add(new VnptEkycPackage());
+          packages.add(new VnptEkycPackage());
+
+          // Add unimodules
+          List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+            new ModuleRegistryAdapter(mModuleRegistryProvider)
+          );
+          packages.addAll(unimodules);
 
           return packages;
         }

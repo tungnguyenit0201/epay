@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -7,16 +7,16 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import { Button, Text, FWLoading, Header } from 'components';
-import { RNCamera } from 'react-native-camera';
-import { Colors, Fonts, Images, Spacing } from 'themes';
-import { scale } from 'utils/Functions';
-import { useDropImage } from 'context/User/utils';
-import { useIsFocused } from '@react-navigation/native';
+import {Button, Text, FWLoading, Header} from 'components';
+import {RNCamera} from 'react-native-camera';
+import {Colors, Fonts, Images, Spacing} from 'themes';
+import {scale} from 'utils/Functions';
+import {useDropImage} from 'context/User/utils';
+import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
-import { useVerifyInfo } from 'context/User/utils';
+import {useVerifyInfo} from 'context/User/utils';
 import KYCType from 'configs/Enums/KYCType';
-import { useTranslation } from 'context/Language';
+import {useTranslation} from 'context/Language';
 
 const CapturePicture = ({
   onDropImage,
@@ -27,8 +27,8 @@ const CapturePicture = ({
   verifyParams,
   type,
 }) => {
-  const { width, height } = useWindowDimensions();
-  const { image, camera, showCamera, loading, setShowCamera, capturePicture } =
+  const {width, height} = useWindowDimensions();
+  const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
   const isFocused = useIsFocused();
   const translation = useTranslation();
@@ -52,9 +52,7 @@ const CapturePicture = ({
       if (cameraType === 'front') {
         return () => captureFaceImage();
       }
-      return () => type === 'back'
-        ? captureBackImage()
-        : captureFrontImage();
+      return () => (type === 'back' ? captureBackImage() : captureFrontImage());
     }
     return () => setShowCamera(1);
   }, [eKYC, cameraType, type]);
@@ -67,8 +65,7 @@ const CapturePicture = ({
     // TODO: translate
     <>
       {!showCamera && (
-        <View
-          style={style}>
+        <View style={style}>
           {imagePath || draft ? (
             <View style={[styles.wrapImg, style]}>
               <View style={styles.titleRow}>
@@ -76,15 +73,16 @@ const CapturePicture = ({
                   size={Fonts.H6}
                   centered
                   bold
-                  style={styles.textUppercase}>
+                  style={styles.textUppercase}
+                >
                   {title}
                 </Text>
                 <Button
                   onPress={KYCFunction}
                   label={translation?.take_a_photo}
                   style={styles.smallButton}
+                  size="sm"
                   leftIcon={Images.VerifyUserInfo.camera}
-                  bold
                 />
               </View>
               <Image
@@ -97,7 +95,7 @@ const CapturePicture = ({
                   },
                 ]}
                 imageStyle={styles.imgFront}
-                source={{ uri: imagePath ? imagePath : draft?.path }}
+                source={{uri: imagePath ? imagePath : draft?.path}}
                 resizeMode={'contain'}
               />
             </View>
@@ -108,7 +106,8 @@ const CapturePicture = ({
                 mb={10}
                 centered
                 bold
-                style={styles.textUppercase}>
+                style={styles.textUppercase}
+              >
                 {title}
               </Text>
               <Image
@@ -116,7 +115,7 @@ const CapturePicture = ({
                 source={Images.VerifyUserInfo.wave}
                 resizeMode="contain"
               />
-              <View style={{ alignItems: 'center' }}>
+              <View style={{alignItems: 'center'}}>
                 <Button
                   onPress={KYCFunction}
                   label={'Chụp ảnh'}
@@ -126,7 +125,6 @@ const CapturePicture = ({
               </View>
             </View>
           )}
-
         </View>
       )}
       {showCamera && (
@@ -152,35 +150,38 @@ const CapturePicture = ({
                 message: 'We need your permission to use your audio',
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
-              }}>
-              {({ camera, status, recordAudioPermissionStatus }) => {
+              }}
+            >
+              {({camera, status, recordAudioPermissionStatus}) => {
                 if (status !== 'READY') return <FWLoading />;
                 return (
                   <View
                     style={{
                       width: width,
                       height: height,
-                    }}>
+                    }}
+                  >
                     <Header
                       back
                       avoidStatusBar
                       title={title}
                       onPressBack={() => setShowCamera(false)}
-                      style={{ zIndex: 10 }}
+                      style={{zIndex: 10}}
                     />
                     <View
                       style={{
                         position: 'absolute',
                         width: width,
                         height: height,
-                      }}>
+                      }}
+                    >
                       <Image
                         source={
                           cameraType == 'back'
                             ? Images.Camera.CameraSquare
                             : Images.Camera.Oval
                         }
-                        style={{ width: width, height: height }}
+                        style={{width: width, height: height}}
                       />
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>
@@ -190,7 +191,8 @@ const CapturePicture = ({
                           centered
                           ml={Spacing.PADDING}
                           mr={Spacing.PADDING}
-                          mt={Spacing.PADDING * 2}>
+                          mt={Spacing.PADDING * 2}
+                        >
                           Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
                           chụp đủ sáng và rõ nét
                         </Text>
@@ -201,7 +203,8 @@ const CapturePicture = ({
                         style={styles.wrapBtn}
                         onPress={() =>
                           capturePicture(onDropImage, cameraType == 'back')
-                        }>
+                        }
+                      >
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}
@@ -296,8 +299,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   smallButton: {
-    height: scale(32),
     paddingHorizontal: 16,
+    marginLeft: Spacing.PADDING,
+    flex: 1,
   },
   emptyHolder: {
     paddingVertical: Spacing.PADDING * 3,

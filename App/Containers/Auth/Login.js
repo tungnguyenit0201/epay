@@ -13,15 +13,17 @@ import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
-
+import * as LocalAuthentication from 'expo-local-authentication';
+import WebView from 'components/WebView/Partial';
 const Login = ({route}) => {
-  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
+  const {phone, name} = _.get(route, 'params', {});
+  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID, message} =
     useAuth();
   const translation = useTranslation();
 
   const {biometryType, onTouchID} = useTouchID({
-    onSuccess: () =>
-      onLoginByTouchID({phone: _.get(route, 'params.phone', '')}),
+    autoShow: !name,
+    onSuccess: () => onLoginByTouchID({phone}),
   });
 
   return (
@@ -31,9 +33,15 @@ const Login = ({route}) => {
         <BigLogo style={{marginBottom: 30}} />
         <Content
           style={styles.wrap}
-          title={translation.enter_your_password}
+          title={
+            name
+              ? `Xin chào ${_.last(name.split(' '))}`
+              : translation.enter_your_password
+          }
           text={
-            translation.password_for_account_security_and_transaction_confirmation_at_checkout
+            name
+              ? phone
+              : translation.password_for_account_security_and_transaction_confirmation_at_checkout
           }
         />
       </View>
@@ -42,10 +50,9 @@ const Login = ({route}) => {
         initialValues={{
           password: '',
         }}
-        onSubmit={({password}) =>
-          onLogin({phone: _.get(route, 'params.phone', ''), password})
-        }
-        validationSchema={passwordSchema}>
+        onSubmit={({password}) => onLogin({phone, password})}
+        validationSchema={passwordSchema}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -72,7 +79,7 @@ const Login = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.password && errors.password}
                   value={values.password}
-                  leftIcon={Images.Transfer.Lock}
+                  //leftIcon={Images.Transfer.Lock}
                   autoFocus
                   style={styles.wrap}
                 />
@@ -80,16 +87,19 @@ const Login = ({route}) => {
                 <View style={[styles.box, {marginTop: 5}]}>
                   <Pressable onPress={onForgetPassword}>
                     <Text style={[styles.linkText]}>
-                      {translation.forgot_password}
+                      {translation.forgot_password}?
                     </Text>
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.linkText]}>Đổi số điện thoại</Text>
+                    <Text style={[styles.linkText]}>Đổi SĐT</Text>
                   </Pressable>
                 </View>
+                <WebView
+                  style={styles.textError}
+                  source={{html: ` ${message}`}}
+                />
               </View>
-
               <FooterContainer>
                 <View style={[styles.flexRow]}>
                   <Button
@@ -103,7 +113,9 @@ const Login = ({route}) => {
                     <Pressable onPress={onTouchID} style={styles.btn}>
                       <Icon
                         icon={
-                          biometryType === 'FaceID'
+                          biometryType ===
+                          LocalAuthentication.AuthenticationType
+                            .FACIAL_RECOGNITION
                             ? Images.SignIn.Face
                             : Images.SignIn.FingerPrint
                         }
@@ -161,6 +173,12 @@ const styles = StyleSheet.create({
   iconSize: {
     width: scale(17),
     height: scale(17),
+  },
+  textError: {
+    marginTop: 50,
+    color: Colors.Highlight,
+    textAlign: 'center',
+    minHeight: 200,
   },
 });
 export default Login;

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
 import {Colors, Spacing, Images} from 'themes';
-import {useForgetPassword} from 'context/Auth/utils';
+import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
@@ -19,11 +19,14 @@ import _ from 'lodash';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import {HelpModal} from 'components/Auth';
 
 const ForgetNewPassword = ({route}) => {
   const {phone} = route?.params;
   const {onNewPassword, active, onSetActive} = useForgetPassword();
   const translation = useTranslation();
+  const {showModal, setShowModal, openCallDialog, onGoTerm} = useRegister();
+
   const onSubmit = values => {
     onNewPassword({...values, phone});
   };
@@ -35,7 +38,10 @@ const ForgetNewPassword = ({route}) => {
         // blackIcon
         // avoidStatusBar
         renderRightComponent={() => (
-          <TouchableOpacity style={styles.pr1}>
+          <TouchableOpacity
+            style={styles.pr1}
+            onPress={() => setShowModal(true)}
+          >
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -79,7 +85,7 @@ const ForgetNewPassword = ({route}) => {
                 <Content
                   title="Đặt lại mật khẩu"
                   text={
-                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                    'Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa & số'
                   }
                 />
                 <TextInput
@@ -90,7 +96,8 @@ const ForgetNewPassword = ({route}) => {
                   placeholder={translation.enter_your_password}
                   error={touched.newPassword && errors.newPassword}
                   value={values.newPassword}
-                  leftIcon={Images.Transfer.Lock}
+                  maxLength={20}
+                  /* leftIcon={Images.Transfer.Lock} */
                 />
                 <TextInput
                   password
@@ -100,12 +107,11 @@ const ForgetNewPassword = ({route}) => {
                   placeholder={translation.confirm_password}
                   error={touched.passwordConfirm && errors.passwordConfirm}
                   value={values.passwordConfirm}
-                  leftIcon={Images.Transfer.Lock}
+                  maxLength={20}
+                  /* leftIcon={Images.Transfer.Lock} */
                 />
                 <Text style={styles.note}>
-                  {
-                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
-                  }
+                  {`Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa và số`}
                 </Text>
               </ScrollView>
 
@@ -116,7 +122,7 @@ const ForgetNewPassword = ({route}) => {
                     {` Tôi đồng ý với các `}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}
                     >
                       <Text style={styles.firstLink}>
                         {'Thoả thuận người dùng '}
@@ -125,7 +131,7 @@ const ForgetNewPassword = ({route}) => {
                     và
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => {}}
+                      onPress={() => onGoTerm(SCREEN.POLICY)}
                     >
                       <Text style={styles.firstLink}>
                         {'Chính sách quyền riêng tư '}
@@ -146,6 +152,11 @@ const ForgetNewPassword = ({route}) => {
           );
         }}
       </Formik>
+      <HelpModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPress={openCallDialog}
+      />
     </BlueHeader>
   );
 };

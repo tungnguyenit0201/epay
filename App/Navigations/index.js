@@ -44,6 +44,8 @@ import Withdraw from 'containers/Wallet/Withdraw';
 import MyQR from 'containers/Wallet/MyQR';
 import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
+import RegisterResult from 'containers/Service/TrafficFee/RegisterResult';
+import RegisterFee from 'containers/Service/TrafficFee/Register';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
 import Confirmation from 'containers/Wallet/Confirmation';
 import Security from 'containers/User/Security';
@@ -86,15 +88,17 @@ import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/Wallet/QRPay/TransferResults';
+import TransferResults from 'containers/Wallet/QRPay/TransferConfirm';
 import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
+import Boarding from 'containers/Boarding';
+import {getAll} from 'utils/Functions';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
-  const {getToken} = useAsyncStorage();
+  const {getToken, getName, getPhone} = useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
   const {onPressNotify} = useNotify();
@@ -135,7 +139,14 @@ const AppNavigator = () => {
       else setLanguage(currentLanguage);
     };
 
+    const checkWelcomeBack = async () => {
+      // const name = await getName();
+      const [name, phone] = await getAll(getName, getPhone);
+      name && phone && Navigator.navigate(SCREEN.LOGIN, {phone, name});
+    };
+
     getCurrentLanguage();
+    checkWelcomeBack();
   }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {
@@ -247,6 +258,7 @@ const AppNavigator = () => {
             component={TabNavigation}
           />
           <Stack.Screen name={SCREEN.LANGUAGE} component={Language} />
+          <Stack.Screen name={SCREEN.BOADRING} component={Boarding} />
           <Stack.Screen name={SCREEN.HOME} component={Home} />
           <Stack.Screen name={SCREEN.AUTH} component={Auth} />
           <Stack.Screen name={SCREEN.LOGIN} component={Login} />
@@ -301,6 +313,14 @@ const AppNavigator = () => {
             component={TransferSuccess}
           />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER}
+            component={RegisterFee}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER_RESULT}
+            component={RegisterResult}
+          />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
@@ -393,7 +413,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
-
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
         </Stack.Navigator>
       </KeyboardStateProvider>
