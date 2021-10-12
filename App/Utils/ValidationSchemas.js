@@ -69,7 +69,7 @@ export const newPasswordSchema = yup.object().shape({
   passwordConfirm: yup
     .string()
     .required()
-    .oneOf([yup.ref('newPassword'), null], 'Dữ liệu không khớp với mật khẩu')
+    .oneOf([yup.ref('newPassword'), null], 'Dữ liệu không khớp với mật khẩu')
     .label('Xác nhận mật khẩu')
     .max(20, 'Mật khẩu tối đa 20 ký tự'),
 });

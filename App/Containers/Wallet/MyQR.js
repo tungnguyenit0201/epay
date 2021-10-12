@@ -49,8 +49,7 @@ const QRPay = ({route}) => {
               textAlign: 'center',
               lineHeight: 25,
               marginBottom: 25,
-            }}
-          >
+            }}>
             Nhận tiền từ bạn bè nhanh hơn bằng mã QR của bạn
           </Text>
           <QRCode
@@ -72,7 +71,7 @@ const QRPay = ({route}) => {
 
       <View style={[base.container, styles.flexCenter]}>
         <Button
-          mode="outline"
+          //mode="outline"
           mb={20}
           label={'Nhập số tiền bạn muốn nhận'} // TODO: translate
           onPress={() => {

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Pressable, Image, StyleSheet, Platform} from 'react-native';
+import {View, Pressable, Image, StyleSheet, BackHandler} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Text, Icon} from 'components';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -24,6 +24,17 @@ const Header = ({
   const goBack = () => {
     !!onPressBack ? onPressBack() : Navigator.goBack();
   };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        back && goBack();
+      },
+    );
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <View
       style={[styles.wrap, blackIcon && {backgroundColor: Colors.white}, style]}
