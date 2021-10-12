@@ -7,7 +7,7 @@ import Navigator from 'navigations/Navigator';
 import {use} from '@react-navigation/native';
 import {Formik, useFormikContext} from 'formik';
 import {addressSchema} from 'utils/ValidationSchemas';
-import {scale} from 'utils/Functions';
+import {hideCMND, scale} from 'utils/Functions';
 import {useSelectRegion, useUserInfo} from 'context/User/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
@@ -40,7 +40,8 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}>
+        onSubmit={onUpdateUserInfo}
+      >
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -82,7 +83,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
         <View style={[base.container, {paddingTop: 20}]}>
           <View pointerEvents="none">
             <InputBlock
-              label="Họ và Tên"
+              label="Họ tên"
               value={personalInfo?.FullName}
               style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
             />
@@ -90,7 +91,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <View pointerEvents="none">
             <InputBlock
               label="Ngày sinh"
-              value={personalInfo?.DateOfBirth}
+              value={personalInfo?.DateOfBirth.replaceAll('-', '/')}
               style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
             />
           </View>
@@ -110,11 +111,15 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <View pointerEvents="none">
             <InputBlock
               label="CMND / CCCD"
-              value={personalIC?.ICNumber ? personalIC?.ICNumber : 'Chưa có'}
+              value={
+                personalIC?.ICNumber
+                  ? hideCMND(personalIC?.ICNumber)
+                  : 'Chưa có'
+              }
               style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
             />
           </View>
-          <View pointerEvents="none">
+          {/* <View pointerEvents="none">
             <InputBlock
               label="Nơi cấp"
               value={
@@ -133,41 +138,48 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
               }
               style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
             />
-          </View>
+          </View> */}
 
           <InputBlock
-            label="Tỉnh / Thành phố"
-            error={touched.Provincial && errors.Provincial}
-            value={values.Provincial}
-            isSelect
-            rightIcon={Images.Down}
-            onPress={() => goRegionSelect('cites')}
-          />
-          <InputBlock
-            label="Quận"
-            error={touched.County && errors.County}
-            value={values.County}
-            isSelect
-            rightIcon={Images.Down}
-            onPress={() => goRegionSelect('districts')}
-          />
-          <InputBlock
-            label="Phường / Xã"
-            email
-            required
-            error={touched.Ward && errors.Ward}
-            value={values.Ward}
-            isSelect
-            rightIcon={Images.Down}
-            onPress={() => goRegionSelect('wards')}
-          />
-          <InputBlock
             label="Địa chỉ"
-            required
+            // required
             onChange={handleChange('Address')}
             onBlur={handleBlur('Address')}
             error={touched.Address && errors.Address}
             value={values.Address}
+            placeholder="Nhập số nhà, đường, ..."
+          />
+          <InputBlock
+            // label="Tỉnh / Thành phố"
+            error={touched.Provincial && errors.Provincial}
+            // value={values.Provincial}
+            isSelect
+            rightIcon={Images.Down}
+            onPress={() => goRegionSelect('cites')}
+            placeholder="Tỉnh/Thành"
+            inputStyle={styles.noLabel}
+          />
+          <InputBlock
+            // label="Quận"
+            error={touched.County && errors.County}
+            // value={values.County}
+            isSelect
+            rightIcon={Images.Down}
+            onPress={() => goRegionSelect('districts')}
+            placeholder="Quận"
+            inputStyle={styles.noLabel}
+          />
+          <InputBlock
+            // label="Phường / Xã"
+            email
+            // required
+            error={touched.Ward && errors.Ward}
+            // value={values.Ward}
+            isSelect
+            rightIcon={Images.Down}
+            onPress={() => goRegionSelect('wards')}
+            placeholder="Phường/Xã"
+            inputStyle={styles.noLabel}
           />
         </View>
       </ScrollView>
@@ -184,6 +196,9 @@ const styles = StyleSheet.create({
   flexRow: {
     flex: 1,
     flexDirection: 'row',
-    paddingVertical: 10,
+    paddingVertical: scale(10),
+  },
+  noLabel: {
+    marginTop: scale(100),
   },
 });
