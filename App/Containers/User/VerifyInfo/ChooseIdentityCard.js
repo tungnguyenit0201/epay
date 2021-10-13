@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {ScrollView, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {ScrollView, View, StyleSheet, TouchableOpacity, useWindowDimensions, Image} from 'react-native';
 import {Text, Header, Button, HeaderBg, InputBlock} from 'components';
 import {base, Colors, Images, Spacing} from 'themes';
 import {IC_TPYE, SCREEN} from 'configs/Constants';
@@ -9,6 +9,7 @@ import Navigator from 'navigations/Navigator';
 
 const ChooseIdentityCard = ({route}) => {
   const translation = useTranslation();
+  const { width } = useWindowDimensions();
   const cardList = [
     {label: translation?.id_card, ICType: IC_TPYE.CMND},
     {label: translation?.militaryID, ICType: IC_TPYE.CMNDQD},
@@ -23,6 +24,11 @@ const ChooseIdentityCard = ({route}) => {
   const label = useMemo(() => {
     return info ? info.label : cardList[0].label;
   }, [info, cardList]);
+
+  const backgroundStyle = {
+    width,
+    height: width,
+  };
 
   return (
     <>
@@ -56,11 +62,18 @@ const ChooseIdentityCard = ({route}) => {
           value={label}
         />
       </View>
-      <View style={base.bottom}>
-        <Button
-          label={translation?.continue}
-          onPress={() => onContinue(SCREEN.VERIFY_USER_INFO)}
-        />
+      <Image
+        style={[styles.background, backgroundStyle]}
+        source={Images.VerifyUserInfo.wave}
+        resizeMode="contain"
+      />
+      <View style={styles.bottomContainer}>
+        <View style={styles.buttonContainer}>
+          <Button
+            label={translation?.continue}
+            onPress={() => onContinue(SCREEN.VERIFY_USER_INFO)}
+          />
+        </View>
       </View>
     </>
   );
@@ -75,6 +88,7 @@ const DocumentTypeSelector = (props = {}) => {
         const selectedStyle = {
           backgroundColor: selected ? Colors.selected_gray : Colors.white,
         };
+        const color = selected ? Colors.BLACKTEXT : Colors.l8;
         return (
           <View key={`${Math.random(1, 100)}-dropdown`}>
             <TouchableOpacity
@@ -83,7 +97,7 @@ const DocumentTypeSelector = (props = {}) => {
                 onPress(item);
                 requestClose?.();
               }}>
-              <Text fs="md" style={styles.selectorText}>
+              <Text fs="md" style={styles.selectorText} color={color}>
                 {item?.label}
               </Text>
             </TouchableOpacity>
@@ -109,6 +123,30 @@ const styles = StyleSheet.create({
   selectorText: {
     marginVertical: 10,
     marginHorizontal: Spacing.PADDING,
+  },
+  background: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+  buttonContainer: {
+    paddingHorizontal: Spacing.PADDING,
+    paddingTop: Spacing.PADDING,
+    paddingBottom: Spacing.PADDING * 2,
+    backgroundColor: Colors.white,
+    borderTopLeftRadius: Spacing.PADDING,
+    borderTopRightRadius: Spacing.PADDING,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
+  },
+  bottomContainer: {
+    backgroundColor: Colors.white,
   },
 });
 export default ChooseIdentityCard;

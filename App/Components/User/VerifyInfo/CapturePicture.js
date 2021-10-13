@@ -65,64 +65,39 @@ const CapturePicture = ({
     // TODO: translate
     <>
       {!showCamera && (
-        <View style={style}>
-          {imagePath || draft ? (
-            <View style={[styles.wrapImg, style]}>
-              <View style={styles.titleRow}>
-                <Text
-                  size={Fonts.H6}
-                  centered
-                  bold
-                  style={styles.textUppercase}>
-                  {title}
+        <View style={styles.cardContainer}>
+          <Text
+            fs="h6"
+            bold
+            style={styles.label}>
+            {title}
+          </Text>
+            <Pressable
+              style={styles.contentContainer}
+              onPress={KYCFunction}>
+              {
+                !!imagePath &&
+                <Image
+                style={{
+                  width: image?.widthImg || scale(150),
+                  height: image?.heightImg || scale(150),
+                }}
+                  source={{ uri: imagePath }}
+                  resizeMode={'contain'}
+                />
+              }
+              <View style={styles.imageCover}>
+                <Image
+                  style={styles.iconBigCamera}
+                  source={Images.TrafficFee.BigCamera}
+                  resizeMode={'contain'}
+                />
+                <Text color={Colors.white} bold centered mt={10} fs="h6">
+                  {translation?.face_authentication}
                 </Text>
-                <Button
-                  onPress={KYCFunction}
-                  label={translation?.take_a_photo}
-                  style={styles.smallButton}
-                  leftIcon={Images.VerifyUserInfo.camera}
-                />
               </View>
-              <Image
-                style={[
-                  styles.img,
-                  styles.imgFront,
-                  {
-                    width: image?.widthImg || draft?.widthImg || scale(150),
-                    height: image?.heightImg || draft?.heightImg || scale(150),
-                  },
-                ]}
-                imageStyle={styles.imgFront}
-                source={{uri: imagePath ? imagePath : draft?.path}}
-                resizeMode={'contain'}
-              />
-            </View>
-          ) : (
-            <View style={styles.emptyHolder}>
-              <Text
-                size={Fonts.H6}
-                mb={10}
-                centered
-                bold
-                style={styles.textUppercase}>
-                {title}
-              </Text>
-              <Image
-                style={styles.bgImg}
-                source={Images.VerifyUserInfo.wave}
-                resizeMode="contain"
-              />
-              <View style={{alignItems: 'center'}}>
-                <Button
-                  onPress={KYCFunction}
-                  label={'Chụp ảnh'}
-                  style={styles.btn}
-                  leftIcon={Images.VerifyUserInfo.camera}
-                />
-              </View>
-            </View>
-          )}
-        </View>
+            </Pressable>
+          </View>
       )}
       {showCamera && (
         <Modal isVisible={showCamera} transparent={true}>
@@ -232,35 +207,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
   },
-  wrapImg: {
-    paddingVertical: Spacing.PADDING / 2,
-    paddingHorizontal: Spacing.PADDING,
-    alignItems: 'center',
-    borderRadius: 8,
-    elevation: 3,
-    shadowRadius: 8,
-    shadowColor: Colors.gray,
-    shadowOpacity: 0.3,
+  cardContainer: {
+    paddingVertical: Spacing.PADDING + 3,
+    paddingHorizontal: Spacing.PADDING + 12,
+    marginBottom: Spacing.PADDING,
     backgroundColor: Colors.white,
-  },
-  img: {
-    width: '100%',
-    height: scale(186),
+    borderRadius: 8,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 24,
   },
   imgFront: {
     borderColor: Colors.cl1,
     borderWidth: 1,
     borderRadius: 5,
   },
-
   captureIcon: {
     width: scale(64),
     height: scale(64),
   },
-
-  textUppercase: {
+  label: {
     textTransform: 'uppercase',
     fontWeight: '600',
+    marginBottom: 10,
   },
   bgImg: {
     position: 'absolute',
@@ -271,7 +245,6 @@ const styles = StyleSheet.create({
     width: 128,
     paddingHorizontal: 5,
   },
-
   wrapBtn: {
     position: 'absolute',
     bottom: Spacing.PADDING * 2,
@@ -298,6 +271,29 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.PADDING * 3,
     backgroundColor: Colors.l2,
     borderRadius: 8,
+  },
+  imageCover: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: Colors.BLACK,
+    opacity: 0.8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    zIndex: 1,
+  },
+  iconBigCamera: {
+    width: 60,
+    height: 48,
+  },
+  contentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: scale(186),
   },
 });
 export default CapturePicture;

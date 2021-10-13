@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   ScrollView,
   StyleSheet,
   Image,
   View,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import {Text, Header, Button, HeaderBg} from 'components';
 import {Images, Colors, Spacing} from 'themes';
@@ -23,8 +24,10 @@ const VerifyUserInfo = ({
   buttonTitle,
   showButton = true,
   showInstruction = true,
+  style,
 }) => {
   const translation = useTranslation();
+  const { width } = useWindowDimensions();
   const [showModal, setShowModal] = useState(false);
   const ruleTexts = [
     'Hình chụp phải đủ sáng, không bị mờ, chói sáng.',
@@ -36,6 +39,29 @@ const VerifyUserInfo = ({
     {img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng'},
     {img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc'},
   ];
+
+  const backgroundStyle = {
+    width,
+    height: width,
+  };
+
+
+  const triangleStyle = useMemo(() => {
+    switch (step) {
+      case 1:
+        return {
+          left: Spacing.PADDING * 2 + 30 / 2,
+        };
+      case 2:
+        return {
+          left: width / 2 - 10,
+        };
+      case 3:
+        return {
+          right: Spacing.PADDING * 2 + 30 / 2,
+        };
+    }
+  }, [step]);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -54,7 +80,7 @@ const VerifyUserInfo = ({
     );
 
   return (
-    <>
+    <View style={styles.wrapper}>
       <HeaderBg style={styles.header}>
         <Header
           back
@@ -75,12 +101,16 @@ const VerifyUserInfo = ({
         <Progress step={step} />
         <Image
           source={Images.VerifyUserInfo.iconDown}
-          style={styles.triangle}
+          style={[styles.triangle, triangleStyle]}
           resizeMode="contain"
         />
       </HeaderBg>
-
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+      <Image
+        style={[styles.background, backgroundStyle]}
+        source={Images.VerifyUserInfo.wave}
+        resizeMode="contain"
+      />
+      <ScrollView style={[styles.container, style]} keyboardShouldPersistTaps="handled">
         {renderChildren()}
       </ScrollView>
       {!!showButton && (
@@ -177,14 +207,18 @@ const VerifyUserInfo = ({
           </View>
         </View>
       </Modal>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
     backgroundColor: Colors.white,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
   },
   header: {
     backgroundColor: Colors.white,
@@ -195,8 +229,6 @@ const styles = StyleSheet.create({
   },
   triangle: {
     position: 'absolute',
-    // left: Spacing.PADDING * 2 + 10 / 2,
-    left: Spacing.PADDING * 2 + 30 / 2,
     bottom: -9,
     width: 20,
     height: 10,
@@ -284,6 +316,11 @@ const styles = StyleSheet.create({
   help: {
     position: 'relative',
     bottom: scale(2),
+  },
+  background: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });
 

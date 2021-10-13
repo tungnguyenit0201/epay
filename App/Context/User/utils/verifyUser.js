@@ -165,14 +165,13 @@ const useVerifyInfo = (initialValue = {}) => {
 
   const onUpdateAllInfo = async value => {
     let resultContent;
-    let result = null;
     try {
       const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
         const {extractCardInfo} = contentRef.current;
         const {CardID, CardNumber, Step, ICType, ValidDate, Verified} =
           extractCardInfo || {};
-        result = await verifyIdentityCard({
+        await verifyIdentityCard({
           Address: value.Address,
           BirthDay: value.DateOfBirth,
           CardID,
@@ -189,18 +188,14 @@ const useVerifyInfo = (initialValue = {}) => {
           Verified,
           Ward: value.Ward,
         });
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-          throw result;
-        }
         resultContent = {
+          success: true,
           title: strings.verifySuccess,
         };
       } else {
-        result = await onUpdateIdentify(updateInfo);
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-          throw result;
-        }
+        await onUpdateIdentify(updateInfo);
         resultContent = {
+          success: true,
           title: strings.kycPendingVerify,
         };
       }
