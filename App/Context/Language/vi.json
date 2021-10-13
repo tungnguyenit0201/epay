@@ -231,7 +231,7 @@
   "my_epay_wallet": "Ví EPAY của tôi",
   "transfer_confirmation": "Xác nhận chuyển tiền",
   "link_banks_to_make_transactions": "Liên kết ngân hàng để thực hiện giao dịch",
-  "verify_accounts_enhance_your_account_security" : "Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn",
+  "verify_accounts_enhance_your_account_security": "Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn",
   "pay_fines": "Nộp phạt",
   "medical": "Y tế",
   "traffic": "Giao thông",
@@ -586,5 +586,7 @@
   "cancelled": "Huỷ bỏ",
   "addPromoCode": "Thêm mã khuyến mãi",
   "fillPromoCode": "Nhập mã khuyến mãi",
-  "use": "Sử dụng"
+  "use": "Sử dụng",
+  "place_of_issue_maximum_200_characters": "Nơi cấp không được quá 200 ký tự",
+  "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự"
 }
