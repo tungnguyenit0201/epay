@@ -79,6 +79,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
       }
       return;
     }
+
     switch (error) {
       case 'system_cancel':
         forceShow && onTouchID();
@@ -107,6 +108,12 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
           }); // TODO: translate
         }
         return;
+      case 'not_enrolled':
+        setError({
+          ErrorCode: -1,
+          ErrorMessage:
+            'Quý khách chưa cài đặt vân tay trên thiết bị. Vui lòng cài đặt để sử dụng',
+        }); // TODO: translate
       default:
         return;
     }
