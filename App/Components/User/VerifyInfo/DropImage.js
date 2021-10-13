@@ -127,7 +127,7 @@ const DropImage = ({
                   resizeMode={'contain'}
                 />
                 <Text color={Colors.white} bold centered mt={10} fs="h6">
-                  Chụp ảnh GTTT
+                  {translation.take_a_photo_of_gttt}
                 </Text>
               </View>
             </Pressable>
@@ -194,8 +194,9 @@ const DropImage = ({
                           mr={Spacing.PADDING}
                           mt={Spacing.PADDING * 2}
                         >
-                          Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
-                          chụp đủ sáng và rõ nét
+                          {
+                            translation.please_position_your_id_card_in_this_rectangular_frame_take_a_clear_and_bright_picture
+                          }
                         </Text>
                       </View>
 

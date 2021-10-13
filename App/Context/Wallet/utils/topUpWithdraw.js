@@ -198,9 +198,11 @@ const useConfirmation = () => {
 
   const {transType, bank, fee, amount} = transaction;
   const transTypeText =
-    transType === TRANS_TYPE.CashIn ? 'nạp tiền' : 'rút tiền'; // TODO: translate
+    transType === TRANS_TYPE.CashIn ? translation.top_up : translation.withdraw;
   const sourceTitle =
-    transType === TRANS_TYPE.CashIn ? 'Nguồn tiền' : 'Ngân hàng nhận tiền';
+    transType === TRANS_TYPE.CashIn
+      ? transaction.topup.moneySource
+      : 'Ngân hàng nhận tiền'; //TODO: translate
   const enableSourcePicker = transType === TRANS_TYPE.CashIn;
   const feeValue = calculateFee({cash: amount, feeData: fee});
   const total = feeValue + amount;
@@ -217,11 +219,11 @@ const useConfirmation = () => {
       value: formatCurrency(amount, translation.topup.currency),
     },
     {
-      name: 'Phí giao dịch',
+      name: transaction.fee,
       value: feeDes,
     },
     {
-      name: 'Tổng số tiền',
+      name: transaction.total,
       value: formatCurrency(total, translation.topup.currency),
       bold: true,
     },
@@ -822,10 +824,10 @@ const useTransactionResult = () => {
         statusTitle = translation.top_up;
         break;
       case TRANS_TYPE.CashOut:
-        statusTitle = 'Rút tiền';
+        statusTitle = transaction.withdraw;
         break;
       case TRANS_TYPE.ActiveCustomer:
-        statusTitle = 'Liên kết ngân hàng';
+        statusTitle = transaction.connect_bank;
         break;
     }
 

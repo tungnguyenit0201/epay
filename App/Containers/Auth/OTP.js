@@ -53,25 +53,25 @@ const OTP = ({route}) => {
       countdown={countdown}
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
+      // TODO: translate
       label={
         functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL ||
         functionType === FUNCTION_TYPE.AUTH_EMAIL
           ? 'Mã xác thực gửi về mail ' +
             route?.params.email +
             '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
-          : 'Nhập mã OTP xác thực'
+          : translation.enter_otp_verification_code
       }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
   );
 
   return (
-    // TODO: translate
     <>
       {isLoggedIn ? (
         <>
           <HeaderBg>
-            <Header back title="Xác thực" />
+            <Header back title={translation.common.authen} />
           </HeaderBg>
           <View
             style={[
@@ -106,7 +106,7 @@ const OTP = ({route}) => {
         >
           <Image source={Images.Phone} style={styles.iconPhone} />
           <Text mb={-3} centered fw="700">
-            Gọi cho tôi
+            {translation.call_epay}
           </Text>
         </TouchableOpacity>
       </View>

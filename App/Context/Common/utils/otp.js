@@ -57,6 +57,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             functionType,
           });
         case FUNCTION_TYPE.AUTH_EMAIL:
+        case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
           return Navigator.navigate(SCREEN.VERIFY_EMAIL_RESULT, {
             type: 'failure',
             message: _.get(result, 'ErrorMessage', ''),

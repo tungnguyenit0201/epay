@@ -8,7 +8,15 @@ import {
   RefreshControl,
   FlatList,
 } from 'react-native';
-import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
+import {
+  Text,
+  Header,
+  Button,
+  Row,
+  Col,
+  HeaderBg,
+  ScreenBackground,
+} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
 import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
@@ -42,7 +50,7 @@ const Notification = () => {
         />
       </HeaderBg>
       <View style={styles.wrap}>
-        <Image source={require('images/wave.png')} style={styles.bgImg} />
+        <ScreenBackground />
         <View style={[base.container, styles.flexRow]}>
           <FlatList
             data={dataType}
@@ -129,12 +137,6 @@ const Notification = () => {
           <View style={{height: 120}}></View>
         </ScrollView>
       </View>
-      {selectNotify(type).length !== 0 ? (
-        selectNotify(type).map((item, index) => {})
-      ) : (
-        <Image source={require('images/wave.png')} style={styles.bgImg} />
-      )}
-      {/* <FooterNotification /> */}
     </>
   );
 };
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 150,
     flex: 1,
+    backgroundColor: Colors.white,
   },
 
   emtyNoti: {
@@ -164,13 +167,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: Spacing.PADDING,
     bottom: 23,
-  },
-  bgImg: {
-    width: scale(375),
-    height: scale(375),
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
   },
   isRead: {
     backgroundColor: Colors.l2,

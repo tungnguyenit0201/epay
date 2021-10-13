@@ -83,7 +83,7 @@ const RegisterPassword = ({route}) => {
                 ]}
               >
                 <Content
-                  title="Tạo mật khẩu"
+                  title={translation.create_a_password}
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }

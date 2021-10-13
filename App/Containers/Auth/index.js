@@ -34,7 +34,7 @@ const Auth = () => {
       <BigLogo style={{marginBottom: 30}} />
 
       <Content
-        title="Nhập số điện thoại"
+        title={translation.enter_phone_number}
         text={translation.sign_insign_up_epay}
       />
 
@@ -64,7 +64,7 @@ const Auth = () => {
           return (
             <>
               <TextInput
-                placeholder={'Nhập số điện thoại'} //TODO: translate
+                placeholder={translation.enter_phone_number}
                 numeric
                 onChange={handleChange('phone')}
                 onBlur={handleBlur('phone')}

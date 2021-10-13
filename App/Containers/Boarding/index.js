@@ -10,6 +10,7 @@ import {base, Colors, Images, Spacing} from 'themes';
 import {Button, Text} from 'components';
 import FooterContainer from 'components/Auth/FooterContainer';
 import {scale} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -17,7 +18,8 @@ const Boarding = ({route}) => {
   const indexScreen = route?.params?.indexScreen || 0;
   const {bottom} = useSafeAreaInsets();
   const {width, height} = useWindowDimensions();
-  // TODO: translate
+  const translation = useTranslation();
+
   const data = [
     {
       title: 'Thanh toán đơn giản',
@@ -25,13 +27,13 @@ const Boarding = ({route}) => {
       action: 'Tiếp theo',
     },
     {
-      title: 'Dịch vụ sân bay',
+      title: translation.airport_service,
       content:
         'Cung cấp cho khách hàng tiện ích thanh toán vé máy bay qua giao dịch điện tử',
       action: 'Tiếp theo',
     },
     {
-      title: 'Dịch vụ giao thông',
+      title: translation.traffic_service,
       content:
         'Hỗ trợ tiếp nhận, truyền dẫn và xử lý dữ liệu trong các giao dịch',
       action: 'Đóng',

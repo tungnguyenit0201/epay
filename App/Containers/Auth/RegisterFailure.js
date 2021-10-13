@@ -45,15 +45,15 @@ const RegisterFailure = ({route}) => {
           onPressBack={() => onNavigate(SCREEN.AUTH)}
           renderRightComponent={() => renderRightComponent()}
         />
-
-        <Content
-          title={route?.params?.content?.title || 'Đăng ký \nkhông thành công'}
-          text={
-            route?.params?.content?.text ||
-            'Bạn đã nhập sai OTP quá 3 lần, vui lòng quay lại sau 30 phút.'
-          }
-          styleText={{color: Colors.white}}
-          style={[styles.wrap, styles.flex1, styles.mt1]}
+        <Button
+          label={translation.come_back_later}
+          style={styles.btn}
+          // bg={Colors.white}
+          // color={Colors.black}
+          // border={Colors.cl4}
+          mode="outline"
+          onPress={() => onNavigate(SCREEN.AUTH)}
+          bgImg={0}
         />
 
         <FooterContainer>

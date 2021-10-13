@@ -17,7 +17,7 @@ const DinhDanh = () => {
         />
       </View>
       <Text fs="h4" centered bold mb={10}>
-        Định danh tài khoản
+        {translation.verify_your_account}
       </Text>
       <Text centered mb={20}>
         Tài khoản được định danh sẽ có mức độ bảo mật cao hơn và giới hạn lớn
@@ -25,7 +25,7 @@ const DinhDanh = () => {
       </Text>
       <Button
         type="img"
-        label="Định danh ngay"
+        label={translation.verify_now}
         onPress={() => {
           Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         }}

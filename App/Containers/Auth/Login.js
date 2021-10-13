@@ -92,7 +92,9 @@ const Login = ({route}) => {
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.linkText]}>Đổi SĐT</Text>
+                    <Text style={[styles.linkText]}>
+                      {translation.change_the_phone_number}
+                    </Text>
                   </Pressable>
                 </View>
                 <WebView
@@ -103,7 +105,7 @@ const Login = ({route}) => {
               <FooterContainer>
                 <View style={[styles.flexRow]}>
                   <Button
-                    label="Đăng nhập"
+                    label={translation.sign_in}
                     onPress={handleSubmit}
                     style={!biometryType ? styles.flex1 : styles.firstBtn}
                     disabled={!values.password || !_.isEmpty(errors)}
