@@ -76,7 +76,7 @@ const Login = ({route}) => {
                   required
                   onChange={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  placeholder={translation.enter_your_password}
+                  placeholder={'Nhập mật khẩu'} // TODO: translate
                   error={touched.password && errors.password}
                   value={values.password}
                   //leftIcon={Images.Transfer.Lock}

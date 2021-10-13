@@ -35,8 +35,7 @@ const ForgetPassword = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onSubmitPhone}
-      >
+        onSubmit={onSubmitPhone}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -57,7 +56,6 @@ const ForgetPassword = () => {
               <View style={[styles.wrap, styles.flex1, styles.mt1]}>
                 <TextInput
                   numeric
-                  autoFocus
                   placeholder={translation.enter_your_phone_number}
                   required
                   onChange={handleChange('phone')}
@@ -66,6 +64,7 @@ const ForgetPassword = () => {
                   value={values.phone}
                   /* leftIcon={Images.Phone_1} */
                   isDeleted={values.phone}
+                  maxLength={10}
                 />
               </View>
               <FooterContainer>

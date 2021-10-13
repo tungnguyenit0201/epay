@@ -6,7 +6,7 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
 
-const useEmail = ({functionType}) => {
+const useEmail = ({functionType} = {}) => {
   const {setLoading} = useLoading();
   const {phone} = useUser();
   const {setError} = useError();

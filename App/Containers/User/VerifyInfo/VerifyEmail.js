@@ -1,12 +1,12 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, Header, Button, TextInput, HeaderBg} from 'components';
-import {base, Colors} from 'themes';
+import {base, Colors, Spacing} from 'themes';
 import {SCREEN, TEXT} from 'configs/Constants';
 import {useEmail} from 'context/User/utils';
 import {Formik} from 'formik';
 import {emailSchema} from 'utils/ValidationSchemas';
-
+import FooterContainer from 'components/Auth/FooterContainer';
 const VerifyEmail = ({route}) => {
   const {onEmailAuth} = useEmail(route?.params);
 
@@ -15,32 +15,31 @@ const VerifyEmail = ({route}) => {
       <HeaderBg>
         <Header back title="Xác thực Email" />
       </HeaderBg>
-      <ScrollView style={base.wrap}>
-        <Formik
-          initialValues={{
-            email: '',
-          }}
-          validationSchema={emailSchema}
-          onSubmit={onEmailAuth}
-        >
-          {({
-            handleChange: _handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            setFieldTouched,
-            touched,
-            errors,
-            values,
-          }) => {
-            const handleChange = field => value => {
-              setFieldValue(field, value);
-              setFieldTouched(field, true, false);
-            };
+      <Formik
+        initialValues={{
+          email: '',
+        }}
+        validationSchema={emailSchema}
+        onSubmit={onEmailAuth}>
+        {({
+          handleChange: _handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          setFieldTouched,
+          touched,
+          errors,
+          values,
+        }) => {
+          const handleChange = field => value => {
+            setFieldValue(field, value);
+            setFieldTouched(field, true, false);
+          };
 
-            return (
-              <View>
-                <View style={[base.container, {paddingTop: 20}]}>
+          return (
+            <View style={styles.flex1}>
+              <View style={[styles.wrap, styles.flex1]}>
+                <View style={{paddingTop: 20}}>
                   <Text fs="h5" bold mb={10}>
                     Nhập email
                   </Text>
@@ -57,16 +56,24 @@ const VerifyEmail = ({route}) => {
                   />
                 </View>
 
-                <View style={base.bottom}>
+                {/* <View style={base.bottom}>
                   <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
-                </View>
+                </View> */}
               </View>
-            );
-          }}
-        </Formik>
-      </ScrollView>
+              <FooterContainer>
+                <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
+              </FooterContainer>
+            </View>
+          );
+        }}
+      </Formik>
     </>
   );
 };
 
 export default VerifyEmail;
+const styles = StyleSheet.create({
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  //-------------------
+  flex1: {flex: 1, backgroundColor: Colors.white},
+});

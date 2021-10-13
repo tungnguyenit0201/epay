@@ -152,7 +152,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <InputBlock
             // label="Tỉnh / Thành phố"
             error={touched.Provincial && errors.Provincial}
-            // value={values.Provincial}
+            value={values.Provincial}
             isSelect
             rightIcon={Images.Down}
             onPress={() => goRegionSelect('cites')}
@@ -162,7 +162,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <InputBlock
             // label="Quận"
             error={touched.County && errors.County}
-            // value={values.County}
+            value={values.County}
             isSelect
             rightIcon={Images.Down}
             onPress={() => goRegionSelect('districts')}
@@ -174,7 +174,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             email
             // required
             error={touched.Ward && errors.Ward}
-            // value={values.Ward}
+            value={values.Ward}
             isSelect
             rightIcon={Images.Down}
             onPress={() => goRegionSelect('wards')}

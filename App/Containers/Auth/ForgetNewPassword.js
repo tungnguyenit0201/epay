@@ -40,8 +40,7 @@ const ForgetNewPassword = ({route}) => {
         renderRightComponent={() => (
           <TouchableOpacity
             style={styles.pr1}
-            onPress={() => setShowModal(true)}
-          >
+            onPress={() => setShowModal(true)}>
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -58,8 +57,7 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -80,8 +78,7 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}
-              >
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
                   title={translation.reset_your_password}
                   text={
@@ -118,14 +115,13 @@ const ForgetNewPassword = ({route}) => {
               </ScrollView>
 
               <FooterContainer>
-                <View style={styles.flexRow}>
+                {/* <View style={styles.flexRow}>
                   <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
                     {translation.iAgreeWith}{' '}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}
-                    >
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
                       <Text style={styles.firstLink}>
                         {translation.userAgreement}{' '}
                       </Text>
@@ -133,19 +129,18 @@ const ForgetNewPassword = ({route}) => {
                     {translation.and}
                     <TouchableOpacity
                       style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}
-                    >
+                      onPress={() => onGoTerm(SCREEN.POLICY)}>
                       <Text style={styles.firstLink}>
                         {translation.privacyPolicy}{' '}
                       </Text>
                     </TouchableOpacity>
                     {translation.ofEPAY}
                   </Text>
-                </View>
+                </View> */}
 
                 <Button
                   mt={10}
-                  disabled={!active || !_.isEmpty(errors)}
+                  disabled={!_.isEmpty(errors) || !values.passwordConfirm}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />

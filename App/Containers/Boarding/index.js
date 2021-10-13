@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image, useWindowDimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  useWindowDimensions,
+} from 'react-native';
 import {base, Colors, Images, Spacing} from 'themes';
 import {Button, Text} from 'components';
 import FooterContainer from 'components/Auth/FooterContainer';
@@ -7,26 +13,30 @@ import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 const Boarding = ({route}) => {
   const indexScreen = route?.params?.indexScreen || 0;
+  const {bottom} = useSafeAreaInsets();
   const {width, height} = useWindowDimensions();
   const translation = useTranslation();
 
   const data = [
     {
-      title: translation.simple_payment,
-      content:
-        translation.comes_with_advanced_technology_ensuring_the_best_utility,
+      title: 'Thanh toán đơn giản',
+      content: 'Đi kèm công nghệ tiên tiến, đảm bảo mang đến tiện ích tốt nhất',
+      action: 'Tiếp theo',
     },
     {
       title: translation.airport_service,
       content:
-        translation.provide_customers_with_the_convenience_of_paying_for_airline_tickets_via_electronic_transactions,
+        'Cung cấp cho khách hàng tiện ích thanh toán vé máy bay qua giao dịch điện tử',
+      action: 'Tiếp theo',
     },
     {
       title: translation.traffic_service,
       content:
-        translation.support_to_receive_transmit_and_process_data_in_transactions,
+        'Hỗ trợ tiếp nhận, truyền dẫn và xử lý dữ liệu trong các giao dịch',
+      action: 'Đóng',
     },
   ];
   const onPress = () => {
@@ -37,37 +47,38 @@ const Boarding = ({route}) => {
         });
   };
   return (
-    <View style={[styles.container, {height: height}]}>
-      <Image
-        source={Images.Boarding[indexScreen]}
-        style={[styles.img, {height: height < 812 ? '60%' : '67%'}]}
-      />
-      <View style={styles.slide}>
-        {[0, 1, 2].map(index => (
-          <View
-            key={Math.random(1, 100)}
-            style={[styles.circle, indexScreen == index && styles.active]}
-          ></View>
-        ))}
+    <ImageBackground
+      style={[styles.container, {height: height}]}
+      source={Images.Boarding[indexScreen]}
+    >
+      <View style={styles.bottom}>
+        <View style={styles.slide}>
+          {[0, 1, 2].map(index => (
+            <View
+              key={Math.random(1, 100)}
+              style={[styles.circle, indexScreen == index && styles.active]}
+            ></View>
+          ))}
+        </View>
+        <View style={styles.wrapText}>
+          <Text fs="h5" fw="700" mb={14}>
+            {data[indexScreen].title}
+          </Text>
+          <Text centered style={styles.content}>
+            {data[indexScreen].content}
+          </Text>
+        </View>
+        <FooterContainer
+          style={[
+            // styles.bottomBtn,
+            {width: width},
+            {paddingBottom: bottom ? bottom : Spacing.PADDING},
+          ]}
+        >
+          <Button label={data[indexScreen].action} onPress={onPress} />
+        </FooterContainer>
       </View>
-      <View style={styles.wrapText}>
-        <Text fs="h5" fw="700" mb={14}>
-          {data[indexScreen].title}
-        </Text>
-        <Text centered style={styles.content}>
-          {data[indexScreen].content}
-        </Text>
-      </View>
-      <FooterContainer
-        style={[
-          styles.bottomBtn,
-          {width: width},
-          height < 812 && {paddingBottom: Spacing.PADDING},
-        ]}
-      >
-        <Button label={translation.skip} onPress={onPress} />
-      </FooterContainer>
-    </View>
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
@@ -97,8 +108,9 @@ const styles = StyleSheet.create({
   wrapText: {
     alignItems: 'center',
     paddingHorizontal: scale(38),
+    paddingBottom: Spacing.PADDING,
   },
-  bottomBtn: {
+  bottom: {
     position: 'absolute',
     bottom: 0,
   },

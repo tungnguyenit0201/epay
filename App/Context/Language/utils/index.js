@@ -8,9 +8,9 @@ const useLanguage = () => {
   const {getToken} = useAsyncStorage();
 
   const chooseLanguage = async lang => {
-    if (lang === selectedLanguage) {
-      return;
-    }
+    // if (lang === selectedLanguage) {
+    //   return;
+    // }
     setLanguage(lang);
     const token = await getToken();
     if (token) {
