@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Text, Header, Button, TextInput, HeaderBg} from 'components';
-import {base, Colors} from 'themes';
+import {base, Colors, Spacing} from 'themes';
 import {SCREEN, TEXT} from 'configs/Constants';
 import {useEmail} from 'context/User/utils';
 import {Formik} from 'formik';
@@ -39,7 +39,7 @@ const VerifyEmail = ({route}) => {
           return (
             <View style={styles.flex1}>
               <View style={[styles.wrap, styles.flex1]}>
-                <View style={[base.container, {paddingTop: 20}]}>
+                <View style={{paddingTop: 20}}>
                   <Text fs="h5" bold mb={10}>
                     Nhập email
                   </Text>
@@ -55,6 +55,10 @@ const VerifyEmail = ({route}) => {
                     error={touched.email && errors.email}
                   />
                 </View>
+
+                {/* <View style={base.bottom}>
+                  <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
+                </View> */}
               </View>
               <FooterContainer>
                 <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
@@ -68,3 +72,8 @@ const VerifyEmail = ({route}) => {
 };
 
 export default VerifyEmail;
+const styles = StyleSheet.create({
+  wrap: {paddingHorizontal: Spacing.PADDING},
+  //-------------------
+  flex1: {flex: 1, backgroundColor: Colors.white},
+});
