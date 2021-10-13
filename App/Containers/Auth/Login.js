@@ -35,7 +35,7 @@ const Login = ({route}) => {
           style={styles.wrap}
           title={
             name
-              ? `Xin chào ${_.last(name.split(' '))}`
+              ? `${translation.hello} ${_.last(name.split(' '))}`
               : translation.enter_your_password
           }
           text={
@@ -76,7 +76,7 @@ const Login = ({route}) => {
                   required
                   onChange={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  placeholder={'Nhập mật khẩu'} // TODO: translate
+                  placeholder={translation.enter_password}
                   error={touched.password && errors.password}
                   value={values.password}
                   //leftIcon={Images.Transfer.Lock}
