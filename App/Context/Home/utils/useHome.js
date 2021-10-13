@@ -5,7 +5,7 @@ import {useCommon} from 'context/Common';
 import {getBanner} from 'services/common';
 import {useAsyncStorage, useShowModal} from 'context/Common/utils';
 import {Images} from 'themes';
-
+import {useTranslation} from 'context/Language';
 const useHome = () => {
   const {getPhone} = useAsyncStorage();
   let [banner, setBanner] = useState();
@@ -48,21 +48,22 @@ const useModalSmartOTP = () => {
   return {smartOTPSuggestion, onGoSmartOTP, onPressNever, onClose};
 };
 const useIconConfig = () => {
+  const translation = useTranslation();
   let iconList = {
     C08: {
       icon: Images.Homes.NopPhat,
-      name: 'Nộp phạt',
+      name: translation.pay_fines,
       screen: SCREEN.TOP_UP,
     },
     VDMS: {
       icon: Images.Homes.YTe,
-      name: 'Y tế', // TODO: translate
+      name: translation.medical,
       screen: SCREEN.TOP_UP,
     },
 
     TRAFFIC: {
       icon: Images.Homes.GiaoThong,
-      name: 'Giao thông',
+      name: translation.traffic,
       screen: SCREEN.TOP_UP,
     },
     // {

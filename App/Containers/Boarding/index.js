@@ -4,26 +4,29 @@ import {base, Colors, Images, Spacing} from 'themes';
 import {Button, Text} from 'components';
 import FooterContainer from 'components/Auth/FooterContainer';
 import {scale} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 const Boarding = ({route}) => {
   const indexScreen = route?.params?.indexScreen || 0;
   const {width, height} = useWindowDimensions();
-  // TODO: translate
+  const translation = useTranslation();
+
   const data = [
     {
-      title: 'Thanh toán đơn giản',
-      content: 'Đi kèm công nghệ tiên tiến, đảm bảo mang đến tiện ích tốt nhất',
+      title: translation.simple_payment,
+      content:
+        translation.comes_with_advanced_technology_ensuring_the_best_utility,
     },
     {
-      title: 'Dịch vụ sân bay',
+      title: translation.airport_service,
       content:
-        'Cung cấp cho khách hàng tiện ích thanh toán vé máy bay qua giao dịch điện tử',
+        translation.provide_customers_with_the_convenience_of_paying_for_airline_tickets_via_electronic_transactions,
     },
     {
-      title: 'Dịch vụ giao thông',
+      title: translation.traffic_service,
       content:
-        'Hỗ trợ tiếp nhận, truyền dẫn và xử lý dữ liệu trong các giao dịch',
+        translation.support_to_receive_transmit_and_process_data_in_transactions,
     },
   ];
   const onPress = () => {
@@ -62,7 +65,7 @@ const Boarding = ({route}) => {
           height < 812 && {paddingBottom: Spacing.PADDING},
         ]}
       >
-        <Button label={'Bỏ qua'} onPress={onPress} />
+        <Button label={translation.skip} onPress={onPress} />
       </FooterContainer>
     </View>
   );

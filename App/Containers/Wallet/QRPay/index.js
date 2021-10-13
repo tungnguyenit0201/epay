@@ -16,13 +16,14 @@ import {SCREEN} from 'configs/Constants';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useScanQR} from 'context/Wallet/utils';
 import {useImagePicker} from 'context/User/utils';
-
+import {getTranslation} from 'react-native-ui-lib/generatedTypes/src/incubator/panView/panningUtil';
+import {useTranslation} from 'context/Language';
 const QRPay = () => {
   const camera = useRef();
   const {width, height} = useWindowDimensions();
   const top = getStatusBarHeight();
   const isFocused = useIsFocused();
-
+  const translation = useTranslation();
   const {
     loading,
     image,
@@ -98,7 +99,7 @@ const QRPay = () => {
                 {loading && <FWLoading />}
                 <View style={[styles.wrapText, {top: scale(112)}]}>
                   <Text color={Colors.white} fs="h6" fw="700" centered>
-                    Hướng khung camera vào mã QR để quét
+                    {translation.point_the_camera_frame_at_the_qr_code_to_scan}
                   </Text>
                 </View>
                 <View style={styles.wrapAction}>
@@ -112,7 +113,7 @@ const QRPay = () => {
                       mr={Spacing.PADDING / 4}
                     />
                     <Text fw="700" fs="h6" color={Colors.white}>
-                      Bật đèn pin
+                      {translation.flash_on}
                     </Text>
                   </Pressable>
                   <Pressable
@@ -136,7 +137,7 @@ const QRPay = () => {
                 </View>
                 <View style={styles.wrapBtn}>
                   <Button
-                    label="Mã thanh toán"
+                    label={translation.payment_qr}
                     bgImg={0}
                     leftIcon={Images.Camera.QR}
                     mode="outline"
@@ -144,7 +145,7 @@ const QRPay = () => {
                   />
                   <Button
                     bgImg={0}
-                    label="Quét mã QR"
+                    label={translation.scan_qr}
                     leftIcon={Images.Camera.Scan}
                     // onPress={detectQRCode}
                   />

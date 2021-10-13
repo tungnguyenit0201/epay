@@ -83,9 +83,9 @@ const ForgetNewPassword = ({route}) => {
                 contentContainerStyle={[styles.wrap, styles.py1]}
               >
                 <Content
-                  title="Đặt lại mật khẩu"
+                  title={translation.reset_your_password}
                   text={
-                    'Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa & số'
+                    translation.password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers
                   }
                 />
                 <TextInput
@@ -111,7 +111,9 @@ const ForgetNewPassword = ({route}) => {
                   /* leftIcon={Images.Transfer.Lock} */
                 />
                 <Text style={styles.note}>
-                  {`Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa và số`}
+                  {
+                    translation.password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers
+                  }
                 </Text>
               </ScrollView>
 
@@ -119,25 +121,25 @@ const ForgetNewPassword = ({route}) => {
                 <View style={styles.flexRow}>
                   <Checkbox onPress={onSetActive} />
                   <Text style={{marginLeft: 5}}>
-                    {` Tôi đồng ý với các `}
+                    {translation.iAgreeWith}{' '}
                     <TouchableOpacity
                       style={styles.mtMinus1}
                       onPress={() => onGoTerm(SCREEN.AGREEMENT)}
                     >
                       <Text style={styles.firstLink}>
-                        {'Thoả thuận người dùng '}
+                        {translation.userAgreement}{' '}
                       </Text>
                     </TouchableOpacity>
-                    và
+                    {translation.and}
                     <TouchableOpacity
                       style={styles.mtMinus1}
                       onPress={() => onGoTerm(SCREEN.POLICY)}
                     >
                       <Text style={styles.firstLink}>
-                        {'Chính sách quyền riêng tư '}
+                        {translation.privacyPolicy}{' '}
                       </Text>
                     </TouchableOpacity>
-                    của Epay Services
+                    {translation.ofEPAY}
                   </Text>
                 </View>
 

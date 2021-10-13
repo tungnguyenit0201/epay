@@ -39,7 +39,6 @@ const User = () => {
   const [open, setOpen] = useState(false);
   const {onGoSmartOTP} = useSmartOTP();
 
-  // TODO: translate
   return (
     <View>
       <HeaderBg mb={0}>
@@ -68,7 +67,7 @@ const User = () => {
 
                 <View style={styles.flexRow}>
                   <View style={styles.flex1}>
-                    <Text semibold>Đơn hàng của tôi</Text>
+                    <Text semibold>{translation.my_order}</Text>
                   </View>
                   {/*
                   show notify status when user buy product
@@ -86,7 +85,7 @@ const User = () => {
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.MaThanhToan}
                 />
-                <Text semibold>Mã thanh toán</Text>
+                <Text semibold>{translation.payment_qr}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -99,7 +98,7 @@ const User = () => {
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.ThanhToan}
                 />
-                <Text semibold>Cài đặt hạn mức thanh toán</Text>
+                <Text semibold>{translation.maximum_transaction_value}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.item}
@@ -126,14 +125,14 @@ const User = () => {
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/NapVI.png')}
                 />
-                <Text semibold>Nạp ví tự động</Text>
+                <Text semibold>{translation.automatically_top_up}</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.item} onPress={onGoSmartOTP}>
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/OTP.png')}
                 />
-                <Text semibold>Cài đặt Smart OTP</Text>
+                <Text semibold>{translation.setting_smart_otp}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -159,7 +158,7 @@ const User = () => {
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/Noti.png')}
                 />
-                <Text semibold>Cài đặt thông báo</Text>
+                <Text semibold>{translation.setting_notification}</Text>
               </TouchableOpacity>
 
               {/* <TouchableOpacity
@@ -190,7 +189,7 @@ const User = () => {
               source={require('images/profile/Support.png')}
             />
             <Text fs="h6" semibold ml={10}>
-              Trung tâm trợ giúp
+              {translation.help_center}
             </Text>
 
             <Icon
@@ -213,7 +212,7 @@ const User = () => {
               source={require('images/profile/Info.png')}
             />
             <Text fs="h6" semibold ml={10}>
-              {'Thông tin ứng dụng'}
+              {translation.application_information}
             </Text>
 
             <Icon
@@ -229,7 +228,7 @@ const User = () => {
           <Button
             size="lg"
             onPress={onLogout}
-            label={'Đăng xuất'} //TODO: translate
+            label={translation.log_out}
             // style={base.bgWhite}
             // bgImg={0}
             color={Colors.black}

@@ -40,7 +40,6 @@ const Account = () => {
       screen: MapBankRoutes.BankLinked,
     });
   };
-  // TODO: translate
   return (
     <ImageBackground
       source={Images.Profile.BgStandard}
@@ -136,7 +135,7 @@ const Account = () => {
             source={require('images/profile/plus2.png')}
           />
           <Text semibold ml={10} color={Colors.white}>
-            Liên kết ngân hàng ngay
+            {translation.link_your_bank}
           </Text>
         </TouchableOpacity>
       )}

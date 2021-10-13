@@ -20,13 +20,10 @@ const OTPContainer = ({
 }) => {
   const translation = useTranslation();
   return (
-    // TODO: translate
     <>
-      <Text
-        bold
-        fs="h3"
-        style={[styles.textWhite, styles.mb1, titleStyle]}
-      >{`Nhập OTP`}</Text>
+      <Text bold fs="h3" style={[styles.textWhite, styles.mb1, titleStyle]}>
+        {translation.enter_otp}
+      </Text>
       <Text fs="h6" style={[styles.textGray, styles.mb2]}>
         {label}
       </Text>
@@ -45,7 +42,9 @@ const OTPContainer = ({
 
       <View style={styles.flexRow_1}>
         <View style={styles.flexRow_1}>
-          <Text style={styles.fontSize_1}>Gửi lại mã xác thực (OTP) </Text>
+          <Text style={styles.fontSize_1}>
+            {translation.resend_the_verification_code_otp}{' '}
+          </Text>
 
           <Pressable
             //style={{marginTop: -3}}
@@ -62,7 +61,7 @@ const OTPContainer = ({
             >
               {countdown > 0
                 ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
-                : ` Gửi lại`}
+                : translation.otp.resend}
             </Text>
           </Pressable>
         </View>

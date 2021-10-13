@@ -27,7 +27,7 @@ import {
 } from 'context/Common/utils';
 import {useWallet} from 'context/Wallet';
 import {useCommon} from 'context/Common';
-
+import {useTranslation} from 'context/Language';
 const MAX_OTP_TIME = 5;
 
 const useSmartOTP = params => {
@@ -39,7 +39,7 @@ const useSmartOTP = params => {
   const {setLoading} = useLoading();
   const {dispatch: dispatchWallet} = useWallet();
   const {setSmartOTPSharedKey} = useAsyncStorage();
-
+  const translation = useTranslation();
   const onAcceptTermConditions = (value = true) => {
     setAccepted(value);
   };
@@ -84,7 +84,7 @@ const useSmartOTP = params => {
 
   const onConfirmPassword = async ({password, confirmPassword}) => {
     if (password !== confirmPassword) {
-      setMessage('Mật khẩu không trung khớp'); // TODO: translate
+      setMessage(translation.password_does_not_match); // TODO: translate
       return;
     }
     const passwordEncrypted = await sha256(password);
@@ -128,7 +128,7 @@ const useSmartOTP = params => {
     confirmPassword,
   }) => {
     if (newPassword !== confirmPassword) {
-      setMessage('Mật khẩu không trung khớp'); // TODO: translate
+      setMessage(translation.password_does_not_match);
       return;
     }
     setLoading(true);

@@ -64,7 +64,7 @@ const RegisterFailure = ({route}) => {
           mb={Spacing.PADDING - 10}
         />
         <Button
-          label="Quay lại sau"
+          label={translation.come_back_later}
           style={styles.btn}
           // bg={Colors.white}
           // color={Colors.black}

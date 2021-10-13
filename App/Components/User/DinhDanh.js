@@ -17,14 +17,14 @@ const DinhDanh = () => {
         />
       </View>
       <Text fs="h4" centered bold mb={10}>
-        Định danh tài khoản
+        {translation.verify_your_account}
       </Text>
       <Text centered mb={20}>
         {translation?.kycDescription}
       </Text>
       <Button
         type="img"
-        label="Định danh ngay"
+        label={translation.verify_now}
         onPress={() => {
           Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         }}
