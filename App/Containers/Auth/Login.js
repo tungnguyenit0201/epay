@@ -82,6 +82,7 @@ const Login = ({route}) => {
                   //leftIcon={Images.Transfer.Lock}
                   autoFocus
                   style={styles.wrap}
+                  maxLength={20}
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
