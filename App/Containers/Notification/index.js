@@ -42,6 +42,7 @@ const Notification = () => {
         />
       </HeaderBg>
       <View style={styles.wrap}>
+        <Image source={require('images/wave.png')} style={styles.bgImg} />
         <View style={[base.container, styles.flexRow]}>
           <FlatList
             data={dataType}
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   wrap: {
     paddingTop: 20,
     paddingBottom: 150,
+    flex: 1,
   },
 
   emtyNoti: {
