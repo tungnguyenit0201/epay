@@ -6,6 +6,7 @@ import useShowModal from './showModal';
 import useConfig from './config';
 import {usePermission, useModalPermission} from './permission';
 import useModalPassword from './password';
+import {useHandleBack} from './handleBack';
 
 export {
   useLoading,
@@ -17,4 +18,5 @@ export {
   usePermission,
   useModalPermission,
   useModalPassword,
+  useHandleBack,
 };
