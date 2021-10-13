@@ -14,6 +14,34 @@ import Navigator from 'navigations/Navigator';
 import {useCheckInfo} from 'context/Home/utils';
 import {useTranslation} from 'context/Language';
 
+const Item = React.memo(
+  ({item, styleItem, sizeIcon, styleIcon, styleText, checkInfo}) => {
+    return (
+      <TouchableOpacity
+        style={[styles.item, styleItem]}
+        onPress={() => {
+          !!item?.checkSmartOTP
+            ? checkInfo({screen: item.screen})
+            : Navigator.navigate(item.screen);
+        }}
+      >
+        <Image
+          source={item.icon}
+          style={[
+            {width: scale(sizeIcon), height: scale(sizeIcon)},
+            styles.icon,
+            styleIcon,
+          ]}
+        />
+
+        <Text centered bold mt={5} style={styleText}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+);
+
 const ListItem = ({
   data,
   scroll,
@@ -31,29 +59,6 @@ const ListItem = ({
   const {checkInfo} = useCheckInfo();
   const translation = useTranslation();
 
-  const Item = ({item}) => (
-    <TouchableOpacity
-      style={[styles.item, styleItem]}
-      onPress={() => {
-        !!item?.checkSmartOTP
-          ? checkInfo({screen: item.screen})
-          : Navigator.navigate(item.screen);
-      }}>
-      <Image
-        source={item.icon}
-        style={[
-          {width: scale(sizeIcon), height: scale(sizeIcon)},
-          styles.icon,
-          styleIcon,
-        ]}
-      />
-
-      <Text centered bold mt={5} style={styleText}>
-        {item.name}
-      </Text>
-    </TouchableOpacity>
-  );
-
   const renderItem = ({item, index}) => (
     <View
       style={[
@@ -61,12 +66,15 @@ const ListItem = ({
         width && {width: scale(width)},
         space && {marginBottom: scale(space)},
         index && {marginLeft: scale(space)},
-      ]}>
+      ]}
+    >
       <Item
         item={item}
         styleItem={styleItem}
         styleIcon={styleIcon}
         styleText={styleText}
+        sizeIcon={sizeIcon}
+        checkInfo={checkInfo}
       />
     </View>
   );
@@ -77,7 +85,7 @@ const ListItem = ({
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={(item, index) => `${Math.random(1, 100)}-simple`}
+          keyExtractor={(item, index) => `${index}-simple`}
           //showsHorizontalScrollIndicator={true}
           horizontal={true}
           style={style}
@@ -90,12 +98,15 @@ const ListItem = ({
                 width={`${100 / col}%`}
                 space={space}
                 key={index}
-                style={[space && {marginBottom: space}]}>
+                style={[space && {marginBottom: space}]}
+              >
                 <Item
                   item={item}
                   styleItem={styleItem}
                   styleIcon={styleIcon}
                   styleText={styleText}
+                  sizeIcon={sizeIcon}
+                  checkInfo={checkInfo}
                 />
               </Col>
             );
@@ -116,4 +127,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItem;
+export default React.memo(ListItem);

@@ -184,4 +184,4 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.cl3,
   },
 });
-export default IconList;
+export default React.memo(IconList);

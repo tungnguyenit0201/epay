@@ -43,7 +43,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
       if (!isEnrolled || !passwordEncrypted) {
         return;
       }
-      setBiometryType(type);
+      setBiometryType(_.isArray(type) ? type[0] : type);
     } catch (error) {
       __DEV__ && console.log("Keychain couldn't be accessed!", error);
     }
