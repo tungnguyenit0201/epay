@@ -48,15 +48,14 @@ const RegisterFailure = ({route}) => {
         />
         <View style={styles.wrap}>
           <Text color={Colors.white} bold fs={'h3'}>
-            {translation.sign_up}
+            {route?.params?.content?.title || translation.sign_up}
           </Text>
           <Text color={Colors.white} mb={15} bold fs={'h3'}>
             {translation.transaction.failure}
           </Text>
           <Text color={Colors.white} fs={'h7'}>
-            {
-              translation.you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again
-            }
+            {route?.params?.content?.text ||
+              translation.you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again}
           </Text>
         </View>
       </BlueHeader>

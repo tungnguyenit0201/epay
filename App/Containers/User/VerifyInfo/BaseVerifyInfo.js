@@ -95,14 +95,6 @@ const VerifyUserInfo = ({
               label={buttonTitle}
               onPress={onPressButton}
             />
-
-            <Button
-              label="Đã hiểu"
-              bold
-              onPress={() => {
-                Navigator.navigate(SCREEN.VERIFY_IDENTITY_CARD);
-              }}
-            />
           </View>
         </View>
       )}
