@@ -48,13 +48,15 @@ const RegisterFailure = ({route}) => {
         />
         <View style={styles.wrap}>
           <Text color={Colors.white} bold fs={'h3'}>
-            Đăng ký
+            {translation.sign_up}
           </Text>
           <Text color={Colors.white} mb={15} bold fs={'h3'}>
-            không thành công
+            {translation.transaction.failure}
           </Text>
           <Text color={Colors.white} fs={'h7'}>
-            Bạn đã nhập sai quá 3 lần, vui lòng nhập lại sau 30 phút
+            {
+              translation.you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again
+            }
           </Text>
         </View>
       </BlueHeader>
