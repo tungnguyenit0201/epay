@@ -35,8 +35,7 @@ const ForgetPassword = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onSubmitPhone}
-      >
+        onSubmit={onSubmitPhone}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -66,6 +65,7 @@ const ForgetPassword = () => {
                   value={values.phone}
                   /* leftIcon={Images.Phone_1} */
                   isDeleted={values.phone}
+                  maxLength={10}
                 />
               </View>
               <FooterContainer>
