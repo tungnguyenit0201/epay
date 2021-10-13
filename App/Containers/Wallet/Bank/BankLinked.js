@@ -106,22 +106,19 @@ const BankLinked = props => {
 
         <View style={[base.row, styles.block1]}>
           {!showMoney ? (
-            <Text
-              style={[styles.pr1, styles.pt2, styles.textSize2]}
-              color={Colors.white}
-            >
+            <Text style={[styles.pr1, styles.textSize2]} color={Colors.white}>
               ******
             </Text>
           ) : (
             <TouchableOpacity onPress={onGetConnectedBank} style={styles.pr1}>
-              <Text bold color={Colors.white}>
+              <Text bold fs="h5" mt={-3} color={Colors.white}>
                 {formatMoney(userInfo?.myWallet, true)}
               </Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity onPress={() => setShowMoney(!showMoney)}>
             <Icon
-              icon={showMoney ? Images.Eye : Images.EyeGray}
+              icon={showMoney ? Images.Eye2 : Images.EyeGray2}
               size={20}
               tintColor={Colors.white}
             />
@@ -151,7 +148,7 @@ const BankLinked = props => {
 
         <ScrollView>
           <View style={[styles.wrap, styles.pb1]}>
-            <Text bold fs="h6" mb={12}>
+            <Text bold fs="h6" color={Colors.black} mb={12}>
               Thêm ngân hàng nhận tiền
             </Text>
 
@@ -160,7 +157,7 @@ const BankLinked = props => {
               onPress={mapBank}
             >
               <View style={styles.flex1}>
-                <Text color={Colors.black} fs="h6">
+                <Text color={Colors.l4} fs="h6">
                   {translation.add_bank_account}
                 </Text>
               </View>
