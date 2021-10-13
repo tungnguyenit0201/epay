@@ -30,7 +30,11 @@ export const registerSchema = yup.object().shape({
 });
 
 export const emailSchema = yup.object().shape({
-  email: yup.string().email(TEXT.EMAIL_INVALID).required(TEXT.EMAIL_NOT_BLANK),
+  email: yup
+    .string()
+    .email(TEXT.EMAIL_INVALID)
+    .required(TEXT.EMAIL_NOT_BLANK)
+    .matches(/^[A-Za-z0-9@.]*$/, TEXT.EMAIL_INVALID),
 });
 
 export const phoneSchema = yup.object().shape({
