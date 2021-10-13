@@ -56,7 +56,6 @@ const ForgetPassword = () => {
               <View style={[styles.wrap, styles.flex1, styles.mt1]}>
                 <TextInput
                   numeric
-                  autoFocus
                   placeholder={translation.enter_your_phone_number}
                   required
                   onChange={handleChange('phone')}
