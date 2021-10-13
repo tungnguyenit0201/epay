@@ -1,8 +1,7 @@
 import {TEXT} from 'configs/Constants';
 import * as yup from 'yup';
 
-const FULLNAME_REGEX =
-  /^([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
+const FULLNAME_REGEX = /[^!@#$&*]+$/;
 export const bankCardRegex = /^[a-zA-Z0-9]+$/;
 export const registerSchema = yup.object().shape({
   username: yup.string().required(TEXT.USERNAME_NOT_BLANK),
@@ -112,5 +111,5 @@ export const nameSchema = yup.object().shape({
     .string()
     .required('Tên không được bỏ trống.')
     .max(100, 'Tên không được quá 100 ký tự')
-    .matches(FULLNAME_REGEX, 'Tên không hợp lệ.'),
+    .matches(FULLNAME_REGEX, 'Tên không được chứa ký tự đặc biệt.'),
 });
