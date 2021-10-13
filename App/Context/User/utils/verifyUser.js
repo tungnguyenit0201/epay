@@ -294,7 +294,7 @@ const useVerifyInfo = (initialValue = {}) => {
       return {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
-        titleFront: backSide ? 'Mặt sau' : 'Mặt trước',
+        title: backSide ? 'ẢNH MẶT SAU' : 'ẢNH MẶT TRƯỚC',
         isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
