@@ -54,7 +54,7 @@ const Home = () => {
     },
     {
       icon: Images.Homes.LichSuGd,
-      name: 'Lịch sử',
+      name: translation.history,
       screen: SCREEN.HISTORY,
     },
   ];
@@ -106,20 +106,22 @@ const Home = () => {
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
           icon={Images.SignUp.TouchId}
-          title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
+          title={translation.log_in_touchid}
+          content={
+            translation.if_you_have_a_problem_and_need_help_please_call_us_for_advice_and_support
+          }
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button
                 mb={10}
-                label="Cài đặt vân tay"
+                label={translation.setting_touch_id}
                 onPress={() => {
                   setFirstLogin(false);
                   goSecurity();
                 }}
               />
               <TouchableOpacity onPress={() => setFirstLogin(false)}>
-                <Text>Nhắc tôi sau</Text>
+                <Text>{translation.remind_me_later}</Text>
               </TouchableOpacity>
             </View>
           )}

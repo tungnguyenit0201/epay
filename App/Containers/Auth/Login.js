@@ -14,10 +14,10 @@ import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
 import * as LocalAuthentication from 'expo-local-authentication';
-
+import WebView from 'components/WebView/Partial';
 const Login = ({route}) => {
   const {phone, name} = _.get(route, 'params', {});
-  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID} =
+  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID, message} =
     useAuth();
   const translation = useTranslation();
 
@@ -76,12 +76,13 @@ const Login = ({route}) => {
                   required
                   onChange={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  placeholder={translation.enter_your_password}
+                  placeholder={'Nhập mật khẩu'} // TODO: translate
                   error={touched.password && errors.password}
                   value={values.password}
                   //leftIcon={Images.Transfer.Lock}
                   autoFocus
                   style={styles.wrap}
+                  maxLength={20}
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
@@ -92,15 +93,20 @@ const Login = ({route}) => {
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.linkText]}>Đổi SĐT</Text>
+                    <Text style={[styles.linkText]}>
+                      {translation.change_the_phone_number}
+                    </Text>
                   </Pressable>
                 </View>
+                <WebView
+                  style={styles.textError}
+                  source={{html: ` ${message}`}}
+                />
               </View>
-
               <FooterContainer>
                 <View style={[styles.flexRow]}>
                   <Button
-                    label="Đăng nhập"
+                    label={translation.sign_in}
                     onPress={handleSubmit}
                     style={!biometryType ? styles.flex1 : styles.firstBtn}
                     disabled={!values.password || !_.isEmpty(errors)}
@@ -170,6 +176,12 @@ const styles = StyleSheet.create({
   iconSize: {
     width: scale(17),
     height: scale(17),
+  },
+  textError: {
+    marginTop: 50,
+    color: Colors.Highlight,
+    textAlign: 'center',
+    minHeight: 200,
   },
 });
 export default Login;

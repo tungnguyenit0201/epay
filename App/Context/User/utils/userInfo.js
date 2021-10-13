@@ -76,12 +76,12 @@ const useUserInfo = type => {
       let phone = await getPhone();
       let result = await updatePersonalInfo({
         phone,
-        personalInfo: {FullName: personalInfo.current?.FullName},
+        personalInfo: {FullName: personalInfo.current?.FullName?.trim()},
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         await onGetAllInfo();
-        showModalSmartOTPSuggestion(true);
+        // showModalSmartOTPSuggestion(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else {
         setError(result);

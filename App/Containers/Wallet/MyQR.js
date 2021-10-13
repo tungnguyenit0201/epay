@@ -72,7 +72,7 @@ const QRPay = ({route}) => {
 
       <View style={[base.container, styles.flexCenter]}>
         <Button
-          mode="outline"
+          //mode="outline"
           mb={20}
           label={'Nhập số tiền bạn muốn nhận'} // TODO: translate
           onPress={() => {

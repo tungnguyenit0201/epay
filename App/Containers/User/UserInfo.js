@@ -75,7 +75,7 @@ const UserInfo = () => {
     //TODO: Translate
     <>
       <HeaderBg mb={0}>
-        <Header back title="Trang cá nhân" />
+        <Header back title={translation.profile} />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
@@ -114,9 +114,11 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin cá nhân
+                  {translation.perdonal_information}
                 </Text>
-                <Text style={styles.headingDesc}>Nhập giới thiệu về bạn</Text>
+                <Text style={styles.headingDesc}>
+                  {translation.your_information}
+                </Text>
               </View>
 
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
@@ -124,7 +126,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -140,7 +143,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.rowTitle}>{item.name}</Text>
                   <Text style={base.leftAuto}>{item.val}</Text>
@@ -154,13 +158,13 @@ const UserInfo = () => {
               />
               <View>
                 <Text mt={3} mb={5} style={styles.rowTitle}>
-                  CMND/CCCD/Hộ chiếu
+                  {translation.id_card + '/' + translation.passport}
                 </Text>
                 <Text style={[styles.rowVal]}>
                   {ICInfor?.ICNumber ? (
                     hideCMND(ICInfor?.ICNumber)
                   ) : (
-                    <Text color={Colors.g4}>Chưa có</Text>
+                    <Text color={Colors.g4}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -178,7 +182,7 @@ const UserInfo = () => {
                   {AddressInfo?.Provincial ? (
                     address
                   ) : (
-                    <Text color={Colors.g4}>Chưa có</Text>
+                    <Text color={Colors.g4}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -189,10 +193,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin tài khoản
+                  {translation.account_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  Cập nhật thông tin giấy tờ tùy thân
+                  {translation.update_personal_id}
                 </Text>
               </View>
 
@@ -205,7 +209,8 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }>
+                  }
+                >
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -229,10 +234,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin Email
+                  {translation.email_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  Cập nhật thông tin liên hệ
+                  {translation.update_contact_information}
                 </Text>
               </View>
 
@@ -249,7 +254,8 @@ const UserInfo = () => {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -265,7 +271,7 @@ const UserInfo = () => {
               {PersonalInfo?.Email ? (
                 <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
               ) : (
-                <Text color={Colors.g4}>Chưa có</Text>
+                <Text color={Colors.g4}>{translation.empty}</Text>
               )}
             </View>
           </View>
@@ -294,7 +300,8 @@ const UserInfo = () => {
               <Button mb={10} bold label="Có" onPress={onReVerify} />
               <TouchableOpacity
                 style={styles.textCenter}
-                onPress={() => onReVerify('hideModal')}>
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>

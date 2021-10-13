@@ -25,7 +25,7 @@ const VerifyUserInfo = ({route}) => {
     >
       <View style={[base.container, styles.pt1]}>
         <DropImage
-          title={translation?.photo_of_the_front_side}
+          title={translation?.photo_of_the_front_side.toUpperCase()}
           onDropImage={value => {
             onChange('ICFrontPhoto', value);
             identityCard === IC_TPYE.PASSPORT &&
@@ -39,7 +39,7 @@ const VerifyUserInfo = ({route}) => {
         />
         {identityCard !== IC_TPYE.PASSPORT && (
           <DropImage
-            title={translation?.photo_of_the_back_side}
+            title={translation?.photo_of_the_back_side.toUpperCase()}
             onDropImage={value => {
               onChange('ICBackPhoto', value);
             }}

@@ -77,15 +77,6 @@ const DropImage = ({
     <>
       {!showCamera && (
         <View style={[styles.wrapImg, styles.blockShadow, style]}>
-          <Text
-            // size={Fonts.H6} can not use, please check Text Component!
-            fs="h6"
-            bold
-            style={styles.title1}
-          >
-            {title}
-          </Text>
-
           {/* remember to delete when no use
           <Button
             onPress={KYCFunction}
@@ -96,9 +87,20 @@ const DropImage = ({
           /> */}
 
           <View style={styles.alignCenter}>
+            <Text
+              // size={Fonts.H6} can not use, please check Text Component!
+              fs="h6"
+              bold
+              style={[
+                identify === IC_TPYE.PASSPORT ? styles.w2 : styles.widthFull,
+                styles.title1,
+              ]}
+            >
+              {title}
+            </Text>
             <Pressable
               style={[
-                styles.img,
+                identify === IC_TPYE.PASSPORT ? styles.w2 : styles.widthFull,
                 cameraType !== 'back' && styles.imgFront,
                 cameraType !== 'back' && {
                   width: image?.widthImg || scale(150),
@@ -110,7 +112,9 @@ const DropImage = ({
               <Image
                 style={[
                   styles.radius1,
-                  styles.img,
+                  identify === IC_TPYE.PASSPORT
+                    ? styles.imgPassport
+                    : styles.imgCmnd,
                   cameraType !== 'back' && styles.imgFront,
                   cameraType !== 'back' && {
                     width: image?.widthImg || scale(150),
@@ -127,7 +131,7 @@ const DropImage = ({
                   resizeMode={'contain'}
                 />
                 <Text color={Colors.white} bold centered mt={10} fs="h6">
-                  Chụp ảnh GTTT
+                  {translation.take_a_photo_of_gttt}
                 </Text>
               </View>
             </Pressable>
@@ -194,8 +198,9 @@ const DropImage = ({
                           mr={Spacing.PADDING}
                           mt={Spacing.PADDING * 2}
                         >
-                          Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
-                          chụp đủ sáng và rõ nét
+                          {
+                            translation.please_position_your_id_card_in_this_rectangular_frame_take_a_clear_and_bright_picture
+                          }
                         </Text>
                       </View>
 
@@ -234,6 +239,10 @@ const styles = StyleSheet.create({
   //---------------
   radius1: {borderRadius: 8},
   //---------------
+  widthFull: {width: '100%'},
+  //---------------
+  w2: {width: 190},
+  //---------------
   wrap: {
     paddingVertical: scale(16),
     backgroundColor: Colors.white,
@@ -263,10 +272,6 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.PADDING + 3,
     paddingHorizontal: Spacing.PADDING + 12,
     backgroundColor: Colors.white,
-  },
-  img: {
-    width: '100%',
-    height: scale(186),
   },
   imgFront: {
     borderColor: Colors.cl1,
@@ -324,6 +329,16 @@ const styles = StyleSheet.create({
   iconBigCamera: {
     width: 60,
     height: 48,
+  },
+  //------------------
+  imgPassport: {
+    width: '100%',
+    height: 280,
+  },
+  //------------------
+  imgCmnd: {
+    width: '100%',
+    height: scale(186),
   },
   //------------------
   blockShadow: {

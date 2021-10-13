@@ -6,10 +6,10 @@ import {SCREEN, USER_STATUS} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {Images} from 'themes';
 import {useUserStatus} from 'context/User/utils';
-
+import {useTranslation} from 'context/Language';
 const User = () => {
   const {status} = useUserStatus();
-
+  const translation = useTranslation();
   return status != USER_STATUS.DONE && status != USER_STATUS.VERIFYING_KYC ? (
     <TouchableOpacity
       onPress={() => {
@@ -18,7 +18,8 @@ const User = () => {
         status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK &&
           Navigator.navigate(SCREEN.MAP_BANK_FLOW);
       }}
-      style={[styles.item]}>
+      style={[styles.item]}
+    >
       <Image
         style={styles.img}
         resizeMode={'contain'}
@@ -26,8 +27,8 @@ const User = () => {
       />
       <Text style={styles.text}>
         {status == USER_STATUS.INACTIVE_KYC
-          ? 'Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.'
-          : 'Liên kết ngân hàng để thực hiện giao dịch'}
+          ? translation.verify_accounts_enhance_your_account_security
+          : translation.link_banks_to_make_transactions}
       </Text>
       <Image style={styles.arrow} source={Images.Homes.Arrow} />
     </TouchableOpacity>

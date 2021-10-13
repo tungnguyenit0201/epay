@@ -8,7 +8,15 @@ import {
   RefreshControl,
   FlatList,
 } from 'react-native';
-import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
+import {
+  Text,
+  Header,
+  Button,
+  Row,
+  Col,
+  HeaderBg,
+  ScreenBackground,
+} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
 import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
@@ -42,6 +50,7 @@ const Notification = () => {
         />
       </HeaderBg>
       <View style={styles.wrap}>
+        <ScreenBackground />
         <View style={[base.container, styles.flexRow]}>
           <FlatList
             data={dataType}
@@ -53,7 +62,8 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}>
+                }}
+              >
                 <Text style={[type === item.title && styles.textWhite]}>
                   {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
@@ -71,7 +81,8 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }>
+          }
+        >
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -79,10 +90,12 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}>
+                    onPress={() => onPressNotify(item)}
+                  >
                     <View style={styles.head}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        style={{flexDirection: 'row', alignItems: 'center'}}
+                      >
                         <Image
                           source={require('images/favicon.png')}
                           style={styles.icon}
@@ -124,12 +137,6 @@ const Notification = () => {
           <View style={{height: 120}}></View>
         </ScrollView>
       </View>
-      {selectNotify(type).length !== 0 ? (
-        selectNotify(type).map((item, index) => {})
-      ) : (
-        <Image source={require('images/wave.png')} style={styles.bgImg} />
-      )}
-      {/* <FooterNotification /> */}
     </>
   );
 };
@@ -137,6 +144,8 @@ const styles = StyleSheet.create({
   wrap: {
     paddingTop: 20,
     paddingBottom: 150,
+    flex: 1,
+    backgroundColor: Colors.white,
   },
 
   emtyNoti: {
@@ -158,13 +167,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: Spacing.PADDING,
     bottom: 23,
-  },
-  bgImg: {
-    width: scale(375),
-    height: scale(375),
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
   },
   isRead: {
     backgroundColor: Colors.l2,

@@ -109,6 +109,10 @@ export default {
     ThanhToan: require('images/profile/ThanhToan.png'),
     Translate: require('images/profile/Translate.png'),
     ReVerify: require('images/profile/ReVerify.png'),
+    BgStandard: require('images/bg/bg-standard.png'),
+    BgGold: require('images/bg/bg-gold.png'),
+    BgPlantinum: require('images/bg/bg-plantinum.png'),
+    NotifyStatus: require('images/icons/notification-status.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),

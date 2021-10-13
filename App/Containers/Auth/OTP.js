@@ -34,7 +34,8 @@ const OTP = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -52,32 +53,33 @@ const OTP = ({route}) => {
       countdown={countdown}
       resentOTP={resentOTP}
       onChangePhone={isLoggedIn ? null : onChangePhone}
+      // TODO: translate
       label={
         functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL ||
         functionType === FUNCTION_TYPE.AUTH_EMAIL
           ? 'Mã xác thực gửi về mail ' +
             route?.params.email +
             '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
-          : 'Nhập mã OTP xác thực'
+          : translation.enter_otp_verification_code
       }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />
   );
 
   return (
-    // TODO: translate
     <>
       {isLoggedIn ? (
         <>
           <HeaderBg>
-            <Header back title="Xác thực" />
+            <Header back title={translation.common.authen} />
           </HeaderBg>
           <View
             style={[
               styles.wrap,
               base.bgWhite,
               {paddingTop: scale(28), flex: 1},
-            ]}>
+            ]}
+          >
             {renderOTPContainer()}
           </View>
         </>
@@ -97,34 +99,17 @@ const OTP = ({route}) => {
           </View>
         </BlueHeader>
       )}
-
-      <TouchableOpacity
-        style={[
-          styles.flexRow,
-          styles.justifyCenter,
-          styles.bgGray,
-          {paddingVertical: Spacing.PADDING - 5},
-        ]}
-        onPress={() => setShowModal(true)}>
-        <View
-          style={[
-            styles.lineSize,
-            styles.absolute,
-            styles.bgGray1,
-            styles.top1,
-            styles.left1,
-          ]}></View>
-        <View
-          style={[
-            styles.lineSize,
-            styles.absolute,
-            styles.bgGray1,
-            styles.top1,
-            styles.right1,
-          ]}></View>
-        <Image source={Images.Phone} style={styles.iconPhone} />
-        <Text bold>Gọi cho tôi</Text>
-      </TouchableOpacity>
+      <View style={styles.wrapCalMe}>
+        <TouchableOpacity
+          style={styles.callMe}
+          onPress={() => setShowModal(true)}
+        >
+          <Image source={Images.Phone} style={styles.iconPhone} />
+          <Text mb={-3} centered fw="700">
+            {translation.call_epay}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <HelpModal
         showModal={showModal}
@@ -148,15 +133,14 @@ const styles = StyleSheet.create({
   //-----------------------------
   textCenter: {textAlign: 'center'},
   //-----------------------------
-  bgGray: {backgroundColor: Colors.OtpGray_1},
-  bgGray1: {backgroundColor: Colors.OtpGray_2},
+  bgGray: {backgroundColor: Colors.g3},
+  bgGray1: {backgroundColor: Colors.g4},
   //-----------------------------
   iconRight: {paddingRight: Spacing.PADDING},
   iconPhone: {
     height: Spacing.PADDING,
     width: Spacing.PADDING,
     marginRight: 10,
-    top: 3,
   },
   lineSize: {
     width: 1,
@@ -168,6 +152,20 @@ const styles = StyleSheet.create({
   },
   mt: {
     marginTop: -10,
+  },
+  wrapCalMe: {
+    paddingVertical: scale(10),
+    backgroundColor: Colors.g3,
+  },
+  callMe: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: Colors.g4,
+    marginHorizontal: scale(30),
+    height: 25,
   },
 });
 export default OTP;

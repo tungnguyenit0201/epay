@@ -42,7 +42,9 @@ const TransferBank = ({sourceMoney = []}) => {
             }
           />
           {Number.isInteger(fee) && (
-            <Text>{`Phí giao dịch: ${fee == 0 ? 'Miễn phí' : `${fee}đ`}`}</Text>
+            <Text>{`${translation.transaction_fee}: ${
+              fee == 0 ? translation.free : `${fee}đ`
+            }`}</Text>
           )}
         </View>
         {/* {!item?.BankId && (
@@ -62,23 +64,22 @@ const TransferBank = ({sourceMoney = []}) => {
   };
 
   return (
-    // TODO: translate
     <>
       <View>
         <Text bold fs="h6" mb={20}>
-          Chọn nguồn tiền
+          {translation.source}
         </Text>
         {sourceMoney?.map((item, index) => renderItem(item, index))}
 
         <Text bold fs="h6" mb={20} mt={10}>
-          Thêm ngân hàng
+          {translation.add_bank}
         </Text>
 
         <Pressable
           onPress={() => Navigator.navigate(SCREEN.MAP_BANK_FLOW)}
           style={styles.addBank}
         >
-          <Text fs="h6">Thêm tài khoản ngân hàng</Text>
+          <Text fs="h6">{translation.add_bank_account}</Text>
           <Image
             style={[styles.iconAddBank]}
             source={require('images/qrpay/plus.png')}

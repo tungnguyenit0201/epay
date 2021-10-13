@@ -14,12 +14,19 @@ const User = ({data, style}) => {
 
   const {onGoNotify} = useNotify();
   return (
-    // TODO: translate
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
-        style={[styles.user, styles.flex1]}>
-        <Text bold style={[styles.text, styles.textSize1, styles.pb]}>
+        style={[styles.user, styles.flex1]}
+      >
+        <Text
+          bold
+          size={Fonts.SM}
+          right
+          color={Colors.white}
+          style={styles.lh1}
+          mb={3}
+        >
           {personalInfo?.FullName}
         </Text>
         <Text style={styles.text}>{hidePhone(phone)}</Text>
@@ -40,6 +47,7 @@ const User = ({data, style}) => {
             />
           )}
         </TouchableOpacity>
+
         {/* TODO: show notifications count */}
         {/* <TouchableOpacity
           style={styles.noti}
@@ -54,8 +62,11 @@ const User = ({data, style}) => {
 };
 
 const styles = StyleSheet.create({
+  lh1: {lineHeight: 18},
+  //-------------
   item: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   wicon: {
     overflow: 'hidden',
@@ -73,11 +84,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: Colors.white,
   },
-
-  pb: {
-    paddingBottom: 5,
-  },
-
   noti: {
     width: 16,
     height: 16,
@@ -95,8 +101,6 @@ const styles = StyleSheet.create({
   },
   //----------------
   flex1: {flex: 1},
-  //----------------
-  textSize1: {fontSize: Fonts.SM},
 });
 
 export default User;

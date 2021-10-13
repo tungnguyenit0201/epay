@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
+  BackHandler,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Colors, Fonts, Images, Spacing} from 'themes';
@@ -56,6 +57,7 @@ const Wrapper = React.memo(
     const smartOTPPassword = useModalSmartOTPPassword();
     const modalPassword = useModalPassword();
     const {setError} = useError();
+
     useEffect(() => {
       modalSmartOTP.smartOTPSuggestion &&
         setError({
@@ -73,6 +75,15 @@ const Wrapper = React.memo(
           icon: Images.Modal.Lock,
         });
     }, [modalSmartOTP?.smartOTPSuggestion]);
+
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true,
+      );
+      return () => backHandler.remove();
+    }, []);
+
     return (
       // TODO: translate
       <View style={styles.flexFill}>

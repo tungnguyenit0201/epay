@@ -18,7 +18,6 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
   const {width, height} = useWindowDimensions();
   const top = getStatusBarHeight();
   return (
-    // TODO: translate
     <View style={{display: visible ? 'flex' : 'none'}}>
       <View
         style={{
@@ -75,7 +74,7 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
                 color={Colors.white}
                 style={styles.underLine}
               >
-                Chụp lại
+                {translation.take_a_photo_again}
               </Text>
             </Pressable>
           </View>

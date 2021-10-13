@@ -5,7 +5,7 @@ import {Colors, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
-import {SCREEN} from 'configs/Constants';
+import {GENDER, SCREEN} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 
 const VerifyUserPortrait = ({route}) => {
@@ -179,7 +179,12 @@ const VerifyUserPortrait = ({route}) => {
             {translation.gender}
           </Text>
           <Radio
-            items={GENDERS}
+            items={Object.entries(GENDER)
+              .filter(x => x[0] !== '3')
+              .map(([key, value]) => ({
+                label: value,
+                value: parseInt(key),
+              }))}
             onChange={value => handleChange('SexType', value)}
             selectedValue={info.SexType}
           />
@@ -315,6 +320,7 @@ const styles = StyleSheet.create({
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
+    marginBottom: -3,
   },
   address: {
     marginBottom: 0,

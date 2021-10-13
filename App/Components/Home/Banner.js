@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Banner;
+export default React.memo(Banner);

@@ -81,6 +81,7 @@ const CapturePicture = ({
                   onPress={KYCFunction}
                   label={translation?.take_a_photo}
                   style={styles.smallButton}
+                  size="sm"
                   leftIcon={Images.VerifyUserInfo.camera}
                 />
               </View>
@@ -117,7 +118,7 @@ const CapturePicture = ({
               <View style={{alignItems: 'center'}}>
                 <Button
                   onPress={KYCFunction}
-                  label={'Chụp ảnh'}
+                  label={translation.take_a_photo}
                   style={styles.btn}
                   leftIcon={Images.VerifyUserInfo.camera}
                 />
@@ -192,8 +193,9 @@ const CapturePicture = ({
                           mr={Spacing.PADDING}
                           mt={Spacing.PADDING * 2}
                         >
-                          Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
-                          chụp đủ sáng và rõ nét
+                          {
+                            translation.please_position_your_id_card_in_this_rectangular_frame_take_a_clear_and_bright_picture
+                          }
                         </Text>
                       </View>
 
@@ -298,8 +300,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   smallButton: {
-    height: scale(32),
     paddingHorizontal: 16,
+    marginLeft: Spacing.PADDING,
+    flex: 1,
   },
   emptyHolder: {
     paddingVertical: Spacing.PADDING * 3,
