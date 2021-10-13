@@ -35,7 +35,8 @@ const ForgetPassword = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onSubmitPhone}>
+        onSubmit={onSubmitPhone}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,

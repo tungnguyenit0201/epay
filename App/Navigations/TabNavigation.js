@@ -130,7 +130,8 @@ const TabNavigation = () => {
                   style={{
                     color: isFocused ? Colors.cl1 : Colors.gray,
                   }}
-                  centered>
+                  centered
+                >
                   {TabLabels[label]}
                 </Text>
               </TouchableOpacity>
@@ -145,7 +146,8 @@ const TabNavigation = () => {
         </View>
         <TouchableOpacity
           style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={onCheck}>
+          onPress={onCheck}
+        >
           <Image source={Images.TabBar.QR} style={styles.qrImg} />
         </TouchableOpacity>
       </View>
