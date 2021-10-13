@@ -83,7 +83,7 @@ const DropImage = ({
             bold
             style={styles.title1}
           >
-            {title}
+            {title?.toUpperCase()}
           </Text>
 
           {/* remember to delete when no use

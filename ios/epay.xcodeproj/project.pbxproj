@@ -643,7 +643,7 @@
 				CODE_SIGN_ENTITLEMENTS = EPAY/EPAY.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21101101;
+				CURRENT_PROJECT_VERSION = 21101201;
 				DEVELOPMENT_TEAM = 5G3223L7MC;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -651,6 +651,7 @@
 					"$(PROJECT_DIR)/epay/NativeModules/VnptEkyc/SDK",
 				);
 				INFOPLIST_FILE = EPAY/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -679,7 +680,7 @@
 				CODE_SIGN_ENTITLEMENTS = EPAY/EPAYRelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 21101101;
+				CURRENT_PROJECT_VERSION = 21101201;
 				DEVELOPMENT_TEAM = 5G3223L7MC;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -687,6 +688,7 @@
 					"$(PROJECT_DIR)/epay/NativeModules/VnptEkyc/SDK",
 				);
 				INFOPLIST_FILE = EPAY/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

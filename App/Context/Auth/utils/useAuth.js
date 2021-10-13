@@ -43,7 +43,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
       if (!isEnrolled || !passwordEncrypted) {
         return;
       }
-      setBiometryType(type);
+      setBiometryType(_.isArray(type) ? type[0] : type);
     } catch (error) {
       __DEV__ && console.log("Keychain couldn't be accessed!", error);
     }
@@ -375,6 +375,7 @@ const useForgetPassword = () => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
+  const {agree} = useTranslation();
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
@@ -388,7 +389,11 @@ const useForgetPassword = () => {
         functionType: FUNCTION_TYPE.FORGOT_PASS,
       });
       return;
-    } else setError(result);
+    } else
+      setError({
+        ...result,
+        action: [{label: agree}],
+      });
   };
 
   const onNewPassword = async ({newPassword, phone}) => {
@@ -400,8 +405,6 @@ const useForgetPassword = () => {
     });
     setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
-      console.log('result :>> ', result);
-
       if (result?.ErrorCode === ERROR_CODE.NEW_PASSWORD_SIMILAR_TO_LAST_ONE) {
         return setError({
           ...result,

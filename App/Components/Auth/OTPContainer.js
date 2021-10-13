@@ -25,8 +25,7 @@ const OTPContainer = ({
       <Text
         bold
         fs="h3"
-        style={[styles.textWhite, styles.mb1, titleStyle]}
-      >{`Nhập OTP`}</Text>
+        style={[styles.textWhite, styles.mb1, titleStyle]}>{`Nhập OTP`}</Text>
       <Text fs="h6" style={[styles.textGray, styles.mb2]}>
         {label}
       </Text>
@@ -50,16 +49,14 @@ const OTPContainer = ({
           <Pressable
             //style={{marginTop: -3}}
             disabled={countdown > 0}
-            onPress={resentOTP}
-          >
+            onPress={resentOTP}>
             <Text
               style={[
                 styles.fontSize_1,
                 {
                   color: Colors.cl1,
                 },
-              ]}
-            >
+              ]}>
               {countdown > 0
                 ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
                 : ` Gửi lại`}
@@ -108,7 +105,7 @@ const styles = StyleSheet.create({
   },
   otp: {
     width: scale(40),
-    backgroundColor: Colors.white,
+    /* backgroundColor: 'transparent', */
     fontWeight: '700',
     fontSize: Fonts.H4,
     color: Colors.BLACKTEXT,

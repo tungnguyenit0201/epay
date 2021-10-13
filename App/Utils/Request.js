@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import {Platform, Alert} from 'react-native';
 import axios from './Axios';
 import {API} from 'configs';
 import {buildURL} from './Functions';
@@ -149,6 +149,18 @@ async function request({
       if (__DEV__) {
         console.log(method, buildURL(url, query), params, err);
       }
+      err?.message == 'Network Error' &&
+        Alert.alert(
+          '',
+          'Mất kết nối hoăc đường truyên quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoăc thử lại sau ít phút',
+          [
+            {
+              text: 'Đồng ý',
+              onPress: () => true,
+            },
+          ],
+        );
+
       const result = err?.toJSON?.();
       if (typeof failure === 'function') {
         if (err?.response?.data) {
