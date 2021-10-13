@@ -51,7 +51,8 @@ const Login = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) => onLogin({phone, password})}
-        validationSchema={passwordSchema}>
+        validationSchema={passwordSchema}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -75,12 +76,13 @@ const Login = ({route}) => {
                   required
                   onChange={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  placeholder={translation.enter_your_password}
+                  placeholder={'Nhập mật khẩu'} // TODO: translate
                   error={touched.password && errors.password}
                   value={values.password}
                   //leftIcon={Images.Transfer.Lock}
                   autoFocus
                   style={styles.wrap}
+                  maxLength={20}
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
@@ -91,7 +93,9 @@ const Login = ({route}) => {
                   </Pressable>
 
                   <Pressable onPress={onChangePhone}>
-                    <Text style={[styles.linkText]}>Đổi SĐT</Text>
+                    <Text style={[styles.linkText]}>
+                      {translation.change_the_phone_number}
+                    </Text>
                   </Pressable>
                 </View>
                 <WebView
@@ -102,7 +106,7 @@ const Login = ({route}) => {
               <FooterContainer>
                 <View style={[styles.flexRow]}>
                   <Button
-                    label="Đăng nhập"
+                    label={translation.sign_in}
                     onPress={handleSubmit}
                     style={!biometryType ? styles.flex1 : styles.firstBtn}
                     disabled={!values.password || !_.isEmpty(errors)}

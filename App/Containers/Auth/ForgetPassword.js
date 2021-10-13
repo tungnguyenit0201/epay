@@ -17,16 +17,16 @@ const ForgetPassword = () => {
   const {phone} = usePhone();
   const {onSubmitPhone} = useForgetPassword();
   const translation = useTranslation();
-
-  // TODO: translate
   return (
     <BlueHeader>
       {/* <Header back blackIcon avoidStatusBar /> */}
       <BigLogo style={{marginBottom: 30}} />
       <Content
         style={styles.wrap}
-        title="Quên mật khẩu"
-        text="Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới"
+        title={translation.forgot_password}
+        text={
+          translation.to_reset_your_password_please_enter_your_phone_number_below
+        }
       />
 
       <Formik
@@ -57,7 +57,6 @@ const ForgetPassword = () => {
               <View style={[styles.wrap, styles.flex1, styles.mt1]}>
                 <TextInput
                   numeric
-                  autoFocus
                   placeholder={translation.enter_your_phone_number}
                   required
                   onChange={handleChange('phone')}
@@ -66,6 +65,7 @@ const ForgetPassword = () => {
                   value={values.phone}
                   /* leftIcon={Images.Phone_1} */
                   isDeleted={values.phone}
+                  maxLength={10}
                 />
               </View>
               <FooterContainer>

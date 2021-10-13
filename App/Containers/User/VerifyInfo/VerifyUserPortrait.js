@@ -5,7 +5,7 @@ import {Colors, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
-import {SCREEN} from 'configs/Constants';
+import {GENDER, SCREEN} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 
 const VerifyUserPortrait = ({route}) => {
@@ -153,7 +153,8 @@ const VerifyUserPortrait = ({route}) => {
       showInstruction={false}
       onPressButton={onUpdateAllInfo}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}>
+      buttonTitle={translation.updateInfo}
+    >
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -285,7 +286,8 @@ const VerifyUserPortrait = ({route}) => {
           color={Colors.Highlight}
           bold
           mb={48}
-          fs="h6">
+          fs="h6"
+        >
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>

@@ -17,14 +17,15 @@ const DinhDanh = () => {
         />
       </View>
       <Text fs="h4" centered bold mb={10}>
-        Định danh tài khoản
+        {translation.verify_your_account}
       </Text>
       <Text centered mb={20}>
-        {translation?.kycDescription}
+        Tài khoản được định danh sẽ có mức độ bảo mật cao hơn và giới hạn lớn
+        hơn cho các giao dịch
       </Text>
       <Button
         type="img"
-        label="Định danh ngay"
+        label={translation.verify_now}
         onPress={() => {
           Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         }}

@@ -46,7 +46,8 @@ const SelectMoney = () => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <Button
             mode="outline"
             label="Hủy"

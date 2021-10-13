@@ -45,9 +45,11 @@ const InputBlock = ({
 
   return (
     <View>
-      <Text style={styles.inputLabel}>
-        {label} {required && <Text color={'red'}>* </Text>}
-      </Text>
+      {!!label && (
+        <Text style={styles.inputLabel}>
+          {label} {required && <Text color={'red'}>* </Text>}
+        </Text>
+      )}
       {!isSelect ? (
         <TextInput
           textContentType={'oneTimeCode'}
@@ -77,6 +79,9 @@ const InputBlock = ({
             <Text style={{color: Colors.TEXT}}>
               {value ? value : props?.defaultValue}
             </Text>
+            {!!props?.placeholder && !value && !props?.defaultValue && (
+              <Text style={{color: Colors.l5}}>{props.placeholder}</Text>
+            )}
           </TouchableOpacity>
           {rightIconBgGray && (
             <TouchableOpacity
@@ -100,7 +105,11 @@ const InputBlock = ({
       {rightIcon && (
         <TouchableOpacity
           onPress={onPress}
-          style={[styles.absolute, styles.top1, styles.right1]}
+          style={[
+            styles.absolute,
+            label ? styles.top1 : styles.top2,
+            styles.right1,
+          ]}
         >
           <Icon icon={rightIcon} resizeMode="contain" tintColor={Colors.gray} />
         </TouchableOpacity>
@@ -130,6 +139,7 @@ const styles = StyleSheet.create({
   absolute: {position: 'absolute'},
   //----------------
   top1: {top: scale(45)},
+  top2: {top: scale(10)},
   //----------------
   right1: {right: scale(10)},
   //----------------
@@ -153,7 +163,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING / 2,
     paddingVertical: scale(10),
     height: scale(48),
-    borderColor: Colors.cl4,
+    borderColor: Colors.cl5,
     borderWidth: 1,
     borderRadius: 8,
     flexDirection: 'row',

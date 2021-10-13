@@ -3,20 +3,22 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Button, Modal} from 'components';
 import {Images, Colors, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
-
+import {useTranslation} from 'context/Language';
 const HelpModal = ({showModal, setShowModal, onPress}) => {
+  const translation = useTranslation();
   return (
-    // TODO: translate
     <Modal
       visible={showModal}
       onClose={() => setShowModal(false)}
-      title="Gọi tổng đài"
-      content="Nếu bạn đang gặp vấn đề cần được giúp đỡ, vui lòng gọi về cho chúng tôi để được tư vấn hỗ trợ"
+      title={translation.call_the_center}
+      content={
+        translation.if_you_have_a_problem_and_need_help_please_call_us_for_advice_and_support
+      }
       buttonGroup={() => (
         <>
-          <Button mb={15} label="Gọi 1900-0000" onPress={onPress} />
+          <Button mb={15} label={translation.call_19000000} onPress={onPress} />
           <TouchableOpacity onPress={() => setShowModal(false)}>
-            <Text style={styles.textSecondary}>Không, cảm ơn</Text>
+            <Text style={styles.textSecondary}>{translation.no_thank_you}</Text>
           </TouchableOpacity>
         </>
       )}

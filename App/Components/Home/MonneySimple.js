@@ -33,7 +33,8 @@ const Monney = ({style}) => {
           )}
           <TouchableOpacity
             style={{marginLeft: 10}}
-            onPress={() => setShowMoney(!showMoney)}>
+            onPress={() => setShowMoney(!showMoney)}
+          >
             <Icon
               icon={showMoney ? Images.Eye2 : Images.EyeGray2}
               tintColor={Colors.white}

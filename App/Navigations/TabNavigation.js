@@ -43,7 +43,7 @@ const TabNavigation = () => {
   const {width, height} = useWindowDimensions();
   const translation = useTranslation();
   const TabLabels = {
-    Home: 'Trang chủ', // TODO: translate
+    Home: translation.home,
     User: translation.account,
   };
 
@@ -106,7 +106,7 @@ const TabNavigation = () => {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={label === 'Home' ? styles.tabH : styles.tabU} // TODO: translate
+                style={label === 'Home' ? styles.tabH : styles.tabU}
               >
                 <Image
                   source={
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   wrapQR: {
     position: 'absolute',
-    top: -scale(56 / 2 + 5),
+    top: -scale(56 / 12 + 5),
     width: scale(56),
   },
   qrImg: {

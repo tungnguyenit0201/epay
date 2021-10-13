@@ -26,7 +26,8 @@ const PaymentSettings = () => {
               type: 'confirm_password_response',
               headerLabel: 'Đổi mật khẩu',
             });
-          }}>
+          }}
+        >
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
