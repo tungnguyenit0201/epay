@@ -375,6 +375,7 @@ const useForgetPassword = () => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
+  const {agree} = useTranslation();
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
@@ -388,7 +389,11 @@ const useForgetPassword = () => {
         functionType: FUNCTION_TYPE.FORGOT_PASS,
       });
       return;
-    } else setError(result);
+    } else
+      setError({
+        ...result,
+        action: [{label: agree}],
+      });
   };
 
   const onNewPassword = async ({newPassword, phone}) => {
