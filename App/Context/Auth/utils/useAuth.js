@@ -100,6 +100,11 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
                 'Dấu vân tay không hợp lệ. Vui lòng nhập mật khẩu thiết bị để kích hoạt',
             }); // TODO: translate
           }
+        } else {
+          setError({
+            ErrorCode: -1,
+            ErrorMessage: 'Dấu vân tay không hợp lệ. Vui lòng thử lại sau',
+          }); // TODO: translate
         }
         return;
       default:

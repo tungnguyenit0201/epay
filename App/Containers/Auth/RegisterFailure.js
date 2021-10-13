@@ -48,14 +48,17 @@ const RegisterFailure = ({route}) => {
 
       <Content
         title={route?.params?.content?.title || 'Đăng ký \nkhông thành công'}
-        text={route?.params?.content?.text ||"Bạn đã nhập sai OTP quá 3 lần, vui lòng quay lại sau 30 phút."}
+        text={
+          route?.params?.content?.text ||
+          'Bạn đã nhập sai OTP quá 3 lần, vui lòng quay lại sau 30 phút.'
+        }
         styleText={{color: Colors.white}}
         style={[styles.wrap, styles.flex1, styles.mt1]}
       />
 
       <FooterContainer>
         <Button
-          label={`Gọi ${route?.params?.content?.hotline ||"024 32252336"}`}
+          label={`Gọi ${route?.params?.content?.hotline || '024 32252336'}`}
           style={styles.btn}
           onPress={openCallDialog}
           mb={Spacing.PADDING - 10}

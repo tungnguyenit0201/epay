@@ -140,7 +140,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.Translate}

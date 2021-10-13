@@ -50,7 +50,8 @@ const BankLinked = props => {
       style={styles.alignCenter}
       onPress={() => {
         Navigator.navigate(screen);
-      }}>
+      }}
+    >
       <Image
         source={icon}
         style={[
@@ -107,7 +108,8 @@ const BankLinked = props => {
           {!showMoney ? (
             <Text
               style={[styles.pr1, styles.pt2, styles.textSize2]}
-              color={Colors.white}>
+              color={Colors.white}
+            >
               ******
             </Text>
           ) : (
@@ -132,7 +134,8 @@ const BankLinked = props => {
               width={'33.333%'}
               space={1}
               key={index}
-              style={[styles.mb4, styles.alignCenter]}>
+              style={[styles.mb4, styles.alignCenter]}
+            >
               <Item title={item.name} icon={item.icon} screen={item.screen} />
             </Col>
           ))}
@@ -154,7 +157,8 @@ const BankLinked = props => {
 
             <TouchableOpacity
               style={[base.row, styles.btnAddBank]}
-              onPress={mapBank}>
+              onPress={mapBank}
+            >
               <View style={styles.flex1}>
                 <Text color={Colors.black} fs="h6">
                   {translation.add_bank_account}

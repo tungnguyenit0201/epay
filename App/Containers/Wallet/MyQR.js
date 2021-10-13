@@ -49,7 +49,8 @@ const QRPay = ({route}) => {
               textAlign: 'center',
               lineHeight: 25,
               marginBottom: 25,
-            }}>
+            }}
+          >
             Nhận tiền từ bạn bè nhanh hơn bằng mã QR của bạn
           </Text>
           <QRCode
