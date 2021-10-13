@@ -6,7 +6,7 @@ import {SCREEN, TEXT} from 'configs/Constants';
 import {useEmail} from 'context/User/utils';
 import {Formik} from 'formik';
 import {emailSchema} from 'utils/ValidationSchemas';
-
+import FooterContainer from 'components/Auth/FooterContainer';
 const VerifyEmail = ({route}) => {
   const {onEmailAuth} = useEmail(route?.params);
 
@@ -15,31 +15,30 @@ const VerifyEmail = ({route}) => {
       <HeaderBg>
         <Header back title="Xác thực Email" />
       </HeaderBg>
-      <ScrollView style={base.wrap}>
-        <Formik
-          initialValues={{
-            email: '',
-          }}
-          validationSchema={emailSchema}
-          onSubmit={onEmailAuth}
-        >
-          {({
-            handleChange: _handleChange,
-            handleBlur,
-            handleSubmit,
-            setFieldValue,
-            setFieldTouched,
-            touched,
-            errors,
-            values,
-          }) => {
-            const handleChange = field => value => {
-              setFieldValue(field, value);
-              setFieldTouched(field, true, false);
-            };
+      <Formik
+        initialValues={{
+          email: '',
+        }}
+        validationSchema={emailSchema}
+        onSubmit={onEmailAuth}>
+        {({
+          handleChange: _handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          setFieldTouched,
+          touched,
+          errors,
+          values,
+        }) => {
+          const handleChange = field => value => {
+            setFieldValue(field, value);
+            setFieldTouched(field, true, false);
+          };
 
-            return (
-              <View>
+          return (
+            <View style={styles.flex1}>
+              <View style={[styles.wrap, styles.flex1]}>
                 <View style={[base.container, {paddingTop: 20}]}>
                   <Text fs="h5" bold mb={10}>
                     Nhập email
@@ -56,15 +55,14 @@ const VerifyEmail = ({route}) => {
                     error={touched.email && errors.email}
                   />
                 </View>
-
-                <View style={base.bottom}>
-                  <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
-                </View>
               </View>
-            );
-          }}
-        </Formik>
-      </ScrollView>
+              <FooterContainer>
+                <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
+              </FooterContainer>
+            </View>
+          );
+        }}
+      </Formik>
     </>
   );
 };
