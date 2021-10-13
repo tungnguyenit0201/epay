@@ -1,7 +1,9 @@
 {
+  "hello": "Xin chào",
   "skip": "Bỏ qua",
   "sign_up": "Đăng ký",
   "sign_in": "Đăng nhập",
+  "close": "Đóng",
   "my_wallet": "Ví của tôi",
   "minimum_topup_amount_is_10000_vnd": "Nạp tiền",
   "withdraw": "Rút tiền",
@@ -22,6 +24,7 @@
   "account": "Tài khoản",
   "help_center": "Trung tâm trợ giúp ",
   "please_verify_click_here_to_protect_your_account": "Vui lòng định danh (bấm vào đây) để bảo vệ tài khoản của bạn",
+  "verified_account_will_have_a_higher_level_of_security_and_greater_limits_for_transactions": "Tài khoản được định danh sẽ có mức độ bảo mật cao hơn và giới hạn lớn hơn cho các giao dịch",
   "please_enter_your_phone_number": "Vui lòng nhập số điện thoại",
   "sign_insign_up_epay": "Đăng ký/đăng nhập EPAY ngay!",
   "enter_phone_number": "Nhập số điện thoại",
@@ -37,6 +40,7 @@
   "you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again": "Bạn đã nhập sai quá 3 lần, vui lòng thử lại sau 30 phút",
   "password": "Mật khẩu",
   "enter_your_password": "Nhập mật khẩu của bạn",
+  "enter_password": "Nhập mật khẩu",
   "forgot_password": "Quên mật khẩu",
   "log_out": "Đăng xuất",
   "to_reset_your_password_please_enter_your_phone_number_below": "Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới",
@@ -231,7 +235,7 @@
   "my_epay_wallet": "Ví EPAY của tôi",
   "transfer_confirmation": "Xác nhận chuyển tiền",
   "link_banks_to_make_transactions": "Liên kết ngân hàng để thực hiện giao dịch",
-  "verify_accounts_enhance_your_account_security" : "Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn",
+  "verify_accounts_enhance_your_account_security": "Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn",
   "pay_fines": "Nộp phạt",
   "medical": "Y tế",
   "traffic": "Giao thông",
@@ -586,5 +590,7 @@
   "cancelled": "Huỷ bỏ",
   "addPromoCode": "Thêm mã khuyến mãi",
   "fillPromoCode": "Nhập mã khuyến mãi",
-  "use": "Sử dụng"
+  "use": "Sử dụng",
+  "place_of_issue_maximum_200_characters": "Nơi cấp không được quá 200 ký tự",
+  "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự"
 }

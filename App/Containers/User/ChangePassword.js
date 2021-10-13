@@ -52,7 +52,7 @@ const ChangePassword = ({route}) => {
               <View style={[styles.wrap, styles.flex1]}>
                 <View style={{paddingTop: 20}}>
                   <Text fs="h5" bold mb={10}>
-                    Nhập mật khẩu
+                    {translation.enter_password}
                   </Text>
                   <Text mb={20}>
                     {
@@ -61,7 +61,7 @@ const ChangePassword = ({route}) => {
                   </Text>
                   <TextInput
                     password
-                    placeholder="Nhập mật khẩu"
+                    placeholder={translation.enter_password}
                     placeholderTextColor={Colors.l5}
                     onChange={handleChange('password')}
                     onBlur={handleBlur('password')}

@@ -22,21 +22,22 @@ const Boarding = ({route}) => {
 
   const data = [
     {
-      title: 'Thanh toán đơn giản',
-      content: 'Đi kèm công nghệ tiên tiến, đảm bảo mang đến tiện ích tốt nhất',
-      action: 'Tiếp theo',
+      title: translation.simple_payment,
+      content:
+        translation.comes_with_advanced_technology_ensuring_the_best_utility,
+      action: translation.next,
     },
     {
       title: translation.airport_service,
       content:
-        'Cung cấp cho khách hàng tiện ích thanh toán vé máy bay qua giao dịch điện tử',
-      action: 'Tiếp theo',
+        translation.provide_customers_with_the_convenience_of_paying_for_airline_tickets_via_electronic_transactions,
+      action: translation.next,
     },
     {
       title: translation.traffic_service,
       content:
-        'Hỗ trợ tiếp nhận, truyền dẫn và xử lý dữ liệu trong các giao dịch',
-      action: 'Đóng',
+        translation.support_to_receive_transmit_and_process_data_in_transactions,
+      action: translation.close,
     },
   ];
   const onPress = () => {
