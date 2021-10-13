@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import {useCommon} from 'context/Common';
 import {useError} from 'context/Common/utils';
@@ -43,12 +49,12 @@ const AlertCustom = () => {
                 {error?.title}
               </Text>
             )}
-            <View style={{paddingVertical: Spacing.PADDING}}>
+            <ScrollView style={{paddingVertical: Spacing.PADDING}}>
               <WebView
                 style={{minHeight: 70}}
                 source={{html: ` ${error?.errorMessage}`}}
               />
-            </View>
+            </ScrollView>
             {error?.renderContent?.()}
             {error?.action?.length > 0 &&
               error?.action?.map((item, index) => {
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
     height: 124,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: Spacing.PADDING / 2,
   },
   bgImg: {
     width: '100%',
