@@ -25,7 +25,8 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -45,36 +46,44 @@ const RegisterFailure = ({route}) => {
           onPressBack={() => onNavigate(SCREEN.AUTH)}
           renderRightComponent={() => renderRightComponent()}
         />
+        <View style={styles.wrap}>
+          <Text color={Colors.white} bold fs={'h3'}>
+            Đăng ký
+          </Text>
+          <Text color={Colors.white} mb={15} bold fs={'h3'}>
+            không thành công
+          </Text>
+          <Text color={Colors.white} fs={'h7'}>
+            Bạn đã nhập sai quá 3 lần, vui lòng nhập lại sau 30 phút
+          </Text>
+        </View>
+      </BlueHeader>
+      <FooterContainer>
+        {/* <Button
+          label={`Gọi ${route?.params?.content?.hotline || '024 32252336'}`}
+          style={styles.btn}
+          onPress={openCallDialog}
+          mb={Spacing.PADDING - 10}
+        /> */}
+        <Button
+          label={translation.continue}
+          style={styles.btn}
+          // bg={Colors.white}
+          // color={Colors.black}
+          border={Colors.cl4}
+          onPress={() => onNavigate(SCREEN.AUTH)}
+        />
         <Button
           label={translation.come_back_later}
           style={styles.btn}
           // bg={Colors.white}
           // color={Colors.black}
-          // border={Colors.cl4}
+          border={Colors.cl4}
           mode="outline"
           onPress={() => onNavigate(SCREEN.AUTH)}
           bgImg={0}
         />
-
-        <FooterContainer>
-          <Button
-            label={`Gọi ${route?.params?.content?.hotline || '024 32252336'}`}
-            style={styles.btn}
-            onPress={openCallDialog}
-            mb={Spacing.PADDING - 10}
-          />
-          <Button
-            label="Quay lại sau"
-            style={styles.btn}
-            // bg={Colors.white}
-            // color={Colors.black}
-            // border={Colors.cl4}
-            mode="outline"
-            onPress={() => onNavigate(SCREEN.AUTH)}
-            bgImg={0}
-          />
-        </FooterContainer>
-      </BlueHeader>
+      </FooterContainer>
       <HelpModal
         showModal={showModal}
         setShowModal={setShowModal}
@@ -85,7 +94,7 @@ const RegisterFailure = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  wrap: {paddingHorizontal: Spacing.PADDING},
+  wrap: {paddingHorizontal: Spacing.PADDING, paddingTop: 40},
   flex1: {flex: 1},
   //--------------------
   mt1: {marginTop: 56},
@@ -95,6 +104,7 @@ const styles = StyleSheet.create({
   btn: {
     paddingTop: 4,
     paddingBottom: 8,
+    marginBottom: 10,
   },
   iconRight: {paddingRight: Spacing.PADDING},
 });
