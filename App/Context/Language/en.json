@@ -1,5 +1,7 @@
 {
+  "hello": "Hello",
   "skip": "Skip",
+  "close": "Close",
   "sign_up": "Sign up",
   "sign_in": "Sign in",
   "my_wallet": "My Wallet",
@@ -15,6 +17,7 @@
   "stationservice": "Station/Service",
   "how_to_use_epay": "How to use EPAY",
   "please_verify_click_here_to_protect_your_account": "Please verify (click here) to protect your account",
+  "verified_account_will_have_a_higher_level_of_security_and_greater_limits_for_transactions": "Verified account will have a higher level of security and greater limits for transactions",
   "please_enter_your_phone_number": "Please enter your phone number",
   "sign_insign_up_epay": "Sign in/Sign up EPAY",
   "incorrect_phone_number": "Incorrect phone number",
@@ -29,6 +32,7 @@
   "password": "Password",
   "verify_accounts_enhance_your_account_security": "Verify account's enhance your account security",
   "enter_your_password": "Enter your password",
+  "enter_password": "Enter password",
   "forgot_password": "Forgot password",
   "to_reset_your_password_please_enter_your_phone_number_below": "To reset your password, please enter your phone number below",
   "enter_phone_number": "Enter phone number",

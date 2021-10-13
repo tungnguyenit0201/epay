@@ -247,7 +247,7 @@ const UserInfo = () => {
                   if (PersonalInfo?.Email) {
                     Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
                       type: 'update_email',
-                      headerLabel: 'Nhập mật khẩu',
+                      headerLabel: translation.enter_password,
                     });
                   } else {
                     Navigator.navigate(SCREEN.VERIFY_EMAIL, {

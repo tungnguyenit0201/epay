@@ -233,7 +233,7 @@ const Wrapper = React.memo(
                 </TouchableOpacity>
                 {/* TODO: translate */}
                 <Text bold style={styles.modalTitle}>
-                  Nhập mật khẩu
+                  {translation.enter_password}
                 </Text>
                 <Formik
                   initialValues={{
@@ -260,7 +260,7 @@ const Wrapper = React.memo(
                       <View style={{paddingHorizontal: Spacing.PADDING}}>
                         <InputBlock
                           password
-                          placeholder="Nhập mật khẩu"
+                          placeholder={translation.enter_password}
                           onChange={handleChange('password')}
                           onBlur={handleBlur('password')}
                           value={values.password}

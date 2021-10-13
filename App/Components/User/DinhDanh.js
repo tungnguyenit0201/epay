@@ -20,8 +20,9 @@ const DinhDanh = () => {
         {translation.verify_your_account}
       </Text>
       <Text centered mb={20}>
-        Tài khoản được định danh sẽ có mức độ bảo mật cao hơn và giới hạn lớn
-        hơn cho các giao dịch
+        {
+          translation.verified_account_will_have_a_higher_level_of_security_and_greater_limits_for_transactions
+        }
       </Text>
       <Button
         type="img"
