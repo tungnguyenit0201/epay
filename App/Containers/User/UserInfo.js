@@ -75,7 +75,7 @@ const UserInfo = () => {
     //TODO: Translate
     <>
       <HeaderBg mb={0}>
-        <Header back title="Trang cá nhân" />
+        <Header back title={translation.profile} />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
@@ -114,9 +114,11 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin cá nhân
+                  {translation.perdonal_information}
                 </Text>
-                <Text style={styles.headingDesc}>Nhập giới thiệu về bạn</Text>
+                <Text style={styles.headingDesc}>
+                  {translation.your_information}
+                </Text>
               </View>
 
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
@@ -156,13 +158,13 @@ const UserInfo = () => {
               />
               <View>
                 <Text mt={3} mb={5} style={styles.rowTitle}>
-                  CMND/CCCD/Hộ chiếu
+                  {translation.id_card + '/' + translation.passport}
                 </Text>
                 <Text style={[styles.rowVal]}>
                   {ICInfor?.ICNumber ? (
                     hideCMND(ICInfor?.ICNumber)
                   ) : (
-                    <Text color={Colors.g4}>Chưa có</Text>
+                    <Text color={Colors.g4}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -180,7 +182,7 @@ const UserInfo = () => {
                   {AddressInfo?.Provincial ? (
                     address
                   ) : (
-                    <Text color={Colors.g4}>Chưa có</Text>
+                    <Text color={Colors.g4}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -191,10 +193,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin tài khoản
+                  {translation.account_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  Cập nhật thông tin giấy tờ tùy thân
+                  {translation.update_personal_id}
                 </Text>
               </View>
 
@@ -232,10 +234,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin Email
+                  {translation.email_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  Cập nhật thông tin liên hệ
+                  {translation.update_contact_information}
                 </Text>
               </View>
 
@@ -269,7 +271,7 @@ const UserInfo = () => {
               {PersonalInfo?.Email ? (
                 <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
               ) : (
-                <Text color={Colors.g4}>Chưa có</Text>
+                <Text color={Colors.g4}>{translation.empty}</Text>
               )}
             </View>
           </View>

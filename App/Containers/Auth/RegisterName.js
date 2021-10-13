@@ -42,13 +42,14 @@ const RegisterName = () => {
         };
 
         return (
-          //TODO: translate
           <BlueHeader>
             <BigLogo style={{marginBottom: 30}} />
             <Content
               style={styles.wrap}
-              title="Nhập tên"
-              text="Nhập họ và tên để tạo tài khoản trên ví EPAY"
+              title={translation.enter_name}
+              text={
+                translation.enter_your_first_and_last_name_to_create_an_account_on_epay
+              }
             />
 
             <View style={[styles.wrap, styles.flex1]}>

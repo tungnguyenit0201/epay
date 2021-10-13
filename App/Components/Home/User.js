@@ -14,7 +14,6 @@ const User = ({data, style}) => {
 
   const {onGoNotify} = useNotify();
   return (
-    // TODO: translate
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
