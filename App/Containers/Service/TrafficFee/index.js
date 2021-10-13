@@ -13,14 +13,15 @@ import {scale} from 'utils/Functions';
 import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
-
+import {useError} from 'context/Common/utils';
 const TrafficFee = () => {
   const translation = useTranslation();
+  const {setError} = useError();
   const options = [
     {
       img: Images.TrafficFee.Moneys,
       title: 'Phí giao thông',
-      screen: SCREEN.LANGUAGE,
+      screen: SCREEN.TRAFFIC_FEE,
     },
     {
       img: Images.TransactionHistory.Warning,
@@ -45,7 +46,15 @@ const TrafficFee = () => {
       <TouchableOpacity
         // key={item?.TransCode}
         style={styles.blockTransaction}
-        onPress={() => Navigator.navigate(item.screen)}>
+        onPress={
+          () =>
+            setError({
+              ErrorMessage: 'Comming soon',
+              icon: Images.Homes.Setting,
+            })
+          //Navigator.navigate(item.screen)
+        }
+      >
         <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
           <Image
             source={item.img}
