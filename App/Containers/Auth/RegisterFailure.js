@@ -25,7 +25,8 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
