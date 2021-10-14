@@ -57,7 +57,7 @@ const VerifyUserInfo = ({
         };
       case 3:
         return {
-          right: Spacing.PADDING * 2 + 30 / 2,
+          right: width - Spacing.PADDING * 2 - 40,
         };
     }
   }, [step]);
@@ -207,9 +207,11 @@ const VerifyUserInfo = ({
               ))}
             </Row>
           </ScrollView>
-          <View style={styles.modalBottomButton}>
-            <Button label="Đã hiểu" bold onPress={onHideModal} />
-          </View>
+          {step !== 3 && (
+            <View style={styles.modalBottomButton}>
+              <Button label="Đã hiểu" bold onPress={onHideModal} />
+            </View>
+          )}
         </View>
       </Modal>
     </View>

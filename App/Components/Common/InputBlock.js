@@ -58,7 +58,7 @@ const InputBlock = ({
             {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
             inputStyle,
           ]}
-          placeholderTextColor={Colors.l5}
+          placeholderTextColor={Colors.l4}
           password={password && !showPassword}
           email={email}
           numeric={numeric}
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 48,
-    backgroundColor: Colors.l4,
+    backgroundColor: Colors.l2,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },

@@ -13,6 +13,7 @@ import Navigator from 'navigations/Navigator';
 import {use} from '@react-navigation/native';
 import {Formik, useFormikContext} from 'formik';
 import {addressSchema} from 'utils/ValidationSchemas';
+import {useTranslation} from 'context/Language';
 import {hideCMND, scale} from 'utils/Functions';
 import {useSelectRegion, useUserInfo} from 'context/User/utils';
 import {useUser} from 'context/User';
@@ -30,7 +31,6 @@ const EditInfo = () => {
   useEffect(() => {
     return () => onClearRegionData();
   }, []); // eslint-disable-line
-
   return (
     <>
       <HeaderBg>
@@ -70,7 +70,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     errors,
     values,
   } = useFormikContext();
-
+  const translation = useTranslation();
   useEffect(() => {
     if (region?.Provincial && region?.County)
       for (const [key, value] of Object.entries(region)) {
@@ -81,6 +81,12 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
   const handleChange = field => value => {
     setFieldValue(field, value);
     setFieldTouched(field, true, false);
+  };
+
+  const GENDERS = {
+    1: translation.male,
+    2: translation.female,
+    3: translation.others,
   };
 
   return (
@@ -117,9 +123,10 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <View>
             <Text mb={10}>Giới tính</Text>
             <Radio
-              items={Object.entries(GENDER)
-                ?.filter(x => x[0] !== '3')
-                ?.map(([key, value]) => ({
+              items={Object.entries(GENDERS)
+                .sort((a, b) => b[0] - a[0])
+                .filter(x => x[0] !== '3')
+                .map(([key, value]) => ({
                   label: value,
                   value: parseInt(key),
                 }))}

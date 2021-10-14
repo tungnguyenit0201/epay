@@ -68,7 +68,7 @@ const Auth = () => {
                 numeric
                 onChange={handleChange('phone')}
                 onBlur={handleBlur('phone')}
-                error={touched.phone && errors.phone}
+                error={touched.phone && translation[errors.phone]}
                 value={values.phone}
                 //leftIcon={Images.Phone_1}
                 isDeleted={values.phone}
