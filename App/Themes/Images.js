@@ -102,6 +102,7 @@ export default {
     Bank: require('images/profile/Bank.png'),
     BaoMat: require('images/profile/BaoMat.png'),
     Edit: require('images/profile/Edit.png'),
+    Edit2: require('images/icons/edit-2.png'),
     Help: require('images/profile/Help.png'),
     Location: require('images/profile/Location.png'),
     Logout: require('images/profile/Logout.png'),

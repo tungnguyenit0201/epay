@@ -36,11 +36,11 @@ const VerifyUserPortrait = ({route}) => {
     SexType: extractCardInfo.Gender,
   });
 
-  const GENDERS = [
-    {label: translation.male, value: 1},
-    {label: translation.female, value: 2},
-    {label: translation.others, value: 3},
-  ];
+  const GENDERS = {
+    1: translation.male,
+    2: translation.female,
+    3: translation.others,
+  };
 
   const CARD_RULE = useMemo(() => {
     return {
@@ -205,7 +205,8 @@ const VerifyUserPortrait = ({route}) => {
             {translation.gender}
           </Text>
           <Radio
-            items={Object.entries(GENDER)
+            items={Object.entries(GENDERS)
+              .sort((a, b) => b[0] - a[0])
               .filter(x => x[0] !== '3')
               .map(([key, value]) => ({
                 label: value,
@@ -336,7 +337,7 @@ const styles = StyleSheet.create({
   //---------------
   h1: {height: 8},
   //---------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginBottom: -2},
   //---------------
   mb1: {marginBottom: 10},
   //---------------
@@ -351,13 +352,12 @@ const styles = StyleSheet.create({
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
-    marginBottom: -3,
   },
   address: {
     marginBottom: 0,
   },
   policy: {
-    marginLeft: 5,
+    marginLeft: 10,
   },
 });
 export default VerifyUserPortrait;

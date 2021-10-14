@@ -85,7 +85,7 @@ const ForgetNewPassword = ({route}) => {
                 <Content
                   title={translation.reset_your_password}
                   text={
-                    translation.password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers
+                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
                 />
                 <TextInput
@@ -94,7 +94,7 @@ const ForgetNewPassword = ({route}) => {
                   onChange={handleChange('newPassword')}
                   onBlur={handleBlur('newPassword')}
                   placeholder={translation.enter_your_password}
-                  error={touched.newPassword && errors.newPassword}
+                  error={touched.newPassword && translation[errors.newPassword]}
                   value={values.newPassword}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
@@ -105,14 +105,17 @@ const ForgetNewPassword = ({route}) => {
                   onChange={handleChange('passwordConfirm')}
                   onBlur={handleBlur('passwordConfirm')}
                   placeholder={translation.confirm_password}
-                  error={touched.passwordConfirm && errors.passwordConfirm}
+                  error={
+                    touched.passwordConfirm &&
+                    translation[errors.passwordConfirm]
+                  }
                   value={values.passwordConfirm}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
                 />
                 <Text style={styles.note}>
                   {
-                    translation.password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers
+                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
                   }
                 </Text>
               </ScrollView>

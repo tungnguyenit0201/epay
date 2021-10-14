@@ -1,5 +1,11 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  useWindowDimensions,
+  Image,
+} from 'react-native';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {Button, Header, InputBlock, Radio, HeaderBg, Text} from 'components';
 import {GENDER, SCREEN, TEXT} from 'configs/Constants';
@@ -7,6 +13,7 @@ import Navigator from 'navigations/Navigator';
 import {use} from '@react-navigation/native';
 import {Formik, useFormikContext} from 'formik';
 import {addressSchema} from 'utils/ValidationSchemas';
+import {useTranslation} from 'context/Language';
 import {hideCMND, scale} from 'utils/Functions';
 import {useSelectRegion, useUserInfo} from 'context/User/utils';
 import {useUser} from 'context/User';
@@ -24,7 +31,6 @@ const EditInfo = () => {
   useEffect(() => {
     return () => onClearRegionData();
   }, []); // eslint-disable-line
-
   return (
     <>
       <HeaderBg>
@@ -64,7 +70,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     errors,
     values,
   } = useFormikContext();
-
+  const translation = useTranslation();
   useEffect(() => {
     if (region?.Provincial && region?.County)
       for (const [key, value] of Object.entries(region)) {
@@ -77,30 +83,50 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     setFieldTouched(field, true, false);
   };
 
+  const GENDERS = {
+    1: translation.male,
+    2: translation.female,
+    3: translation.others,
+  };
+
   return (
     <>
       <ScrollView style={{backgroundColor: Colors.white}}>
-        <View style={[base.container, {paddingTop: 20}]}>
-          <View pointerEvents="none">
+        <View style={[base.container, styles.pt1]}>
+          <View pointerEvents="none" style={styles.mb1}>
             <InputBlock
               label="Họ tên"
               value={personalInfo?.FullName}
-              style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
+              style={{
+                backgroundColor: Colors.BACKGROUND_BLUE,
+                textTransform: 'uppercase',
+              }}
             />
           </View>
-          <View pointerEvents="none">
+          <View pointerEvents="none" style={styles.mb1}>
             <InputBlock
               label="Ngày sinh"
               value={personalInfo?.DateOfBirth?.replaceAll?.('-', '/')}
-              style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
+              style={{
+                backgroundColor: Colors.BACKGROUND_BLUE,
+                textTransform: 'uppercase',
+              }}
             />
+            <View style={[styles.blockIcon1, {backgroundColor: Colors.l4}]}>
+              <Image
+                source={Images.Kyc.Calendar}
+                style={styles.iconCalendar}
+                resizeMode={'contain'}
+              />
+            </View>
           </View>
-          <View style={styles.flexRow}>
-            <Text>Giới tính: </Text>
+          <View>
+            <Text mb={10}>Giới tính</Text>
             <Radio
-              items={Object.entries(GENDER)
-                ?.filter(x => x[0] !== '3')
-                ?.map(([key, value]) => ({
+              items={Object.entries(GENDERS)
+                .sort((a, b) => b[0] - a[0])
+                .filter(x => x[0] !== '3')
+                .map(([key, value]) => ({
                   label: value,
                   value: parseInt(key),
                 }))}
@@ -108,7 +134,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
               selectedValue={values.SexType}
             />
           </View>
-          <View pointerEvents="none">
+          <View pointerEvents="none" style={styles.mb2}>
             <InputBlock
               label="CMND / CCCD"
               value={
@@ -116,9 +142,13 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
                   ? hideCMND(personalIC?.ICNumber)
                   : 'Chưa có'
               }
-              style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
+              style={{
+                backgroundColor: Colors.BACKGROUND_BLUE,
+                textTransform: 'uppercase',
+              }}
             />
           </View>
+
           {/* <View pointerEvents="none">
             <InputBlock
               label="Nơi cấp"
@@ -127,7 +157,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
                   ? personalIC?.ICIssuedPlace
                   : 'Chưa có'
               }
-              style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
+              style={{backgroundColor: Colors.BACKGROUND_BLUE, textTransform: 'uppercase'}}
             />
           </View>
           <View pointerEvents="none">
@@ -139,7 +169,9 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
               style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
             />
           </View> */}
-
+        </View>
+        <View style={styles.line1}></View>
+        <View style={[base.container, styles.ptb1]}>
           <InputBlock
             label="Địa chỉ"
             // required
@@ -154,7 +186,8 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             error={touched.Provincial && errors.Provincial}
             value={values.Provincial}
             isSelect
-            rightIcon={Images.Down}
+            // rightIcon={Images.Down}
+            rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('cites')}
             placeholder="Tỉnh/Thành"
             inputStyle={styles.noLabel}
@@ -164,7 +197,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             error={touched.County && errors.County}
             value={values.County}
             isSelect
-            rightIcon={Images.Down}
+            rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('districts')}
             placeholder="Quận"
             inputStyle={styles.noLabel}
@@ -176,7 +209,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             error={touched.Ward && errors.Ward}
             value={values.Ward}
             isSelect
-            rightIcon={Images.Down}
+            rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('wards')}
             placeholder="Phường/Xã"
             inputStyle={styles.noLabel}
@@ -200,5 +233,39 @@ const styles = StyleSheet.create({
   },
   noLabel: {
     marginTop: scale(100),
+  },
+  //---------------
+  mb1: {marginBottom: 7},
+  mb2: {marginBottom: 15},
+  //---------------
+  ptb1: {
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  //---------------
+  pt1: {paddingTop: 20},
+  //---------------
+  iconCalendar: {
+    width: 24,
+    height: 24,
+    tintColor: Colors.GRAY,
+  },
+  //---------------
+  line1: {
+    height: 12,
+    backgroundColor: Colors.cl6,
+  },
+  //---------------
+  blockIcon1: {
+    position: 'absolute',
+    right: 0,
+    bottom: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 48,
+    height: 47,
+    padding: 7,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
   },
 });

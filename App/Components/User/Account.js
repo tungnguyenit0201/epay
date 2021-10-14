@@ -103,8 +103,8 @@ const Account = () => {
         style={[base.row, {marginBottom: 10}]}
         onPress={goToBankLinked}
       >
-        <Text semibold mr={5} color={Colors.white}>
-          {translation.bank_linking}
+        <Text semibold mr={8} color={Colors.white}>
+          {translation.bank_linking}{' '}
           <Text color={Colors.white} semibold>
             ({listConnectBank?.length})
           </Text>

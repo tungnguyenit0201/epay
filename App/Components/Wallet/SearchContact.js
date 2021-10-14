@@ -16,6 +16,7 @@ const SearchContact = ({style}) => {
   };
   return (
     <>
+      {/*old code, delete when no use anymore
       <View style={[styles.wrapSearch, style]}>
         <TouchableOpacity style={styles.iconSearch}>
           <Image source={require('images/Search.png')} style={styles.icon} />
@@ -35,6 +36,17 @@ const SearchContact = ({style}) => {
             />
           </TouchableOpacity>
         )}
+      </View> */}
+
+      <View style={style}>
+        <TextInput
+          style={styles.inputSearch}
+          placeholder={translation.enter_name_or_phone_number}
+          placeholderTextColor={Colors.g4}
+          onChange={handleChange}
+          leftIcon={require('images/Search.png')}
+          isDeleted
+        />
       </View>
     </>
   );
@@ -43,32 +55,32 @@ const SearchContact = ({style}) => {
 export default SearchContact;
 
 const styles = StyleSheet.create({
-  wrapSearch: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-    height: 48,
-    borderRadius: scale(8),
-  },
-  iconSearch: {
-    paddingHorizontal: scale(10),
-    borderRightWidth: 1,
-    borderColor: Colors.g2,
-    marginRight: 5,
-  },
-  icon: {
-    width: 18,
-    height: 18,
-  },
-  inputSearch: {
-    height: 24,
-    borderWidth: 0,
-    flex: 1,
-    fontSize: Fonts.H6,
-  },
-  closeCircle: {
-    width: scale(20),
-    height: scale(20),
-  },
+  // wrapSearch: {
+  //   flexWrap: 'wrap',
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   backgroundColor: Colors.white,
+  //   height: 48,
+  //   borderRadius: scale(8),
+  // },
+  // iconSearch: {
+  //   paddingHorizontal: scale(10),
+  //   borderRightWidth: 1,
+  //   borderColor: Colors.g2,
+  //   marginRight: 5,
+  // },
+  // icon: {
+  //   width: 18,
+  //   height: 18,
+  // },
+  // inputSearch: {
+  //   height: 24,
+  //   borderWidth: 0,
+  //   flex: 1,
+  //   fontSize: Fonts.H6,
+  // },
+  // closeCircle: {
+  //   width: scale(20),
+  //   height: scale(20),
+  // },
 });

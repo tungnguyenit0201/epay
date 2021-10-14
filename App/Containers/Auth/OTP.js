@@ -55,12 +55,9 @@ const OTP = ({route}) => {
       onChangePhone={isLoggedIn ? null : onChangePhone}
       // TODO: translate
       label={
-        functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL ||
-        functionType === FUNCTION_TYPE.AUTH_EMAIL
-          ? 'Mã xác thực gửi về mail ' +
-            route?.params.email +
-            '. Vui lòng kiểm tra email & nhập thông tin bên dưới'
-          : translation.enter_otp_verification_code
+        route?.params?.email
+          ? `Mã xác thực gửi về mail ${route?.params?.email}. Vui lòng kiểm tra email & nhập thông tin bên dưới`
+          : label
       }
       titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
     />

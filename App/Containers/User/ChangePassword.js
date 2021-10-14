@@ -65,7 +65,7 @@ const ChangePassword = ({route}) => {
                     placeholderTextColor={Colors.l5}
                     onChange={handleChange('password')}
                     onBlur={handleBlur('password')}
-                    error={touched.password && errors.password}
+                    error={touched.password && translation[errors.password]}
                     value={values.password}
                   />
                 </View>
