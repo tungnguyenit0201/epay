@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   //---------------
   h1: {height: 8},
   //---------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginBottom: -2},
   //---------------
   mb1: {marginBottom: 10},
   //---------------
@@ -352,13 +352,12 @@ const styles = StyleSheet.create({
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
-    marginBottom: -3,
   },
   address: {
     marginBottom: 0,
   },
   policy: {
-    marginLeft: 5,
+    marginLeft: 10,
   },
 });
 export default VerifyUserPortrait;

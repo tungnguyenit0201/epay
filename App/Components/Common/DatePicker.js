@@ -135,8 +135,10 @@ const styles = StyleSheet.create({
   },
   blockIcon1: {
     justifyContent: 'center',
+    alignItems: 'center',
     right: -1,
-    padding: 8,
+    width: 48,
+    padding: 7,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },

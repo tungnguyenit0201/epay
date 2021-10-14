@@ -83,7 +83,7 @@ const UserInfo = () => {
             <Pressable style={{marginBottom: 15}} onPress={onUpdateAvatar}>
               <View style={styles.avatar}>
                 <Image
-                  style={{width: 94, height: 94}}
+                  style={{width: 120, height: 120}}
                   source={
                     PersonalInfo?.Avatar
                       ? {uri: PersonalInfo.Avatar}
@@ -93,10 +93,7 @@ const UserInfo = () => {
                 />
               </View>
               <View style={styles.wedit}>
-                <Image
-                  style={{width: 16, height: 16, tintColor: Colors.g5}}
-                  source={Images.Edit}
-                />
+                <Image style={styles.iconEdit} source={Images.Profile.Edit2} />
               </View>
             </Pressable>
 
@@ -146,8 +143,14 @@ const UserInfo = () => {
                   key={index}
                 >
                   <Image style={[styles.rowIcon]} source={item.icon} />
-                  <Text style={styles.rowTitle}>{item.name}</Text>
-                  <Text style={base.leftAuto}>{item.val}</Text>
+                  <Text style={styles.lh1} mr={3} fs="h6">
+                    {item.name}
+                  </Text>
+                  <View style={styles.flex1}>
+                    <Text fs="h6" style={[base.leftAuto, styles.lh1]} right>
+                      {item.val}
+                    </Text>
+                  </View>
                 </View>
               );
             })}
@@ -157,10 +160,10 @@ const UserInfo = () => {
                 source={require('images/profile/CMND.png')}
               />
               <View>
-                <Text mt={3} mb={5} style={styles.rowTitle}>
+                <Text mt={3} mb={5} fs="h6">
                   {translation.id_card + '/' + translation.passport}
                 </Text>
-                <Text style={[styles.rowVal]}>
+                <Text>
                   {ICInfor?.ICNumber ? (
                     hideCMND(ICInfor?.ICNumber)
                   ) : (
@@ -175,10 +178,10 @@ const UserInfo = () => {
                 source={require('images/profile/Location.png')}
               />
               <View style={styles.flex1}>
-                <Text mt={3} mb={5} style={styles.rowTitle}>
+                <Text mt={3} mb={5} fs="h6">
                   Địa chỉ
                 </Text>
-                <Text style={[styles.rowVal]}>
+                <Text>
                   {AddressInfo?.Provincial ? (
                     address
                   ) : (
@@ -225,7 +228,7 @@ const UserInfo = () => {
                 source={require('images/profile/Wating.png')}
               />
               <View>
-                <Text style={styles.rowVal}>{getStatusVerifiedText()}</Text>
+                <Text fs="h6">{getStatusVerifiedText()}</Text>
               </View>
             </View>
           </View>
@@ -269,9 +272,9 @@ const UserInfo = () => {
                 source={require('images/profile/Email.png')}
               />
               {PersonalInfo?.Email ? (
-                <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
+                <Text fs="h6">{PersonalInfo.Email}</Text>
               ) : (
-                <Text color={Colors.g4}>{translation.empty}</Text>
+                <Text fs="h6">{translation.empty}</Text>
               )}
             </View>
           </View>
@@ -314,8 +317,8 @@ const UserInfo = () => {
 const styles = StyleSheet.create({
   avatar: {
     overflow: 'hidden',
-    height: 94,
-    width: 94,
+    height: 120,
+    width: 120,
     borderRadius: 99,
     backgroundColor: Colors.g4,
   },
@@ -329,12 +332,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     bottom: 0,
     right: -10,
-    width: 40,
-    height: 40,
+    width: 36,
+    height: 36,
 
     backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: Colors.cl4,
+    borderColor: Colors.l2,
   },
   heading: {
     flexDirection: 'row',
@@ -342,8 +345,8 @@ const styles = StyleSheet.create({
   },
 
   editBox: {
-    width: scale(46),
-    height: scale(46),
+    width: scale(56),
+    height: scale(56),
     marginTop: -10,
     marginRight: -10,
   },
@@ -365,16 +368,13 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 5,
   },
-  rowTitle: {
-    fontSize: Fonts.H6,
-    fontWeight: '500',
-  },
-  rowVal: {
-    //color: Colors.g2,
-  },
-  //tho------------
+  //---------------
   flex1: {flex: 1},
-
+  //---------------
+  lh1: {lineHeight: 26},
+  //---------------
   textCenter: {alignSelf: 'center'},
+  //---------------
+  iconEdit: {width: 18, height: 18, tintColor: Colors.g5},
 });
 export default UserInfo;

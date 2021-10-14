@@ -34,7 +34,8 @@ const OTP = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -74,7 +75,8 @@ const OTP = ({route}) => {
               styles.wrap,
               base.bgWhite,
               {paddingTop: scale(28), flex: 1},
-            ]}>
+            ]}
+          >
             {renderOTPContainer()}
           </View>
         </>
@@ -97,7 +99,8 @@ const OTP = ({route}) => {
       <View style={styles.wrapCalMe}>
         <TouchableOpacity
           style={styles.callMe}
-          onPress={() => setShowModal(true)}>
+          onPress={() => setShowModal(true)}
+        >
           <Image source={Images.Phone} style={styles.iconPhone} />
           <Text mb={-3} centered fw="700">
             {translation.call_epay}
