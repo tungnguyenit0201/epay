@@ -6,7 +6,7 @@ import {
   Image,
   useWindowDimensions,
 } from 'react-native';
-import {Button, HeaderBg, Text} from 'components';
+import {Button, HeaderBg, Text, Header} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
@@ -61,11 +61,12 @@ const VerifySuccess = ({route}) => {
     <>
       <View style={[styles.pb1, styles.bgWhite]}>
         <HeaderBg>
-          <View>
+          {/* <View>
             <Text centered fs="h6" color={Colors.white} bold mb={5}>
               {translation?.account_verification}
             </Text>
-          </View>
+          </View> */}
+          <Header back title={translation?.account_verification} />
         </HeaderBg>
       </View>
       <ScrollView style={styles.container}>
