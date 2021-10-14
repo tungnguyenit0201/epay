@@ -210,7 +210,7 @@ const useAuth = () => {
           phone,
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
-            title: 'Đăng nhập \nkhông thành công',
+            title: 'Đăng nhập ',
             text: 'Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lai sau 15 phút',
             hotline: '1900-0000',
           },

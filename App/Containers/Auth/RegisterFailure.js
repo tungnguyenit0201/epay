@@ -25,8 +25,7 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.white}
@@ -48,12 +47,14 @@ const RegisterFailure = ({route}) => {
         />
         <View style={styles.wrap}>
           <Text color={Colors.white} bold fs={'h3'}>
-            {route?.params?.content?.title || translation.sign_up}
+            {(route?.params?.content?.title || translation.sign_up) +
+              '\n' +
+              translation.transaction.failure}
           </Text>
-          <Text color={Colors.white} mb={15} bold fs={'h3'}>
+          {/* <Text color={Colors.white} mb={15} bold fs={'h3'}>
             {translation.transaction.failure}
-          </Text>
-          <Text color={Colors.white} fs={'h7'}>
+          </Text> */}
+          <Text color={Colors.white} fs={'md'} mt={15} style={styles.line}>
             {route?.params?.content?.text ||
               translation.you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again}
           </Text>
@@ -67,7 +68,7 @@ const RegisterFailure = ({route}) => {
           mb={Spacing.PADDING - 10}
         /> */}
         <Button
-          label={translation.continue}
+          label={`Gọi ${route?.params?.content?.hotline || '1900-000'}`}
           style={styles.btn}
           // bg={Colors.white}
           // color={Colors.black}
@@ -108,6 +109,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   iconRight: {paddingRight: Spacing.PADDING},
+  line: {
+    lineHeight: 23,
+  },
 });
 
 export default RegisterFailure;
