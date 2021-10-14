@@ -251,7 +251,7 @@
   "setting_notification": "Cài đặt thông báo",
   "application_information": "Thông tin ứng dụng",
   "system": "Hệ thống",
-  "password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers": "Mật khẩu cần có ít nhất 8 ký tự gòm chữ thường, chữ hoa và số",
+  "password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers": "Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa và số",
   "simple_payment": "Thanh toán đơn giản",
   "comes_with_advanced_technology_ensuring_the_best_utility": "Đi kèm công nghệ tiên tiến, đảm bảo mang đến tiện ích tốt nhất",
   "next": "Tiếp theo",
@@ -592,5 +592,6 @@
   "fillPromoCode": "Nhập mã khuyến mãi",
   "use": "Sử dụng",
   "place_of_issue_maximum_200_characters": "Nơi cấp không được quá 200 ký tự",
-  "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự"
+  "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự",
+  "enter_the_password_to_access_the_epay_wallet_and_protect_the_account": "Nhập mật khẩu để truy cập ví EPAY, đồng thời bảo vệ tài khoản"
 }

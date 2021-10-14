@@ -40,8 +40,7 @@ const ForgetNewPassword = ({route}) => {
         renderRightComponent={() => (
           <TouchableOpacity
             style={styles.pr1}
-            onPress={() => setShowModal(true)}
-          >
+            onPress={() => setShowModal(true)}>
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -58,8 +57,7 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -80,12 +78,11 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}
-              >
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
                   title={translation.reset_your_password}
                   text={
-                    translation.password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers
+                    translation.enter_the_password_to_access_the_epay_wallet_and_protect_the_account
                   }
                 />
                 <TextInput

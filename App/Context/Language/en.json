@@ -543,5 +543,6 @@
   "fillPromoCode": "Nhập mã khuyến mãi",
   "use": "Sử dụng",
   "place_of_issue_maximum_200_characters": "Place of issue maximum 200 characters",
-  "address_maximum_200_characters": "Address maximum 200 characters"
+  "address_maximum_200_characters": "Address maximum 200 characters",
+  "enter_the_password_to_access_the_epay_wallet_and_protect_the_account": "Enter the password to access the EPAY wallet and protect the account"
 }
