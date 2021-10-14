@@ -161,7 +161,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             error={touched.Provincial && errors.Provincial}
             value={values.Provincial}
             isSelect
-            rightIcon={Images.Down}
+            rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('cites')}
             placeholder="Tỉnh/Thành"
             inputStyle={styles.noLabel}
@@ -171,7 +171,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             error={touched.County && errors.County}
             value={values.County}
             isSelect
-            rightIcon={Images.Down}
+            rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('districts')}
             placeholder="Quận"
             inputStyle={styles.noLabel}
@@ -183,7 +183,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             error={touched.Ward && errors.Ward}
             value={values.Ward}
             isSelect
-            rightIcon={Images.Down}
+            rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('wards')}
             placeholder="Phường/Xã"
             inputStyle={styles.noLabel}
