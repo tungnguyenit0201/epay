@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {StyleSheet, View, Pressable, TouchableOpacity} from 'react-native';
 import {Text, OTP} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
@@ -19,6 +19,12 @@ const OTPContainer = ({
   titleStyle,
 }) => {
   const translation = useTranslation();
+  const otpRef = useRef(null);
+
+  useEffect(() => {
+    otpRef.current?.focusField(0);
+  }, []);
+
   return (
     <>
       <Text bold fs="h3" style={[styles.textWhite, styles.mb1, titleStyle]}>
@@ -28,6 +34,7 @@ const OTPContainer = ({
         {label}
       </Text>
       <OTPInputView
+        ref={otpRef}
         style={styles.wrapOtp}
         pinCount={6}
         onCodeChanged={onChange}
