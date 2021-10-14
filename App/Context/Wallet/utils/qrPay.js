@@ -2,7 +2,7 @@ import {useAsyncStorage, useError, usePermission} from 'context/Common/utils';
 import {useEffect, useState, useCallback} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import RNQRGenerator from 'rn-qr-generator';
-import {getQRCodeInfo, getTransferUser} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import _ from 'lodash';
@@ -18,6 +18,7 @@ const useScanQR = () => {
   const {error} = useCommon();
   const {getPhone} = useAsyncStorage();
   const {setError} = useError();
+  const {getQRCodeInfo, getTransferUser} = useServiceWallet();
   const {checkPermission} = usePermission();
   const {dispatch} = useWallet();
 

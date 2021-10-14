@@ -2,7 +2,7 @@ import {useCommon} from 'context/Common';
 import _ from 'lodash';
 import {useUser} from 'context/User';
 import useAsyncStorage from './asyncStorage';
-import {getSettingsInfo} from 'services/user';
+import useServiceUser from 'services/user';
 // import {useRegister} from 'context/Auth/utils';
 // import useError from './error';
 // import {Images} from 'themes';
@@ -12,6 +12,7 @@ const useShowModal = () => {
   const {token, phone} = useUser();
   const {getModalSmartOTPDisabled} = useAsyncStorage();
   const {dispatch} = useCommon();
+  const {getSettingsInfo} = useServiceUser();
   // const modalSmartOTP = useModalSmartOTP();
 
   // const {setFirstLogin} = useRegister();

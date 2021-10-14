@@ -9,15 +9,7 @@ import {
   SCREEN,
 } from 'configs/Constants';
 import {sha256} from 'react-native-sha256';
-import {
-  activateSmartOTP,
-  changeSmartOTPPassword,
-  checkSmartOTP,
-  checkSmartOTPKey,
-  genOtp,
-  getSmartOTPInfo,
-  syncSmartOTP,
-} from 'services/common';
+import useServiceCommon from 'services/common';
 import {
   useAsyncStorage,
   useError,
@@ -39,6 +31,12 @@ const useSmartOTP = params => {
   const {setLoading} = useLoading();
   const {dispatch: dispatchWallet} = useWallet();
   const {setSmartOTPSharedKey} = useAsyncStorage();
+  const {
+    activateSmartOTP,
+    changeSmartOTPPassword,
+    checkSmartOTP,
+    checkSmartOTPKey,
+  } = useServiceCommon();
   const translation = useTranslation();
   const onAcceptTermConditions = (value = true) => {
     setAccepted(value);
@@ -287,6 +285,7 @@ const useSmartOTPInfo = () => {
   const [smartOTPInfo, setSmartOTPInfo] = useState({});
   const {onShowModal: onShowModalSmartOTP} = useModalSmartOTP();
   const {onShowModal: onShowModalPassword} = useModalPassword();
+  const {getSmartOTPInfo} = useServiceCommon();
 
   useEffect(() => {
     const getOTPInfo = async () => {
@@ -333,6 +332,7 @@ const useSyncSmartOTP = params => {
   const [status, setStatus] = useState(params?.type);
   const {setSmartOTPSharedKey} = useAsyncStorage();
   const {onShowModal} = useModalSmartOTP();
+  const {syncSmartOTP} = useServiceCommon();
 
   const onSync = async smartOTPPassword => {
     setStatus('sync');
@@ -364,6 +364,7 @@ const useModalSmartOTP = () => {
   const {
     showModal: {smartOTPPassword, goBack},
   } = useCommon();
+  const {checkSmartOTPKey} = useServiceCommon();
   const {showModalSmartOTPPassword} = useShowModal();
   const {onGoOTP} = useSmartOTP();
   const {setError} = useError();

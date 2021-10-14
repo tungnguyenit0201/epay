@@ -1,5 +1,5 @@
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
-import {getWalletInfo} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import {useWallet} from '..';
 import _ from 'lodash';
 import {ERROR_CODE} from 'configs/Constants';
@@ -11,7 +11,7 @@ const useWalletInfo = () => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useWallet();
-
+  const {getWalletInfo} = useServiceWallet();
   const onGetWalletInfo = async () => {
     // setLoading(true);
     const phone = await getPhone();

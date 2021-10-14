@@ -1,11 +1,6 @@
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useEffect, useRef, useState} from 'react';
-import {
-  getTransferUser,
-  moneyTransfer,
-  payment,
-  getSourceMoney,
-} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import Navigator from 'navigations/Navigator';
 import {SCREEN, TRANS_FORM_TYPE, TRANS_TYPE} from 'configs/Constants';
 import _ from 'lodash';
@@ -21,6 +16,8 @@ export const useQRTransfer = (mount = true) => {
   const {setLoading} = useLoading();
   const {phone} = useUser();
   const {qrTransaction, dispatch} = useWallet();
+  const {getTransferUser, moneyTransfer, payment, getSourceMoney} =
+    useServiceWallet();
   const transfer = useRef({
     amount: null,
     payoneer: 0,

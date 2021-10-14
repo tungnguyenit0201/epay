@@ -5,7 +5,7 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
-import {getSettingsInfo} from 'services/user';
+import useServiceUser from 'services/user';
 import * as LocalAuthentication from 'expo-local-authentication';
 import {Linking} from 'react-native';
 
@@ -15,6 +15,7 @@ const useSecuritySettings = () => {
   const {phone} = useUser();
   const {setLoading} = useLoading();
   const {setError} = useError();
+  const {getSettingsInfo} = useServiceUser();
   const [settings, setSettings] = useState({
     touchIdEnabled: false,
     // data from getSettingsInfo()

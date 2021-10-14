@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import TouchID from 'react-native-touch-id';
-import {checkPhone, login, register} from 'services/auth';
-import {getTerm} from 'services/common';
+import useServiceAuth from 'services/auth';
+import useServiceCommon from 'services/common';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN, TERM_TYPE} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
@@ -16,7 +16,7 @@ import {
 } from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
-import {updateForgotPassword} from 'services/user';
+import useServiceUser from 'services/user';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
@@ -157,6 +157,7 @@ const useAuth = () => {
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
+  const {checkPhone, login} = useServiceAuth();
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
     const result = await checkPhone(phone);
@@ -301,6 +302,8 @@ const useRegister = () => {
   const {onLogin} = useAuth();
   const {dispatch} = useUser();
   const {setPhone, getPhone} = useAsyncStorage();
+  const {register} = useServiceAuth();
+  const {getTerm} = useServiceCommon();
 
   let [active, setActive] = useState(false);
   let [showModal, setShowModal] = useState(false);
@@ -406,6 +409,8 @@ const useForgetPassword = () => {
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
   const {agree} = useTranslation();
+  const {checkPhone} = useServiceAuth();
+  const {updateForgotPassword} = useServiceUser();
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);

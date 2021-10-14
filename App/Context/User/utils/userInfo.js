@@ -1,18 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
-import {
-  updatePersonalInfo,
-  getPersonalInfo,
-  getAllInfo,
-  updateUserAddress,
-  getConnectedBank,
-  confirmPassword,
-  getLimit,
-  getQRCode,
-  updateAvatar,
-  updatePassword,
-} from 'services/user';
+import useServiceUser from 'services/user';
 import {
   useAsyncStorage,
   useError,
@@ -44,6 +33,18 @@ const useUserInfo = type => {
   const {showModalSmartOTPSuggestion} = useShowModal();
   const {onChangeLimit} = useBankInfo();
   const {walletInfo} = useWallet();
+  const {
+    updatePersonalInfo,
+    getPersonalInfo,
+    getAllInfo,
+    updateUserAddress,
+    getConnectedBank,
+    confirmPassword,
+    getLimit,
+    getQRCode,
+    updateAvatar,
+    updatePassword,
+  } = useServiceUser();
   const [showModal, setShowModal] = useState(null);
 
   const setPersonalInfo = (key, value) => {

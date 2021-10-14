@@ -9,21 +9,14 @@ import {
   TRANS_TYPE,
 } from 'configs/Constants';
 import {useWallet} from '..';
-import {
-  cashIn,
-  cashInConfirm,
-  cashInNapas,
-  cashOut,
-  cashOutConfirm,
-  checkAmountLimit,
-} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import {
   calculateFee,
   formatCurrency,
   fromCurrency,
   generateTOTP,
 } from 'utils/Functions';
-import {confirmOTP, genOtp} from 'services/common';
+import useServiceCommon from 'services/common';
 import {useUser} from 'context/User';
 import {
   useAsyncStorage,
@@ -277,6 +270,7 @@ const useOTPBySmartOTP = () => {
   const {onCashInOTP} = useCashIn();
   const {onCashOutConnectedBank} = useCashOut();
   const {onTransaction} = useTransaction();
+  const {confirmOTP, genOtp} = useServiceCommon();
   useEffect(() => {
     let interval = null;
     if (code) {
@@ -488,6 +482,7 @@ const useCashIn = () => {
   const {onTransaction} = useTransaction();
   const {confirmUsingBioID, checkBiometry} = useConfirmMethod();
   const {onShowModal: onShowModalPassword} = useModalPassword();
+  const {cashIn, cashInConfirm, cashInNapas} = useServiceWallet();
   const {bank, amount, transType, ConfirmType, TransCode} = transaction;
   const {BankConnectId, BankId, CardNumber, CardHolder, CardIssueDate} =
     bank || {};
@@ -700,6 +695,7 @@ const useCashOut = () => {
   const {BankConnectId, BankId} = bank || {};
   const {onTransaction: gotoSmartOTPConfirm} = useSmartOTP();
   const {onShowModal: onShowModalPassword} = useModalPassword();
+  const {cashOut, cashOutConfirm, checkAmountLimit} = useServiceWallet();
   const cashOutRef = useRef({
     ConfirmType,
     TransCode,

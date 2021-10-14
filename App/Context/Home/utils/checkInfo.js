@@ -4,8 +4,7 @@ import Navigator from 'navigations/Navigator';
 import {PERSONAL_IC, SCREEN, SMART_OTP, USER_STATUS} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
-import {getSettingsInfo} from 'services/user';
-import {checkSmartOTP} from 'services/common';
+import useServiceCommon from 'services/common';
 import {useUser} from 'context/User';
 import {useUserStatus} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
@@ -23,6 +22,7 @@ const useCheckInfo = () => {
   const {setError} = useError();
   const modalSmartOTP = useModalSmartOTP();
   const {setFirstLogin} = useRegister();
+  const {checkSmartOTP} = useServiceCommon();
 
   const onCheckSmartOTP = async screen => {
     const result = await checkSmartOTP({phone});

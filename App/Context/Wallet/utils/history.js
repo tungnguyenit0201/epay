@@ -3,7 +3,7 @@ import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import {useEffect, useState, useRef, useCallback} from 'react';
-import {getHistory, getHistoryDetail} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -20,6 +20,7 @@ const useHistory = () => {
   const {phone} = useUser();
   const [historyData, setHistoryData] = useState(null);
   const {setError} = useError();
+  const {getHistory, getHistoryDetail} = useServiceWallet();
   const {setLoading} = useLoading();
   const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({

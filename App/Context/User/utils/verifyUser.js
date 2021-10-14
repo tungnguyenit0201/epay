@@ -2,11 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import {Platform, Linking} from 'react-native';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
-import {
-  updatePersonalInfo,
-  updateUserAddress,
-  updateIdentify,
-} from 'services/user';
+import useServiceUser from 'services/user';
 import {
   useAsyncStorage,
   useError,
@@ -58,6 +54,8 @@ const useVerifyInfo = (initialValue = {}) => {
   const [SDKImage, setSDKImage] = useState();
   const strings = useTranslation() || {};
   const {showError} = useAlert();
+  const {updatePersonalInfo, updateUserAddress, updateIdentify} =
+    useServiceUser();
   const {onShowModal: onShowModalPassword} = useModalPassword();
   const documentType = contentRef.current?.identifyCard?.ICType;
   const eKYC = kycType === KYCType.EKYC;

@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {Linking} from 'react-native';
-import {confirmOTP, genOtp} from 'services/common';
+import useServiceCommon from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
@@ -24,6 +24,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   const {onLogin} = useAuth();
   const {onGetPersonalInfo} = useUserInfo();
   const {setResend, getResend} = useAsyncStorage();
+  const {confirmOTP, genOtp} = useServiceCommon();
 
   const onChange = value => {
     setCode(value);

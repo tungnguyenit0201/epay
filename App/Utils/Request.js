@@ -149,29 +149,20 @@ async function request({
       if (__DEV__) {
         console.log(method, buildURL(url, query), params, err);
       }
-      err?.message == 'Network Error' &&
-        Alert.alert(
-          '',
-          'Mất kết nối hoăc đường truyên quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoăc thử lại sau ít phút',
-          [
-            {
-              text: 'Đồng ý',
-              onPress: () => true,
-            },
-          ],
-        );
 
-      const result = err?.toJSON?.();
-      if (typeof failure === 'function') {
-        if (err?.response?.data) {
-          return failure({
-            status: err?.response?.status,
-            ...err?.response?.data,
-          });
-        } else {
-          return failure({message: result?.message});
-        }
-      }
+      return failure(err);
+
+      // const result = err?.toJSON?.();
+      // if (typeof failure === 'function') {
+      //   if (err?.response?.data) {
+      //     return failure({
+      //       status: err?.response?.status,
+      //       ...err?.response?.data,
+      //     });
+      //   } else {
+      //     return failure({message: result?.message});
+      //   }
+      // }
     }
   }
 }
