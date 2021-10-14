@@ -84,7 +84,7 @@ export default ({
         style={[
           size == 'xxs' && {fontSize: scale(10)},
           size == 'xs' && {fontSize: scale(12)},
-          size == 'sm' && {fontSize: scale(14)},
+          // size == 'sm' && {fontSize: Fonts.H6},
           size == 'lg' && {fontSize: scale(18)},
           size == 'xl' && {fontSize: scale(20)},
           {
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 0,
   },
-  sm: {height: 34, paddingHorizontal: 15},
+  sm: {height: 40, paddingHorizontal: 15},
   lg: {height: 55},
   xl: {height: 70},
 
