@@ -98,10 +98,12 @@ const Login = ({route}) => {
                     </Text>
                   </Pressable>
                 </View>
-                <WebView
-                  style={styles.textError}
-                  source={{html: ` ${message}`}}
-                />
+                {!!message && (
+                  <WebView
+                    style={styles.textError}
+                    source={{html: ` ${message}`}}
+                  />
+                )}
               </View>
               <FooterContainer>
                 <View style={[styles.flexRow]}>
