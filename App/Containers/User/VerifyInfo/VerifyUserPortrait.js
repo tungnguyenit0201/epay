@@ -173,6 +173,7 @@ const VerifyUserPortrait = ({route}) => {
 
   return (
     <BaseVerifyInfo
+      style={styles.base}
       step={3}
       showInstruction={false}
       onPressButton={onUpdateAllInfo}
@@ -193,6 +194,7 @@ const VerifyUserPortrait = ({route}) => {
           multiline
         />
         <DatePicker
+          onChange={value => handleChange('DateOfBirth', value)}
           label={translation.date_of_birth_ddmmyyyy}
           value={info.DateOfBirth}
           required
@@ -321,6 +323,9 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
+  base: {
+    backgroundColor: Colors.white,
+  },
   container: {
     paddingHorizontal: Spacing.PADDING,
     marginTop: Spacing.PADDING,
