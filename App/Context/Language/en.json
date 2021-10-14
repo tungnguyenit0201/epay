@@ -39,6 +39,8 @@
   "or_please_call_19000000": "Or please call 1900-0000",
   "set_password": "Set password",
   "create_a_password": "Create a password",
+  "password_maximum_20_characters": "Password maximum 20 characters",
+  "data_does_not_match_with_password": "Data does not match with password",
   "password_for_account_security_and_transaction_confirmation_at_checkout": "Password for account security and transaction confirmation at checkout",
   "note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number": "Note: Password needs to be at least 8 characters including lowercase, uppercase, and number",
   "confirm_password": "Confirm Password",

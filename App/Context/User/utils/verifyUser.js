@@ -171,14 +171,13 @@ const useVerifyInfo = (initialValue = {}) => {
 
   const onUpdateAllInfo = async value => {
     let resultContent;
-    let result = null;
     try {
       const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
         const {extractCardInfo} = contentRef.current;
         const {CardID, CardNumber, Step, ICType, ValidDate, Verified} =
           extractCardInfo || {};
-        result = await verifyIdentityCard({
+        await verifyIdentityCard({
           Address: value.Address,
           BirthDay: value.DateOfBirth,
           CardID,
@@ -195,18 +194,14 @@ const useVerifyInfo = (initialValue = {}) => {
           Verified,
           Ward: value.Ward,
         });
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-          throw result;
-        }
         resultContent = {
+          success: true,
           title: strings.verifySuccess,
         };
       } else {
-        result = await onUpdateIdentify(updateInfo);
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-          throw result;
-        }
+        await onUpdateIdentify(updateInfo);
         resultContent = {
+          success: true,
           title: strings.kycPendingVerify,
         };
       }
@@ -300,7 +295,7 @@ const useVerifyInfo = (initialValue = {}) => {
       return {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
-        titleFront: backSide ? 'Mặt sau' : 'Mặt trước',
+        title: backSide ? 'ẢNH MẶT SAU' : 'ẢNH MẶT TRƯỚC',
         isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
@@ -361,18 +356,32 @@ const useVerifyInfo = (initialValue = {}) => {
       if (isRequestPermissionsGranted) {
         openSDK();
       } else {
-        Navigator.showAlert({
+        setError({
           icon: Images.warning,
           title: strings?.kycPermissionTitle,
-          message: strings?.permissionDenied,
-          positiveButton: {
-            title: strings?.acceptRequested,
-            onPress: () => Linking.openSettings(),
-          },
-          negativeButton: {
-            title: strings?.cancelled,
-          },
+          ErrorMessage: strings?.permissionDenied,
+          action: [
+            {
+              label: strings?.acceptRequested,
+              onPress: () => Linking.openSettings(),
+            },
+            {
+              label: strings?.cancelled,
+            },
+          ],
         });
+        // Navigator.showAlert({
+        //   icon: Images.warning,
+        //   title: strings?.kycPermissionTitle,
+        //   message: strings?.permissionDenied,
+        //   positiveButton: {
+        //     title: strings?.acceptRequested,
+        //     onPress: () => Linking.openSettings(),
+        //   },
+        //   negativeButton: {
+        //     title: strings?.cancelled,
+        //   },
+        // });
       }
     }
   };
@@ -413,7 +422,8 @@ const useVerifyInfo = (initialValue = {}) => {
         setLoading(false);
         ConsoleUtils.log('ERROR [extractCardInfo]', e);
         const {ErrorMessage = strings?.unknownError} = e || {};
-        showError({message: ErrorMessage});
+        // showError({message: ErrorMessage});
+        setError({ErrorMessage});
       }
     } else {
       ConsoleUtils.warn('[extractCardInfo] Missing Data!');
@@ -441,7 +451,8 @@ const useVerifyInfo = (initialValue = {}) => {
         setLoading(false);
         ConsoleUtils.log('ERROR [compareUserFace]', e);
         const {ErrorMessage = strings?.unknownError} = e || {};
-        showError({message: ErrorMessage});
+        // showError({message: ErrorMessage});
+        setError({ErrorMessage});
       }
     } else {
       ConsoleUtils.warn('[compareUserFace] Missing Data!');
@@ -464,7 +475,8 @@ const useVerifyInfo = (initialValue = {}) => {
         } catch (e) {
           ConsoleUtils.log('ERROR [verifyIdentityCard]', e);
           const {ErrorMessage = strings?.unknownError} = e || {};
-          showError({message: ErrorMessage});
+          // showError({message: ErrorMessage});
+          setError({ErrorMessage});
           reject(e);
         }
       } else {

@@ -65,6 +65,14 @@ const AlertCustom = () => {
                         label={item?.label || 'Đóng'}
                         onPress={() => onPressAction(item?.onPress)}
                       />
+                    ) : item?.mode == 'outline' ? (
+                      <Button
+                        label={item?.label}
+                        onPress={() => onPressAction(item?.onPress)}
+                        mode="outline"
+                        size="sm"
+                        mt={Spacing.PADDING}
+                      />
                     ) : (
                       <TouchableOpacity
                         style={styles.btnOutline}

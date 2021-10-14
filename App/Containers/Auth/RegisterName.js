@@ -59,8 +59,8 @@ const RegisterName = () => {
                 placeholder={translation.enter_your_name}
                 onChange={handleChange('FullName')}
                 onBlur={handleBlur('FullName')}
-                error={touched.FullName && errors.FullName}
-                value={values.FullName}
+                error={touched.FullName && translation[errors.FullName]}
+                value={values?.FullName?.replace(/[0-9]/g, '')}
                 isDeleted={values.FullName}
                 maxLength={100}
               />

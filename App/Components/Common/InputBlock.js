@@ -58,7 +58,7 @@ const InputBlock = ({
             {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
             inputStyle,
           ]}
-          placeholderTextColor={Colors.l5}
+          placeholderTextColor={Colors.l4}
           password={password && !showPassword}
           email={email}
           numeric={numeric}

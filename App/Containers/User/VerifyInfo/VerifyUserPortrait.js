@@ -36,11 +36,11 @@ const VerifyUserPortrait = ({route}) => {
     SexType: extractCardInfo.Gender,
   });
 
-  const GENDERS = [
-    {label: translation.male, value: 1},
-    {label: translation.female, value: 2},
-    {label: translation.others, value: 3},
-  ];
+  const GENDERS = {
+    1: translation.male,
+    2: translation.female,
+    3: translation.others,
+  };
 
   const CARD_RULE = useMemo(() => {
     return {
@@ -173,6 +173,7 @@ const VerifyUserPortrait = ({route}) => {
 
   return (
     <BaseVerifyInfo
+      style={styles.base}
       step={3}
       showInstruction={false}
       onPressButton={onUpdateAllInfo}
@@ -193,6 +194,7 @@ const VerifyUserPortrait = ({route}) => {
           multiline
         />
         <DatePicker
+          onChange={value => handleChange('DateOfBirth', value)}
           label={translation.date_of_birth_ddmmyyyy}
           value={info.DateOfBirth}
           required
@@ -203,7 +205,8 @@ const VerifyUserPortrait = ({route}) => {
             {translation.gender}
           </Text>
           <Radio
-            items={Object.entries(GENDER)
+            items={Object.entries(GENDERS)
+              .sort((a, b) => b[0] - a[0])
               .filter(x => x[0] !== '3')
               .map(([key, value]) => ({
                 label: value,
@@ -321,6 +324,9 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
+  base: {
+    backgroundColor: Colors.white,
+  },
   container: {
     paddingHorizontal: Spacing.PADDING,
     marginTop: Spacing.PADDING,
