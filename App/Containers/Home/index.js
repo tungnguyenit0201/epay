@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Image,
@@ -31,7 +31,6 @@ const Home = () => {
   const {banner, goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
-
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
@@ -56,14 +55,6 @@ const Home = () => {
       icon: Images.Homes.LichSuGd,
       name: translation.history,
       screen: SCREEN.HISTORY,
-    },
-  ];
-  const dataBanner = [
-    {
-      ImageUrl: require('images/home/banner-1.jpg'),
-    },
-    {
-      ImageUrl: require('images/home/banner-2.jpg'),
     },
   ];
 

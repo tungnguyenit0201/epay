@@ -79,6 +79,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
       }
       return;
     }
+
     switch (error) {
       case 'system_cancel':
         forceShow && onTouchID();
@@ -107,6 +108,12 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
           }); // TODO: translate
         }
         return;
+      case 'not_enrolled':
+        setError({
+          ErrorCode: -1,
+          ErrorMessage:
+            'Quý khách chưa cài đặt vân tay trên thiết bị. Vui lòng cài đặt để sử dụng',
+        }); // TODO: translate
       default:
         return;
     }
@@ -192,12 +199,18 @@ const useAuth = () => {
           },
         });
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
-        return Navigator.push(SCREEN.OTP, {
-          phone,
-          functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
-          password,
-          encrypted,
+        console.log('object :>> ');
+        setError({
+          ...result,
+          onClose: () =>
+            Navigator.push(SCREEN.OTP, {
+              phone,
+              functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
+              password,
+              encrypted,
+            }),
         });
+        return;
 
       case ERROR_CODE.SUCCESS:
         Keychain.setGenericPassword(phone, passwordEncrypted);

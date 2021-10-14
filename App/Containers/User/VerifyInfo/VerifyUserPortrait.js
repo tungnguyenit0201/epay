@@ -129,6 +129,28 @@ const VerifyUserPortrait = ({route}) => {
     setInfo({...info, [key]: value});
   };
 
+  const handleValidate = key => {
+    switch (key) {
+      case 'ICIssuedPlace':
+        if (info[key]?.length > 200)
+          return setError({
+            ...error,
+            [key]: translation?.place_of_issue_maximum_200_characters,
+          });
+        return setError({...error, [key]: ''});
+
+      case 'Address':
+        if (info[key]?.length > 200)
+          return setError({
+            ...error,
+            [key]: translation?.address_maximum_200_characters,
+          });
+        return setError({...error, [key]: ''});
+      default:
+        break;
+    }
+  };
+
   const buttonEnabled = useMemo(() => {
     return (
       info.ICFullName &&
@@ -138,17 +160,20 @@ const VerifyUserPortrait = ({route}) => {
       GENDERS.find(gender => gender.value === info.SexType) &&
       info.ICIssuedDate &&
       info.ICIssuedPlace &&
+      !error?.ICIssuedPlace &&
       // && (originalInfo?.ValidDate ? info.ValidDate : true)
       info.Provincial &&
       info.County &&
       (wardEmpty ? true : info.Ward) &&
       info.Address &&
+      !error?.Address &&
       acceptPolicy
     );
   }, [info, acceptPolicy, error]);
 
   return (
     <BaseVerifyInfo
+      style={styles.base}
       step={3}
       showInstruction={false}
       onPressButton={onUpdateAllInfo}
@@ -169,6 +194,7 @@ const VerifyUserPortrait = ({route}) => {
           multiline
         />
         <DatePicker
+          onChange={value => handleChange('DateOfBirth', value)}
           label={translation.date_of_birth_ddmmyyyy}
           value={info.DateOfBirth}
           required
@@ -213,6 +239,7 @@ const VerifyUserPortrait = ({route}) => {
           onChange={value => handleChange('ICIssuedPlace', value)}
           value={info.ICIssuedPlace}
           error={error.ICIssuedPlace}
+          onBlur={() => handleValidate('ICIssuedPlace')}
           style={styles.mb1}
           required
           placeholder={translation?.inputIssuedPlace}
@@ -228,6 +255,7 @@ const VerifyUserPortrait = ({route}) => {
           onChange={value => handleChange('Address', value)}
           value={info.Address}
           error={error.Address}
+          onBlur={() => handleValidate('Address')}
           style={styles.address}
           required
           placeholder={translation?.inputAddress}
@@ -295,6 +323,9 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
+  base: {
+    backgroundColor: Colors.white,
+  },
   container: {
     paddingHorizontal: Spacing.PADDING,
     marginTop: Spacing.PADDING,

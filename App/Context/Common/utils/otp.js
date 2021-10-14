@@ -67,7 +67,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             phone,
             functionType,
             content: {
-              title: 'Đổi mật khẩu \nkhông thành công',
+              title: 'Đổi mật khẩu ',
               text: 'Thông tin nhập không đúng. Vui lòng gọi đến tổng đài nếu cần được hỗ trợ.',
               hotline: '1900-0000',
             },

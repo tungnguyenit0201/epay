@@ -594,5 +594,7 @@
   "cancelled": "Huỷ bỏ",
   "addPromoCode": "Thêm mã khuyến mãi",
   "fillPromoCode": "Nhập mã khuyến mãi",
-  "use": "Sử dụng"
+  "use": "Sử dụng",
+  "place_of_issue_maximum_200_characters": "Nơi cấp không được quá 200 ký tự",
+  "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự"
 }
