@@ -1,7 +1,10 @@
 import {TEXT} from 'configs/Constants';
 import * as yup from 'yup';
 
-const FULLNAME_REGEX = /[^!@#$&*]+$/;
+// const FULLNAME_REGEX = /[^@$!%*#?&]+$/;
+const FULLNAME_REGEX =
+  /^[a-zA-ZaàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵzAÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬDĐEÈẺẼÉẸÊỀỂỄẾỆIÌỈĨÍỊOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢUÙỦŨÚỤƯỪỬỮỨỰYỲỶỸÝỴ\s]+$/;
+
 export const bankCardRegex = /^[a-zA-Z0-9]+$/;
 export const registerSchema = yup.object().shape({
   username: yup.string().required(TEXT.USERNAME_NOT_BLANK),

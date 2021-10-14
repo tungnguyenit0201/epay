@@ -36,9 +36,9 @@ const RegisterName = () => {
         values,
       }) => {
         const handleChange = field => value => {
-          setFieldValue(field, value);
+          setFieldValue(field, value?.replace(/[0-9]/g, ''));
           setFieldTouched(field, true, false);
-          setPersonalInfo(field, value);
+          setPersonalInfo(field, value?.replace(/[0-9]/g, ''));
         };
 
         return (
