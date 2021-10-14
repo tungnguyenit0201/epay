@@ -74,7 +74,7 @@ const VerifyEmailResult = ({route}) => {
         </ScrollView>
         <View style={base.bottom}>
           <Button
-            label={success ? 'Trang chủ' : 'Đóng'}
+            label={success ? 'Trang chủ' : 'Trang cá nhân'}
             onPress={() => onAction(success)}
           />
         </View>
