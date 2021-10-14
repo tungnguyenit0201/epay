@@ -113,7 +113,7 @@ export const verifyUserSchema = yup.object().shape({
 export const nameSchema = yup.object().shape({
   FullName: yup
     .string()
-    .required('name_cannot_be_left_blank')
+    .required('full_name_cannot_be_left_blank')
     .max(100, 'fullname_maximum_100_characters')
     .matches(FULLNAME_REGEX, 'Tên không được chứa ký tự đặc biệt.'),
 });
