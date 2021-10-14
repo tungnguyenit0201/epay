@@ -40,10 +40,10 @@ export const emailSchema = yup.object().shape({
 export const phoneSchema = yup.object().shape({
   phone: yup
     .string()
-    .required('*Số điện thoại không hợp lệ')
+    .required('incorrect_phone_number')
     .matches(
       /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
-      '*Số điện thoại không hợp lệ',
+      'incorrect_phone_number',
     )
     .label(TEXT.PHONE),
 });
@@ -54,9 +54,9 @@ export const passwordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
-      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
     )
-    .label('Mật khẩu'),
+    .label('password'),
 });
 
 export const newPasswordSchema = yup.object().shape({
@@ -65,16 +65,16 @@ export const newPasswordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
-      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
     )
-    .label('Mật khẩu')
-    .max(20, 'Mật khẩu tối đa 20 ký tự'),
+    .label('password')
+    .max(20, 'password_maximum_20_characters'),
   passwordConfirm: yup
     .string()
     .required()
-    .oneOf([yup.ref('newPassword'), null], 'Dữ liệu không khớp với mật khẩu')
+    .oneOf([yup.ref('newPassword'), null], 'data_does_not_match_with_password')
     .label('Xác nhận mật khẩu')
-    .max(20, 'Mật khẩu tối đa 20 ký tự'),
+    .max(20, 'password_maximum_20_characters'),
 });
 
 export const napasSchema = yup.object().shape({
@@ -113,7 +113,7 @@ export const verifyUserSchema = yup.object().shape({
 export const nameSchema = yup.object().shape({
   FullName: yup
     .string()
-    .required('Tên không được bỏ trống.')
-    .max(100, 'Tên không được quá 100 ký tự')
+    .required('name_cannot_be_left_blank')
+    .max(100, 'fullname_maximum_100_characters')
     .matches(FULLNAME_REGEX, 'Tên không được chứa ký tự đặc biệt.'),
 });

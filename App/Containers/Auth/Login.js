@@ -77,7 +77,7 @@ const Login = ({route}) => {
                   onChange={handleChange('password')}
                   onBlur={handleBlur('password')}
                   placeholder={translation.enter_password}
-                  error={touched.password && errors.password}
+                  error={touched.password && translation[errors.password]}
                   value={values.password}
                   //leftIcon={Images.Transfer.Lock}
                   autoFocus

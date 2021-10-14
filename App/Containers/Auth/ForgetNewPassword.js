@@ -40,7 +40,8 @@ const ForgetNewPassword = ({route}) => {
         renderRightComponent={() => (
           <TouchableOpacity
             style={styles.pr1}
-            onPress={() => setShowModal(true)}>
+            onPress={() => setShowModal(true)}
+          >
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -57,7 +58,8 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -78,7 +80,8 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}>
+                contentContainerStyle={[styles.wrap, styles.py1]}
+              >
                 <Content
                   title={translation.reset_your_password}
                   text={
@@ -91,7 +94,7 @@ const ForgetNewPassword = ({route}) => {
                   onChange={handleChange('newPassword')}
                   onBlur={handleBlur('newPassword')}
                   placeholder={translation.enter_your_password}
-                  error={touched.newPassword && errors.newPassword}
+                  error={touched.newPassword && translation[errors.newPassword]}
                   value={values.newPassword}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
@@ -102,7 +105,10 @@ const ForgetNewPassword = ({route}) => {
                   onChange={handleChange('passwordConfirm')}
                   onBlur={handleBlur('passwordConfirm')}
                   placeholder={translation.confirm_password}
-                  error={touched.passwordConfirm && errors.passwordConfirm}
+                  error={
+                    touched.passwordConfirm &&
+                    translation[errors.passwordConfirm]
+                  }
                   value={values.passwordConfirm}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
