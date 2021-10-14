@@ -60,7 +60,7 @@ const RegisterName = () => {
                 onChange={handleChange('FullName')}
                 onBlur={handleBlur('FullName')}
                 error={touched.FullName && errors.FullName}
-                value={values.FullName}
+                value={values?.FullName?.replace(/[0-9]/g, '')}
                 isDeleted={values.FullName}
                 maxLength={100}
               />
