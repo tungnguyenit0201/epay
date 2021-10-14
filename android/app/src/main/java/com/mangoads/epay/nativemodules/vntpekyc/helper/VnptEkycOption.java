@@ -25,7 +25,7 @@ public class VnptEkycOption {
         option.cameraType = SDKEnum.CameraType.BACK;
         option.titleColor = "#ffffff";
         option.backgroundCameraColor = "#80000000";
-        option.doneButtonColor = "#6FC3EA";
+        option.doneButtonColor = "#1F5CAB";
         option.doneButtonBackgroundColor = "#FFFFFF";
         option.frameCornerColor = "#FFFFFF";
 
@@ -65,7 +65,7 @@ public class VnptEkycOption {
         option.cameraType = SDKEnum.CameraType.BACK;
         option.titleColor = "#ffffff";
         option.backgroundCameraColor = "#80000000";
-        option.doneButtonColor = "#6FC3EA";
+        option.doneButtonColor = "#1F5CAB";
         option.doneButtonBackgroundColor = "#FFFFFF";
         option.frameCornerColor = "#FFFFFF";
 
