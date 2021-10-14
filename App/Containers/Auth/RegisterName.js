@@ -69,7 +69,7 @@ const RegisterName = () => {
             <FooterContainer>
               <Button
                 disabled={disable}
-                label={translation.done}
+                label={translation.completed}
                 style={styles.btn}
                 onPress={handleSubmit}
               />

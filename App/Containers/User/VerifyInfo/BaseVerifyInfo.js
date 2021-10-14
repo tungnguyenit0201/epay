@@ -16,9 +16,6 @@ import Row from 'components/Common/Row';
 import Col from 'components/Common/Col';
 import {scale} from 'utils/Functions';
 
-import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
-import Navigator from 'navigations/Navigator';
-
 const VerifyUserInfo = ({
   children,
   disableButton,
