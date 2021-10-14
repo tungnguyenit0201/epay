@@ -1,17 +1,20 @@
 import {useEffect, useRef, useState} from 'react';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import {useAsyncStorage, useLoading} from 'context/Common/utils';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
 import {getSettingsInfo} from 'services/user';
+import * as LocalAuthentication from 'expo-local-authentication';
+import {Linking} from 'react-native';
 
 const useSecuritySettings = () => {
   const {setTouchIdEnabled, getTouchIdEnabled} = useAsyncStorage();
   const {onLogout} = useAuth();
   const {phone} = useUser();
   const {setLoading} = useLoading();
+  const {setError} = useError();
   const [settings, setSettings] = useState({
     touchIdEnabled: false,
     // data from getSettingsInfo()
@@ -32,11 +35,21 @@ const useSecuritySettings = () => {
     loadSettings();
   }, []); // eslint-disable-line
 
-  const onTouchId = value => {
-    setTouchIdEnabled(value);
-    if (value) {
-      onLogout();
+  const onTouchId = async value => {
+    const isTouchIdEnrolled = await LocalAuthentication.isEnrolledAsync();
+    if (value && !isTouchIdEnrolled) {
+      setError({
+        ErrorCode: -1,
+        title: 'Cài đặt vân tay',
+        ErrorMessage:
+          'Quý khách chưa cài đặt vân tay trên thiết bị. Vui lòng cài đặt để sử dụng',
+        action: [{label: 'Cài đặt', onPress: Linking.openSettings}],
+      }); // TODO: translate
+      return false;
     }
+    setTouchIdEnabled(value);
+    value && onLogout();
+    return true;
   };
 
   const onSmartOTP = async () => {
