@@ -94,7 +94,7 @@ const ForgetNewPassword = ({route}) => {
                   onChange={handleChange('newPassword')}
                   onBlur={handleBlur('newPassword')}
                   placeholder={translation.enter_your_password}
-                  error={touched.newPassword && errors.newPassword}
+                  error={touched.newPassword && translation[errors.newPassword]}
                   value={values.newPassword}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
@@ -105,7 +105,10 @@ const ForgetNewPassword = ({route}) => {
                   onChange={handleChange('passwordConfirm')}
                   onBlur={handleBlur('passwordConfirm')}
                   placeholder={translation.confirm_password}
-                  error={touched.passwordConfirm && errors.passwordConfirm}
+                  error={
+                    touched.passwordConfirm &&
+                    translation[errors.passwordConfirm]
+                  }
                   value={values.passwordConfirm}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
