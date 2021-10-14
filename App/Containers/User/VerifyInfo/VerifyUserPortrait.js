@@ -176,7 +176,7 @@ const VerifyUserPortrait = ({route}) => {
       style={styles.base}
       step={3}
       showInstruction={false}
-      onPressButton={onUpdateAllInfo}
+      onPressButton={() => onUpdateAllInfo(info)}
       disableButton={!buttonEnabled}
       buttonTitle={translation.updateInfo}
     >
