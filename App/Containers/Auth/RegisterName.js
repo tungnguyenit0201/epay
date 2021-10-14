@@ -46,7 +46,7 @@ const RegisterName = () => {
             <BigLogo style={{marginBottom: 30}} />
             <Content
               style={styles.wrap}
-              title={translation.enter_name}
+              title={translation.enter_full_name}
               text={
                 translation.enter_your_first_and_last_name_to_create_an_account_on_epay
               }
@@ -56,7 +56,7 @@ const RegisterName = () => {
               <TextInput
                 required
                 onFocus={e => setDisable(false)}
-                placeholder={translation.enter_your_name}
+                placeholder={translation.enter_full_name}
                 onChange={handleChange('FullName')}
                 onBlur={handleBlur('FullName')}
                 error={touched.FullName && translation[errors.FullName]}
