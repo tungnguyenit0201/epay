@@ -53,8 +53,10 @@ export const passwordSchema = yup.object().shape({
     .string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
-      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
+      // 'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+      'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
     )
     .label('Mật khẩu'),
 });
@@ -64,8 +66,10 @@ export const newPasswordSchema = yup.object().shape({
     .string()
     .required()
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
-      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
+      // 'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+      'Mật khẩu tối thiểu 8 ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường, tự đặc biệt',
     )
     .label('Mật khẩu')
     .max(20, 'Mật khẩu tối đa 20 ký tự'),
