@@ -91,7 +91,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <View pointerEvents="none">
             <InputBlock
               label="Ngày sinh"
-              value={personalInfo?.DateOfBirth.replaceAll('-', '/')}
+              value={personalInfo?.DateOfBirth?.replaceAll?.('-', '/')}
               style={{backgroundColor: Colors.g2, textTransform: 'uppercase'}}
             />
           </View>
@@ -99,8 +99,8 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             <Text>Giới tính: </Text>
             <Radio
               items={Object.entries(GENDER)
-                .filter(x => x[0] !== '3')
-                .map(([key, value]) => ({
+                ?.filter(x => x[0] !== '3')
+                ?.map(([key, value]) => ({
                   label: value,
                   value: parseInt(key),
                 }))}
