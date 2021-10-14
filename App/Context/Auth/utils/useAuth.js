@@ -150,6 +150,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
 const useAuth = () => {
   const [message, setMessage] = useState('');
   const {setLoading} = useLoading();
+  const translation = useTranslation();
   const {dispatch, route} = useUser();
   const {setError} = useError();
   const {getPhone, setPhone, setToken, getPushToken, getName} =
@@ -210,8 +211,8 @@ const useAuth = () => {
           phone,
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
-            title: 'Đăng nhập ',
-            text: 'Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lai sau 15 phút',
+            title: translation.sign_in,
+            text: translation.you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again,
             hotline: '1900-0000',
           },
         });
