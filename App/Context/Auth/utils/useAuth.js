@@ -28,22 +28,28 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
   const {getTouchIdEnabled, getPhone} = useAsyncStorage();
   const {setError} = useError();
   const isLocked = useRef(false);
+  const textInputRef = useRef(null);
 
   const checkBiometry = async () => {
     try {
-      const [type, isEnrolled, credentials] = await getAll(
+      const [type, isEnrolled, credentials, touchIdEnabled] = await getAll(
         LocalAuthentication.supportedAuthenticationTypesAsync,
         LocalAuthentication.isEnrolledAsync,
         Keychain.getGenericPassword,
+        getTouchIdEnabled,
       );
       let passwordEncrypted =
         credentials?.username == (await getPhone())
           ? credentials?.password
           : null;
-      if (!isEnrolled || !passwordEncrypted) {
+      if (!passwordEncrypted || !touchIdEnabled) {
         return;
       }
-      setBiometryType(_.isArray(type) ? type[0] : type);
+      const biometryType = _.isArray(type) ? type[0] : type;
+      if (biometryType && !isEnrolled) {
+        showNotEnrolledError();
+      }
+      setBiometryType(biometryType);
     } catch (error) {
       __DEV__ && console.log("Keychain couldn't be accessed!", error);
     }
@@ -53,6 +59,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
     if (!biometryType) {
       return;
     }
+    Keyboard.dismiss();
 
     const options = {
       promptMessage: passcode
@@ -109,14 +116,20 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
         }
         return;
       case 'not_enrolled':
-        setError({
-          ErrorCode: -1,
-          ErrorMessage:
-            'Quý khách chưa cài đặt vân tay trên thiết bị. Vui lòng cài đặt để sử dụng',
-        }); // TODO: translate
+        showNotEnrolledError();
       default:
         return;
     }
+  };
+
+  const showNotEnrolledError = () => {
+    setError({
+      ErrorCode: -1,
+      title: 'Cài đặt vân tay',
+      ErrorMessage:
+        'Quý khách chưa cài đặt vân tay trên thiết bị. Vui lòng cài đặt để sử dụng',
+      action: [{label: 'Cài đặt', onPress: Linking.openSettings}],
+    }); // TODO: translate
   };
 
   useEffect(() => {
@@ -124,10 +137,14 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    autoShow && biometryType && onTouchID();
+    if (autoShow) {
+      onTouchID();
+    } else {
+      textInputRef.current?.focus && textInputRef.current.focus();
+    }
   }, [biometryType]); // eslint-disable-line
 
-  return {biometryType, onTouchID, getTouchIdEnabled};
+  return {biometryType, onTouchID, getTouchIdEnabled, textInputRef};
 };
 
 const useAuth = () => {

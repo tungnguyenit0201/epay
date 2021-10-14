@@ -21,7 +21,7 @@ const Login = ({route}) => {
     useAuth();
   const translation = useTranslation();
 
-  const {biometryType, onTouchID} = useTouchID({
+  const {biometryType, onTouchID, textInputRef} = useTouchID({
     autoShow: !name,
     onSuccess: () => onLoginByTouchID({phone}),
   });
@@ -72,6 +72,7 @@ const Login = ({route}) => {
             <View style={styles.flex1}>
               <View style={[styles.wrap, styles.flex1]}>
                 <TextInput
+                  ref={textInputRef}
                   password
                   required
                   onChange={handleChange('password')}
@@ -80,7 +81,7 @@ const Login = ({route}) => {
                   error={touched.password && translation[errors.password]}
                   value={values.password}
                   //leftIcon={Images.Transfer.Lock}
-                  autoFocus
+                  // autoFocus
                   style={styles.wrap}
                   maxLength={20}
                 />

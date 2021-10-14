@@ -7,13 +7,14 @@ import {useAsyncStorage, useShowModal} from 'context/Common/utils';
 import {Images} from 'themes';
 import {useTranslation} from 'context/Language';
 const useHome = () => {
-  const {getPhone} = useAsyncStorage();
+  const {getPhone, getToken} = useAsyncStorage();
   let [banner, setBanner] = useState();
   const goSecurity = () => {
     Navigator.navigate(SCREEN.SECURITY);
   };
   const onGetBanner = async () => {
     let phone = await getPhone();
+    let token = await getToken();
     let result = await getBanner({phone});
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) setBanner(result?.Banners);
   };

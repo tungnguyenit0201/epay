@@ -12,9 +12,11 @@ const SwitchCustom = ({
 }) => {
   const [isActive, setActive] = useState(initialValue);
 
-  const onValueChange = value => {
-    setActive(value);
-    onChange && onChange(value);
+  const onValueChange = async value => {
+    const result = onChange ? await onChange(value) : undefined;
+    if (result === undefined || result) {
+      setActive(value);
+    }
   };
 
   return (
