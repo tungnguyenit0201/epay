@@ -51,7 +51,7 @@ const VerifyEmailResult = ({route}) => {
             style={styles.icon}
             resizeMode="contain"
           />
-          <View style={base.container}>
+          <View style={[base.container, styles.alignCenter]}>
             <Text bold size={Fonts.H5} mb={20}>
               Xác thực email {success ? 'thành công' : 'không thành công'}
             </Text>
