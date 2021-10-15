@@ -85,12 +85,21 @@ const useAsyncStorage = () => {
     return await AsyncStorage.getItem(phone);
   };
 
-  const setName = async name => {
-    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.NAME, name);
+  const addName = async ({name, phone}) => {
+    const nameData = await getNameData();
+    if (Object.keys(nameData).includes(phone)) {
+      return;
+    }
+    nameData[phone] = name;
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.USER.NAME_DATA,
+      JSON.stringify(nameData),
+    );
   };
 
-  const getName = async () => {
-    return await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.NAME);
+  const getNameData = async () => {
+    const value = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.NAME_DATA);
+    return value ? JSON.parse(value) : {};
   };
 
   return {
@@ -110,8 +119,8 @@ const useAsyncStorage = () => {
     getPushToken,
     setResend,
     getResend,
-    setName,
-    getName,
+    addName,
+    getNameData,
   };
 };
 

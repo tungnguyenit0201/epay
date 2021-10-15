@@ -23,7 +23,7 @@ const SmartOtp = () => {
           <Header back title={translation.password_and_security} />
         </HeaderBg>
 
-        <Text>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
+        <Text mt={20}>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
         <Text>Smart OTP: Phiên bản {smartOTPInfo?.version || '...'}</Text>
 
         <TouchableOpacity style={styles.item} onPress={onChangePassword}>

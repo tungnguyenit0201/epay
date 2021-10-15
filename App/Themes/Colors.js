@@ -43,6 +43,10 @@ export default {
   moneyItem: '#C8DFF4',
   Highlight: '#E10000',
 
+  //IMPORTANT
+  // chỉ dùng từ khúc này trở lên thôi nha mọi người, k thêm màu tuỳ ý vào, chỗ nào trong design
+  // mà màu k có trong này thì là design sai, nhắn deisign sửa lại nhé
+
   TEXT: '#555555',
   GRAY: '#696969',
   ICONGRAY: '#AAAAAA',

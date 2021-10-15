@@ -36,14 +36,14 @@ const useCheckInfo = () => {
     //   modal: {type: 'smartOTPSuggestion', value: true},
     // });
     setError({
-      title: 'Nhanh và bảo mật hơn với smart OTP',
+      title: translation.faster_and_more_secure_with_smart_otp,
       ErrorCode: -1,
       ErrorMessage:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+        translation.security_method_proactively_obtains_onetime_transaction_verification_code_otp_and_automatically_enters_it_into_the_system_when_performing_online_transactions,
       onClose: () => setFirstLogin(false),
       action: [
         {
-          label: 'Cài smart OTP ngay',
+          label: translation.install_smart_otp,
           onPress: modalSmartOTP?.onGoSmartOTP,
         },
       ],
@@ -55,7 +55,7 @@ const useCheckInfo = () => {
     setError({
       // title: translation.notification,
       ErrorCode: -1,
-      ErrorMessage: 'Liên kết ngân hàng để thực hiện giao dịch.',
+      ErrorMessage: translation.link_banks_to_make_transactions,
       onClose: () => checkInfo({value: false}),
       action: [
         {
@@ -63,7 +63,7 @@ const useCheckInfo = () => {
           onPress: () => onNavigate(SCREEN.MAP_BANK_FLOW),
         },
         {
-          label: 'Nhắc tôi sau',
+          label: translation.remind_me_later,
           onPress: () => checkInfo({value: false}),
         },
       ],
@@ -75,12 +75,11 @@ const useCheckInfo = () => {
       icon: Images.Modal.UserTick,
       // title: translation.notification,
       ErrorCode: -1,
-      ErrorMessage:
-        'Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.',
+      ErrorMessage: translation.verify_accounts_enhance_your_account_security,
       onClose: () => checkInfo({value: false}),
       action: [
         {
-          label: 'Định danh',
+          label: translation.verify,
           onPress: () => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD),
         },
       ],

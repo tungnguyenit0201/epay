@@ -20,6 +20,7 @@ import {ListItemSimple, Row, Col, Text, Modal} from 'components';
 import {useError} from 'context/Common/utils';
 
 const IconList = ({data}) => {
+  const [open, setOpen] = useState(false);
   const {width} = useWindowDimensions();
   let [indexTab, setIndexTab] = useState(0);
   const {iconHome} = useIconConfig();
@@ -62,62 +63,73 @@ const IconList = ({data}) => {
 
   const renderItem = ({index, item}) => {
     return (
-      <View style={{width: width}} key={Math.random(0, 100)}>
-        <View style={{flexDirection: 'row'}}>
-          {iconHome.slice(index * 4, index * 4 + 2)?.map((item, index) => {
-            // return <Item item={item} key={Math.random(0, 100)} />;
-            return (
-              <TouchableOpacity
-                key={Math.random(0, 100)}
-                style={[
-                  styles.item,
-                  {
-                    width: width / 2 - Spacing.PADDING,
-                  },
-                ]}
-                onPress={() =>
-                  setError({
-                    ErrorMessage: 'Comming soon',
-                    icon: Images.Homes.Setting,
-                  })
-                }
-              >
-                <Image source={item.icon} style={styles.icon} />
+      <>
+        <View style={{width: width}} key={Math.random(0, 100)}>
+          <View style={{flexDirection: 'row'}}>
+            {iconHome.slice(index * 4, index * 4 + 2)?.map((item, index) => {
+              // return <Item item={item} key={Math.random(0, 100)} />;
+              return (
+                <TouchableOpacity
+                  key={Math.random(0, 100)}
+                  style={[
+                    styles.item,
+                    {
+                      width: width / 2 - Spacing.PADDING,
+                    },
+                  ]}
+                  onPress={() => setOpen(true)}
+                >
+                  <Image source={item.icon} style={styles.icon} />
 
-                <Text centered bold mt={5}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-        <View style={{flexDirection: 'row'}} key={Math.random(0, 100)}>
-          {iconHome.slice(index * 4 + 2, index * 4 + 4)?.map((item, index) => {
-            // return <Item item={item} />;
-            return (
-              <TouchableOpacity
-                key={Math.random(0, 100)}
-                style={[
-                  styles.item,
-                  {
-                    width: width / 2 - Spacing.PADDING,
-                  },
-                ]}
-                onPress={() => {
-                  // Alert.alert('', 'Coming soon')
-                  Navigator.navigate(SCREEN.TRAFFIC_FEE);
-                }}
-              >
-                <Image source={item.icon} style={styles.icon} />
+                  <Text centered bold mt={5}>
+                    {item.name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+          <View style={{flexDirection: 'row'}} key={Math.random(0, 100)}>
+            {iconHome
+              .slice(index * 4 + 2, index * 4 + 4)
+              ?.map((item, index) => {
+                // return <Item item={item} />;
+                return (
+                  <TouchableOpacity
+                    key={Math.random(0, 100)}
+                    style={[
+                      styles.item,
+                      {
+                        width: width / 2 - Spacing.PADDING,
+                      },
+                    ]}
+                    onPress={() => {
+                      // Alert.alert('', 'Coming soon')
+                      Navigator.navigate(SCREEN.TRAFFIC_FEE);
+                    }}
+                  >
+                    <Image source={item.icon} style={styles.icon} />
 
-                <Text centered bold mt={5}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+                    <Text centered bold mt={5}>
+                      {item.name}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+          </View>
         </View>
-      </View>
+        <Modal
+          visible={open}
+          onClose={() => setOpen(false)}
+          content="Coming soon"
+          buttonGroup={() => (
+            <View>
+              <Text></Text>
+            </View>
+          )}
+          icon={Images.Homes.Setting}
+          // icon={Images.SignUp.BigPhone}
+        />
+      </>
     );
   };
 

@@ -26,7 +26,7 @@ const useUserInfo = type => {
     Email: '',
   });
 
-  const {getPhone, setName} = useAsyncStorage();
+  const {getPhone, addName} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useUser();
@@ -114,7 +114,8 @@ const useUserInfo = type => {
           personalInfo: result?.PersonalInfo,
         });
         dispatch({type: 'SET_PHONE', phone});
-        result?.PersonalInfo?.FullName && setName(result.PersonalInfo.FullName);
+        result?.PersonalInfo?.FullName &&
+          addName({name: result.PersonalInfo.FullName, phone});
     }
   };
 
@@ -175,6 +176,9 @@ const useUserInfo = type => {
             break;
           case 'confirm_password_response':
             Navigator.push(SCREEN.NEW_PASSWORD, {oldPassword: password});
+            break;
+          case 'update_account':
+            Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
             break;
           case 'update_email':
             Navigator.push(SCREEN.VERIFY_EMAIL, {
@@ -249,6 +253,7 @@ const useUserInfo = type => {
       phone,
       personalInfo: {SexType},
     });
+    await onGetAllInfo();
     result?.ErrorCode && setError(result);
   };
 

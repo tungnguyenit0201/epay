@@ -157,7 +157,7 @@ const VerifyUserPortrait = ({route}) => {
       !error.ICNumber &&
       info.ICNumber &&
       info.DateOfBirth &&
-      GENDERS.find(gender => gender.value === info.SexType) &&
+      info.SexType &&
       info.ICIssuedDate &&
       info.ICIssuedPlace &&
       !error?.ICIssuedPlace &&

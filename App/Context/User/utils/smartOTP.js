@@ -86,11 +86,13 @@ const useSmartOTP = params => {
       return;
     }
     const passwordEncrypted = await sha256(password);
+    setLoading(true);
     const result = await activateSmartOTP({
       phone,
       password: passwordEncrypted,
       active: true,
     });
+    setLoading(false);
     // fail
     if (_.get(result, 'ErrorCode', true)) {
       setError(result);

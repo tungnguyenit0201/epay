@@ -118,5 +118,8 @@ export const nameSchema = yup.object().shape({
     .string()
     .required('full_name_cannot_be_left_blank')
     .max(100, 'fullname_maximum_100_characters')
-    .matches(FULLNAME_REGEX, 'Tên không được chứa ký tự đặc biệt.'),
+    .matches(
+      FULLNAME_REGEX,
+      'first_and_last_name_must_not_contain_special_characters',
+    ),
 });

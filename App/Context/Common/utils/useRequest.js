@@ -1,8 +1,14 @@
 import {request} from 'utils/Request';
 import {useError} from 'context/Common/utils';
+import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
+import {Alert} from 'react-native';
+import {useCommon} from 'context/Common';
 const useRequest = () => {
   const {setError} = useError();
-  const handleError = error => {
+  const {error: errorContext} = useCommon();
+  const handleError = (error, failure) => {
+    if (typeof failure == 'function') return failure(error);
     if (error?.message == 'Network Error')
       return setError({
         ErrorMessage:
@@ -13,19 +19,27 @@ const useRequest = () => {
           },
         ],
       });
-    // if (error?.message == 'Request failed with status code 401')
-    //   return setError({
-    //     ErrorMessage:
-    //       'Tài khoản đã được đăng nhập ở một thiết bị khác hoặc phiên đăng nhập hết hạn!',
-    //   });
+    if (error?.message?.search?.('401') != -1)
+      setError({
+        ErrorMessage:
+          'Tài khoản đã được đăng nhập ở một thiết bị khác hoặc phiên đăng nhập hết hạn!',
+        onClose: () => Navigator.reset(SCREEN.AUTH),
+      });
+    return;
   };
-  const doRequest = async ({url, method = 'post', params, success}) => {
+  const doRequest = async ({
+    url,
+    method = 'post',
+    params,
+    success,
+    failure,
+  }) => {
     await request({
       url,
       method,
       params,
       success,
-      failure: error => handleError(error),
+      failure: error => handleError(error, failure),
     });
   };
   return {doRequest};

@@ -41,7 +41,6 @@ const User = ({style}) => {
         <Text bold size={Fonts.MD} mb={2} style={styles.lh1}>
           {userInfo?.personalInfo?.FullName}
         </Text>
-
         <View style={[styles.flexRow, styles.alignCenter]}>
           <Text style={styles.flex1}>{hidePhone(phone)}</Text>
           <StatusUser size="xxs" />
