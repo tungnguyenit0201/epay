@@ -11,7 +11,7 @@ import useError from './error';
 import {useUserInfo} from 'context/User/utils';
 import {useAsyncStorage} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
-
+import {useTranslation} from 'context/Language';
 const useOTP = ({functionType, phone, password, encrypted}) => {
   const {config} = useCommon();
   const [errorMessage, setErrorMessage] = useState(null);
@@ -25,7 +25,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   const {onGetPersonalInfo} = useUserInfo();
   const {setResend, getResend} = useAsyncStorage();
   const {confirmOTP, genOtp} = useServiceCommon();
-
+  const translation = useTranslation();
   const onChange = value => {
     setCode(value);
     errorMessage && setErrorMessage(null);
@@ -68,8 +68,8 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             phone,
             functionType,
             content: {
-              title: 'Đổi mật khẩu ',
-              text: 'Thông tin nhập không đúng. Vui lòng gọi đến tổng đài nếu cần được hỗ trợ.',
+              title: translation.password_change,
+              text: translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
               hotline: '1900-0000',
             },
           });
@@ -165,7 +165,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
       /* case FUNCTION_TYPE.REGISTER_ACCOUNT:
         return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`; */
       default:
-        return `Nhập mã OTP xác thực`;
+        return translation.enter_otp_verification_code;
     }
   };
 
