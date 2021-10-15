@@ -61,14 +61,14 @@ const Wrapper = React.memo(
     useEffect(() => {
       modalSmartOTP.smartOTPSuggestion &&
         setError({
-          title: 'Nhanh và bảo mật hơn với smart OTP',
+          title: translation.faster_and_more_secure_with_smart_otp,
           ErrorCode: -1,
           ErrorMessage:
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
+            translation.security_method_proactively_obtains_onetime_transaction_verification_code_otp_and_automatically_enters_it_into_the_system_when_performing_online_transactions,
           onClose: () => setFirstLogin(false),
           action: [
             {
-              label: 'Cài smart OTP ngay',
+              label: translation.install_smart_otp,
               onPress: modalSmartOTP?.onGoSmartOTP,
             },
           ],
