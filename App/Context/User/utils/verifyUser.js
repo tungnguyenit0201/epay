@@ -22,11 +22,7 @@ import {
 import Ekyc from 'utils/Ekyc';
 import EKYC_ERROR from 'configs/Enums/EkycError';
 import KYCType from 'configs/Enums/KYCType';
-import {
-  extractIdentityCardInfo,
-  compareFace,
-  identityCardVerify,
-} from 'services/ekyc';
+import useServiceEKYC from 'services/ekyc';
 import {ConsoleUtils} from 'utils/Console';
 import useAlert from 'utils/Alert';
 import {Images} from 'themes';
@@ -53,14 +49,23 @@ const useVerifyInfo = (initialValue = {}) => {
   const {kycType} = userInfo;
   const [SDKImage, setSDKImage] = useState();
   const strings = useTranslation() || {};
-  const {showError} = useAlert();
+  // const {showError} = useAlert();
   const {updatePersonalInfo, updateUserAddress, updateIdentify} =
     useServiceUser();
   const {onShowModal: onShowModalPassword} = useModalPassword();
+  const {extractIdentityCardInfo, compareFace, identityCardVerify} =
+    useServiceEKYC();
   const documentType = contentRef.current?.identifyCard?.ICType;
   const eKYC = kycType === KYCType.EKYC;
   const bank = contentRef.current?.KYCFlow === KYC_FLOW.BANK;
 
+  const showError = () => {
+    setError({
+      icon: Images.TransactionHistory.Fail,
+      title: strings?.error,
+      ErrorMessage: strings?.unknownError,
+    });
+  };
   const onChange = (key, value) => {
     contentRef.current[key] = value;
     setDisabledIdentify(

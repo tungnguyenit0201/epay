@@ -2,7 +2,8 @@ import {request} from 'utils/Request';
 import {useError} from 'context/Common/utils';
 const useRequest = () => {
   const {setError} = useError();
-  const handleError = error => {
+  const handleError = (error, failure) => {
+    if (typeof failure == 'function') return failure(error);
     if (error?.message == 'Network Error')
       return setError({
         ErrorMessage:
@@ -19,13 +20,19 @@ const useRequest = () => {
     //       'Tài khoản đã được đăng nhập ở một thiết bị khác hoặc phiên đăng nhập hết hạn!',
     //   });
   };
-  const doRequest = async ({url, method = 'post', params, success}) => {
+  const doRequest = async ({
+    url,
+    method = 'post',
+    params,
+    success,
+    failure,
+  }) => {
     await request({
       url,
       method,
       params,
       success,
-      failure: error => handleError(error),
+      failure: error => handleError(error, failure),
     });
   };
   return {doRequest};
