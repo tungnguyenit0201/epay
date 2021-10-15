@@ -49,12 +49,11 @@ const TrafficFee = () => {
         onPress={
           () =>
             setError({
-              ErrorMessage: 'Comming soon',
+              ErrorMessage: 'Coming soon',
               icon: Images.Homes.Setting,
             })
           //Navigator.navigate(item.screen)
-        }
-      >
+        }>
         <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
           <Image
             source={item.img}
