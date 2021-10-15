@@ -102,7 +102,7 @@ const BankLinked = props => {
     //TODO: Translate
     <>
       <HeaderBg>
-        <Header back title={translation.my_wallet} style={styles.mb} />
+        <Header back title={translation.topup.my_wallet} style={styles.mb} />
 
         <View style={[base.row, styles.block1]}>
           {!showMoney ? (

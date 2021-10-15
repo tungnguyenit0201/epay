@@ -508,6 +508,7 @@
     "forgotPassword": "Quên mật khẩu?"
   },
   "topup": {
+    "my_wallet": "Ví của tôi",
     "walletAmount": "Số dư ví",
     "cashInMinError": "*Số tiền nạp tối thiểu là % đ",
     "cashInMaxError": "*Số tiền nạp tối đa là % đ",
