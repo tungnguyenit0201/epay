@@ -250,7 +250,7 @@ const UserInfo = () => {
                   if (PersonalInfo?.Email) {
                     Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
                       type: 'update_email',
-                      headerLabel: translation.enter_password,
+                      headerLabel: translation.common.authen,
                     });
                   } else {
                     Navigator.navigate(SCREEN.VERIFY_EMAIL, {
@@ -300,7 +300,18 @@ const UserInfo = () => {
           icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
-              <Button mb={10} bold label="Có" onPress={onReVerify} />
+              <Button
+                mb={10}
+                bold
+                label="Có"
+                onPress={() => {
+                  onReVerify('hideModal');
+                  Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
+                    type: 'update_account',
+                    headerLabel: translation.common.authen,
+                  });
+                }}
+              />
               <TouchableOpacity
                 style={styles.textCenter}
                 onPress={() => onReVerify('hideModal')}
