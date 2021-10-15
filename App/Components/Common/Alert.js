@@ -41,6 +41,7 @@ const AlertCustom = () => {
             <Image
               source={error?.icon ? error?.icon : Images.Modal.Danger}
               style={styles.icon}
+              resizeMode="contain"
             />
           </View>
           <View style={styles.modalView}>
