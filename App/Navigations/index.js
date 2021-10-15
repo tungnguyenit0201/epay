@@ -98,7 +98,7 @@ import {getAll} from 'utils/Functions';
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
-  const {getToken, getName, getPhone} = useAsyncStorage();
+  const {getToken, getNameData, getPhone} = useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
   const {onPressNotify} = useNotify();
@@ -141,8 +141,10 @@ const AppNavigator = () => {
 
     const checkWelcomeBack = async () => {
       // const name = await getName();
-      const [name, phone] = await getAll(getName, getPhone);
-      name && phone && Navigator.navigate(SCREEN.LOGIN, {phone, name});
+      const [nameData, phone] = await getAll(getNameData, getPhone);
+      phone &&
+        nameData[phone] &&
+        Navigator.navigate(SCREEN.LOGIN, {phone, name: nameData[phone]});
     };
 
     getCurrentLanguage();
