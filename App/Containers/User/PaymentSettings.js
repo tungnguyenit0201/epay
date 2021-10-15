@@ -91,7 +91,7 @@ const PaymentSettings = () => {
       <Modal
         visible={open}
         onClose={() => setOpen(false)}
-        content="Comming soon"
+        content="Coming soon"
         buttonGroup={() => (
           <View>
             <Text></Text>

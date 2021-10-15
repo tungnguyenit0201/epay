@@ -91,12 +91,15 @@ const useAsyncStorage = () => {
       return;
     }
     nameData[phone] = name;
-    await AsyncStorage.setItem(ASYNC_STORAGE_KEY.USER.NAME, nameData);
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.USER.NAME_DATA,
+      JSON.stringify(nameData),
+    );
   };
 
   const getNameData = async () => {
-    const value = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.NAME);
-    return typeof value === 'object' ? JSON.parse(value) : {};
+    const value = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.NAME_DATA);
+    return value ? JSON.parse(value) : {};
   };
 
   return {

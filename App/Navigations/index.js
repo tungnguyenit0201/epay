@@ -94,6 +94,7 @@ import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
 import {getAll} from 'utils/Functions';
+import {useLoginName} from 'context/Auth/utils';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -103,6 +104,7 @@ const AppNavigator = () => {
   const isReadyRef = React.useRef(false);
   const {onPressNotify} = useNotify();
   const {dispatch} = useUser();
+  const {navigateLoginByName} = useLoginName();
 
   const openNotificaiton = async remoteMessage => {
     const token = await getToken();
@@ -142,9 +144,7 @@ const AppNavigator = () => {
     const checkWelcomeBack = async () => {
       // const name = await getName();
       const [nameData, phone] = await getAll(getNameData, getPhone);
-      phone &&
-        nameData[phone] &&
-        Navigator.navigate(SCREEN.LOGIN, {phone, name: nameData[phone]});
+      phone && nameData[phone] && navigateLoginByName(phone);
     };
 
     getCurrentLanguage();
