@@ -10,6 +10,7 @@ import useServiceUser from 'services/user';
 import Keychain from 'react-native-keychain';
 
 const useForgetPassword = () => {
+  const translation = useTranslation();
   const {setError} = useError();
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
@@ -54,7 +55,7 @@ const useForgetPassword = () => {
       return setError(result);
     }
 
-    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
+    setError({ErrorCode: -1, ErrorMessage: translation.password_change_failed});
     Navigator.reset(SCREEN.AUTH);
     Keychain.setGenericPassword(phone, passwordEncrypted);
   };

@@ -78,7 +78,7 @@ const useAuth = () => {
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
             title: translation.sign_in,
-            text: 'Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lại sau 15 phút',
+            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minutes,
             hotline: '1900-0000',
           },
         });

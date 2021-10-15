@@ -9,6 +9,7 @@ import {Linking} from 'react-native';
 import {useLoading, useError, useAsyncStorage} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import useAuth from './auth';
+
 const useRegister = () => {
   let registerRef = useRef({
     phone: null,
