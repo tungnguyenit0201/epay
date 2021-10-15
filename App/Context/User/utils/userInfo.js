@@ -249,6 +249,7 @@ const useUserInfo = type => {
       phone,
       personalInfo: {SexType},
     });
+    await onGetAllInfo();
     result?.ErrorCode && setError(result);
   };
 

@@ -83,16 +83,11 @@ const useAuth = () => {
           },
         });
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
-        console.log('object :>> ');
-        setError({
-          ...result,
-          onClose: () =>
-            Navigator.push(SCREEN.OTP, {
-              phone,
-              functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
-              password,
-              encrypted,
-            }),
+        Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.CONFIRM_NEW_DEVICE,
+          password,
+          encrypted,
         });
         return;
 
