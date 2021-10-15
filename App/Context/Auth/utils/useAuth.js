@@ -213,7 +213,7 @@ const useAuth = () => {
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
             title: translation.sign_in,
-            text: 'Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lại sau 15 phút',
+            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minutes,
             hotline: '1900-0000',
           },
         });
@@ -406,6 +406,7 @@ const usePhone = () => {
 };
 
 const useForgetPassword = () => {
+  const translation = useTranslation();
   const {setError} = useError();
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
@@ -450,7 +451,7 @@ const useForgetPassword = () => {
       return setError(result);
     }
 
-    setError({ErrorCode: -1, ErrorMessage: 'Đổi Mật khẩu thành công.'}); // TODO: translate
+    setError({ErrorCode: -1, ErrorMessage: translation.password_change_failed});
     Navigator.reset(SCREEN.AUTH);
     Keychain.setGenericPassword(phone, passwordEncrypted);
   };
