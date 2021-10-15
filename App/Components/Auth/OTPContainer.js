@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   // textDefault: {
   //   color: Colors.GRAY,
   //   paddingBottom: Spacing.PADDING - 4,
-  //   fontSize: Fonts.FONT_MEDIUM_LARGE,
+  //   fontSize: Fonts.MD_LARGE,
   // },
   wrapOtp: {
     flexDirection: 'row',

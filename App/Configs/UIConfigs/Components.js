@@ -98,7 +98,7 @@ ThemeManager.setComponentTheme(
           // fontFamily: bold
           //   ? Fonts.FONT_BOLD
           //   : medium
-          //   ? Fonts.FONT_MEDIUM
+          //   ? Fonts.MD
           //   : semibold
           //   ? Fonts.FONT_SEMIBOLD
           //   : Fonts.FONT_REGULAR,

@@ -7,7 +7,7 @@ import {Colors, Fonts} from 'themes';
 var css = `
   *{
     font-family: SVN-Gilroy !important;
-    font-size: ${Fonts.FONT_MEDIUM} !important;
+    font-size: ${Fonts.MD} !important;
     color: ${Colors.TEXT} !important
   }
   .markRed {

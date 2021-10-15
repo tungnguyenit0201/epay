@@ -1,4 +1,30 @@
 export default {
+  tp1: '#1F5CAB',
+  tp2: '#141212',
+  tp3: '#666666',
+  tp4: '#848181',
+  tp5: '#A7A7A7',
+
+  bs1: '#CCCCCC',
+  bs2: '#EEEEEE',
+  bs3: '#F8F8F8',
+  bs4: '#FFFFFF',
+
+  bg1: '#EEF6FF',
+
+  hl1: '#D80000',
+  hl2: '#1EC84E',
+
+  grd1: '#A389FF',
+  grd2: '#3AD3E8',
+
+  brd1: '#437EC0',
+  brd2: '#6FC3EA',
+
+  //IMPORTANT
+  // chỉ dùng từ khúc này trở lên thôi nha mọi người, k thêm màu tuỳ ý vào, chỗ nào trong design
+  // mà màu k có trong này thì là design sai, nhắn deisign sửa lại nhé
+
   cl1: '#437EC0',
   cl2: '#6FC3EA',
   cl3: '#969696',
@@ -9,11 +35,6 @@ export default {
   white: '#fff',
   black: '#222',
   gray: '#666',
-
-  bg1: '#07006A',
-  bg2: '#4D0094',
-  bg3: '#6B45FF',
-  bg4: '#5066CF',
 
   l1: '#F8F8F8',
   l2: '#EEEEEE',

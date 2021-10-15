@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontFamily: Fonts.FONT_REGULAR,
     color: Colors.TEXT,
-    fontSize: Fonts.FONT_MEDIUM,
+    fontSize: Fonts.MD,
   },
   error: {
     borderColor: Colors.ALERT,

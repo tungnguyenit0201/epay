@@ -101,13 +101,13 @@ const TransactionResult = () => {
           color={Colors.blue}
           label={translation.common.goBackHome}
           style={styles.goBackHomeButton}
-          // fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.MD}
           onPress={onBackHome}
         />
         <Button
           label={translation.common.createTransaction}
           style={styles.retryButton}
-          // fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.MD}
           onPress={onRetry}
         />
       </View>

@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     color: Colors.cl1,
   },
   warningText: {
-    fontSize: Fonts.FONT_SMALL,
+    fontSize: Fonts.SM,
     marginBottom: Spacing.PADDING,
   },
 });

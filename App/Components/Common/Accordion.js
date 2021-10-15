@@ -56,7 +56,8 @@ const Accordion = ({
       {!Platform.OS == 'android' ? (
         <Animated.View
           style={[{height: animation}]}
-          key={`animated-${Math.random(1, 1000)}`}>
+          key={`animated-${Math.random(1, 1000)}`}
+        >
           <View
             style={{
               position: 'absolute',
@@ -64,7 +65,8 @@ const Accordion = ({
               left: 0,
               right: 0,
             }}
-            onLayout={onLayout}>
+            onLayout={onLayout}
+          >
             {renderProps()}
           </View>
         </Animated.View>
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
   },
   textRight: {
     paddingRight: Spacing.PADDING,
-    fontSize: Fonts.FONT_SMALL,
+    fontSize: Fonts.SM,
   },
   wrapImage: {
     marginLeft: Spacing.PADDING,

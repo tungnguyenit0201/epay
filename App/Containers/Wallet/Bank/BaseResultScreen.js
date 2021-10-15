@@ -140,7 +140,7 @@ const BaseResultScreen = props => {
                 // onPress={onPressPositive}
                 label={translation.common.createTransaction}
                 // style={styles.retryButton}
-                // fs={Fonts.FONT_MEDIUM
+                // fs={Fonts.MD
                 onPress={onRetry}
               />
             </Col>

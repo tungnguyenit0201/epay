@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.l2,
     fontFamily: Fonts.FONT_REGULAR,
     color: Colors.TEXT,
-    fontSize: Fonts.FONT_MEDIUM,
+    fontSize: Fonts.MD,
   },
   iconSearch: {
     width: 17,

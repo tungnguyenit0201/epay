@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   fontSmall: {
-    fontSize: Fonts.FONT_SMALL,
+    fontSize: Fonts.SM,
   },
 });
 
