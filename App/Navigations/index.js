@@ -46,6 +46,8 @@ import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import RegisterResult from 'containers/Service/TrafficFee/RegisterResult';
 import RegisterFee from 'containers/Service/TrafficFee/Register';
+import TrafficRegisterForm from 'containers/Service/TrafficFee/RegisterForm';
+import TrafficRfid from 'containers/Service/TrafficFee/RFID';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
 import Confirmation from 'containers/Wallet/Confirmation';
 import Security from 'containers/User/Security';
@@ -321,6 +323,11 @@ const AppNavigator = () => {
             name={SCREEN.TRAFFIC_REGISTER_RESULT}
             component={RegisterResult}
           />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER_FORM}
+            component={TrafficRegisterForm}
+          />
+          <Stack.Screen name={SCREEN.TRAFFIC_RFID} component={TrafficRfid} />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
