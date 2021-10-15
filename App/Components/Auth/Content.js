@@ -15,7 +15,8 @@ const Content = ({title, text, style, titleMb, textMb, styleText}) => {
           style={[
             styles.textWhite,
             titleMb ? {marginBottom: titleMb} : styles.mb1,
-          ]}>
+          ]}
+          numberOfLines={2}>
           {title}
         </Text>
       )}

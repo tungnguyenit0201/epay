@@ -38,19 +38,11 @@ const User = ({style}) => {
       </TouchableOpacity>
 
       <View style={styles.flex1}>
-        <View
-          style={[
-            styles.flexRow,
-            styles.alignCenter,
-            {justifyContent: 'space-between'},
-          ]}
-        >
-          <View>
-            <Text bold size={Fonts.MD} mb={2} style={styles.lh1}>
-              {userInfo?.personalInfo?.FullName}
-            </Text>
-            <Text style={styles.flex1}>{hidePhone(phone)}</Text>
-          </View>
+        <Text bold size={Fonts.MD} mb={2} style={styles.lh1}>
+          {userInfo?.personalInfo?.FullName}
+        </Text>
+        <View style={[styles.flexRow, styles.alignCenter]}>
+          <Text style={styles.flex1}>{hidePhone(phone)}</Text>
           <StatusUser size="xxs" />
         </View>
       </View>
