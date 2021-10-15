@@ -143,7 +143,7 @@ const VerifyUserInfo = ({
                 bold
                 fs="h4"
                 centered
-                color={Colors.cl1}
+                color={Colors.brd1}
                 style={styles.modalTitle}
               >
                 Hướng dẫn chụp hình 2 mặt chứng từ

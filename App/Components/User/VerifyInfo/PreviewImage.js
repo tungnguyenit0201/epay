@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     width: scale(300),
     height: scale(180),
     borderRadius: 5,
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
   },
   groupButton: {

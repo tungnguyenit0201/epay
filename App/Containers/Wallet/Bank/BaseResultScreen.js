@@ -121,8 +121,8 @@ const BaseResultScreen = props => {
             <Col space={10} width="50%">
               <SecondaryButton
                 bg={Colors.white}
-                border={Colors.cl1}
-                color={Colors.cl1}
+                border={Colors.brd1}
+                color={Colors.brd1}
                 label={translation.common.goBackHome}
                 // label={secondaryButton?.title}
                 labelStyle={{fontSize: 14}}

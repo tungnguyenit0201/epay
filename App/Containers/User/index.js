@@ -58,7 +58,8 @@ const User = () => {
             <Col space={15}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.NotifyStatus}
@@ -78,7 +79,8 @@ const User = () => {
 
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.MaThanhToan}
@@ -90,7 +92,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.ThanhToan}
@@ -101,7 +104,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.SECURITY);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.BaoMat}
@@ -115,7 +119,8 @@ const User = () => {
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
                   setOpen(true);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/NapVI.png')}
@@ -134,7 +139,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.Translate}
@@ -146,7 +152,8 @@ const User = () => {
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
                   setOpen(true);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/Noti.png')}
@@ -163,7 +170,7 @@ const User = () => {
                   style={[styles.icon]}
                   icon={Images.Profile.Location}
                   size={24}
-                  tintColor={Colors.cl1}
+                  tintColor={Colors.brd1}
                 />
                 <Text semibold>{translation.location_setting} </Text>
               </TouchableOpacity> */}
@@ -175,7 +182,8 @@ const User = () => {
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
               setOpen(true);
-            }}>
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
@@ -197,7 +205,8 @@ const User = () => {
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
               setOpen(true);
-            }}>
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}

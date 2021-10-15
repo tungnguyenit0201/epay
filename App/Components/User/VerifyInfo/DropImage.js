@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   imgFront: {
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
     borderRadius: 5,
   },

@@ -114,7 +114,7 @@ const TransactionDetails = () => {
             ))}
             <Col width="30%" style={styles.mb_15}>
               <TouchableOpacity style={styles.addBank}>
-                <Icon icon={Images.Transfer.UNION} tintColor={Colors.cl1} />
+                <Icon icon={Images.Transfer.UNION} tintColor={Colors.brd1} />
                 <Text style={styles.fontSmall}>Thêm liên kết NH</Text>
               </TouchableOpacity>
             </Col>

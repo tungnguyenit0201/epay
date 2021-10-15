@@ -55,7 +55,7 @@ const InputBlock = ({
           textContentType={'oneTimeCode'}
           style={[
             styles.input,
-            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
+            {borderColor: isFocused ? Colors.brd1 : Colors.BORDER},
             inputStyle,
           ]}
           placeholderTextColor={Colors.l4}

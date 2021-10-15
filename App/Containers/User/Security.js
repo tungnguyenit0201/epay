@@ -32,7 +32,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}>Đổi mật khẩu</Text>
           <Icon
@@ -47,7 +47,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Smart OTP</Text>
           <Icon
@@ -62,7 +62,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Cài đặt Touch id / Face id</Text>
           <Switch
@@ -76,7 +76,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}>Cảnh báo đăng nhập trên thiết bị khác</Text>
           <Switch />
@@ -87,7 +87,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Lưu phiên đăng nhập</Text>
           <Switch />

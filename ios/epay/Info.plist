@@ -57,7 +57,7 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Cho phép EPAY sử dụng Face ID trên thiết bị của bạn?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Cho phép EPAY kết nối thư viện của bạn?</string>
 	<key>UIAppFonts</key>

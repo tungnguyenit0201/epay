@@ -30,7 +30,7 @@ const Transfer = () => {
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Mobile}
-                tintColor={Colors.cl1}
+                tintColor={Colors.brd1}
               />
               <Text style={styles.arrowIcon}>
                 {translation.transfer_via_a_phone_number}
@@ -55,7 +55,7 @@ const Transfer = () => {
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Bank}
-                tintColor={Colors.cl1}
+                tintColor={Colors.brd1}
               />
               <Text style={styles.arrowIcon}>
                 {translation.transfer_via_a_bank}
@@ -94,7 +94,7 @@ const Transfer = () => {
             <Button
               label="Không"
               style={styles.buttonCancle}
-              // color={Colors.cl1}
+              // color={Colors.brd1}
               // fs={Fonts.H6}
               onPress={() => setOpen(false)}
             />
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: scale(120),
     height: scale(42),
     //backgroundColor: 'transparent',
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
   },
   blockButton: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   inputNavigate: {
-    backgroundColor: Colors.cl2,
+    backgroundColor: Colors.brd2,
     padding: Spacing.PADDING,
     marginBottom: scale(10),
     flex: 1,

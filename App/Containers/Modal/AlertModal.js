@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   positiveButtonContainer: {
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
     borderRadius: 8,
     marginTop: 20,
   },

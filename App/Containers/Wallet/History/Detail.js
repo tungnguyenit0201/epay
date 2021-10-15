@@ -58,7 +58,7 @@ const ToggleRightText = ({text}) => {
         <Text
           onPress={toggleTextShown}
           style={[styles.textRight]}
-          color={Colors.cl1}
+          color={Colors.brd1}
           bold
         >
           {textShown ? 'Thu gọn' : 'Xem thêm'}

@@ -6,7 +6,7 @@ import {scale} from 'utils/Functions';
 
 const FWLoading = ({
   wrapStyle,
-  color = Colors.cl1,
+  color = Colors.brd1,
   size = scale(25),
   loadingStyle,
 }) => (

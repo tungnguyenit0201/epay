@@ -33,7 +33,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Cài đặt nạp tiền tự động</Text>
           <Icon
@@ -48,12 +48,12 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Xác nhận thanh toán nhanh</Text>
           <Switch
             style={base.leftAuto}
-            onColor={Colors.cl1}
+            onColor={Colors.brd1}
             offColor={Colors.l3}
             value={xacNhan}
             onValueChange={isXacNhan}
@@ -64,7 +64,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Hạn mức trong ngày</Text>
         </Pressable>
@@ -73,7 +73,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Đăng ký thanh toán giao thông</Text>
           <Icon

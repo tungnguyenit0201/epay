@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     elevation: 24,
   },
   imgFront: {
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
     borderRadius: 5,
   },

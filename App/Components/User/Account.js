@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   number: {
     height: 40,
     lineHeight: 40,
-    color: Colors.cl2,
+    color: Colors.brd2,
     fontSize: scale(30),
   },
   line: {

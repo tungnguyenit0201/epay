@@ -5,7 +5,7 @@ import {Switch} from 'react-native-ui-lib';
 const SwitchCustom = ({
   style,
   onChange,
-  onColor = Colors.cl1,
+  onColor = Colors.brd1,
   offColor = Colors.l3,
   initialValue = false,
   ...props

@@ -119,7 +119,7 @@ const TabNavigation = () => {
                     styles.icon,
                     // route.name != 'Home' &&
                     // {
-                    //   tintColor: isFocused ? Colors.cl1 : Colors.gray,
+                    //   tintColor: isFocused ? Colors.brd1 : Colors.gray,
                     // },
                     isFocused || {tintColor: Colors.gray},
                   ]}
@@ -128,7 +128,7 @@ const TabNavigation = () => {
                 />
                 <Text
                   style={{
-                    color: isFocused ? Colors.cl1 : Colors.gray,
+                    color: isFocused ? Colors.brd1 : Colors.gray,
                   }}
                   centered
                 >

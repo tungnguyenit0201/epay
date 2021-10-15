@@ -10,7 +10,7 @@ export default ({
   onPress,
   label,
   icon,
-  backgroundColor = Colors.cl1,
+  backgroundColor = Colors.brd1,
   mt,
   mb,
   ml,
@@ -43,7 +43,8 @@ export default ({
               marginRight: mr || mh,
             },
             style,
-          ]}>
+          ]}
+        >
           {!!icon && (
             <Image
               source={icon}

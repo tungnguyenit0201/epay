@@ -36,11 +36,12 @@ const RegionSelect = ({route}) => {
       <Pressable
         onPress={() => onSelected(item)}
         style={{
-          backgroundColor: isSelected ? Colors.cl1 : Colors.white,
+          backgroundColor: isSelected ? Colors.brd1 : Colors.white,
           padding: Spacing.PADDING,
           borderBottomColor: Colors.BORDER,
           borderBottomWidth: 1,
-        }}>
+        }}
+      >
         <Text color={isSelected ? Colors.white : Colors.TEXT}>
           {item?.ProvinceName || item?.DistrictName || item?.WardName}
         </Text>

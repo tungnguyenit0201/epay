@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 40,
     overflow: 'hidden',
-    color: Colors.cl1,
+    color: Colors.brd1,
     paddingHorizontal: 25,
   },
   continueContainer: {

@@ -41,7 +41,7 @@ export default ({
         styles.button,
         mode == 'contain' && styles.contain,
         mode == 'outline' && styles.outline,
-        mode == 'outline' && {borderColor: disabled ? Colors.l3 : Colors.cl1},
+        mode == 'outline' && {borderColor: disabled ? Colors.l3 : Colors.brd1},
         size == 'xxs' ? styles.xxs : '',
         size == 'xs' ? styles.xs : '',
         size == 'sm' ? styles.sm : '',
@@ -92,7 +92,7 @@ export default ({
               mode == 'outline'
                 ? disabled
                   ? Colors.black
-                  : Colors.cl1
+                  : Colors.brd1
                 : Colors.white,
           },
           color && {color: color},
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
   },
   contain: {
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
   },
   outline: {
     borderWidth: 1.5,

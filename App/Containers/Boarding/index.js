@@ -98,13 +98,13 @@ const styles = StyleSheet.create({
   circle: {
     width: scale(8),
     height: scale(8),
-    backgroundColor: Colors.cl2,
+    backgroundColor: Colors.brd2,
     borderRadius: scale(4),
     marginRight: Spacing.PADDING / 2,
   },
   active: {
     width: scale(22),
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
   },
   wrapText: {
     alignItems: 'center',

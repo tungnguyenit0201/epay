@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: 48,
     height: '100%',
-    backgroundColor: Colors.cl2,
+    backgroundColor: Colors.brd2,
     justifyContent: 'center',
     alignItems: 'center',
     borderTopRightRadius: 8,

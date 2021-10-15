@@ -73,7 +73,7 @@ const Home = () => {
             col={4}
             data={dataMenu}
             styleText={[{fontSize: 14, color: Colors.white}]}
-            styleWicon={[{backgroundColor: Colors.cl1}]}
+            styleWicon={[{backgroundColor: Colors.brd1}]}
             //styleIcon={[{tintColor: Colors.white}]}
           />
         </View>

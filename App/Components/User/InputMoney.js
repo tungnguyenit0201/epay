@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     height: 40,
     overflow: 'hidden',
     marginBottom: 10,
-    color: Colors.cl1,
+    color: Colors.brd1,
   },
   warningText: {
     fontSize: Fonts.SM,

@@ -39,14 +39,15 @@ const BankInfo = () => {
               alignItems: 'center',
               marginBottom: 24,
             },
-          ]}>
+          ]}
+        >
           <Text bold size={Fonts.H6} style={{fontWeight: 'bold'}}>
             Loại liên kết
           </Text>
 
           <View style={styles.flex}>
             <Button
-              bg={cardOption ? Colors.cl1 : Colors.BORDER}
+              bg={cardOption ? Colors.brd1 : Colors.BORDER}
               color={!cardOption && Colors.l3}
               label="Thẻ"
               onPress={chooseCard}
@@ -55,7 +56,7 @@ const BankInfo = () => {
             />
 
             <Button
-              bg={accountOption ? Colors.cl1 : Colors.BORDER}
+              bg={accountOption ? Colors.brd1 : Colors.BORDER}
               color={!accountOption && Colors.l3}
               label="Tài khoản"
               onPress={chooseAccount}
@@ -104,7 +105,8 @@ const BankInfo = () => {
         style={{
           backgroundColor: Colors.BORDER,
           height: 8,
-        }}></View>
+        }}
+      ></View>
 
       <View style={[styles.wrap, styles.pt_1]}>
         <Text
@@ -112,7 +114,8 @@ const BankInfo = () => {
           style={{
             marginBottom: 8,
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           {translation.conditions_to_connect}
         </Text>
 

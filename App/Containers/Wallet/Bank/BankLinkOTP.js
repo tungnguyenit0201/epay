@@ -87,7 +87,7 @@ const OTP = props => {
                 style={[
                   styles.fontSize_1,
                   {
-                    color: Colors.cl1,
+                    color: Colors.brd1,
                   },
                 ]}
               >

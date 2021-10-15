@@ -50,7 +50,7 @@ const PopupModal = (props = {}) => {
     <View style={styles.container}>
       <View style={[styles.modal, modalStyle, style]}>
         <View style={styles.header}>
-          <Text bold fs="h6" centered color={Colors.cl1}>
+          <Text bold fs="h6" centered color={Colors.brd1}>
             {title}
           </Text>
           <Pressable style={styles.btn} onPress={onPressClose}>

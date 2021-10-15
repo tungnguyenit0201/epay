@@ -52,13 +52,15 @@ const Select = ({
         onPress={() => {
           onChange?.(item.value);
           onHideModal();
-        }}>
+        }}
+      >
         <View
           paddingH-page
           paddingV-middle
           borderB={borderB}
-          borderColor={Colors.l2}>
-          <Text color={isSelected ? Colors.cl1 : Colors.TEXT}>
+          borderColor={Colors.l2}
+        >
+          <Text color={isSelected ? Colors.brd1 : Colors.TEXT}>
             {item?.label}
           </Text>
         </View>
@@ -77,13 +79,15 @@ const Select = ({
       <Pressable
         disabled={disabled}
         onPress={onShowModal}
-        style={styles.inputWrap}>
+        style={styles.inputWrap}
+      >
         {leftComponent}
         <View style={{flex: 1}}>
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l4 : Colors.TEXT}>
+            color={disabled ? Colors.l4 : Colors.TEXT}
+          >
             {mappedValue?.[value]?.label || placeholder}
           </Text>
         </View>
@@ -106,7 +110,8 @@ const Select = ({
         center
         panDirection={'none'}
         visible={showModal}
-        onDismiss={onHideModal}>
+        onDismiss={onHideModal}
+      >
         <View backgroundColor={'white'} br20>
           <View paddingH-page paddingV-page borderB>
             <Text bold>{label}</Text>

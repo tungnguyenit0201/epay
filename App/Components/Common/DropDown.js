@@ -22,10 +22,11 @@ const DropDown = ({visible, setVisible, onPress, data, title}) => {
     <Modal
       isVisible={visible}
       transparent={true}
-      onBackdropPress={() => setVisible(false)}>
+      onBackdropPress={() => setVisible(false)}
+    >
       <View style={[styles.modal, {width: width, bottom: -bottom}]}>
         <View style={styles.header}>
-          <Text bold fs="h6" centered color={Colors.cl1}>
+          <Text bold fs="h6" centered color={Colors.brd1}>
             {title}
           </Text>
           <Pressable style={styles.btn} onPress={() => setVisible(false)}>
@@ -41,7 +42,8 @@ const DropDown = ({visible, setVisible, onPress, data, title}) => {
                   onPress={() => {
                     onPress(item);
                     setVisible(false);
-                  }}>
+                  }}
+                >
                   <Text fs="md" mb={Spacing.PADDING}>
                     {item?.label}
                   </Text>

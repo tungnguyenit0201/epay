@@ -31,7 +31,7 @@ const SmartOtp = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Đổi mật khẩu smart OTP</Text>
           <Icon
@@ -46,7 +46,7 @@ const SmartOtp = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Quên mật khẩu smart OTP</Text>
           <Icon
@@ -61,7 +61,7 @@ const SmartOtp = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Smart OTP không hoạt động</Text>
           <Icon

@@ -42,13 +42,15 @@ const Picker = ({
       <Pressable
         disabled={disabled}
         onPress={onShowModal}
-        style={styles.inputWrap}>
+        style={styles.inputWrap}
+      >
         {leftComponent}
         <View style={{flex: 1}}>
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l2 : Colors.Text}>
+            color={disabled ? Colors.l2 : Colors.Text}
+          >
             {value?.label || placeholder}
           </Text>
         </View>
@@ -64,7 +66,8 @@ const Picker = ({
         panDirection={'none'}
         visible={showModal}
         onDismiss={onHideModal}
-        width={'100%'}>
+        width={'100%'}
+      >
         <View background-white br20>
           <View row>
             <View flex padding-page>
@@ -75,8 +78,9 @@ const Picker = ({
                 paddingRight: Spacing.PADDING,
                 paddingTop: Spacing.PADDING / 2,
               }}
-              onPress={onHideModal}>
-              <Text semibold color={Colors.cl1}>
+              onPress={onHideModal}
+            >
+              <Text semibold color={Colors.brd1}>
                 {TEXT.DONE}
               </Text>
             </TouchableOpacity>
@@ -84,7 +88,8 @@ const Picker = ({
           <WheelPicker
             onValueChange={(value, index) => onChange(items[index])}
             selectedValue={value?.value_index}
-            itemStyle={{alignItems: 'flex-start'}}>
+            itemStyle={{alignItems: 'flex-start'}}
+          >
             {items?.map?.((item, idx) => {
               return (
                 <WheelPicker.Item

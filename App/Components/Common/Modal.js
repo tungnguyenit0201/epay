@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     elevation: 2,
   },
-  buttonClose: {backgroundColor: Colors.cl1},
+  buttonClose: {backgroundColor: Colors.brd1},
   textStyle: {
     color: Colors.white,
     fontWeight: 'bold',
