@@ -11,6 +11,7 @@ import {useUserInfo} from 'context/User/utils';
 import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
+import useLoginName from './loginName';
 
 const useAuth = () => {
   const [message, setMessage] = useState('');
@@ -18,12 +19,13 @@ const useAuth = () => {
   const translation = useTranslation();
   const {dispatch, route} = useUser();
   const {setError} = useError();
-  const {getPhone, setPhone, setToken, getPushToken, getNameData} =
-    useAsyncStorage();
+  const {setPhone, setToken, getPushToken} = useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
   const {checkPhone, login} = useServiceAuth();
+  const {navigateLoginByName, resetLoginByName} = useLoginName();
+
   const onCheckPhoneExist = async ({phone}) => {
     setLoading(true);
     const result = await checkPhone(phone);
@@ -40,7 +42,7 @@ const useAuth = () => {
 
       // login
       case ERROR_CODE.PHONE_IS_REGISTERED:
-        return Navigator.push(SCREEN.LOGIN, {phone});
+        return navigateLoginByName(phone);
     }
   };
 
@@ -141,7 +143,7 @@ const useAuth = () => {
       Authorization: ``,
     });
     await setToken('');
-    Navigator.reset(SCREEN.LOGIN);
+    await resetLoginByName();
   };
 
   return {
