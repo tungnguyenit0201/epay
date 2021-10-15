@@ -177,6 +177,9 @@ const useUserInfo = type => {
           case 'confirm_password_response':
             Navigator.push(SCREEN.NEW_PASSWORD, {oldPassword: password});
             break;
+          case 'update_account':
+            Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+            break;
           case 'update_email':
             Navigator.push(SCREEN.VERIFY_EMAIL, {
               functionType: FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL,
