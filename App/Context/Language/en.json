@@ -514,6 +514,9 @@
     "currencySign": "đ",
     "authen": "Xác thực"
   },
+  "topup": {
+    "my_wallet": "My wallet"
+  },
   "transaction": {
     "confirm": "Xác nhận",
     "confirmTransaction": "Xác nhận giao dịch",

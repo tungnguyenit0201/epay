@@ -9,10 +9,12 @@ import {useTranslation} from 'context/Language';
 const SearchContact = ({style}) => {
   const translation = useTranslation();
   const [show, setShow] = useState(false);
+  const [data, setData] = useState('');
   //const {data, onSearch} = useContacts();
 
   const handleChange = e => {
-    e ? setShow(true) : setShow(false);
+    //e ? setShow(true) : setShow(false);
+    setData(e);
   };
   return (
     <>
@@ -44,6 +46,7 @@ const SearchContact = ({style}) => {
           placeholder={translation.enter_name_or_phone_number}
           placeholderTextColor={Colors.g4}
           onChange={handleChange}
+          value={data}
           leftIcon={require('images/Search.png')}
           isDeleted
         />
