@@ -109,8 +109,7 @@ const BankPickerScreen = props => {
 
       <ScrollView
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {renderContent()}
       </ScrollView>
     </View>
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    top: 48,
+    top: 51,
     left: 10,
     paddingRight: 10,
     borderRightWidth: 1,

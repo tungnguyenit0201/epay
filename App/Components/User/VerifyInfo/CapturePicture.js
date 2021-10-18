@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {
   StyleSheet,
   useWindowDimensions,
@@ -7,16 +7,16 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import { Button, Text, FWLoading, Header } from 'components';
-import { RNCamera } from 'react-native-camera';
-import { Colors, Fonts, Images, Spacing } from 'themes';
-import { scale } from 'utils/Functions';
-import { useDropImage } from 'context/User/utils';
-import { useIsFocused } from '@react-navigation/native';
+import {Button, Text, FWLoading, Header} from 'components';
+import {RNCamera} from 'react-native-camera';
+import {Colors, Fonts, Images, Spacing} from 'themes';
+import {scale} from 'utils/Functions';
+import {useDropImage} from 'context/User/utils';
+import {useIsFocused} from '@react-navigation/native';
 import PreviewImage from './PreviewImage';
-import { useVerifyInfo } from 'context/User/utils';
+import {useVerifyInfo} from 'context/User/utils';
 import KYCType from 'configs/Enums/KYCType';
-import { useTranslation } from 'context/Language';
+import {useTranslation} from 'context/Language';
 
 const CapturePicture = ({
   onDropImage,
@@ -27,8 +27,8 @@ const CapturePicture = ({
   verifyParams,
   type,
 }) => {
-  const { width, height } = useWindowDimensions();
-  const { image, camera, showCamera, loading, setShowCamera, capturePicture } =
+  const {width, height} = useWindowDimensions();
+  const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
     useDropImage();
   const isFocused = useIsFocused();
   const translation = useTranslation();
@@ -52,9 +52,7 @@ const CapturePicture = ({
       if (cameraType === 'front') {
         return () => captureFaceImage();
       }
-      return () => type === 'back'
-        ? captureBackImage()
-        : captureFrontImage();
+      return () => (type === 'back' ? captureBackImage() : captureFrontImage());
     }
     return () => setShowCamera(1);
   }, [eKYC, cameraType, type]);
@@ -67,8 +65,7 @@ const CapturePicture = ({
     // TODO: translate
     <>
       {!showCamera && (
-        <View
-          style={style}>
+        <View style={style}>
           {imagePath || draft ? (
             <View style={[styles.wrapImg, style]}>
               <View style={styles.titleRow}>
@@ -84,7 +81,6 @@ const CapturePicture = ({
                   label={translation?.take_a_photo}
                   style={styles.smallButton}
                   leftIcon={Images.VerifyUserInfo.camera}
-                  bold
                 />
               </View>
               <Image
@@ -97,7 +93,7 @@ const CapturePicture = ({
                   },
                 ]}
                 imageStyle={styles.imgFront}
-                source={{ uri: imagePath ? imagePath : draft?.path }}
+                source={{uri: imagePath ? imagePath : draft?.path}}
                 resizeMode={'contain'}
               />
             </View>
@@ -116,7 +112,7 @@ const CapturePicture = ({
                 source={Images.VerifyUserInfo.wave}
                 resizeMode="contain"
               />
-              <View style={{ alignItems: 'center' }}>
+              <View style={{alignItems: 'center'}}>
                 <Button
                   onPress={KYCFunction}
                   label={'Chụp ảnh'}
@@ -126,7 +122,6 @@ const CapturePicture = ({
               </View>
             </View>
           )}
-
         </View>
       )}
       {showCamera && (
@@ -153,7 +148,7 @@ const CapturePicture = ({
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
               }}>
-              {({ camera, status, recordAudioPermissionStatus }) => {
+              {({camera, status, recordAudioPermissionStatus}) => {
                 if (status !== 'READY') return <FWLoading />;
                 return (
                   <View
@@ -166,7 +161,7 @@ const CapturePicture = ({
                       avoidStatusBar
                       title={title}
                       onPressBack={() => setShowCamera(false)}
-                      style={{ zIndex: 10 }}
+                      style={{zIndex: 10}}
                     />
                     <View
                       style={{
@@ -180,7 +175,7 @@ const CapturePicture = ({
                             ? Images.Camera.CameraSquare
                             : Images.Camera.Oval
                         }
-                        style={{ width: width, height: height }}
+                        style={{width: width, height: height}}
                       />
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>

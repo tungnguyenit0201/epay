@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, useWindowDimensions} from 'react-native';
 import {Text, Row, Col} from 'components';
-import {Colors, Spacing} from 'themes';
+import {Colors, Fonts, Spacing} from 'themes';
 import LinearGradient from 'react-native-linear-gradient';
 
 const data = [
@@ -47,7 +47,13 @@ const Progress = ({step}) => {
                       index + 1 <= step && styles.circleInnerActive,
                     ]}></View>
                 </View>
-                <Text style={[styles.text]}>{item.name}</Text>
+                <Text
+                  style={[styles.text]}
+                  color={Colors.WHITETEXT}
+                  centered
+                  size={Fonts.SM}>
+                  {item.name}
+                </Text>
               </View>
             </Col>
           );
@@ -84,9 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.barRight,
   },
   text: {
-    width: 80,
-    color: Colors.white,
-    textAlign: 'center',
+    width: 75,
+    lineHeight: 18,
   },
 });
 export default Progress;

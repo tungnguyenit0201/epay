@@ -81,8 +81,7 @@ const DropImage = ({
             // size={Fonts.H6} can not use, please check Text Component!
             fs="h6"
             bold
-            style={styles.title1}
-          >
+            style={styles.title1}>
             {title}
           </Text>
 
@@ -105,8 +104,7 @@ const DropImage = ({
                   height: image?.heightImg || scale(150),
                 },
               ]}
-              onPress={KYCFunction}
-            >
+              onPress={KYCFunction}>
               <Image
                 style={[
                   styles.radius1,
@@ -153,8 +151,7 @@ const DropImage = ({
                 message: 'We need your permission to use your audio',
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
-              }}
-            >
+              }}>
               {({camera, status, recordAudioPermissionStatus}) => {
                 if (status !== 'READY') {
                   return <FWLoading />;
@@ -164,8 +161,7 @@ const DropImage = ({
                     style={{
                       width: width,
                       height: height,
-                    }}
-                  >
+                    }}>
                     <Header
                       back
                       avoidStatusBar
@@ -178,8 +174,7 @@ const DropImage = ({
                         position: 'absolute',
                         width: width,
                         height: height,
-                      }}
-                    >
+                      }}>
                       <Image
                         source={Images.Camera.CameraSquare}
                         style={{width: width, height: height}}
@@ -192,8 +187,7 @@ const DropImage = ({
                           centered
                           ml={Spacing.PADDING}
                           mr={Spacing.PADDING}
-                          mt={Spacing.PADDING * 2}
-                        >
+                          mt={Spacing.PADDING * 2}>
                           Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
                           chụp đủ sáng và rõ nét
                         </Text>
@@ -204,8 +198,7 @@ const DropImage = ({
                         style={styles.wrapBtn}
                         onPress={() =>
                           capturePicture(onDropImage, cameraType === 'back')
-                        }
-                      >
+                        }>
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}

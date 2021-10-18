@@ -30,8 +30,7 @@ const BankItem = ({title, icon, item, callback}) => (
     style={styles.item}
     onPress={() => {
       callback?.(item);
-    }}
-  >
+    }}>
     <View
       style={{
         width: 48,
@@ -40,8 +39,7 @@ const BankItem = ({title, icon, item, callback}) => (
         backgroundColor: Colors.BORDER,
         alignItems: 'center',
         justifyContent: 'center',
-      }}
-    >
+      }}>
       <Image
         source={icon}
         style={{
@@ -261,8 +259,7 @@ const BankList = forwardRef((props, ref) => {
             marginVertical: 8,
           },
           style,
-        ]}
-      >
+        ]}>
         <Text
           size={18}
           style={{
@@ -270,8 +267,7 @@ const BankList = forwardRef((props, ref) => {
             marginBottom: 16,
             fontSize: 18,
             marginTop: 8,
-          }}
-        >
+          }}>
           {title || translation.bank_linking}
         </Text>
         <Row>
@@ -281,8 +277,7 @@ const BankList = forwardRef((props, ref) => {
                 width={'33.333%'}
                 space={10}
                 key={index}
-                style={{marginBottom: 16}}
-              >
+                style={{marginBottom: 16}}>
                 <BankItem
                   callback={onPress}
                   bankInfo={bankInfo}

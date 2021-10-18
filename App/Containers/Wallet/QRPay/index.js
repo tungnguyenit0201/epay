@@ -61,8 +61,7 @@ const QRPay = () => {
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
         onBarCodeRead={qrCode => {
           onGetQRCodeInfo(qrCode?.data);
-        }}
-      >
+        }}>
         {({camera, status, recordAudioPermissionStatus}) => {
           if (status !== 'READY') return <FWLoading />;
           return (
@@ -70,8 +69,7 @@ const QRPay = () => {
               style={{
                 width: width,
                 height: height,
-              }}
-            >
+              }}>
               <Header
                 back
                 avoidStatusBar
@@ -83,8 +81,7 @@ const QRPay = () => {
                   position: 'absolute',
                   width: width,
                   height: height,
-                }}
-              >
+                }}>
                 {image?.path && (
                   <View style={styles.wrapQRImg}>
                     <Image source={{uri: image?.path}} style={styles.qrImg} />
@@ -104,8 +101,7 @@ const QRPay = () => {
                 <View style={styles.wrapAction}>
                   <Pressable
                     style={styles.action}
-                    onPress={() => setFlash(!flash)}
-                  >
+                    onPress={() => setFlash(!flash)}>
                     <Icon
                       icon={Images.Camera.Flash}
                       tintColor={Colors.white}
@@ -117,8 +113,7 @@ const QRPay = () => {
                   </Pressable>
                   <Pressable
                     style={[styles.action, {marginLeft: Spacing.PADDING}]}
-                    onPress={() => setFlash(!flash)}
-                  >
+                    onPress={() => setFlash(!flash)}>
                     <Icon
                       icon={Images.Camera.Gallery}
                       tintColor={Colors.white}
@@ -128,8 +123,7 @@ const QRPay = () => {
                       fw="700"
                       fs="h6"
                       color={Colors.white}
-                      onPress={() => onPhoto(false)}
-                    >
+                      onPress={() => onPhoto(false)}>
                       Chọn hình có sẵn
                     </Text>
                   </Pressable>

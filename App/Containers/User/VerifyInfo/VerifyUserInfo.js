@@ -21,8 +21,7 @@ const VerifyUserInfo = ({route}) => {
       step={1}
       disableButton={!verifyInfo?.ICFrontPhoto || !verifyInfo?.ICBackPhoto}
       buttonTitle={translation?.continue}
-      onPressButton={onDoneIdentityCard}
-    >
+      onPressButton={onDoneIdentityCard}>
       <View style={[base.container, styles.pt1]}>
         <DropImage
           title={translation?.photo_of_the_front_side}
@@ -56,7 +55,7 @@ const VerifyUserInfo = ({route}) => {
 };
 
 const styles = StyleSheet.create({
-  pt1: {paddingTop: 48},
+  pt1: {paddingTop: 17},
   //------------------
   mb1: {marginBottom: 10},
   //------------------

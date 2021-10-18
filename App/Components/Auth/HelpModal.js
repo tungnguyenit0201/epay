@@ -37,7 +37,7 @@ const HelpModal = ({showModal, setShowModal, onPress}) => {
             Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để
             được tư vấn hỗ trợ.
           </Text>
-          <Button mb={10} label="Gọi 1900-0000" bold onPress={onPress} />
+          <Button mb={10} label="Gọi 1900-0000" onPress={onPress} />
         </View>
       </View>
     </Modal>
