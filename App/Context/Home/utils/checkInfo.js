@@ -76,11 +76,14 @@ const useCheckInfo = () => {
       // title: translation.notification,
       ErrorCode: -1,
       ErrorMessage: translation.verify_accounts_enhance_your_account_security,
-      onClose: () => checkInfo({value: false}),
+      // onClose: () => checkInfo({value: false}),
       action: [
         {
-          label: translation.verify,
+          label: translation.verify_now,
           onPress: () => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD),
+        },
+        {
+          label: translation.close,
         },
       ],
     });
@@ -96,7 +99,7 @@ const useCheckInfo = () => {
           ErrorMessage: 'Đang xác thực',
           title: translation.notification,
         });
-      status == USER_STATUS.INACTIVE_KYC && showKYC();
+      showKYC();
       status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK && showConnectBank();
       return false;
     }
