@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   groupButton: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: '100%',
     paddingBottom: 45,
     paddingTop: Spacing.PADDING,

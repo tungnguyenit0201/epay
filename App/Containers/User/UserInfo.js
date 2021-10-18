@@ -346,9 +346,9 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
 
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderWidth: 1,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
   },
   heading: {
     flexDirection: 'row',

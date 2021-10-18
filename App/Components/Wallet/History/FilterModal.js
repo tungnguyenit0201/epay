@@ -143,7 +143,7 @@ const GroupFilter = memo(({translation, onSelect, initialData}) => {
       <Text bold mb={15} style={styles.textSize4}>
         {translation.service_group}
       </Text>
-      <Text bold mb={6} color={Colors.gray} style={styles.textSize5}>
+      <Text bold mb={6} color={Colors.tp3} style={styles.textSize5}>
         Nhóm giao dịch
       </Text>
 
@@ -166,7 +166,7 @@ const GroupFilter = memo(({translation, onSelect, initialData}) => {
         style={[styles.flatList1, styles.mb2]}
       />
 
-      <Text bold mb={6} style={styles.textSize5} color={Colors.gray}>
+      <Text bold mb={6} style={styles.textSize5} color={Colors.tp3}>
         Nhóm dịch vụ
       </Text>
 
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
   pb1: {paddingBottom: Spacing.PADDING * 1.5},
   pb2: {paddingBottom: 45},
   //end
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //------------------
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   cirle: {borderRadius: 100},
   //------------------
   textCenter: {textAlign: 'center'},
-  textWhite: {color: Colors.white},
+  textWhite: {color: Colors.bs4},
   //-----------------
   borderRadius1: {borderRadius: 8},
   //-----------------
@@ -393,10 +393,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(10),
     height: 38,
     borderRadius: scale(8),
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     fontFamily: Fonts.FONT_REGULAR,
-    color: Colors.TEXT,
-    fontSize: Fonts.FONT_MEDIUM,
+    color: Colors.tp3,
+    fontSize: Fonts.MD,
   },
   iconSearch: {
     width: 17,
@@ -429,24 +429,24 @@ const styles = StyleSheet.create({
   blockSumIncome: {
     paddingLeft: 8,
     borderLeftWidth: 0.8,
-    borderColor: Colors.l4,
+    borderColor: Colors.bs1,
   },
   blockCardTick: {
     width: 40,
     height: 40,
     alignItems: 'center',
     paddingTop: 10,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
   },
   blockTransaction: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,
@@ -454,7 +454,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   flatList1: {
     // marginLeft: -10,
@@ -477,11 +477,11 @@ const styles = StyleSheet.create({
   grayLine1: {
     paddingTop: 16,
     borderBottomWidth: 1,
-    borderColor: Colors.l3,
+    borderColor: Colors.bs1,
   },
   grayLine2: {
     paddingTop: 8,
-    backgroundColor: Colors.l3,
+    backgroundColor: Colors.bs1,
   },
   bottom: {
     height: scale(80),

@@ -46,11 +46,17 @@ const IconList = ({data}) => {
           styles.item,
           {
             width: width / 2 - Spacing.PADDING,
-            // borderColor: Colors.black,
+            // borderColor: Colors.tp2,
             // borderWidth: 1,
           },
         ]}
-        onPress={() => Alert.alert('', 'Coming soon')}>
+        onPress={() =>
+          setError({
+            ErrorMessage: 'Coming soon',
+            icon: Images.Homes.Setting,
+          })
+        }
+      >
         <Image source={item.icon} style={styles.icon} />
 
         <Text centered bold mt={5}>
@@ -76,7 +82,13 @@ const IconList = ({data}) => {
                       width: width / 2 - Spacing.PADDING,
                     },
                   ]}
-                  onPress={() => setOpen(true)}>
+                  onPress={() =>
+                    setError({
+                      ErrorMessage: 'Coming soon',
+                      icon: Images.Homes.Setting,
+                    })
+                  }
+                >
                   <Image source={item.icon} style={styles.icon} />
 
                   <Text centered bold mt={5}>
@@ -103,7 +115,8 @@ const IconList = ({data}) => {
                     onPress={() => {
                       // Alert.alert('', 'Coming soon')
                       Navigator.navigate(SCREEN.TRAFFIC_FEE);
-                    }}>
+                    }}
+                  >
                     <Image source={item.icon} style={styles.icon} />
 
                     <Text centered bold mt={5}>
@@ -114,18 +127,6 @@ const IconList = ({data}) => {
               })}
           </View>
         </View>
-        <Modal
-          visible={open}
-          onClose={() => setOpen(false)}
-          content="Coming soon"
-          buttonGroup={() => (
-            <View>
-              <Text></Text>
-            </View>
-          )}
-          icon={Images.Homes.Setting}
-          // icon={Images.SignUp.BigPhone}
-        />
       </>
     );
   };
@@ -151,10 +152,11 @@ const IconList = ({data}) => {
               style={[
                 styles.dot,
                 indexTab == index && {
-                  backgroundColor: Colors.cl1,
+                  backgroundColor: Colors.brd1,
                 },
               ]}
-              onPress={() => onPressSwitch(index)}></TouchableOpacity>
+              onPress={() => onPressSwitch(index)}
+            ></TouchableOpacity>
           ))}
         </View>
       )}

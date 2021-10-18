@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Colors, Images, Spacing, base } from 'themes';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { scale } from 'utils/Functions';
+import React, {useState} from 'react';
+import {View, Image, StyleSheet} from 'react-native';
+import {Colors, Images, Spacing, base} from 'themes';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {scale} from 'utils/Functions';
 import StatusBar from './StatusBar';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const bgheader = require('images/home/homeHeader.jpg');
 
-const Header = ({ children, bgimg, bgColor = Colors.white, mb = 0, style }) => {
+const Header = ({children, bgimg, bgColor = Colors.bs4, mb = 0, style}) => {
   const top = getStatusBarHeight();
   return (
     <View
@@ -21,7 +21,8 @@ const Header = ({ children, bgimg, bgColor = Colors.white, mb = 0, style }) => {
           backgroundColor: bgColor,
         },
         style,
-      ]}>
+      ]}
+    >
       <StatusBar
         barStyle={'light-content'}
         translucent
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderBottomRightRadius: 24,
     borderBottomLeftRadius: 24,
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
   },
   img: {
     width: scale(375),

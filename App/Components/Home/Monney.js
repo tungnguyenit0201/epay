@@ -12,17 +12,17 @@ const Monney = ({style, title, showing}) => {
   const translation = useTranslation();
   return (
     <View style={[styles.item, style]}>
-      <View style={[]}>
+      <View>
         <Text fs="h6">{title || translation.my_wallet}</Text>
       </View>
       <View style={[styles.right]}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={styles.flexCustom1}>
           {!showMoney ? (
-            <Text size={Fonts.H2} style={[styles.text, {paddingTop: 3}]}>
+            <Text size={Fonts.H2} style={[styles.text, styles.lh1]}>
               ******
             </Text>
           ) : (
-            <Text bold size={Fonts.H5} style={styles.text}>
+            <Text bold size={Fonts.H5} style={[styles.text, styles.lh2]}>
               {formatCurrency(
                 wallet?.AvailableBlance,
                 translation.topup.currency,
@@ -35,7 +35,7 @@ const Monney = ({style, title, showing}) => {
           >
             <Icon
               icon={showMoney ? Images.Eye : Images.EyeGray}
-              //tintColor={isMoney ? Colors.l4 : ''}
+              //tintColor={isMoney ? Colors.bs1 : ''}
               size={20}
             />
           </TouchableOpacity>
@@ -46,22 +46,26 @@ const Monney = ({style, title, showing}) => {
 };
 
 const styles = StyleSheet.create({
+  lh1: {lineHeight: 42},
+  lh2: {lineHeight: 23},
+  //----------------
   item: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.l1,
+    backgroundColor: Colors.tp3,
     borderRadius: 4,
     padding: 10,
     marginBottom: 20,
   },
-
   right: {
     marginLeft: 'auto',
   },
   text: {
     height: 20,
   },
+  //----------------
+  flexCustom1: {flexDirection: 'row', alignItems: 'center'},
 });
 
 export default Monney;

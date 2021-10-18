@@ -36,12 +36,13 @@ const RegionSelect = ({route}) => {
       <Pressable
         onPress={() => onSelected(item)}
         style={{
-          backgroundColor: isSelected ? Colors.cl1 : Colors.white,
+          backgroundColor: isSelected ? Colors.brd1 : Colors.bs4,
           padding: Spacing.PADDING,
-          borderBottomColor: Colors.BORDER,
+          borderBottomColor: Colors.bs2,
           borderBottomWidth: 1,
-        }}>
-        <Text color={isSelected ? Colors.white : Colors.TEXT}>
+        }}
+      >
+        <Text color={isSelected ? Colors.bs4 : Colors.tp3}>
           {item?.ProvinceName || item?.DistrictName || item?.WardName}
         </Text>
       </Pressable>
@@ -68,7 +69,7 @@ const RegionSelect = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     padding: Spacing.PADDING,

@@ -38,7 +38,7 @@ const OTP = ({route}) => {
     >
       <Icon
         icon={Images.Register.Info}
-        tintColor={Colors.white}
+        tintColor={Colors.bs4}
         style={styles.iconSize}
       />
     </TouchableOpacity>
@@ -59,7 +59,7 @@ const OTP = ({route}) => {
           ? `Mã xác thực gửi về mail ${route?.params?.email}. Vui lòng kiểm tra email & nhập thông tin bên dưới`
           : label
       }
-      titleStyle={isLoggedIn ? {color: Colors.BLACKTEXT} : {}}
+      titleStyle={isLoggedIn ? {color: Colors.tp2} : {}}
     />
   );
 

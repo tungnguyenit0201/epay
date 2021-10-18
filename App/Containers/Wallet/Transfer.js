@@ -30,7 +30,7 @@ const Transfer = () => {
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Mobile}
-                tintColor={Colors.cl1}
+                tintColor={Colors.brd1}
               />
               <Text style={styles.arrowIcon}>
                 {translation.transfer_via_a_phone_number}
@@ -38,7 +38,7 @@ const Transfer = () => {
               <View style={styles.iconLocation}>
                 <Icon
                   icon={Images.Transfer.ArrowRight}
-                  tintColor={Colors.black}
+                  tintColor={Colors.tp2}
                   style={styles.arrowRight}
                 />
               </View>
@@ -55,7 +55,7 @@ const Transfer = () => {
               <Icon
                 style={styles.iconNav}
                 icon={Images.Transfer.Bank}
-                tintColor={Colors.cl1}
+                tintColor={Colors.brd1}
               />
               <Text style={styles.arrowIcon}>
                 {translation.transfer_via_a_bank}
@@ -63,7 +63,7 @@ const Transfer = () => {
               <View style={styles.iconLocation}>
                 <Icon
                   icon={Images.Transfer.ArrowRight}
-                  tintColor={Colors.black}
+                  tintColor={Colors.tp2}
                   style={styles.arrowRight}
                 />
               </View>
@@ -94,7 +94,7 @@ const Transfer = () => {
             <Button
               label="Không"
               style={styles.buttonCancle}
-              // color={Colors.cl1}
+              // color={Colors.brd1}
               // fs={Fonts.H6}
               onPress={() => setOpen(false)}
             />
@@ -115,7 +115,7 @@ const Transfer = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textDescription: {
-    fontSize: Fonts.FONT_MEDIUM,
+    fontSize: Fonts.MD,
     marginTop: scale(8),
     textAlign: 'center',
   },
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: scale(120),
     height: scale(42),
     //backgroundColor: 'transparent',
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
   },
   blockButton: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
 
   inputNavigate: {
-    backgroundColor: Colors.cl2,
+    backgroundColor: Colors.brd2,
     padding: Spacing.PADDING,
     marginBottom: scale(10),
     flex: 1,
@@ -177,12 +177,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   arrowIcon: {
-    color: Colors.black,
+    color: Colors.tp2,
     fontSize: Fonts.H6,
   },
   modal: {
     height: scale(180),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     paddingVertical: Spacing.PADDING,
     paddingHorizontal: Spacing.PADDING + scale(20),
     borderRadius: scale(5),

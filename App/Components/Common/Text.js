@@ -5,7 +5,7 @@ import {scale} from 'utils/Functions';
 
 const CustomText = ({
   style: _style,
-  color = Colors.BLACKTEXT,
+  color = Colors.tp2,
   centered,
   right,
   regular,

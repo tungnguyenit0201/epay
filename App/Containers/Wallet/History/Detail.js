@@ -58,7 +58,7 @@ const ToggleRightText = ({text}) => {
         <Text
           onPress={toggleTextShown}
           style={[styles.textRight]}
-          color={Colors.cl1}
+          color={Colors.brd1}
           bold
         >
           {textShown ? 'Thu gọn' : 'Xem thêm'}
@@ -198,10 +198,10 @@ const DetailHistory = ({route}) => {
             )}
 
             <View style={styles.mt2}>
-              <Text fs="md" centered color={Colors.gray}>
+              <Text fs="md" centered color={Colors.tp3}>
                 Mã giao dịch: {TransCode}
               </Text>
-              <Text fs="md" centered color={Colors.gray}>
+              <Text fs="md" centered color={Colors.tp3}>
                 Thời gian: {TransTime}
               </Text>
             </View>
@@ -238,7 +238,7 @@ const DetailHistory = ({route}) => {
                 <Text
                   fs="h6"
                   bold
-                  color={Colors.gray}
+                  color={Colors.tp3}
                   style={[styles.haftWidth, styles.textRight]}
                 >
                   {item.value}
@@ -248,7 +248,7 @@ const DetailHistory = ({route}) => {
                 <DashedLine
                   dashLength={4}
                   dashThickness={1}
-                  dashColor={Colors.l3}
+                  dashColor={Colors.bs1}
                 />
               )}
             </>
@@ -257,7 +257,7 @@ const DetailHistory = ({route}) => {
           <LinearGradient
             start={{x: 0, y: 0.75}}
             end={{x: 1, y: 0.25}}
-            colors={[Colors.barLeft, Colors.barRight]}
+            colors={[Colors.grd1, Colors.grd2]}
             style={[
               styles.borderRadius1,
               styles.px1,
@@ -273,14 +273,14 @@ const DetailHistory = ({route}) => {
               <View style={[styles.flexRow, styles.flex1, styles.pr1]}>
                 <Icon
                   icon={Images.Phone_1}
-                  tintColor={Colors.white}
+                  tintColor={Colors.bs4}
                   style={styles.iconPhone}
                 />
-                <Text color={Colors.white} ml={8} bold>
+                <Text color={Colors.bs4} ml={8} bold>
                   Hỗ trợ
                 </Text>
               </View>
-              <Text color={Colors.white} bold>
+              <Text color={Colors.bs4} bold>
                 1900-0000
               </Text>
             </TouchableOpacity>
@@ -314,7 +314,7 @@ const DetailHistory = ({route}) => {
                       <DashedLine
                         dashLength={4}
                         dashThickness={1}
-                        dashColor={Colors.l3}
+                        dashColor={Colors.bs1}
                       />
                     )}
                   </View>
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
   //end
   textRight: {textAlign: 'right'},
   //-----------------
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //-----------------
   borderRadius1: {borderRadius: 8},
   //-----------------
@@ -392,7 +392,7 @@ const styles = StyleSheet.create({
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,

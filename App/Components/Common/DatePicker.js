@@ -63,7 +63,7 @@ export default ({
             styles.justifyCenter,
           ]}
         >
-          <Text color={!!value ? Colors.TEXT : Colors.GRAY} style={styles.pl1}>
+          <Text color={!!value ? Colors.tp3 : Colors.tp3} style={styles.pl1}>
             {value}
           </Text>
         </View>
@@ -71,7 +71,7 @@ export default ({
           style={[
             styles.blockIcon1,
             styles.fullHeight,
-            {backgroundColor: noIconBg ? 'unset' : Colors.l4},
+            {backgroundColor: noIconBg ? 'unset' : Colors.bs1},
           ]}
         >
           <Image
@@ -82,7 +82,7 @@ export default ({
         </View>
       </Pressable>
       {!!error && showErrorLabel && (
-        <Text color={Colors.ALERT} mt={3} size={scale(12)}>
+        <Text color={Colors.hl1} mt={3} size={scale(12)}>
           {error}
         </Text>
       )}
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
   },
   //----------------
   flex1: {flex: 1},
@@ -124,14 +124,14 @@ const styles = StyleSheet.create({
   pl1: {paddingLeft: 10},
   //----------------
   error: {
-    borderColor: Colors.ALERT,
+    borderColor: Colors.hl1,
     borderWidth: 1,
   },
   //-----------------
   icon: {
     width: 24,
     height: 24,
-    tintColor: Colors.GRAY,
+    tintColor: Colors.tp3,
   },
   blockIcon1: {
     justifyContent: 'center',

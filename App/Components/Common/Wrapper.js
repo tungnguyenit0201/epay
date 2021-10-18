@@ -193,7 +193,7 @@ const Wrapper = React.memo(
                 <TouchableOpacity onPress={smartOTPPassword.onHideModal}>
                   <Icon
                     icon={Images.CloseThin}
-                    tintColor={Colors.black}
+                    tintColor={Colors.tp2}
                     size={scale(10)}
                     style={styles.iconCloseSmartOTPPassword}
                   />
@@ -226,7 +226,7 @@ const Wrapper = React.memo(
                 <TouchableOpacity onPress={modalPassword.onHideModal}>
                   <Icon
                     icon={Images.CloseThin}
-                    tintColor={Colors.black}
+                    tintColor={Colors.tp2}
                     size={scale(10)}
                     style={styles.iconCloseSmartOTPPassword}
                   />
@@ -298,7 +298,7 @@ const Wrapper = React.memo(
 const styles = StyleSheet.create({
   flexFill: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   avoidStatusBar: {height: getStatusBarHeight()},
   buttonGroup: {
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   bottomModalContainer: {
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   iconCloseSmartOTPPassword: {
     position: 'absolute',

@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: scale(10),
     marginTop: scale(200),
   },

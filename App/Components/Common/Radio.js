@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   tickWrap: {
     width: 15,
     height: 15,
-    borderColor: Colors.l6,
+    borderColor: Colors.tp4,
     borderWidth: 1,
     borderRadius: 8,
     alignItems: 'center',
@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
     width: 9,
     height: 9,
     borderRadius: 5,
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
   },
 });

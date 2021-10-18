@@ -67,7 +67,7 @@ const OTPContainer = ({
               style={[
                 styles.fontSize_1,
                 {
-                  color: Colors.cl1,
+                  color: Colors.brd1,
                 },
               ]}
             >
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
   mb1: {marginBottom: 12},
   mb2: {marginBottom: 26},
   //-----------------------
-  textWhite: {color: Colors.white},
-  textGray: {color: Colors.gray},
+  textWhite: {color: Colors.bs4},
+  textGray: {color: Colors.tp3},
   //-----------------------
   // header: {
   //   fontSize: 20,
@@ -106,9 +106,9 @@ const styles = StyleSheet.create({
   // },
   // textCenter: {textAlign: 'center'},
   // textDefault: {
-  //   color: Colors.GRAY,
+  //   color: Colors.tp3,
   //   paddingBottom: Spacing.PADDING - 4,
-  //   fontSize: Fonts.FONT_MEDIUM_LARGE,
+  //   fontSize: Fonts.MD_LARGE,
   // },
   wrapOtp: {
     flexDirection: 'row',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     /* backgroundColor: 'transparent', */
     fontWeight: '700',
     fontSize: Fonts.H4,
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     textAlign: 'center',
     borderBottomColor: Colors.g2,
     borderWidth: 0,

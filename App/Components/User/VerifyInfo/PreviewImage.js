@@ -36,9 +36,9 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
           }}
         >
           <View style={styles.back}>
-            <Icon icon={Images.ArrowLeft} tintColor={Colors.white} />
+            <Icon icon={Images.ArrowLeft} tintColor={Colors.bs4} />
           </View>
-          <Text style={styles.center} color={Colors.white} fs="h6" bold>
+          <Text style={styles.center} color={Colors.bs4} fs="h6" bold>
             {title}
           </Text>
         </Pressable>
@@ -71,7 +71,7 @@ const PreviewImage = ({visible, image, setShowCamera, title, cameraType}) => {
                 mt={Spacing.PADDING}
                 fs="h6"
                 bold
-                color={Colors.white}
+                color={Colors.bs4}
                 style={styles.underLine}
               >
                 {translation.take_a_photo_again}
@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
     width: scale(300),
     height: scale(180),
     borderRadius: 5,
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
   },
   groupButton: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: '100%',
     paddingBottom: Spacing.PADDING * 2,
     paddingTop: Spacing.PADDING,

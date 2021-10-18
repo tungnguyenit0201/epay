@@ -74,7 +74,7 @@ const RadioICInfo = forwardRef(
 export default RadioICInfo;
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: 16,
     // padding: 16,
@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRightWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     zIndex: 1,
   },
   input_text: {
     paddingLeft: 50,
     // borderRightWidth: 1,
     // borderStyle: 'solid',
-    // borderColor: Colors.l4,
+    // borderColor: Colors.bs1,
     borderWidth: 0,
     borderRadius: 8,
   },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   tickWrap: {
     width: 15,
     height: 15,
-    borderColor: Colors.l6,
+    borderColor: Colors.tp4,
     borderWidth: 1,
     borderRadius: 8,
     alignItems: 'center',
@@ -137,6 +137,6 @@ const styles = StyleSheet.create({
     width: 9,
     height: 9,
     borderRadius: 5,
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
   },
 });

@@ -136,7 +136,7 @@ const Transfer = () => {
 const styles = StyleSheet.create({
   block: {
     paddingHorizontal: Spacing.PADDING,
-    borderBottomColor: Colors.l2,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 10,
   },
   avatar: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     height: 48,
     borderRadius: scale(8),
     marginBottom: 20,
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
   boxBottom: {
     padding: scale(20),
     paddingBottom: scale(40),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     height: 56,
     width: 56,
     borderRadius: 99,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.tp2,
   },
   //-------------
   userPortrait: {width: 56, height: 56},

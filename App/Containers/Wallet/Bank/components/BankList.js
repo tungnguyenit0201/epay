@@ -37,7 +37,7 @@ const BankItem = ({title, icon, item, callback}) => (
         width: 48,
         height: 48,
         borderRadius: 100,
-        backgroundColor: Colors.BORDER,
+        backgroundColor: Colors.bs2,
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -250,7 +250,7 @@ const BankList = forwardRef((props, ref) => {
       <View
         style={[
           {
-            backgroundColor: Colors.WHITETEXT,
+            backgroundColor: Colors.bs4,
             shadowColor: 'rgba(0, 0, 0, 0.16)',
             shadowOpacity: 1,
             shadowOffset: {width: 0, height: 0},
@@ -298,7 +298,7 @@ const BankList = forwardRef((props, ref) => {
     );
   };
   if (!loaded) {
-    return <ActivityIndicator color={Colors.BORDER} />;
+    return <ActivityIndicator color={Colors.bs2} />;
   }
   if (!Array.isArray(bankData) || bankData.length === 0) {
     return <View />;
@@ -310,7 +310,7 @@ export default BankList;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: 16,
     // padding: 16,
@@ -326,14 +326,14 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRightWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     zIndex: 1,
   },
   input_text: {
     paddingLeft: 50,
     // borderRightWidth: 1,
     // borderStyle: 'solid',
-    // borderColor: Colors.l4,
+    // borderColor: Colors.bs1,
     borderWidth: 0,
     borderRadius: 8,
   },

@@ -16,7 +16,8 @@ const ModalBottom = ({children, visible, onClose}) => {
       transparent={true}
       isVisible={visible}
       onBackdropPress={onClose}
-      style={styles.alignCenter}>
+      style={styles.alignCenter}
+    >
       <View style={[styles.contentModal, {width: width, bottom: -bottom}]}>
         {children}
       </View>
@@ -26,7 +27,7 @@ const ModalBottom = ({children, visible, onClose}) => {
 
 const styles = StyleSheet.create({
   contentModal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     position: 'absolute',
     marginLeft: -Spacing.PADDING,
     borderTopLeftRadius: Spacing.PADDING,

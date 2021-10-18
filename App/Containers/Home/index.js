@@ -72,9 +72,9 @@ const Home = () => {
             space={1}
             col={4}
             data={dataMenu}
-            styleText={[{fontSize: 14, color: Colors.white}]}
-            styleWicon={[{backgroundColor: Colors.cl1}]}
-            //styleIcon={[{tintColor: Colors.white}]}
+            styleText={[{fontSize: 14, color: Colors.bs4}]}
+            styleWicon={[{backgroundColor: Colors.brd1}]}
+            //styleIcon={[{tintColor: Colors.bs4}]}
           />
         </View>
       </HeaderBg>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   rowHeader: {
     // flexWrap: 'wrap', hide to not break line
     flexDirection: 'row',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 25,
   },

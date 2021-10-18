@@ -32,7 +32,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}>Đổi mật khẩu</Text>
           <Icon
@@ -47,9 +47,9 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
-          <Text style={styles.text}> Smart OTP</Text>
+          <Text style={styles.text}>Smart OTP</Text>
           <Icon
             style={[base.leftAuto]}
             icon={Images.ArrowRight}
@@ -62,9 +62,9 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
-          <Text style={styles.text}> Cài đặt Touch id / Face id</Text>
+          <Text style={styles.text}>Cài đặt Touch id / Face id</Text>
           <Switch
             key={touchIdEnabled}
             initialValue={touchIdEnabled}
@@ -76,7 +76,7 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}>Cảnh báo đăng nhập trên thiết bị khác</Text>
           <Switch />
@@ -87,9 +87,9 @@ const PaymentSettings = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
-          <Text style={styles.text}> Lưu phiên đăng nhập</Text>
+          <Text style={styles.text}>Lưu phiên đăng nhập</Text>
           <Switch />
         </View>
       </ScrollView>
@@ -98,8 +98,8 @@ const PaymentSettings = () => {
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.white,
-    borderBottomColor: Colors.l2,
+    backgroundColor: Colors.bs4,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,

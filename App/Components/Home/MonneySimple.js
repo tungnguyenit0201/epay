@@ -37,7 +37,7 @@ const Monney = ({style}) => {
           >
             <Icon
               icon={showMoney ? Images.Eye2 : Images.EyeGray2}
-              tintColor={Colors.white}
+              tintColor={Colors.bs4}
               size={20}
             />
           </TouchableOpacity>
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  title: {color: Colors.white},
+  title: {color: Colors.bs4},
   right: {
     marginLeft: 'auto',
   },
   text: {
     height: 25,
-    color: Colors.white,
+    color: Colors.bs4,
     marginBottom: 5,
   },
 });

@@ -44,10 +44,10 @@ const Banner = ({
       >
         <Image source={{uri: item?.ImageUrl}} style={[styles.img, styleImg]} />
         <View style={styles.wrapText}>
-          <Text fs="h6" fw="900" color={Colors.white}>
+          <Text fs="h6" fw="900" color={Colors.bs4}>
             {item?.Title?.toUpperCase()}
           </Text>
-          <Text numberOfLines={2} fs="sm" color={Colors.white}>
+          <Text numberOfLines={2} fs="sm" color={Colors.bs4}>
             {item?.Content}
           </Text>
         </View>

@@ -50,7 +50,7 @@ const PopUpBankLink = props => {
           label={'Dùng giấy tờ tùy thân khác'}
           bold
           size="lg"
-          // color={Colors.white}
+          // color={Colors.bs4}
           style={{
             alignItems: 'center',
             justifyContent: 'center',

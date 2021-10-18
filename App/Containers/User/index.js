@@ -36,15 +36,14 @@ const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
-  const [open, setOpen] = useState(false);
   const {onGoSmartOTP} = useSmartOTP();
-
+  const {setError} = useError();
   return (
     <View>
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.white}]}>
+      <ScrollView style={[base.wrap, {backgroundColor: Colors.bs4}]}>
         <View style={[base.container]}>
           <UserInfo style={styles.mb2} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
@@ -58,7 +57,8 @@ const User = () => {
             <Col space={15}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.NotifyStatus}
@@ -71,14 +71,15 @@ const User = () => {
                   {/*
                   show notify status when user buy product
                   <View style={[styles.topMinus1,styles.notify1]}>
-                    <Text color={Colors.white} centered size={Fonts.SM}>3</Text>
+                    <Text color={Colors.bs4} centered size={Fonts.SM}>3</Text>
                   </View> */}
                 </View>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.MaThanhToan}
@@ -90,7 +91,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.ThanhToan}
@@ -101,7 +103,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.SECURITY);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.BaoMat}
@@ -114,8 +117,12 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  setOpen(true);
-                }}>
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/NapVI.png')}
@@ -134,7 +141,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.Translate}
@@ -145,8 +153,12 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
-                  setOpen(true);
-                }}>
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/Noti.png')}
@@ -163,7 +175,7 @@ const User = () => {
                   style={[styles.icon]}
                   icon={Images.Profile.Location}
                   size={24}
-                  tintColor={Colors.cl1}
+                  tintColor={Colors.brd1}
                 />
                 <Text semibold>{translation.location_setting} </Text>
               </TouchableOpacity> */}
@@ -174,8 +186,12 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              setOpen(true);
-            }}>
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
@@ -196,8 +212,12 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              setOpen(true);
-            }}>
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}
@@ -222,24 +242,12 @@ const User = () => {
             label={translation.log_out}
             // style={base.bgWhite}
             // bgImg={0}
-            color={Colors.black}
+            color={Colors.tp2}
             mode="outline"
             style={{borderWidth: 0, elevation: 4}}
           />
         </View>
       </ScrollView>
-      <Modal
-        visible={open}
-        onClose={() => setOpen(false)}
-        content="Coming soon"
-        buttonGroup={() => (
-          <View>
-            <Text></Text>
-          </View>
-        )}
-        icon={Images.Homes.Setting}
-        // icon={Images.SignUp.BigPhone}
-      />
     </View>
   );
 };
@@ -257,10 +265,10 @@ const styles = StyleSheet.create({
   //------------
   item: {
     padding: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 10,
     marginBottom: 15,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

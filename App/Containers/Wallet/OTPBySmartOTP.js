@@ -19,7 +19,7 @@ const OTPBySmartOTP = props => {
     return (
       <Text centered mv={20}>
         <Text centered>{translation.otp.timeOTP}</Text>
-        <Text centered bold color={Colors.blue}>{`${time}s`}</Text>
+        <Text centered bold color={Colors.tp1}>{`${time}s`}</Text>
       </Text>
     );
   }, [time]);

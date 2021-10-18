@@ -47,14 +47,14 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
       // bg={setBg}
       // size={size}
       // fw={'500'}
-      // color={Colors.white}
+      // color={Colors.bs4}
       // label={getStatusVerifiedText()}
       // style={[{minWidth: 93}, style]}
       onPress={() => {
         statusVerified == PERSONAL_IC.INACTIVE && onVerify();
       }}
     >
-      <Text color={Colors.white} fs="sx" centered>
+      <Text color={Colors.bs4} fs="sx" centered>
         {getStatusVerifiedText()}
       </Text>
     </Pressable>

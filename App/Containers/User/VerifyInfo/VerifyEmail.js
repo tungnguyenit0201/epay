@@ -9,6 +9,7 @@ import {emailSchema} from 'utils/ValidationSchemas';
 import FooterContainer from 'components/Auth/FooterContainer';
 const VerifyEmail = ({route}) => {
   const {onEmailAuth} = useEmail(route?.params);
+  let [disable, setDisable] = useState(true);
 
   return (
     <>
@@ -50,7 +51,8 @@ const VerifyEmail = ({route}) => {
 
                   <TextInput
                     placeholder="Nhập email "
-                    placeholderTextColor={Colors.l5}
+                    placeholderTextColor={Colors.tp5}
+                    onFocus={e => setDisable(false)}
                     onChange={handleChange('email')}
                     onBlur={handleBlur('email')}
                     error={touched.email && errors.email}
@@ -62,7 +64,11 @@ const VerifyEmail = ({route}) => {
                 </View> */}
               </View>
               <FooterContainer>
-                <Button label={TEXT.CONTINUE} onPress={handleSubmit} />
+                <Button
+                  disabled={disable}
+                  label={TEXT.CONTINUE}
+                  onPress={handleSubmit}
+                />
               </FooterContainer>
             </View>
           );
@@ -76,5 +82,5 @@ export default VerifyEmail;
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //-------------------
-  flex1: {flex: 1, backgroundColor: Colors.white},
+  flex1: {flex: 1, backgroundColor: Colors.bs4},
 });

@@ -63,8 +63,8 @@ const CalendarCustom = ({
         }
         newMarkedDates[startDateKey] = startDate;
         newMarkedDates[endDateKey] = {
-          color: Colors.blue,
-          textColor: Colors.white,
+          color: Colors.tp1,
+          textColor: Colors.bs4,
           [isReversed ? 'startingDay' : 'endingDay']: true,
         };
         // mark all days between startingDay & endingDay
@@ -81,8 +81,8 @@ const CalendarCustom = ({
       // if both dates are marked
       newMarkedDates[date.dateString] = {
         startingDay: true,
-        color: Colors.blue,
-        textColor: Colors.white,
+        color: Colors.tp1,
+        textColor: Colors.bs4,
       };
     }
     setMarkedDates(newMarkedDates);
@@ -100,7 +100,7 @@ const CalendarCustom = ({
         isReached = true;
       } else {
         // not reach
-        result[iterativeDateFormatted] = {color: Colors.cl5};
+        result[iterativeDateFormatted] = {color: Colors.bg1};
       }
     }
     return result;
@@ -134,8 +134,8 @@ const CalendarCustom = ({
         [startDate]: {
           endingDay: true,
           startingDay: true,
-          color: Colors.blue,
-          textColor: Colors.white,
+          color: Colors.tp1,
+          textColor: Colors.bs4,
         },
       });
       return;
@@ -145,13 +145,13 @@ const CalendarCustom = ({
         {
           [startDate]: {
             startingDay: true,
-            color: Colors.blue,
-            textColor: Colors.white,
+            color: Colors.tp1,
+            textColor: Colors.bs4,
           },
           [endDate]: {
             endingDay: true,
-            color: Colors.blue,
-            textColor: Colors.white,
+            color: Colors.tp1,
+            textColor: Colors.bs4,
           },
         },
         startDate,
@@ -175,7 +175,7 @@ const CalendarCustom = ({
         <TouchableOpacity onPress={() => calendarRef.current.addMonth(-1)}>
           <Icon
             icon={Images.ArrowLeft}
-            tintColor={Colors.gray}
+            tintColor={Colors.tp3}
             style={styles.iconArrow1}
             resizeMode="contain"
           />
@@ -187,7 +187,7 @@ const CalendarCustom = ({
           <Icon
             icon={Images.ArrowRight}
             style={styles.iconArrow1}
-            tintColor={Colors.gray}
+            tintColor={Colors.tp3}
             resizeMode="contain"
           />
         </TouchableOpacity>
@@ -239,7 +239,7 @@ const CalendarCustom = ({
         markedDates={markedDates}
         hideArrows
         theme={{
-          textSectionTitleColor: Colors.BLACK,
+          textSectionTitleColor: Colors.tp2,
         }}
       />
     </>
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   pb2: {paddingBottom: 45},
   pb3: {paddingBottom: 40},
   //end
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //------------------
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
   cirle: {borderRadius: 100},
   //------------------
   textCenter: {textAlign: 'center'},
-  textWhite: {color: Colors.white},
+  textWhite: {color: Colors.bs4},
   //-----------------
   borderRadius1: {borderRadius: 8},
   //-----------------
@@ -333,10 +333,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(10),
     height: 38,
     borderRadius: scale(8),
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     fontFamily: Fonts.FONT_REGULAR,
-    color: Colors.TEXT,
-    fontSize: Fonts.FONT_MEDIUM,
+    color: Colors.tp3,
+    fontSize: Fonts.MD,
   },
   iconSearch: {
     width: 17,
@@ -369,24 +369,24 @@ const styles = StyleSheet.create({
   blockSumIncome: {
     paddingLeft: 8,
     borderLeftWidth: 0.8,
-    borderColor: Colors.l4,
+    borderColor: Colors.bs1,
   },
   blockCardTick: {
     width: 40,
     height: 40,
     alignItems: 'center',
     paddingTop: 10,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
   },
   blockTransaction: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   flatList1: {
     // marginLeft: -10,
@@ -417,11 +417,11 @@ const styles = StyleSheet.create({
   grayLine1: {
     paddingTop: 16,
     borderBottomWidth: 1,
-    borderColor: Colors.l3,
+    borderColor: Colors.bs1,
   },
   grayLine2: {
     paddingTop: 8,
-    backgroundColor: Colors.l3,
+    backgroundColor: Colors.bs1,
   },
   bottom: {
     height: scale(80),
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
   borderTopBottom: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: Colors.l3,
+    borderColor: Colors.bs1,
     paddingVertical: scale(6),
   },
 });

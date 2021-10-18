@@ -93,9 +93,9 @@ const DocumentTypeSelector = (props = {}) => {
       {data?.map(item => {
         const selected = item.ICType === selectedItem.ICType;
         const selectedStyle = {
-          backgroundColor: selected ? Colors.selected_gray : Colors.white,
+          backgroundColor: selected ? Colors.bs2 : Colors.bs4,
         };
-        const color = selected ? Colors.BLACKTEXT : Colors.l8;
+        const color = selected ? Colors.tp2 : Colors.tp3;
         return (
           <View key={`${Math.random(1, 100)}-dropdown`}>
             <TouchableOpacity
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bgWhite: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   flex1: {flex: 1},
   pt1: {paddingTop: 20},
@@ -141,10 +141,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
     paddingTop: Spacing.PADDING,
     paddingBottom: Spacing.PADDING * 2,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     elevation: 24,
   },
   bottomContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
 });
 export default ChooseIdentityCard;

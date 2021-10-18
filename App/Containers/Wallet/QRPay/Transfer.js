@@ -108,7 +108,7 @@ const Transfer = () => {
 const styles = StyleSheet.create({
   block: {
     paddingHorizontal: Spacing.PADDING,
-    borderBottomColor: Colors.l2,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 10,
   },
   avatar: {

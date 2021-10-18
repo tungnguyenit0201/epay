@@ -53,7 +53,7 @@ const ActiveSmartOtp = () => {
             <Text>
               Tôi đồng ý với
               <Text
-                color={Colors.cl1}
+                color={Colors.brd1}
                 onPress={() => alert('Điều khoản điều kiện')}
               >
                 {' '}

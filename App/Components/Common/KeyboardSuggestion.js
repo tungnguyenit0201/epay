@@ -58,7 +58,7 @@ const KeyboardSuggestion = ({
             paddingVertical: scale(8),
             justifyContent: 'space-evenly',
             flexDirection: 'row',
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.bs4,
           }}
         >
           {optionList &&
@@ -89,11 +89,11 @@ const styles = StyleSheet.create({
   option: {
     textAlign: 'center',
     lineHeight: 40,
-    backgroundColor: Colors.moneyItem,
+    backgroundColor: Colors.bg1,
     borderRadius: 8,
     height: 40,
     overflow: 'hidden',
-    color: Colors.cl1,
+    color: Colors.brd1,
     paddingHorizontal: 25,
   },
   continueContainer: {

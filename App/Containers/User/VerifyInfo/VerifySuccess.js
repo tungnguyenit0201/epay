@@ -62,7 +62,7 @@ const VerifySuccess = ({route}) => {
       <View style={[styles.pb1, styles.bgWhite]}>
         <HeaderBg>
           {/* <View>
-            <Text centered fs="h6" color={Colors.white} bold mb={5}>
+            <Text centered fs="h6" color={Colors.bs4} bold mb={5}>
               {translation?.account_verification}
             </Text>
           </View> */}
@@ -167,7 +167,7 @@ const VerifySuccess = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   //---------------
   alignCenter: {alignItems: 'center'},
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   pb1: {paddingBottom: 70},
   pb2: {paddingBottom: Spacing.PADDING * 2},
   //---------------
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //---------------
   circleRadius: {borderRadius: 100},
   //---------------
@@ -214,12 +214,12 @@ const styles = StyleSheet.create({
     flex: 0.48,
   },
   homeButton: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primary,
+    backgroundColor: Colors.bs4,
+    borderColor: Colors.grd3,
     borderWidth: 1,
   },
   homeText: {
-    color: Colors.primary,
+    color: Colors.grd3,
   },
   warningIcon: {
     width: 64,

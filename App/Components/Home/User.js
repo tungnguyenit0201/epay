@@ -23,7 +23,7 @@ const User = ({data, style}) => {
           bold
           size={Fonts.SM}
           right
-          color={Colors.white}
+          color={Colors.bs4}
           style={styles.lh1}
           mb={3}
         >
@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 99,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.tp2,
     borderWidth: 0,
-    borderColor: Colors.white,
+    borderColor: Colors.bs4,
   },
   user: {
     marginRight: 10,
   },
   text: {
     textAlign: 'right',
-    color: Colors.white,
+    color: Colors.bs4,
   },
   noti: {
     width: 16,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   notiText: {
     lineHeight: 16,
     textAlign: 'center',
-    color: Colors.white,
+    color: Colors.bs4,
     fontSize: 10,
   },
   //----------------

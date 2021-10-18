@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontSize: Fonts.FONT_LARGE,
     textAlign: 'center',
-    borderColor: Colors.BLACKTEXT,
+    borderColor: Colors.tp2,
     borderWidth: 1,
     borderRadius: 0,
   },

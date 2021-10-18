@@ -21,7 +21,7 @@ const TrafficFee = () => {
     {
       img: Images.TrafficFee.Moneys,
       title: 'Phí giao thông',
-      screen: SCREEN.TRAFFIC_FEE,
+      screen: SCREEN.TRAFFIC_REGISTER,
     },
     {
       img: Images.TransactionHistory.Warning,
@@ -31,7 +31,7 @@ const TrafficFee = () => {
     {
       img: Images.TrafficFee.Station,
       title: 'Mua vé xe',
-      screen: SCREEN.TRAFFIC_REGISTER,
+      screen: SCREEN.TRAFFIC_FEE,
     },
     {
       img: Images.TrafficFee.Ticket,
@@ -46,14 +46,14 @@ const TrafficFee = () => {
       <TouchableOpacity
         // key={item?.TransCode}
         style={styles.blockTransaction}
-        onPress={
-          () =>
-            setError({
-              ErrorMessage: 'Coming soon',
-              icon: Images.Homes.Setting,
-            })
-          //Navigator.navigate(item.screen)
-        }>
+        onPress={() =>
+          // setError({
+          //   ErrorMessage: 'Comming soon',
+          //   icon: Images.Homes.Setting,
+          // })
+          Navigator.navigate(item.screen)
+        }
+      >
         <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
           <Image
             source={item.img}
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     paddingTop: 10,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
   },
   blockTransaction: {
@@ -140,11 +140,11 @@ const styles = StyleSheet.create({
     paddingVertical: 17,
     paddingHorizontal: 13,
     borderBottomWidth: 1,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
 });
 

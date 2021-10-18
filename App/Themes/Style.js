@@ -4,10 +4,10 @@ import {Colors, Spacing, Fonts} from 'themes';
 
 const styles = StyleSheet.create({
   bgWhite: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     paddingVertical: 20,
   },
   container: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   shadow: {
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     marginBottom: 20,
     padding: 15,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 10,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     padding: 20,
     borderRadius: 10,
     position: 'relative',
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   close: {
     width: 20,
     height: 20,
-    backgroundColor: Colors.l4,
+    backgroundColor: Colors.bs1,
     position: 'absolute',
     top: -8,
     right: -8,
@@ -74,22 +74,22 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
     marginTop: -1,
-    color: Colors.white,
+    color: Colors.bs4,
   },
   bottom: {
     paddingHorizontal: Spacing.PADDING,
     paddingBottom: Spacing.PADDING,
     paddingTop: 10,
     position: 'relative',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   boxBottom: {
     padding: scale(20),
     paddingBottom: 30,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -45,7 +45,7 @@ const ForgetNewPassword = ({route}) => {
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
-              tintColor={Colors.white}
+              tintColor={Colors.bs4}
             />
           </TouchableOpacity>
         )}

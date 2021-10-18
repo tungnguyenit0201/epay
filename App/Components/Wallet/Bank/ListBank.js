@@ -22,7 +22,8 @@ const ListBank = ({listBank, space}) => {
       style={styles.item}
       onPress={() => {
         Navigator.navigate(screen);
-      }}>
+      }}
+    >
       <View style={styles.block1}>
         <Image
           source={icon}
@@ -47,7 +48,8 @@ const ListBank = ({listBank, space}) => {
               width={`33.333%`}
               space={space ? space : 5}
               key={index}
-              style={styles.mb1}>
+              style={styles.mb1}
+            >
               <Item
                 title={item.name}
                 icon={item.icon}
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 100,
-    backgroundColor: Colors.BORDER,
+    backgroundColor: Colors.bs2,
     alignItems: 'center',
     justifyContent: 'center',
   },

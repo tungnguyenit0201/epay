@@ -37,7 +37,7 @@ const TransactionResult = () => {
               source={require('images/noti/Success.png')}
               style={styles.imgSuccess}
             />
-            <Text bold fs="h5" color={Colors.cl1} mb={15}>
+            <Text bold fs="h5" color={Colors.brd1} mb={15}>
               1.0005.000đ
             </Text>
             <Text centered>
@@ -77,7 +77,7 @@ const TransactionResult = () => {
                   source={require('images/qrpay/Save.png')}
                   style={[{width: 24, height: 24, marginRight: 5}]}
                 />
-                <Text bold color={Colors.cl1}>
+                <Text bold color={Colors.brd1}>
                   Lưu ảnh
                 </Text>
               </View>
@@ -87,7 +87,7 @@ const TransactionResult = () => {
                   source={require('images/qrpay/Share.png')}
                   style={[{width: 24, height: 24}]}
                 />
-                <Text bold color={Colors.cl1}>
+                <Text bold color={Colors.brd1}>
                   {' '}
                   Chia sẻ ảnh{' '}
                 </Text>
@@ -105,9 +105,9 @@ const TransactionResult = () => {
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              bg={Colors.white}
-              border={Colors.cl1}
-              color={Colors.cl1}
+              bg={Colors.bs4}
+              border={Colors.brd1}
+              color={Colors.brd1}
               label="Về trang chủ"
               labelStyle={{fontSize: 14}}
               onPress={() => Navigator.navigate(SCREEN.HOME)}
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     color: Colors.cl3,
   },
   textRight: {
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     maxWidth: scale(160),
   },
 });

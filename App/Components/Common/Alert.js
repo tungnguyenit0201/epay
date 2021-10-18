@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
     opacity: 0.7,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.tp2,
   },
   centeredView: {
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: scale(20),
     width: scale(311),
     alignSelf: 'center',
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textStyle: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontWeight: 'bold',
     textAlign: 'center',
   },

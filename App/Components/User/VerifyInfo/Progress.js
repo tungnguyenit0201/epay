@@ -23,7 +23,7 @@ const Progress = ({step}) => {
         <LinearGradient
           start={{x: 0, y: 0.75}}
           end={{x: 1, y: 0.25}}
-          colors={[Colors.barLeft, Colors.barRight]}
+          colors={[Colors.grd1, Colors.grd2]}
           style={[styles.bar, {width: (widthBar / 6) * stepColor + num}]}
         ></LinearGradient>
       </View>
@@ -49,7 +49,7 @@ const Progress = ({step}) => {
                 </View>
                 <Text
                   style={[styles.text]}
-                  color={Colors.WHITETEXT}
+                  color={Colors.bs4}
                   centered
                   size={Fonts.SM}
                 >
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   barWhite: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: '100%',
     marginTop: 10,
     marginBottom: -10,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   circleInner: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: 12,
     height: 12,
     borderRadius: 99,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   circleInnerActive: {
-    backgroundColor: Colors.barRight,
+    backgroundColor: Colors.grd2,
   },
   text: {
     width: 75,

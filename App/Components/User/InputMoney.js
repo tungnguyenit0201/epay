@@ -93,7 +93,7 @@ const Input = forwardRef(({onChange, errorStyle, placeholder}, ref) => {
           placeholder={placeholder || translation.topup.cashInInputMoney}
           style={[styles.input]}
           errorStyle={errorStyle}
-          placeholderTextColor={Colors.l5}
+          placeholderTextColor={Colors.tp5}
           value={value}
           onChange={_onChange}
           showErrorLabel={!!errorMessage}
@@ -121,15 +121,15 @@ const styles = StyleSheet.create({
   item: {
     textAlign: 'center',
     lineHeight: 40,
-    backgroundColor: Colors.moneyItem,
+    backgroundColor: Colors.bg1,
     borderRadius: 8,
     height: 40,
     overflow: 'hidden',
     marginBottom: 10,
-    color: Colors.cl1,
+    color: Colors.brd1,
   },
   warningText: {
-    fontSize: Fonts.FONT_SMALL,
+    fontSize: Fonts.SM,
     marginBottom: Spacing.PADDING,
   },
 });

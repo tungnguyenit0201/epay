@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     padding: Spacing.PADDING,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   main: {
     paddingTop: 20,

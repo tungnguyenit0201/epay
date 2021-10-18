@@ -119,16 +119,16 @@ const TabNavigation = () => {
                     styles.icon,
                     // route.name != 'Home' &&
                     // {
-                    //   tintColor: isFocused ? Colors.cl1 : Colors.gray,
+                    //   tintColor: isFocused ? Colors.brd1 : Colors.tp3,
                     // },
-                    isFocused || {tintColor: Colors.gray},
+                    isFocused || {tintColor: Colors.tp3},
                   ]}
                   // resizeMode={'cover'}
                   resizeMode={'contain'}
                 />
                 <Text
                   style={{
-                    color: isFocused ? Colors.cl1 : Colors.gray,
+                    color: isFocused ? Colors.brd1 : Colors.tp3,
                   }}
                   centered
                 >
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     elevation: 0,
     bottom: 0,
-    shadowColor: Colors.l5,
+    shadowColor: Colors.tp5,
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 0.4,
     shadowRadius: 6,

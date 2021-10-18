@@ -29,7 +29,7 @@ const TransactionResult = () => {
           <Text style={styles.detailTextContent}>{item.value}</Text>
         </View>
         {index < data.length - 1 && (
-          <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.l3} />
+          <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
         )}
       </View>
     );
@@ -74,7 +74,7 @@ const TransactionResult = () => {
               <LinearGradient
                 start={{x: 0, y: 0.75}}
                 end={{x: 1, y: 0.25}}
-                colors={[Colors.barLeft, Colors.barRight]}
+                colors={[Colors.grd1, Colors.grd2]}
                 style={styles.supportLinear}
               >
                 <View style={styles.row}>
@@ -98,16 +98,16 @@ const TransactionResult = () => {
       <View style={[base.boxBottom, styles.bottomButtonContainer]}>
         <Button
           bgImg={0}
-          color={Colors.blue}
+          color={Colors.tp1}
           label={translation.common.goBackHome}
           style={styles.goBackHomeButton}
-          // fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.MD}
           onPress={onBackHome}
         />
         <Button
           label={translation.common.createTransaction}
           style={styles.retryButton}
-          // fs={Fonts.FONT_MEDIUM}
+          // fs={Fonts.MD}
           onPress={onRetry}
         />
       </View>
@@ -117,7 +117,7 @@ const TransactionResult = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   blackColor: {
-    backgroundColor: Colors.g9,
+    backgroundColor: Colors.tp2,
   },
   textWhite: {
-    color: Colors.white,
+    color: Colors.bs4,
   },
   contentAbove: {
     flex: 1,
@@ -140,13 +140,13 @@ const styles = StyleSheet.create({
   statusTitle: {
     fontSize: Fonts.H5,
     marginTop: scale(14),
-    color: Colors.l7,
+    color: Colors.tp2,
     fontWeight: 'bold',
     paddingBottom: Spacing.PADDING,
     lineHeight: 30,
   },
   formatAmount: {
-    color: Colors.blue,
+    color: Colors.tp1,
     fontSize: Fonts.H3,
     textAlign: 'center',
     fontWeight: 'bold',
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    color: Colors.l8,
+    color: Colors.tp3,
     fontSize: scale(14),
     textAlign: 'center',
     fontWeight: '400',
@@ -180,13 +180,13 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   supportDescription: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontSize: scale(14),
     textAlign: 'center',
     fontWeight: '700',
   },
   supportPhone: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontSize: scale(14),
     textAlign: 'center',
     fontWeight: '700',
@@ -198,9 +198,9 @@ const styles = StyleSheet.create({
   goBackHomeButton: {
     flex: 1,
     marginRight: 5,
-    borderColor: Colors.blue,
+    borderColor: Colors.tp1,
     borderWidth: 2,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   mt_30: {
     marginBottom: scale(30),
@@ -220,13 +220,13 @@ const styles = StyleSheet.create({
     fontSize: scale(16),
     fontWeight: '400',
     lineHeight: 25,
-    color: Colors.l8,
+    color: Colors.tp3,
   },
   detailTextContent: {
     fontSize: scale(16),
     fontWeight: '700',
     lineHeight: 25,
-    color: Colors.l7,
+    color: Colors.tp2,
   },
   bottomButtonContainer: {
     flexDirection: 'row',

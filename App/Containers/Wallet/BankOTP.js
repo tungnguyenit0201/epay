@@ -41,7 +41,7 @@ const BankOTP = props => {
     () => () => {
       return (
         <>
-          <Text mb={5} fs={'h3'} fw={'600'} color={Colors.l7}>
+          <Text mb={5} fs={'h3'} fw={'600'} color={Colors.tp2}>
             {translation.otp.enterOTP}
           </Text>
           <Text mt={10} mb={35} size={scale(16)} fw={'400'}>
@@ -73,7 +73,7 @@ export default BankOTP;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   content: {
     flex: 1,
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
   },
   inputTextField: {
     width: scale(40),
-    backgroundColor: Colors.white,
-    borderBottomColor: Colors.cl4,
+    backgroundColor: Colors.bs4,
+    borderBottomColor: Colors.bs1,
     borderWidth: 0,
     borderBottomWidth: 2,
     borderRadius: 2,
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     fontSize: Fonts.H2,
   },
 });

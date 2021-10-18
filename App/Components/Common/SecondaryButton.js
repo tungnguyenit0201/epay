@@ -59,13 +59,13 @@ export default ({
           buttonStyle,
           {paddingVertical: 4},
         ]}
-        linearColors={[Colors.primary, Colors.blue]}
+        linearColors={[Colors.grd3, Colors.tp1]}
       >
         <View
           style={{
             ...styles.button,
             flex: 1,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.bs4,
             borderColor: 'transparent',
           }}
         >
@@ -89,7 +89,7 @@ export default ({
               fs && {fontSize: fs},
               bold && {fontWeight: 'bold'},
               {
-                color: color ? color : Colors.blue,
+                color: color ? color : Colors.tp1,
                 lineHeight: 20,
               },
               labelStyle,
@@ -127,11 +127,11 @@ const styles = StyleSheet.create({
     // paddingHorizontal: Spacing.PADDING,
   },
   contain: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   outline: {
     borderWidth: 1,
-    borderColor: Colors.white,
+    borderColor: Colors.bs4,
   },
   xxs: {
     height: 20,
