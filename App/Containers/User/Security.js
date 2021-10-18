@@ -49,7 +49,7 @@ const PaymentSettings = () => {
             size={24}
             tintColor={Colors.brd1}
           />
-          <Text style={styles.text}> Smart OTP</Text>
+          <Text style={styles.text}>Smart OTP</Text>
           <Icon
             style={[base.leftAuto]}
             icon={Images.ArrowRight}
@@ -64,7 +64,7 @@ const PaymentSettings = () => {
             size={24}
             tintColor={Colors.brd1}
           />
-          <Text style={styles.text}> Cài đặt Touch id / Face id</Text>
+          <Text style={styles.text}>Cài đặt Touch id / Face id</Text>
           <Switch
             key={touchIdEnabled}
             initialValue={touchIdEnabled}
@@ -89,7 +89,7 @@ const PaymentSettings = () => {
             size={24}
             tintColor={Colors.brd1}
           />
-          <Text style={styles.text}> Lưu phiên đăng nhập</Text>
+          <Text style={styles.text}>Lưu phiên đăng nhập</Text>
           <Switch />
         </View>
       </ScrollView>

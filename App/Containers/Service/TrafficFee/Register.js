@@ -13,6 +13,9 @@ import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import FooterContainer from 'components/Auth/FooterContainer';
 
+import {SCREEN} from 'configs/Constants';
+import Navigator from 'navigations/Navigator';
+
 const RegisterFee = () => {
   const translation = useTranslation();
   return (
@@ -49,7 +52,10 @@ const RegisterFee = () => {
         </ScrollView>
 
         <FooterContainer>
-          <Button label={`Thêm đăng ký xe`} />
+          <Button
+            label={`Thêm đăng ký xe`}
+            onPress={() => Navigator.navigate(SCREEN.TRAFFIC_REGISTER_FORM)}
+          />
         </FooterContainer>
       </View>
     </>

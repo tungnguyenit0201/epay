@@ -190,7 +190,6 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('cites')}
             placeholder="Tỉnh/Thành"
-            inputStyle={styles.noLabel}
           />
           <InputBlock
             // label="Quận"
@@ -200,7 +199,6 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('districts')}
             placeholder="Quận"
-            inputStyle={styles.noLabel}
           />
           <InputBlock
             // label="Phường / Xã"
@@ -212,7 +210,6 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('wards')}
             placeholder="Phường/Xã"
-            inputStyle={styles.noLabel}
           />
         </View>
       </ScrollView>
@@ -231,9 +228,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: scale(10),
   },
-  noLabel: {
-    marginTop: scale(100),
-  },
+  // noLabel: {
+  //   marginTop: scale(100),
+  // }, no use anymore
   //---------------
   mb1: {marginBottom: 7},
   mb2: {marginBottom: 15},

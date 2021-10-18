@@ -71,36 +71,39 @@ const InputBlock = ({
           {...props}
         />
       ) : (
-        <View style={styles.mb1}>
-          <TouchableOpacity
-            style={[styles.select, !!error && styles.error]}
-            onPress={onPress}
-          >
-            <Text style={{color: Colors.tp3}}>
-              {value ? value : props?.defaultValue}
-            </Text>
-            {!!props?.placeholder && !value && !props?.defaultValue && (
-              <Text style={{color: Colors.tp5}}>{props.placeholder}</Text>
-            )}
-          </TouchableOpacity>
-          {rightIconBgGray && (
+        <>
+          <View style={props.style}>
             <TouchableOpacity
+              style={[styles.select, !!error && styles.error]}
               onPress={onPress}
-              style={[styles.blockArrowRight, styles.pos1]}
             >
-              <Image
-                source={rightIconBgGray}
-                resizeMode="contain"
-                style={styles.rightIcon}
-              />
+              <Text style={{color: Colors.tp3}}>
+                {value ? value : props?.defaultValue}
+              </Text>
+              {!!props?.placeholder && !value && !props?.defaultValue && (
+                <Text style={{color: Colors.tp5}}>{props.placeholder}</Text>
+              )}
             </TouchableOpacity>
-          )}
-          {!!error && (
-            <Text color={Colors.hl1} mt={3} size={scale(12)}>
-              {error}
-            </Text>
-          )}
-        </View>
+            {rightIconBgGray && (
+              <TouchableOpacity
+                onPress={onPress}
+                style={[styles.blockArrowRight, styles.pos1]}
+              >
+                <Image
+                  source={rightIconBgGray}
+                  resizeMode="contain"
+                  style={styles.rightIcon}
+                />
+              </TouchableOpacity>
+            )}
+            {!!error && (
+              <Text color={Colors.hl1} mt={3} size={scale(12)}>
+                {error}
+              </Text>
+            )}
+          </View>
+          <View style={styles.mb1} />
+        </>
       )}
       {rightIcon && (
         <TouchableOpacity
@@ -162,8 +165,8 @@ const styles = StyleSheet.create({
   select: {
     paddingHorizontal: Spacing.PADDING / 2,
     paddingVertical: scale(10),
-    height: scale(48),
-    borderColor: Colors.bg1,
+    height: scale(46),
+    borderColor: Colors.bs1,
     borderWidth: 1,
     borderRadius: 8,
     flexDirection: 'row',
@@ -183,7 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 48,
-    backgroundColor: Colors.bs2,
+    backgroundColor: Colors.bs1,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },
