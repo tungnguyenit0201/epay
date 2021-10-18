@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   rowHeader: {
     // flexWrap: 'wrap', hide to not break line
     flexDirection: 'row',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 25,
   },
