@@ -36,9 +36,8 @@ const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
-  const [open, setOpen] = useState(false);
   const {onGoSmartOTP} = useSmartOTP();
-
+  const {setError} = useError();
   return (
     <View>
       <HeaderBg mb={0}>
@@ -58,7 +57,8 @@ const User = () => {
             <Col space={15}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.NotifyStatus}
@@ -78,7 +78,8 @@ const User = () => {
 
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.MaThanhToan}
@@ -90,7 +91,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.ThanhToan}
@@ -101,7 +103,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.SECURITY);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.BaoMat}
@@ -114,8 +117,12 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  setOpen(true);
-                }}>
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/NapVI.png')}
@@ -134,7 +141,8 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   Navigator.navigate(SCREEN.LANGUAGE);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.Translate}
@@ -145,8 +153,12 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
-                  setOpen(true);
-                }}>
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
+                }}
+              >
                 <Image
                   style={[styles.icon, styles.mb3]}
                   source={require('images/profile/Noti.png')}
@@ -174,8 +186,12 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              setOpen(true);
-            }}>
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
@@ -196,8 +212,12 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              setOpen(true);
-            }}>
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Info.png')}
@@ -228,18 +248,6 @@ const User = () => {
           />
         </View>
       </ScrollView>
-      <Modal
-        visible={open}
-        onClose={() => setOpen(false)}
-        content="Coming soon"
-        buttonGroup={() => (
-          <View>
-            <Text></Text>
-          </View>
-        )}
-        icon={Images.Homes.Setting}
-        // icon={Images.SignUp.BigPhone}
-      />
     </View>
   );
 };

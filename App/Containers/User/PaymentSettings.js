@@ -13,7 +13,7 @@ import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
-
+import {useError} from 'context/Common/utils';
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {useUserInfo} from 'context/User/utils';
 import {formatMoney} from 'utils/Functions';
@@ -21,14 +21,22 @@ const PaymentSettings = () => {
   const translation = useTranslation();
   const [xacNhan, isXacNhan] = useState(false);
   const {onGetLimit} = useUserInfo();
-  const [open, setOpen] = useState(false);
+  const {setError} = useError();
   return (
     <>
       <HeaderBg>
         <Header back title={translation.payment_setting} />
       </HeaderBg>
       <ScrollView style={base.wrap}>
-        <TouchableOpacity style={styles.item} onPress={() => setOpen(true)}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() =>
+            setError({
+              ErrorMessage: 'Coming soon',
+              icon: Images.Homes.Setting,
+            })
+          }
+        >
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
@@ -68,7 +76,15 @@ const PaymentSettings = () => {
           />
           <Text style={styles.text}> Hạn mức trong ngày</Text>
         </Pressable>
-        <TouchableOpacity style={styles.item} onPress={() => setOpen(true)}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() =>
+            setError({
+              ErrorMessage: 'Coming soon',
+              icon: Images.Homes.Setting,
+            })
+          }
+        >
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
@@ -88,17 +104,6 @@ const PaymentSettings = () => {
           <Text>{`Cài đặt hạn mức: ${formatMoney(50000000)}đ`}</Text>
         </View>
       </ScrollView>
-      <Modal
-        visible={open}
-        onClose={() => setOpen(false)}
-        content="Coming soon"
-        buttonGroup={() => (
-          <View>
-            <Text></Text>
-          </View>
-        )}
-        icon={Images.Homes.Setting}
-      />
     </>
   );
 };
