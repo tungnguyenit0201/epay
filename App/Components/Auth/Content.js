@@ -16,7 +16,8 @@ const Content = ({title, text, style, titleMb, textMb, styleText}) => {
             styles.textWhite,
             titleMb ? {marginBottom: titleMb} : styles.mb1,
           ]}
-          numberOfLines={2}>
+          numberOfLines={2}
+        >
           {title}
         </Text>
       )}
@@ -27,7 +28,8 @@ const Content = ({title, text, style, titleMb, textMb, styleText}) => {
             styles.textGray,
             textMb ? {marginBottom: textMb} : styles.mb2,
             styleText,
-          ]}>
+          ]}
+        >
           {text}
         </Text>
       )}
