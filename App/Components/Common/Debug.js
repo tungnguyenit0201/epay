@@ -9,6 +9,7 @@ import Navigator from 'navigations/Navigator';
 import {useAuth} from 'context/Auth/utils';
 import {useAsyncStorage, useRequest} from 'context/Common/utils';
 import API from 'configs/API';
+import useServiceCommon from 'services/common';
 
 let debugData = [];
 
@@ -40,6 +41,9 @@ const Debug = () => {
               <Text>Close</Text>
             </Pressable>
             <DomainPicker onclose={() => setShow(false)} />
+            <Text fs="h6" bold>
+              API logs:
+            </Text>
             <FlatList
               data={debugData}
               style={{padding: scale(10)}}
@@ -62,36 +66,48 @@ const Debug = () => {
 
 const DomainPicker = ({onclose}) => {
   const {domain, onChangeDomain} = useRequest();
+  const {getConfigInfo} = useServiceCommon();
+
   return (
     <View>
-      <Text fs="h5">Choose domain:</Text>
-      {API.ROOT_LIST.map(item => {
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              onChangeDomain(item);
-              onclose();
-            }}
-            key={item}
-          >
-            <Text
-              fs="md"
-              style={[
-                styles.serverItem,
-                domain === item ? {color: Colors.cl1} : {},
-              ]}
+      <Text fs="h5" bold>
+        Choose domain:
+      </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        {API.ROOT_LIST.map(item => {
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                onChangeDomain(item);
+                onclose();
+                getConfigInfo();
+              }}
+              key={item}
             >
-              {item.split('//')[1].split('.')[0]}
-            </Text>
-          </TouchableOpacity>
-        );
-      })}
+              <Text
+                fs="md"
+                style={[
+                  styles.serverItem,
+                  domain === item ? {color: Colors.tp1} : {},
+                ]}
+              >
+                {item.split('//')[1].split('.')[0]}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 };
 
+const addLog = data => {
+  debugData.push(data);
+  debugData.length > 5 && (debugData = debugData.slice(1));
+};
+
 export default Debug;
-export {debugData};
+export {debugData, addLog};
 
 const styles = StyleSheet.create({
   container: {
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.bs4,
     borderRadius: scale(10),
-    marginTop: scale(200),
+    marginTop: scale(50),
   },
   serverItem: {
     // fontSize: LG,
