@@ -123,23 +123,19 @@ const RegisterPassword = ({route}) => {
                   <Checkbox onPress={setActive} />
                   <Text style={{marginLeft: 5}}>
                     {` Tôi đồng ý với các `}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
+                    <Text
                       onPress={() => onGoTerm(SCREEN.AGREEMENT)}
+                      style={styles.firstLink}
                     >
-                      <Text style={styles.firstLink}>
-                        {'Thoả thuận người dùng '}
-                      </Text>
-                    </TouchableOpacity>
-                    và
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
+                      {'Thoả thuận người dùng'}
+                    </Text>{' '}
+                    và{' '}
+                    <Text
                       onPress={() => onGoTerm(SCREEN.POLICY)}
+                      style={styles.firstLink}
                     >
-                      <Text style={styles.firstLink}>
-                        {'Chính sách quyền riêng tư '}
-                      </Text>
-                    </TouchableOpacity>
+                      {'Chính sách quyền riêng tư '}
+                    </Text>
                     của Epay Services
                   </Text>
                 </View>
