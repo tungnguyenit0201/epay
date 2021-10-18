@@ -50,7 +50,12 @@ const IconList = ({data}) => {
             // borderWidth: 1,
           },
         ]}
-        onPress={() => Alert.alert('', 'Coming soon')}
+        onPress={() =>
+          setError({
+            ErrorMessage: 'Coming soon',
+            icon: Images.Homes.Setting,
+          })
+        }
       >
         <Image source={item.icon} style={styles.icon} />
 
@@ -77,7 +82,12 @@ const IconList = ({data}) => {
                       width: width / 2 - Spacing.PADDING,
                     },
                   ]}
-                  onPress={() => setOpen(true)}
+                  onPress={() =>
+                    setError({
+                      ErrorMessage: 'Coming soon',
+                      icon: Images.Homes.Setting,
+                    })
+                  }
                 >
                   <Image source={item.icon} style={styles.icon} />
 
@@ -117,18 +127,6 @@ const IconList = ({data}) => {
               })}
           </View>
         </View>
-        <Modal
-          visible={open}
-          onClose={() => setOpen(false)}
-          content="Coming soon"
-          buttonGroup={() => (
-            <View>
-              <Text></Text>
-            </View>
-          )}
-          icon={Images.Homes.Setting}
-          // icon={Images.SignUp.BigPhone}
-        />
       </>
     );
   };

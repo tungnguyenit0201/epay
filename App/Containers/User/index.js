@@ -36,9 +36,8 @@ const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
-  const [open, setOpen] = useState(false);
   const {onGoSmartOTP} = useSmartOTP();
-
+  const {setError} = useError();
   return (
     <View>
       <HeaderBg mb={0}>
@@ -118,7 +117,10 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  setOpen(true);
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
                 }}
               >
                 <Image
@@ -151,7 +153,10 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
-                  setOpen(true);
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
                 }}
               >
                 <Image
@@ -181,7 +186,10 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              setOpen(true);
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
             }}
           >
             <Image
@@ -204,7 +212,10 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              setOpen(true);
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
             }}
           >
             <Image
@@ -237,18 +248,6 @@ const User = () => {
           />
         </View>
       </ScrollView>
-      <Modal
-        visible={open}
-        onClose={() => setOpen(false)}
-        content="Coming soon"
-        buttonGroup={() => (
-          <View>
-            <Text></Text>
-          </View>
-        )}
-        icon={Images.Homes.Setting}
-        // icon={Images.SignUp.BigPhone}
-      />
     </View>
   );
 };
