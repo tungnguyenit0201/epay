@@ -38,7 +38,7 @@
   "change_the_phone_number": "Đổi SĐT",
   "incorrect_verification_code": "Mã xác thực không đúng",
   "incorrect_verification_code_you_have_2_attempts_left": "Mã xác thực không đúng, bạn còn 2 lần thử",
-  "you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again": "Bạn đã nhập sai quá 3 lần, vui lòng thử lại sau 30 phút",
+  "you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again": "Bạn đã nhập sai OTP quá 3 lần, vui lòng thử lại sau 30 phút",
   "password": "Mật khẩu",
   "enter_your_password": "Nhập mật khẩu của bạn",
   "enter_password": "Nhập mật khẩu",
