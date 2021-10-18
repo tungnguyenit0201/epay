@@ -111,11 +111,8 @@ const BankPickerScreen = props => {
   return (
     <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
-        <Header
-          back
-          title="Chọn ngân hàng" //TODO: Translate
-        />
-        {renderSearchView()}
+        <Header back title={translation.bank_linking} />
+        {/* {renderSearchView()} */}
       </HeaderBg>
 
       <ScrollView

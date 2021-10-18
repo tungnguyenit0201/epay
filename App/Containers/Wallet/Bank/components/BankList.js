@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors, Images} from 'themes';
+import {Colors, Fonts, Images} from 'themes';
 import {Col, Radio, Row, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
@@ -32,10 +32,11 @@ const BankItem = ({title, icon, item, callback}) => (
       callback?.(item);
     }}
   >
-    <View
+    {/* <View
       style={{
         width: 48,
         height: 48,
+        marginRight: 10,
         borderRadius: 100,
         backgroundColor: Colors.bs2,
         alignItems: 'center',
@@ -50,10 +51,23 @@ const BankItem = ({title, icon, item, callback}) => (
         }}
         resizeMode={'contain'}
       />
+    </View> */}
+    <Image
+      source={icon}
+      style={{
+        // width: scale(30),
+        width: scale(52),
+        marginRight: 10,
+        aspectRatio: 2,
+      }}
+      resizeMode={'contain'}
+    />
+    <View styles={styles.flex1}>
+      <Text fs="h6" bold size={Fonts.SM}>
+        {title}
+      </Text>
+      <Text color={Colors.tp3}>**********1234</Text>
     </View>
-    <Text centered style={{marginTop: 10}}>
-      {title}
-    </Text>
   </TouchableOpacity>
 );
 
@@ -278,7 +292,8 @@ const BankList = forwardRef((props, ref) => {
           {bankData.map((item, index) => {
             return (
               <Col
-                width={'33.333%'}
+                // width={'33.333%'}
+                width={'100%'}
                 space={10}
                 key={index}
                 style={{marginBottom: 16}}
@@ -309,6 +324,8 @@ const BankList = forwardRef((props, ref) => {
 export default BankList;
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
+  //---------------
   container: {
     backgroundColor: Colors.bs4,
     paddingBottom: 40,
@@ -337,7 +354,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 8,
   },
-  item: {alignItems: 'center', flex: 1},
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   radio: {
     marginRight: 0,
     marginTop: 4,
