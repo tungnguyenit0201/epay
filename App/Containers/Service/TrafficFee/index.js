@@ -21,7 +21,7 @@ const TrafficFee = () => {
     {
       img: Images.TrafficFee.Moneys,
       title: 'Phí giao thông',
-      screen: SCREEN.TRAFFIC_FEE,
+      screen: SCREEN.TRAFFIC_REGISTER,
     },
     {
       img: Images.TransactionHistory.Warning,
@@ -31,7 +31,7 @@ const TrafficFee = () => {
     {
       img: Images.TrafficFee.Station,
       title: 'Mua vé xe',
-      screen: SCREEN.TRAFFIC_REGISTER,
+      screen: SCREEN.TRAFFIC_FEE,
     },
     {
       img: Images.TrafficFee.Ticket,
@@ -46,14 +46,14 @@ const TrafficFee = () => {
       <TouchableOpacity
         // key={item?.TransCode}
         style={styles.blockTransaction}
-        onPress={
-          () =>
-            setError({
-              ErrorMessage: 'Coming soon',
-              icon: Images.Homes.Setting,
-            })
-          //Navigator.navigate(item.screen)
-        }>
+        onPress={() =>
+          // setError({
+          //   ErrorMessage: 'Comming soon',
+          //   icon: Images.Homes.Setting,
+          // })
+          Navigator.navigate(item.screen)
+        }
+      >
         <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
           <Image
             source={item.img}
