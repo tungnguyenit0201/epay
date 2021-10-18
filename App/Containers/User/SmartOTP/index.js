@@ -18,13 +18,14 @@ const SmartOtp = () => {
 
   return (
     <>
-      <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title={translation.password_and_security} />
-        </HeaderBg>
-
-        <Text mt={20}>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
-        <Text>Smart OTP: Phiên bản {smartOTPInfo?.version || '...'}</Text>
+      <HeaderBg>
+        <Header back title={translation.password_and_security} />
+      </HeaderBg>
+      <ScrollView style={[base.wrap, styles.pH]}>
+        <Text mt={5}>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
+        <Text mb={5}>
+          Smart OTP: Phiên bản {smartOTPInfo?.version || '...'}
+        </Text>
 
         <TouchableOpacity style={styles.item} onPress={onChangePassword}>
           <Icon
@@ -85,12 +86,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
-    paddingHorizontal: Spacing.PADDING,
+    paddingRight: Spacing.PADDING,
     alignItems: 'center',
   },
   text: {
     marginRight: 80,
     fontSize: Fonts.H6,
+  },
+  pH: {
+    paddingHorizontal: Spacing.PADDING,
   },
 });
 export default SmartOtp;
