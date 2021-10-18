@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   wicon: {
     width: scale(48),
     height: scale(48),
-    backgroundColor: Colors.l1,
+    backgroundColor: Colors.tp3,
     borderRadius: 99,
     marginBottom: 5,
     position: 'relative',

@@ -15,30 +15,31 @@ const Checkbox = ({onPress, hitSlop, label}) => {
   return (
     <Pressable
       hitSlop={hitSlop}
-      style={{ flexDirection:'row' }}
-      onPress={_onPress}>
+      style={{flexDirection: 'row'}}
+      onPress={_onPress}
+    >
       {
         <>
-        <View style={[
-          styles.container, 
-          !active && styles.checked,
-          label && {marginRight:10},
-          ,
-          ]}>
-        <Image
-          resizeMode="cover"
-          source={Images.Check}
-          style={{
-            width: '100%',
-            height: '100%',
-            display: active ? 'flex' : 'none', //tránh tạo lại component mới load hình lâu
-          }}></Image>
-          </View> 
-          {
-          <Text>{label}</Text>
-          }
+          <View
+            style={[
+              styles.container,
+              !active && styles.checked,
+              label && {marginRight: 10},
+              ,
+            ]}
+          >
+            <Image
+              resizeMode="cover"
+              source={Images.Check}
+              style={{
+                width: '100%',
+                height: '100%',
+                display: active ? 'flex' : 'none', //tránh tạo lại component mới load hình lâu
+              }}
+            ></Image>
+          </View>
+          {<Text>{label}</Text>}
         </>
-         
       }
     </Pressable>
   );
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   checked: {
-    borderColor: Colors.MEDIUMGRAY,
+    borderColor: Colors.tp4,
     borderWidth: 1,
   },
 });

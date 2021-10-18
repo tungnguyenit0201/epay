@@ -42,7 +42,7 @@ const RegisterFee = () => {
               source={Images.TrafficFee.BigCar}
               resizeMode="contain"
             />
-            <Text centered mt={20} fs="h6" color={Colors.gray}>
+            <Text centered mt={20} fs="h6" color={Colors.tp3}>
               Chưa có giao dịch để hiển thị
             </Text>
           </View>

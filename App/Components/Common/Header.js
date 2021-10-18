@@ -37,7 +37,7 @@ const Header = ({
 
   return (
     <View
-      style={[styles.wrap, blackIcon && {backgroundColor: Colors.white}, style]}
+      style={[styles.wrap, blackIcon && {backgroundColor: Colors.bs4}, style]}
     >
       {avoidStatusBar && <View style={styles.avoidStatusBar} />}
       <View style={styles.header}>
@@ -47,9 +47,9 @@ const Header = ({
               fw="700"
               // fs="h6"
               size={Fonts.H6}
-              color={Colors.white}
+              color={Colors.bs4}
               centered
-              style={[titleStyle, blackIcon && {color: Colors.black}]}
+              style={[titleStyle, blackIcon && {color: Colors.tp2}]}
             >
               {title}
             </Text>
@@ -74,7 +74,7 @@ const Header = ({
               <View style={styles.back}>
                 <Icon
                   icon={Images.ArrowLeft}
-                  tintColor={blackIcon ? Colors.BLACK : Colors.white}
+                  tintColor={blackIcon ? Colors.tp2 : Colors.bs4}
                 />
               </View>
             </Pressable>

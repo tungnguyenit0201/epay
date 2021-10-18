@@ -20,13 +20,13 @@ const FWLoading = ({
 const styles = StyleSheet.create({
   wrap: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.tp2,
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.5,
   },
   background: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: scale(5),
     width: scale(72),
     height: scale(64),

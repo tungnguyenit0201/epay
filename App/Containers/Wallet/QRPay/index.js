@@ -98,7 +98,7 @@ const QRPay = () => {
 
                 {loading && <FWLoading />}
                 <View style={[styles.wrapText, {top: scale(112)}]}>
-                  <Text color={Colors.white} fs="h6" fw="700" centered>
+                  <Text color={Colors.bs4} fs="h6" fw="700" centered>
                     {translation.point_the_camera_frame_at_the_qr_code_to_scan}
                   </Text>
                 </View>
@@ -109,10 +109,10 @@ const QRPay = () => {
                   >
                     <Icon
                       icon={Images.Camera.Flash}
-                      tintColor={Colors.white}
+                      tintColor={Colors.bs4}
                       mr={Spacing.PADDING / 4}
                     />
-                    <Text fw="700" fs="h6" color={Colors.white}>
+                    <Text fw="700" fs="h6" color={Colors.bs4}>
                       {translation.flash_on}
                     </Text>
                   </Pressable>
@@ -122,13 +122,13 @@ const QRPay = () => {
                   >
                     <Icon
                       icon={Images.Camera.Gallery}
-                      tintColor={Colors.white}
+                      tintColor={Colors.bs4}
                       mr={Spacing.PADDING / 2}
                     />
                     <Text
                       fw="700"
                       fs="h6"
-                      color={Colors.white}
+                      color={Colors.bs4}
                       onPress={() => onPhoto(false)}
                     >
                       Chọn hình có sẵn
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     left: scale(61),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   qrImg: {
     width: scale(200),

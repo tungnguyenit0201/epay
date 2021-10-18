@@ -88,7 +88,7 @@ const VerifyUserInfo = ({
             if (showInstruction) {
               return (
                 <TouchableOpacity onPress={onShowModal}>
-                  <Text fs="md" color={Colors.white} style={styles.help}>
+                  <Text fs="md" color={Colors.bs4} style={styles.help}>
                     Hướng dẫn
                   </Text>
                 </TouchableOpacity>
@@ -160,7 +160,7 @@ const VerifyUserInfo = ({
                   source={Images.VerifyUserInfo.tick}
                   style={styles.tickIcon}
                 />
-                <Text bold fs="h6" color={Colors.gray} style={styles.flex}>
+                <Text bold fs="h6" color={Colors.tp3} style={styles.flex}>
                   {e}
                 </Text>
               </View>
@@ -221,14 +221,14 @@ const VerifyUserInfo = ({
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   container: {
     flex: 1,
     backgroundColor: 'transparent',
   },
   header: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     position: 'relative',
     paddingBottom: 0,
     marginBottom: 0,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   buton: {
     paddingHorizontal: Spacing.PADDING,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     paddingVertical: Spacing.PADDING,
   },
   modalContainer: {
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   modalContentContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
     position: 'absolute',
@@ -305,10 +305,10 @@ const styles = StyleSheet.create({
     // paddingVertical: Spacing.PADDING,
     paddingTop: Spacing.PADDING,
     paddingBottom: Spacing.PADDING * 2,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     elevation: 24,
   },
   bottom: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   help: {
     position: 'relative',

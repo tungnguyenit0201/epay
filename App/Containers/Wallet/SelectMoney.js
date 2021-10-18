@@ -56,9 +56,9 @@ const SelectMoney = () => {
               width: '45%',
               borderWidth: 1,
               borderColor: Colors.brd1,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.bs4,
             }}
-            labelStyle={{color: Colors.BLACK}}
+            labelStyle={{color: Colors.tp2}}
           />
           <Button
             label="Xác nhận"
@@ -76,7 +76,7 @@ const SelectMoney = () => {
 
 const styles = StyleSheet.create({
   shadow: {
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     elevation: 8,
     margin: 10,
     paddingVertical: 15,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 8,
   },
 });

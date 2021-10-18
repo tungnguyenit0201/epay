@@ -47,9 +47,9 @@ const Picker = ({
           paddingH-page
           paddingV-middle
           borderB={borderB}
-          borderColor={Colors.l2}
+          borderColor={Colors.bs2}
         >
-          <Text color={isSelected ? Colors.brd1 : Colors.BLACKTEXT}>
+          <Text color={isSelected ? Colors.brd1 : Colors.tp2}>
             {item?.label}
           </Text>
         </View>
@@ -70,7 +70,7 @@ const Picker = ({
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l4 : Colors.BLACKTEXT}
+            color={disabled ? Colors.bs1 : Colors.tp2}
           >
             {value?.label || placeholder}
           </Text>
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   inputWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: Colors.BORDER,
+    borderColor: Colors.bs2,
     borderWidth: 1,
     paddingVertical: 11,
     paddingHorizontal: 8,

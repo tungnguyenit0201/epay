@@ -85,7 +85,7 @@ const Boarding = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   img: {width: '100%'},
   slide: {

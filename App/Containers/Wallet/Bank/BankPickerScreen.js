@@ -109,7 +109,7 @@ const BankPickerScreen = props => {
     );
   };
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header
           back
@@ -131,7 +131,7 @@ export default BankPickerScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: Spacing.PADDING,
   },
@@ -146,14 +146,14 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRightWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     zIndex: 1,
   },
   input_text: {
     paddingLeft: 50,
     // borderRightWidth: 1,
     // borderStyle: 'solid',
-    // borderColor: Colors.l4,
+    // borderColor: Colors.bs1,
     borderWidth: 0,
     borderRadius: 8,
   },

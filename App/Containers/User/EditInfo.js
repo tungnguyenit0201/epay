@@ -91,14 +91,14 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
 
   return (
     <>
-      <ScrollView style={{backgroundColor: Colors.white}}>
+      <ScrollView style={{backgroundColor: Colors.bs4}}>
         <View style={[base.container, styles.pt1]}>
           <View pointerEvents="none" style={styles.mb1}>
             <InputBlock
               label="Họ tên"
               value={personalInfo?.FullName}
               style={{
-                backgroundColor: Colors.BACKGROUND_BLUE,
+                backgroundColor: Colors.bg1,
                 textTransform: 'uppercase',
               }}
             />
@@ -108,11 +108,11 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
               label="Ngày sinh"
               value={personalInfo?.DateOfBirth?.replaceAll?.('-', '/')}
               style={{
-                backgroundColor: Colors.BACKGROUND_BLUE,
+                backgroundColor: Colors.bg1,
                 textTransform: 'uppercase',
               }}
             />
-            <View style={[styles.blockIcon1, {backgroundColor: Colors.l4}]}>
+            <View style={[styles.blockIcon1, {backgroundColor: Colors.bs1}]}>
               <Image
                 source={Images.Kyc.Calendar}
                 style={styles.iconCalendar}
@@ -143,7 +143,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
                   : 'Chưa có'
               }
               style={{
-                backgroundColor: Colors.BACKGROUND_BLUE,
+                backgroundColor: Colors.bg1,
                 textTransform: 'uppercase',
               }}
             />
@@ -157,7 +157,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
                   ? personalIC?.ICIssuedPlace
                   : 'Chưa có'
               }
-              style={{backgroundColor: Colors.BACKGROUND_BLUE, textTransform: 'uppercase'}}
+              style={{backgroundColor: Colors.bg1, textTransform: 'uppercase'}}
             />
           </View>
           <View pointerEvents="none">
@@ -248,12 +248,12 @@ const styles = StyleSheet.create({
   iconCalendar: {
     width: 24,
     height: 24,
-    tintColor: Colors.GRAY,
+    tintColor: Colors.tp3,
   },
   //---------------
   line1: {
     height: 12,
-    backgroundColor: Colors.cl6,
+    backgroundColor: Colors.bs2,
   },
   //---------------
   blockIcon1: {

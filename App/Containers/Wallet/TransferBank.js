@@ -81,7 +81,7 @@ const BankTransferInfo = () => {
               height: 48,
               marginRight: 16,
               borderRadius: 100,
-              backgroundColor: Colors.BORDER,
+              backgroundColor: Colors.bs2,
               alignItems: 'center',
               justifyContent: 'center',
             }}
@@ -217,7 +217,7 @@ const BankTransferInfo = () => {
           style={{
             paddingVertical: 24,
             paddingHorizontal: 16,
-            backgroundColor: Colors.BACKGROUNDCOLOR,
+            backgroundColor: Colors.bs4,
           }}
         >
           <Text
@@ -264,7 +264,7 @@ const BankTransferInfo = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -277,10 +277,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  text_white: {color: Colors.white},
+  text_white: {color: Colors.bs4},
   mb_1: {marginBottom: 8},
   line_gray: {
-    backgroundColor: Colors.BORDER,
+    backgroundColor: Colors.bs2,
     height: 8,
   },
   item: {
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   wicon: {
     width: scale(48),
     height: scale(48),
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
     marginBottom: 7,
   },
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRightWidth: 0.5,
     borderStyle: 'solid',
-    borderColor: Colors.GRAY,
+    borderColor: Colors.tp3,
     zIndex: 1,
   },
   icon_lock_img: {

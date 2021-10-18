@@ -54,7 +54,7 @@ const PaymentSettings = () => {
           <Switch
             style={base.leftAuto}
             onColor={Colors.brd1}
-            offColor={Colors.l3}
+            offColor={Colors.bs1}
             value={xacNhan}
             onValueChange={isXacNhan}
           />
@@ -104,8 +104,8 @@ const PaymentSettings = () => {
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.white,
-    borderBottomColor: Colors.l2,
+    backgroundColor: Colors.bs4,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,

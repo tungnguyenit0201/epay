@@ -63,7 +63,8 @@ const LimitSetting = ({route}) => {
   const renderListLimit = ({item}) => (
     <TouchableOpacity
       disabled={item.limit <= amountLimit ? false : true}
-      onPress={() => setLimit(item.limit)}>
+      onPress={() => setLimit(item.limit)}
+    >
       <View style={styles.containerItem}>
         <Text style={item.limit <= amountLimit ? styles.item : styles.disabled}>
           {formatMoney(item.limit)}
@@ -72,7 +73,7 @@ const LimitSetting = ({route}) => {
           <Icon
             style={{height: 20, width: 20}}
             icon={Images.WidthDraw.Done}
-            tintColor={Colors.black}
+            tintColor={Colors.tp2}
           />
         ) : (
           <View></View>
@@ -105,7 +106,8 @@ const LimitSetting = ({route}) => {
             paddingBottom: 10,
             fontSize: Fonts.H6,
             textTransform: 'uppercase',
-          }}>
+          }}
+        >
           Hạn mức trong ngày
         </Text>
         <FlatList
@@ -126,7 +128,7 @@ const LimitSetting = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,

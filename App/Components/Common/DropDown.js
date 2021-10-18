@@ -59,7 +59,7 @@ const DropDown = ({visible, setVisible, onPress, data, title}) => {
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     position: 'absolute',
     marginLeft: -Spacing.PADDING,
     borderTopLeftRadius: Spacing.PADDING,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   header: {
     padding: Spacing.PADDING,
     borderStyle: 'solid',
-    borderBottomColor: Colors.l2,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
   },
   btn: {

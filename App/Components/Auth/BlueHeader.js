@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   leftZero: {left: 0},
   pt1: {paddingTop: 43},
   //-------------------------
-  bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  bgWhite: {backgroundColor: Colors.bs4},
 });
 
 export default BlueHeader;

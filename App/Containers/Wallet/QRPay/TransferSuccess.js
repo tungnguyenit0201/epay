@@ -105,7 +105,7 @@ const TransactionResult = () => {
         <Row space={10}>
           <Col space={10} width="50%">
             <Button
-              bg={Colors.white}
+              bg={Colors.bs4}
               border={Colors.brd1}
               color={Colors.brd1}
               label="Về trang chủ"
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     color: Colors.cl3,
   },
   textRight: {
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     maxWidth: scale(160),
   },
 });

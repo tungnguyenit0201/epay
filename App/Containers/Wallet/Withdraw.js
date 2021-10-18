@@ -45,7 +45,7 @@ const Withdraw = () => {
               ref={inputRef}
               onChange={onChangeCash}
               errorStyle={{
-                borderColor: Colors.cl4,
+                borderColor: Colors.bs1,
               }}
             />
           </View>

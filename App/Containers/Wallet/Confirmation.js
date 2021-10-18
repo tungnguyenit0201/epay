@@ -135,7 +135,7 @@ const Confirmation = () => {
           <TextInput
             placeholder="1 -> next , 0 -> error"
             password
-            placeholderTextColor={Colors.l5}
+            placeholderTextColor={Colors.tp5}
             onChange={handleChange}
           />
           <Text style={styles.textUnderline}>Quên mật khẩu?</Text>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   textRight: {
     fontSize: Fonts.H6,
-    color: Colors.black,
+    color: Colors.tp2,
   },
   confirmButtonContainer: {
     flex: 1,

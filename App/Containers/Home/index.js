@@ -72,9 +72,9 @@ const Home = () => {
             space={1}
             col={4}
             data={dataMenu}
-            styleText={[{fontSize: 14, color: Colors.white}]}
+            styleText={[{fontSize: 14, color: Colors.bs4}]}
             styleWicon={[{backgroundColor: Colors.brd1}]}
-            //styleIcon={[{tintColor: Colors.white}]}
+            //styleIcon={[{tintColor: Colors.bs4}]}
           />
         </View>
       </HeaderBg>

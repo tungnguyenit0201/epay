@@ -41,7 +41,7 @@ const BankLinkKYCInfo = props => {
   };
 
   return (
-    <View flex={1} backgroundColor={Colors.white}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header title={translation.connect_bank} back />
       </HeaderBg>
@@ -129,7 +129,7 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
           onBlur={handleBlur('Address')}
           error={touched.Address && errors.Address}
           value={values.Address}
-          inputStyle={{borderColor: Colors.BORDER}}
+          inputStyle={{borderColor: Colors.bs2}}
         />
       </ScrollView>
 
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   shadowButton: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 1, height: 0},

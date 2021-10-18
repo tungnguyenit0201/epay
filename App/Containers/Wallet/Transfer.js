@@ -38,7 +38,7 @@ const Transfer = () => {
               <View style={styles.iconLocation}>
                 <Icon
                   icon={Images.Transfer.ArrowRight}
-                  tintColor={Colors.black}
+                  tintColor={Colors.tp2}
                   style={styles.arrowRight}
                 />
               </View>
@@ -63,7 +63,7 @@ const Transfer = () => {
               <View style={styles.iconLocation}>
                 <Icon
                   icon={Images.Transfer.ArrowRight}
-                  tintColor={Colors.black}
+                  tintColor={Colors.tp2}
                   style={styles.arrowRight}
                 />
               </View>
@@ -115,7 +115,7 @@ const Transfer = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -177,12 +177,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   arrowIcon: {
-    color: Colors.black,
+    color: Colors.tp2,
     fontSize: Fonts.H6,
   },
   modal: {
     height: scale(180),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     paddingVertical: Spacing.PADDING,
     paddingHorizontal: Spacing.PADDING + scale(20),
     borderRadius: scale(5),

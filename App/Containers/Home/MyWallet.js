@@ -69,7 +69,7 @@ const MyWallet = ({route}) => {
 
         <View
           style={{
-            backgroundColor: Colors.BORDER,
+            backgroundColor: Colors.bs2,
             height: 8,
           }}
         ></View>
@@ -128,7 +128,7 @@ const MyWallet = ({route}) => {
           styles.wrap,
           {
             padding: Spacing.PADDING,
-            backgroundColor: Colors.BACKGROUNDCOLOR,
+            backgroundColor: Colors.bs4,
           },
         ]}
       >
@@ -144,21 +144,21 @@ const MyWallet = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
   py_1: {paddingVertical: Spacing.PADDING},
   text: {
-    color: Colors.gray,
+    color: Colors.tp3,
     lineHeight: 20,
     marginBottom: 15,
   },
   itemAddBank: {
     maxWidth: '33.333%',
     alignItems: 'center',
-    borderColor: Colors.l5,
+    borderColor: Colors.tp5,
     borderWidth: 1,
     borderStyle: 'dashed',
     padding: 10,

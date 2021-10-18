@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
   },
   itemBank: {
     flex: 1,
-    backgroundColor: Colors.cl5,
+    backgroundColor: Colors.bg1,
     borderRadius: 10,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

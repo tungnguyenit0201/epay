@@ -32,7 +32,7 @@ const QRPay = ({route}) => {
   }; */
   return (
     // TODO: translate
-    <View style={{flex: 1, backgroundColor: Colors.white}}>
+    <View style={{flex: 1, backgroundColor: Colors.bs4}}>
       <HeaderBg>
         <Header
           title="Mã của tôi" // TODO: translate

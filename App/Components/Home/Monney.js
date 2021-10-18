@@ -35,7 +35,7 @@ const Monney = ({style, title, showing}) => {
           >
             <Icon
               icon={showMoney ? Images.Eye : Images.EyeGray}
-              //tintColor={isMoney ? Colors.l4 : ''}
+              //tintColor={isMoney ? Colors.bs1 : ''}
               size={20}
             />
           </TouchableOpacity>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.l1,
+    backgroundColor: Colors.tp3,
     borderRadius: 4,
     padding: 10,
     marginBottom: 20,

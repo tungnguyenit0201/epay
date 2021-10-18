@@ -8,7 +8,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const bgheader = require('images/home/homeHeader.jpg');
 
-const Header = ({children, bgimg, bgColor = Colors.white, mb = 0, style}) => {
+const Header = ({children, bgimg, bgColor = Colors.bs4, mb = 0, style}) => {
   const top = getStatusBarHeight();
   return (
     <View

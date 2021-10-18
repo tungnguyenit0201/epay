@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 16,
   },
   header: {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.PADDING / 2,
   },
   positiveText: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontWeight: 'bold',
   },
   negativeButton: {
@@ -228,13 +228,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: Spacing.PADDING / 2,
-    backgroundColor: Colors.white,
-    borderColor: Colors.primary,
+    backgroundColor: Colors.bs4,
+    borderColor: Colors.grd3,
     borderWidth: 1,
     borderRadius: 10,
   },
   secondaryText: {
     fontWeight: 'bold',
-    color: Colors.blue,
+    color: Colors.tp1,
   },
 });

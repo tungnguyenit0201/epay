@@ -41,7 +41,7 @@ const Promotion = () => {
           <Text>{item?.Content}</Text>
           <Text color={Colors.brd1}>Điều kiện</Text>
         </View>
-        <Text color={Colors.l8}>HSD: {item?.ExpireDate}</Text>
+        <Text color={Colors.tp3}>HSD: {item?.ExpireDate}</Text>
       </TouchableOpacity>
     );
   };
@@ -81,7 +81,7 @@ const Promotion = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   wrapInput: {
     flexDirection: 'row',
@@ -100,12 +100,12 @@ const styles = StyleSheet.create({
     paddingTop: scale(24),
   },
   wrapPromo: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     padding: scale(12),
     borderRadius: 8,
   },
   active: {
-    backgroundColor: Colors.cl5,
+    backgroundColor: Colors.bg1,
   },
   bottomBtn: {
     position: 'absolute',

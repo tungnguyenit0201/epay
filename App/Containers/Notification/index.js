@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 150,
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
 
   emtyNoti: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     bottom: 23,
   },
   isRead: {
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
   },
   tag: {
     flexDirection: 'row',
@@ -178,15 +178,15 @@ const styles = StyleSheet.create({
     paddingVertical: scale(5),
     paddingHorizontal: scale(10),
     borderRadius: 99,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     height: 32,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
     borderWidth: 1,
     marginRight: scale(5),
   },
   tagActive: {
-    backgroundColor: Colors.blue,
-    borderColor: Colors.blue,
+    backgroundColor: Colors.tp1,
+    borderColor: Colors.tp1,
   },
 
   flexRow: {flexDirection: 'row', paddingBottom: 15},
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   },
 
   textWhite: {
-    color: Colors.white,
+    color: Colors.bs4,
   },
 });
 export default Notification;

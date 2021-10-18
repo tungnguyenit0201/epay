@@ -122,7 +122,7 @@ const BankCardInfo = props => {
   };
   return (
     <ScrollView
-      style={{backgroundColor: Colors.white}}
+      style={{backgroundColor: Colors.bs4}}
       contentContainerStyle={{flex: 1}}
     >
       <HeaderBg>

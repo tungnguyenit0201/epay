@@ -8,10 +8,10 @@ var css = `
   *{
     font-family: SVN-Gilroy !important;
     font-size: ${Fonts.MD} !important;
-    color: ${Colors.TEXT} !important
+    color: ${Colors.tp3} !important
   }
   .markRed {
-    color: ${Colors.Highlight}!important
+    color: ${Colors.hl1}!important
   }
   body {
     // white-space: pre-wrap; 
@@ -21,7 +21,7 @@ var css = `
   .content{ padding: 5px 10px 40px !important }
   img { max-width: 100% !important }
   table, tr, td {
-    border: 1px solid ${Colors.BORDER};
+    border: 1px solid ${Colors.bs2};
     border-collapse: collapse;
   }`;
 

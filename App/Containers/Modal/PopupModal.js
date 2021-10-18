@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 8,
   },
   wrap: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   header: {
     padding: Spacing.PADDING,
     borderStyle: 'solid',
-    borderBottomColor: Colors.l2,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
   },
   btn: {

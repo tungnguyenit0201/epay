@@ -57,7 +57,7 @@ const Account = () => {
             Số dư
           </Text>
           <Image
-            style={[base.leftAuto, {width: 88, height: 32,tintColor: Colors.white}]}
+            style={[base.leftAuto, {width: 88, height: 32,tintColor: Colors.bs4}]}
             source={require('images/profile/epay.png')}
           />
         </View> */}
@@ -66,11 +66,11 @@ const Account = () => {
         <Image
           style={[
             base.rightAuto,
-            {width: 88, height: 32, tintColor: Colors.white},
+            {width: 88, height: 32, tintColor: Colors.bs4},
           ]}
           source={require('images/profile/epay.png')}
         />
-        <Text ml={10} bold color={Colors.white} fs="h6">
+        <Text ml={10} bold color={Colors.bs4} fs="h6">
           Standard
         </Text>
       </View>
@@ -92,7 +92,7 @@ const Account = () => {
           <Icon
             icon={showMoney ? Images.Eye2 : Images.EyeGray2}
             size={20}
-            tintColor={Colors.white}
+            tintColor={Colors.bs4}
           />
         </TouchableOpacity>
       </View>
@@ -103,9 +103,9 @@ const Account = () => {
         style={[base.row, {marginBottom: 10}]}
         onPress={goToBankLinked}
       >
-        <Text semibold mr={8} color={Colors.white}>
+        <Text semibold mr={8} color={Colors.bs4}>
           {translation.bank_linking}{' '}
-          <Text color={Colors.white} semibold>
+          <Text color={Colors.bs4} semibold>
             ({listConnectBank?.length})
           </Text>
         </Text>
@@ -123,7 +123,7 @@ const Account = () => {
               source={{uri: BankLogoUrl}}
               resizeMode="contain"
             />
-            <Text semibold ml={10} color={Colors.white}>
+            <Text semibold ml={10} color={Colors.bs4}>
               {BankName}
             </Text>
           </View>
@@ -134,7 +134,7 @@ const Account = () => {
             style={{width: 40, height: 40}}
             source={require('images/profile/plus2.png')}
           />
-          <Text semibold ml={10} color={Colors.white}>
+          <Text semibold ml={10} color={Colors.bs4}>
             {translation.link_your_bank}
           </Text>
         </TouchableOpacity>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     marginTop: 10,
     marginBottom: 15,
     opacity: 0.5,

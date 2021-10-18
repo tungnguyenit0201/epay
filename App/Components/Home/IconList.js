@@ -46,7 +46,7 @@ const IconList = ({data}) => {
           styles.item,
           {
             width: width / 2 - Spacing.PADDING,
-            // borderColor: Colors.black,
+            // borderColor: Colors.tp2,
             // borderWidth: 1,
           },
         ]}

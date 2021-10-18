@@ -60,7 +60,7 @@ const Select = ({
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l4 : Colors.TEXT}
+            color={disabled ? Colors.bs1 : Colors.tp3}
           >
             {mappedValue?.[value]?.label || placeholder}
           </Text>
@@ -130,9 +130,9 @@ const styles = StyleSheet.create({
   wrap: {},
   inputWrap: {
     flexDirection: 'row',
-    backgroundColor: Colors.l1,
+    backgroundColor: Colors.tp3,
     alignItems: 'center',
-    borderColor: Colors.l1,
+    borderColor: Colors.tp3,
     borderWidth: 1,
     paddingVertical: 11,
     paddingHorizontal: 8,

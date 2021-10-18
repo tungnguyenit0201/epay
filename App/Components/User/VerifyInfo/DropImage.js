@@ -130,7 +130,7 @@ const DropImage = ({
                   source={Images.TrafficFee.BigCamera}
                   resizeMode={'contain'}
                 />
-                <Text color={Colors.white} bold centered mt={10} fs="h6">
+                <Text color={Colors.bs4} bold centered mt={10} fs="h6">
                   {translation.take_a_photo_of_gttt}
                 </Text>
               </View>
@@ -191,7 +191,7 @@ const DropImage = ({
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>
                         <Text
-                          color={Colors.white}
+                          color={Colors.bs4}
                           fs="h6"
                           centered
                           ml={Spacing.PADDING}
@@ -245,9 +245,9 @@ const styles = StyleSheet.create({
   //---------------
   wrap: {
     paddingVertical: scale(16),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   wrapImg: {
     paddingVertical: Spacing.PADDING + 3,
     paddingHorizontal: Spacing.PADDING + 12,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   imgFront: {
     borderColor: Colors.brd1,
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   },
   emptyHolder: {
     paddingVertical: Spacing.PADDING,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 8,
   },
   title1: {
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
   //------------------
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   blockBlurBlack: {
     width: '100%',
     height: '100%',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.tp2,
     opacity: 0.8,
     alignItems: 'center',
     justifyContent: 'center',

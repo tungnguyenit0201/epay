@@ -50,7 +50,7 @@ const VerifyEmail = ({route}) => {
 
                   <TextInput
                     placeholder="Nhập email "
-                    placeholderTextColor={Colors.l5}
+                    placeholderTextColor={Colors.tp5}
                     onChange={handleChange('email')}
                     onBlur={handleBlur('email')}
                     error={touched.email && errors.email}
@@ -76,5 +76,5 @@ export default VerifyEmail;
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //-------------------
-  flex1: {flex: 1, backgroundColor: Colors.white},
+  flex1: {flex: 1, backgroundColor: Colors.bs4},
 });

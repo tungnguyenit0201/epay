@@ -62,7 +62,7 @@ const ChangePassword = ({route}) => {
                   <TextInput
                     password
                     placeholder={translation.enter_password}
-                    placeholderTextColor={Colors.l5}
+                    placeholderTextColor={Colors.tp5}
                     onChange={handleChange('password')}
                     onBlur={handleBlur('password')}
                     error={touched.password && translation[errors.password]}
@@ -91,5 +91,5 @@ export default ChangePassword;
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //-------------------
-  flex1: {flex: 1, backgroundColor: Colors.white},
+  flex1: {flex: 1, backgroundColor: Colors.bs4},
 });

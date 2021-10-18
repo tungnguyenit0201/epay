@@ -29,7 +29,7 @@ const RegisterFailure = ({route}) => {
     >
       <Icon
         icon={Images.Register.Info}
-        tintColor={Colors.white}
+        tintColor={Colors.bs4}
         style={styles.iconSize}
       />
     </TouchableOpacity>
@@ -47,15 +47,15 @@ const RegisterFailure = ({route}) => {
           renderRightComponent={() => renderRightComponent()}
         />
         <View style={styles.wrap}>
-          <Text color={Colors.white} bold fs={'h3'}>
+          <Text color={Colors.bs4} bold fs={'h3'}>
             {(route?.params?.content?.title || translation.sign_up) +
               '\n' +
               translation.transaction.failure}
           </Text>
-          {/* <Text color={Colors.white} mb={15} bold fs={'h3'}>
+          {/* <Text color={Colors.bs4} mb={15} bold fs={'h3'}>
             {translation.transaction.failure}
           </Text> */}
-          <Text color={Colors.white} fs={'md'} mt={15} style={styles.line}>
+          <Text color={Colors.bs4} fs={'md'} mt={15} style={styles.line}>
             {route?.params?.content?.text ||
               translation.you_have_entered_the_otp_incorrectly_three_times_please_wait_30_minutes_and_try_again}
           </Text>
@@ -71,17 +71,17 @@ const RegisterFailure = ({route}) => {
         <Button
           label={`Gọi ${route?.params?.content?.hotline || '1900-000'}`}
           style={styles.btn}
-          // bg={Colors.white}
-          // color={Colors.black}
-          border={Colors.cl4}
+          // bg={Colors.bs4}
+          // color={Colors.tp2}
+          border={Colors.bs1}
           onPress={() => onNavigate(SCREEN.AUTH)}
         />
         <Button
           label={translation.come_back_later}
           style={styles.btn}
-          // bg={Colors.white}
-          // color={Colors.black}
-          border={Colors.cl4}
+          // bg={Colors.bs4}
+          // color={Colors.tp2}
+          border={Colors.bs1}
           mode="outline"
           onPress={() => onNavigate(SCREEN.AUTH)}
           bgImg={0}

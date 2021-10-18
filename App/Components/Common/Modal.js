@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   buttonClose: {backgroundColor: Colors.brd1},
   textStyle: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   px1: {paddingHorizontal: 32},
   pb1: {paddingBottom: 15},
   //------------------
-  bgWhite: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  bgWhite: {backgroundColor: Colors.bs4},
   //------------------
   borderRadius1: {borderRadius: Spacing.PADDING},
 

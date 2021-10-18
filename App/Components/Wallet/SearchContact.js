@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   //   flexWrap: 'wrap',
   //   flexDirection: 'row',
   //   alignItems: 'center',
-  //   backgroundColor: Colors.white,
+  //   backgroundColor: Colors.bs4,
   //   height: 48,
   //   borderRadius: scale(8),
   // },

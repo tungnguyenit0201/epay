@@ -325,7 +325,7 @@ const VerifyUserPortrait = ({route}) => {
 };
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   container: {
     paddingHorizontal: Spacing.PADDING,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
   pb1: {paddingBottom: 24},
   //---------------
   underline: {textDecorationLine: 'underline'},
-  bgGray: {backgroundColor: Colors.l4},
+  bgGray: {backgroundColor: Colors.bs1},
   //---------------
   firstLink: {
     textDecorationLine: 'underline',

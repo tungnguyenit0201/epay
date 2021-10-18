@@ -62,7 +62,7 @@ const TransactionDetails = () => {
             <TextInput
               placeholder={translation.enter_topup_amount}
               style={styles.inputCurrent}
-              placeholderTextColor={Colors.BLACK}
+              placeholderTextColor={Colors.tp2}
             />
             <Text bold style={styles.textCurrent}>
               đ
@@ -72,7 +72,7 @@ const TransactionDetails = () => {
           <TextInput
             placeholder={translation.enter_message}
             style={styles.inputBlock}
-            placeholderTextColor={Colors.BLACK}
+            placeholderTextColor={Colors.tp2}
           />
           {/* Icon Rectangle */}
           <Icon
@@ -135,14 +135,14 @@ export default TransactionDetails;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
     flex: 1,
   },
   textBlack: {
-    color: Colors.white,
+    color: Colors.bs4,
   },
   ml_20: {
     marginLeft: scale(20),
@@ -154,13 +154,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerTitle: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontSize: Fonts.H6,
     textAlign: 'center',
   },
   textHeader: {
     fontSize: Fonts.H6,
-    color: Colors.white,
+    color: Colors.bs4,
     marginBottom: scale(8),
     marginTop: scale(25),
   },
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   nameUser: {
     fontSize: Fonts.H6,
-    color: Colors.white,
+    color: Colors.bs4,
   },
   flexBox: {
     flex: 4,

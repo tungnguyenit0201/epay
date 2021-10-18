@@ -48,7 +48,7 @@ export default BottomModal;
 
 const styles = StyleSheet.create({
   modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     position: 'absolute',
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   header: {
     padding: Spacing.PADDING,
     borderStyle: 'solid',
-    borderBottomColor: Colors.l2,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
   },
   btn: {

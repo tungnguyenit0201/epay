@@ -43,7 +43,7 @@ const RegisterPassword = ({route}) => {
             <Icon
               icon={Images.Register.Info}
               style={styles.iconSize}
-              tintColor={Colors.white}
+              tintColor={Colors.bs4}
             />
           </TouchableOpacity>
         )}

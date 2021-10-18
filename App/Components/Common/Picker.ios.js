@@ -49,7 +49,7 @@ const Picker = ({
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l2 : Colors.Text}
+            color={disabled ? Colors.bs2 : Colors.Text}
           >
             {value?.label || placeholder}
           </Text>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   inputWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: Colors.BORDER,
+    borderColor: Colors.bs2,
     borderWidth: 1,
     paddingVertical: 11,
     paddingHorizontal: 8,

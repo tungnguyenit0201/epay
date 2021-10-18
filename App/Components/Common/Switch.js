@@ -6,7 +6,7 @@ const SwitchCustom = ({
   style,
   onChange,
   onColor = Colors.brd1,
-  offColor = Colors.l3,
+  offColor = Colors.bs1,
   initialValue = false,
   ...props
 }) => {

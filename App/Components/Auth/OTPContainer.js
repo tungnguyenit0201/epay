@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
   mb1: {marginBottom: 12},
   mb2: {marginBottom: 26},
   //-----------------------
-  textWhite: {color: Colors.white},
-  textGray: {color: Colors.gray},
+  textWhite: {color: Colors.bs4},
+  textGray: {color: Colors.tp3},
   //-----------------------
   // header: {
   //   fontSize: 20,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   // },
   // textCenter: {textAlign: 'center'},
   // textDefault: {
-  //   color: Colors.GRAY,
+  //   color: Colors.tp3,
   //   paddingBottom: Spacing.PADDING - 4,
   //   fontSize: Fonts.MD_LARGE,
   // },
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     /* backgroundColor: 'transparent', */
     fontWeight: '700',
     fontSize: Fonts.H4,
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     textAlign: 'center',
     borderBottomColor: Colors.g2,
     borderWidth: 0,

@@ -78,9 +78,9 @@ const Accordion = ({
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.BACKGROUNDACCORDION,
+    backgroundColor: Colors.bs2,
     marginHorizontal: -Spacing.PADDING,
-    borderBottomColor: Colors.BACKGROUNDCOLOR,
+    borderBottomColor: Colors.bs4,
     borderBottomWidth: 1,
     paddingHorizontal: Spacing.PADDING,
     flexDirection: 'column',

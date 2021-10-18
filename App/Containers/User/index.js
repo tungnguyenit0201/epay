@@ -44,7 +44,7 @@ const User = () => {
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.white}]}>
+      <ScrollView style={[base.wrap, {backgroundColor: Colors.bs4}]}>
         <View style={[base.container]}>
           <UserInfo style={styles.mb2} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
@@ -72,7 +72,7 @@ const User = () => {
                   {/*
                   show notify status when user buy product
                   <View style={[styles.topMinus1,styles.notify1]}>
-                    <Text color={Colors.white} centered size={Fonts.SM}>3</Text>
+                    <Text color={Colors.bs4} centered size={Fonts.SM}>3</Text>
                   </View> */}
                 </View>
               </TouchableOpacity>
@@ -231,7 +231,7 @@ const User = () => {
             label={translation.log_out}
             // style={base.bgWhite}
             // bgImg={0}
-            color={Colors.black}
+            color={Colors.tp2}
             mode="outline"
             style={{borderWidth: 0, elevation: 4}}
           />
@@ -266,10 +266,10 @@ const styles = StyleSheet.create({
   //------------
   item: {
     padding: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 10,
     marginBottom: 15,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

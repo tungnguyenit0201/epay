@@ -126,7 +126,7 @@ const Login = ({route}) => {
                             : Images.SignIn.FingerPrint
                         }
                         style={styles.iconSize}
-                        tintColor={Colors.white}
+                        tintColor={Colors.bs4}
                       />
                     </Pressable>
                   )}
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   //-------------------
   linkText: {
     textDecorationStyle: 'solid',
-    textDecorationColor: Colors.BLACK,
+    textDecorationColor: Colors.tp2,
   },
   box: {
     flexDirection: 'row',
