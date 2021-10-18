@@ -51,6 +51,11 @@ const useRequest = () => {
     success,
     failure,
   }) => {
+    if (!baseUrl) {
+      baseUrl =
+        (await AsyncStorage.getItem(ASYNC_STORAGE_KEY.COMMON.DOMAIN)) ||
+        API.ROOT;
+    }
     await request({
       baseUrl,
       url,
