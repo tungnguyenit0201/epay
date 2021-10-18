@@ -138,16 +138,19 @@ const QRPay = () => {
                 <View style={styles.wrapBtn}>
                   <Button
                     label={translation.payment_qr}
-                    bgImg={0}
+                    bgImg={false}
                     leftIcon={Images.Camera.QR}
                     mode="outline"
                     mr={Spacing.PADDING / 2}
+                    style={styles.outline}
+                    color={Colors.bs4}
                   />
                   <Button
-                    bgImg={0}
+                    bgImg={false}
                     label={translation.scan_qr}
                     leftIcon={Images.Camera.Scan}
                     // onPress={detectQRCode}
+                    style={{flex: 1}}
                   />
                 </View>
               </View>
@@ -177,6 +180,7 @@ const styles = StyleSheet.create({
   wrapBtn: {
     position: 'absolute',
     bottom: Spacing.PADDING * 3,
+    paddingHorizontal: Spacing.PADDING,
     alignSelf: 'center',
     flexDirection: 'row',
   },
@@ -198,6 +202,7 @@ const styles = StyleSheet.create({
     width: scale(200),
     height: scale(200),
   },
+  outline: {flex: 1, borderColor: Colors.bs4, backgroundColor: 'transparent'},
 });
 
 export default QRPay;
