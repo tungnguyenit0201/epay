@@ -1,8 +1,15 @@
-const ROOT = 'https://dev2.epayservices.com.vn:9443/api/v2/';
+const ROOT_LIST = [
+  'https://dev2.epayservices.com.vn:9443/api/v2/',
+  'https://test2.epayservices.com.vn:9443/api/v2/',
+  'https://test3.epayservices.com.vn:9443/api/v2/',
+  'https://test4.epayservices.com.vn:9443/api/v2/',
+];
+const ROOT = ROOT_LIST[0];
 const TIMEOUT = 10000;
 
 export default {
   ROOT,
+  ROOT_LIST,
   TIMEOUT,
   AUTH: {
     CHECK_PHONE: 'account/check_exist',

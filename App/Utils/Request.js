@@ -66,6 +66,7 @@ const getEncryptParam = async (url, params) => {
 async function request({
   method = 'get',
   url,
+  baseUrl,
   query,
   params,
   success,
@@ -73,7 +74,7 @@ async function request({
   headers,
   form = false,
 }) {
-  let root = API.ROOT;
+  let root = baseUrl || API.ROOT;
   const requestMethod = axios;
   // __DEV__ && curlirize(requestMethod);
 

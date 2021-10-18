@@ -66,6 +66,17 @@ export default function userReducer(state, action) {
         ...state,
         sourceMoney: action?.sourceMoney,
       };
+    case 'RESET':
+      return {
+        listConnectBank: [],
+        listDomesticBank: [],
+        listInternationalBank: [],
+        limit: '',
+        transaction: {},
+        wallet: {},
+        icInfo: {},
+        qrTransaction: {},
+      };
     default:
       return state;
   }

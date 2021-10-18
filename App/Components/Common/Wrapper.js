@@ -101,7 +101,7 @@ const Wrapper = React.memo(
           <View style={styles.flexFill}>{children}</View>
           {loading && <FWLoading />}
           {!!error?.errorMessage && <Alert />}
-          {__DEV__ && <Debug />}
+          <Debug />
           {/* {modalSmartOTP.smartOTPSuggestion && (
             <ModalCustom
               icon={Images.Modal.Lock}

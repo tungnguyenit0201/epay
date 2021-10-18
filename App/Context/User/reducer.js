@@ -70,6 +70,25 @@ export default function userReducer(state, action) {
         ...state,
         route: action?.route,
       };
+    case 'RESET':
+      return {
+        token: '',
+        firstLogin: false,
+        personalInfo: null,
+        personalAddress: '',
+        personalIC: '',
+        phone: null,
+        myWallet: '',
+        region: {
+          Provincial: '',
+          County: '',
+          Ward: '',
+        },
+        qrCode: '',
+        listNotify: [],
+        kycType: undefined,
+        route: null,
+      };
     default:
       return state;
   }
