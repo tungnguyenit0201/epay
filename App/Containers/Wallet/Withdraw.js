@@ -38,7 +38,7 @@ const Withdraw = () => {
       <ScrollView style={base.wrap} showsVerticalScrollIndicator={false}>
         <View style={[base.container, styles.mainContainer]}>
           <View style={base.boxShadow}>
-            <Monney title={translation.topup?.walletAmount} showing />
+            <Monney title={translation.topup?.walletAmount} />
             <InputMoney
               placeholder={'Nhập số tiền rút'}
               errorMessage={'*Số tiền rút tối thiểu là 10.000đ'}
