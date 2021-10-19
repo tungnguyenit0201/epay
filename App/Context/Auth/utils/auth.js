@@ -43,6 +43,8 @@ const useAuth = () => {
       // login
       case ERROR_CODE.PHONE_IS_REGISTERED:
         return navigateLoginByName(phone);
+      default:
+        return setError(result);
     }
   };
 

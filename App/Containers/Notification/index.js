@@ -111,7 +111,7 @@ const Notification = () => {
                         )}
                       </Text>
                     </View>
-                    <Text>{item?.Content}</Text>
+                    <Text numberOfLines={4}>{item?.Content}</Text>
                     {/* {item?.ContentImgUrl && (
                       <Image
                         source={{uri: `${item?.ContentImgUrl}`}}
