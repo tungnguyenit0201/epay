@@ -70,7 +70,7 @@ async function request({
   query,
   params,
   success,
-  failure = defaultFailureHandle,
+  failure,
   headers,
   form = false,
 }) {
@@ -135,6 +135,7 @@ async function request({
           if (__DEV__) {
             console.log({...result?.data, ...parseData} || result);
           }
+          // return failure({message: 'Network Error'});
           return success({...result?.data, ...parseData} || result);
         }
       } else {

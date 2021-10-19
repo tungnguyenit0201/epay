@@ -113,6 +113,8 @@ const useAuth = () => {
             : Navigator.reset(SCREEN.TAB_NAVIGATION);
         }
         return;
+      default:
+        setError(result);
     }
   };
 
