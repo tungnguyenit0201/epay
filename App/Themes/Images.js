@@ -114,6 +114,13 @@ export default {
     BgGold: require('images/bg/bg-gold.png'),
     BgPlantinum: require('images/bg/bg-plantinum.png'),
     NotifyStatus: require('images/icons/notification-status.png'),
+    TaskSquare: require('images/icons/task-square.png'),
+    Lock: require('images/icons/lock.png'),
+    Call: require('images/icons/call.png'),
+    Clock: require('images/icons/clock.png'),
+    Login: require('images/icons/login.png'),
+    DollarCircle: require('images/icons/dollar-circle.png'),
+    Key: require('images/icons/key.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),

@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors, Fonts, Images} from 'themes';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import {Col, Radio, Row, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
@@ -27,7 +27,7 @@ import RadioICInfo from 'containers/Wallet/Bank/components/RadioICInfo';
 
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
-    style={styles.item}
+    style={[styles.item, styles.blockShadowGray]}
     onPress={() => {
       callback?.(item);
     }}
@@ -55,7 +55,6 @@ const BankItem = ({title, icon, item, callback}) => (
     <Image
       source={icon}
       style={{
-        // width: scale(30),
         width: scale(52),
         marginRight: 10,
         aspectRatio: 2,
@@ -261,43 +260,14 @@ const BankList = forwardRef((props, ref) => {
   };
   const renderBankBlock = () => {
     return (
-      <View
-        style={[
-          {
-            backgroundColor: Colors.bs4,
-            shadowColor: 'rgba(0, 0, 0, 0.16)',
-            shadowOpacity: 1,
-            shadowOffset: {width: 0, height: 0},
-            elevation: 1,
-            marginHorizontal: 16,
-            borderRadius: 16,
-            padding: 16,
-            marginVertical: 8,
-          },
-          style,
-        ]}
-      >
-        <Text
-          size={18}
-          style={{
-            fontWeight: 'bold',
-            marginBottom: 16,
-            fontSize: 18,
-            marginTop: 8,
-          }}
-        >
+      <View style={[styles.px1, style]}>
+        <Text size={Fonts.LG} bold mb={16}>
           {title || translation.bank_linking}
         </Text>
         <Row>
           {bankData.map((item, index) => {
             return (
-              <Col
-                // width={'33.333%'}
-                width={'100%'}
-                space={10}
-                key={index}
-                style={{marginBottom: 16}}
-              >
+              <Col width={'100%'} key={index} style={{marginBottom: 16}}>
                 <BankItem
                   callback={onPress}
                   bankInfo={bankInfo}
@@ -325,7 +295,9 @@ export default BankList;
 
 const styles = StyleSheet.create({
   flex1: {flex: 1},
-  //---------------
+  //-----------------
+  px1: {paddingHorizontal: Spacing.PADDING},
+  //-----------------
   container: {
     backgroundColor: Colors.bs4,
     paddingBottom: 40,
@@ -364,5 +336,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     flexDirection: 'column',
+  },
+  //---------------
+  blockShadowGray: {
+    backgroundColor: Colors.bs4,
+    // shadowColor: 'rgba(0, 0, 0, 0.16)',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 0},
+    elevation: 24,
+    shadowRadius: 8,
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
   },
 });

@@ -110,7 +110,7 @@ const Account = () => {
           </Text>
         </Text>
         <Image
-          style={[styles.iconPlus, styles.topMinus1]}
+          style={styles.iconPlus}
           source={require('images/profile/plus.png')}
         />
       </TouchableOpacity>
@@ -145,7 +145,7 @@ const Account = () => {
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: 15},
   //------------
-  topMinus1: {top: -1},
+  // topMinus1: {top: 0},
   //------------
   flex1: {flex: 1},
   //------------

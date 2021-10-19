@@ -109,7 +109,20 @@ const User = () => {
                   style={[styles.icon, styles.mb3]}
                   source={Images.Profile.BaoMat}
                 />
-                <Text semibold>{translation.password_and_security} </Text>
+                <Text semibold>{translation.password_and_security}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  // Navigator.navigate(SCREEN.SECURITY);
+                }}
+              >
+                <Image
+                  style={[styles.icon, styles.mb3]}
+                  source={Images.Profile.TaskSquare}
+                />
+                <Text semibold>{'Trình tự thanh toán'}</Text>
               </TouchableOpacity>
             </Col>
             <Col space={15}>
