@@ -115,8 +115,24 @@ const useAuth = () => {
             : Navigator.reset(SCREEN.TAB_NAVIGATION);
         }
         return;
+
+      case ERROR_CODE.PASSWORD_CHANGE_REQUIRED_AFTER_LONG_TIME_NO_CHANGE:
+        setDefaultHeaders({
+          Authorization: `Bearer ${result?.Token}`,
+        });
+        await setToken(result?.Token);
+        dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+        onGetAllInfo();
+        onGetWalletInfo();
+        onGetConnectedBank();
+        return setError({
+          ...result,
+          onClose: () => {
+            Navigator.navigate(SCREEN.NEW_PASSWORD, {oldPassword: password});
+          },
+        });
       default:
-        setError(result);
+        return setError(result);
     }
   };
 

@@ -102,6 +102,19 @@ const useAsyncStorage = () => {
     return value ? JSON.parse(value) : {};
   };
 
+  const setInactiveTime = async time => {
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.COMMON.TURN_OF_AFTER_TIME,
+      time?.toString?.(),
+    );
+  };
+
+  const getInactiveTime = async () => {
+    return await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.COMMON.TURN_OF_AFTER_TIME,
+    );
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -121,6 +134,8 @@ const useAsyncStorage = () => {
     getResend,
     addName,
     getNameData,
+    getInactiveTime,
+    setInactiveTime,
   };
 };
 

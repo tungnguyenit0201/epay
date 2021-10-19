@@ -83,7 +83,6 @@ const Wrapper = React.memo(
       );
       return () => backHandler.remove();
     }, []);
-    console.log('error :>> ', error);
     return (
       // TODO: translate
       <View style={styles.flexFill}>

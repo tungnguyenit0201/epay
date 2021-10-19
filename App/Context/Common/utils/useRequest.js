@@ -80,7 +80,7 @@ const useRequest = () => {
     Navigator.reset(SCREEN.AUTH);
     dispatchUser({type: 'RESET'});
     dispatchWallet({type: 'RESET'});
-    dispatchCommon({type: 'SET_CONFIG', config: {}});
+    // dispatchCommon({type: 'SET_CONFIG', config: {}});
     setDefaultHeaders({
       Authorization: ``,
     });

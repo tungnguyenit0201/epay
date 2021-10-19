@@ -8,10 +8,11 @@ import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform, Alert, Linking} from 'react-native';
+import {Platform, Alert, Linking, AppState} from 'react-native';
 import {useAsyncStorage, useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
 import {useNotify} from 'context/User/utils';
+import RNRestart from 'react-native-restart';
 import {useUser} from 'context/User';
 import {Text} from 'components';
 
@@ -101,7 +102,8 @@ import {useLoginName} from 'context/Auth/utils';
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
-  const {getToken, getNameData, getPhone} = useAsyncStorage();
+  const {getToken, getNameData, getPhone, getInactiveTime, setInactiveTime} =
+    useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
   const {onPressNotify} = useNotify();
@@ -131,6 +133,34 @@ const AppNavigator = () => {
       await onGetConfig();
     };
     getConfig();
+
+    const subscription = AppState.addEventListener(
+      'change',
+      async nextAppState => {
+        try {
+          if (nextAppState === 'background') {
+            await setInactiveTime(Date.now());
+          }
+          if (nextAppState === 'active') {
+            let config = await onGetConfig();
+            let inactiveTime = await getInactiveTime();
+            let time =
+              parseInt?.(inactiveTime) + config?.TurnOffAfterTime * 10000;
+            if (parseInt?.(time) != 'NaN') {
+              if (time > Date.now()) {
+              } else {
+                RNRestart.Restart();
+              }
+              await setInactiveTime(null);
+            }
+          }
+        } catch (error) {}
+      },
+    );
+
+    return () => {
+      subscription?.remove?.();
+    };
   }, []); // eslint-disable-line
 
   React.useEffect(() => {
