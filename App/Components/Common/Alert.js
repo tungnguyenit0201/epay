@@ -20,7 +20,7 @@ const AlertCustom = () => {
   const onPressAction = action => {
     action?.();
     error?.onClose?.();
-    setError(null);
+    setError(-1);
   };
   return (
     // TODO: translate
@@ -29,7 +29,7 @@ const AlertCustom = () => {
         animationIn="zoomIn"
         transparent={true}
         visible={!!error?.errorMessage}
-        onBackdropPress={() => setError(null)}
+        onBackdropPress={() => onPressAction()}
       >
         <View style={styles.centeredView}>
           <View style={styles.header}>

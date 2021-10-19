@@ -7,9 +7,10 @@ import {useEmail} from 'context/User/utils';
 import {Formik} from 'formik';
 import {emailSchema} from 'utils/ValidationSchemas';
 import FooterContainer from 'components/Auth/FooterContainer';
+import _ from 'lodash';
+
 const VerifyEmail = ({route}) => {
   const {onEmailAuth} = useEmail(route?.params);
-  let [disable, setDisable] = useState(true);
 
   return (
     <>
@@ -52,7 +53,6 @@ const VerifyEmail = ({route}) => {
                   <TextInput
                     placeholder="Nhập email "
                     placeholderTextColor={Colors.tp5}
-                    onFocus={e => setDisable(false)}
                     onChange={handleChange('email')}
                     onBlur={handleBlur('email')}
                     error={touched.email && errors.email}
@@ -65,7 +65,7 @@ const VerifyEmail = ({route}) => {
               </View>
               <FooterContainer>
                 <Button
-                  disabled={disable}
+                  disabled={!_.isEmpty(errors) || !values.email}
                   label={TEXT.CONTINUE}
                   onPress={handleSubmit}
                 />

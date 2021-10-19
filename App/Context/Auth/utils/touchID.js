@@ -10,7 +10,6 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
   const [biometryType, setBiometryType] = useState(null);
   const {getTouchIdEnabled, getPhone} = useAsyncStorage();
   const {setError} = useError();
-  const isLocked = useRef(false);
   const textInputRef = useRef(null);
 
   const checkBiometry = async () => {
@@ -62,7 +61,6 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
     const {success, error} = result;
     if (success) {
       if (passcode) {
-        isLocked.current = false;
         onTouchID({passcode: false, forceShow: true});
       } else {
         onSuccess && onSuccess();
@@ -81,16 +79,13 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
         }); // TODO: translate
       case 'lockout':
         if (Platform.OS === 'ios') {
-          if (isLocked.current) {
-            onTouchID({passcode: true});
-          } else {
-            isLocked.current = true;
-            setError({
-              ErrorCode: -1,
-              ErrorMessage:
-                'Dấu vân tay không hợp lệ. Vui lòng nhập mật khẩu thiết bị để kích hoạt',
-            }); // TODO: translate
-          }
+          // isLocked.current = true;
+          // setError({
+          //   ErrorCode: -1,
+          //   ErrorMessage:
+          //     'Dấu vân tay không hợp lệ. Vui lòng nhập mật khẩu thiết bị để kích hoạt',
+          // }); // TODO: translate
+          onTouchID({passcode: true});
         } else {
           setError({
             ErrorCode: -1,

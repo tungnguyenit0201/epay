@@ -9,6 +9,7 @@ import API from 'configs/API';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {setDefaultHeaders} from 'utils/Axios';
+import RNRestart from 'react-native-restart';
 
 let baseUrl = null;
 
@@ -25,7 +26,10 @@ const useRequest = () => {
 
   const handleError = (error, failure) => {
     if (typeof failure == 'function') return failure(error);
-    if (error?.message == 'Network Error')
+    if (
+      error?.message == 'Network Error' ||
+      error?.message?.search('timeout') != -1
+    ) {
       return setError({
         ErrorMessage:
           'Mất kết nối hoặc đường truyền quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoặc thử lại sau ít phút',
@@ -35,13 +39,14 @@ const useRequest = () => {
           },
         ],
       });
+    }
+
     if (error?.message?.search?.('401') != -1)
-      setError({
+      return setError({
         ErrorMessage:
           'Tài khoản đã được đăng nhập ở một thiết bị khác hoặc phiên đăng nhập hết hạn!',
         onClose: onLogout,
       });
-    return;
   };
 
   const doRequest = async ({
@@ -73,13 +78,10 @@ const useRequest = () => {
   };
 
   const onLogout = () => {
-    Navigator.reset(SCREEN.AUTH);
-    dispatchUser({type: 'RESET'});
-    dispatchWallet({type: 'RESET'});
-    dispatchCommon({type: 'SET_CONFIG', config: {}});
     setDefaultHeaders({
       Authorization: ``,
     });
+    RNRestart.Restart();
   };
 
   return {doRequest, domain: baseUrl, onChangeDomain};

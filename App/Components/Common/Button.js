@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.PADDING,
   },
   contain: {
-    backgroundColor: Colors.brd1,
+    backgroundColor: Colors.tp1,
   },
   outline: {
     borderWidth: 1.5,

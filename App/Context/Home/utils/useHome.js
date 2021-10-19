@@ -3,21 +3,32 @@ import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, MENU, SCREEN} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import useServiceCommon from 'services/common';
-import {useAsyncStorage, useShowModal} from 'context/Common/utils';
+import {useAsyncStorage, useError, useShowModal} from 'context/Common/utils';
 import {Images} from 'themes';
 import {useTranslation} from 'context/Language';
+import * as LocalAuthentication from 'expo-local-authentication';
+import {Linking} from 'react-native';
+
 const useHome = () => {
   const {getPhone, getToken} = useAsyncStorage();
   let [banner, setBanner] = useState();
   const {getBanner} = useServiceCommon();
-  const goSecurity = () => {
-    Navigator.navigate(SCREEN.SECURITY);
+  const {setError} = useError();
+
+  const goSecurity = async () => {
+    const isTouchIdEnrolled = await LocalAuthentication.isEnrolledAsync();
+    if (isTouchIdEnrolled) {
+      Navigator.navigate(SCREEN.SECURITY);
+    } else {
+      Linking.openSettings();
+    }
   };
   const onGetBanner = async () => {
     let phone = await getPhone();
     let token = await getToken();
     let result = await getBanner({phone});
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) setBanner(result?.Banners);
+    else setError(result);
   };
   useEffect(() => {
     onGetBanner();

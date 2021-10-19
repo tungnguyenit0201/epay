@@ -124,7 +124,7 @@ const useNotify = () => {
   };
 
   const onGoNotify = async () => {
-    await onGetAllNotify();
+    // await onGetAllNotify();
     Navigator.navigate(SCREEN.NOTIFICATION);
   };
 
@@ -157,6 +157,10 @@ const useNotify = () => {
     Navigator.navigate(SCREEN.EPAY_SUCCESS, {data: item});
     item?.Id && !item?.IsRead && onReadNotify(item.Id);
   };
+
+  useEffect(() => {
+    phone && onGetAllNotify();
+  }, [phone]);
 
   return {
     onGetChargesNotify,

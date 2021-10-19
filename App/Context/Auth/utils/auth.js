@@ -43,6 +43,8 @@ const useAuth = () => {
       // login
       case ERROR_CODE.PHONE_IS_REGISTERED:
         return navigateLoginByName(phone);
+      default:
+        return setError(result);
     }
   };
 
@@ -113,6 +115,24 @@ const useAuth = () => {
             : Navigator.reset(SCREEN.TAB_NAVIGATION);
         }
         return;
+
+      case ERROR_CODE.PASSWORD_CHANGE_REQUIRED_AFTER_LONG_TIME_NO_CHANGE:
+        setDefaultHeaders({
+          Authorization: `Bearer ${result?.Token}`,
+        });
+        await setToken(result?.Token);
+        dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
+        onGetAllInfo();
+        onGetWalletInfo();
+        onGetConnectedBank();
+        return setError({
+          ...result,
+          onClose: () => {
+            Navigator.navigate(SCREEN.NEW_PASSWORD, {oldPassword: password});
+          },
+        });
+      default:
+        return setError(result);
     }
   };
 
@@ -141,6 +161,10 @@ const useAuth = () => {
     await resetLoginByName();
   };
 
+  const onSetMessage = value => {
+    setMessage(value);
+  };
+
   return {
     onCheckPhoneExist,
     onChangePhone,
@@ -149,6 +173,7 @@ const useAuth = () => {
     onLoginByTouchID,
     onLogout,
     message,
+    onSetMessage,
   };
 };
 

@@ -85,6 +85,7 @@ export default {
     PROMO_APPLY: 'payment/promo_apply',
     GET_PROMOTION: 'payment/get_promotions',
     PAYMENT: 'payment/payment',
+    PAYMENT_COMFRIM: 'payment/payment_confirm',
     MONEY_TRANSFER: 'wallet/money_transfer',
     GET_SOURCE_MONEY: 'wallet/get_source_money',
   },

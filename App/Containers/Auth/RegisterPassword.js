@@ -97,6 +97,7 @@ const RegisterPassword = ({route}) => {
                   error={touched.newPassword && translation[errors.newPassword]}
                   value={values.newPassword}
                   //leftIcon={Images.Transfer.Lock}
+                  maxLength={20}
                 />
                 <TextInput
                   password
@@ -110,6 +111,7 @@ const RegisterPassword = ({route}) => {
                   }
                   value={values.passwordConfirm}
                   //leftIcon={Images.Transfer.Lock}
+                  maxLength={20}
                 />
                 <Text style={styles.textNote}>
                   {

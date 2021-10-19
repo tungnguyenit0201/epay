@@ -10,7 +10,7 @@ import {useUser} from 'context/User';
 import {hidePhone} from 'utils/Functions';
 
 const User = ({data, style}) => {
-  const {personalInfo, phone} = useUser();
+  const {personalInfo, phone, listNotify} = useUser();
 
   const {onGoNotify} = useNotify();
   return (
@@ -48,14 +48,16 @@ const User = ({data, style}) => {
           )}
         </TouchableOpacity>
 
-        {/* TODO: show notifications count */}
-        {/* <TouchableOpacity
-          style={styles.noti}
-          onPress={() => {
-            Navigator.navigate(SCREEN.NOTIFICATION);
-          }}>
-          <Text style={styles.notiText}>10</Text>
-        </TouchableOpacity> */}
+        {!!listNotify?.length && (
+          <TouchableOpacity
+            style={styles.noti}
+            onPress={() => {
+              Navigator.navigate(SCREEN.NOTIFICATION);
+            }}
+          >
+            <Text style={styles.notiText}>{listNotify.length}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   noti: {
     width: 16,
     height: 16,
-    backgroundColor: Colors.Highlight,
+    backgroundColor: Colors.hl1,
     position: 'absolute',
     top: -5,
     right: -5,
