@@ -138,19 +138,17 @@ const AppNavigator = () => {
       'change',
       async nextAppState => {
         try {
-          if (nextAppState === 'background') {
+          if (nextAppState === 'background' || nextAppState === 'inactive') {
             await setInactiveTime(Date.now());
           }
           if (nextAppState === 'active') {
             let config = await onGetConfig();
             let inactiveTime = await getInactiveTime();
             let time =
-              parseInt?.(inactiveTime) + config?.TurnOffAfterTime * 10000;
+              parseInt?.(inactiveTime) + config?.TurnOffAfterTime * 100;
             if (parseInt?.(time) != 'NaN') {
-              if (time > Date.now()) {
-              } else {
-                RNRestart.Restart();
-              }
+              time < Date.now() && RNRestart.Restart();
+
               await setInactiveTime(null);
             }
           }

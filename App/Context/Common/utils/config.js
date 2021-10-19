@@ -18,6 +18,7 @@ const useConfig = () => {
         error: {
           errorCode: result?.ErrorCode,
           errorMessage: result?.ErrorMessage,
+          action: [{onPress: () => {}}],
         },
       });
   };
