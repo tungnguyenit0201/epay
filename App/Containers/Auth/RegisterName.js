@@ -11,9 +11,9 @@ import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import _ from 'lodash';
 
 const RegisterName = () => {
-  let [disable, setDisable] = useState(true);
   const translation = useTranslation();
   const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
   const {showModal, setShowModal, openCallDialog} = useRegister();
@@ -55,7 +55,6 @@ const RegisterName = () => {
             <View style={[styles.wrap, styles.flex1]}>
               <TextInput
                 required
-                onFocus={e => setDisable(false)}
                 placeholder={translation.enter_full_name}
                 onChange={handleChange('FullName')}
                 onBlur={handleBlur('FullName')}
@@ -68,7 +67,7 @@ const RegisterName = () => {
 
             <FooterContainer>
               <Button
-                disabled={disable}
+                disabled={!_.isEmpty(errors) || !values.FullName}
                 label={translation.completed}
                 style={styles.btn}
                 onPress={handleSubmit}
