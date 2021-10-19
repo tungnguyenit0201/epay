@@ -9,6 +9,7 @@ import API from 'configs/API';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {setDefaultHeaders} from 'utils/Axios';
+import RNRestart from 'react-native-restart';
 
 let baseUrl = null;
 
@@ -77,13 +78,10 @@ const useRequest = () => {
   };
 
   const onLogout = () => {
-    Navigator.reset(SCREEN.AUTH);
-    dispatchUser({type: 'RESET'});
-    dispatchWallet({type: 'RESET'});
-    // dispatchCommon({type: 'SET_CONFIG', config: {}});
     setDefaultHeaders({
       Authorization: ``,
     });
+    RNRestart.Restart();
   };
 
   return {doRequest, domain: baseUrl, onChangeDomain};
