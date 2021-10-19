@@ -17,8 +17,14 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import WebView from 'components/WebView/Partial';
 const Login = ({route}) => {
   const {phone, name} = _.get(route, 'params', {});
-  const {onChangePhone, onForgetPassword, onLogin, onLoginByTouchID, message} =
-    useAuth();
+  const {
+    onChangePhone,
+    onForgetPassword,
+    onLogin,
+    onLoginByTouchID,
+    message,
+    onSetMessage,
+  } = useAuth();
   const translation = useTranslation();
 
   const {biometryType, onTouchID, textInputRef} = useTouchID({
@@ -116,7 +122,13 @@ const Login = ({route}) => {
                   />
 
                   {!!biometryType && (
-                    <Pressable onPress={onTouchID} style={styles.btn}>
+                    <Pressable
+                      onPress={() => {
+                        onSetMessage('');
+                        onTouchID();
+                      }}
+                      style={styles.btn}
+                    >
                       <Icon
                         icon={
                           biometryType ===

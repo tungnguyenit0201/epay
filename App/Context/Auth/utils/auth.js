@@ -145,6 +145,10 @@ const useAuth = () => {
     await resetLoginByName();
   };
 
+  const onSetMessage = value => {
+    setMessage(value);
+  };
+
   return {
     onCheckPhoneExist,
     onChangePhone,
@@ -153,6 +157,7 @@ const useAuth = () => {
     onLoginByTouchID,
     onLogout,
     message,
+    onSetMessage,
   };
 };
 
