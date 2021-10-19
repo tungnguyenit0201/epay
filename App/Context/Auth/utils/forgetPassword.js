@@ -55,7 +55,11 @@ const useForgetPassword = () => {
       return setError(result);
     }
 
-    setError({ErrorCode: -1, ErrorMessage: translation.password_change_failed});
+    setError({
+      ErrorCode: -1,
+      ErrorMessage:
+        translation.password_change + ' ' + translation.transaction.success,
+    });
     Navigator.reset(SCREEN.AUTH);
     Keychain.setGenericPassword(phone, passwordEncrypted);
   };
