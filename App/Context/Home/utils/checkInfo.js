@@ -1,7 +1,13 @@
 import {useState, useEffect} from 'react';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
-import {PERSONAL_IC, SCREEN, SMART_OTP, USER_STATUS} from 'configs/Constants';
+import {
+  ERROR_CODE,
+  PERSONAL_IC,
+  SCREEN,
+  SMART_OTP,
+  USER_STATUS,
+} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import useServiceCommon from 'services/common';
@@ -26,29 +32,31 @@ const useCheckInfo = () => {
 
   const onCheckSmartOTP = async screen => {
     const result = await checkSmartOTP({phone});
-    const isSmartOTPActived = _.get(result, 'State', 0);
-    if (isSmartOTPActived) {
-      screen && Navigator.navigate(screen);
-      return true;
-    }
-    // dispatch({
-    //   type: 'SHOW_MODAL',
-    //   modal: {type: 'smartOTPSuggestion', value: true},
-    // });
-    setError({
-      title: translation.faster_and_more_secure_with_smart_otp,
-      ErrorCode: -1,
-      ErrorMessage:
-        translation.security_method_proactively_obtains_onetime_transaction_verification_code_otp_and_automatically_enters_it_into_the_system_when_performing_online_transactions,
-      onClose: () => setFirstLogin(false),
-      action: [
-        {
-          label: translation.install_smart_otp,
-          onPress: modalSmartOTP?.onGoSmartOTP,
-        },
-      ],
-      icon: Images.Modal.Lock,
-    });
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      const isSmartOTPActived = _.get(result, 'State', 0);
+      if (isSmartOTPActived) {
+        screen && Navigator.navigate(screen);
+        return true;
+      }
+      // dispatch({
+      //   type: 'SHOW_MODAL',
+      //   modal: {type: 'smartOTPSuggestion', value: true},
+      // });
+      setError({
+        title: translation.faster_and_more_secure_with_smart_otp,
+        ErrorCode: -1,
+        ErrorMessage:
+          translation.security_method_proactively_obtains_onetime_transaction_verification_code_otp_and_automatically_enters_it_into_the_system_when_performing_online_transactions,
+        onClose: () => setFirstLogin(false),
+        action: [
+          {
+            label: translation.install_smart_otp,
+            onPress: modalSmartOTP?.onGoSmartOTP,
+          },
+        ],
+        icon: Images.Modal.Lock,
+      });
+    } else setError(result);
   };
 
   const showConnectBank = () => {

@@ -101,7 +101,6 @@ const useUserInfo = type => {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
         return setError(result);
       case ERROR_CODE.SUCCESS:
-        console.log('result?.PersonalInfo :>> ', result?.PersonalInfo);
         dispatch({
           type: 'UPDATE_WALLET',
           data: result?.WalletInfo?.AvailableBlance,
