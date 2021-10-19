@@ -76,7 +76,7 @@ const DomainPicker = ({onclose}) => {
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         {API.ROOT_LIST.map(item => {
           return (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 onChangeDomain(item);
                 onclose();
@@ -93,7 +93,7 @@ const DomainPicker = ({onclose}) => {
               >
                 {item.split('//')[1].split('.')[0]}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>
