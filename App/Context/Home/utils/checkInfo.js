@@ -110,12 +110,7 @@ const useCheckInfo = () => {
           });
           break;
         case PERSONAL_IC.EXPIRED:
-          setError({
-            ErrorCode: -1,
-            ErrorMessage:
-              'GTTT hết hạn. Quý khách cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví',
-            title: translation.notification,
-          });
+          onCheckKYCExpired();
           break;
         case USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK:
           showConnectBank();
@@ -134,12 +129,27 @@ const useCheckInfo = () => {
     status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK && showConnectBank();
     Navigator.navigate(screen);
   };
+
+  const onCheckKYCExpired = () => {
+    if (status === PERSONAL_IC.EXPIRED) {
+      setError({
+        ErrorCode: -1,
+        ErrorMessage:
+          'GTTT hết hạn. Quý khách cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví',
+        title: translation.notification,
+      });
+      return false;
+    }
+    return true;
+  };
+
   return {
     KYC: showModal.KYC,
     connectBank: showModal.connectBank,
     checkSmartOTP,
     checkInfo,
     onNavigate,
+    onCheckKYCExpired,
   };
 };
 

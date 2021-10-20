@@ -116,8 +116,8 @@ async function request({
         });
         if (__DEV__) {
           console.log(method, buildUrl, postParams, result);
-          addLog(result);
         }
+        addLog(result);
       }
 
       let {data, status} = result || {};

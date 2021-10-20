@@ -7,9 +7,12 @@ import {scale} from 'utils/Functions';
 import {Images} from 'themes';
 import {useUserStatus} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
+import {useCheckInfo} from 'context/Home/utils';
 const User = () => {
   const {status} = useUserStatus();
   const translation = useTranslation();
+  const {onCheckKYCExpired} = useCheckInfo();
+
   return status != USER_STATUS.DONE && status != USER_STATUS.VERIFYING_KYC ? (
     <TouchableOpacity
       onPress={() => {
@@ -17,6 +20,7 @@ const User = () => {
           Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
         status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK &&
           Navigator.navigate(SCREEN.MAP_BANK_FLOW);
+        onCheckKYCExpired();
       }}
       style={[styles.item]}
     >

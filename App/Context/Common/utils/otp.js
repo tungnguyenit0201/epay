@@ -184,7 +184,9 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   };
 
   useEffect(() => {
-    functionType !== FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL && onGenOtp();
+    ![FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL, FUNCTION_TYPE.AUTH_EMAIL].includes(
+      functionType,
+    ) && onGenOtp();
   }, [phone, functionType]); // eslint-disable-line
 
   useEffect(() => {

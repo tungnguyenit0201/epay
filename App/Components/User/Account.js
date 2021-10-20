@@ -21,6 +21,7 @@ import {useWallet} from 'context/Wallet';
 import {useMoney} from 'context/Wallet/utils';
 import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
+import {useCheckInfo} from 'context/Home/utils';
 
 const Account = () => {
   const translation = useTranslation();
@@ -29,16 +30,19 @@ const Account = () => {
   const {onGetAllBank, onContinue} = useBankInfo();
   const {listConnectBank} = useWallet();
   const {showMoney, setShowMoney} = useMoney();
+  const {onCheckKYCExpired} = useCheckInfo();
 
   const mapBank = () => {
-    onContinue(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankPickerScreen,
-    });
+    onCheckKYCExpired() &&
+      onContinue(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankPickerScreen,
+      });
   };
   const goToBankLinked = () => {
-    onContinue(SCREEN.MAP_BANK_FLOW, {
-      screen: MapBankRoutes.BankLinked,
-    });
+    onCheckKYCExpired() &&
+      onContinue(SCREEN.MAP_BANK_FLOW, {
+        screen: MapBankRoutes.BankLinked,
+      });
   };
   return (
     <ImageBackground
