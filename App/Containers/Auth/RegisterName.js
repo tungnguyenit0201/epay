@@ -11,6 +11,7 @@ import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import _ from 'lodash';
 
 const RegisterName = () => {
   const translation = useTranslation();

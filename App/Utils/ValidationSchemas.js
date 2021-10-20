@@ -66,12 +66,12 @@ export const newPasswordSchema = yup.object().shape({
   newPassword: yup
     .string()
     .required()
+    .max(20, 'password_maximum_20_characters')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
       'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
     )
-    .label('password')
-    .max(20, 'password_maximum_20_characters'),
+    .label('password'),
   passwordConfirm: yup
     .string()
     .required()
