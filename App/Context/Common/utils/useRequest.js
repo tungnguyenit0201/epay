@@ -28,7 +28,8 @@ const useRequest = () => {
     if (typeof failure == 'function') return failure(error);
     if (
       error?.message == 'Network Error' ||
-      error?.message?.search('timeout') != -1
+      error?.message?.search('timeout') != -1 ||
+      error?.message == 'Request failed with status code 503'
     ) {
       return setError({
         ErrorMessage:

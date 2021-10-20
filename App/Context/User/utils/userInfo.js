@@ -231,9 +231,13 @@ const useUserInfo = type => {
 
     switch (type) {
       case 'photo':
-        return ImagePicker.openPicker(options).then(onUpdateResult);
+        return ImagePicker.openPicker(options)
+          .then(onUpdateResult)
+          .catch(() => {});
       case 'camera':
-        return ImagePicker.openCamera(options).then(onUpdateResult);
+        return ImagePicker.openCamera(options)
+          .then(onUpdateResult)
+          .catch(() => {});
       default:
         return setShowModal('selectAvatar');
     }
