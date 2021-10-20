@@ -13,12 +13,8 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import {useCommon} from 'context/Common';
 import Debug from './Debug';
-import {
-  useCheckInfo,
-  useModalSmartOTP as useModalSmartOTPSuggestion,
-} from 'context/Home/utils';
+import {useModalSmartOTP as useModalSmartOTPSuggestion} from 'context/Home/utils';
 import {useTranslation} from 'context/Language';
-import {SCREEN} from 'configs/Constants';
 import {
   Modal as ModalCustom,
   Alert,
@@ -49,7 +45,6 @@ const Wrapper = React.memo(
   }) => {
     const {loading, error} = useCommon();
     const modalSmartOTP = useModalSmartOTPSuggestion();
-    const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
     const translation = useTranslation();
     const {permissionCamera, showModalCamera, askPermission} =
       useModalPermission();
