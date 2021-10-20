@@ -13,7 +13,6 @@ import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterName = () => {
-  let [disable, setDisable] = useState(true);
   const translation = useTranslation();
   const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
   const {showModal, setShowModal, openCallDialog} = useRegister();
@@ -36,9 +35,10 @@ const RegisterName = () => {
         values,
       }) => {
         const handleChange = field => value => {
-          setFieldValue(field, value?.replace(/[0-9]/g, ''));
+          let valueConvert = value?.replace(/[0-9]/g, '');
+          setFieldValue(field, valueConvert);
           setFieldTouched(field, true, false);
-          setPersonalInfo(field, value?.replace(/[0-9]/g, ''));
+          setPersonalInfo(field, valueConvert);
         };
 
         return (
@@ -55,12 +55,11 @@ const RegisterName = () => {
             <View style={[styles.wrap, styles.flex1]}>
               <TextInput
                 required
-                onFocus={e => setDisable(false)}
                 placeholder={translation.enter_full_name}
                 onChange={handleChange('FullName')}
                 onBlur={handleBlur('FullName')}
                 error={touched.FullName && translation[errors.FullName]}
-                value={values?.FullName?.replace(/[0-9]/g, '')}
+                value={values?.FullName}
                 isDeleted={values.FullName}
                 maxLength={100}
               />
@@ -68,7 +67,7 @@ const RegisterName = () => {
 
             <FooterContainer>
               <Button
-                disabled={disable}
+                disabled={errors?.FullName}
                 label={translation.completed}
                 style={styles.btn}
                 onPress={handleSubmit}

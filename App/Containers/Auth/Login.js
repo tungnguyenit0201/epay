@@ -93,13 +93,23 @@ const Login = ({route}) => {
                 />
 
                 <View style={[styles.box, {marginTop: 5}]}>
-                  <Pressable onPress={onForgetPassword}>
+                  <Pressable
+                    onPress={() => {
+                      setFieldValue('password', '');
+                      onForgetPassword();
+                    }}
+                  >
                     <Text style={[styles.linkText]}>
                       {translation.forgot_password}?
                     </Text>
                   </Pressable>
 
-                  <Pressable onPress={onChangePhone}>
+                  <Pressable
+                    onPress={() => {
+                      onChangePhone();
+                      setFieldValue('password', '');
+                    }}
+                  >
                     <Text style={[styles.linkText]}>
                       {translation.change_the_phone_number}
                     </Text>
