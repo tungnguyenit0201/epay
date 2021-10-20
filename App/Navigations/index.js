@@ -55,6 +55,10 @@ import Security from 'containers/User/Security';
 import ChangePassword from 'containers/User/ChangePassword';
 import UserInfo from 'containers/User/UserInfo';
 import PaymentSettings from 'containers/User/PaymentSettings';
+import WalletAccessHistory from 'containers/User/AccessHistory';
+import SortBank from 'containers/User/SortBank';
+import LinkedBank from 'containers/User/LinkedBank/index';
+import LinkedBankDetail from 'containers/User/LinkedBank/Detail';
 import EditInfo from 'containers/User/EditInfo';
 import NewPassword from 'containers/User/NewPassword';
 import Contacts from 'containers/Wallet/Contacts';
@@ -77,7 +81,7 @@ import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
 import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
 import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
 import MapBankFlow from 'containers/Wallet/Bank/MapBankFlow';
-import BankLinked from 'containers/Wallet/Bank/BankLinked';
+// import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
@@ -361,6 +365,18 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
+
+          <Stack.Screen name={SCREEN.SORT_BANK} component={SortBank} />
+          <Stack.Screen
+            name={SCREEN.WALLET_ACCESS_HISTORY}
+            component={WalletAccessHistory}
+          />
+          <Stack.Screen name={SCREEN.LINKED_BANK} component={LinkedBank} />
+          <Stack.Screen
+            name={SCREEN.LINKED_BANK_DETAIL}
+            component={LinkedBankDetail}
+          />
+
           <Stack.Screen name={SCREEN.EDIT_INFO} component={EditInfo} />
           <Stack.Screen name={SCREEN.NEW_PASSWORD} component={NewPassword} />
           <Stack.Screen

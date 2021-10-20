@@ -8,4 +8,4 @@ const LinkedBankDetail = () => {
     </View>
   );
 };
-return LinkedBankDetail;
+export default LinkedBankDetail;

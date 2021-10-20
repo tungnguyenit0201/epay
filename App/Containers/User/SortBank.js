@@ -8,4 +8,4 @@ const SortBank = () => {
     </View>
   );
 };
-return SortBank;
+export default SortBank;
