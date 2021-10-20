@@ -145,7 +145,7 @@ const AppNavigator = () => {
             let config = await onGetConfig();
             let inactiveTime = await getInactiveTime();
             let time =
-              parseInt?.(inactiveTime) + config?.TurnOffAfterTime * 100;
+              parseInt?.(inactiveTime) + config?.TurnOffAfterTime * 1000;
             if (parseInt?.(time) != 'NaN') {
               time < Date.now() && RNRestart.Restart();
 

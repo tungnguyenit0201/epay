@@ -79,6 +79,16 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
           return;
       }
     }
+    if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
+      setError({
+        ...result,
+        onClose: () =>
+          _.get(result, 'ErrorCode', '') === ERROR_CODE.PHONE_IS_REGISTERED
+            ? Navigator.navigate(SCREEN.AUTH)
+            : true,
+      });
+    }
+
     // success
     switch (functionType) {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
@@ -170,12 +180,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   };
 
   const onGenOtp = async () => {
-    let canSend = await checkResend();
-    canSend &&
-      (await genOtp({
-        phone,
-        functionType,
-      }));
+    await resentOTP();
   };
 
   useEffect(() => {
