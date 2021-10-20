@@ -100,15 +100,30 @@ const useCheckInfo = () => {
   const checkInfo = ({screen, value = true}) => {
     // console.log('status :>> ', status, getStatus(), value);
     if (status != USER_STATUS.DONE) {
-      (status == USER_STATUS.VERIFYING_KYC ||
-        status == PERSONAL_IC.RE_VERIFYING) &&
-        setError({
-          ErrorCode: -1,
-          ErrorMessage: 'Đang xác thực',
-          title: translation.notification,
-        });
-      showKYC();
-      status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK && showConnectBank();
+      switch (status) {
+        case USER_STATUS.VERIFYING_KYC:
+        case PERSONAL_IC.RE_VERIFYING:
+          setError({
+            ErrorCode: -1,
+            ErrorMessage: 'Đang xác thực',
+            title: translation.notification,
+          });
+          break;
+        case PERSONAL_IC.EXPIRED:
+          setError({
+            ErrorCode: -1,
+            ErrorMessage:
+              'GTTT hết hạn. Quý khách cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví',
+            title: translation.notification,
+          });
+          break;
+        case USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK:
+          showConnectBank();
+          break;
+        default:
+          showKYC();
+          break;
+      }
       return false;
     }
     return onCheckSmartOTP(screen);

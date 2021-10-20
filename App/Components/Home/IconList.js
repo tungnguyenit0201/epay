@@ -69,13 +69,13 @@ const IconList = ({data}) => {
   const renderItem = ({index, item}) => {
     return (
       <>
-        <View style={{width: width}} key={Math.random(0, 100)}>
+        <View style={{width: width}} key={index}>
           <View style={{flexDirection: 'row'}}>
-            {iconHome.slice(index * 4, index * 4 + 2)?.map((item, index) => {
-              // return <Item item={item} key={Math.random(0, 100)} />;
+            {iconHome.slice(index * 4, index * 4 + 2)?.map((item, index2) => {
+              // return <Item item={item} key={iconIndex} />;
               return (
                 <TouchableOpacity
-                  key={Math.random(0, 100)}
+                  key={index2}
                   style={[
                     styles.item,
                     {
@@ -98,14 +98,14 @@ const IconList = ({data}) => {
               );
             })}
           </View>
-          <View style={{flexDirection: 'row'}} key={Math.random(0, 100)}>
+          <View style={{flexDirection: 'row'}} key={index}>
             {iconHome
               .slice(index * 4 + 2, index * 4 + 4)
-              ?.map((item, index) => {
+              ?.map((item, index2) => {
                 // return <Item item={item} />;
                 return (
                   <TouchableOpacity
-                    key={Math.random(0, 100)}
+                    key={index2}
                     style={[
                       styles.item,
                       {
@@ -139,7 +139,7 @@ const IconList = ({data}) => {
         data={[...Array(Math.ceil(iconHome?.length / 4))]}
         renderItem={renderItem}
         viewabilityConfig={viewConfigRef.current}
-        keyExtractor={(item, index) => `${Math.random(0, 100)}-icon`}
+        keyExtractor={(item, index) => `${index}-icon`}
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         pagingEnabled
@@ -148,7 +148,7 @@ const IconList = ({data}) => {
         <View style={[styles.controls]}>
           {[...Array(Math.ceil(iconHome?.length / 4))]?.map((item, index) => (
             <TouchableOpacity
-              key={`${Math.random(0, 100)}-switch`}
+              key={`${index}-switch`}
               style={[
                 styles.dot,
                 indexTab == index && {
