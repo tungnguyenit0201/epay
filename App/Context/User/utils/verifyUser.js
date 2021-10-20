@@ -423,14 +423,10 @@ const useVerifyInfo = (initialValue = {}) => {
         return extractData;
       } catch (e) {
         setLoading(false);
-        ConsoleUtils.log('ERROR [extractCardInfo]', e);
-        const {ErrorMessage = strings?.unknownError} = e || {};
-        // showError({message: ErrorMessage});
-        setError({ErrorMessage});
+        // const {ErrorMessage = strings?.unknownError} = e || {};
       }
     } else {
       ConsoleUtils.warn('[extractCardInfo] Missing Data!');
-      showError();
     }
   };
 
@@ -452,14 +448,9 @@ const useVerifyInfo = (initialValue = {}) => {
         return result;
       } catch (e) {
         setLoading(false);
-        ConsoleUtils.log('ERROR [compareUserFace]', e);
-        const {ErrorMessage = strings?.unknownError} = e || {};
-        // showError({message: ErrorMessage});
-        setError({ErrorMessage});
       }
     } else {
       ConsoleUtils.warn('[compareUserFace] Missing Data!');
-      showError();
     }
   };
 
@@ -477,14 +468,10 @@ const useVerifyInfo = (initialValue = {}) => {
           resolve(result);
         } catch (e) {
           ConsoleUtils.log('ERROR [verifyIdentityCard]', e);
-          const {ErrorMessage = strings?.unknownError} = e || {};
-          // showError({message: ErrorMessage});
-          setError({ErrorMessage});
           reject(e);
         }
       } else {
         ConsoleUtils.warn('[verifyIdentityCard] Missing Data!');
-        showError();
         reject();
       }
     });
