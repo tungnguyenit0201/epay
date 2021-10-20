@@ -156,11 +156,11 @@ const styles = StyleSheet.create({
     width: scale(28),
     height: scale(28),
   },
-  boxTime1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    top: -3,
-  },
+  // boxTime1: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   top: -3,
+  // },
   bgImg: {
     width: scale(375),
     height: scale(375),
