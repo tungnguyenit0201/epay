@@ -135,11 +135,6 @@ async function request({
           if (__DEV__) {
             console.log({...result?.data, ...parseData} || result);
           }
-          // return failure({message: 'Network Error'});
-          // return success({
-          //   ErrorCode: 1,
-          //   ErrorMessage: 'Tài khoản ví không tồn tại',
-          // });
           return success({...result?.data, ...parseData} || result);
         }
       } else {
