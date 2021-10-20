@@ -137,6 +137,15 @@ const useCheckInfo = () => {
         ErrorMessage:
           'GTTT hết hạn. Quý khách cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví',
         title: translation.notification,
+        action: [
+          {
+            label: translation.verify_your_account,
+            onPress: () => Navigator.navigate(SCREEN.USER_INFO),
+          },
+          {
+            label: 'Đóng',
+          },
+        ],
       });
       return false;
     }
