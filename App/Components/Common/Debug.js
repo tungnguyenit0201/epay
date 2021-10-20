@@ -10,6 +10,8 @@ import {useAuth} from 'context/Auth/utils';
 import {useAsyncStorage, useRequest} from 'context/Common/utils';
 import API from 'configs/API';
 import useServiceCommon from 'services/common';
+import {useUser} from 'context/User';
+import KYC_TYPE from 'configs/Enums/KYCType';
 
 let debugData = [];
 
@@ -41,6 +43,7 @@ const Debug = () => {
               <Text>Close</Text>
             </Pressable>
             <DomainPicker onclose={() => setShow(false)} />
+            <KYCTypePicker onclose={() => setShow(false)} />
             <Text fs="h6" bold>
               API logs:
             </Text>
@@ -92,6 +95,42 @@ const DomainPicker = ({onclose}) => {
                 ]}
               >
                 {item.split('//')[1].split('.')[0]}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+
+const KYCTypePicker = ({onclose}) => {
+  const {kycType, dispatch} = useUser();
+
+  return (
+    <View>
+      <Text fs="h5" bold>
+        Choose KYC type:
+      </Text>
+      <View style={{flexDirection: 'row'}}>
+        {[KYC_TYPE.KYC, KYC_TYPE.EKYC].map(item => {
+          return (
+            <Pressable
+              onPress={() => {
+                onclose();
+                dispatch({type: 'SET_KYC_TYPE', data: item});
+              }}
+              key={item}
+            >
+              <Text
+                fs="md"
+                style={[
+                  styles.serverItem,
+                  {marginRight: scale(50)},
+                  kycType === item ? {color: Colors.tp1} : {},
+                ]}
+              >
+                {item}
               </Text>
             </Pressable>
           );
