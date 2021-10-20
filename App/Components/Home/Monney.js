@@ -46,14 +46,14 @@ const Monney = ({style, title, showing}) => {
 };
 
 const styles = StyleSheet.create({
-  lh1: {lineHeight: 42},
-  lh2: {lineHeight: 23},
+  lh1: {lineHeight: 39},
+  lh2: {lineHeight: 24},
   //----------------
   item: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.tp3,
+    backgroundColor: Colors.bs3,
     borderRadius: 4,
     padding: 10,
     marginBottom: 20,
