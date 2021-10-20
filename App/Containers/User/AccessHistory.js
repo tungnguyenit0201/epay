@@ -143,8 +143,6 @@ const styles = StyleSheet.create({
   //----------------
   // alignCenter: {alignItems: 'center',},
   //----------------
-  maxWidth1: {maxWidth: 200},
-  //----------------
   mr1: {marginRight: 8},
   //----------------
   ptb1: {paddingVertical: 24},
