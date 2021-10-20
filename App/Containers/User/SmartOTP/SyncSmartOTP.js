@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
   },
   modalBackground: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.tp2,
     opacity: 0.8,
   },
   modalText: {
-    color: Colors.WHITETEXT,
+    color: Colors.bs4,
   },
   completionContainer: {
     position: 'absolute',
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: Spacing.PADDING * 2,
     alignItems: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
 });

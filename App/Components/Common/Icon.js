@@ -11,7 +11,7 @@ export default ({style, icon, size, tintColor, ml, mr, mb, mt}) => {
         {
           width: !!size ? size : scale(24),
           height: !!size ? size : scale(24),
-          tintColor: !!tintColor ? tintColor : Colors.ICONGRAY,
+          tintColor: !!tintColor ? tintColor : Colors.tp3,
         },
         ml && {marginLeft: ml},
         mr && {marginRight: mr},

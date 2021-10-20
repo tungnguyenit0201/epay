@@ -81,14 +81,16 @@ const OTP = props => {
             <Pressable
               style={{marginTop: -3}}
               disabled={countdown > 0}
-              onPress={resentOTP}>
+              onPress={resentOTP}
+            >
               <Text
                 style={[
                   styles.fontSize_1,
                   {
-                    color: Colors.cl1,
+                    color: Colors.brd1,
                   },
-                ]}>
+                ]}
+              >
                 {countdown > 0
                   ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
                   : ' Gửi lại'}
@@ -118,7 +120,7 @@ const OTP = props => {
     );
   };
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header back title={translation.connect_bank} />
       </HeaderBg>
@@ -126,7 +128,8 @@ const OTP = props => {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderOTP()}
       </ScrollView>
       {renderButton()}
@@ -145,8 +148,8 @@ const styles = StyleSheet.create({
   //-----------------------------
   textCenter: {textAlign: 'center'},
   //-----------------------------
-  bgGray: {backgroundColor: Colors.OtpGray_1},
-  bgGray1: {backgroundColor: Colors.OtpGray_2},
+  bgGray: {backgroundColor: Colors.g3},
+  bgGray1: {backgroundColor: Colors.g4},
   //-----------------------------
   iconRight: {paddingRight: Spacing.PADDING},
   iconPhone: {
@@ -166,12 +169,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Spacing.PADDING,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   shadowButton: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 1, height: 0},
@@ -183,7 +186,7 @@ const styles = StyleSheet.create({
   shadow: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.BACKGROUND_BLUE,
+    backgroundColor: Colors.bg1,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 0, height: 0},
@@ -236,11 +239,11 @@ const styles = StyleSheet.create({
   },
   otp: {
     width: scale(40),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     fontSize: Fonts.H4,
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     textAlign: 'center',
-    borderBottomColor: Colors.cl4,
+    borderBottomColor: Colors.bs1,
     borderWidth: 0,
     borderBottomWidth: 1,
     borderRadius: 2,

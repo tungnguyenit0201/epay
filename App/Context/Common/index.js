@@ -13,6 +13,7 @@ export const CommonProvider = ({children}) => {
       permissionCamera: false,
       smartOTPPassword: null,
       password: null,
+      backType: 0,
     },
     config: {},
   });

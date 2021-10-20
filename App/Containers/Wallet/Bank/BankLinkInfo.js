@@ -136,8 +136,9 @@ export default function (props) {
         onPress={() => callback?.()}
         style={[
           styles.shadow,
-          {backgroundColor: isSelected ? Colors.BACKGROUND_BLUE : Colors.white},
-        ]}>
+          {backgroundColor: isSelected ? Colors.bg1 : Colors.bs4},
+        ]}
+      >
         <View style={{flexDirection: 'row'}}>
           <View flex={1}>
             <Text style={styles.subTitle}>{nameText}</Text>
@@ -159,9 +160,9 @@ export default function (props) {
                 width: 20,
                 height: 20,
                 borderRadius: 16,
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.bs4,
                 borderWidth: 1,
-                borderColor: Colors.GRAY,
+                borderColor: Colors.tp3,
               }}
             />
           )}
@@ -244,14 +245,15 @@ export default function (props) {
     );
   };
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header back title={translation.connect_bank} />
       </HeaderBg>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderBankInfo()}
         {renderBankInput()}
         {renderListKYCOptions(icInfo)}
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
   },
   bankIc: {
     borderRadius: 8,
-    borderColor: Colors.BORDER,
+    borderColor: Colors.bs2,
     borderWidth: 1,
     paddingHorizontal: 18,
     paddingVertical: 8,
@@ -291,13 +293,13 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     paddingHorizontal: Spacing.PADDING,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingBottom: 40,
   },
   shadowButton: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 1, height: 0},
@@ -309,7 +311,7 @@ const styles = StyleSheet.create({
   shadow: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.BACKGROUND_BLUE,
+    backgroundColor: Colors.bg1,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 0, height: 0},

@@ -9,16 +9,23 @@ const useError = () => {
   const setError = useCallback(
     error => {
       // let message = translation.errorCode[error?.ErrorCode];
-      dispatch({
-        type: 'SET_ERROR',
-        error: {
-          errorCode: error?.ErrorCode,
-          errorMessage: error?.ErrorMessage,
-          title: error?.title,
-          onClose: error?.onClose,
-          icon: error?.icon,
-        },
-      });
+      !!error &&
+        dispatch({
+          type: 'SET_ERROR',
+          error:
+            error != -1
+              ? {
+                  errorCode: error?.ErrorCode,
+                  errorMessage: error?.ErrorMessage,
+                  title: error?.title,
+                  onClose: error?.onClose,
+                  icon: error?.icon,
+                  label: error?.label,
+                  action: error?.action || [{onPress: () => {}}],
+                  renderContent: error?.renderContent,
+                }
+              : null,
+        });
     },
     [dispatch],
   );

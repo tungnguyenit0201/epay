@@ -96,7 +96,7 @@ const BaseResultScreen = props => {
         <Text bold fs="h5" mb={15}>
           {transTitle || ''}
         </Text>
-        <Text centered color={Colors.gray}>
+        <Text centered color={Colors.tp3}>
           {`Ngân hàng ${params?.item?.BankName}\n`}
           {`số tài khoản ${params?.bankConnectInfo?.BankAccount}`}
         </Text>
@@ -114,14 +114,15 @@ const BaseResultScreen = props => {
         style={[
           base.boxBottom,
           {position: 'absolute', bottom: 0, left: 0, right: 0},
-        ]}>
+        ]}
+      >
         <Row space={10}>
           {!!1 && (
             <Col space={10} width="50%">
               <SecondaryButton
-                bg={Colors.white}
-                border={Colors.cl1}
-                color={Colors.cl1}
+                bg={Colors.bs4}
+                border={Colors.brd1}
+                color={Colors.brd1}
                 label={translation.common.goBackHome}
                 // label={secondaryButton?.title}
                 labelStyle={{fontSize: 14}}
@@ -139,7 +140,7 @@ const BaseResultScreen = props => {
                 // onPress={onPressPositive}
                 label={translation.common.createTransaction}
                 // style={styles.retryButton}
-                // fs={Fonts.FONT_MEDIUM
+                // fs={Fonts.MD
                 onPress={onRetry}
               />
             </Col>
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
     color: Colors.cl3,
   },
   textRight: {
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     maxWidth: scale(160),
   },
 });

@@ -1,18 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN, FUNCTION_TYPE} from 'configs/Constants';
-import {
-  updatePersonalInfo,
-  getPersonalInfo,
-  getAllInfo,
-  updateUserAddress,
-  getConnectedBank,
-  confirmPassword,
-  getLimit,
-  getQRCode,
-  updateAvatar,
-  updatePassword,
-} from 'services/user';
+import useServiceUser from 'services/user';
 import {
   useAsyncStorage,
   useError,
@@ -37,13 +26,25 @@ const useUserInfo = type => {
     Email: '',
   });
 
-  const {getPhone} = useAsyncStorage();
+  const {getPhone, addName} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch} = useUser();
   const {showModalSmartOTPSuggestion} = useShowModal();
   const {onChangeLimit} = useBankInfo();
   const {walletInfo} = useWallet();
+  const {
+    updatePersonalInfo,
+    getPersonalInfo,
+    getAllInfo,
+    updateUserAddress,
+    getConnectedBank,
+    confirmPassword,
+    getLimit,
+    getQRCode,
+    updateAvatar,
+    updatePassword,
+  } = useServiceUser();
   const [showModal, setShowModal] = useState(null);
 
   const setPersonalInfo = (key, value) => {
@@ -76,12 +77,12 @@ const useUserInfo = type => {
       let phone = await getPhone();
       let result = await updatePersonalInfo({
         phone,
-        personalInfo: personalInfo.current,
+        personalInfo: {FullName: personalInfo.current?.FullName?.trim()},
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
         await onGetAllInfo();
-        showModalSmartOTPSuggestion(true);
+        // showModalSmartOTPSuggestion(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else {
         setError(result);
@@ -100,7 +101,6 @@ const useUserInfo = type => {
       case ERROR_CODE.LOGIN_PASSWORD_INCORRECT:
         return setError(result);
       case ERROR_CODE.SUCCESS:
-        console.log('result?.PersonalInfo :>> ', result?.PersonalInfo);
         dispatch({
           type: 'UPDATE_WALLET',
           data: result?.WalletInfo?.AvailableBlance,
@@ -113,6 +113,8 @@ const useUserInfo = type => {
           personalInfo: result?.PersonalInfo,
         });
         dispatch({type: 'SET_PHONE', phone});
+        result?.PersonalInfo?.FullName &&
+          addName({name: result.PersonalInfo.FullName, phone});
     }
   };
 
@@ -174,6 +176,9 @@ const useUserInfo = type => {
           case 'confirm_password_response':
             Navigator.push(SCREEN.NEW_PASSWORD, {oldPassword: password});
             break;
+          case 'update_account':
+            Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+            break;
           case 'update_email':
             Navigator.push(SCREEN.VERIFY_EMAIL, {
               functionType: FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL,
@@ -226,9 +231,13 @@ const useUserInfo = type => {
 
     switch (type) {
       case 'photo':
-        return ImagePicker.openPicker(options).then(onUpdateResult);
+        return ImagePicker.openPicker(options)
+          .then(onUpdateResult)
+          .catch(() => {});
       case 'camera':
-        return ImagePicker.openCamera(options).then(onUpdateResult);
+        return ImagePicker.openCamera(options)
+          .then(onUpdateResult)
+          .catch(() => {});
       default:
         return setShowModal('selectAvatar');
     }
@@ -247,6 +256,7 @@ const useUserInfo = type => {
       phone,
       personalInfo: {SexType},
     });
+    await onGetAllInfo();
     result?.ErrorCode && setError(result);
   };
 

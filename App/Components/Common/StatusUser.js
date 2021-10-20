@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import {Button, Text} from 'components';
 import {PERSONAL_IC} from 'configs/Constants';
 
@@ -36,20 +36,36 @@ const StatusUser = ({size = 'sm', radius = 30, style}) => {
   }
 
   return (
-    <Button
-      radius={radius}
-      bgImg={0}
-      bg={setBg}
-      size={size}
-      fw={'500'}
-      color={Colors.white}
-      label={getStatusVerifiedText()}
-      style={[{minWidth: 93}, style]}
+    <Pressable
+      style={[
+        styles.container,
+        style,
+        {borderRadius: radius, backgroundColor: setBg},
+      ]}
+      // radius={radius}
+      // bgImg={0}
+      // bg={setBg}
+      // size={size}
+      // fw={'500'}
+      // color={Colors.bs4}
+      // label={getStatusVerifiedText()}
+      // style={[{minWidth: 93}, style]}
       onPress={() => {
         statusVerified == PERSONAL_IC.INACTIVE && onVerify();
       }}
-    />
+    >
+      <Text color={Colors.bs4} fs="sx" centered>
+        {getStatusVerifiedText()}
+      </Text>
+    </Pressable>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    minWidth: 93,
+    paddingVertical: 3,
+    paddingHorizontal: 8,
+  },
+});
 export default StatusUser;

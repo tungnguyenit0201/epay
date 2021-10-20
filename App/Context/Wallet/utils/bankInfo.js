@@ -12,21 +12,11 @@ import {useWallet} from 'context/Wallet';
 import _, {isEmpty} from 'lodash';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
-import {
-  activeCustomerOtp,
-  activeUser,
-  getConnectedBank,
-  getConnectedBankDetail,
-  getDomesticBank,
-  getIdentifyInfo,
-  getInternationalBank,
-  getNapasBank,
-  mapBankNapas,
-} from 'services/bank';
+import useServiceBank from 'services/bank';
 import {useUser} from 'context/User';
 import {IC_TYPE_CHAR} from 'configs/Enums/ICType';
 import {useTranslation} from 'context/Language';
-import {changeLimit} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 
 const mockIc = [
   {
@@ -195,7 +185,18 @@ const useBankInfo = (initialValue = {}) => {
   const {setError} = useError();
   const {dispatch} = useWallet();
   const translation = useTranslation();
-
+  const {changeLimit} = useServiceWallet();
+  const {
+    activeCustomerOtp,
+    activeUser,
+    getConnectedBank,
+    getConnectedBankDetail,
+    getDomesticBank,
+    getIdentifyInfo,
+    getInternationalBank,
+    getNapasBank,
+    mapBankNapas,
+  } = useServiceBank();
   const onChange = (key, value) => {
     mapBankInfo.current[key] = value;
   };

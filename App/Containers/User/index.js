@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Text, HeaderBg, Icon, Header, Row, Col, Button} from 'components';
+import {
+  Text,
+  HeaderBg,
+  Icon,
+  Header,
+  Row,
+  Col,
+  Button,
+  Modal,
+} from 'components';
 import {
   ScrollView,
   View,
@@ -21,85 +30,134 @@ import DinhDanh from 'components/User/DinhDanh';
 import {useSmartOTP} from 'context/User/utils';
 import {useUser} from 'context/User';
 import {useAuth} from 'context/Auth/utils';
-
+import {useError} from 'context/Common/utils';
+import {FLEX_KEY_PATTERN} from 'react-native-ui-lib/generatedTypes/src/commons/modifiers';
 const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
   const {onGoSmartOTP} = useSmartOTP();
-
-  // TODO: translate
+  const {setError} = useError();
   return (
     <View>
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.white}]}>
+      <ScrollView style={base.wrap}>
         <View style={[base.container]}>
-          <UserInfo style={[{marginBottom: 20}]} />
+          <UserInfo style={styles.mb2} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
             <DinhDanh />
           )}
-          <Account />
-          <Row space={10} style={[{marginBottom: 30}]}>
-            <Col space={10}>
+          <View style={styles.mb1}>
+            <Account />
+          </View>
+
+          <Row space={15} style={styles.mb4}>
+            <Col space={15}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}>
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
                 <Image
-                  style={[styles.icon]}
+                  style={[styles.icon, styles.mb3]}
+                  source={Images.Profile.NotifyStatus}
+                />
+
+                <View style={styles.flexRow}>
+                  <View style={styles.flex1}>
+                    <Text semibold>{translation.my_order}</Text>
+                  </View>
+                  {/*
+                  show notify status when user buy product
+                  <View style={[styles.topMinus1,styles.notify1]}>
+                    <Text color={Colors.bs4} centered size={Fonts.SM}>3</Text>
+                  </View> */}
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+              >
+                <Image
+                  style={[styles.icon, styles.mb3]}
                   source={Images.Profile.MaThanhToan}
                 />
-                <Text semibold>Mã thanh toán</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                  Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
-                }}>
-                <Image
-                  style={[styles.icon]}
-                  source={Images.Profile.ThanhToan}
-                />
-                <Text semibold>Cài đặt hạn mức thanh toán</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                  Navigator.navigate(SCREEN.SECURITY);
-                }}>
-                <Image style={[styles.icon]} source={Images.Profile.BaoMat} />
-                <Text semibold>{translation.password_and_security} </Text>
-              </TouchableOpacity>
-            </Col>
-            <Col space={10}>
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => {
-                  // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  Alert.alert('', 'Coming soon');
-                }}>
-                <Image
-                  style={[styles.icon]}
-                  source={require('images/profile/NapVI.png')}
-                />
-                <Text semibold>Nạp ví tự động</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.item} onPress={onGoSmartOTP}>
-                <Image
-                  style={[styles.icon]}
-                  source={require('images/profile/OTP.png')}
-                />
-                <Text semibold>Cài đặt Smart OTP</Text>
+                <Text semibold>{translation.payment_qr}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                }}>
+                  Navigator.navigate(SCREEN.PAYMENT_SETTINGS);
+                }}
+              >
                 <Image
-                  style={[styles.icon]}
+                  style={[styles.icon, styles.mb3]}
+                  source={Images.Profile.ThanhToan}
+                />
+                <Text semibold>{translation.maximum_transaction_value}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  Navigator.navigate(SCREEN.SECURITY);
+                }}
+              >
+                <Image
+                  style={[styles.icon, styles.mb3]}
+                  source={Images.Profile.BaoMat}
+                />
+                <Text semibold>{translation.password_and_security}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  // Navigator.navigate(SCREEN.SECURITY);
+                }}
+              >
+                <Image
+                  style={[styles.icon, styles.mb3]}
+                  source={Images.Profile.TaskSquare}
+                />
+                <Text semibold>{'Trình tự thanh toán'}</Text>
+              </TouchableOpacity>
+            </Col>
+            <Col space={15}>
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
+                }}
+              >
+                <Image
+                  style={[styles.icon, styles.mb3]}
+                  source={require('images/profile/NapVI.png')}
+                />
+                <Text semibold>{translation.automatically_top_up}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.item} onPress={onGoSmartOTP}>
+                <Image
+                  style={[styles.icon, styles.mb3]}
+                  source={require('images/profile/OTP.png')}
+                />
+                <Text semibold>{translation.setting_smart_otp}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.item}
+                onPress={() => {
+                  Navigator.navigate(SCREEN.LANGUAGE);
+                }}
+              >
+                <Image
+                  style={[styles.icon, styles.mb3]}
                   source={Images.Profile.Translate}
                 />
                 <Text semibold>{translation.language_setting}</Text>
@@ -108,13 +166,17 @@ const User = () => {
                 style={styles.item}
                 onPress={() => {
                   // Navigator.navigate(SCREEN.NOTIFICATION);
-                  Alert.alert('', 'Coming soon');
-                }}>
+                  setError({
+                    ErrorMessage: 'Coming soon',
+                    icon: Images.Homes.Setting,
+                  });
+                }}
+              >
                 <Image
-                  style={[styles.icon]}
+                  style={[styles.icon, styles.mb3]}
                   source={require('images/profile/Noti.png')}
                 />
-                <Text semibold>Cài đặt thông báo</Text>
+                <Text semibold>{translation.setting_notification}</Text>
               </TouchableOpacity>
 
               {/* <TouchableOpacity
@@ -126,7 +188,7 @@ const User = () => {
                   style={[styles.icon]}
                   icon={Images.Profile.Location}
                   size={24}
-                  tintColor={Colors.cl1}
+                  tintColor={Colors.brd1}
                 />
                 <Text semibold>{translation.location_setting} </Text>
               </TouchableOpacity> */}
@@ -137,36 +199,51 @@ const User = () => {
             style={[base.row, styles.itemMenu]}
             onPress={() => {
               // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
-            }}>
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
+            }}
+          >
             <Image
               style={[styles.iconMenu]}
               source={require('images/profile/Support.png')}
             />
             <Text fs="h6" semibold ml={10}>
-              Trung tâm trợ giúp
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[base.row, styles.itemMenu]}
-            onPress={() => {
-              // Navigator.navigate(SCREEN.NOTIFICATION);
-              Alert.alert('', 'Coming soon');
-            }}>
-            <Image
-              style={[styles.iconMenu]}
-              source={require('images/profile/Info.png')}
-            />
-            <Text fs="h6" semibold ml={10}>
-              {'Thông tin ứng dụng'}
+              {translation.help_center}
             </Text>
 
             <Icon
               style={[base.leftAuto]}
               size={24}
               icon={Images.ArrowRight}
-              tintColor={Colors.g3}
+              tintColor={Colors.g5}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[base.row, styles.itemMenu]}
+            onPress={() => {
+              // Navigator.navigate(SCREEN.NOTIFICATION);
+              setError({
+                ErrorMessage: 'Coming soon',
+                icon: Images.Homes.Setting,
+              });
+            }}
+          >
+            <Image
+              style={[styles.iconMenu]}
+              source={require('images/profile/Info.png')}
+            />
+            <Text fs="h6" semibold ml={10}>
+              {translation.application_information}
+            </Text>
+
+            <Icon
+              style={[base.leftAuto]}
+              size={24}
+              icon={Images.ArrowRight}
+              tintColor={Colors.g5}
             />
           </TouchableOpacity>
         </View>
@@ -175,12 +252,12 @@ const User = () => {
           <Button
             size="lg"
             onPress={onLogout}
-            type={1}
-            label={'Đăng xuất'} //TODO: translate
-            // fw="600"
-            style={base.bgWhite}
-            bgImg={0}
-            color={Colors.black}
+            label={translation.log_out}
+            // style={base.bgWhite}
+            // bgImg={0}
+            color={Colors.tp2}
+            mode="outline"
+            style={{borderWidth: 0, elevation: 4}}
           />
         </View>
       </ScrollView>
@@ -188,12 +265,23 @@ const User = () => {
   );
 };
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
+  //------------
+  flexRow: {flexDirection: 'row'},
+  //------------
+  topMinus1: {top: -2},
+  //------------
+  mb1: {marginBottom: 24},
+  mb2: {marginBottom: 20},
+  mb3: {marginBottom: 10},
+  mb4: {marginBottom: 15},
+  //------------
   item: {
     padding: 10,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: Colors.black,
+    marginBottom: 15,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -211,7 +299,7 @@ const styles = StyleSheet.create({
   itemMenu: {
     borderTopColor: Colors.g2,
     borderTopWidth: 1,
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   iconMenu: {
     width: 32,
@@ -219,10 +307,18 @@ const styles = StyleSheet.create({
   },
 
   boxLogout: {
-    marginTop: 30,
+    //marginTop: 30,
     paddingTop: scale(20),
     paddingHorizontal: scale(20),
-    paddingBottom: scale(260),
+    paddingBottom: scale(250),
+  },
+  //-----------
+  notify1: {
+    width: 18,
+    height: 18,
+    paddingTop: 3,
+    borderRadius: 100,
+    backgroundColor: Colors.Highlight,
   },
 });
 export default User;

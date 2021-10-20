@@ -47,7 +47,7 @@ export default React.forwardRef(
     const keyboardType = email
       ? 'email-address'
       : numeric
-      ? 'number-pad'
+      ? 'numeric'
       : phone
       ? 'phone-pad'
       : 'default';
@@ -88,7 +88,8 @@ export default React.forwardRef(
                   top: 14,
                   left: 14,
                 },
-              ]}>
+              ]}
+            >
               <Image source={leftIcon} style={styles.icon_lock_img} />
             </View>
           )}
@@ -100,7 +101,8 @@ export default React.forwardRef(
               Boolean(leftIcon) && {paddingLeft: 50},
               (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
               style,
-            ]}>
+            ]}
+          >
             <TextInput
               ref={ref}
               autoCapitalize={'none'}
@@ -111,7 +113,7 @@ export default React.forwardRef(
               importantForAutofill={'yes'}
               placeholder={placeholder}
               style={[styles.textStyle, textStyle, errorStyle]}
-              placeholderTextColor={placeholderTextColor || Colors.BOTTOMBORDER}
+              placeholderTextColor={placeholderTextColor || Colors.tp5}
               onChangeText={onChangeText}
               keyboardType={keyboardType}
               secureTextEntry={password && !showPassword}
@@ -132,9 +134,10 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: scale(12),
                 top: scale(12),
-              }}>
+              }}
+            >
               <Image
-                source={showPassword ? Images.Eye : Images.EyeGray}
+                source={showPassword ? Images.Eye2 : Images.EyeGray2}
                 style={{width: scale(20), height: scale(20)}}
                 resizeMode="contain"
               />
@@ -148,7 +151,8 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: 15,
                 top: 18,
-              }}>
+              }}
+            >
               <Icon
                 icon={Images.CloseThin}
                 style={{
@@ -161,7 +165,7 @@ export default React.forwardRef(
         </View>
 
         {!!error && showErrorLabel && (
-          <Text color={Colors.ALERT} mt={3} size={scale(12)}>
+          <Text color={Colors.hl1} mt={3} size={scale(12)}>
             {error}
           </Text>
         )}
@@ -177,25 +181,25 @@ const styles = StyleSheet.create({
     paddingVertical: scale(2),
     height: 48,
     borderRadius: scale(8),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderWidth: 1,
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     justifyContent: 'center',
   },
   textStyle: {
     fontFamily: Fonts.FONT_REGULAR,
-    color: Colors.TEXT,
-    fontSize: Fonts.FONT_MEDIUM,
+    color: Colors.tp3,
+    fontSize: Fonts.MD,
   },
   error: {
-    borderColor: Colors.ALERT,
+    borderColor: Colors.hl1,
     borderWidth: 1,
   },
   icon_lock: {
     paddingRight: 10,
     borderRightWidth: 0.5,
     borderStyle: 'solid',
-    borderColor: Colors.GRAY,
+    borderColor: Colors.tp3,
     zIndex: 1,
   },
   icon_lock_img: {

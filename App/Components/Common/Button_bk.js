@@ -8,9 +8,9 @@ import {useSelector} from 'react-redux';
 export default ({
   onPress,
   label,
-  lableColor = Colors.BACKGROUNDCOLOR,
+  lableColor = Colors.bs4,
   icon,
-  backgroundColor = Colors.BLACKTEXT,
+  backgroundColor = Colors.tp2,
   mt,
   mb,
   ml,
@@ -24,8 +24,8 @@ export default ({
   mode = 'contained', //text, outlined, contained
   className = 'button-primary',
 }) => {
-  let textColor = mode == 'contained' ? lableColor : Colors.BLACKTEXT;
-  let tintColor = mode == 'contained' ? Colors.BACKGROUNDCOLOR : Colors.BLACK;
+  let textColor = mode == 'contained' ? lableColor : Colors.tp2;
+  let tintColor = mode == 'contained' ? Colors.bs4 : Colors.tp2;
   return (
     <Pressable
       disabled={disabled}
@@ -33,7 +33,7 @@ export default ({
       style={[
         {
           flex,
-          backgroundColor: disabled ? Colors.GRAY : backgroundColor,
+          backgroundColor: disabled ? Colors.tp3 : backgroundColor,
           marginTop: mt || mv,
           marginBottom: mb || mv,
           marginLeft: ml || mh,
@@ -43,7 +43,8 @@ export default ({
         style,
         mode == 'text' && styles.textButton,
         mode == 'outlined' && styles.outlinedButton,
-      ]}>
+      ]}
+    >
       <Text centered semibold color={textColor} style={labelStyle}>
         {typeof label == 'function' ? label() : label}
       </Text>
@@ -66,11 +67,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 19,
     borderRadius: 5,
   },
-  textButton: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  textButton: {backgroundColor: Colors.bs4},
   outlinedButton: {
-    borderColor: Colors.GRAY,
+    borderColor: Colors.tp3,
     borderWidth: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   image: {
     width: scale(15),

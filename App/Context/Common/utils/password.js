@@ -1,13 +1,14 @@
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
-import {confirmPassword} from 'services/user';
+import useServiceUser from 'services/user';
 import useShowModal from './showModal';
 import {useCommon} from '..';
 import {sha256} from 'react-native-sha256';
 import useError from './error';
 
 const useModalPassword = () => {
+  const {confirmPassword} = useServiceUser();
   const {phone} = useUser();
   const {
     showModal: {password, goBack},

@@ -85,6 +85,36 @@ const useAsyncStorage = () => {
     return await AsyncStorage.getItem(phone);
   };
 
+  const addName = async ({name, phone}) => {
+    const nameData = await getNameData();
+    if (Object.keys(nameData).includes(phone)) {
+      return;
+    }
+    nameData[phone] = name;
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.USER.NAME_DATA,
+      JSON.stringify(nameData),
+    );
+  };
+
+  const getNameData = async () => {
+    const value = await AsyncStorage.getItem(ASYNC_STORAGE_KEY.USER.NAME_DATA);
+    return value ? JSON.parse(value) : {};
+  };
+
+  const setInactiveTime = async time => {
+    await AsyncStorage.setItem(
+      ASYNC_STORAGE_KEY.COMMON.TURN_OF_AFTER_TIME,
+      time?.toString?.(),
+    );
+  };
+
+  const getInactiveTime = async () => {
+    return await AsyncStorage.getItem(
+      ASYNC_STORAGE_KEY.COMMON.TURN_OF_AFTER_TIME,
+    );
+  };
+
   return {
     ...AsyncStorage,
     getPhone,
@@ -102,6 +132,10 @@ const useAsyncStorage = () => {
     getPushToken,
     setResend,
     getResend,
+    addName,
+    getNameData,
+    getInactiveTime,
+    setInactiveTime,
   };
 };
 

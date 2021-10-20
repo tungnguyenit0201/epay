@@ -78,7 +78,7 @@ const Transfer = () => {
               onChange={handleChange}
             />
             <Text mr={5} ml={5}>
-              VNĐ
+              đ
             </Text>
             {showClose && (
               <TouchableOpacity>
@@ -115,7 +115,6 @@ const Transfer = () => {
           onPress={() => {
             Navigator.navigate(SCREEN.TRANSFER_RESULTS);
           }}
-          type={1}
           label="Tiếp tục"
         />
       </View>
@@ -123,17 +122,13 @@ const Transfer = () => {
       <Modal
         visible={showModal}
         onClose={() => setShowModal(false)}
-        icon={require('images/qrpay/MoneySend.png')}>
+        icon={require('images/qrpay/MoneySend.png')}
+      >
         <Text centered mb={20}>
           Tiêu đề thông báo Bạn đã nhập số tiền chuyển vượt hạn mức giao dịch
-          trong ngày, hạn mức hiện tại của bạn là X0.000.000 vnđ
+          trong ngày, hạn mức hiện tại của bạn là X0.000.000đ
         </Text>
-        <Button
-          type={1}
-          mb={10}
-          label="Đóng"
-          onPress={() => setShowModal(false)}
-        />
+        <Button mb={10} label="Đóng" onPress={() => setShowModal(false)} />
       </Modal>
     </>
   );
@@ -141,7 +136,7 @@ const Transfer = () => {
 const styles = StyleSheet.create({
   block: {
     paddingHorizontal: Spacing.PADDING,
-    borderBottomColor: Colors.l2,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 10,
   },
   avatar: {
@@ -157,7 +152,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     height: 48,
     borderRadius: scale(8),
     marginBottom: 20,
@@ -173,10 +168,10 @@ const styles = StyleSheet.create({
   boxBottom: {
     padding: scale(20),
     paddingBottom: scale(40),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

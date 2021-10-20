@@ -17,22 +17,17 @@ const Language = () => {
       <Image source={Images.Logo} style={[styles.logo, styles.topMinus1]} />
 
       <View style={styles.groupButton}>
-        <View style={styles.mb1}>
-          <Image
-            source={require('images/bg/border-blue.png')}
-            style={styles.bgImgBlue}
-            resizeMode="stretch"
-          />
-          <Button
-            label="English"
-            bg={Colors.white}
-            color={Colors.cl1}
-            onPress={() => chooseLanguage('en')}
-            bgImg={0}
-            style={{margin: 2}}
-          />
-        </View>
-        <Button label="Tiếng Việt" onPress={() => chooseLanguage('vi')} />
+        <Button
+          label="English"
+          mode="outline"
+          onPress={() => chooseLanguage('en')}
+          style={styles.en}
+        />
+        <Button
+          label="Tiếng Việt"
+          onPress={() => chooseLanguage('vi')}
+          style={styles.flex1}
+        />
       </View>
     </View>
   );
@@ -59,13 +54,18 @@ const styles = StyleSheet.create({
   groupButton: {
     position: 'absolute',
     bottom: 0,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: '100%',
     paddingBottom: 45,
     paddingTop: Spacing.PADDING,
     paddingHorizontal: Spacing.PADDING,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
+    flexDirection: 'row',
+  },
+  en: {
+    marginRight: Spacing.PADDING,
+    flex: 1,
   },
 });
 export default Language;

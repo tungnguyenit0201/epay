@@ -11,9 +11,9 @@ import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
+import _ from 'lodash';
 
 const RegisterName = () => {
-  let [disable, setDisable] = useState(true);
   const translation = useTranslation();
   const {personalInfo, onUpdatePersonalInfo, setPersonalInfo} = useUserInfo();
   const {showModal, setShowModal, openCallDialog} = useRegister();
@@ -23,7 +23,8 @@ const RegisterName = () => {
         FullName: '',
       }}
       validationSchema={nameSchema}
-      onSubmit={onUpdatePersonalInfo}>
+      onSubmit={onUpdatePersonalInfo}
+    >
       {({
         handleChange: _handleChange,
         handleBlur,
@@ -35,38 +36,40 @@ const RegisterName = () => {
         values,
       }) => {
         const handleChange = field => value => {
-          setFieldValue(field, value);
+          let valueConvert = value?.replace(/[0-9]/g, '');
+          setFieldValue(field, valueConvert);
           setFieldTouched(field, true, false);
-          setPersonalInfo(field, value);
+          setPersonalInfo(field, valueConvert);
         };
 
         return (
-          //TODO: translate
           <BlueHeader>
             <BigLogo style={{marginBottom: 30}} />
             <Content
               style={styles.wrap}
-              title="Nhập tên"
-              text="Nhập họ và tên để tạo tài khoản trên ví EPAY"
+              title={translation.enter_full_name}
+              text={
+                translation.enter_your_first_and_last_name_to_create_an_account_on_epay
+              }
             />
 
             <View style={[styles.wrap, styles.flex1]}>
               <TextInput
                 required
-                onFocus={e => setDisable(false)}
-                placeholder={translation.enter_your_name}
+                placeholder={translation.enter_full_name}
                 onChange={handleChange('FullName')}
                 onBlur={handleBlur('FullName')}
-                error={touched.FullName && errors.FullName}
-                value={values.FullName}
+                error={touched.FullName && translation[errors.FullName]}
+                value={values?.FullName}
                 isDeleted={values.FullName}
+                maxLength={100}
               />
             </View>
 
             <FooterContainer>
               <Button
-                disabled={disable}
-                label={translation.done}
+                disabled={errors?.FullName}
+                label={translation.completed}
                 style={styles.btn}
                 onPress={handleSubmit}
               />

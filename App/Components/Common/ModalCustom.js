@@ -31,7 +31,7 @@ const ModalCustom = ({children, visible, onClose, icon}) => {
 
 const styles = StyleSheet.create({
   Modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 16,
     position: 'relative',
     width: 311,

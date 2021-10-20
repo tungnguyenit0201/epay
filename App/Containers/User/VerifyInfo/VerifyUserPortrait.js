@@ -5,7 +5,7 @@ import {Colors, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
-import {SCREEN} from 'configs/Constants';
+import {GENDER, SCREEN} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 
 const VerifyUserPortrait = ({route}) => {
@@ -36,11 +36,11 @@ const VerifyUserPortrait = ({route}) => {
     SexType: extractCardInfo.Gender,
   });
 
-  const GENDERS = [
-    {label: translation.male, value: 1},
-    {label: translation.female, value: 2},
-    {label: translation.others, value: 3},
-  ];
+  const GENDERS = {
+    1: translation.male,
+    2: translation.female,
+    3: translation.others,
+  };
 
   const CARD_RULE = useMemo(() => {
     return {
@@ -129,31 +129,57 @@ const VerifyUserPortrait = ({route}) => {
     setInfo({...info, [key]: value});
   };
 
+  const handleValidate = key => {
+    switch (key) {
+      case 'ICIssuedPlace':
+        if (info[key]?.length > 200)
+          return setError({
+            ...error,
+            [key]: translation?.place_of_issue_maximum_200_characters,
+          });
+        return setError({...error, [key]: ''});
+
+      case 'Address':
+        if (info[key]?.length > 200)
+          return setError({
+            ...error,
+            [key]: translation?.address_maximum_200_characters,
+          });
+        return setError({...error, [key]: ''});
+      default:
+        break;
+    }
+  };
+
   const buttonEnabled = useMemo(() => {
     return (
       info.ICFullName &&
       !error.ICNumber &&
       info.ICNumber &&
       info.DateOfBirth &&
-      GENDERS.find(gender => gender.value === info.SexType) &&
+      info.SexType &&
       info.ICIssuedDate &&
       info.ICIssuedPlace &&
+      !error?.ICIssuedPlace &&
       // && (originalInfo?.ValidDate ? info.ValidDate : true)
       info.Provincial &&
       info.County &&
       (wardEmpty ? true : info.Ward) &&
       info.Address &&
+      !error?.Address &&
       acceptPolicy
     );
   }, [info, acceptPolicy, error]);
 
   return (
     <BaseVerifyInfo
+      style={styles.base}
       step={3}
       showInstruction={false}
-      onPressButton={onUpdateAllInfo}
+      onPressButton={() => onUpdateAllInfo(info)}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}>
+      buttonTitle={translation.updateInfo}
+    >
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -168,6 +194,7 @@ const VerifyUserPortrait = ({route}) => {
           multiline
         />
         <DatePicker
+          onChange={value => handleChange('DateOfBirth', value)}
           label={translation.date_of_birth_ddmmyyyy}
           value={info.DateOfBirth}
           required
@@ -178,7 +205,13 @@ const VerifyUserPortrait = ({route}) => {
             {translation.gender}
           </Text>
           <Radio
-            items={GENDERS}
+            items={Object.entries(GENDERS)
+              .sort((a, b) => b[0] - a[0])
+              .filter(x => x[0] !== '3')
+              .map(([key, value]) => ({
+                label: value,
+                value: parseInt(key),
+              }))}
             onChange={value => handleChange('SexType', value)}
             selectedValue={info.SexType}
           />
@@ -207,6 +240,7 @@ const VerifyUserPortrait = ({route}) => {
           onChange={value => handleChange('ICIssuedPlace', value)}
           value={info.ICIssuedPlace}
           error={error.ICIssuedPlace}
+          onBlur={() => handleValidate('ICIssuedPlace')}
           style={styles.mb1}
           required
           placeholder={translation?.inputIssuedPlace}
@@ -222,6 +256,7 @@ const VerifyUserPortrait = ({route}) => {
           onChange={value => handleChange('Address', value)}
           value={info.Address}
           error={error.Address}
+          onBlur={() => handleValidate('Address')}
           style={styles.address}
           required
           placeholder={translation?.inputAddress}
@@ -280,7 +315,8 @@ const VerifyUserPortrait = ({route}) => {
           color={Colors.Highlight}
           bold
           mb={48}
-          fs="h6">
+          fs="h6"
+        >
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>
@@ -288,6 +324,9 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
+  base: {
+    backgroundColor: Colors.bs4,
+  },
   container: {
     paddingHorizontal: Spacing.PADDING,
     marginTop: Spacing.PADDING,
@@ -298,7 +337,7 @@ const styles = StyleSheet.create({
   //---------------
   h1: {height: 8},
   //---------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginBottom: -2},
   //---------------
   mb1: {marginBottom: 10},
   //---------------
@@ -308,7 +347,7 @@ const styles = StyleSheet.create({
   pb1: {paddingBottom: 24},
   //---------------
   underline: {textDecorationLine: 'underline'},
-  bgGray: {backgroundColor: Colors.l4},
+  bgGray: {backgroundColor: Colors.bs1},
   //---------------
   firstLink: {
     textDecorationLine: 'underline',
@@ -318,7 +357,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   policy: {
-    marginLeft: 5,
+    marginLeft: 10,
   },
 });
 export default VerifyUserPortrait;

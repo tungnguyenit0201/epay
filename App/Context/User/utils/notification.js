@@ -4,20 +4,20 @@ import {ERROR_CODE, SCREEN, NOTIFY} from 'configs/Constants';
 import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
-import {
-  getChargesNotify,
-  getPromotionNotify,
-  getOtherNotify,
-  readNotify,
-  getAllNofify,
-} from 'services/notification';
+import useSErviceNotificaiton from 'services/notification';
 import {getAll} from 'utils/Functions';
 
 const useNotify = () => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch, userInfo, phone} = useUser();
-
+  const {
+    getChargesNotify,
+    getPromotionNotify,
+    getOtherNotify,
+    readNotify,
+    getAllNofify,
+  } = useSErviceNotificaiton();
   let listChargesNotify = [];
   let listPromotionNotify = [];
   let listOtherNotify = [];
@@ -124,7 +124,7 @@ const useNotify = () => {
   };
 
   const onGoNotify = async () => {
-    await onGetAllNotify();
+    // await onGetAllNotify();
     Navigator.navigate(SCREEN.NOTIFICATION);
   };
 
@@ -157,6 +157,10 @@ const useNotify = () => {
     Navigator.navigate(SCREEN.EPAY_SUCCESS, {data: item});
     item?.Id && !item?.IsRead && onReadNotify(item.Id);
   };
+
+  useEffect(() => {
+    phone && onGetAllNotify();
+  }, [phone]);
 
   return {
     onGetChargesNotify,

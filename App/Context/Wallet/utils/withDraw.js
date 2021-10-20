@@ -4,7 +4,7 @@ import _ from 'lodash';
 import useBankInfo from './bankInfo';
 import {useWallet} from '..';
 import {useTopUpWithdraw} from './topUpWithdraw';
-import {getBankFee} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import {useUser} from 'context/User';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
 
@@ -21,6 +21,7 @@ const useWithDraw = () => {
   const {phone} = useUser();
   const {onGetConnectedBank} = useBankInfo();
   const {listConnectBank} = useWallet();
+  const {getBankFee} = useServiceWallet();
   const [bankFeeData, setBankFeeData] = useState({
     [TRANS_FORM_TYPE.CONNECTED_BANK]: null,
   });

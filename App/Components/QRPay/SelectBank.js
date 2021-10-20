@@ -17,12 +17,13 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
     <>
       <View style={styles.block}>
         <Text fw="700" fs="lg" mb={10}>
-          {sourceTitle || translation.topup.moneySource}
+          {sourceTitle || translation?.topup?.moneySource}
         </Text>
         <Pressable
           disabled={disabled}
           onPress={onPress}
-          style={[styles.itemBank]}>
+          style={[styles.itemBank]}
+        >
           <Image
             style={[styles.iconBank]}
             source={
@@ -36,7 +37,8 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
             style={{
               alignItems: '',
             }}
-            width="70%">
+            width="70%"
+          >
             <Text fs="h6" bold>
               {BankName}
             </Text>
@@ -61,9 +63,9 @@ const styles = StyleSheet.create({
   },
   itemBank: {
     flex: 1,
-    backgroundColor: Colors.cl5,
+    backgroundColor: Colors.bg1,
     borderRadius: 10,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

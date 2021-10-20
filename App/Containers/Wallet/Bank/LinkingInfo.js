@@ -39,15 +39,16 @@ const BankInfo = () => {
               alignItems: 'center',
               marginBottom: 24,
             },
-          ]}>
+          ]}
+        >
           <Text bold size={Fonts.H6} style={{fontWeight: 'bold'}}>
             Loại liên kết
           </Text>
 
           <View style={styles.flex}>
             <Button
-              bg={cardOption ? Colors.cl1 : Colors.BORDER}
-              color={!cardOption && Colors.l3}
+              bg={cardOption ? Colors.brd1 : Colors.bs2}
+              color={!cardOption && Colors.bs1}
               label="Thẻ"
               onPress={chooseCard}
               mr={10}
@@ -55,8 +56,8 @@ const BankInfo = () => {
             />
 
             <Button
-              bg={accountOption ? Colors.cl1 : Colors.BORDER}
-              color={!accountOption && Colors.l3}
+              bg={accountOption ? Colors.brd1 : Colors.bs2}
+              color={!accountOption && Colors.bs1}
               label="Tài khoản"
               onPress={chooseAccount}
               style={styles.btn}
@@ -94,17 +95,18 @@ const BankInfo = () => {
             marginHorizontal: 0,
             borderWidth: 1,
             borderStyle: 'solid',
-            borderColor: Colors.cl4,
+            borderColor: Colors.bs1,
           }}
-          inputStyle={{color: Colors.cl4}}
+          inputStyle={{color: Colors.bs1}}
         />
       </View>
 
       <View
         style={{
-          backgroundColor: Colors.BORDER,
+          backgroundColor: Colors.bs2,
           height: 8,
-        }}></View>
+        }}
+      ></View>
 
       <View style={[styles.wrap, styles.pt_1]}>
         <Text
@@ -112,7 +114,8 @@ const BankInfo = () => {
           style={{
             marginBottom: 8,
             fontWeight: 'bold',
-          }}>
+          }}
+        >
           {translation.conditions_to_connect}
         </Text>
 
@@ -143,7 +146,7 @@ const BankInfo = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -167,19 +170,19 @@ const styles = StyleSheet.create({
     height: 32,
   },
   // input: {
-  //   borderColor: Colors.black,
+  //   borderColor: Colors.tp2,
   //   borderRadius: 3,
-  //   backgroundColor: Colors.white,
+  //   backgroundColor: Colors.bs4,
   // },
   mb_1: {marginBottom: 16},
   dot: {
     width: 3,
     height: 3,
     marginRight: 8,
-    backgroundColor: Colors.l3,
+    backgroundColor: Colors.bs1,
     borderRadius: 100,
   },
-  text_gray: {color: Colors.l3},
+  text_gray: {color: Colors.bs1},
 });
 
 export default BankInfo;

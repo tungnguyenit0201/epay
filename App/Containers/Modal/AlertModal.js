@@ -80,7 +80,8 @@ const AlertModal = (props = {}) => {
           <ImageBackground
             source={Images.BgModal}
             style={[styles.headerBackground]}
-            resizeMode="contain">
+            resizeMode="contain"
+          >
             {!!icon && (
               <View style={styles.iconContainer}>
                 <Image
@@ -96,11 +97,13 @@ const AlertModal = (props = {}) => {
           {renderContent()}
           <TouchableOpacity
             style={[styles.buttonContainer, styles.positiveButtonContainer]}
-            onPress={onPressPositive}>
+            onPress={onPressPositive}
+          >
             <ImageBackground
               source={Images.primaryButton}
               resizeMode="cover"
-              style={styles.positiveButton}>
+              style={styles.positiveButton}
+            >
               <Text style={styles.positiveText}>
                 {positiveButton?.title || strings?.agree}
               </Text>
@@ -109,11 +112,13 @@ const AlertModal = (props = {}) => {
           {!!secondaryButton && (
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={onPressSecondary}>
+              onPress={onPressSecondary}
+            >
               <ImageBackground
                 source={Images.borderButton}
                 resizeMode="stretch"
-                style={styles.positiveButton}>
+                style={styles.positiveButton}
+              >
                 <Text style={styles.secondaryText}>
                   {secondaryButton.title}
                 </Text>
@@ -123,7 +128,8 @@ const AlertModal = (props = {}) => {
           {!!negativeButton && (
             <TouchableOpacity
               style={styles.negativeButton}
-              onPress={onPressNegative}>
+              onPress={onPressNegative}
+            >
               <Text style={styles.negativeText}>{negativeButton.title}</Text>
             </TouchableOpacity>
           )}
@@ -143,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modal: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 16,
   },
   header: {
@@ -181,7 +187,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.PADDING / 2,
   },
   positiveText: {
-    color: Colors.white,
+    color: Colors.bs4,
     fontWeight: 'bold',
   },
   negativeButton: {
@@ -204,7 +210,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   positiveButtonContainer: {
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
     borderRadius: 8,
     marginTop: 20,
   },
@@ -222,13 +228,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: Spacing.PADDING / 2,
-    backgroundColor: Colors.white,
-    borderColor: Colors.primary,
+    backgroundColor: Colors.bs4,
+    borderColor: Colors.grd3,
     borderWidth: 1,
     borderRadius: 10,
   },
   secondaryText: {
     fontWeight: 'bold',
-    color: Colors.blue,
+    color: Colors.tp1,
   },
 });

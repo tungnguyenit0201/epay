@@ -19,7 +19,7 @@ const OTPBySmartOTP = props => {
     return (
       <Text centered mv={20}>
         <Text centered>{translation.otp.timeOTP}</Text>
-        <Text centered bold color={Colors.blue}>{`${time}s`}</Text>
+        <Text centered bold color={Colors.tp1}>{`${time}s`}</Text>
       </Text>
     );
   }, [time]);
@@ -39,7 +39,8 @@ const OTPBySmartOTP = props => {
           fs={'h5'}
           fw={'600'}
           color={'#141212'}
-          style={{lineHeight: 34}}>
+          style={{lineHeight: 34}}
+        >
           {translation.transaction.confirmTransaction}
         </Text>
         <Text mb={35}>{translation.transaction.autoFillOTP} </Text>

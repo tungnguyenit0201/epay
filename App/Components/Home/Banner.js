@@ -36,16 +36,18 @@ const Banner = ({
         {
           width: scale(width),
         },
-      ]}>
+      ]}
+    >
       <TouchableOpacity
         style={[styles.item, styleItem]}
-        onPress={() => openLink(item?.RedirectUrl)}>
+        onPress={() => openLink(item?.RedirectUrl)}
+      >
         <Image source={{uri: item?.ImageUrl}} style={[styles.img, styleImg]} />
         <View style={styles.wrapText}>
-          <Text fs="h6" fw="900" color={Colors.white}>
+          <Text fs="h6" fw="900" color={Colors.bs4}>
             {item?.Title?.toUpperCase()}
           </Text>
-          <Text numberOfLines={2} color={Colors.white}>
+          <Text numberOfLines={2} fs="sm" color={Colors.bs4}>
             {item?.Content}
           </Text>
         </View>
@@ -84,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Banner;
+export default React.memo(Banner);
