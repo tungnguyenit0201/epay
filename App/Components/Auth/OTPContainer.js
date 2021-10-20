@@ -22,13 +22,13 @@ const OTPContainer = ({
   const otpRef = useRef(null);
 
   useEffect(() => {
-    if (code) {
+    if (code || !message) {
       return;
     }
     setTimeout(() => {
       otpRef.current?.focusField(0);
     }, 500);
-  }, [code]);
+  }, [code, message]);
 
   return (
     <>

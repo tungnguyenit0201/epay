@@ -63,7 +63,10 @@ const VerifyEmailResult = ({route}) => {
                 </Text>
               ) : (
                 <WebView
-                  style={{minHeight: 70}}
+                  style={{
+                    minHeight: 70,
+                    width: scale(343),
+                  }}
                   source={{
                     html: `<style> div { color: red !important } </style> ${route?.params?.message}`,
                   }}
