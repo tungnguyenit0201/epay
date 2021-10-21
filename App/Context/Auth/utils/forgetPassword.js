@@ -30,11 +30,20 @@ const useForgetPassword = () => {
         functionType: FUNCTION_TYPE.FORGOT_PASS,
       });
       return;
-    } else
-      setError({
-        ...result,
-        action: [{label: agree}],
-      });
+    }
+    setError({
+      ...result,
+      action: [
+        {
+          label: agree,
+          onPress: () => {
+            errorCode !==
+              ERROR_CODE.ACCOUNT_IS_NOT_EXISTED_OR_INVALID_PASSWORD &&
+              Navigator.navigate(SCREEN.LOGIN);
+          },
+        },
+      ],
+    });
   };
 
   const onNewPassword = async ({newPassword, phone}) => {
@@ -46,13 +55,12 @@ const useForgetPassword = () => {
     });
     setLoading(false);
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
-      if (result?.ErrorCode === ERROR_CODE.NEW_PASSWORD_SIMILAR_TO_LAST_ONE) {
-        return setError({
-          ...result,
-          action: [{onPress: () => Navigator.navigate(SCREEN.AUTH)}],
-        });
-      }
-      return setError(result);
+      return setError({
+        ...result,
+        action: [
+          {label: agree, onPress: () => Navigator.navigate(SCREEN.LOGIN)},
+        ],
+      });
     }
 
     setError({
