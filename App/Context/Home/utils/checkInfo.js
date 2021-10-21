@@ -15,7 +15,7 @@ import {useUser} from 'context/User';
 import {useUserStatus} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {Images} from 'themes';
-import {useModalSmartOTP} from 'context/User/utils';
+import {useModalSmartOTP} from './useHome';
 import {useRegister} from 'context/Auth/utils';
 
 const useCheckInfo = () => {
