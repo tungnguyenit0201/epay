@@ -323,8 +323,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     borderRadius: 8,
     marginHorizontal: Spacing.PADDING,
-    paddingVertical: 24,
     paddingHorizontal: 16,
+    paddingTop: 24,
+    paddingBottom: 16,
   },
   //----------------
   boxCirle1: {
