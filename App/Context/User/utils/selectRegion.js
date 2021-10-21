@@ -1,22 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
-import { useAsyncStorage, useError, useLoading } from 'context/Common/utils';
-import { useTranslation } from 'context/Language';
+import {useState, useEffect, useRef} from 'react';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
-import { ERROR_CODE, SCREEN } from 'configs/Constants';
-import { getProvince, getDistrict, getWard } from 'services/region';
-import { useUser } from 'context/User';
+import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import useServiceRegion from 'services/region';
+import {useUser} from 'context/User';
 
-const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
+const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
   // const [values, setValues] = useState();
   // const [search, setSearch] = useState('');
   const translation = useTranslation();
-  const { region, dispatch } = useUser();
+  const {region, dispatch} = useUser();
 
-  const { setError } = useError();
-  const { setLoading } = useLoading();
-  const { getPhone } = useAsyncStorage();
+  const {getProvince, getDistrict, getWard} = useServiceRegion();
+  const {setError} = useError();
+  const {setLoading} = useLoading();
+  const {getPhone} = useAsyncStorage();
   const pleaseChooseFirst = type => {
-    setError({ ErrorCode: -1, ErrorMessage: `Vui lòng chọn ${type} trước` }); // TODO: translate
+    setError({ErrorCode: -1, ErrorMessage: `Vui lòng chọn ${type} trước`}); // TODO: translate
   };
 
   const escapeRegex = string => string?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -25,7 +26,7 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
     try {
       setLoading(true);
       let phone = await getPhone();
-      let result = await getProvince({ phone });
+      let result = await getProvince({phone});
 
       setLoading(false);
       if (result?.ErrorCode == ERROR_CODE.SUCCESS)
@@ -36,11 +37,11 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
     }
   };
 
-  const onGetDistrict = async ({ ProvinceID }) => {
+  const onGetDistrict = async ({ProvinceID}) => {
     try {
       setLoading(true);
       let phone = await getPhone();
-      let result = await getDistrict({ ProvinceID, phone });
+      let result = await getDistrict({ProvinceID, phone});
       setLoading(false);
       if (result?.ErrorCode == ERROR_CODE.SUCCESS)
         return result?.DistrictInfoList;
@@ -50,11 +51,11 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
     }
   };
 
-  const onGetWard = async ({ DistrictID }) => {
+  const onGetWard = async ({DistrictID}) => {
     try {
       setLoading(true);
       let phone = await getPhone();
-      let result = await getWard({ DistrictID, phone });
+      let result = await getWard({DistrictID, phone});
       setLoading(false);
 
       if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
@@ -98,7 +99,7 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
           pleaseChooseFirst(translation.district);
         } else {
           let _items = [];
-          if (!type) _items = await onGetWard({ DistrictID: region?.DistrictID });
+          if (!type) _items = await onGetWard({DistrictID: region?.DistrictID});
           Navigator.navigate('RegionSelect', {
             items: type ? items : _items,
             type: _type,
@@ -114,7 +115,7 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
     if (type === 'cites') {
       dispatch({
         type: 'SET_REGION',
-        data: { ...region, Provincial: item?.ProvinceName, ...item },
+        data: {...region, Provincial: item?.ProvinceName, ...item},
       });
       const _items = await onGetDistrict({
         ProvinceID: item?.ProvinceID.toString(),
@@ -126,11 +127,17 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
         callbackScreen,
       });
     } else if (type === 'districts') {
-      const _items = await onGetWard({ DistrictID: item?.DistrictID });
+      const _items = await onGetWard({DistrictID: item?.DistrictID});
       if (!_items?.length) {
         dispatch({
           type: 'SET_REGION',
-          data: { ...region, County: item?.DistrictName, Ward: '', wardEmpty: true, ...item },
+          data: {
+            ...region,
+            County: item?.DistrictName,
+            Ward: '',
+            wardEmpty: true,
+            ...item,
+          },
         });
         Navigator.navigate(callbackScreen, {
           type: parentType,
@@ -138,7 +145,12 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
       } else {
         dispatch({
           type: 'SET_REGION',
-          data: { ...region, County: item?.DistrictName, wardEmpty: false, ...item },
+          data: {
+            ...region,
+            County: item?.DistrictName,
+            wardEmpty: false,
+            ...item,
+          },
         });
         Navigator.push('RegionSelect', {
           items: _items,
@@ -151,7 +163,7 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
       console.log('callbackScreen', callbackScreen);
       dispatch({
         type: 'SET_REGION',
-        data: { ...region, Ward: item?.WardName, wardEmpty: false, ...item },
+        data: {...region, Ward: item?.WardName, wardEmpty: false, ...item},
       });
       Navigator.navigate(callbackScreen, {
         type: parentType,
@@ -181,6 +193,6 @@ const useSelectRegion = ({ items, type, parentType, callbackScreen } = {}) => {
   //   );
   // }, [search]);
 
-  return { goRegionSelect, onSelected, onClearRegionData };
+  return {goRegionSelect, onSelected, onClearRegionData};
 };
 export default useSelectRegion;

@@ -1,11 +1,6 @@
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useEffect, useRef, useState} from 'react';
-import {
-  getTransferUser,
-  moneyTransfer,
-  payment,
-  getSourceMoney,
-} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import Navigator from 'navigations/Navigator';
 import {SCREEN, TRANS_FORM_TYPE, TRANS_TYPE} from 'configs/Constants';
 import _ from 'lodash';
@@ -21,6 +16,13 @@ export const useQRTransfer = (mount = true) => {
   const {setLoading} = useLoading();
   const {phone} = useUser();
   const {qrTransaction, dispatch} = useWallet();
+  const {
+    getTransferUser,
+    moneyTransfer,
+    payment,
+    getSourceMoney,
+    paymentComfrim,
+  } = useServiceWallet();
   const transfer = useRef({
     amount: null,
     payoneer: 0,
@@ -68,13 +70,27 @@ export const useQRTransfer = (mount = true) => {
   };
 
   const onPayment = async () => {
+    setLoading(true);
     let result = await payment({
       phone,
       OrderId: qrTransaction?.OrderID,
       MerchantCode: qrTransaction?.MerchantCode,
       TransFormType: TRANS_FORM_TYPE.WALLET,
+      Amount: 100000,
     });
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+    } else setError(result);
+    setLoading(false);
   };
+
+  // const onPaymentConfrim = async () => {
+  //   let result = await paymentComfrim({
+  //     phone,
+  //     OrderId: qrTransaction?.OrderID,
+  //     MerchantCode: qrTransaction?.MerchantCode,
+  //     TransFormType: TRANS_FORM_TYPE.WALLET,
+  //   });
+  // };
 
   const onGetSourceMoney = async () => {
     let result = await getSourceMoney({
@@ -88,8 +104,8 @@ export const useQRTransfer = (mount = true) => {
   };
 
   const onContinue = async () => {
-    await onMoneyTransfer();
-    // await onPayment()
+    // await onMoneyTransfer();
+    await onPayment();
   };
 
   const onMount = async () => {

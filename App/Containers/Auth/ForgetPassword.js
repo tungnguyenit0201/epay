@@ -17,16 +17,16 @@ const ForgetPassword = () => {
   const {phone} = usePhone();
   const {onSubmitPhone} = useForgetPassword();
   const translation = useTranslation();
-
-  // TODO: translate
   return (
     <BlueHeader>
       {/* <Header back blackIcon avoidStatusBar /> */}
       <BigLogo style={{marginBottom: 30}} />
       <Content
         style={styles.wrap}
-        title="Quên mật khẩu"
-        text="Để lấy lại mật khẩu, bạn vui lòng nhập số điện thoại bên dưới"
+        title={translation.forgot_password}
+        text={
+          translation.to_reset_your_password_please_enter_your_phone_number_below
+        }
       />
 
       <Formik
@@ -35,7 +35,8 @@ const ForgetPassword = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onSubmitPhone}>
+        onSubmit={onSubmitPhone}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -56,15 +57,15 @@ const ForgetPassword = () => {
               <View style={[styles.wrap, styles.flex1, styles.mt1]}>
                 <TextInput
                   numeric
-                  autoFocus
                   placeholder={translation.enter_your_phone_number}
                   required
                   onChange={handleChange('phone')}
                   onBlur={handleBlur('phone')}
-                  error={touched.phone && errors.phone}
+                  error={touched.phone && translation[errors.phone]}
                   value={values.phone}
                   /* leftIcon={Images.Phone_1} */
                   isDeleted={values.phone}
+                  maxLength={10}
                 />
               </View>
               <FooterContainer>
@@ -72,7 +73,7 @@ const ForgetPassword = () => {
                   label={translation.continue}
                   onPress={handleSubmit}
                   disabled={!_.isEmpty(errors)}
-                  // fs={Fonts.FONT_MEDIUM}
+                  // fs={Fonts.MD}
                 />
               </FooterContainer>
             </>

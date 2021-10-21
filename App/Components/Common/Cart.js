@@ -14,7 +14,8 @@ const Cart = ({style}) => {
       onPress={() => {
         Navigator.push('Cart');
       }}
-      style={[!!qty && {paddingTop: 10, paddingRight: 10}, style]}>
+      style={[!!qty && {paddingTop: 10, paddingRight: 10}, style]}
+    >
       <Image
         source={Images.Cart}
         style={{width: scale(20), height: scale(18)}}
@@ -25,7 +26,7 @@ const Cart = ({style}) => {
             label={`${qty}`}
             size={'small'}
             absR
-            backgroundColor={Colors.cl1}
+            backgroundColor={Colors.brd1}
           />
         </View>
       )}

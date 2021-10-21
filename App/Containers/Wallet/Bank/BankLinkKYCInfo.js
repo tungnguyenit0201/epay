@@ -41,7 +41,7 @@ const BankLinkKYCInfo = props => {
   };
 
   return (
-    <View flex={1} backgroundColor={Colors.white}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header title={translation.connect_bank} back />
       </HeaderBg>
@@ -52,7 +52,8 @@ const BankLinkKYCInfo = props => {
           District: ICInfo?.District,
           Province: ICInfo?.Province,
         }}
-        validationSchema={addressSchema}>
+        validationSchema={addressSchema}
+      >
         <FormikContent
           region={ICInfo}
           goRegionSelect={goRegionSelect}
@@ -93,7 +94,8 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
       <ScrollView
         style={{paddingHorizontal: Spacing.PADDING}}
         flex={1}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+      >
         <InputBlock
           label="Tỉnh / Thành phố"
           error={touched.Province && errors.Province}
@@ -127,7 +129,7 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
           onBlur={handleBlur('Address')}
           error={touched.Address && errors.Address}
           value={values.Address}
-          inputStyle={{borderColor: Colors.BORDER}}
+          inputStyle={{borderColor: Colors.bs2}}
         />
       </ScrollView>
 
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   shadowButton: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 1, height: 0},

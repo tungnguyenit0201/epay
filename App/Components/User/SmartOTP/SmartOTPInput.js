@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
     width: Spacing.PADDING,
     height: Spacing.PADDING,
     borderRadius: Spacing.PADDING / 2,
-    backgroundColor: Colors.g9,
+    backgroundColor: Colors.tp2,
   },
   activeCirle: {
-    backgroundColor: Colors.l4,
+    backgroundColor: Colors.bs1,
   },
 });

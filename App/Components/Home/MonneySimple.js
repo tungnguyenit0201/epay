@@ -17,7 +17,7 @@ const Monney = ({style}) => {
     <View style={[styles.item, base.shadow, style]}>
       <View style={[]}>
         <Text fs="h6" style={styles.title}>
-          {translation.my_wallet} :
+          {translation.my_wallet}
         </Text>
       </View>
       <View style={[styles.right]}>
@@ -33,10 +33,11 @@ const Monney = ({style}) => {
           )}
           <TouchableOpacity
             style={{marginLeft: 10}}
-            onPress={() => setShowMoney(!showMoney)}>
+            onPress={() => setShowMoney(!showMoney)}
+          >
             <Icon
-              icon={showMoney ? Images.Eye : Images.EyeGray}
-              tintColor={Colors.white}
+              icon={showMoney ? Images.Eye2 : Images.EyeGray2}
+              tintColor={Colors.bs4}
               size={20}
             />
           </TouchableOpacity>
@@ -53,13 +54,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  title: {color: Colors.white},
+  title: {color: Colors.bs4},
   right: {
     marginLeft: 'auto',
   },
   text: {
     height: 25,
-    color: Colors.white,
+    color: Colors.bs4,
+    marginBottom: 5,
   },
 });
 

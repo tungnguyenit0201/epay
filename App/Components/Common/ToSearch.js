@@ -7,14 +7,14 @@ import {stripTags, scale} from 'utils/Functions';
 const ToSearch = ({searchText}) => {
   let [searchList, setSearchList] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      // let res = await Course.getListCourses({keyword: searchText});
-      let res = ProductService.getProducts({keyword: searchText});
-      setSearchList(res);
-    };
-    fetchData();
-  }, [searchText]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     // let res = await Course.getListCourses({keyword: searchText});
+  //     let res = ProductService.getProducts({keyword: searchText});
+  //     setSearchList(res);
+  //   };
+  //   fetchData();
+  // }, [searchText]);
 
   const renderItem = ({item}) => (
     <View style={styles.title}>
@@ -45,7 +45,7 @@ const ToSearch = ({searchText}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingHorizontal: Spacing.PADDING,
     paddingTop: Spacing.PADDING,
   },

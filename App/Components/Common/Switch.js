@@ -5,16 +5,18 @@ import {Switch} from 'react-native-ui-lib';
 const SwitchCustom = ({
   style,
   onChange,
-  onColor = Colors.cl1,
-  offColor = Colors.l3,
+  onColor = Colors.brd1,
+  offColor = Colors.bs1,
   initialValue = false,
   ...props
 }) => {
   const [isActive, setActive] = useState(initialValue);
 
-  const onValueChange = value => {
-    setActive(value);
-    onChange && onChange(value);
+  const onValueChange = async value => {
+    const result = onChange ? await onChange(value) : undefined;
+    if (result === undefined || result) {
+      setActive(value);
+    }
   };
 
   return (

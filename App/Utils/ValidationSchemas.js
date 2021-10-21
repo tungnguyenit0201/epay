@@ -1,8 +1,10 @@
 import {TEXT} from 'configs/Constants';
 import * as yup from 'yup';
 
+// const FULLNAME_REGEX = /[^@$!%*#?&]+$/;
 const FULLNAME_REGEX =
-  /^([aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ ?)+$/i;
+  /^[a-zA-ZaàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵzAÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬDĐEÈẺẼÉẸÊỀỂỄẾỆIÌỈĨÍỊOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢUÙỦŨÚỤƯỪỬỮỨỰYỲỶỸÝỴ\s]+$/;
+
 export const bankCardRegex = /^[a-zA-Z0-9]+$/;
 export const registerSchema = yup.object().shape({
   username: yup.string().required(TEXT.USERNAME_NOT_BLANK),
@@ -31,16 +33,20 @@ export const registerSchema = yup.object().shape({
 });
 
 export const emailSchema = yup.object().shape({
-  email: yup.string().email(TEXT.EMAIL_INVALID).required(TEXT.EMAIL_NOT_BLANK),
+  email: yup
+    .string()
+    .email(TEXT.EMAIL_INVALID)
+    .required(TEXT.EMAIL_NOT_BLANK)
+    .matches(/^[A-Za-z0-9@.]*$/, TEXT.EMAIL_INVALID),
 });
 
 export const phoneSchema = yup.object().shape({
   phone: yup
     .string()
-    .required('*Số điện thoại không hợp lệ')
+    .required('incorrect_phone_number')
     .matches(
       /^(\+?84|0)((3([2-9]))|(5([2689]))|(7([0|6-9]))|(8([1-9]))|(9([0-9])))([0-9]{7})$/,
-      '*Số điện thoại không hợp lệ',
+      'incorrect_phone_number',
     )
     .label(TEXT.PHONE),
 });
@@ -51,27 +57,27 @@ export const passwordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
-      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
     )
-    .label('Mật khẩu'),
+    .label('password'),
 });
 
 export const newPasswordSchema = yup.object().shape({
   newPassword: yup
     .string()
     .required()
+    .max(20, 'password_maximum_20_characters')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\S]{8,}$/,
-      'Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa và số',
+      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
     )
-    .label('Mật khẩu')
-    .max(20, 'Mật khẩu tối đa 20 ký tự'),
+    .label('password'),
   passwordConfirm: yup
     .string()
     .required()
-    .oneOf([yup.ref('newPassword'), null], TEXT.PASSWORD_NOT_MATCH)
+    .oneOf([yup.ref('newPassword'), null], 'data_does_not_match_with_password')
     .label('Xác nhận mật khẩu')
-    .max(20, 'Mật khẩu tối đa 20 ký tự'),
+    .max(20, 'password_maximum_20_characters'),
 });
 
 export const napasSchema = yup.object().shape({
@@ -110,7 +116,10 @@ export const verifyUserSchema = yup.object().shape({
 export const nameSchema = yup.object().shape({
   FullName: yup
     .string()
-    .required('Tên không được bỏ trống.')
-    .max(100)
-    .matches(FULLNAME_REGEX, 'Tên không hợp lệ.'),
+    .required('full_name_cannot_be_left_blank')
+    .max(100, 'fullname_maximum_100_characters')
+    .matches(
+      FULLNAME_REGEX,
+      'first_and_last_name_must_not_contain_special_characters',
+    ),
 });

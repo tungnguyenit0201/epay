@@ -49,7 +49,7 @@ const SelectImage = ({title, onSelectImage, chooseImage, css}) => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 54,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 8,
   },
   textUppercase: {textTransform: 'uppercase'},

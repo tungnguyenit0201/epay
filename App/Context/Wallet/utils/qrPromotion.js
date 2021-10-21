@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
-import {getPromotion, applyPromo} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 
@@ -11,6 +11,7 @@ const useQRPromo = () => {
   const {setLoading} = useLoading();
   const {phone} = useUser();
   const {qrTransaction, dispatch} = useWallet();
+  const {getPromotion, applyPromo} = useServiceWallet();
   const promotion = useRef({});
   let [promoCode, setPromoCode] = useState(false);
 

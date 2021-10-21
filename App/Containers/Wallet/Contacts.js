@@ -56,7 +56,8 @@ const Contacts = () => {
     return (
       <TouchableOpacity
         style={styles.blockHorizontal}
-        onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}>
+        onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
+      >
         <Image source={item.avatar} style={styles.avatar} />
         <Text bold>{item.name}</Text>
         <Text style={styles.fontSmall}>{item.phone}</Text>
@@ -67,7 +68,8 @@ const Contacts = () => {
   const renderVertical = ({item}) => (
     <TouchableOpacity
       style={styles.blockVertical}
-      onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}>
+      onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
+    >
       <Image source={item.avatar} style={styles.avatar} />
       <View style={styles.ml_16}>
         <Text bold>{item.name}</Text>
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     marginBottom: scale(8),
   },
   fontSmall: {
-    fontSize: Fonts.FONT_SMALL,
+    fontSize: Fonts.SM,
   },
   blockVertical: {
     flex: 1,

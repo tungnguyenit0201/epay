@@ -43,10 +43,9 @@ const KeyboardSuggestion = ({
           {
             paddingBottom: isShow ? 0 : 30,
           },
-        ]}>
+        ]}
+      >
         <Button
-          style={styles.continue}
-          // size={'xss'}
           label="Tiếp tục"
           onPress={onContinue}
           disabled={!isContinueEnabled}
@@ -59,14 +58,16 @@ const KeyboardSuggestion = ({
             paddingVertical: scale(8),
             justifyContent: 'space-evenly',
             flexDirection: 'row',
-            backgroundColor: Colors.white,
-          }}>
+            backgroundColor: Colors.bs4,
+          }}
+        >
           {optionList &&
             optionList.map(option => {
               return (
                 <TouchableOpacity
                   onPress={() => onPressOption(option.value)}
-                  key={`${option.value}-${Math.random(1, 100)}`}>
+                  key={`${option.value}-${Math.random(1, 100)}`}
+                >
                   <Text bold style={styles.option}>
                     {option.label}
                   </Text>
@@ -88,19 +89,16 @@ const styles = StyleSheet.create({
   option: {
     textAlign: 'center',
     lineHeight: 40,
-    backgroundColor: Colors.moneyItem,
+    backgroundColor: Colors.bg1,
     borderRadius: 8,
     height: 40,
     overflow: 'hidden',
-    color: Colors.cl1,
+    color: Colors.brd1,
     paddingHorizontal: 25,
   },
   continueContainer: {
     padding: scale(16),
     paddingBottom: 0,
-  },
-  continue: {
-    height: scale(48),
   },
 });
 

@@ -59,11 +59,11 @@ const TransactionResult = () => {
     },
     {
       label: 'Thực chuyển ',
-      value: '1.000.000 vnd',
+      value: '1.000.000đ',
     },
     {
       label: 'Tổng số tiền',
-      value: <Text bold>1.005.000 vnđ</Text>,
+      value: <Text bold>1.005.000đ</Text>,
     },
   ];
   const paymentData = [
@@ -101,7 +101,7 @@ const TransactionResult = () => {
 
           <Text style={styles.textRight}>{item.value}</Text>
         </View>
-        <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.l3} />
+        <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
       </View>
     );
   };
@@ -149,9 +149,9 @@ const TransactionResult = () => {
                       fs={Fonts.SM}
                       fw="400"
                       bgImg={false}
-                      bg={Colors.white}
-                      border={Colors.cl4}
-                      color={Colors.black}
+                      bg={Colors.bs4}
+                      border={Colors.bs1}
+                      color={Colors.tp2}
                       onPress={() => Navigator.navigate(SCREEN.QR_PROMOTION)}
                     />
                     <Text style={styles.textRight}>-</Text>
@@ -160,7 +160,7 @@ const TransactionResult = () => {
                   <DashedLine
                     dashLength={4}
                     dashThickness={1}
-                    dashColor={Colors.l3}
+                    dashColor={Colors.bs1}
                   />
                 </View>
               </>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     color: Colors.cl3,
   },
   textRight: {
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     // maxWidth: scale(160),
   },
   sepa: {marginLeft: -Spacing.PADDING, marginTop: -1},

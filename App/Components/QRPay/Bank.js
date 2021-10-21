@@ -15,7 +15,8 @@ const TransferBank = ({sourceMoney = []}) => {
     return (
       <View
         style={[styles.itemBank, !item?.SourceId && styles.itemBankActive]}
-        key={`${Math.random(1, 100)}-sourceMoney`}>
+        key={`${Math.random(1, 100)}-sourceMoney`}
+      >
         <Image
           style={[styles.iconBank]}
           source={
@@ -41,7 +42,9 @@ const TransferBank = ({sourceMoney = []}) => {
             }
           />
           {Number.isInteger(fee) && (
-            <Text>{`Phí giao dịch: ${fee == 0 ? 'Miễn phí' : `${fee}đ`}`}</Text>
+            <Text>{`${translation.transaction_fee}: ${
+              fee == 0 ? translation.free : `${fee}đ`
+            }`}</Text>
           )}
         </View>
         {/* {!item?.BankId && (
@@ -61,22 +64,22 @@ const TransferBank = ({sourceMoney = []}) => {
   };
 
   return (
-    // TODO: translate
     <>
       <View>
         <Text bold fs="h6" mb={20}>
-          Chọn nguồn tiền
+          {translation.source}
         </Text>
         {sourceMoney?.map((item, index) => renderItem(item, index))}
 
         <Text bold fs="h6" mb={20} mt={10}>
-          Thêm ngân hàng
+          {translation.add_bank}
         </Text>
 
         <Pressable
           onPress={() => Navigator.navigate(SCREEN.MAP_BANK_FLOW)}
-          style={styles.addBank}>
-          <Text fs="h6">Thêm tài khoản ngân hàng</Text>
+          style={styles.addBank}
+        >
+          <Text fs="h6">{translation.add_bank_account}</Text>
           <Image
             style={[styles.iconAddBank]}
             source={require('images/qrpay/plus.png')}
@@ -90,9 +93,9 @@ const styles = StyleSheet.create({
   itemBank: {
     position: 'relative',
     marginBottom: 20,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 10,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
     padding: scale(10),
   },
   itemBankActive: {
-    backgroundColor: Colors.cl5,
+    backgroundColor: Colors.bg1,
   },
   opaciy: {
     position: 'absolute',
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.tp2,
     opacity: 0.3,
     fontSize: 0,
     borderRadius: 10,
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
   },
   addBank: {
     borderWidth: 1,
-    borderColor: Colors.l3,
+    borderColor: Colors.bs1,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',

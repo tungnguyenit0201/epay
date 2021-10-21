@@ -1,15 +1,18 @@
 import {scale} from 'utils/Functions';
 
-export const FONT_NAME = 'SVN-Gilroy';
+// export const FONT_NAME = 'SVN-Gilroy';
+export const FONT_NAME = 'Averta';
 
-export const FONT_REGULAR = FONT_NAME;
-export const FONT_ITALIC = FONT_NAME + 'Italic';
-export const FONT_500 = FONT_NAME + 'Medium';
-export const FONT_BOLD_ITALIC = FONT_NAME + 'BoldItalic';
-export const FONT_BOLD = FONT_NAME + 'Bold';
-
-const FONT_SMALL = scale(12);
-const FONT_MEDIUM = scale(14);
+// export const FONT_REGULAR = FONT_NAME;
+// export const FONT_ITALIC = FONT_NAME + 'Italic';
+// export const FONT_SEMIBOLD = FONT_NAME + 'Medium';
+// export const FONT_BOLD_ITALIC = FONT_NAME + 'BoldItalic';
+// export const FONT_BOLD = FONT_NAME + 'Bold';
+export const FONT_REGULAR = FONT_NAME + '-Regular';
+export const FONT_ITALIC = FONT_NAME + '-RegularItalic';
+export const FONT_SEMIBOLD = FONT_NAME + '-Semibold';
+export const FONT_BOLD_ITALIC = FONT_NAME + '-BoldItalic';
+export const FONT_BOLD = FONT_NAME + '-Bold';
 
 const SX = scale(10);
 const SM = scale(12);
@@ -27,9 +30,7 @@ export default {
   FONT_BOLD_ITALIC,
   FONT_ITALIC,
   FONT_BOLD,
-  FONT_500,
-  FONT_SMALL,
-  FONT_MEDIUM,
+  FONT_SEMIBOLD,
   SX,
   SM,
   MD,

@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {Linking} from 'react-native';
-import {confirmOTP, genOtp} from 'services/common';
+import useServiceCommon from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
@@ -11,7 +11,7 @@ import useError from './error';
 import {useUserInfo} from 'context/User/utils';
 import {useAsyncStorage} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
-
+import {useTranslation} from 'context/Language';
 const useOTP = ({functionType, phone, password, encrypted}) => {
   const {config} = useCommon();
   const [errorMessage, setErrorMessage] = useState(null);
@@ -24,7 +24,8 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   const {onLogin} = useAuth();
   const {onGetPersonalInfo} = useUserInfo();
   const {setResend, getResend} = useAsyncStorage();
-
+  const {confirmOTP, genOtp} = useServiceCommon();
+  const translation = useTranslation();
   const onChange = value => {
     setCode(value);
     errorMessage && setErrorMessage(null);
@@ -57,20 +58,37 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
             functionType,
           });
         case FUNCTION_TYPE.AUTH_EMAIL:
+        case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
           return Navigator.navigate(SCREEN.VERIFY_EMAIL_RESULT, {
             type: 'failure',
             message: _.get(result, 'ErrorMessage', ''),
           });
         case FUNCTION_TYPE.FORGOT_PASS:
-          setError(result);
-          Navigator.popToTop();
-          return;
+          return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+            phone,
+            functionType,
+            content: {
+              title: translation.password_change,
+              text: translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
+              hotline: '1900-0000',
+            },
+          });
         default:
           setError(result);
           Navigator.goBack();
           return;
       }
     }
+    if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
+      setError({
+        ...result,
+        onClose: () =>
+          _.get(result, 'ErrorCode', '') === ERROR_CODE.PHONE_IS_REGISTERED
+            ? Navigator.navigate(SCREEN.AUTH)
+            : true,
+      });
+    }
+
     // success
     switch (functionType) {
       case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
@@ -112,6 +130,8 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
       setError({
         ErrorCode: -1,
         ErrorMessage: `Số lần gửi OTP quá ${config?.ResendOtpNo} lần/${config?.LockWhenResendTooManyTime} giây vui lòng quay lại sau ${remain} phút`,
+        onClose: Navigator.goBack,
+        action: [{onPress: Navigator.goBack}],
       }); // TODO: translate
       Navigator.goBack();
       return false;
@@ -128,8 +148,8 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
     try {
       setLoading(true);
       let canSend = await checkResend();
-      if (canSend) {
-        let result = genOtp({
+      if (canSend !== false) {
+        let result = await genOtp({
           phone,
           functionType,
         });
@@ -152,24 +172,21 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
 
   const getLabel = () => {
     switch (functionType) {
-      case FUNCTION_TYPE.REGISTER_ACCOUNT:
-        return `Nhập mã OTP xác thực`;
+      /* case FUNCTION_TYPE.REGISTER_ACCOUNT:
+        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`; */
       default:
-        return `Bạn chỉ cần nhập mã OTP đã gửi tới số điện thoại đã đăng ký`;
+        return translation.enter_otp_verification_code;
     }
   };
 
   const onGenOtp = async () => {
-    let canSend = await checkResend();
-    canSend &&
-      (await genOtp({
-        phone,
-        functionType,
-      }));
+    await resentOTP();
   };
 
   useEffect(() => {
-    functionType !== FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL && onGenOtp();
+    ![FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL, FUNCTION_TYPE.AUTH_EMAIL].includes(
+      functionType,
+    ) && onGenOtp();
   }, [phone, functionType]); // eslint-disable-line
 
   useEffect(() => {

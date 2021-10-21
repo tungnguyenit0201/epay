@@ -26,6 +26,12 @@ export default function commonReducer(state, action) {
           goBack: action?.goBack,
         },
       };
+    case 'SET_BACK_TYPE':
+      console.log('action :>> ', action);
+      return {
+        ...state,
+        backType: action?.backType,
+      };
     default:
       return state;
   }

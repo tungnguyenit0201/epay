@@ -62,7 +62,8 @@ const BankTransferInfo = () => {
               marginTop: 28,
               marginBottom: 10,
             },
-          ]}>
+          ]}
+        >
           {translation.transfer_to}
         </Text>
 
@@ -72,17 +73,19 @@ const BankTransferInfo = () => {
             {
               alignItems: 'center',
             },
-          ]}>
+          ]}
+        >
           <View
             style={{
               width: 48,
               height: 48,
               marginRight: 16,
               borderRadius: 100,
-              backgroundColor: Colors.BORDER,
+              backgroundColor: Colors.bs2,
               alignItems: 'center',
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Image
               source={Images.ConnectBank.logoVtb}
               style={{
@@ -101,7 +104,8 @@ const BankTransferInfo = () => {
                   fontWeight: '500',
                   fontSize: Fonts.H6,
                 },
-              ]}>
+              ]}
+            >
               Vietinbank
             </Text>
             <Text style={styles.text_white}>{translation.free}</Text>
@@ -135,8 +139,9 @@ const BankTransferInfo = () => {
               top: 10,
               fontWeight: 'bold',
               fontSize: 18,
-            }}>
-            vnđ
+            }}
+          >
+            đ
           </Text>
         </View>
 
@@ -158,7 +163,8 @@ const BankTransferInfo = () => {
             {
               marginBottom: 20,
             },
-          ]}>
+          ]}
+        >
           {translation.transfer_by_epay_wallet}
         </Text>
 
@@ -167,7 +173,8 @@ const BankTransferInfo = () => {
             <Col width="33.33%" space="10" key={index}>
               <Pressable
                 style={[styles.item]}
-                onPress={() => setChecked(index)}>
+                onPress={() => setChecked(index)}
+              >
                 <View style={[styles.wicon]}>
                   <Image source={item.icon} style={[styles.icon]} />
                   {checkedBank === index && (
@@ -204,20 +211,23 @@ const BankTransferInfo = () => {
         useNativeDriver
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}>
+        onBackdropPress={onHideModal}
+      >
         <View
           style={{
             paddingVertical: 24,
             paddingHorizontal: 16,
-            backgroundColor: Colors.BACKGROUNDCOLOR,
-          }}>
+            backgroundColor: Colors.bs4,
+          }}
+        >
           <Text
             style={{
               textAlign: 'center',
               fontWeight: 'bold',
               fontSize: 20,
               marginBottom: 22,
-            }}>
+            }}
+          >
             {translation.password}
           </Text>
 
@@ -240,7 +250,8 @@ const BankTransferInfo = () => {
               style={{
                 textAlign: 'center',
                 fontSize: 14,
-              }}>
+              }}
+            >
               {translation.forgot_password}?
             </Text>
           </TouchableOpacity>
@@ -253,7 +264,7 @@ const BankTransferInfo = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -266,10 +277,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  text_white: {color: Colors.white},
+  text_white: {color: Colors.bs4},
   mb_1: {marginBottom: 8},
   line_gray: {
-    backgroundColor: Colors.BORDER,
+    backgroundColor: Colors.bs2,
     height: 8,
   },
   item: {
@@ -279,7 +290,7 @@ const styles = StyleSheet.create({
   wicon: {
     width: scale(48),
     height: scale(48),
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
     marginBottom: 7,
   },
@@ -315,7 +326,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRightWidth: 0.5,
     borderStyle: 'solid',
-    borderColor: Colors.GRAY,
+    borderColor: Colors.tp3,
     zIndex: 1,
   },
   icon_lock_img: {

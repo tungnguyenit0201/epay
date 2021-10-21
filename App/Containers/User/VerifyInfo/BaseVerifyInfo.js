@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {
   ScrollView,
   StyleSheet,
   Image,
   View,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 import {Text, Header, Button, HeaderBg} from 'components';
 import {Images, Colors, Spacing} from 'themes';
@@ -23,8 +24,10 @@ const VerifyUserInfo = ({
   buttonTitle,
   showButton = true,
   showInstruction = true,
+  style,
 }) => {
   const translation = useTranslation();
+  const {width} = useWindowDimensions();
   const [showModal, setShowModal] = useState(false);
   const ruleTexts = [
     'Hình chụp phải đủ sáng, không bị mờ, chói sáng.',
@@ -36,6 +39,28 @@ const VerifyUserInfo = ({
     {img: Images.VerifyUserInfo.cmndDark, title: 'Dư, thiếu sáng'},
     {img: Images.VerifyUserInfo.cmndFail, title: 'Chụp mất góc'},
   ];
+
+  const backgroundStyle = {
+    width,
+    height: width,
+  };
+
+  const triangleStyle = useMemo(() => {
+    switch (step) {
+      case 1:
+        return {
+          left: Spacing.PADDING * 2 + 30 / 2,
+        };
+      case 2:
+        return {
+          left: width / 2 - 10,
+        };
+      case 3:
+        return {
+          right: width - Spacing.PADDING * 2 - 40,
+        };
+    }
+  }, [step]);
 
   const onShowModal = () => {
     setShowModal(true);
@@ -54,7 +79,7 @@ const VerifyUserInfo = ({
     );
 
   return (
-    <>
+    <View style={styles.wrapper}>
       <HeaderBg style={styles.header}>
         <Header
           back
@@ -63,7 +88,7 @@ const VerifyUserInfo = ({
             if (showInstruction) {
               return (
                 <TouchableOpacity onPress={onShowModal}>
-                  <Text fs="md" color={Colors.white} style={styles.help}>
+                  <Text fs="md" color={Colors.bs4} style={styles.help}>
                     Hướng dẫn
                   </Text>
                 </TouchableOpacity>
@@ -73,14 +98,22 @@ const VerifyUserInfo = ({
           }}
         />
         <Progress step={step} />
+
         <Image
           source={Images.VerifyUserInfo.iconDown}
-          style={styles.triangle}
+          style={[styles.triangle, triangleStyle]}
           resizeMode="contain"
         />
       </HeaderBg>
-
-      <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+      <Image
+        style={[styles.background, backgroundStyle]}
+        source={Images.VerifyUserInfo.wave}
+        resizeMode="contain"
+      />
+      <ScrollView
+        style={[styles.container, style]}
+        keyboardShouldPersistTaps="handled"
+      >
         {renderChildren()}
       </ScrollView>
       {!!showButton && (
@@ -101,7 +134,8 @@ const VerifyUserInfo = ({
         style={styles.modalContainer}
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}>
+        onBackdropPress={onHideModal}
+      >
         <View style={styles.modalContentContainer}>
           <ScrollView style={styles.modalScroll}>
             <View style={styles.modalTitleContainer}>
@@ -109,8 +143,9 @@ const VerifyUserInfo = ({
                 bold
                 fs="h4"
                 centered
-                color={Colors.cl1}
-                style={styles.modalTitle}>
+                color={Colors.brd1}
+                style={styles.modalTitle}
+              >
                 Hướng dẫn chụp hình 2 mặt chứng từ
               </Text>
             </View>
@@ -125,7 +160,7 @@ const VerifyUserInfo = ({
                   source={Images.VerifyUserInfo.tick}
                   style={styles.tickIcon}
                 />
-                <Text bold fs="h6" color={Colors.gray} style={styles.flex}>
+                <Text bold fs="h6" color={Colors.tp3} style={styles.flex}>
                   {e}
                 </Text>
               </View>
@@ -172,22 +207,28 @@ const VerifyUserInfo = ({
               ))}
             </Row>
           </ScrollView>
-          <View style={styles.modalBottomButton}>
-            <Button label="Đã hiểu" bold onPress={onHideModal} />
-          </View>
+          {step !== 3 && (
+            <View style={styles.modalBottomButton}>
+              <Button label="Đã hiểu" bold onPress={onHideModal} />
+            </View>
+          )}
         </View>
       </Modal>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: Colors.bs4,
+  },
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: 'transparent',
   },
   header: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     position: 'relative',
     paddingBottom: 0,
     marginBottom: 0,
@@ -195,15 +236,13 @@ const styles = StyleSheet.create({
   },
   triangle: {
     position: 'absolute',
-    // left: Spacing.PADDING * 2 + 10 / 2,
-    left: Spacing.PADDING * 2 + 30 / 2,
     bottom: -9,
     width: 20,
     height: 10,
   },
   buton: {
     paddingHorizontal: Spacing.PADDING,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     paddingVertical: Spacing.PADDING,
   },
   modalContainer: {
@@ -212,7 +251,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   modalContentContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
     position: 'absolute',
@@ -266,10 +305,10 @@ const styles = StyleSheet.create({
     // paddingVertical: Spacing.PADDING,
     paddingTop: Spacing.PADDING,
     paddingBottom: Spacing.PADDING * 2,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -279,11 +318,16 @@ const styles = StyleSheet.create({
     elevation: 24,
   },
   bottom: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   help: {
     position: 'relative',
     bottom: scale(2),
+  },
+  background: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });
 

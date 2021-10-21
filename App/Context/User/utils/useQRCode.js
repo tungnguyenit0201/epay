@@ -2,7 +2,7 @@ import {ERROR_CODE} from 'configs/Constants';
 import {useAsyncStorage, useLoading, useError} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import {useEffect, useRef, useState} from 'react';
-import {getQRCode} from 'services/user';
+import useServiceUser from 'services/user';
 import {Share} from 'react-native';
 import _ from 'lodash';
 const useQRCode = () => {
@@ -11,6 +11,7 @@ const useQRCode = () => {
   const {setError} = useError();
   const {dispatch} = useUser();
   const myQRCode = useRef();
+  const {getQRCode} = useServiceUser();
 
   const shareQRCode = () => {
     myQRCode.current.toDataURL(dataURL => {

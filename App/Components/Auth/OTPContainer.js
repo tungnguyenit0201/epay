@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {StyleSheet, View, Pressable, TouchableOpacity} from 'react-native';
 import {Text, OTP} from 'components';
 import {Colors, Fonts, Spacing} from 'themes';
@@ -19,17 +19,27 @@ const OTPContainer = ({
   titleStyle,
 }) => {
   const translation = useTranslation();
+  const otpRef = useRef(null);
+
+  useEffect(() => {
+    if (code || !message) {
+      return;
+    }
+    setTimeout(() => {
+      otpRef.current?.focusField(0);
+    }, 500);
+  }, [code, message]);
+
   return (
-    // TODO: translate
     <>
-      <Text
-        bold
-        fs="h3"
-        style={[styles.textWhite, styles.mb1, titleStyle]}>{`Nhập OTP`}</Text>
+      <Text bold fs="h3" style={[styles.textWhite, styles.mb1, titleStyle]}>
+        {translation.enter_otp}
+      </Text>
       <Text fs="h6" style={[styles.textGray, styles.mb2]}>
         {label}
       </Text>
       <OTPInputView
+        ref={otpRef}
         style={styles.wrapOtp}
         pinCount={6}
         onCodeChanged={onChange}
@@ -44,22 +54,26 @@ const OTPContainer = ({
 
       <View style={styles.flexRow_1}>
         <View style={styles.flexRow_1}>
-          <Text style={styles.fontSize_1}>Gửi lại mã xác thực (OTP) </Text>
+          <Text style={styles.fontSize_1}>
+            {translation.resend_the_verification_code_otp}{' '}
+          </Text>
 
           <Pressable
             //style={{marginTop: -3}}
             disabled={countdown > 0}
-            onPress={resentOTP}>
+            onPress={resentOTP}
+          >
             <Text
               style={[
                 styles.fontSize_1,
                 {
-                  color: Colors.cl1,
+                  color: Colors.brd1,
                 },
-              ]}>
+              ]}
+            >
               {countdown > 0
                 ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
-                : ` Gửi lại`}
+                : translation.otp.resend}
             </Text>
           </Pressable>
         </View>
@@ -82,8 +96,8 @@ const styles = StyleSheet.create({
   mb1: {marginBottom: 12},
   mb2: {marginBottom: 26},
   //-----------------------
-  textWhite: {color: Colors.white},
-  textGray: {color: Colors.gray},
+  textWhite: {color: Colors.bs4},
+  textGray: {color: Colors.tp3},
   //-----------------------
   // header: {
   //   fontSize: 20,
@@ -92,9 +106,9 @@ const styles = StyleSheet.create({
   // },
   // textCenter: {textAlign: 'center'},
   // textDefault: {
-  //   color: Colors.GRAY,
+  //   color: Colors.tp3,
   //   paddingBottom: Spacing.PADDING - 4,
-  //   fontSize: Fonts.FONT_MEDIUM_LARGE,
+  //   fontSize: Fonts.MD_LARGE,
   // },
   wrapOtp: {
     flexDirection: 'row',
@@ -105,13 +119,14 @@ const styles = StyleSheet.create({
   },
   otp: {
     width: scale(40),
-    backgroundColor: Colors.white,
+    /* backgroundColor: 'transparent', */
+    fontWeight: '700',
     fontSize: Fonts.H4,
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     textAlign: 'center',
-    borderBottomColor: Colors.cl4,
+    borderBottomColor: Colors.g2,
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: 3,
     borderRadius: 2,
     height: scale(50),
   },

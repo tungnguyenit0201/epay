@@ -52,11 +52,11 @@ const TransactionResult = () => {
     },
     {
       label: 'Thực chuyển ',
-      value: '1.000.000 vnd',
+      value: '1.000.000đ',
     },
     {
       label: 'Tổng số tiền',
-      value: <Text bold>1.005.000 vnđ</Text>,
+      value: <Text bold>1.005.000đ</Text>,
     },
   ];
   return (
@@ -81,7 +81,8 @@ const TransactionResult = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text style={styles.textLeft}>{item.label}</Text>
 
                     <Text style={styles.textRight}>{item.value}</Text>
@@ -98,7 +99,6 @@ const TransactionResult = () => {
           onPress={() => {
             Navigator.navigate(SCREEN.TRANSFER_SUCCESS);
           }}
-          type={1}
           label="Chuyển tiền"
         />
       </View>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     color: Colors.cl3,
   },
   textRight: {
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     maxWidth: scale(160),
   },
 });

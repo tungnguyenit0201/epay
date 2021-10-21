@@ -48,7 +48,8 @@ const SelectInput = ({
     <Row style={[styles.container, style]}>
       <TouchableOpacity onPress={onShowModal}>
         <Row
-          style={[styles.selectContainer, !showInputStyle && {width: '80%'}]}>
+          style={[styles.selectContainer, !showInputStyle && {width: '80%'}]}
+        >
           <Text>
             {selectedValue?.label ||
               optionList.find(x => x.value === defaultValue)?.label}
@@ -66,7 +67,8 @@ const SelectInput = ({
         useNativeDriver
         hideModalContentWhileAnimating
         backdropTransitionOutTiming={0}
-        onBackdropPress={onHideModal}>
+        onBackdropPress={onHideModal}
+      >
         <ModalContent optionList={optionList} onselect={_onSelect} />
       </Modal>
     </Row>
@@ -85,9 +87,10 @@ const ModalContent = ({optionList, onselect}) => {
             style={{
               paddingBottom: 10,
               marginBottom: 10,
-              borderColor: Colors.gray,
+              borderColor: Colors.tp3,
               borderBottomWidth: 1,
-            }}>
+            }}
+          >
             <Text>{label}</Text>
           </TouchableOpacity>
         );
@@ -101,7 +104,7 @@ export default SelectInput;
 const styles = StyleSheet.create({
   container: {
     borderRadius: scale(8),
-    borderColor: Colors.gray,
+    borderColor: Colors.tp3,
     borderWidth: 1,
   },
   selectContainer: {
@@ -117,10 +120,10 @@ const styles = StyleSheet.create({
     width: 1,
     height: '55%',
     marginTop: 10,
-    backgroundColor: Colors.cl4,
+    backgroundColor: Colors.bs1,
   },
   modalContainer: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     padding: Spacing.PADDING / 2,
   },
   input: {

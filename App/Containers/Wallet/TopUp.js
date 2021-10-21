@@ -38,12 +38,12 @@ const TopUp = () => {
       <ScrollView style={base.wrap} showsVerticalScrollIndicator={false}>
         <View style={[base.container, styles.mainContainer]}>
           <View style={base.boxShadow}>
-            <Monney title={translation.topup?.walletAmount} showing />
+            <Monney title={translation.topup?.walletAmount} />
             <InputMoney
               ref={inputRef}
               onChange={onChangeCash}
               errorStyle={{
-                borderColor: Colors.cl4,
+                borderColor: Colors.bs1,
               }}
             />
           </View>

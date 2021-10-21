@@ -77,14 +77,6 @@ const DropImage = ({
     <>
       {!showCamera && (
         <View style={[styles.wrapImg, styles.blockShadow, style]}>
-          <Text
-            // size={Fonts.H6} can not use, please check Text Component!
-            fs="h6"
-            bold
-            style={styles.title1}>
-            {title}
-          </Text>
-
           {/* remember to delete when no use
           <Button
             onPress={KYCFunction}
@@ -95,20 +87,34 @@ const DropImage = ({
           /> */}
 
           <View style={styles.alignCenter}>
+            <Text
+              // size={Fonts.H6} can not use, please check Text Component!
+              fs="h6"
+              bold
+              style={[
+                identify === IC_TPYE.PASSPORT ? styles.w2 : styles.widthFull,
+                styles.title1,
+              ]}
+            >
+              {title}
+            </Text>
             <Pressable
               style={[
-                styles.img,
+                identify === IC_TPYE.PASSPORT ? styles.w2 : styles.widthFull,
                 cameraType !== 'back' && styles.imgFront,
                 cameraType !== 'back' && {
                   width: image?.widthImg || scale(150),
                   height: image?.heightImg || scale(150),
                 },
               ]}
-              onPress={KYCFunction}>
+              onPress={KYCFunction}
+            >
               <Image
                 style={[
                   styles.radius1,
-                  styles.img,
+                  identify === IC_TPYE.PASSPORT
+                    ? styles.imgPassport
+                    : styles.imgCmnd,
                   cameraType !== 'back' && styles.imgFront,
                   cameraType !== 'back' && {
                     width: image?.widthImg || scale(150),
@@ -124,8 +130,8 @@ const DropImage = ({
                   source={Images.TrafficFee.BigCamera}
                   resizeMode={'contain'}
                 />
-                <Text color={Colors.white} bold centered mt={10} fs="h6">
-                  Chụp ảnh GTTT
+                <Text color={Colors.bs4} bold centered mt={10} fs="h6">
+                  {translation.take_a_photo_of_gttt}
                 </Text>
               </View>
             </Pressable>
@@ -151,7 +157,8 @@ const DropImage = ({
                 message: 'We need your permission to use your audio',
                 buttonPositive: 'Ok',
                 buttonNegative: 'Cancel',
-              }}>
+              }}
+            >
               {({camera, status, recordAudioPermissionStatus}) => {
                 if (status !== 'READY') {
                   return <FWLoading />;
@@ -161,7 +168,8 @@ const DropImage = ({
                     style={{
                       width: width,
                       height: height,
-                    }}>
+                    }}
+                  >
                     <Header
                       back
                       avoidStatusBar
@@ -174,7 +182,8 @@ const DropImage = ({
                         position: 'absolute',
                         width: width,
                         height: height,
-                      }}>
+                      }}
+                    >
                       <Image
                         source={Images.Camera.CameraSquare}
                         style={{width: width, height: height}}
@@ -182,14 +191,16 @@ const DropImage = ({
                       {loading && <FWLoading />}
                       <View style={styles.wrapText}>
                         <Text
-                          color={Colors.white}
+                          color={Colors.bs4}
                           fs="h6"
                           centered
                           ml={Spacing.PADDING}
                           mr={Spacing.PADDING}
-                          mt={Spacing.PADDING * 2}>
-                          Xin vui lòng đặt giấy tờ nằm vừa khung hình chữ nhật,
-                          chụp đủ sáng và rõ nét
+                          mt={Spacing.PADDING * 2}
+                        >
+                          {
+                            translation.please_position_your_id_card_in_this_rectangular_frame_take_a_clear_and_bright_picture
+                          }
                         </Text>
                       </View>
 
@@ -198,7 +209,8 @@ const DropImage = ({
                         style={styles.wrapBtn}
                         onPress={() =>
                           capturePicture(onDropImage, cameraType === 'back')
-                        }>
+                        }
+                      >
                         <Image
                           source={Images.Capture}
                           style={styles.captureIcon}
@@ -227,11 +239,15 @@ const styles = StyleSheet.create({
   //---------------
   radius1: {borderRadius: 8},
   //---------------
+  widthFull: {width: '100%'},
+  //---------------
+  w2: {width: 190},
+  //---------------
   wrap: {
     paddingVertical: scale(16),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -255,14 +271,10 @@ const styles = StyleSheet.create({
   wrapImg: {
     paddingVertical: Spacing.PADDING + 3,
     paddingHorizontal: Spacing.PADDING + 12,
-    backgroundColor: Colors.white,
-  },
-  img: {
-    width: '100%',
-    height: scale(186),
+    backgroundColor: Colors.bs4,
   },
   imgFront: {
-    borderColor: Colors.cl1,
+    borderColor: Colors.brd1,
     borderWidth: 1,
     borderRadius: 5,
   },
@@ -296,7 +308,7 @@ const styles = StyleSheet.create({
   },
   emptyHolder: {
     paddingVertical: Spacing.PADDING,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 8,
   },
   title1: {
@@ -319,9 +331,19 @@ const styles = StyleSheet.create({
     height: 48,
   },
   //------------------
+  imgPassport: {
+    width: '100%',
+    height: 280,
+  },
+  //------------------
+  imgCmnd: {
+    width: '100%',
+    height: scale(186),
+  },
+  //------------------
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -334,7 +356,7 @@ const styles = StyleSheet.create({
   blockBlurBlack: {
     width: '100%',
     height: '100%',
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.tp2,
     opacity: 0.8,
     alignItems: 'center',
     justifyContent: 'center',

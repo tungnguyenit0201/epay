@@ -7,18 +7,13 @@ import {useSelector} from 'react-redux';
 import Navigator from 'navigations/Navigator';
 
 export default ({
+  mode = 'contain', //outline
   onPress,
-  bgImg = 1,
+  bgImg = true,
   label,
   label2,
   icon,
   leftIcon,
-  border,
-  color,
-  bold,
-  bg,
-  radius,
-  fs,
   fw = '700',
   size,
   mt,
@@ -29,9 +24,14 @@ export default ({
   mv,
   disabled,
   style,
-  labelStyle,
+  color,
   label2Style,
-  mode = 'contain', //outline
+  labelStyle,
+  border,
+  bold,
+  bg,
+  radius,
+  fs,
 }) => {
   return (
     <Pressable
@@ -41,35 +41,33 @@ export default ({
         styles.button,
         mode == 'contain' && styles.contain,
         mode == 'outline' && styles.outline,
-        border && {borderColor: border, borderWidth: 1},
-        radius && {borderRadius: radius},
-        bg && {backgroundColor: bg},
+        mode == 'outline' && {borderColor: disabled ? Colors.bs1 : Colors.brd1},
+        size == 'xxs' ? styles.xxs : '',
+        size == 'xs' ? styles.xs : '',
+        size == 'sm' ? styles.sm : '',
+        size == 'lg' ? styles.lg : '',
+        size == 'xl' ? styles.xl : '',
+        // border && {borderColor: border, borderWidth: 1},
+        // radius && {borderRadius: radius},
+        // bg && {backgroundColor: bg},
         mt && {marginTop: mt},
         mb && {marginBottom: mb},
         ml && {marginLeft: ml},
         mr && {marginRight: mr},
         mv && {marginVertical: mv},
         mh && {marginHorizontal: mh},
-        size == 'xxs' ? styles.xxs : '',
-        size == 'xs' ? styles.xs : '',
-        size == 'sm' ? styles.sm : '',
-        size == 'lg' ? styles.lg : '',
-        size == 'xl' ? styles.xl : '',
         style,
-        disabled && {backgroundColor: Colors.g4},
-      ]}>
-      {bgImg === 1 && (
-        <>
-          <Image source={require('images/Button.png')} style={styles.bgImg} />
-          {disabled ? (
-            <Image
-              source={require('images/ButtonDisable.png')}
-              style={styles.bgImg}
-            />
-          ) : (
-            <Image source={require('images/Button.png')} style={styles.bgImg} />
-          )}
-        </>
+      ]}
+    >
+      {!!bgImg && mode == 'contain' && (
+        <Image
+          source={
+            disabled
+              ? require('images/ButtonDisable.png')
+              : require('images/Button.png')
+          }
+          style={styles.bgImg}
+        />
       )}
 
       {!!leftIcon && (
@@ -86,28 +84,23 @@ export default ({
         style={[
           size == 'xxs' && {fontSize: scale(10)},
           size == 'xs' && {fontSize: scale(12)},
-          size == 'sm' && {fontSize: scale(14)},
+          // size == 'sm' && {fontSize: Fonts.H6},
           size == 'lg' && {fontSize: scale(18)},
           size == 'xl' && {fontSize: scale(20)},
-          fs && {fontSize: fs},
-          // bold && {fontWeight: 'bold'},
-          fw ? {fontWeight: fw} : {fontWeight: 'bold'},
           {
-            color: color ? color : Colors.white,
-            // lineHeight: 20,
+            color:
+              mode == 'outline'
+                ? disabled
+                  ? Colors.tp2
+                  : Colors.brd1
+                : Colors.bs4,
           },
-          labelStyle,
-        ]}>
+          color && {color: color},
+          // labelStyle,
+        ]}
+      >
         {label}
-        {
-          label2 && [
-            <>
-              <Text> </Text>
-              <Text style={label2Style}>{label2}</Text>
-            </>,
-          ]
-          //label2 && typeof label2 == 'function' ? label2() : label2
-        }
+        {label2 && <Text style={label2Style}>{` ${label2}`}</Text>}
       </Text>
       {!!icon && (
         <Image source={icon} style={[styles.image]} resizeMode={'contain'} />
@@ -122,16 +115,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: scale(8),
     height: scale(48),
+    width: '100%',
     position: 'relative',
     overflow: 'hidden',
     paddingHorizontal: Spacing.PADDING,
   },
   contain: {
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.tp1,
   },
   outline: {
-    borderWidth: 1,
-    borderColor: Colors.white,
+    borderWidth: 1.5,
+    borderColor: Colors.bs1,
+    backgroundColor: Colors.bs4,
   },
   xxs: {
     height: 20,
@@ -143,7 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 0,
   },
-  sm: {height: 34, paddingHorizontal: 15},
+  sm: {height: 40, paddingHorizontal: 15},
   lg: {height: 55},
   xl: {height: 70},
 
@@ -172,11 +167,7 @@ const styles = StyleSheet.create({
 {
   /* <Button
   label="Đăng ký" 
-  border='#fff'
-  color='#f00'
-  bg='#999'
-  radius={50}
-  style={[{marginTop:30}]}
+  mode = 'contain'
   onPress={() => Navigator.navigate(SCREEN.REGISTER)}
 /> */
 }

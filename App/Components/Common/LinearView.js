@@ -5,13 +5,14 @@ import {Colors} from 'themes';
 import {scale} from 'utils/Functions';
 
 const LinearView = ({children, style, linearColors}) => {
-  const linearArray = linearColors || [Colors.barLeft, Colors.barRight];
+  const linearArray = linearColors || [Colors.grd1, Colors.grd2];
   return (
     <LinearGradient
       colors={linearArray}
       style={[styles.linearGradient, style]}
       start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}>
+      end={{x: 1, y: 0}}
+    >
       {children}
     </LinearGradient>
   );

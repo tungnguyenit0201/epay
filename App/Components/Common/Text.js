@@ -5,7 +5,7 @@ import {scale} from 'utils/Functions';
 
 const CustomText = ({
   style: _style,
-  color = Colors.BLACKTEXT,
+  color = Colors.tp2,
   centered,
   right,
   regular,
@@ -57,7 +57,8 @@ const CustomText = ({
           marginRight: mr || mh,
         },
         underline && {textDecorationLine: 'underline'},
-        fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 48},
+        fs === 'sx' && {fontSize: Fonts.SX, lineHeight: 14},
+        fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 16},
         fs === 'md' && {fontSize: Fonts.MD, lineHeight: 20},
         fs === 'lg' && {fontSize: Fonts.LG, lineHeight: 26},
         fs === 'h1' && {fontSize: Fonts.H1, lineHeight: 44},
@@ -70,7 +71,8 @@ const CustomText = ({
 
         style,
       ]}
-      {...props}>
+      {...props}
+    >
       {children}
     </Text>
   );

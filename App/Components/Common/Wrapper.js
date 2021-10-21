@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   View,
@@ -7,17 +7,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
+  BackHandler,
 } from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Colors, Fonts, Images, Spacing} from 'themes';
 import {useCommon} from 'context/Common';
 import Debug from './Debug';
-import {
-  useCheckInfo,
-  useModalSmartOTP as useModalSmartOTPSuggestion,
-} from 'context/Home/utils';
+import {useModalSmartOTP as useModalSmartOTPSuggestion} from 'context/Home/utils';
 import {useTranslation} from 'context/Language';
-import {SCREEN} from 'configs/Constants';
 import {
   Modal as ModalCustom,
   Alert,
@@ -27,7 +24,11 @@ import {
   Icon,
   InputBlock,
 } from 'components';
-import {useModalPassword, useModalPermission} from 'context/Common/utils';
+import {
+  useError,
+  useModalPassword,
+  useModalPermission,
+} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
 import {useModalSmartOTP as useModalSmartOTPPassword} from 'context/User/utils';
 import {scale} from 'utils/Functions';
@@ -44,14 +45,39 @@ const Wrapper = React.memo(
   }) => {
     const {loading, error} = useCommon();
     const modalSmartOTP = useModalSmartOTPSuggestion();
-    const {KYC, connectBank, checkInfo, onNavigate} = useCheckInfo();
     const translation = useTranslation();
     const {permissionCamera, showModalCamera, askPermission} =
       useModalPermission();
     const {setFirstLogin} = useRegister();
     const smartOTPPassword = useModalSmartOTPPassword();
     const modalPassword = useModalPassword();
+    const {setError} = useError();
 
+    useEffect(() => {
+      modalSmartOTP.smartOTPSuggestion &&
+        setError({
+          title: translation.faster_and_more_secure_with_smart_otp,
+          ErrorCode: -1,
+          ErrorMessage:
+            translation.security_method_proactively_obtains_onetime_transaction_verification_code_otp_and_automatically_enters_it_into_the_system_when_performing_online_transactions,
+          onClose: () => setFirstLogin(false),
+          action: [
+            {
+              label: translation.install_smart_otp,
+              onPress: modalSmartOTP?.onGoSmartOTP,
+            },
+          ],
+          icon: Images.Modal.Lock,
+        });
+    }, [modalSmartOTP?.smartOTPSuggestion]);
+
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true,
+      );
+      return () => backHandler.remove();
+    }, []);
     return (
       // TODO: translate
       <View style={styles.flexFill}>
@@ -68,9 +94,9 @@ const Wrapper = React.memo(
           {avoidStatusBar && <View style={styles.avoidStatusBar} />}
           <View style={styles.flexFill}>{children}</View>
           {loading && <FWLoading />}
-          {!!error?.errorCode && <Alert />}
-          {__DEV__ && <Debug />}
-          {modalSmartOTP.smartOTPSuggestion && (
+          {!!error?.errorMessage && <Alert />}
+          <Debug />
+          {/* {modalSmartOTP.smartOTPSuggestion && (
             <ModalCustom
               icon={Images.Modal.Lock}
               visible={modalSmartOTP.smartOTPSuggestion}
@@ -85,17 +111,11 @@ const Wrapper = React.memo(
                     label="Cài smart OTP ngay"
                     onPress={modalSmartOTP.onGoSmartOTP}
                   />
-                  <TouchableOpacity onPress={modalSmartOTP.onPressNever}>
-                    <Text style={styles.underline}>Không, cảm ơn</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={modalSmartOTP.onClose}>
-                    <Text style={styles.underline}>Nhắc tôi sau</Text>
-                  </TouchableOpacity>
                 </View>
               )}
             />
-          )}
-          {KYC && (
+          )} */}
+          {/* {KYC && (
             <ModalCustom
               icon={Images.Modal.UserTick}
               visible={KYC}
@@ -110,14 +130,12 @@ const Wrapper = React.memo(
                     label="Định danh"
                     onPress={() => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD)}
                   />
-                  {/* <TouchableOpacity onPress={() => checkInfo({value: false})}>
-                    <Text style={styles.underline}>Nhắc tôi sau</Text>
-                  </TouchableOpacity> */}
+                  
                 </View>
               )}
             />
-          )}
-          {connectBank && (
+          )} */}
+          {/* {connectBank && (
             <ModalCustom
               visible={connectBank}
               onClose={() => checkInfo({value: false})}
@@ -137,8 +155,8 @@ const Wrapper = React.memo(
                 </View>
               )}
             />
-          )}
-          {permissionCamera && (
+          )} */}
+          {/* {permissionCamera && (
             <ModalCustom
               visible={permissionCamera}
               onClose={() => showModalCamera(false)}
@@ -158,7 +176,7 @@ const Wrapper = React.memo(
                 </View>
               )}
             />
-          )}
+          )}  */}
           {smartOTPPassword.smartOTPPassword?.show && (
             <View style={styles.backdrop}>
               <Pressable
@@ -169,7 +187,7 @@ const Wrapper = React.memo(
                 <TouchableOpacity onPress={smartOTPPassword.onHideModal}>
                   <Icon
                     icon={Images.CloseThin}
-                    tintColor={Colors.black}
+                    tintColor={Colors.tp2}
                     size={scale(10)}
                     style={styles.iconCloseSmartOTPPassword}
                   />
@@ -202,14 +220,14 @@ const Wrapper = React.memo(
                 <TouchableOpacity onPress={modalPassword.onHideModal}>
                   <Icon
                     icon={Images.CloseThin}
-                    tintColor={Colors.black}
+                    tintColor={Colors.tp2}
                     size={scale(10)}
                     style={styles.iconCloseSmartOTPPassword}
                   />
                 </TouchableOpacity>
                 {/* TODO: translate */}
                 <Text bold style={styles.modalTitle}>
-                  Nhập mật khẩu
+                  {translation.enter_password}
                 </Text>
                 <Formik
                   initialValues={{
@@ -236,7 +254,7 @@ const Wrapper = React.memo(
                       <View style={{paddingHorizontal: Spacing.PADDING}}>
                         <InputBlock
                           password
-                          placeholder="Nhập mật khẩu"
+                          placeholder={translation.enter_password}
                           onChange={handleChange('password')}
                           onBlur={handleBlur('password')}
                           value={values.password}
@@ -274,7 +292,7 @@ const Wrapper = React.memo(
 const styles = StyleSheet.create({
   flexFill: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   avoidStatusBar: {height: getStatusBarHeight()},
   buttonGroup: {
@@ -293,7 +311,7 @@ const styles = StyleSheet.create({
   bottomModalContainer: {
     borderTopLeftRadius: Spacing.PADDING,
     borderTopRightRadius: Spacing.PADDING,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   iconCloseSmartOTPPassword: {
     position: 'absolute',

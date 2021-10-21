@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Image,
@@ -31,7 +31,6 @@ const Home = () => {
   const {banner, goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
-
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,
@@ -54,16 +53,8 @@ const Home = () => {
     },
     {
       icon: Images.Homes.LichSuGd,
-      name: 'Lịch sử',
+      name: translation.history,
       screen: SCREEN.HISTORY,
-    },
-  ];
-  const dataBanner = [
-    {
-      ImageUrl: require('images/home/banner-1.jpg'),
-    },
-    {
-      ImageUrl: require('images/home/banner-2.jpg'),
     },
   ];
 
@@ -81,9 +72,9 @@ const Home = () => {
             space={1}
             col={4}
             data={dataMenu}
-            styleText={[{fontSize: 14, color: Colors.white}]}
-            styleWicon={[{backgroundColor: Colors.cl1}]}
-            //styleIcon={[{tintColor: Colors.white}]}
+            styleText={[{fontSize: 14, color: Colors.bs4}]}
+            styleWicon={[{backgroundColor: Colors.brd1}]}
+            //styleIcon={[{tintColor: Colors.bs4}]}
           />
         </View>
       </HeaderBg>
@@ -105,20 +96,23 @@ const Home = () => {
         <Modal
           visible={firstLogin}
           onClose={() => setFirstLogin(false)}
-          title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
+          icon={Images.SignUp.TouchId}
+          title={translation.log_in_touchid}
+          content={
+            translation.if_you_have_a_problem_and_need_help_please_call_us_for_advice_and_support
+          }
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
               <Button
                 mb={10}
-                label="Cài đặt vân tay"
+                label={translation.setting_touch_id}
                 onPress={() => {
                   setFirstLogin(false);
                   goSecurity();
                 }}
               />
               <TouchableOpacity onPress={() => setFirstLogin(false)}>
-                <Text>Để sau</Text>
+                <Text>{translation.remind_me_later}</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -131,7 +125,7 @@ const styles = StyleSheet.create({
   rowHeader: {
     // flexWrap: 'wrap', hide to not break line
     flexDirection: 'row',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 25,
   },

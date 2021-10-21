@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {Text} from 'components';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import {SCREEN} from 'configs/Constants';
@@ -26,11 +25,9 @@ import History from 'containers/Wallet/History';
 
 import {useTranslation} from 'context/Language';
 import {useCheckInfo} from 'context/Home/utils';
-import {useBankInfo} from 'context/Wallet/utils';
-import {usePermission} from 'context/Common/utils';
 
 const TabIcons = {
-  Home: Images.TabBar.HomeGray,
+  Home: Images.TabBar.Home,
   User: Images.TabBar.User,
 };
 const TabIconsActive = {
@@ -39,31 +36,21 @@ const TabIconsActive = {
 };
 
 const TabNavigation = () => {
-  const {bottom} = useSafeAreaInsets();
   const {width, height} = useWindowDimensions();
   const translation = useTranslation();
   const TabLabels = {
-    Home: 'Trang chủ', // TODO: translate
+    Home: translation.home,
     User: translation.account,
   };
 
   function TabBarCustom({state, descriptors, navigation}) {
     const {checkInfo} = useCheckInfo();
-    const {onGetConnectedBank} = useBankInfo();
-    const {checkPermission} = usePermission();
 
-    // useEffect(() => {
-    //   const getConnectBank = async () => {
-    //     let banks = await onGetConnectedBank();
-    //   };
-    //   getConnectBank();
-    // }, []); // eslint-disable-line
     const onCheck = async () => {
-      // let permission = await checkPermission(async () => {
       let result = await checkInfo(SCREEN.QRPAY);
       Boolean(result) && navigation.navigate(SCREEN.QRPAY);
-      // });
     };
+
     return (
       <View style={styles.container}>
         <View style={[styles.wrapTab, {width: width}]}>
@@ -106,33 +93,34 @@ const TabNavigation = () => {
                 testID={options.tabBarTestID}
                 onPress={onPress}
                 onLongPress={onLongPress}
-                style={label === 'Home' ? styles.tabH : styles.tabU} // TODO: translate
+                style={label === 'Home' ? styles.tabH : styles.tabU}
               >
                 <Image
                   source={
-                    // !isFocused
-                    //   ? TabIcons[route.name]
-                    //   : TabIconsActive[route.name]
-                    TabIcons[route.name]
+                    !isFocused
+                      ? TabIcons[route.name]
+                      : TabIconsActive[route.name]
                   }
-                  style={[
-                    styles.icon,
-                    // route.name != 'Home' &&
-                    {
-                      tintColor: isFocused ? Colors.cl1 : Colors.gray,
-                    },
-                  ]}
-                  resizeMode={'cover'}
+                  style={[styles.icon, isFocused || {tintColor: Colors.tp3}]}
+                  resizeMode={'contain'}
                 />
                 <Text
                   style={{
-                    color: isFocused ? Colors.cl1 : Colors.gray,
-                  }}>
+                    color: isFocused ? Colors.brd1 : Colors.tp3,
+                  }}
+                  centered
+                >
                   {TabLabels[label]}
                 </Text>
               </TouchableOpacity>
             );
           })}
+          <TouchableOpacity
+            style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
+            onPress={onCheck}
+          >
+            <Image source={Images.TabBar.QR} style={styles.qrImg} />
+          </TouchableOpacity>
         </View>
         <View style={styles.wrapTabImg}>
           <Image
@@ -140,11 +128,6 @@ const TabNavigation = () => {
             style={[{width: width}, styles.tabImage]}
           />
         </View>
-        <TouchableOpacity
-          style={[styles.wrapQR, {left: width / 2 - scale(56 / 2)}]}
-          onPress={onCheck}>
-          <Image source={Images.TabBar.QR} style={styles.qrImg} />
-        </TouchableOpacity>
       </View>
     );
   }
@@ -168,7 +151,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     elevation: 0,
     bottom: 0,
-    shadowColor: Colors.l5,
+    shadowColor: Colors.tp5,
     shadowOffset: {width: 0, height: 0},
     shadowOpacity: 0.4,
     shadowRadius: 6,
@@ -183,7 +166,6 @@ const styles = StyleSheet.create({
   },
   tabImage: {
     height: scale(80),
-    // zIndex: 1,
   },
   tabH: {
     alignItems: 'center',
@@ -208,7 +190,7 @@ const styles = StyleSheet.create({
   },
   wrapQR: {
     position: 'absolute',
-    top: -scale(56 / 2 + 5),
+    top: -scale(56 / 12 + 5),
     width: scale(56),
   },
   qrImg: {

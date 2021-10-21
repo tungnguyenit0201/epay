@@ -1,13 +1,22 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, ScrollView, StyleSheet, Image} from 'react-native';
-import {HeaderBg, Header, InputBlock} from 'components';
-import {Colors, Spacing, Images} from 'themes';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+} from 'react-native';
+import {HeaderBg, Header, TextInput, Text} from 'components';
+import {Colors, Spacing, Images, Fonts, base} from 'themes';
+import {SCREEN} from 'configs/Constants';
+import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import {debounce, isEmpty} from 'lodash';
 import BankList from 'containers/Wallet/Bank/components/BankList';
 import {BANK_TYPE} from 'context/Wallet/utils/bankInfo';
 import {useBankInfo} from 'context/Wallet/utils';
 import {useWallet} from 'context/Wallet';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
 const BankPickerScreen = props => {
   const translation = useTranslation();
@@ -17,6 +26,7 @@ const BankPickerScreen = props => {
   const bankLinkRef = useRef();
   const napasRef = useRef();
   const visaRef = useRef();
+  const {onGetAllBank, onContinue} = useBankInfo();
 
   useEffect(() => {
     return () => setKeySearch('');
@@ -44,10 +54,17 @@ const BankPickerScreen = props => {
       onSearchDebounce(text);
     }
   };
+
+  const mapBank = () => {
+    onContinue(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankPickerScreen,
+    });
+  };
+
   const renderSearchView = () => {
     return (
-      <View style={[{marginTop: -20}]}>
-        <View style={styles.icon}>
+      <View style={[{marginTop: 10}]}>
+        {/* <View style={styles.icon}>
           <Image source={Images.TabBar.Search} style={styles.image} />
         </View>
         <InputBlock
@@ -56,6 +73,14 @@ const BankPickerScreen = props => {
           placeholder={translation.which_back_are_you_looking_for}
           style={styles.input_text}
           onChange={onChange}
+        /> */}
+        <TextInput
+          onBlur={onBlur}
+          onFocus={onFocus}
+          placeholder={translation.which_back_are_you_looking_for}
+          style={styles.input_text}
+          onChange={onChange}
+          leftIcon={Images.TabBar.Search}
         />
       </View>
     );
@@ -70,18 +95,20 @@ const BankPickerScreen = props => {
             title={translation.bank_linking}
             key={'DomesticBank'}
             type={BANK_TYPE.LIST_DOMESTIC_BANK}
+            style={styles.mb1}
           />
         </View>
       );
     }
     return (
-      <View>
+      <>
         <BankList
           ref={bankLinkRef}
           title={translation.bank_linking}
           key={'DomesticBank'}
           type={BANK_TYPE.LIST_DOMESTIC_BANK}
           navigation={props?.navigation}
+          style={styles.mb1}
         />
         <BankList
           ref={visaRef}
@@ -89,6 +116,7 @@ const BankPickerScreen = props => {
           key={'InternationalBank'}
           type={BANK_TYPE.LIST_INTERNATIONAL_BANK}
           navigation={props?.navigation}
+          style={styles.mb1}
         />
         <BankList
           ref={napasRef}
@@ -96,21 +124,44 @@ const BankPickerScreen = props => {
           key={'NapasBank'}
           type={BANK_TYPE.LIST_NAPAS_BANK}
           navigation={props?.navigation}
+          style={styles.mb1}
         />
-      </View>
+      </>
     );
   };
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
-        <Header back title={translation.connect_bank} />
-        {renderSearchView()}
+        <Header back title={translation.bank_linking} />
+        {/* {renderSearchView()} */}
       </HeaderBg>
 
       <ScrollView
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         {renderContent()}
+        <View style={[styles.lineGray1, styles.mb2]}></View>
+
+        <View style={styles.px1}>
+          <Text bold size={Fonts.LG} mb={16}>
+            Thêm ngân hàng nhận tiền
+          </Text>
+
+          <TouchableOpacity
+            style={[base.row, styles.btnAddBank]}
+            onPress={mapBank}
+          >
+            <View style={styles.flex1}>
+              <Text fs="h6">{translation.add_bank_account}</Text>
+            </View>
+            <Image
+              source={Images.ConnectBank.Plus}
+              style={styles.iconPlus}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -118,8 +169,15 @@ const BankPickerScreen = props => {
 export default BankPickerScreen;
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
+  //---------------
+  mb1: {marginBottom: 16},
+  mb2: {marginBottom: 32},
+  //---------------
+  px1: {paddingHorizontal: Spacing.PADDING},
+  //---------------
   container: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: Spacing.PADDING,
   },
@@ -129,21 +187,37 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    top: 51,
+    top: 52,
     left: 10,
     paddingRight: 10,
     borderRightWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     zIndex: 1,
   },
   input_text: {
     paddingLeft: 50,
-    // borderRightWidth: 1,
-    // borderStyle: 'solid',
-    // borderColor: Colors.l4,
     borderWidth: 0,
     borderRadius: 8,
   },
   item: {alignItems: 'center'},
+  //----------------
+  lineGray1: {
+    height: 12,
+    backgroundColor: Colors.bs2,
+  },
+  //----------------
+  iconPlus: {
+    width: scale(24),
+    height: scale(24),
+  },
+  //----------------
+  btnAddBank: {
+    marginBottom: Spacing.PADDING,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: Colors.bs1,
+    borderRadius: 8,
+  },
 });

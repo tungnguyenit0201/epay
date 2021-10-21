@@ -13,6 +13,9 @@ import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import FooterContainer from 'components/Auth/FooterContainer';
 
+import {SCREEN} from 'configs/Constants';
+import Navigator from 'navigations/Navigator';
+
 const RegisterFee = () => {
   const translation = useTranslation();
   return (
@@ -42,14 +45,17 @@ const RegisterFee = () => {
               source={Images.TrafficFee.BigCar}
               resizeMode="contain"
             />
-            <Text centered mt={20} fs="h6" color={Colors.gray}>
+            <Text centered mt={20} fs="h6" color={Colors.tp3}>
               Chưa có giao dịch để hiển thị
             </Text>
           </View>
         </ScrollView>
 
         <FooterContainer>
-          <Button label={`Thêm đăng ký xe`} />
+          <Button
+            label={`Thêm đăng ký xe`}
+            onPress={() => Navigator.navigate(SCREEN.TRAFFIC_REGISTER_FORM)}
+          />
         </FooterContainer>
       </View>
     </>

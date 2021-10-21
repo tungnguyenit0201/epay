@@ -2,20 +2,33 @@ import {useState, useEffect, useCallback} from 'react';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, MENU, SCREEN} from 'configs/Constants';
 import {useCommon} from 'context/Common';
-import {getBanner} from 'services/common';
-import {useAsyncStorage, useShowModal} from 'context/Common/utils';
+import useServiceCommon from 'services/common';
+import {useAsyncStorage, useError, useShowModal} from 'context/Common/utils';
 import {Images} from 'themes';
+import {useTranslation} from 'context/Language';
+import * as LocalAuthentication from 'expo-local-authentication';
+import {Linking} from 'react-native';
 
 const useHome = () => {
-  const {getPhone} = useAsyncStorage();
+  const {getPhone, getToken} = useAsyncStorage();
   let [banner, setBanner] = useState();
-  const goSecurity = () => {
-    Navigator.navigate(SCREEN.SECURITY);
+  const {getBanner} = useServiceCommon();
+  const {setError} = useError();
+
+  const goSecurity = async () => {
+    const isTouchIdEnrolled = await LocalAuthentication.isEnrolledAsync();
+    if (isTouchIdEnrolled) {
+      Navigator.navigate(SCREEN.SECURITY);
+    } else {
+      Linking.openSettings();
+    }
   };
   const onGetBanner = async () => {
     let phone = await getPhone();
+    let token = await getToken();
     let result = await getBanner({phone});
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) setBanner(result?.Banners);
+    else setError(result);
   };
   useEffect(() => {
     onGetBanner();
@@ -48,21 +61,22 @@ const useModalSmartOTP = () => {
   return {smartOTPSuggestion, onGoSmartOTP, onPressNever, onClose};
 };
 const useIconConfig = () => {
+  const translation = useTranslation();
   let iconList = {
     C08: {
       icon: Images.Homes.NopPhat,
-      name: 'Nộp phạt',
+      name: translation.pay_fines,
       screen: SCREEN.TOP_UP,
     },
     VDMS: {
       icon: Images.Homes.YTe,
-      name: 'Y tế', // TODO: translate
+      name: translation.medical,
       screen: SCREEN.TOP_UP,
     },
 
     TRAFFIC: {
       icon: Images.Homes.GiaoThong,
-      name: 'Giao thông',
+      name: translation.traffic,
       screen: SCREEN.TOP_UP,
     },
     // {
