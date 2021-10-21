@@ -19,7 +19,10 @@ import FooterContainer from 'components/Auth/FooterContainer';
 import {HelpModal} from 'components/Auth';
 const RegisterFailure = ({route}) => {
   const translation = useTranslation();
-  const {openCallDialog, showModal, setShowModal} = useOTP(route?.params);
+  const {openCallDialog, showModal, setShowModal} = useOTP({
+    ...route?.params,
+    isMount: false,
+  });
   const {onNavigate} = useRegister();
 
   const renderRightComponent = () => (

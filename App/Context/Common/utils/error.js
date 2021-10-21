@@ -21,7 +21,7 @@ const useError = () => {
                   onClose: error?.onClose,
                   icon: error?.icon,
                   label: error?.label,
-                  action: error?.action || [{onPress: () => {}}],
+                  action: error?.action || [{onPress: false}],
                   renderContent: error?.renderContent,
                 }
               : null,

@@ -13,12 +13,14 @@ import {scale} from 'utils/Functions';
 import {Colors, Spacing, Fonts, Images} from 'themes';
 import {Text, Button} from 'components';
 import WebView from 'components/WebView/Partial';
+import {useTranslation} from 'context/Language';
 
 const AlertCustom = () => {
   const {error} = useCommon();
   const {setError} = useError();
+  const translation = useTranslation();
   const onPressAction = action => {
-    action?.();
+    typeof action === 'function' && action?.();
     error?.onClose?.();
     setError(-1);
   };
@@ -63,7 +65,7 @@ const AlertCustom = () => {
                   <View key={`${Math.random(1, 100)}-action`}>
                     {index == 0 ? (
                       <Button
-                        label={item?.label || 'Đóng'}
+                        label={item?.label || translation.agree}
                         onPress={() => onPressAction(item?.onPress)}
                       />
                     ) : item?.mode == 'outline' ? (

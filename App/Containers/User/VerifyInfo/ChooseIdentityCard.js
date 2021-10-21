@@ -78,7 +78,7 @@ const ChooseIdentityCard = ({route}) => {
         <View style={styles.buttonContainer}>
           <Button
             label={translation?.continue}
-            onPress={() => onContinue(SCREEN.VERIFY_USER_INFO)}
+            onPress={() => onContinue(SCREEN.VERIFY_USER_PORTRAIT)}
           />
         </View>
       </View>

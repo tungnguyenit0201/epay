@@ -34,11 +34,6 @@ const useRequest = () => {
       return setError({
         ErrorMessage:
           'Mất kết nối hoặc đường truyền quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoặc thử lại sau ít phút',
-        action: [
-          {
-            label: 'Đồng ý',
-          },
-        ],
       });
     }
 

@@ -573,7 +573,7 @@
   "unknownError": "Đã có lỗi trong quá trình xử lý. Vui lòng thử lại sau.",
   "error": "Lỗi",
   "militaryID": "Chứng minh thư quân đội",
-  "inputFullName": "Nhập họ & tên",
+  "inputFullName": "Họ và tên",
   "inputIDNumber": "Nhập số GTTT",
   "inputIssuedPlace": "Nhập nơi cấp",
   "inputAddress": "Nhập số nhà, đường,...",

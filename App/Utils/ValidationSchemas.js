@@ -82,28 +82,28 @@ export const newPasswordSchema = yup.object().shape({
 
 export const napasSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
 });
 
 export const visaSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
 });
 
 export const addressSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
 });
 
 export const verifyUserSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'), // TODO: translate
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
   ICFullName: yup.string().required('Họ và tên không được bỏ trống.'),
@@ -115,6 +115,17 @@ export const verifyUserSchema = yup.object().shape({
 
 export const nameSchema = yup.object().shape({
   FullName: yup
+    .string()
+    .required('full_name_cannot_be_left_blank')
+    .max(100, 'fullname_maximum_100_characters')
+    .matches(
+      FULLNAME_REGEX,
+      'first_and_last_name_must_not_contain_special_characters',
+    ),
+});
+
+export const eKYCSchema = yup.object().shape({
+  ICFullName: yup
     .string()
     .required('full_name_cannot_be_left_blank')
     .max(100, 'fullname_maximum_100_characters')

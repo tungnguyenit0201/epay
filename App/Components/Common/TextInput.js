@@ -60,7 +60,10 @@ export default React.forwardRef(
         onChange?.(text.replace(regexForNonAlphaNum, ''));
       } else {
         const regexValid = new RegExp(regex).test(text);
-        regexValid && onChange?.(text);
+        if (regexValid && regex) {
+          const regexText = new RegExp(regex);
+          onChange?.(text?.replace(regexText, ''));
+        } else onChange?.(text);
       }
     };
 

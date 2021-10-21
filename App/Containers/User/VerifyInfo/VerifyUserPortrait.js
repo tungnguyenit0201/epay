@@ -7,6 +7,7 @@ import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
 import {GENDER, SCREEN} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
+import {eKYCSchema} from 'utils/ValidationSchemas';
 
 const VerifyUserPortrait = ({route}) => {
   const {onUpdateAllInfo, onContinue, verifyInfo} = useVerifyInfo(
@@ -129,7 +130,7 @@ const VerifyUserPortrait = ({route}) => {
     setInfo({...info, [key]: value});
   };
 
-  const handleValidate = key => {
+  const handleValidate = async key => {
     switch (key) {
       case 'ICIssuedPlace':
         if (info[key]?.length > 200)
@@ -146,6 +147,17 @@ const VerifyUserPortrait = ({route}) => {
             [key]: translation?.address_maximum_200_characters,
           });
         return setError({...error, [key]: ''});
+      case 'ICFullName':
+        console.log('eKYCSchema');
+        let isValid = await eKYCSchema.isValid(info);
+        if (isValid) return setError({...error, [key]: ''});
+
+        return eKYCSchema.validate(info).catch(err => {
+          setError({
+            ...error,
+            [key]: err?.errors?.length > 0 ? err?.errors[0] : '',
+          });
+        });
       default:
         break;
     }
@@ -185,13 +197,15 @@ const VerifyUserPortrait = ({route}) => {
           label={translation.enter_your_full_name}
           style={styles.mb1}
           onChange={value => handleChange('ICFullName', value)}
+          onBlur={() => handleValidate('ICFullName')}
           value={info.ICFullName}
-          error={error.ICFullName}
+          error={translation[error?.ICFullName]}
           required
           placeholder={translation?.inputFullName}
-          alphanumeric
+          regex={/[^\p{L} ]+/gu}
           trimOnBlur
           multiline
+          maxLength={100}
         />
         <DatePicker
           onChange={value => handleChange('DateOfBirth', value)}
