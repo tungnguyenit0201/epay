@@ -297,14 +297,10 @@ const VerifyUserPortrait = ({route}) => {
         <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
-            {translation?.iAgreeWith}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>{translation?.userAgreement}</Text>
-            </TouchableOpacity>{' '}
-            {translation?.and}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>
-            </TouchableOpacity>{' '}
+            {translation?.iAgreeWith}{' '}
+            <Text style={styles.firstLink}>{translation?.userAgreement}</Text>{' '}
+            {translation?.and}{' '}
+            <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>{' '}
             {translation?.ofEPAY}
           </Text>
         </View>
