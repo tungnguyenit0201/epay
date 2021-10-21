@@ -121,6 +121,8 @@ export default {
     Login: require('images/icons/login.png'),
     DollarCircle: require('images/icons/dollar-circle.png'),
     Key: require('images/icons/key.png'),
+    BlueMobile: require('images/icons/mobile.png'),
+    GrayMobile: require('images/icons/mobile-unactive.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),

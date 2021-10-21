@@ -34,6 +34,7 @@ const RegisterName = () => {
         touched,
         errors,
         values,
+        isSubmitting,
       }) => {
         const handleChange = field => value => {
           let valueConvert = value?.replace(/[0-9]/g, '');
@@ -68,7 +69,7 @@ const RegisterName = () => {
 
             <FooterContainer>
               <Button
-                disabled={errors?.FullName}
+                disabled={errors?.FullName || isSubmitting}
                 label={translation.completed}
                 style={styles.btn}
                 onPress={handleSubmit}

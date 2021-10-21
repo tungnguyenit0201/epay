@@ -43,7 +43,7 @@ const User = () => {
       <HeaderBg mb={0}>
         <Header back title={translation.bank_account} />
       </HeaderBg>
-      <ScrollView style={[base.wrap, {backgroundColor: Colors.bs4}]}>
+      <ScrollView style={base.wrap}>
         <View style={[base.container]}>
           <UserInfo style={styles.mb2} />
           {userInfo?.personalIC?.Verified == PERSONAL_IC.INACTIVE && (
