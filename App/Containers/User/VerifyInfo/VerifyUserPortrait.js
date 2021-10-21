@@ -64,7 +64,8 @@ const VerifyUserPortrait = ({route}) => {
         title: translation.militaryIDNumber,
         regex: '^[0-9]*$',
         minLength: 8,
-        maxLength: 8,
+        fixedLength: true,
+        maxLength: 12,
         keyboardType: 'numeric',
       },
     };
