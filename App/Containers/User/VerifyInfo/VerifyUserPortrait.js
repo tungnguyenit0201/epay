@@ -240,7 +240,7 @@ const VerifyUserPortrait = ({route}) => {
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
           trimOnBlur
-          maxLength={15}
+          maxLength={CARD_RULE[ICType || 1].maxLength}
         />
         <DatePicker
           label={translation.valid_date}
