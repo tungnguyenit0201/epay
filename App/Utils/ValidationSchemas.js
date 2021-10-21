@@ -37,7 +37,10 @@ export const emailSchema = yup.object().shape({
     .string()
     .email(TEXT.EMAIL_INVALID)
     .required(TEXT.EMAIL_NOT_BLANK)
-    .matches(/^[A-Za-z0-9@.]*$/, TEXT.EMAIL_INVALID),
+    .matches(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      TEXT.EMAIL_INVALID,
+    ),
 });
 
 export const phoneSchema = yup.object().shape({
