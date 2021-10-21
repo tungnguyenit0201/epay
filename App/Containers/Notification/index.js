@@ -44,10 +44,11 @@ const Notification = () => {
     <>
       <HeaderBg>
         <Header title={translation.notification} back />
-        <Image
+        {/* read all noti */}
+        {/* <Image
           source={require('images/noti/TickCircle.png')}
           style={styles.TickCircle}
-        />
+        /> */}
       </HeaderBg>
       <View style={styles.wrap}>
         <ScreenBackground />

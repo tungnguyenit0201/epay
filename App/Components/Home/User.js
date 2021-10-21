@@ -8,11 +8,16 @@ import {useNotify} from 'context/User/utils';
 import Navigator from 'navigations/Navigator';
 import {useUser} from 'context/User';
 import {hidePhone} from 'utils/Functions';
+import _ from 'lodash';
 
 const User = ({data, style}) => {
   const {personalInfo, phone, listNotify} = useUser();
-
   const {onGoNotify} = useNotify();
+
+  const numNotify = _.isArray(listNotify)
+    ? listNotify.filter(x => !x.IsRead).length
+    : 0;
+
   return (
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
@@ -48,14 +53,14 @@ const User = ({data, style}) => {
           )}
         </TouchableOpacity>
 
-        {!!listNotify?.length && (
+        {!!numNotify && (
           <TouchableOpacity
             style={styles.noti}
             onPress={() => {
               Navigator.navigate(SCREEN.NOTIFICATION);
             }}
           >
-            <Text style={styles.notiText}>{listNotify.length}</Text>
+            <Text style={styles.notiText}>{numNotify}</Text>
           </TouchableOpacity>
         )}
       </View>

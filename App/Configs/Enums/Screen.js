@@ -95,5 +95,6 @@ const SCREEN = {
   BANK_PICKER_SCREEN: 'BankPickerScreen',
   BANK_KYC_SCREEN: 'BankKYCInfo',
   BANK_OTP: 'BankOTP',
+  FORGET_PASSWORD_KYC: 'ForgetPasswordKYC',
 };
 export default SCREEN;
