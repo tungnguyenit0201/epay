@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   pos1: {
     position: 'absolute',
     top: 0,
-    right: 0,
+    right: -1,
   },
   //----------------
   inputLabel: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   error: {
     borderColor: Colors.hl1,
-    borderWidth: 1,
+    borderWidth: 0.8,
   },
   rightIcon: {
     width: 16,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   //---------------
   blockArrowRight: {
-    height: '100%',
+    height: scale(46),
     justifyContent: 'center',
     alignItems: 'center',
     width: 48,

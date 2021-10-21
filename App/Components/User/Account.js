@@ -19,7 +19,10 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {useMoney} from 'context/Wallet/utils';
+
 import {SCREEN} from 'configs/Constants';
+import Navigator from 'navigations/Navigator';
+
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {useCheckInfo} from 'context/Home/utils';
 
@@ -120,7 +123,9 @@ const Account = () => {
             source={require('images/profile/plus.png')}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Navigator.navigate(SCREEN.LINKED_BANK)}
+        >
           <Text fs="sm" color={Colors.bs4}>
             Xem tất cả
           </Text>
