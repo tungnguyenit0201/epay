@@ -27,7 +27,7 @@ const PaymentSettings = () => {
       <View style={[base.bgWhite, styles.flex1]}>
         <Image source={require('images/wave.png')} style={styles.bgImg} />
         <ScrollView contentContainerStyle={[base.container, styles.pt1]}>
-          <View style={[styles.boxShadowGray]}>
+          <View style={styles.boxShadowGray}>
             <TouchableOpacity
               style={styles.item}
               onPress={() => {
@@ -65,7 +65,10 @@ const PaymentSettings = () => {
             /> */}
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.item} onPress={onSmartOTP}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() => Navigator.navigate(SCREEN.WALLET_ACCESS_HISTORY)}
+            >
               <Image
                 source={Images.Profile.Clock}
                 resizeMode="contain"
