@@ -57,7 +57,7 @@ const VerifyEmailResult = ({route}) => {
             </Text>
             <View style={styles.block}>
               {success ? (
-                <Text>
+                <Text centered>
                   Tài khoản đã được xác thực email để nhận thông báo và ưu đã
                   mới nhất từ EPAY
                 </Text>
