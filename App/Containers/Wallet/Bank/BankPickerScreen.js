@@ -133,7 +133,7 @@ const BankPickerScreen = props => {
     <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header back title={translation.bank_linking} />
-        {/* {renderSearchView()} */}
+        {renderSearchView()}
       </HeaderBg>
 
       <ScrollView
@@ -141,27 +141,6 @@ const BankPickerScreen = props => {
         showsVerticalScrollIndicator={false}
       >
         {renderContent()}
-        <View style={[styles.lineGray1, styles.mb2]}></View>
-
-        <View style={styles.px1}>
-          <Text bold size={Fonts.LG} mb={16}>
-            Thêm ngân hàng nhận tiền
-          </Text>
-
-          <TouchableOpacity
-            style={[base.row, styles.btnAddBank]}
-            onPress={mapBank}
-          >
-            <View style={styles.flex1}>
-              <Text fs="h6">{translation.add_bank_account}</Text>
-            </View>
-            <Image
-              source={Images.ConnectBank.Plus}
-              style={styles.iconPlus}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
       </ScrollView>
     </View>
   );
