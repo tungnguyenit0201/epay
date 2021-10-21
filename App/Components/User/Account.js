@@ -103,33 +103,43 @@ const Account = () => {
 
       <View style={styles.line} />
 
-      <TouchableOpacity
-        style={[base.row, {marginBottom: 10}]}
-        onPress={goToBankLinked}
-      >
-        <Text semibold mr={8} color={Colors.bs4}>
-          {translation.bank_linking}{' '}
-          <Text color={Colors.bs4} semibold>
-            ({listConnectBank?.length})
+      <View style={[base.row, styles.justifyBetween, styles.mb2]}>
+        <TouchableOpacity
+          style={base.row}
+          // onPress={goToBankLinked}
+          onPress={mapBank}
+        >
+          <Text semibold mr={8} color={Colors.bs4}>
+            {translation.bank_linking}{' '}
+            <Text color={Colors.bs4} semibold>
+              ({listConnectBank?.length})
+            </Text>
           </Text>
-        </Text>
-        <Image
-          style={styles.iconPlus}
-          source={require('images/profile/plus.png')}
-        />
-      </TouchableOpacity>
+          <Image
+            style={styles.iconPlus}
+            source={require('images/profile/plus.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text fs="sm" color={Colors.bs4}>
+            Xem tất cả
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {listConnectBank?.length ? (
         listConnectBank.map(({BankName, BankLogoUrl}) => (
-          <View style={base.row}>
-            <Image
-              style={{width: 40, height: 40}}
-              source={{uri: BankLogoUrl}}
-              resizeMode="contain"
-            />
-            <Text semibold ml={10} color={Colors.bs4}>
+          <View style={[base.row, styles.fWrap]}>
+            <View style={[styles.boxCircle1, styles.mr1]}>
+              <Image
+                style={{width: 21, height: 21}}
+                source={{uri: BankLogoUrl}}
+                resizeMode="contain"
+              />
+            </View>
+            {/* <Text semibold ml={10} color={Colors.bs4}>
               {BankName}
-            </Text>
+            </Text> */}
           </View>
         ))
       ) : (
@@ -148,15 +158,19 @@ const Account = () => {
 };
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: 15},
-  //------------
-  // topMinus1: {top: 0},
-  //------------
+  //--------------
+  fWrap: {flexWrap: 'wrap'},
+  //--------------
   flex1: {flex: 1},
-  //------------
+  justifyBetween: {justifyContent: 'space-between'},
+  //--------------
+  mr1: {marginRight: 16},
+  //--------------
   mb1: {marginBottom: 32},
-  //------------
+  mb2: {marginBottom: 10},
+  //--------------
   pxy1: {padding: 16},
-  //------------
+  //--------------
   wbg: {
     position: 'absolute',
     right: 0,
@@ -188,7 +202,16 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     opacity: 0.5,
   },
-  //------------
+  //--------------
   iconPlus: {width: 20, height: 20},
+  //--------------
+  boxCircle1: {
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.g2,
+  },
 });
 export default Account;
