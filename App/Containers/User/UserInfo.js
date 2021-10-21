@@ -87,7 +87,7 @@ const UserInfo = () => {
                   source={
                     PersonalInfo?.Avatar
                       ? {uri: PersonalInfo.Avatar}
-                      : Images.DefaultUser
+                      : Images.User
                   }
                   resizeMode="cover"
                 />
