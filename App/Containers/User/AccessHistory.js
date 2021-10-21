@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   flexRow: {flexDirection: 'row'},
   //----------------
   flex1: {flex: 1},
-  // alignCenter: {alignItems: 'center'},
+  // alignCenter: {alignItems: 'center',},
   mr1: {marginRight: 8},
   //----------------
   ptb1: {paddingVertical: 24},
