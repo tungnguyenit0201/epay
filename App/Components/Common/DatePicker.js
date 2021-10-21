@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Pressable, Image} from 'react-native';
-import {Colors, Images, Fonts} from 'themes';
+import {Colors, Images, Fonts, Spacing} from 'themes';
 import Text from './Text';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import dayjs from 'dayjs';
@@ -11,7 +11,7 @@ export default ({
   placeholder,
   onChange,
   style,
-  marginBottom = 19,
+  marginBottom = Spacing.PADDING,
   error,
   value,
   label,
@@ -64,8 +64,8 @@ export default ({
             styles.justifyCenter,
           ]}
         >
-          <Text color={!!value ? Colors.tp3 : Colors.tp3} style={styles.pl1}>
-            {value}
+          <Text color={!!value ? Colors.tp3 : Colors.tp5} style={styles.pl1}>
+            {value || placeholder}
           </Text>
         </View>
         <View
