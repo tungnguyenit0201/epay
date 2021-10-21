@@ -5,7 +5,7 @@ import {Colors, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
-import {GENDER, SCREEN} from 'configs/Constants';
+import {GENDER, SCREEN, IC_TPYE} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 import {eKYCSchema} from 'utils/ValidationSchemas';
 
@@ -148,7 +148,6 @@ const VerifyUserPortrait = ({route}) => {
           });
         return setError({...error, [key]: ''});
       case 'ICFullName':
-        console.log('eKYCSchema');
         let isValid = await eKYCSchema.isValid(info);
         if (isValid) return setError({...error, [key]: ''});
 
@@ -237,10 +236,11 @@ const VerifyUserPortrait = ({route}) => {
           error={error.ICNumber}
           style={styles.mb1}
           required
-          numeric
+          numeric={ICType != IC_TPYE.PASSPORT}
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
           trimOnBlur
+          maxLength={15}
         />
         <DatePicker
           label={translation.valid_date}
@@ -260,6 +260,7 @@ const VerifyUserPortrait = ({route}) => {
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
           multiline
+          alphanumeric
           maxLength={200}
         />
       </View>
@@ -275,6 +276,7 @@ const VerifyUserPortrait = ({route}) => {
           required
           placeholder={translation?.inputAddress}
           trimOnBlur
+          alphanumeric
           multiline
           maxLength={200}
         />
