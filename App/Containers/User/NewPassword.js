@@ -94,7 +94,7 @@ const ChangePassword = ({route}) => {
                   />
                   <Text style={styles.note}>
                     {
-                      translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                      translation.note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters
                     }
                   </Text>
                 </ScrollView>
