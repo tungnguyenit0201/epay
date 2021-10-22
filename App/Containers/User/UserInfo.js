@@ -225,7 +225,11 @@ const UserInfo = () => {
             <View style={[base.row]}>
               <Image
                 style={[styles.rowIcon]}
-                source={require('images/profile/Wating.png')}
+                source={
+                  statusVerified == PERSONAL_IC.ACTIVED
+                    ? Images.Profile.Validated
+                    : Images.Profile.Waiting
+                }
               />
               <View>
                 <Text fs="h6">{getStatusVerifiedText()}</Text>

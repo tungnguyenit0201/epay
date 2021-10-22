@@ -110,6 +110,8 @@ export default {
     ThanhToan: require('images/profile/ThanhToan.png'),
     Translate: require('images/profile/Translate.png'),
     ReVerify: require('images/profile/ReVerify.png'),
+    Waiting: require('images/profile/Waiting.png'),
+    Validated: require('images/profile/Validated.png'),
     BgStandard: require('images/bg/bg-standard.png'),
     BgGold: require('images/bg/bg-gold.png'),
     BgPlantinum: require('images/bg/bg-plantinum.png'),
