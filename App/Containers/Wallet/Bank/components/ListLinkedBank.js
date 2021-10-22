@@ -27,28 +27,30 @@ import RadioICInfo from 'containers/Wallet/Bank/components/RadioICInfo';
 
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
-    style={styles.alignCenter}
+    style={[styles.item, styles.blockShadowGray]}
     onPress={() => {
       callback?.(item);
     }}
   >
-    <View style={styles.boxCirle1}>
-      <Image
-        source={icon}
-        style={{
-          width: scale(32),
-          aspectRatio: 2,
-        }}
-        resizeMode={'contain'}
-      />
+    <Image
+      source={icon}
+      style={{
+        width: scale(52),
+        marginRight: 10,
+        aspectRatio: 2,
+      }}
+      resizeMode={'contain'}
+    />
+    <View styles={styles.flex1}>
+      <Text fs="h6" bold size={Fonts.SM}>
+        {title}
+      </Text>
+      <Text color={Colors.tp3}>**********1234</Text>
     </View>
-    <Text fs="md" mt={4} centered>
-      {title}
-    </Text>
   </TouchableOpacity>
 );
 
-const BankList = forwardRef((props, ref) => {
+const ListLinkedBank = forwardRef((props, ref) => {
   const translation = useTranslation();
   const {title, type = '', bankInfo = '', callback, style} = props || {};
   const [bankData, setBankData] = useState([]);
@@ -238,16 +240,17 @@ const BankList = forwardRef((props, ref) => {
   };
   const renderBankBlock = () => {
     return (
-      <View style={[styles.boxShadowGray, style]}>
+      <View style={[styles.px1, style]}>
         <Text size={Fonts.LG} bold mb={16}>
           {title || translation.bank_linking}
         </Text>
         <Row>
           {bankData.map((item, index) => {
             return (
-              <Col width={'33.3333%'} key={index} style={{marginBottom: 16}}>
+              <Col width={'100%'} key={index} style={{marginBottom: 16}}>
                 <BankItem
-                  callback={onPress}
+                  //   callback={onPress}
+                  callback={() => Navigator.navigate(SCREEN.LINKED_BANK_DETAIL)}
                   bankInfo={bankInfo}
                   title={item.BankName}
                   icon={{uri: item.BankLogoUrl}}
@@ -269,20 +272,17 @@ const BankList = forwardRef((props, ref) => {
   return renderBankBlock();
 });
 
-export default BankList;
+export default ListLinkedBank;
 
 const styles = StyleSheet.create({
   flex1: {flex: 1},
   //-----------------
   px1: {paddingHorizontal: Spacing.PADDING},
   //-----------------
-  alignCenter: {alignItems: 'center'},
-  //-----------------
   container: {
     backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: 16,
-    // padding: 16,
   },
   image: {
     width: 20,
@@ -306,6 +306,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 8,
   },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   radio: {
     marginRight: 0,
     marginTop: 4,
@@ -314,7 +318,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   //---------------
-  boxShadowGray: {
+  blockShadowGray: {
     backgroundColor: Colors.bs4,
     // shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 0.2,
@@ -322,18 +326,7 @@ const styles = StyleSheet.create({
     elevation: 24,
     shadowRadius: 8,
     borderRadius: 8,
-    marginHorizontal: Spacing.PADDING,
-    paddingHorizontal: 16,
-    paddingTop: 24,
-    paddingBottom: 16,
-  },
-  //----------------
-  boxCirle1: {
-    width: 48,
-    height: 48,
-    borderRadius: 100,
-    backgroundColor: Colors.bs2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 14,
   },
 });

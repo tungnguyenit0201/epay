@@ -144,6 +144,7 @@ export default {
     Plus: require('images/icons/add.png'),
     Search: require('images/icons/search-normal.png'),
     BankLink: require('images/icon_banklink-2.png'),
+    BgBlue: require('images/bg/bg-blue.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
