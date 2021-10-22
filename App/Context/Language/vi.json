@@ -57,7 +57,7 @@
   "set_password": "Tạo mật khẩu EPAY",
   "create_a_password": "Tạo mật khẩu",
   "password_for_account_security_and_transaction_confirmation_at_checkout": "Mật khẩu để bảo mật tài khoản và xác nhận giao dịch khi thanh toán",
-  "note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters": "Lưu ý: Mật khẩu cần có ít nhất 8 kí tự gồm chữ thường, chữ hoa, số và ký tự đặc biệt",
+  "note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters": "Lưu ý: Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa, số và ký tự đặc biệt",
   "confirm_password": "Xác nhận lại mật khẩu",
   "enter_the_password_again": "Nhập lại mật khẩu",
   "incorrect_password": "Mật khẩu không đúng",
