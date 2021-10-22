@@ -3,11 +3,8 @@ import {useError} from 'context/Common/utils';
 import Navigator from 'navigations/Navigator';
 import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import {Alert} from 'react-native';
-import {useCommon} from 'context/Common';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from 'configs/API';
-import {useUser} from 'context/User';
-import {useWallet} from 'context/Wallet';
 import {setDefaultHeaders} from 'utils/Axios';
 import RNRestart from 'react-native-restart';
 
@@ -20,9 +17,6 @@ let baseUrl = null;
 
 const useRequest = () => {
   const {setError} = useError();
-  const {error: errorContext, dispatch: dispatchCommon} = useCommon();
-  const {dispatch: dispatchUser} = useUser();
-  const {dispatch: dispatchWallet} = useWallet();
 
   const handleError = (error, failure) => {
     if (typeof failure == 'function') return failure(error);

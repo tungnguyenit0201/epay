@@ -262,6 +262,7 @@ const VerifyUserPortrait = ({route}) => {
           trimOnBlur
           multiline
           alphanumeric
+          autoHeight
           maxLength={200}
         />
       </View>
@@ -279,6 +280,7 @@ const VerifyUserPortrait = ({route}) => {
           trimOnBlur
           alphanumeric
           multiline
+          autoHeight
           maxLength={200}
         />
         <InputBlock

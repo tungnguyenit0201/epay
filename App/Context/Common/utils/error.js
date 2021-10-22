@@ -8,8 +8,7 @@ const useError = () => {
   const translation = useTranslation();
   const setError = useCallback(
     error => {
-      // let message = translation.errorCode[error?.ErrorCode];
-      !!error &&
+      (!!error?.ErrorMessage || error == -1) &&
         dispatch({
           type: 'SET_ERROR',
           error:

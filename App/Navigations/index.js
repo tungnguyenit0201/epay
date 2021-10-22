@@ -111,7 +111,7 @@ const AppNavigator = () => {
     useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
-  const {onPressNotify} = useNotify();
+  const {onPressNotify} = useNotify(false);
   const {dispatch} = useUser();
   const {navigateLoginByName} = useLoginName();
 

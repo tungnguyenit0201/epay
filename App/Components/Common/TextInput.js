@@ -40,6 +40,7 @@ export default React.forwardRef(
       trimOnBlur,
       onBlur,
       textStyle,
+      autoHeight,
       ...props
     },
     ref,
@@ -103,6 +104,7 @@ export default React.forwardRef(
               error && [styles.error, errorStyle],
               Boolean(leftIcon) && {paddingLeft: 50},
               (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
+              !!autoHeight ? styles.autoHeight : styles.fixedHeight,
               style,
             ]}
           >
@@ -182,13 +184,22 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingHorizontal: scale(10),
     paddingVertical: scale(2),
-    height: 48,
     borderRadius: scale(8),
     backgroundColor: Colors.bs4,
     borderWidth: 1,
     borderColor: Colors.bs1,
     justifyContent: 'center',
+    maxHeight: 160,
   },
+  fixedHeight: {
+    height: 48,
+  },
+  autoHeight: {
+    maxHeight: 160,
+    paddingVertical: 0,
+    minHeight: 48,
+  },
+
   textStyle: {
     fontFamily: Fonts.FONT_REGULAR,
     color: Colors.tp3,
