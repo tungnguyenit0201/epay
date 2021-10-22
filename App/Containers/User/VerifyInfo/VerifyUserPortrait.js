@@ -29,6 +29,7 @@ const VerifyUserPortrait = ({route}) => {
     DateOfBirth: extractCardInfo.BirthDay,
     ICNumber: extractCardInfo.CardNumber,
     ICIssuedDate: extractCardInfo.IssueDate,
+    ValidDate: extractCardInfo.ValidDate,
     ICIssuedPlace: extractCardInfo.IssuePlace,
     Provincial: extractCardInfo.Province,
     County: extractCardInfo.District,
@@ -173,7 +174,7 @@ const VerifyUserPortrait = ({route}) => {
       info.ICIssuedDate &&
       info.ICIssuedPlace &&
       !error?.ICIssuedPlace &&
-      // && (originalInfo?.ValidDate ? info.ValidDate : true)
+      (extractCardInfo?.ValidDate ? info.ValidDate : true) &&
       info.Provincial &&
       info.County &&
       (wardEmpty ? true : info.Ward) &&
@@ -181,7 +182,7 @@ const VerifyUserPortrait = ({route}) => {
       !error?.Address &&
       acceptPolicy
     );
-  }, [info, acceptPolicy, error]);
+  }, [info, acceptPolicy, error, extractCardInfo]);
 
   return (
     <BaseVerifyInfo
@@ -250,6 +251,16 @@ const VerifyUserPortrait = ({route}) => {
           required
           placeholder="dd/mm/yyyy"
         />
+        {
+          !!extractCardInfo.ValidDate &&
+          <DatePicker
+            label={translation.expired_date}
+            onChange={value => handleChange('ValidDate', value)}
+            value={info.ValidDate}
+            required
+            placeholder="dd/mm/yyyy"
+          />
+        }
         <InputBlock
           label={translation?.issuedPlace}
           onChange={value => handleChange('ICIssuedPlace', value)}

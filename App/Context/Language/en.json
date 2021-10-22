@@ -105,6 +105,7 @@
   "date_of_birth_ddmmyyyy": "Date of birth (dd/mm/yyyy)",
   "enter_id_code": "Enter ID Code",
   "valid_date": "Valid Date",
+  "expired_date": "Expired Date",
   "female": "Female",
   "male": "Male",
   "provice": "Provice",

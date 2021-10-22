@@ -123,6 +123,7 @@
   "date_of_birth_ddmmyyyy": "Ngày sinh (dd/mm/yyyy)",
   "enter_id_code": "Nhập số CMND/CCCD",
   "valid_date": "Ngày cấp",
+  "expired_date": "Ngày hết hạn",
   "gender": "Giới tính",
   "female": "Nữ",
   "male": "Nam",
