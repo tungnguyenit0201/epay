@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
+    marginBottom: 15,
   },
   btn: {
     position: 'absolute',

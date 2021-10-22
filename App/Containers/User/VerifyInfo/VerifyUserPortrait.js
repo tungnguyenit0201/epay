@@ -64,7 +64,8 @@ const VerifyUserPortrait = ({route}) => {
         title: translation.militaryIDNumber,
         regex: '^[0-9]*$',
         minLength: 8,
-        maxLength: 8,
+        fixedLength: true,
+        maxLength: 12,
         keyboardType: 'numeric',
       },
     };
@@ -240,7 +241,7 @@ const VerifyUserPortrait = ({route}) => {
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
           trimOnBlur
-          maxLength={15}
+          maxLength={CARD_RULE[ICType || 1].maxLength}
         />
         <DatePicker
           label={translation.valid_date}
@@ -261,6 +262,7 @@ const VerifyUserPortrait = ({route}) => {
           trimOnBlur
           multiline
           alphanumeric
+          autoHeight
           maxLength={200}
         />
       </View>
@@ -278,6 +280,7 @@ const VerifyUserPortrait = ({route}) => {
           trimOnBlur
           alphanumeric
           multiline
+          autoHeight
           maxLength={200}
         />
         <InputBlock
@@ -310,7 +313,7 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => !wardEmpty && goRegionSelect('wards')}
           defaultValue={translation.town}
         />
-        <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
+        <View style={[styles.flexRow, styles.pt2, styles.pb1, styles.pr1]}>
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
             {translation?.iAgreeWith}{' '}
@@ -324,7 +327,7 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}
           style={styles.underline}
           centered
-          color={Colors.Highlight}
+          color={Colors.hl1}
           bold
           mb={48}
           fs="h6"
@@ -357,6 +360,7 @@ const styles = StyleSheet.create({
   pt2: {paddingTop: 10},
   //---------------
   pb1: {paddingBottom: 24},
+  pr1: {paddingRight: 12},
   //---------------
   underline: {textDecorationLine: 'underline'},
   bgGray: {backgroundColor: Colors.bs1},

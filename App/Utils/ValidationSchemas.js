@@ -57,7 +57,7 @@ export const passwordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
+      'password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters',
     )
     .label('password'),
 });
@@ -69,7 +69,7 @@ export const newPasswordSchema = yup.object().shape({
     .max(20, 'password_maximum_20_characters')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
+      'password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters',
     )
     .label('password'),
   passwordConfirm: yup

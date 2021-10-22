@@ -8,7 +8,7 @@ import useSErviceNotificaiton from 'services/notification';
 import {getAll} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 
-const useNotify = () => {
+const useNotify = (isMount = true) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch, userInfo, phone} = useUser();
@@ -164,7 +164,7 @@ const useNotify = () => {
   };
 
   useEffect(() => {
-    phone && onGetAllNotify(true);
+    phone && isMount && onGetAllNotify(true);
   }, [phone]);
 
   return {
