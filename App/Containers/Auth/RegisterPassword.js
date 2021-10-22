@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   textNote: {
-    fontSize: 12,
+    fontSize: scale(12),
     fontWeight: '500',
     paddingRight: 9,
   },

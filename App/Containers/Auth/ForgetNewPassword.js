@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   note: {
     paddingRight: 10,
-    fontSize: 12,
+    fontSize: scale(12),
   },
   firstLink: {
     textDecorationLine: 'underline',
