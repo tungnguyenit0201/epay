@@ -23,6 +23,7 @@ import {useTranslation} from 'context/Language';
 import {useHome} from 'context/Home/utils';
 import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
+import {useHandleBack} from 'context/Common/utils';
 
 const Home = () => {
   // TODO : translation
@@ -31,6 +32,8 @@ const Home = () => {
   const {banner, goSecurity} = useHome();
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
+  const backHandler = useHandleBack(); // run useEffect
+
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,

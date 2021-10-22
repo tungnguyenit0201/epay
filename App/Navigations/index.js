@@ -114,6 +114,7 @@ const AppNavigator = () => {
   const {onPressNotify} = useNotify(false);
   const {dispatch} = useUser();
   const {navigateLoginByName} = useLoginName();
+  const appState = React.useRef(AppState.currentState);
 
   const openNotificaiton = async remoteMessage => {
     const token = await getToken();
@@ -143,10 +144,14 @@ const AppNavigator = () => {
       'change',
       async nextAppState => {
         try {
+          appState.current = nextAppState;
           if (nextAppState === 'background' || nextAppState === 'inactive') {
             await setInactiveTime(Date.now());
           }
-          if (nextAppState === 'active') {
+          if (
+            appState.current?.match(/inactive|background/) &&
+            nextAppState === 'active'
+          ) {
             let config = await onGetConfig();
             let inactiveTime = await getInactiveTime();
             let time =
