@@ -299,6 +299,7 @@ const useVerifyInfo = (initialValue = {}) => {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
         title: backSide ? 'ẢNH MẶT SAU' : 'ẢNH MẶT TRƯỚC',
+        titleFront: '',
         isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
