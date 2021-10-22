@@ -134,3 +134,17 @@ export const eKYCSchema = yup.object().shape({
       'first_and_last_name_must_not_contain_special_characters',
     ),
 });
+
+export const forgetPasswordKYCSchema = yup.object().shape({
+  icNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
+  validDate: yup.string().required('Ngày cấp không được bỏ trống.'),
+});
+
+export const forgetPasswordKYCBankSchema = yup.object().shape({
+  icNumber: yup.string().required('CMND / CCCD không được bỏ trống.'),
+  validDate: yup.string().required('Ngày cấp không được bỏ trống.'),
+  lastBankNumber: yup
+    .string()
+    .required('Ngày cấp không được bỏ trống.')
+    .length(4, '4 số cuối ngân hàng đã liên kiết không đủ'),
+});

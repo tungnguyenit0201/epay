@@ -16,28 +16,24 @@ import {
   Icon,
   DatePicker,
 } from 'components';
-import {Colors, Spacing, Images} from 'themes';
-import {useForgetPassword, useRegister} from 'context/Auth/utils';
+import {Colors, Spacing, Images, Fonts} from 'themes';
+import {useForgetPassword} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
-import {newPasswordSchema} from 'utils/ValidationSchemas';
+import {
+  forgetPasswordKYCSchema,
+  forgetPasswordKYCBankSchema,
+} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
 import Content from 'components/Auth/Content';
 import _ from 'lodash';
-import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
-import {HelpModal} from 'components/Auth';
 
 const ForgetPasswordKYC = ({route}) => {
-  const {phone} = route?.params;
-  const {onNewPassword, active, onSetActive} = useForgetPassword();
+  const {phone, isNeedCheckIC, isNeedCheckBankAccount} = route?.params;
+  const {onSubmitKYC, message, onCustomerSupport} = useForgetPassword();
   const translation = useTranslation();
-  const {showModal, setShowModal, openCallDialog, onGoTerm} = useRegister();
-
-  const onSubmit = values => {
-    onNewPassword({...values, phone});
-  };
 
   // TODO: Translate
   return (
@@ -46,12 +42,16 @@ const ForgetPasswordKYC = ({route}) => {
 
       <Formik
         initialValues={{
-          idCode: '',
+          icNumber: '',
           validDate: '',
           lastBankNumber: '',
         }}
-        validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}
+        validationSchema={
+          isNeedCheckBankAccount
+            ? forgetPasswordKYCBankSchema
+            : forgetPasswordKYCSchema
+        }
+        onSubmit={values => onSubmitKYC({...values, phone})}
       >
         {({
           handleChange: _handleChange,
@@ -84,52 +84,68 @@ const ForgetPasswordKYC = ({route}) => {
                 />
                 <TextInput
                   required
-                  onChange={handleChange('idCode')}
-                  onBlur={handleBlur('idCode')}
+                  onChange={handleChange('icNumber')}
+                  onBlur={handleBlur('icNumber')}
                   placeholder={translation.enter_id_code}
-                  error={touched.idCode && translation[errors.idCode]}
-                  value={values.idCode}
-                  maxLength={20}
+                  error={
+                    touched.icNumber &&
+                    (translation[errors.icNumber] || errors.icNumber)
+                  }
+                  value={values.icNumber}
+                  maxLength={12}
                   /* leftIcon={Images.Transfer.Lock} */
                   marginBottom={Spacing.PADDING}
                 />
                 <DatePicker
-                  onChange={value => handleChange('validDate', value)}
+                  onChange={handleChange('validDate')}
                   value={values.validDate}
                   required
-                  placeholder="dd/mm/yyyy"
-                />
-                <TextInput
-                  required
-                  onChange={handleChange('lastBankNumber')}
-                  onBlur={handleBlur('lastBankNumber')}
-                  placeholder={translation.valid_date}
+                  placeholder={`${translation.valid_date} (dd/mm/yyyy)`}
                   error={
-                    touched.lastBankNumber && translation[errors.lastBankNumber]
+                    touched.validDate &&
+                    (translation[errors.validDate] || errors.validDate)
                   }
-                  value={values.lastBankNumber}
-                  maxLength={20}
-                  /* leftIcon={Images.Transfer.Lock} */
                 />
+                {!!isNeedCheckBankAccount && (
+                  <TextInput
+                    numeric
+                    required
+                    onChange={handleChange('lastBankNumber')}
+                    onBlur={handleBlur('lastBankNumber')}
+                    placeholder={'Nhập 4 số cuối ngân hàng đã liên kiết'}
+                    error={
+                      touched.lastBankNumber &&
+                      (translation[errors.lastBankNumber] ||
+                        errors.lastBankNumber)
+                    }
+                    value={values.lastBankNumber}
+                    maxLength={4}
+                    /* leftIcon={Images.Transfer.Lock} */
+                    marginBottom={Spacing.PADDING}
+                  />
+                )}
+                <Text style={styles.message}>{message}</Text>
               </ScrollView>
 
               <FooterContainer>
                 <Button
                   mt={10}
-                  disabled={!_.isEmpty(errors) || !values.idCode}
+                  mb={Spacing.PADDING}
+                  disabled={!_.isEmpty(errors) || !values.icNumber}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
+                <Pressable style={styles.outline} onPress={onCustomerSupport}>
+                  <Text style={styles.customerCare1}>Hỗ trợ khách hàng</Text>
+                  <Text bold style={styles.customerCare2}>
+                    Gọi 1900-000
+                  </Text>
+                </Pressable>
               </FooterContainer>
             </View>
           );
         }}
       </Formik>
-      <HelpModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        onPress={openCallDialog}
-      />
     </BlueHeader>
   );
 };
@@ -156,6 +172,28 @@ const styles = StyleSheet.create({
   firstLink: {
     textDecorationLine: 'underline',
     marginLeft: 3,
+  },
+  message: {
+    color: Colors.hl1,
+    textAlign: 'center',
+  },
+  outline: {
+    borderWidth: 1.5,
+    borderColor: Colors.tp1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: scale(8),
+    height: scale(48),
+    width: '100%',
+    paddingHorizontal: Spacing.PADDING,
+  },
+  customerCare1: {
+    fontSize: Fonts.SM,
+    color: Colors.tp3,
+  },
+  customerCare2: {
+    fontSize: Fonts.H6,
+    color: Colors.tp1,
   },
 });
 export default ForgetPasswordKYC;

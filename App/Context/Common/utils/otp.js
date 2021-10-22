@@ -12,6 +12,7 @@ import {useUserInfo} from 'context/User/utils';
 import {useAsyncStorage} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
 import {useTranslation} from 'context/Language';
+
 const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {config} = useCommon();
   const [errorMessage, setErrorMessage] = useState(null);

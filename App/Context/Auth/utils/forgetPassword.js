@@ -8,6 +8,8 @@ import {useTranslation} from 'context/Language';
 import {useLoading, useError} from 'context/Common/utils';
 import useServiceUser from 'services/user';
 import Keychain from 'react-native-keychain';
+import useRegister from './register';
+import {Keyboard} from 'react-native';
 
 const useForgetPassword = () => {
   const translation = useTranslation();
@@ -15,8 +17,10 @@ const useForgetPassword = () => {
   const {setLoading} = useLoading();
   const [active, setActive] = useState(false);
   const {agree} = useTranslation();
-  const {checkPhone} = useServiceAuth();
+  const {checkPhone, checkICInfo} = useServiceAuth();
   const {updateForgotPassword} = useServiceUser();
+  const [message, setMessage] = useState('');
+  const {openCallDialog} = useRegister();
 
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
@@ -25,10 +29,21 @@ const useForgetPassword = () => {
       errorCode === ERROR_CODE.SUCCESS ||
       errorCode === ERROR_CODE.PHONE_IS_REGISTERED
     ) {
-      Navigator.push(SCREEN.OTP, {
-        phone,
-        functionType: FUNCTION_TYPE.FORGOT_PASS,
-      });
+      const isNeedCheckIC = result?.NeedCheckIC;
+      const isNeedCheckBankAccount = result?.NeedCheckBankAccount;
+
+      if (isNeedCheckIC || isNeedCheckBankAccount) {
+        Navigator.push(SCREEN.FORGET_PASSWORD_KYC, {
+          phone,
+          isNeedCheckIC,
+          isNeedCheckBankAccount,
+        });
+      } else {
+        Navigator.push(SCREEN.OTP, {
+          phone,
+          functionType: FUNCTION_TYPE.FORGOT_PASS,
+        });
+      }
       return;
     }
     setError({
@@ -76,7 +91,44 @@ const useForgetPassword = () => {
     setActive(!active);
   };
 
-  return {onSubmitPhone, onNewPassword, active, onSetActive};
+  const onSubmitKYC = async ({phone, icNumber, validDate, lastBankNumber}) => {
+    setMessage('');
+    setLoading(true);
+    const result = await checkICInfo({
+      phone,
+      IcNumber: icNumber,
+      IcDate: validDate,
+      BankNumber: lastBankNumber,
+    });
+    setLoading(false);
+    Keyboard.dismiss();
+    if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
+      Navigator.navigate(SCREEN.OTP, {
+        functionType: FUNCTION_TYPE.FORGOT_PASS,
+        isMount: false,
+      });
+      return;
+    }
+    setMessage(result?.ErrorMessage);
+  };
+
+  const onCustomerSupport = () => {
+    openCallDialog();
+    Navigator.navigate(SCREEN.OTP, {
+      functionType: FUNCTION_TYPE.FORGOT_PASS,
+      isMount: false,
+    });
+  };
+
+  return {
+    onSubmitPhone,
+    onNewPassword,
+    active,
+    onSetActive,
+    onSubmitKYC,
+    message,
+    onCustomerSupport,
+  };
 };
 
 export default useForgetPassword;
