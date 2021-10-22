@@ -313,7 +313,7 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => !wardEmpty && goRegionSelect('wards')}
           defaultValue={translation.town}
         />
-        <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
+        <View style={[styles.flexRow, styles.pt2, styles.pb1, styles.pr1]}>
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
             {translation?.iAgreeWith}{' '}
@@ -327,7 +327,7 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}
           style={styles.underline}
           centered
-          color={Colors.Highlight}
+          color={Colors.hl1}
           bold
           mb={48}
           fs="h6"
@@ -360,6 +360,7 @@ const styles = StyleSheet.create({
   pt2: {paddingTop: 10},
   //---------------
   pb1: {paddingBottom: 24},
+  pr1: {paddingRight: 12},
   //---------------
   underline: {textDecorationLine: 'underline'},
   bgGray: {backgroundColor: Colors.bs1},
