@@ -10,6 +10,7 @@ import {
 } from 'components';
 import {useTranslation} from 'context/Language';
 import {base, Colors, Spacing, Images} from 'themes';
+import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useUserInfo} from 'context/User/utils';
@@ -119,6 +120,11 @@ const ChangePassword = ({route}) => {
   );
 };
 
-export default ChangePassword;
+const styles = StyleSheet.create({
+  note: {
+    fontSize: scale(12),
+    paddingRight: 10,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default ChangePassword;
