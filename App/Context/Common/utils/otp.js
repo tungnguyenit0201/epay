@@ -12,7 +12,7 @@ import {useUserInfo} from 'context/User/utils';
 import {useAsyncStorage} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
 import {useTranslation} from 'context/Language';
-const useOTP = ({functionType, phone, password, encrypted}) => {
+const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {config} = useCommon();
   const [errorMessage, setErrorMessage] = useState(null);
   const [countdown, setCountdown] = useState(config?.ResendOtpTime || 60);
@@ -80,7 +80,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
       }
     }
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
-      setError({
+      return setError({
         ...result,
         onClose: () =>
           _.get(result, 'ErrorCode', '') === ERROR_CODE.PHONE_IS_REGISTERED
@@ -131,9 +131,7 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         ErrorCode: -1,
         ErrorMessage: `Số lần gửi OTP quá ${config?.ResendOtpNo} lần/${config?.LockWhenResendTooManyTime} giây vui lòng quay lại sau ${remain} phút`,
         onClose: Navigator.goBack,
-        action: [{onPress: Navigator.goBack}],
       }); // TODO: translate
-      Navigator.goBack();
       return false;
     }
 
@@ -156,7 +154,11 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
         let errorCode = _.get(result, 'ErrorCode', '');
         if (errorCode == ERROR_CODE.SUCCESS) {
           setCountdown(config?.ResendOtpTime || 60);
-        } else setError(result);
+        } else
+          setError({
+            ...result,
+            onClose: () => Navigator.goBack?.(),
+          });
       }
 
       setLoading(false);
@@ -186,7 +188,9 @@ const useOTP = ({functionType, phone, password, encrypted}) => {
   useEffect(() => {
     ![FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL, FUNCTION_TYPE.AUTH_EMAIL].includes(
       functionType,
-    ) && onGenOtp();
+    ) &&
+      isMount &&
+      onGenOtp();
   }, [phone, functionType]); // eslint-disable-line
 
   useEffect(() => {

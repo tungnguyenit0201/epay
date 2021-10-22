@@ -74,7 +74,18 @@ const useServiceEKYC = () => {
           const {ErrorCode} = res;
           if (ErrorCode === ERROR_CODE.SUCCESS) {
             resolve(res);
-          } else setError(res);
+          } else
+            setError({
+              ...res,
+              action: [
+                {
+                  label: translation.agree,
+                  onPress: () => {
+                    Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+                  },
+                },
+              ],
+            });
           reject(res);
         },
         // failure: err => {

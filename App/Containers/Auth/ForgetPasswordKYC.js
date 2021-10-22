@@ -7,7 +7,15 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
+import {
+  Text,
+  Checkbox,
+  Header,
+  Button,
+  TextInput,
+  Icon,
+  DatePicker,
+} from 'components';
 import {Colors, Spacing, Images} from 'themes';
 import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
@@ -21,7 +29,7 @@ import BlueHeader from 'components/Auth/BlueHeader';
 import FooterContainer from 'components/Auth/FooterContainer';
 import {HelpModal} from 'components/Auth';
 
-const ForgetNewPassword = ({route}) => {
+const ForgetPasswordKYC = ({route}) => {
   const {phone} = route?.params;
   const {onNewPassword, active, onSetActive} = useForgetPassword();
   const translation = useTranslation();
@@ -31,31 +39,16 @@ const ForgetNewPassword = ({route}) => {
     onNewPassword({...values, phone});
   };
 
+  // TODO: Translate
   return (
     <BlueHeader>
-      <Header
-        back
-        // blackIcon
-        // avoidStatusBar
-        renderRightComponent={() => (
-          <TouchableOpacity
-            style={styles.pr1}
-            onPress={() => setShowModal(true)}
-          >
-            <Icon
-              icon={Images.Register.Info}
-              style={styles.firstIcon}
-              tintColor={Colors.bs4}
-            />
-          </TouchableOpacity>
-        )}
-        logo={Images.logoEpay}
-      />
+      <Header back logo={Images.logoEpay} />
 
       <Formik
         initialValues={{
-          newPassword: '',
-          passwordConfirm: '',
+          idCode: '',
+          validDate: '',
+          lastBankNumber: '',
         }}
         validationSchema={newPasswordSchema}
         onSubmit={onSubmit}
@@ -83,70 +76,47 @@ const ForgetNewPassword = ({route}) => {
                 contentContainerStyle={[styles.wrap, styles.py1]}
               >
                 <Content
-                  title={translation.reset_your_password}
-                  text={
-                    translation.password_for_account_security_and_transaction_confirmation_at_checkout
-                  }
+                  title={'Xác nhận thông tin cá nhân'}
+                  titleMb={Spacing.PADDING * 2}
+                  //   text={
+                  //     translation.password_for_account_security_and_transaction_confirmation_at_checkout
+                  //   }
                 />
                 <TextInput
-                  password
                   required
-                  onChange={handleChange('newPassword')}
-                  onBlur={handleBlur('newPassword')}
-                  placeholder={translation.enter_your_password}
-                  error={touched.newPassword && translation[errors.newPassword]}
-                  value={values.newPassword}
+                  onChange={handleChange('idCode')}
+                  onBlur={handleBlur('idCode')}
+                  placeholder={translation.enter_id_code}
+                  error={touched.idCode && translation[errors.idCode]}
+                  value={values.idCode}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
+                  marginBottom={Spacing.PADDING}
+                />
+                <DatePicker
+                  onChange={value => handleChange('validDate', value)}
+                  value={values.validDate}
+                  required
+                  placeholder="dd/mm/yyyy"
                 />
                 <TextInput
-                  password
                   required
-                  onChange={handleChange('passwordConfirm')}
-                  onBlur={handleBlur('passwordConfirm')}
-                  placeholder={translation.confirm_password}
+                  onChange={handleChange('lastBankNumber')}
+                  onBlur={handleBlur('lastBankNumber')}
+                  placeholder={translation.valid_date}
                   error={
-                    touched.passwordConfirm &&
-                    translation[errors.passwordConfirm]
+                    touched.lastBankNumber && translation[errors.lastBankNumber]
                   }
-                  value={values.passwordConfirm}
+                  value={values.lastBankNumber}
                   maxLength={20}
                   /* leftIcon={Images.Transfer.Lock} */
                 />
-                <Text style={styles.note}>
-                  {
-                    translation.note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters
-                  }
-                </Text>
               </ScrollView>
 
               <FooterContainer>
-                {/* <View style={styles.flexRow}>
-                  <Checkbox onPress={onSetActive} />
-                  <Text style={{marginLeft: 5}}>
-                    {translation.iAgreeWith}{' '}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
-                      <Text style={styles.firstLink}>
-                        {translation.userAgreement}{' '}
-                      </Text>
-                    </TouchableOpacity>
-                    {translation.and}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}>
-                      <Text style={styles.firstLink}>
-                        {translation.privacyPolicy}{' '}
-                      </Text>
-                    </TouchableOpacity>
-                    {translation.ofEPAY}
-                  </Text>
-                </View> */}
-
                 <Button
                   mt={10}
-                  disabled={!_.isEmpty(errors) || !values.passwordConfirm}
+                  disabled={!_.isEmpty(errors) || !values.idCode}
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
@@ -188,4 +158,4 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
 });
-export default ForgetNewPassword;
+export default ForgetPasswordKYC;

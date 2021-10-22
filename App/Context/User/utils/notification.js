@@ -6,11 +6,13 @@ import {useUser} from 'context/User';
 import _ from 'lodash';
 import useSErviceNotificaiton from 'services/notification';
 import {getAll} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 
-const useNotify = () => {
+const useNotify = (isMount = true) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch, userInfo, phone} = useUser();
+  const translation = useTranslation();
   const {
     getChargesNotify,
     getPromotionNotify,
@@ -85,12 +87,15 @@ const useNotify = () => {
     }
   };
 
-  const onGetAllNotify = async () => {
+  const onGetAllNotify = async isMount => {
     try {
       setLoading(true);
       const result = await getAllNofify({phone});
       if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-        setError(result);
+        setError({
+          ...result,
+          onClose: () => (isMount ? Navigator.goBack?.() : true),
+        });
         return;
       }
       dispatch({type: 'SET_NOTIFY', data: result?.NotifyInfo});
@@ -159,7 +164,7 @@ const useNotify = () => {
   };
 
   useEffect(() => {
-    phone && onGetAllNotify();
+    phone && isMount && onGetAllNotify(true);
   }, [phone]);
 
   return {

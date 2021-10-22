@@ -56,6 +56,7 @@ const VerifyEmail = ({route}) => {
                     onChange={handleChange('email')}
                     onBlur={handleBlur('email')}
                     error={touched.email && errors.email}
+                    maxLength={254}
                   />
                 </View>
 

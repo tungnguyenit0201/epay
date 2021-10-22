@@ -100,6 +100,7 @@ import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
+import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import {getAll} from 'utils/Functions';
 import {useLoginName} from 'context/Auth/utils';
 
@@ -110,7 +111,7 @@ const AppNavigator = () => {
     useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
-  const {onPressNotify} = useNotify();
+  const {onPressNotify} = useNotify(false);
   const {dispatch} = useUser();
   const {navigateLoginByName} = useLoginName();
 
@@ -467,6 +468,10 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
+          <Stack.Screen
+            name={SCREEN.FORGET_PASSWORD_KYC}
+            component={ForgetPasswordKYC}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

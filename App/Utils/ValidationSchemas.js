@@ -57,7 +57,7 @@ export const passwordSchema = yup.object().shape({
     .required()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
+      'password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters',
     )
     .label('password'),
 });
@@ -69,7 +69,7 @@ export const newPasswordSchema = yup.object().shape({
     .max(20, 'password_maximum_20_characters')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      'password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_numbers',
+      'password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters',
     )
     .label('password'),
   passwordConfirm: yup
@@ -82,28 +82,28 @@ export const newPasswordSchema = yup.object().shape({
 
 export const napasSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
 });
 
 export const visaSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
 });
 
 export const addressSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'),
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
 });
 
 export const verifyUserSchema = yup.object().shape({
   Address: yup.string().required('Địa chỉ không được bỏ trống.'), // TODO: translate
-  Ward: yup.string().required('Phương không được bỏ trống.'),
+  Ward: yup.string().required('Phường không được bỏ trống.'),
   County: yup.string().required('Quận không được bỏ trống.'),
   Provincial: yup.string().required('Tỉnh không được bỏ trống.'),
   ICFullName: yup.string().required('Họ và tên không được bỏ trống.'),
@@ -115,6 +115,17 @@ export const verifyUserSchema = yup.object().shape({
 
 export const nameSchema = yup.object().shape({
   FullName: yup
+    .string()
+    .required('full_name_cannot_be_left_blank')
+    .max(100, 'fullname_maximum_100_characters')
+    .matches(
+      FULLNAME_REGEX,
+      'first_and_last_name_must_not_contain_special_characters',
+    ),
+});
+
+export const eKYCSchema = yup.object().shape({
+  ICFullName: yup
     .string()
     .required('full_name_cannot_be_left_blank')
     .max(100, 'fullname_maximum_100_characters')
