@@ -25,7 +25,7 @@
   "enter_otp_verification_code": "Enter OTP verification code",
   "resend_the_verification_code_otp_here": "Resend the verification code (OTP) here",
   "resend_the_verification_code_otp": "Resend the verification code (OTP)",
-  "you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minutes": "You have entered the wrong password more than 3 times, please come back in 15 minutes",
+  "you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minute": "You have entered the wrong password more than 3 times, please come back in 1 minute",
   "change_the_phone_number": "Change tel",
   "incorrect_verification_code": "Incorrect verification code",
   "incorrect_verification_code_you_have_2_attempts_left": "Incorrect verification code, you have 2 attempts left",

@@ -82,7 +82,7 @@ const useAuth = () => {
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
             title: translation.sign_in,
-            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minutes,
+            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute,
             hotline: '1900-0000',
           },
         });

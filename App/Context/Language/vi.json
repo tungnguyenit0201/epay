@@ -32,7 +32,7 @@
   "incorrect_phone_number": "Số điện thoại không hợp lệ",
   "enter_otp": "Nhập OTP",
   "enter_otp_verification_code": "Nhập mã OTP xác thực",
-  "you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minutes": "Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lại sau 15 phút",
+  "you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute": "Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lại sau 1 phút",
   "resend_the_verification_code_otp_here": "Gửi lại mã xác thực (OTP) tại đây",
   "resend_the_verification_code_otp": "Gửi lại mã xác thực (OTP)",
   "change_the_phone_number": "Đổi SĐT",
