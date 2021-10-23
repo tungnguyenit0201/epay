@@ -178,7 +178,7 @@ const useVerifyInfo = (initialValue = {}) => {
       const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
         const {extractCardInfo} = contentRef.current;
-        const {CardID, CardNumber, Step, ICType, ValidDate, Verified} =
+        const {CardID, CardNumber, Step, ICType, Verified} =
           extractCardInfo || {};
         await verifyIdentityCard({
           Address: value.Address,
@@ -193,7 +193,7 @@ const useVerifyInfo = (initialValue = {}) => {
           IssueDate: value.ICIssuedDate,
           IssuePlace: value.ICIssuedPlace,
           Province: value.Provincial,
-          ValidDate,
+          ValidDate: value.ValidDate,
           Verified,
           Ward: value.Ward,
         });
