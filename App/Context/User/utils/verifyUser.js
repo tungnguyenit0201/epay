@@ -184,7 +184,7 @@ const useVerifyInfo = (initialValue = {}) => {
           Address: value.Address,
           BirthDay: value.DateOfBirth,
           CardID,
-          CardNumber,
+          CardNumber: value?.ICNumber ? value?.ICNumber : CardNumber,
           District: value.County,
           Step,
           FullName: value.ICFullName,
