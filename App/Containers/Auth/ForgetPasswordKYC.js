@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {
   Text,
-  Checkbox,
+  FooterContainer,
   Header,
   Button,
   TextInput,
@@ -28,7 +28,6 @@ import {useTranslation} from 'context/Language';
 import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const ForgetPasswordKYC = ({route}) => {
   const {phone, isNeedCheckIC, isNeedCheckBankAccount} = route?.params;

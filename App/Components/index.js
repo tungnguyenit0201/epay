@@ -37,3 +37,4 @@ export {default as ListItemSimple} from './Common/ListItemSimple';
 export {default as DropDown} from './Common/DropDown';
 export {default as LinearView} from './Common/LinearView';
 export {default as ScreenBackground} from './Common/ScreenBackground';
+export {default as FooterContainer} from './Common/FooterContainer';

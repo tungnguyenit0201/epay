@@ -10,7 +10,14 @@ import {
 } from 'react-native';
 import {useSelector} from 'react-redux';
 
-import {HeaderBg, Header, Text, InputBlock, Button, Switch} from 'components';
+import {
+  HeaderBg,
+  Header,
+  Text,
+  FooterContainer,
+  Button,
+  Switch,
+} from 'components';
 
 import {SCREEN} from 'configs/Constants';
 import {useRoute} from '@react-navigation/native';
@@ -23,7 +30,6 @@ import {useBankInfo} from 'context/Wallet/utils';
 import {censorCardNumber} from 'context/Wallet/utils/bankInfo';
 import {bankCardRegex} from 'utils/ValidationSchemas';
 import {useWallet} from 'context/Wallet';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const DEFAULT_BANK = {
   BankId: 1,

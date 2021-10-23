@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {Text, Header, Button, HeaderBg, Icon} from 'components';
+import {Text, Header, Button, FooterContainer, Icon} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
@@ -15,7 +15,6 @@ import {useRegister} from 'context/Auth/utils';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {Content} from 'components/Auth';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {HelpModal} from 'components/Auth';
 const RegisterFailure = ({route}) => {
   const translation = useTranslation();

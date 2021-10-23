@@ -7,13 +7,20 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {Header, HeaderBg, Text, Button, DatePicker, Row, Col} from 'components';
+import {
+  Header,
+  HeaderBg,
+  Text,
+  Button,
+  FooterContainer,
+  Row,
+  Col,
+} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import {TRANS_DETAIL} from 'configs/Constants';
 import Modal from 'react-native-modal';
-import FooterContainer from 'components/Auth/FooterContainer';
 import Calendar from 'components/Wallet/History/Calendar';
 import _ from 'lodash';
 

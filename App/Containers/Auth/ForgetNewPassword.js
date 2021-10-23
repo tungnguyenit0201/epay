@@ -7,7 +7,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
+import {
+  Text,
+  FooterContainer,
+  Header,
+  Button,
+  TextInput,
+  Icon,
+} from 'components';
 import {Colors, Spacing, Images} from 'themes';
 import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
@@ -18,7 +25,6 @@ import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {HelpModal} from 'components/Auth';
 
 const ForgetNewPassword = ({route}) => {
@@ -121,29 +127,6 @@ const ForgetNewPassword = ({route}) => {
               </ScrollView>
 
               <FooterContainer>
-                {/* <View style={styles.flexRow}>
-                  <Checkbox onPress={onSetActive} />
-                  <Text style={{marginLeft: 5}}>
-                    {translation.iAgreeWith}{' '}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
-                      <Text style={styles.firstLink}>
-                        {translation.userAgreement}{' '}
-                      </Text>
-                    </TouchableOpacity>
-                    {translation.and}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}>
-                      <Text style={styles.firstLink}>
-                        {translation.privacyPolicy}{' '}
-                      </Text>
-                    </TouchableOpacity>
-                    {translation.ofEPAY}
-                  </Text>
-                </View> */}
-
                 <Button
                   mt={10}
                   disabled={!_.isEmpty(errors) || !values.passwordConfirm}

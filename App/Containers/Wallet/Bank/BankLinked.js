@@ -29,7 +29,6 @@ import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
 import {useMoney} from 'context/Wallet/utils';
 import ListBank from 'components/Wallet/Bank/ListBank';
-// import FooterContainer from 'components/Auth/FooterContainer';
 
 import {useBankInfo} from 'context/Wallet/utils';
 import BankList from 'containers/Wallet/Bank/components/BankList';
@@ -178,20 +177,6 @@ const BankLinked = props => {
           />
         </ScrollView>
       </View>
-
-      {/* <FooterContainer
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          paddingBottom: Spacing.PADDING * 1.5
-        }}>
-        <Button
-          label={translation.connect_bank}
-          onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
-        />
-      </FooterContainer> */}
     </>
   );
 };

@@ -6,12 +6,11 @@ import {
   Image,
   useWindowDimensions,
 } from 'react-native';
-import {Button, HeaderBg, Text, Header} from 'components';
+import {Button, HeaderBg, Text, Header, FooterContainer} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {useUser} from 'context/User';
 
 const VerifySuccess = ({route}) => {
