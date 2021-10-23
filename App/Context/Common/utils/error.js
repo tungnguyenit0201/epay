@@ -32,3 +32,26 @@ const useError = () => {
 };
 
 export default useError;
+
+/*
+Example:
+
+ setError({
+      icon: Images.Modal.UserTick,
+      title: translation.notification,
+      ErrorCode: -1,
+      ErrorMessage:
+        'Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.',
+      onClose: () => checkInfo({value: false}),
+      action: [
+        {
+          label: 'Định danh',
+          onPress: () => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD),
+        },
+        {
+          label: 'Nhắc tôi sau',
+          onPress: () => checkInfo({value: false}),
+        },
+      ],
+    });
+*/
