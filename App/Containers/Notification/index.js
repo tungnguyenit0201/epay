@@ -7,6 +7,7 @@ import {
   Image,
   RefreshControl,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Text,
@@ -32,7 +33,8 @@ const Notification = () => {
   const translation = useTranslation();
   const [type, setType] = useState(NOTIFY.ALL.title);
   const [refreshing, setRefreshing] = useState(false);
-  const {selectNotify, onGetAllNotify, onPressNotify} = useNotify();
+  const {selectNotify, onGetAllNotify, onPressNotify, onReadAllNotify} =
+    useNotify();
   const dataType = [
     {id: 0, title: NOTIFY.ALL.title},
     {id: 1, title: NOTIFY.CHARGES.title},
@@ -44,11 +46,12 @@ const Notification = () => {
     <>
       <HeaderBg>
         <Header title={translation.notification} back />
-        {/* read all noti */}
-        {/* <Image
-          source={require('images/noti/TickCircle.png')}
-          style={styles.TickCircle}
-        /> */}
+        <TouchableOpacity onPress={onReadAllNotify}>
+          <Image
+            source={require('images/noti/TickCircle.png')}
+            style={styles.TickCircle}
+          />
+        </TouchableOpacity>
       </HeaderBg>
       <View style={styles.wrap}>
         <ScreenBackground />
