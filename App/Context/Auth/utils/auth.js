@@ -154,6 +154,7 @@ const useAuth = () => {
 
   const onLogout = async () => {
     dispatch({type: 'UPDATE_TOKEN', data: ''});
+    dispatch({type: 'SET_PERSONAL_INFO', data: null});
     setDefaultHeaders({
       Authorization: ``,
     });

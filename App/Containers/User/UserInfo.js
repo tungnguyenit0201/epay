@@ -43,14 +43,15 @@ const UserInfo = () => {
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
 
-  const address =
-    AddressInfo?.Address +
-    ', ' +
-    AddressInfo?.Ward +
-    ', ' +
-    AddressInfo?.County +
-    ', ' +
-    AddressInfo?.Provincial;
+  const address = [
+    AddressInfo?.Address,
+    AddressInfo?.Ward,
+    AddressInfo?.County,
+    AddressInfo?.Provincial,
+  ]
+    .filter(x => x)
+    .join(', ');
+
   const data = [
     {
       icon: require('images/profile/User.png'),

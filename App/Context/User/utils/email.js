@@ -8,11 +8,19 @@ import {useUser} from '..';
 
 const useEmail = ({functionType} = {}) => {
   const {setLoading} = useLoading();
-  const {phone} = useUser();
+  const {phone, personalInfo} = useUser();
   const {setError} = useError();
   const {verifyEmail, updateEmail} = useServiceUser();
 
   const onEmailAuth = async ({email}) => {
+    const oldEmail = personalInfo?.Email;
+    if (email === oldEmail) {
+      setError({
+        ErrorCode: -1,
+        ErrorMessage: 'Email mới không được trùng email hiện tại', // TODO: translate
+      });
+      return;
+    }
     setLoading(true);
     const emailFunction =
       functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL

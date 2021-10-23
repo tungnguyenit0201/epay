@@ -163,6 +163,14 @@ const useNotify = (isMount = true) => {
     item?.Id && !item?.IsRead && onReadNotify(item.Id);
   };
 
+  const onReadAllNotify = () => {
+    const list = userInfo?.listNotify?.filter(x => !x.IsRead);
+    list.forEach(item => {
+      item?.Id && readNotify({phone, notifyID: item?.Id});
+    });
+    onGetAllNotify();
+  };
+
   useEffect(() => {
     phone && isMount && onGetAllNotify(true);
   }, [phone]);
@@ -176,6 +184,7 @@ const useNotify = (isMount = true) => {
     onReadNotify,
     onPressNotify,
     onGoNotify,
+    onReadAllNotify,
   };
 };
 export default useNotify;

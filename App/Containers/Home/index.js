@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React from 'react';
 import {
   View,
   Image,
@@ -6,9 +6,8 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {Text, Modal, Button, HeaderBg} from 'components';
+import {HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 // import ListItem from 'components/Common/ListItem';
 import ListItemSimple from 'components/Common/ListItemSimple';
@@ -21,17 +20,12 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import {useHome} from 'context/Home/utils';
-import {useUser} from 'context/User';
-import {useRegister} from 'context/Auth/utils';
 import {useHandleBack} from 'context/Common/utils';
 
 const Home = () => {
   // TODO : translation
-  const {top} = useSafeAreaInsets();
   const translation = useTranslation();
-  const {banner, goSecurity} = useHome();
-  const {firstLogin} = useUser();
-  const {setFirstLogin} = useRegister();
+  const {banner} = useHome();
   const backHandler = useHandleBack(); // run useEffect
 
   const dataMenu = [
@@ -94,33 +88,6 @@ const Home = () => {
           <View style={styles.bottom} />
         </ScrollView>
       </View>
-
-      {firstLogin && (
-        <Modal
-          visible={firstLogin}
-          onClose={() => setFirstLogin(false)}
-          icon={Images.SignUp.TouchId}
-          title={translation.log_in_touchid}
-          content={
-            translation.if_you_have_a_problem_and_need_help_please_call_us_for_advice_and_support
-          }
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label={translation.setting_touch_id}
-                onPress={() => {
-                  setFirstLogin(false);
-                  goSecurity();
-                }}
-              />
-              <TouchableOpacity onPress={() => setFirstLogin(false)}>
-                <Text>{translation.remind_me_later}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      )}
     </>
   );
 };
