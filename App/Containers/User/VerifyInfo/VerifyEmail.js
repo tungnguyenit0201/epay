@@ -1,12 +1,18 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, useWindowDimensions} from 'react-native';
-import {Text, Header, Button, TextInput, HeaderBg} from 'components';
+import {
+  Text,
+  Header,
+  Button,
+  TextInput,
+  HeaderBg,
+  FooterContainer,
+} from 'components';
 import {base, Colors, Spacing} from 'themes';
 import {SCREEN, TEXT} from 'configs/Constants';
 import {useEmail} from 'context/User/utils';
 import {Formik} from 'formik';
 import {emailSchema} from 'utils/ValidationSchemas';
-import FooterContainer from 'components/Auth/FooterContainer';
 import _ from 'lodash';
 
 const VerifyEmail = ({route}) => {

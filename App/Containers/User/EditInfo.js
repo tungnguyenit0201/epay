@@ -1,16 +1,16 @@
 import React, {useEffect, useRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  useWindowDimensions,
-  Image,
-} from 'react-native';
+import {StyleSheet, View, ScrollView, Image} from 'react-native';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {Button, Header, InputBlock, Radio, HeaderBg, Text} from 'components';
+import {
+  Button,
+  Header,
+  InputBlock,
+  Radio,
+  HeaderBg,
+  Text,
+  FooterContainer,
+} from 'components';
 import {GENDER, SCREEN, TEXT} from 'configs/Constants';
-import Navigator from 'navigations/Navigator';
-import {use} from '@react-navigation/native';
 import {Formik, useFormikContext} from 'formik';
 import {addressSchema} from 'utils/ValidationSchemas';
 import {useTranslation} from 'context/Language';
@@ -18,7 +18,6 @@ import {hideCMND, scale} from 'utils/Functions';
 import {useSelectRegion, useUserInfo} from 'context/User/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
-import FooterContainer from 'components/Auth/FooterContainer';
 const EditInfo = () => {
   // TODO : translation
   const {onUpdateUserInfo} = useUserInfo();

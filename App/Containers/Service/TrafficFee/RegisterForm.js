@@ -4,8 +4,7 @@ import {
   Header,
   HeaderBg,
   InputBlock,
-  Radio,
-  DatePicker,
+  FooterContainer,
   Text,
   Checkbox,
   Button,
@@ -17,8 +16,6 @@ import {useUser} from 'context/User';
 
 import {GENDER, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterForm = () => {
   const translation = useTranslation() || {};

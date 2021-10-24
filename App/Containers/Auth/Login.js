@@ -1,6 +1,13 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
-import {Text, Header, Icon, Button, TextInput} from 'components';
+import {
+  Text,
+  Header,
+  Icon,
+  Button,
+  TextInput,
+  FooterContainer,
+} from 'components';
 import {Colors, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useAuth, useTouchID} from 'context/Auth/utils';
@@ -12,7 +19,6 @@ import Content from 'components/Auth/Content';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 import * as LocalAuthentication from 'expo-local-authentication';
 import WebView from 'components/WebView/Partial';
 const Login = ({route}) => {

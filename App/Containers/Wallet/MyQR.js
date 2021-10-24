@@ -5,11 +5,10 @@ import QRCode from 'react-native-qrcode-svg';
 import {Colors, Fonts, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import {Header, HeaderBg, Button, Col, Row} from 'components';
+import {Header, HeaderBg, Button, Col, Row, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
 import {useQRCode} from 'context/User/utils';
-import FooterContainer from 'components/Auth/FooterContainer';
 const QRPay = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();

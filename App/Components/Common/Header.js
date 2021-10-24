@@ -6,7 +6,6 @@ import {Colors, Fonts, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {scale} from 'utils/Functions';
 import _ from 'lodash';
-import {SCREEN} from 'configs/Constants';
 
 const Header = ({
   title,
@@ -30,6 +29,7 @@ const Header = ({
       'hardwareBackPress',
       () => {
         back && goBack();
+        return true;
       },
     );
     return () => backHandler.remove();

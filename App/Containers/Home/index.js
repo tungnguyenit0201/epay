@@ -20,11 +20,14 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import {useHome} from 'context/Home/utils';
+import {useHandleBack} from 'context/Common/utils';
 
 const Home = () => {
   // TODO : translation
   const translation = useTranslation();
   const {banner} = useHome();
+  const backHandler = useHandleBack(); // run useEffect
+
   const dataMenu = [
     {
       icon: Images.Homes.NapTien,

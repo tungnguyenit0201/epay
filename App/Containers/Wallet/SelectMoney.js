@@ -1,13 +1,6 @@
 import React, {useRef, useState} from 'react';
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-} from 'react-native';
-import {Header, HeaderBg, Button, Text} from 'components';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import {Header, HeaderBg, Button, Text, FooterContainer} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -19,7 +12,6 @@ import SelectBank from 'components/User/TopUp/SelectBank';
 
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import FooterContainer from 'components/Auth/FooterContainer';
 const SelectMoney = () => {
   const translation = useTranslation();
   const [value, setValue] = useState();

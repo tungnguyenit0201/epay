@@ -3,16 +3,14 @@ import {ScrollView, StyleSheet, View, Image} from 'react-native';
 import {
   Text,
   Button,
-  Icon,
+  FooterContainer,
   Header,
-  Radio,
   Checkbox,
   HeaderBg,
 } from 'components';
 import {base, Colors} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useSmartOTP} from 'context/User/utils';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {scale} from 'utils/Functions';
 const ActiveSmartOtp = () => {
   const translation = useTranslation();

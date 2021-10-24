@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, TextInput} from 'components';
+import {Button, TextInput, FooterContainer} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
@@ -11,7 +11,6 @@ import {useTranslation} from 'context/Language';
 import BigLogo from 'components/Auth/BigLogo';
 import BlueHeader from 'components/Auth/BlueHeader';
 import Content from 'components/Auth/Content';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const ForgetPassword = () => {
   const {phone} = usePhone();

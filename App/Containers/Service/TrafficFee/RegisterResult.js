@@ -1,19 +1,9 @@
 import React, {useCallback, useState} from 'react';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {Header, HeaderBg, Text, Button} from 'components';
+import {ScrollView, View, StyleSheet, Image} from 'react-native';
+import {Header, HeaderBg, Text, Button, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
-import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
-import Navigator from 'navigations/Navigator';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterResult = () => {
   const translation = useTranslation();

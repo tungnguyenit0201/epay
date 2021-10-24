@@ -1,4 +1,11 @@
-import {Header, HeaderBg, Button, TextInput, Text} from 'components';
+import {
+  Header,
+  HeaderBg,
+  Button,
+  TextInput,
+  Text,
+  FooterContainer,
+} from 'components';
 import {useTranslation} from 'context/Language';
 import React from 'react';
 import {
@@ -7,7 +14,6 @@ import {
   useWindowDimensions,
   TouchableOpacity,
 } from 'react-native';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {base, Colors, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {useQRPromo} from 'context/Wallet/utils';

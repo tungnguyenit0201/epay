@@ -1,4 +1,4 @@
-import {Header, HeaderBg, Text, Button, Icon} from 'components';
+import {Header, HeaderBg, Text, FooterContainer, Icon} from 'components';
 import {useTranslation} from 'context/Language';
 import React, {useState, useCallback, useEffect} from 'react';
 import DashedLine from 'react-native-dashed-line';
@@ -8,14 +8,11 @@ import {
   View,
   StyleSheet,
   Image,
-  TextInput,
   TouchableOpacity,
-  ImageBackground,
   Linking,
 } from 'react-native';
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import _ from 'lodash';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {formatMoney} from 'utils/Functions';
 

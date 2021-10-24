@@ -251,8 +251,7 @@ const VerifyUserPortrait = ({route}) => {
           required
           placeholder="dd/mm/yyyy"
         />
-        {
-          !!extractCardInfo.ValidDate &&
+        {!!extractCardInfo.ValidDate && (
           <DatePicker
             label={translation.expired_date}
             onChange={value => handleChange('ValidDate', value)}
@@ -260,7 +259,7 @@ const VerifyUserPortrait = ({route}) => {
             required
             placeholder="dd/mm/yyyy"
           />
-        }
+        )}
         <InputBlock
           label={translation?.issuedPlace}
           onChange={value => handleChange('ICIssuedPlace', value)}
