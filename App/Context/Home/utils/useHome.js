@@ -51,7 +51,7 @@ const useHome = () => {
       LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION;
     // TODO: translate
     setError({
-      icon: Images.SignUp.TouchId,
+      icon: isFaceId ? Images.SignUp.FaceId : Images.SignUp.TouchId,
       title: isFaceId ? 'Đăng nhập khuôn mặt' : translation.log_in_touchid,
       ErrorCode: -1,
       ErrorMessage:

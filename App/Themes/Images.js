@@ -165,6 +165,7 @@ export default {
     BigPhone: require('images/icons/big-phone.png'),
     BlueWave: require('images/bg/blue-wave.png'),
     TouchId: require('images/icons/touch-id.png'),
+    FaceId: require('images/icons/face-id.png'),
   },
   Kyc: {
     Calendar: require('images/icons/calendar.png'),
