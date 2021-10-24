@@ -114,6 +114,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
     let resendObj = JSON.parse(resend);
 
     if (Date.now() >= resendObj?.time + 60000 * 30) {
+      setCountdown(config?.ResendOtpTime || 60);
       return await setResend({
         phone,
         time: Date.now(),
