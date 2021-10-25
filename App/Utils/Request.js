@@ -41,7 +41,7 @@ const getEncryptParam = async (url, params) => {
   let currentLanguage = await AsyncStorage.getItem(
     ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
   );
-  let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
+  let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT_CORE);
   let requestData = await getRequestData(url, params);
   return {
     MsgType: urlPart[urlPart.length - 1],

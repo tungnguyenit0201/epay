@@ -29,7 +29,7 @@ const CalendarCustom = ({
   onSelectRange,
   initialStạrtDate,
   initialEndDate,
-  format = COMMON_ENUM.DATETIME_FORMAT,
+  format = COMMON_ENUM.DATETIME_FORMAT_CORE,
 }) => {
   const translation = useTranslation();
   const calendarRef = useRef(null);

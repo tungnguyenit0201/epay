@@ -163,12 +163,14 @@ const useNotify = (isMount = true) => {
     item?.Id && !item?.IsRead && onReadNotify(item.Id);
   };
 
-  const onReadAllNotify = () => {
-    const list = userInfo?.listNotify?.filter(x => !x.IsRead);
-    list.forEach(item => {
-      item?.Id && readNotify({phone, notifyID: item?.Id});
+  const onReadAllNotify = async () => {
+    const listNotify = userInfo?.listNotify?.filter(x => !x.IsRead);
+    const listPromise = [];
+    listNotify.forEach(item => {
+      listPromise.push(readNotify({phone, notifyID: item?.Id}));
     });
-    onGetAllNotify();
+    await Promise.all(listPromise);
+    await onGetAllNotify();
   };
 
   useEffect(() => {
