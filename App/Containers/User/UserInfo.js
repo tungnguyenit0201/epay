@@ -299,9 +299,7 @@ const UserInfo = () => {
           visible={showModalReVerify}
           onClose={() => onReVerify('hideModal')}
           title="Xác nhận đổi giấy tờ tùy thân"
-          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
-        GTTT cũ. Bạn có chắc chắn muốn 
-        đổi không?" // TODO: translate
+          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với GTTT cũ. Bạn có chắc chắn muốn đổi không?" // TODO: translate
           icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
