@@ -30,12 +30,7 @@ const PaymentSettings = () => {
       <ScrollView style={base.wrap}>
         <TouchableOpacity
           style={styles.item}
-          onPress={() =>
-            setError({
-              ErrorMessage: 'Coming soon',
-              icon: Images.Homes.Setting,
-            })
-          }
+          onPress={() => Navigator.navigate(SCREEN.EDIT_AUTO_RECHARGE)}
         >
           <Icon
             mr={8}
