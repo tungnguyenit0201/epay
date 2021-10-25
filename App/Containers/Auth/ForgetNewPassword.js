@@ -33,8 +33,9 @@ const ForgetNewPassword = ({route}) => {
   const translation = useTranslation();
   const {showModal, setShowModal, openCallDialog, onGoTerm} = useRegister();
 
-  const onSubmit = values => {
+  const onSubmit = (values, {resetForm}) => {
     onNewPassword({...values, phone});
+    resetForm();
   };
 
   return (

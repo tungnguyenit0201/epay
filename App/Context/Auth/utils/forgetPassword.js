@@ -69,11 +69,18 @@ const useForgetPassword = () => {
       phone,
     });
     setLoading(false);
-    if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
+    const errorCode = _.get(result, 'ErrorCode', '');
+    if (errorCode !== ERROR_CODE.SUCCESS) {
       return setError({
         ...result,
         action: [
-          {label: agree, onPress: () => Navigator.navigate(SCREEN.LOGIN)},
+          {
+            label: agree,
+            onPress: () => {
+              errorCode !== ERROR_CODE.NEW_PASSWORD_SIMILAR_TO_LAST_ONE &&
+                Navigator.navigate(SCREEN.LOGIN);
+            },
+          },
         ],
       });
     }
