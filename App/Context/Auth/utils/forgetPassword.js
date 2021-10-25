@@ -82,9 +82,16 @@ const useForgetPassword = () => {
       ErrorCode: -1,
       ErrorMessage:
         translation.password_change + ' ' + translation.transaction.success,
+      action: [
+        {
+          label: translation.agree,
+          onPress: () => {
+            Navigator.reset(SCREEN.AUTH);
+            Keychain.setGenericPassword(phone, passwordEncrypted);
+          },
+        },
+      ],
     });
-    Navigator.reset(SCREEN.AUTH);
-    Keychain.setGenericPassword(phone, passwordEncrypted);
   };
 
   const onSetActive = () => {
@@ -104,6 +111,7 @@ const useForgetPassword = () => {
     Keyboard.dismiss();
     if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
       Navigator.navigate(SCREEN.OTP, {
+        phone,
         functionType: FUNCTION_TYPE.FORGOT_PASS,
         isMount: false,
       });
@@ -112,10 +120,11 @@ const useForgetPassword = () => {
     setMessage(result?.ErrorMessage);
   };
 
-  const onCustomerSupport = () => {
+  const onCustomerSupport = ({phone}) => {
     openCallDialog();
     Navigator.navigate(SCREEN.OTP, {
       functionType: FUNCTION_TYPE.FORGOT_PASS,
+      phone,
       isMount: false,
     });
   };
