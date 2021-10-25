@@ -125,6 +125,7 @@ export default {
     Key: require('images/icons/key.png'),
     BlueMobile: require('images/icons/mobile.png'),
     GrayMobile: require('images/icons/mobile-unactive.png'),
+    Menu: require('images/icons/menu.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),

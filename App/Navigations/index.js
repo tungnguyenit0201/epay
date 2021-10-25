@@ -15,6 +15,8 @@ import {useNotify} from 'context/User/utils';
 import RNRestart from 'react-native-restart';
 import {useUser} from 'context/User';
 import {Text} from 'components';
+import {getAll} from 'utils/Functions';
+import {useLoginName} from 'context/Auth/utils';
 
 const Stack = createStackNavigator();
 
@@ -101,8 +103,7 @@ import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
-import {getAll} from 'utils/Functions';
-import {useLoginName} from 'context/Auth/utils';
+import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -476,6 +477,10 @@ const AppNavigator = () => {
           <Stack.Screen
             name={SCREEN.FORGET_PASSWORD_KYC}
             component={ForgetPasswordKYC}
+          />
+          <Stack.Screen
+            name={SCREEN.EDIT_AUTO_RECHARGE}
+            component={EditAutoReCharge}
           />
         </Stack.Navigator>
       </KeyboardStateProvider>
