@@ -176,7 +176,6 @@ const styles = StyleSheet.create({
   px1: {paddingHorizontal: Spacing.PADDING},
   //---------------
   container: {
-    backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: Spacing.PADDING,
   },
