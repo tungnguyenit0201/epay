@@ -189,7 +189,7 @@ const useVerifyInfo = (initialValue = {}) => {
           Step,
           FullName: value.ICFullName,
           Gender: value.SexType,
-          ICType,
+          ICType: documentType,
           IssueDate: value.ICIssuedDate,
           IssuePlace: value.ICIssuedPlace,
           Province: value.Provincial,

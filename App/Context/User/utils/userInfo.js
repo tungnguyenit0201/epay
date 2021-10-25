@@ -226,7 +226,7 @@ const useUserInfo = type => {
         setError(result);
         return;
       }
-      await onGetPersonalInfo();
+      await onGetAllInfo();
     };
 
     switch (type) {
