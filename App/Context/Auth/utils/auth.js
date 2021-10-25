@@ -19,7 +19,8 @@ const useAuth = () => {
   const translation = useTranslation();
   const {dispatch, route} = useUser();
   const {setError} = useError();
-  const {setPhone, setToken, getPushToken} = useAsyncStorage();
+  const {setPhone, setToken, getPushToken, setTouchIdEnabled} =
+    useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
@@ -96,7 +97,7 @@ const useAuth = () => {
         return;
 
       case ERROR_CODE.SUCCESS:
-        Keychain.setGenericPassword(phone, passwordEncrypted);
+        onUpdateKeychain({phone, passwordEncrypted});
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
@@ -164,6 +165,14 @@ const useAuth = () => {
 
   const onSetMessage = value => {
     setMessage(value);
+  };
+
+  const onUpdateKeychain = async ({phone, passwordEncrypted}) => {
+    const credentials = await Keychain.getGenericPassword();
+    if (credentials?.username !== phone) {
+      setTouchIdEnabled(false);
+    }
+    Keychain.setGenericPassword(phone, passwordEncrypted);
   };
 
   return {
