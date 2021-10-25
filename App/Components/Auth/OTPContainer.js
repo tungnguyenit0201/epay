@@ -6,6 +6,7 @@ import {useTranslation} from 'context/Language';
 import _ from 'lodash';
 import {scale} from 'utils/Functions';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import WebView from 'components/WebView/Partial';
 
 const OTPContainer = ({
   code,
@@ -87,7 +88,9 @@ const OTPContainer = ({
         )}
       </View>
 
-      <Text style={styles.message}>{message}</Text>
+      {!!message && (
+        <WebView style={styles.message} source={{html: `${message}`}} />
+      )}
     </>
   );
 };
@@ -131,9 +134,10 @@ const styles = StyleSheet.create({
     height: scale(50),
   },
   message: {
-    marginTop: 16,
-    color: Colors.Highlight,
-    textAlign: 'center',
+    marginTop: Spacing.PADDING,
+    // color: Colors.Highlight,
+    // textAlign: 'center',
+    minHeight: scale(70),
   },
   fontSize_1: {fontSize: 14},
   flexRow_1: {
