@@ -21,7 +21,7 @@ const useForgetPassword = () => {
   const {updateForgotPassword} = useServiceUser();
   const [message, setMessage] = useState('');
   const {openCallDialog} = useRegister();
-
+  let [showModal, setShowModal] = useState(false);
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
     const errorCode = _.get(result, 'ErrorCode', '');
@@ -123,6 +123,9 @@ const useForgetPassword = () => {
   return {
     onSubmitPhone,
     onNewPassword,
+    showModal,
+    setShowModal,
+    openCallDialog,
     active,
     onSetActive,
     onSubmitKYC,

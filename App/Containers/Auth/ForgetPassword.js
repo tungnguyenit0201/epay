@@ -1,6 +1,6 @@
-import React, {useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Button, TextInput, FooterContainer} from 'components';
+import React from 'react';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Button, TextInput, FooterContainer, Header, Icon} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
@@ -8,18 +8,35 @@ import {phoneSchema} from 'utils/ValidationSchemas';
 import _ from 'lodash';
 import {useForgetPassword, usePhone} from 'context/Auth/utils';
 import {useTranslation} from 'context/Language';
-import BigLogo from 'components/Auth/BigLogo';
 import BlueHeader from 'components/Auth/BlueHeader';
-import Content from 'components/Auth/Content';
-
+import {HelpModal, Content} from 'components/Auth';
 const ForgetPassword = () => {
   const {phone} = usePhone();
-  const {onSubmitPhone} = useForgetPassword();
+  const {onSubmitPhone, showModal, setShowModal, openCallDialog} =
+    useForgetPassword();
   const translation = useTranslation();
+
   return (
     <BlueHeader>
       {/* <Header back blackIcon avoidStatusBar /> */}
-      <BigLogo style={{marginBottom: 30}} />
+      {console.log('showModal', showModal)}
+      <Header
+        style={(styles.mt, styles.mb)}
+        back
+        renderRightComponent={() => (
+          <TouchableOpacity
+            style={{paddingRight: Spacing.PADDING}}
+            onPress={() => setShowModal(true)}
+          >
+            <Icon
+              icon={Images.Register.Info}
+              style={styles.iconSize}
+              tintColor={Colors.bs4}
+            />
+          </TouchableOpacity>
+        )}
+        logo={Images.logoEpay}
+      />
       <Content
         style={styles.wrap}
         title={translation.forgot_password}
@@ -79,6 +96,11 @@ const ForgetPassword = () => {
           );
         }}
       </Formik>
+      <HelpModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onPress={openCallDialog}
+      />
     </BlueHeader>
   );
 };
@@ -89,5 +111,11 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   //------------------
   mt1: {marginTop: 24},
+  mt: {marginTop: -10},
+  mb: {marginBottom: 30},
+  iconSize: {
+    width: scale(20),
+    height: scale(20),
+  },
 });
 export default ForgetPassword;
