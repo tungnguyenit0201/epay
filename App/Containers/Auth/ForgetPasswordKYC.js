@@ -134,7 +134,10 @@ const ForgetPasswordKYC = ({route}) => {
                   label={translation?.continue}
                   onPress={handleSubmit}
                 />
-                <Pressable style={styles.outline} onPress={onCustomerSupport}>
+                <Pressable
+                  style={styles.outline}
+                  onPress={() => onCustomerSupport({phone})}
+                >
                   <Text style={styles.customerCare1}>Hỗ trợ khách hàng</Text>
                   <Text bold style={styles.customerCare2}>
                     Gọi 1900-000

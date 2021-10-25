@@ -23,7 +23,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {onLogin} = useAuth();
-  const {onGetPersonalInfo} = useUserInfo();
+  const {onGetAllInfo} = useUserInfo();
   const {setResend, getResend} = useAsyncStorage();
   const {confirmOTP, genOtp} = useServiceCommon();
   const translation = useTranslation();
@@ -104,7 +104,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
         return Navigator.push(SCREEN.SMART_OTP_PASSWORD, {type: 'password'});
       case FUNCTION_TYPE.AUTH_EMAIL:
       case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
-        onGetPersonalInfo();
+        onGetAllInfo();
         Navigator.push(SCREEN.VERIFY_EMAIL_RESULT, {type: 'success'});
         return;
     }
@@ -114,6 +114,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
     let resendObj = JSON.parse(resend);
 
     if (Date.now() >= resendObj?.time + 60000 * 30) {
+      setCountdown(config?.ResendOtpTime || 60);
       return await setResend({
         phone,
         time: Date.now(),
