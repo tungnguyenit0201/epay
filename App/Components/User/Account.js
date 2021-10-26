@@ -133,20 +133,20 @@ const Account = () => {
       </View>
 
       {listConnectBank?.length ? (
-        listConnectBank.map(({BankName, BankLogoUrl}) => (
-          <View style={[base.row, styles.fWrap]}>
-            <View style={[styles.boxCircle1, styles.mr1]}>
+        <View style={[base.row, styles.fWrap]}>
+          {listConnectBank.map(({BankName, BankLogoUrl}) => (
+            <View style={[styles.boxCircle1, styles.mr1, styles.mb3]}>
               <Image
-                style={{width: 21, height: 21}}
+                style={{width: 25, aspectRatio: 1}}
                 source={{uri: BankLogoUrl}}
                 resizeMode="contain"
               />
             </View>
-            {/* <Text semibold ml={10} color={Colors.bs4}>
-              {BankName}
-            </Text> */}
-          </View>
-        ))
+            // <Text semibold ml={10} color={Colors.bs4}>
+            //   {BankName}
+            // </Text>
+          ))}
+        </View>
       ) : (
         <TouchableOpacity style={[base.row]} onPress={mapBank}>
           <Image
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
   //--------------
   mb1: {marginBottom: 32},
   mb2: {marginBottom: 10},
+  mb3: {marginBottom: 5},
   //--------------
   pxy1: {padding: 16},
   //--------------
@@ -211,8 +212,8 @@ const styles = StyleSheet.create({
   iconPlus: {width: 20, height: 20},
   //--------------
   boxCircle1: {
-    width: 32,
-    height: 32,
+    width: 36,
+    height: 36,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',

@@ -254,4 +254,7 @@ export default {
     BigCamera: require('images/icons/big-camera.png'),
     Wave: require('images/wave.png'),
   },
+  Notification: {
+    TickCircle: require('images/noti/TickCircle.png'),
+  },
 };

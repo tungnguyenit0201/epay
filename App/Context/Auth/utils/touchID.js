@@ -5,12 +5,14 @@ import {useError, useAsyncStorage} from 'context/Common/utils';
 import Keychain from 'react-native-keychain';
 import * as LocalAuthentication from 'expo-local-authentication';
 import {getAll} from 'utils/Functions';
+import {useIsFocused} from '@react-navigation/native';
 
 const useTouchID = ({onSuccess, autoShow = false}) => {
   const [biometryType, setBiometryType] = useState(null);
   const {getTouchIdEnabled, getPhone} = useAsyncStorage();
   const {setError} = useError();
   const textInputRef = useRef(null);
+  const isFocused = useIsFocused();
 
   const checkBiometry = async () => {
     try {
@@ -24,7 +26,9 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
         credentials?.username == (await getPhone())
           ? credentials?.password
           : null;
+
       if (!passwordEncrypted || !touchIdEnabled) {
+        setBiometryType(null);
         return;
       }
       const biometryType = _.isArray(type) ? type[0] : type;
@@ -112,7 +116,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
 
   useEffect(() => {
     checkBiometry();
-  }, []); // eslint-disable-line
+  }, [isFocused]); // eslint-disable-line
 
   useEffect(() => {
     if (autoShow) {

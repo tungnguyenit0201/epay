@@ -45,13 +45,21 @@ const Notification = () => {
   return (
     <>
       <HeaderBg>
-        <Header title={translation.notification} back />
-        <TouchableOpacity onPress={onReadAllNotify}>
-          <Image
-            source={require('images/noti/TickCircle.png')}
-            style={styles.TickCircle}
-          />
-        </TouchableOpacity>
+        <Header
+          title={translation.notification}
+          back
+          renderRightComponent={() => (
+            <TouchableOpacity
+              onPress={onReadAllNotify}
+              style={{backgroundColor: 'yelllow'}}
+            >
+              <Image
+                source={Images.Notification.TickCircle}
+                style={styles.TickCircle}
+              />
+            </TouchableOpacity>
+          )}
+        />
       </HeaderBg>
       <View style={styles.wrap}>
         <ScreenBackground />
@@ -110,9 +118,10 @@ const Notification = () => {
                         </Text>
                       </View>
                       <Text style={styles.date}>
-                        {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
-                          'hh:MMA | DD/MM/YYYY',
-                        )}
+                        {moment(
+                          item?.Time,
+                          COMMON_ENUM.DATETIME_FORMAT_CORE,
+                        ).format(COMMON_ENUM.DATETIME_FORMAT_APP)}
                       </Text>
                     </View>
                     <Text numberOfLines={4}>{item?.Content}</Text>
@@ -168,9 +177,6 @@ const styles = StyleSheet.create({
   TickCircle: {
     width: 24,
     height: 24,
-    position: 'absolute',
-    right: Spacing.PADDING,
-    bottom: 23,
   },
   isRead: {
     backgroundColor: Colors.bs2,

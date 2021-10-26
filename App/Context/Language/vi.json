@@ -298,6 +298,9 @@
   "take_a_portrait_photo": "Chụp ảnh chân dung",
   "email_authentication": "Xác thực Email",
   "update_your_email_to_receive_the_latest_announcements_and_offers_from_epay": "Cập nhật email để nhận thông báo và ưu đãi mới nhất từ EPAY",
+  "are_you_sure_you_want_to_logout": "Bạn có chắc muốn thoát tài khoản?",
+  "yes": "Có",
+  "no": "Không",
   "errorCode": {
     "1": "Tài khoản không tồn tại hoặc mật khẩu sai",
     "2": "Tài khoản đang bị khóa",

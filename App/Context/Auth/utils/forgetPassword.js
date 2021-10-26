@@ -21,7 +21,7 @@ const useForgetPassword = () => {
   const {updateForgotPassword} = useServiceUser();
   const [message, setMessage] = useState('');
   const {openCallDialog} = useRegister();
-
+  let [showModal, setShowModal] = useState(false);
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
     const errorCode = _.get(result, 'ErrorCode', '');
@@ -69,11 +69,18 @@ const useForgetPassword = () => {
       phone,
     });
     setLoading(false);
-    if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
+    const errorCode = _.get(result, 'ErrorCode', '');
+    if (errorCode !== ERROR_CODE.SUCCESS) {
       return setError({
         ...result,
         action: [
-          {label: agree, onPress: () => Navigator.navigate(SCREEN.LOGIN)},
+          {
+            label: agree,
+            onPress: () => {
+              errorCode !== ERROR_CODE.NEW_PASSWORD_SIMILAR_TO_LAST_ONE &&
+                Navigator.navigate(SCREEN.LOGIN);
+            },
+          },
         ],
       });
     }
@@ -132,6 +139,9 @@ const useForgetPassword = () => {
   return {
     onSubmitPhone,
     onNewPassword,
+    showModal,
+    setShowModal,
+    openCallDialog,
     active,
     onSetActive,
     onSubmitKYC,

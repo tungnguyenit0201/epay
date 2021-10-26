@@ -88,8 +88,8 @@ const History = () => {
           <Text style={[styles.textSize2, styles.mb1]}>{title}</Text>
           <View style={[styles.flexRow, styles.justifyBetween, styles.flex1]}>
             <Text style={[styles.textSize1, {color: gray}]}>
-              {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT).format(
-                'hh:mm   DD/MM/YYYY',
+              {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT_CORE).format(
+                COMMON_ENUM.DATETIME_FORMAT_APP,
               )}
             </Text>
             <Text

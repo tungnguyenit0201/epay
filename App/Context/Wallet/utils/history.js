@@ -36,7 +36,7 @@ const useHistory = () => {
   const parseHistory = data => {
     // parser for grouping
     const parser = item => {
-      const time = moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT);
+      const time = moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT_CORE);
       return `${time.month()}/${time.year()}`;
     };
     // group into object -> to array -> map into structured objects {key, list, income, expense}
@@ -80,8 +80,8 @@ const useHistory = () => {
     setHistoryData(null);
     const result = await getHistory({
       phone,
-      StartDate: startDate || moment().format(COMMON_ENUM.DATETIME_FORMAT),
-      EndDate: endDate || moment().format(COMMON_ENUM.DATETIME_FORMAT),
+      StartDate: startDate || moment().format(COMMON_ENUM.DATETIME_FORMAT_CORE),
+      EndDate: endDate || moment().format(COMMON_ENUM.DATETIME_FORMAT_CORE),
       CodeFilter: search || '',
       ServiceId: serviceID.join(',') || 0,
       StateId: stateID,

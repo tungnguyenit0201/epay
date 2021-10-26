@@ -208,16 +208,14 @@ const useVerifyInfo = (initialValue = {}) => {
           title: strings.kycPendingVerify,
         };
       }
-      await Promise.all([
-        onUpdatePersonalInfo(updateInfo, false),
+      await onUpdatePersonalInfo(updateInfo, false),
         onUpdateUserAddress(updateInfo, false),
         onGetAllInfo(),
-        onClearRegionData(),
-      ]);
+        onClearRegionData();
     } catch (e) {
       const {ErrorMessage = strings?.unknownError} = e || {};
       resultContent = {
-        title: strings.verifyFailed,
+        title: strings.kycPendingVerify,
         message: ErrorMessage,
       };
     } finally {

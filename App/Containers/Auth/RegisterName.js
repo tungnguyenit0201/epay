@@ -63,6 +63,7 @@ const RegisterName = () => {
                 value={values?.FullName}
                 isDeleted={values.FullName}
                 maxLength={100}
+                name
               />
             </View>
 
