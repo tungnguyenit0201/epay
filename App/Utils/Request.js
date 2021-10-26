@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import {Platform, Alert} from 'react-native';
 import axios from './Axios';
 import {API} from 'configs';
 import {buildURL} from './Functions';
@@ -10,9 +10,9 @@ import {
   getReadableVersion,
 } from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {debugData} from 'components/Common/Debug';
+import {addLog} from 'components/Common/Debug';
 import {ASYNC_STORAGE_KEY, COMMON_ENUM} from 'configs/Constants';
-// import curlirize from 'axios-curlirize';
+import curlirize from 'axios-curlirize';
 
 let transactionID = '';
 
@@ -41,7 +41,7 @@ const getEncryptParam = async (url, params) => {
   let currentLanguage = await AsyncStorage.getItem(
     ASYNC_STORAGE_KEY.LANGUAGE.CURRENT_LANGUAGE,
   );
-  let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT);
+  let requestTime = moment().format(COMMON_ENUM.DATETIME_FORMAT_CORE);
   let requestData = await getRequestData(url, params);
   return {
     MsgType: urlPart[urlPart.length - 1],
@@ -66,14 +66,15 @@ const getEncryptParam = async (url, params) => {
 async function request({
   method = 'get',
   url,
+  baseUrl,
   query,
   params,
   success,
-  failure = defaultFailureHandle,
+  failure,
   headers,
   form = false,
 }) {
-  let root = API.ROOT;
+  let root = baseUrl || API.ROOT;
   const requestMethod = axios;
   // __DEV__ && curlirize(requestMethod);
 
@@ -115,8 +116,8 @@ async function request({
         });
         if (__DEV__) {
           console.log(method, buildUrl, postParams, result);
-          debugData.push(result);
         }
+        addLog(result);
       }
 
       let {data, status} = result || {};
@@ -125,12 +126,13 @@ async function request({
       // console.log('[Request] URL: ' + buildUrl);
       // console.log('[Request] Data: ' + JSON.stringify(result.data));
       if (status === 200 || status === 201 || status === 203) {
-        if (_.get(result, 'data.TransactionID', '')) {
-          transactionID = _.get(result, 'data.TransactionID', '');
-        }
+        // if (_.get(result, 'data.TransactionID', '')) {
+        //   transactionID = _.get(result, 'data.TransactionID', '');
+        // }
 
         if (typeof success === 'function') {
           let parseData = typeof Data == 'string' ? JSON.parse(Data) : Data;
+          parseData?.TransactionID && (transactionID = parseData.TransactionID);
           if (__DEV__) {
             console.log({...result?.data, ...parseData} || result);
           }
@@ -149,17 +151,20 @@ async function request({
       if (__DEV__) {
         console.log(method, buildURL(url, query), params, err);
       }
-      const result = err?.toJSON?.();
-      if (typeof failure === 'function') {
-        if (err?.response?.data) {
-          return failure({
-            status: err?.response?.status,
-            ...err?.response?.data,
-          });
-        } else {
-          return failure({message: result?.message});
-        }
-      }
+
+      return failure(err);
+
+      // const result = err?.toJSON?.();
+      // if (typeof failure === 'function') {
+      //   if (err?.response?.data) {
+      //     return failure({
+      //       status: err?.response?.status,
+      //       ...err?.response?.data,
+      //     });
+      //   } else {
+      //     return failure({message: result?.message});
+      //   }
+      // }
     }
   }
 }

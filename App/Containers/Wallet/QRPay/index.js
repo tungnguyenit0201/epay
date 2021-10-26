@@ -16,13 +16,14 @@ import {SCREEN} from 'configs/Constants';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useScanQR} from 'context/Wallet/utils';
 import {useImagePicker} from 'context/User/utils';
-
+import {getTranslation} from 'react-native-ui-lib/generatedTypes/src/incubator/panView/panningUtil';
+import {useTranslation} from 'context/Language';
 const QRPay = () => {
   const camera = useRef();
   const {width, height} = useWindowDimensions();
   const top = getStatusBarHeight();
   const isFocused = useIsFocused();
-
+  const translation = useTranslation();
   const {
     loading,
     image,
@@ -61,7 +62,8 @@ const QRPay = () => {
         barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
         onBarCodeRead={qrCode => {
           onGetQRCodeInfo(qrCode?.data);
-        }}>
+        }}
+      >
         {({camera, status, recordAudioPermissionStatus}) => {
           if (status !== 'READY') return <FWLoading />;
           return (
@@ -69,7 +71,8 @@ const QRPay = () => {
               style={{
                 width: width,
                 height: height,
-              }}>
+              }}
+            >
               <Header
                 back
                 avoidStatusBar
@@ -81,7 +84,8 @@ const QRPay = () => {
                   position: 'absolute',
                   width: width,
                   height: height,
-                }}>
+                }}
+              >
                 {image?.path && (
                   <View style={styles.wrapQRImg}>
                     <Image source={{uri: image?.path}} style={styles.qrImg} />
@@ -94,53 +98,59 @@ const QRPay = () => {
 
                 {loading && <FWLoading />}
                 <View style={[styles.wrapText, {top: scale(112)}]}>
-                  <Text color={Colors.white} fs="h6" fw="700" centered>
-                    Hướng khung camera vào mã QR để quét
+                  <Text color={Colors.bs4} fs="h6" fw="700" centered>
+                    {translation.point_the_camera_frame_at_the_qr_code_to_scan}
                   </Text>
                 </View>
                 <View style={styles.wrapAction}>
                   <Pressable
                     style={styles.action}
-                    onPress={() => setFlash(!flash)}>
+                    onPress={() => setFlash(!flash)}
+                  >
                     <Icon
                       icon={Images.Camera.Flash}
-                      tintColor={Colors.white}
+                      tintColor={Colors.bs4}
                       mr={Spacing.PADDING / 4}
                     />
-                    <Text fw="700" fs="h6" color={Colors.white}>
-                      Bật đèn pin
+                    <Text fw="700" fs="h6" color={Colors.bs4}>
+                      {translation.flash_on}
                     </Text>
                   </Pressable>
                   <Pressable
                     style={[styles.action, {marginLeft: Spacing.PADDING}]}
-                    onPress={() => setFlash(!flash)}>
+                    onPress={() => setFlash(!flash)}
+                  >
                     <Icon
                       icon={Images.Camera.Gallery}
-                      tintColor={Colors.white}
+                      tintColor={Colors.bs4}
                       mr={Spacing.PADDING / 2}
                     />
                     <Text
                       fw="700"
                       fs="h6"
-                      color={Colors.white}
-                      onPress={() => onPhoto(false)}>
+                      color={Colors.bs4}
+                      onPress={() => onPhoto(false)}
+                    >
                       Chọn hình có sẵn
                     </Text>
                   </Pressable>
                 </View>
                 <View style={styles.wrapBtn}>
                   <Button
-                    label="Mã thanh toán"
-                    bgImg={0}
+                    label={translation.payment_qr}
+                    bgImg={false}
                     leftIcon={Images.Camera.QR}
                     mode="outline"
                     mr={Spacing.PADDING / 2}
+                    style={styles.outline}
+                    color={Colors.bs4}
                   />
                   <Button
-                    bgImg={0}
-                    label="Quét mã QR"
+                    bgImg={false}
+                    label={translation.scan_qr}
                     leftIcon={Images.Camera.Scan}
                     // onPress={detectQRCode}
+                    style={{flex: 1}}
                   />
                 </View>
               </View>
@@ -170,6 +180,7 @@ const styles = StyleSheet.create({
   wrapBtn: {
     position: 'absolute',
     bottom: Spacing.PADDING * 3,
+    paddingHorizontal: Spacing.PADDING,
     alignSelf: 'center',
     flexDirection: 'row',
   },
@@ -185,12 +196,13 @@ const styles = StyleSheet.create({
     left: scale(61),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   qrImg: {
     width: scale(200),
     height: scale(200),
   },
+  outline: {flex: 1, borderColor: Colors.bs4, backgroundColor: 'transparent'},
 });
 
 export default QRPay;

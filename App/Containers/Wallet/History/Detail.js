@@ -1,4 +1,4 @@
-import {Header, HeaderBg, Text, Button, Icon} from 'components';
+import {Header, HeaderBg, Text, FooterContainer, Icon} from 'components';
 import {useTranslation} from 'context/Language';
 import React, {useState, useCallback, useEffect} from 'react';
 import DashedLine from 'react-native-dashed-line';
@@ -8,14 +8,11 @@ import {
   View,
   StyleSheet,
   Image,
-  TextInput,
   TouchableOpacity,
-  ImageBackground,
   Linking,
 } from 'react-native';
 import {Images, Colors, Spacing, Fonts} from 'themes';
 import _ from 'lodash';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {formatMoney} from 'utils/Functions';
 
@@ -50,15 +47,17 @@ const ToggleRightText = ({text}) => {
         bold
         style={[styles.textRight]}
         onTextLayout={onTextLayout_1}
-        numberOfLines={numLines}>
+        numberOfLines={numLines}
+      >
         {text}
       </Text>
       {showMoreButton && (
         <Text
           onPress={toggleTextShown}
           style={[styles.textRight]}
-          color={Colors.cl1}
-          bold>
+          color={Colors.brd1}
+          bold
+        >
           {textShown ? 'Thu gọn' : 'Xem thêm'}
         </Text>
       )}
@@ -122,7 +121,7 @@ const DetailHistory = ({route}) => {
       {title: 'Số quyết định ', value: '51G-5678, Loại 1 < 12 chỗ biển trắng'},
       {title: 'Họ tên người vi phạm ', value: 'Nguyen Van A'},
       {title: 'CMND/CCCD/Hộ chiếu ', value: '12******678'},
-      {title: 'Số tiền ', value: '1.000.000 Vnd '},
+      {title: 'Số tiền ', value: '1.000.000đ'},
       {
         title: 'Hành vi vi phạm ',
         value:
@@ -189,16 +188,17 @@ const DetailHistory = ({route}) => {
                 bold
                 color={isIncome ? blue_1 : Colors.Highlight}
                 centered
-                style={styles.wrap}>
-                {isIncome ? '+' : '-'} {formatMoney(TransAmount, ' Vnđ')}
+                style={styles.wrap}
+              >
+                {isIncome ? '+' : '-'} {formatMoney(TransAmount, true)}
               </Text>
             )}
 
             <View style={styles.mt2}>
-              <Text fs="md" centered color={Colors.gray}>
+              <Text fs="md" centered color={Colors.tp3}>
                 Mã giao dịch: {TransCode}
               </Text>
-              <Text fs="md" centered color={Colors.gray}>
+              <Text fs="md" centered color={Colors.tp3}>
                 Thời gian: {TransTime}
               </Text>
             </View>
@@ -214,7 +214,8 @@ const DetailHistory = ({route}) => {
               styles.botZero,
               styles.rightZero,
               styles.absolute,
-            ]}>
+            ]}
+          >
             <Image
               source={Images.TransactionHistory.LogoBg}
               style={styles.logoBg}
@@ -226,15 +227,17 @@ const DetailHistory = ({route}) => {
             <>
               <View
                 style={[styles.flexRow, styles.pt2, styles.pb3]}
-                key={index}>
+                key={index}
+              >
                 <Text fs="h6" style={[styles.haftWidth, styles.pr1]}>
                   {item.title}
                 </Text>
                 <Text
                   fs="h6"
                   bold
-                  color={Colors.gray}
-                  style={[styles.haftWidth, styles.textRight]}>
+                  color={Colors.tp3}
+                  style={[styles.haftWidth, styles.textRight]}
+                >
                   {item.value}
                 </Text>
               </View>
@@ -242,7 +245,7 @@ const DetailHistory = ({route}) => {
                 <DashedLine
                   dashLength={4}
                   dashThickness={1}
-                  dashColor={Colors.l3}
+                  dashColor={Colors.bs1}
                 />
               )}
             </>
@@ -251,28 +254,30 @@ const DetailHistory = ({route}) => {
           <LinearGradient
             start={{x: 0, y: 0.75}}
             end={{x: 1, y: 0.25}}
-            colors={[Colors.barLeft, Colors.barRight]}
+            colors={[Colors.grd1, Colors.grd2]}
             style={[
               styles.borderRadius1,
               styles.px1,
               styles.py1,
               styles.mt1,
               styles.mb2,
-            ]}>
+            ]}
+          >
             <TouchableOpacity
               style={[styles.flexRow]}
-              onPress={() => Linking.openURL('tel:19000000')}>
+              onPress={() => Linking.openURL('tel:19000000')}
+            >
               <View style={[styles.flexRow, styles.flex1, styles.pr1]}>
                 <Icon
                   icon={Images.Phone_1}
-                  tintColor={Colors.white}
+                  tintColor={Colors.bs4}
                   style={styles.iconPhone}
                 />
-                <Text color={Colors.white} ml={8} bold>
+                <Text color={Colors.bs4} ml={8} bold>
                   Hỗ trợ
                 </Text>
               </View>
-              <Text color={Colors.white} bold>
+              <Text color={Colors.bs4} bold>
                 1900-0000
               </Text>
             </TouchableOpacity>
@@ -290,7 +295,8 @@ const DetailHistory = ({route}) => {
                   styles.mb2,
                   styles.px2,
                   styles.py2,
-                ]}>
+                ]}
+              >
                 {dataRowMoreInfo[TransType].map((item, index) => (
                   <View key={index}>
                     <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
@@ -305,7 +311,7 @@ const DetailHistory = ({route}) => {
                       <DashedLine
                         dashLength={4}
                         dashThickness={1}
-                        dashColor={Colors.l3}
+                        dashColor={Colors.bs1}
                       />
                     )}
                   </View>
@@ -365,7 +371,7 @@ const styles = StyleSheet.create({
   //end
   textRight: {textAlign: 'right'},
   //-----------------
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //-----------------
   borderRadius1: {borderRadius: 8},
   //-----------------
@@ -383,7 +389,7 @@ const styles = StyleSheet.create({
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,

@@ -15,7 +15,9 @@ const Content = ({title, text, style, titleMb, textMb, styleText}) => {
           style={[
             styles.textWhite,
             titleMb ? {marginBottom: titleMb} : styles.mb1,
-          ]}>
+          ]}
+          numberOfLines={2}
+        >
           {title}
         </Text>
       )}
@@ -26,7 +28,8 @@ const Content = ({title, text, style, titleMb, textMb, styleText}) => {
             styles.textGray,
             textMb ? {marginBottom: textMb} : styles.mb2,
             styleText,
-          ]}>
+          ]}
+        >
           {text}
         </Text>
       )}
@@ -39,8 +42,8 @@ const styles = StyleSheet.create({
   mb1: {marginBottom: 14},
   mb2: {marginBottom: 26},
   //-----------------------
-  textWhite: {color: Colors.white},
-  textGray: {color: Colors.gray},
+  textWhite: {color: Colors.bs4},
+  textGray: {color: Colors.tp3},
 });
 
 export default Content;

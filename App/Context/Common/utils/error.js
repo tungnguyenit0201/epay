@@ -8,17 +8,23 @@ const useError = () => {
   const translation = useTranslation();
   const setError = useCallback(
     error => {
-      // let message = translation.errorCode[error?.ErrorCode];
-      dispatch({
-        type: 'SET_ERROR',
-        error: {
-          errorCode: error?.ErrorCode,
-          errorMessage: error?.ErrorMessage,
-          title: error?.title,
-          onClose: error?.onClose,
-          icon: error?.icon,
-        },
-      });
+      (!!error?.ErrorMessage || error == -1) &&
+        dispatch({
+          type: 'SET_ERROR',
+          error:
+            error != -1
+              ? {
+                  errorCode: error?.ErrorCode,
+                  errorMessage: error?.ErrorMessage,
+                  title: error?.title,
+                  onClose: error?.onClose,
+                  icon: error?.icon,
+                  label: error?.label,
+                  action: error?.action || [{onPress: false}],
+                  renderContent: error?.renderContent,
+                }
+              : null,
+        });
     },
     [dispatch],
   );
@@ -26,3 +32,26 @@ const useError = () => {
 };
 
 export default useError;
+
+/*
+Example:
+
+ setError({
+      icon: Images.Modal.UserTick,
+      title: translation.notification,
+      ErrorCode: -1,
+      ErrorMessage:
+        'Cập nhật định danh để tăng cường bảo mật cho tài khoản của bạn.',
+      onClose: () => checkInfo({value: false}),
+      action: [
+        {
+          label: 'Định danh',
+          onPress: () => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD),
+        },
+        {
+          label: 'Nhắc tôi sau',
+          onPress: () => checkInfo({value: false}),
+        },
+      ],
+    });
+*/

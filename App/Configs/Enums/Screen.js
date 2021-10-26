@@ -33,7 +33,9 @@ const SCREEN = {
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
   TRAFFIC_REGISTER: 'RegisterFee',
+  TRAFFIC_REGISTER_FORM: 'RegisterForm',
   TRAFFIC_REGISTER_RESULT: 'RegisterResult',
+  TRAFFIC_RFID: 'RFID',
   CONFIRMATION: 'Confirmation',
   USER: 'User',
   HISTORY: 'History',
@@ -41,6 +43,10 @@ const SCREEN = {
   CHANGE_PASSWORD: 'ChangePassword',
   SECURITY: 'Security',
   USER_INFO: 'UserInfo',
+  SORT_BANK: 'SortBank',
+  WALLET_ACCESS_HISTORY: 'AccessHistory',
+  LINKED_BANK: 'LinkedBank',
+  LINKED_BANK_DETAIL: 'LinkedBankDetail',
   PAYMENT_SETTINGS: 'PaymentSettings',
   LIMIT_SETTING: 'LimitSetting',
   EDIT_INFO: 'EditInfo',
@@ -89,5 +95,7 @@ const SCREEN = {
   BANK_PICKER_SCREEN: 'BankPickerScreen',
   BANK_KYC_SCREEN: 'BankKYCInfo',
   BANK_OTP: 'BankOTP',
+  FORGET_PASSWORD_KYC: 'ForgetPasswordKYC',
+  EDIT_AUTO_RECHARGE: 'EditAutoReCharge',
 };
 export default SCREEN;

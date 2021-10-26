@@ -53,13 +53,15 @@ const Select = ({
       <Pressable
         disabled={disabled}
         onPress={onShowModal}
-        style={styles.inputWrap}>
+        style={styles.inputWrap}
+      >
         {leftComponent}
         <View style={{flex: 1}}>
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l4 : Colors.TEXT}>
+            color={disabled ? Colors.bs1 : Colors.tp3}
+          >
             {mappedValue?.[value]?.label || placeholder}
           </Text>
         </View>
@@ -82,7 +84,8 @@ const Select = ({
         panDirection={'none'}
         visible={showModal}
         onDismiss={onHideModal}
-        width={'100%'}>
+        width={'100%'}
+      >
         <View background-white br20>
           <View row>
             <View flex padding-page>
@@ -95,8 +98,9 @@ const Select = ({
                   onChange?.(items?.[0]?.value);
                 }
                 onHideModal();
-              }}>
-              <Text semibold color={Colors.cl1}>
+              }}
+            >
+              <Text semibold color={Colors.brd1}>
                 Xong
               </Text>
             </TouchableOpacity>
@@ -104,7 +108,8 @@ const Select = ({
           <WheelPicker
             onValueChange={(value, index) => onChange(value)}
             selectedValue={mappedValue[value]?.value}
-            itemStyle={{alignItems: 'flex-start'}}>
+            itemStyle={{alignItems: 'flex-start'}}
+          >
             {items?.map?.((item, idx) => {
               return (
                 <WheelPicker.Item
@@ -125,9 +130,9 @@ const styles = StyleSheet.create({
   wrap: {},
   inputWrap: {
     flexDirection: 'row',
-    backgroundColor: Colors.l1,
+    backgroundColor: Colors.tp3,
     alignItems: 'center',
-    borderColor: Colors.l1,
+    borderColor: Colors.tp3,
     borderWidth: 1,
     paddingVertical: 11,
     paddingHorizontal: 8,

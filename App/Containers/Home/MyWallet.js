@@ -69,9 +69,10 @@ const MyWallet = ({route}) => {
 
         <View
           style={{
-            backgroundColor: Colors.BORDER,
+            backgroundColor: Colors.bs2,
             height: 8,
-          }}></View>
+          }}
+        ></View>
 
         <View style={[styles.wrap, styles.py_1]}>
           {listBankConnect ? (
@@ -81,7 +82,8 @@ const MyWallet = ({route}) => {
                   marginBottom: 10,
                   fontSize: Fonts.H6,
                   fontWeight: 'bold',
-                }}>
+                }}
+              >
                 {translation.connect_cardbank_account}
               </Text>
               <Text style={styles.text}>
@@ -113,7 +115,7 @@ const MyWallet = ({route}) => {
               : ''}
             <Col width="30%" style={styles.mb_15}>
               <TouchableOpacity style={styles.addBank}>
-                <Icon icon={Images.Transfer.UNION} tintColor={Colors.cl1} />
+                <Icon icon={Images.Transfer.UNION} tintColor={Colors.brd1} />
                 <Text style={styles.fontSmall}>Thêm liên kết NH</Text>
               </TouchableOpacity>
             </Col>
@@ -126,12 +128,11 @@ const MyWallet = ({route}) => {
           styles.wrap,
           {
             padding: Spacing.PADDING,
-            backgroundColor: Colors.BACKGROUNDCOLOR,
+            backgroundColor: Colors.bs4,
           },
-        ]}>
+        ]}
+      >
         <Button
-          bg={Colors.cl1}
-          color={Colors.white}
           label={translation.add_bank}
           onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
         />
@@ -143,21 +144,21 @@ const MyWallet = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
   },
   py_1: {paddingVertical: Spacing.PADDING},
   text: {
-    color: Colors.gray,
+    color: Colors.tp3,
     lineHeight: 20,
     marginBottom: 15,
   },
   itemAddBank: {
     maxWidth: '33.333%',
     alignItems: 'center',
-    borderColor: Colors.l5,
+    borderColor: Colors.tp5,
     borderWidth: 1,
     borderStyle: 'dashed',
     padding: 10,
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   fontSmall: {
-    fontSize: Fonts.FONT_SMALL,
+    fontSize: Fonts.SM,
   },
 });
 

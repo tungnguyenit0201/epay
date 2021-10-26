@@ -1,6 +1,14 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
+import {
+  Text,
+  Checkbox,
+  Header,
+  Button,
+  TextInput,
+  Icon,
+  FooterContainer,
+} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
@@ -10,8 +18,7 @@ import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
-
+import _ from 'lodash';
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
   const {
@@ -33,15 +40,17 @@ const RegisterPassword = ({route}) => {
     // TODO: translate
     <BlueHeader>
       <Header
+        style={styles.mt}
         back
         renderRightComponent={() => (
           <TouchableOpacity
             style={{paddingRight: Spacing.PADDING}}
-            onPress={() => setShowModal(true)}>
+            onPress={() => setShowModal(true)}
+          >
             <Icon
               icon={Images.Register.Info}
               style={styles.iconSize}
-              tintColor={Colors.white}
+              tintColor={Colors.bs4}
             />
           </TouchableOpacity>
         )}
@@ -53,7 +62,8 @@ const RegisterPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}>
+        onSubmit={onSubmit}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -77,9 +87,10 @@ const RegisterPassword = ({route}) => {
                 contentContainerStyle={[
                   {paddingVertical: scale(24)},
                   styles.wrap,
-                ]}>
+                ]}
+              >
                 <Content
-                  title="Tạo mật khẩu"
+                  title={translation.create_a_password}
                   text={
                     translation.password_for_account_security_and_transaction_confirmation_at_checkout
                   }
@@ -90,9 +101,10 @@ const RegisterPassword = ({route}) => {
                   onChange={handleChange('newPassword')}
                   onBlur={handleBlur('newPassword')}
                   placeholder={translation.enter_your_password}
-                  error={touched.newPassword && errors.newPassword}
+                  error={touched.newPassword && translation[errors.newPassword]}
                   value={values.newPassword}
                   //leftIcon={Images.Transfer.Lock}
+                  maxLength={20}
                 />
                 <TextInput
                   password
@@ -100,13 +112,17 @@ const RegisterPassword = ({route}) => {
                   onChange={handleChange('passwordConfirm')}
                   onBlur={handleBlur('passwordConfirm')}
                   placeholder={translation.confirm_password}
-                  error={touched.passwordConfirm && errors.passwordConfirm}
+                  error={
+                    touched.passwordConfirm &&
+                    translation[errors.passwordConfirm]
+                  }
                   value={values.passwordConfirm}
                   //leftIcon={Images.Transfer.Lock}
+                  maxLength={20}
                 />
                 <Text style={styles.textNote}>
                   {
-                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                    translation.note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters
                   }
                 </Text>
               </ScrollView>
@@ -115,28 +131,37 @@ const RegisterPassword = ({route}) => {
                 <View style={styles.flexRow}>
                   <Checkbox onPress={setActive} />
                   <Text style={{marginLeft: 5}}>
-                    {` Tôi đồng ý với các `}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
-                      <Text style={styles.firstLink}>
-                        {'Thoả thuận người dùng '}
-                      </Text>
-                    </TouchableOpacity>
-                    và
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}>
-                      <Text style={styles.firstLink}>
-                        {'Chính sách quyền riêng tư '}
-                      </Text>
-                    </TouchableOpacity>
-                    của Epay Services
+                    {`Tôi đồng ý với `}
+                    <Text
+                      onPress={() => onGoTerm(SCREEN.POLICY)}
+                      style={styles.firstLink}
+                      color={Colors.tp1}
+                    >
+                      {'điều kiện & điều khoản '}
+                    </Text>
+                    của EPAY
+                    {/* {` Tôi đồng ý với các `}
+                    <Text
+                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}
+                      style={styles.firstLink}
+                    >
+                      {'Thoả thuận người dùng'}
+                    </Text>{' '}
+                    và{' '}
+                    <Text
+                      onPress={() => onGoTerm(SCREEN.POLICY)}
+                      style={styles.firstLink}
+                    >
+                      {'Chính sách quyền riêng tư '}
+                    </Text>
+                    của Epay Services */}
                   </Text>
                 </View>
 
                 <Button
-                  disabled={!active}
+                  disabled={
+                    !active || !_.isEmpty(errors) || !values.passwordConfirm
+                  }
                   mt={10}
                   label={translation?.sign_up}
                   onPress={handleSubmit}
@@ -159,18 +184,18 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
   //-----------------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginTop: -2.5},
+  mt: {marginTop: -10},
   //-----------------------
   iconSize: {
     width: scale(20),
     height: scale(20),
   },
   firstLink: {
-    textDecorationLine: 'underline',
     marginLeft: 3,
   },
   textNote: {
-    fontSize: 12,
+    fontSize: scale(12),
     fontWeight: '500',
     paddingRight: 9,
   },

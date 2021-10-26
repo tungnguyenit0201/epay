@@ -7,7 +7,7 @@ import {useRoute} from '@react-navigation/native';
 import {useUser} from 'context/User';
 import {SCREEN} from 'configs/Constants';
 import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
-import {mapBankNapas} from 'services/bank';
+import useServiceBank from 'services/bank';
 import moment from 'moment';
 const INPUT_REF = {
   CARD_NUMBER: 'cardNumber',
@@ -26,6 +26,7 @@ const BankCardInfo = props => {
   const [issueDate, setissueDate] = useState('');
   const [cardNumberErr, setCardNumberErr] = useState('');
   const [cardHolderName, setName] = useState(personalInfo?.FullName);
+  const {mapBankNapas} = useServiceBank();
 
   useEffect(() => {
     return () => {};
@@ -121,8 +122,9 @@ const BankCardInfo = props => {
   };
   return (
     <ScrollView
-      style={{backgroundColor: Colors.white}}
-      contentContainerStyle={{flex: 1}}>
+      style={{backgroundColor: Colors.bs4}}
+      contentContainerStyle={{flex: 1}}
+    >
       <HeaderBg>
         <Header title="Thông tin cá nhân" back />
       </HeaderBg>

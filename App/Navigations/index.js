@@ -8,12 +8,15 @@ import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTranslation} from 'context/Language';
 import SplashScreen from 'react-native-splash-screen';
-import {Platform, Alert, Linking} from 'react-native';
+import {Platform, Alert, Linking, AppState} from 'react-native';
 import {useAsyncStorage, useConfig} from 'context/Common/utils';
 import messaging from '@react-native-firebase/messaging';
 import {useNotify} from 'context/User/utils';
+import RNRestart from 'react-native-restart';
 import {useUser} from 'context/User';
 import {Text} from 'components';
+import {getAll} from 'utils/Functions';
+import {useLoginName} from 'context/Auth/utils';
 
 const Stack = createStackNavigator();
 
@@ -46,12 +49,18 @@ import Transfer from 'containers/Wallet/Transfer';
 import TrafficFee from 'containers/Service/TrafficFee';
 import RegisterResult from 'containers/Service/TrafficFee/RegisterResult';
 import RegisterFee from 'containers/Service/TrafficFee/Register';
+import TrafficRegisterForm from 'containers/Service/TrafficFee/RegisterForm';
+import TrafficRfid from 'containers/Service/TrafficFee/RFID';
 import TrafficViolationPayment from 'containers/Service/TrafficViolationPayment';
 import Confirmation from 'containers/Wallet/Confirmation';
 import Security from 'containers/User/Security';
 import ChangePassword from 'containers/User/ChangePassword';
 import UserInfo from 'containers/User/UserInfo';
 import PaymentSettings from 'containers/User/PaymentSettings';
+import WalletAccessHistory from 'containers/User/AccessHistory';
+import SortBank from 'containers/User/SortBank';
+import LinkedBank from 'containers/User/LinkedBank/index';
+import LinkedBankDetail from 'containers/User/LinkedBank/Detail';
 import EditInfo from 'containers/User/EditInfo';
 import NewPassword from 'containers/User/NewPassword';
 import Contacts from 'containers/Wallet/Contacts';
@@ -74,7 +83,7 @@ import SmartOTPFailure from 'containers/User/SmartOTP/SmartOTPFailure';
 import SyncSmartOTP from 'containers/User/SmartOTP/SyncSmartOTP';
 import OTPBySmartOTP from 'containers/Wallet/OTPBySmartOTP';
 import MapBankFlow from 'containers/Wallet/Bank/MapBankFlow';
-import BankLinked from 'containers/Wallet/Bank/BankLinked';
+// import BankLinked from 'containers/Wallet/Bank/BankLinked';
 import BankLinkKYCInfo from 'containers/Wallet/Bank/BankLinkKYCInfo';
 import BankDetail from 'containers/Wallet/Bank/BankDetail';
 import LimitSetting from 'containers/Wallet/LimitSetting';
@@ -93,15 +102,20 @@ import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
+import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
+import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
-  const {getToken} = useAsyncStorage();
+  const {getToken, getNameData, getPhone, getInactiveTime, setInactiveTime} =
+    useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
-  const {onPressNotify} = useNotify();
+  const {onPressNotify} = useNotify(false);
   const {dispatch} = useUser();
+  const {navigateLoginByName} = useLoginName();
+  const appState = React.useRef(AppState.currentState);
 
   const openNotificaiton = async remoteMessage => {
     const token = await getToken();
@@ -126,6 +140,36 @@ const AppNavigator = () => {
       await onGetConfig();
     };
     getConfig();
+
+    const subscription = AppState.addEventListener(
+      'change',
+      async nextAppState => {
+        try {
+          appState.current = nextAppState;
+          if (nextAppState === 'background' || nextAppState === 'inactive') {
+            await setInactiveTime(Date.now());
+          }
+          if (
+            appState.current?.match(/inactive|background/) &&
+            nextAppState === 'active'
+          ) {
+            let config = await onGetConfig();
+            let inactiveTime = await getInactiveTime();
+            let time =
+              parseInt?.(inactiveTime) + config?.TurnOffAfterTime * 1000;
+            if (parseInt?.(time) != 'NaN') {
+              time < Date.now() && RNRestart.Restart();
+
+              await setInactiveTime(null);
+            }
+          }
+        } catch (error) {}
+      },
+    );
+
+    return () => {
+      subscription?.remove?.();
+    };
   }, []); // eslint-disable-line
 
   React.useEffect(() => {
@@ -138,7 +182,14 @@ const AppNavigator = () => {
       else setLanguage(currentLanguage);
     };
 
+    const checkWelcomeBack = async () => {
+      // const name = await getName();
+      const [nameData, phone] = await getAll(getNameData, getPhone);
+      phone && nameData[phone] && navigateLoginByName(phone);
+    };
+
     getCurrentLanguage();
+    checkWelcomeBack();
   }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {
@@ -228,7 +279,8 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}>
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -237,7 +289,8 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -311,9 +364,26 @@ const AppNavigator = () => {
             name={SCREEN.TRAFFIC_REGISTER_RESULT}
             component={RegisterResult}
           />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_REGISTER_FORM}
+            component={TrafficRegisterForm}
+          />
+          <Stack.Screen name={SCREEN.TRAFFIC_RFID} component={TrafficRfid} />
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
+
+          <Stack.Screen name={SCREEN.SORT_BANK} component={SortBank} />
+          <Stack.Screen
+            name={SCREEN.WALLET_ACCESS_HISTORY}
+            component={WalletAccessHistory}
+          />
+          <Stack.Screen name={SCREEN.LINKED_BANK} component={LinkedBank} />
+          <Stack.Screen
+            name={SCREEN.LINKED_BANK_DETAIL}
+            component={LinkedBankDetail}
+          />
+
           <Stack.Screen name={SCREEN.EDIT_INFO} component={EditInfo} />
           <Stack.Screen name={SCREEN.NEW_PASSWORD} component={NewPassword} />
           <Stack.Screen
@@ -404,6 +474,14 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
+          <Stack.Screen
+            name={SCREEN.FORGET_PASSWORD_KYC}
+            component={ForgetPasswordKYC}
+          />
+          <Stack.Screen
+            name={SCREEN.EDIT_AUTO_RECHARGE}
+            component={EditAutoReCharge}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
@@ -422,7 +500,8 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}>
+      }}
+    >
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />

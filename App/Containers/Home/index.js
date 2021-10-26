@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   Image,
@@ -6,9 +6,8 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import {Text, Modal, Button, HeaderBg} from 'components';
+import {HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 // import ListItem from 'components/Common/ListItem';
 import ListItemSimple from 'components/Common/ListItemSimple';
@@ -21,16 +20,13 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import {useHome} from 'context/Home/utils';
-import {useUser} from 'context/User';
-import {useRegister} from 'context/Auth/utils';
+import {useHandleBack} from 'context/Common/utils';
 
 const Home = () => {
   // TODO : translation
-  const {top} = useSafeAreaInsets();
   const translation = useTranslation();
-  const {banner, goSecurity} = useHome();
-  const {firstLogin} = useUser();
-  const {setFirstLogin} = useRegister();
+  const {banner} = useHome();
+  const backHandler = useHandleBack(); // run useEffect
 
   const dataMenu = [
     {
@@ -54,16 +50,8 @@ const Home = () => {
     },
     {
       icon: Images.Homes.LichSuGd,
-      name: 'Lịch sử',
+      name: translation.history,
       screen: SCREEN.HISTORY,
-    },
-  ];
-  const dataBanner = [
-    {
-      ImageUrl: require('images/home/banner-1.jpg'),
-    },
-    {
-      ImageUrl: require('images/home/banner-2.jpg'),
     },
   ];
 
@@ -81,9 +69,9 @@ const Home = () => {
             space={1}
             col={4}
             data={dataMenu}
-            styleText={[{fontSize: 14, color: Colors.white}]}
-            styleWicon={[{backgroundColor: Colors.cl1}]}
-            //styleIcon={[{tintColor: Colors.white}]}
+            styleText={[{fontSize: 14, color: Colors.bs4}]}
+            styleWicon={[{backgroundColor: Colors.brd1}]}
+            //styleIcon={[{tintColor: Colors.bs4}]}
           />
         </View>
       </HeaderBg>
@@ -100,30 +88,6 @@ const Home = () => {
           <View style={styles.bottom} />
         </ScrollView>
       </View>
-
-      {firstLogin && (
-        <Modal
-          visible={firstLogin}
-          onClose={() => setFirstLogin(false)}
-          title="Đăng nhập vân tay"
-          content="Nếu bạn gặp vấn đề cần giúp đỡ, vui lòng gọi về cho chúng tôi để được  tư vấn hỗ trợ." // TODO: translate
-          buttonGroup={() => (
-            <View style={styles.buttonGroup}>
-              <Button
-                mb={10}
-                label="Cài đặt vân tay"
-                onPress={() => {
-                  setFirstLogin(false);
-                  goSecurity();
-                }}
-              />
-              <TouchableOpacity onPress={() => setFirstLogin(false)}>
-                <Text>Để sau</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
-      )}
     </>
   );
 };
@@ -131,7 +95,7 @@ const styles = StyleSheet.create({
   rowHeader: {
     // flexWrap: 'wrap', hide to not break line
     flexDirection: 'row',
-    alignItems: 'center',
+    //alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 25,
   },

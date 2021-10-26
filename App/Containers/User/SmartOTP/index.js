@@ -18,20 +18,21 @@ const SmartOtp = () => {
 
   return (
     <>
-      <ScrollView style={base.wrap}>
-        <HeaderBg>
-          <Header back title={translation.password_and_security} />
-        </HeaderBg>
-
-        <Text>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
-        <Text>Smart OTP: Phiên bản {smartOTPInfo?.version || '...'}</Text>
+      <HeaderBg>
+        <Header back title={translation.password_and_security} />
+      </HeaderBg>
+      <ScrollView style={[base.wrap, styles.pH]}>
+        <Text mt={5}>Số serial: {smartOTPInfo?.serialNumber || '...'}</Text>
+        <Text mb={5}>
+          Smart OTP: Phiên bản {smartOTPInfo?.version || '...'}
+        </Text>
 
         <TouchableOpacity style={styles.item} onPress={onChangePassword}>
           <Icon
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Đổi mật khẩu smart OTP</Text>
           <Icon
@@ -46,7 +47,7 @@ const SmartOtp = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Quên mật khẩu smart OTP</Text>
           <Icon
@@ -61,7 +62,7 @@ const SmartOtp = () => {
             mr={8}
             icon={Images.Profile.MaThanhToan}
             size={24}
-            tintColor={Colors.cl1}
+            tintColor={Colors.brd1}
           />
           <Text style={styles.text}> Smart OTP không hoạt động</Text>
           <Icon
@@ -80,17 +81,20 @@ const SmartOtp = () => {
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.white,
-    borderBottomColor: Colors.l2,
+    backgroundColor: Colors.bs4,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
-    paddingHorizontal: Spacing.PADDING,
+    paddingRight: Spacing.PADDING,
     alignItems: 'center',
   },
   text: {
     marginRight: 80,
     fontSize: Fonts.H6,
+  },
+  pH: {
+    paddingHorizontal: Spacing.PADDING,
   },
 });
 export default SmartOtp;

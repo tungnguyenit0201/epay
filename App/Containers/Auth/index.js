@@ -6,7 +6,7 @@ import {
   Pressable,
   useWindowDimensions,
 } from 'react-native';
-import {Button, Text, TextInput, Icon} from 'components';
+import {Button, FooterContainer, TextInput} from 'components';
 import {Colors, Images, Spacing, Fonts} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
@@ -18,7 +18,6 @@ import _ from 'lodash';
 // import {scale} from 'utils/Functions';
 import {Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const Auth = () => {
   const {onCheckPhoneExist} = useAuth();
@@ -34,7 +33,7 @@ const Auth = () => {
       <BigLogo style={{marginBottom: 30}} />
 
       <Content
-        title="Nhập số điện thoại"
+        title={translation.enter_phone_number}
         text={translation.sign_insign_up_epay}
       />
 
@@ -44,7 +43,8 @@ const Auth = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onCheckPhoneExist}>
+        onSubmit={onCheckPhoneExist}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -63,11 +63,11 @@ const Auth = () => {
           return (
             <>
               <TextInput
-                placeholder={'Nhập số điện thoại'} //TODO: translate
+                placeholder={translation.enter_phone_number}
                 numeric
                 onChange={handleChange('phone')}
                 onBlur={handleBlur('phone')}
-                error={touched.phone && errors.phone}
+                error={touched.phone && translation[errors.phone]}
                 value={values.phone}
                 //leftIcon={Images.Phone_1}
                 isDeleted={values.phone}
@@ -75,7 +75,8 @@ const Auth = () => {
               />
 
               <FooterContainer
-                style={[styles.absolute, styles.botZero, {width: width}]}>
+                style={[styles.absolute, styles.botZero, {width: width}]}
+              >
                 <Button
                   label={translation.continue}
                   onPress={handleSubmit}

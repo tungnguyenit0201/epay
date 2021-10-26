@@ -7,12 +7,22 @@ import {
   Image,
   RefreshControl,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
-import {Text, Header, Button, Row, Col, HeaderBg} from 'components';
+import {
+  Text,
+  Header,
+  Button,
+  Row,
+  Col,
+  HeaderBg,
+  ScreenBackground,
+} from 'components';
 import {Colors, Fonts, base, Images, Spacing} from 'themes';
 
-import {SCREEN, NOTIFY} from 'configs/Constants';
+import {SCREEN, NOTIFY, COMMON_ENUM} from 'configs/Constants';
 import {scale} from 'utils/Functions';
+import moment from 'moment';
 
 import {useTranslation} from 'context/Language';
 
@@ -23,7 +33,8 @@ const Notification = () => {
   const translation = useTranslation();
   const [type, setType] = useState(NOTIFY.ALL.title);
   const [refreshing, setRefreshing] = useState(false);
-  const {selectNotify, onGetAllNotify, onPressNotify} = useNotify();
+  const {selectNotify, onGetAllNotify, onPressNotify, onReadAllNotify} =
+    useNotify();
   const dataType = [
     {id: 0, title: NOTIFY.ALL.title},
     {id: 1, title: NOTIFY.CHARGES.title},
@@ -34,13 +45,24 @@ const Notification = () => {
   return (
     <>
       <HeaderBg>
-        <Header title={translation.notification} back />
-        <Image
-          source={require('images/noti/TickCircle.png')}
-          style={styles.TickCircle}
+        <Header
+          title={translation.notification}
+          back
+          renderRightComponent={() => (
+            <TouchableOpacity
+              onPress={onReadAllNotify}
+              style={{backgroundColor: 'yelllow'}}
+            >
+              <Image
+                source={Images.Notification.TickCircle}
+                style={styles.TickCircle}
+              />
+            </TouchableOpacity>
+          )}
         />
       </HeaderBg>
       <View style={styles.wrap}>
+        <ScreenBackground />
         <View style={[base.container, styles.flexRow]}>
           <FlatList
             data={dataType}
@@ -52,7 +74,8 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}>
+                }}
+              >
                 <Text style={[type === item.title && styles.textWhite]}>
                   {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
@@ -70,7 +93,8 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }>
+          }
+        >
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -78,19 +102,29 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}>
+                    onPress={() => onPressNotify(item)}
+                  >
                     <View style={styles.head}>
-                      <Image
-                        source={require('images/favicon.png')}
-                        style={styles.icon}
-                      />
-                      <Text style={styles.date}>{item?.Time}</Text>
-                    </View>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}
+                      >
+                        <Image
+                          source={require('images/favicon.png')}
+                          style={styles.icon}
+                        />
 
-                    <Text bold fs="h6" mb={10}>
-                      {item?.Title}
-                    </Text>
-                    <Text>{item?.Content}</Text>
+                        <Text bold fs="h6" ml={10} centered>
+                          {item?.Title}
+                        </Text>
+                      </View>
+                      <Text style={styles.date}>
+                        {moment(
+                          item?.Time,
+                          COMMON_ENUM.DATETIME_FORMAT_CORE,
+                        ).format(COMMON_ENUM.DATETIME_FORMAT_APP)}
+                      </Text>
+                    </View>
+                    <Text numberOfLines={4}>{item?.Content}</Text>
                     {/* {item?.ContentImgUrl && (
                       <Image
                         source={{uri: `${item?.ContentImgUrl}`}}
@@ -108,7 +142,7 @@ const Notification = () => {
                     source={require('images/noti/Noti.png')}
                     style={styles.imgSuccess}
                   />
-                  <Text>Không có thông báo nào</Text>
+                  <Text>Chưa có thông báo mới</Text>
                 </View>
               </>
             )}
@@ -116,12 +150,6 @@ const Notification = () => {
           <View style={{height: 120}}></View>
         </ScrollView>
       </View>
-      {selectNotify(type).length !== 0 ? (
-        selectNotify(type).map((item, index) => {})
-      ) : (
-        <Image source={require('images/wave.png')} style={styles.bgImg} />
-      )}
-      {/* <FooterNotification /> */}
     </>
   );
 };
@@ -129,6 +157,8 @@ const styles = StyleSheet.create({
   wrap: {
     paddingTop: 20,
     paddingBottom: 150,
+    flex: 1,
+    backgroundColor: Colors.bs4,
   },
 
   emtyNoti: {
@@ -147,19 +177,9 @@ const styles = StyleSheet.create({
   TickCircle: {
     width: 24,
     height: 24,
-    position: 'absolute',
-    right: Spacing.PADDING,
-    bottom: 23,
-  },
-  bgImg: {
-    width: scale(375),
-    height: scale(375),
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
   },
   isRead: {
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
   },
   tag: {
     flexDirection: 'row',
@@ -168,15 +188,15 @@ const styles = StyleSheet.create({
     paddingVertical: scale(5),
     paddingHorizontal: scale(10),
     borderRadius: 99,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     height: 32,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
     borderWidth: 1,
     marginRight: scale(5),
   },
   tagActive: {
-    backgroundColor: Colors.blue,
-    borderColor: Colors.blue,
+    backgroundColor: Colors.tp1,
+    borderColor: Colors.tp1,
   },
 
   flexRow: {flexDirection: 'row', paddingBottom: 15},
@@ -198,7 +218,7 @@ const styles = StyleSheet.create({
   },
 
   textWhite: {
-    color: Colors.white,
+    color: Colors.bs4,
   },
 });
 export default Notification;

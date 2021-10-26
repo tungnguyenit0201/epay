@@ -3,7 +3,7 @@ import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import Navigator from 'navigations/Navigator';
 import {useEffect, useState, useRef, useCallback} from 'react';
-import {getHistory, getHistoryDetail} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -20,6 +20,7 @@ const useHistory = () => {
   const {phone} = useUser();
   const [historyData, setHistoryData] = useState(null);
   const {setError} = useError();
+  const {getHistory, getHistoryDetail} = useServiceWallet();
   const {setLoading} = useLoading();
   const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({
@@ -35,7 +36,7 @@ const useHistory = () => {
   const parseHistory = data => {
     // parser for grouping
     const parser = item => {
-      const time = moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT);
+      const time = moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT_CORE);
       return `${time.month()}/${time.year()}`;
     };
     // group into object -> to array -> map into structured objects {key, list, income, expense}
@@ -79,8 +80,8 @@ const useHistory = () => {
     setHistoryData(null);
     const result = await getHistory({
       phone,
-      StartDate: startDate || moment().format(COMMON_ENUM.DATETIME_FORMAT),
-      EndDate: endDate || moment().format(COMMON_ENUM.DATETIME_FORMAT),
+      StartDate: startDate || moment().format(COMMON_ENUM.DATETIME_FORMAT_CORE),
+      EndDate: endDate || moment().format(COMMON_ENUM.DATETIME_FORMAT_CORE),
       CodeFilter: search || '',
       ServiceId: serviceID.join(',') || 0,
       StateId: stateID,

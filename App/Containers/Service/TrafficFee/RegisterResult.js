@@ -1,19 +1,9 @@
 import React, {useCallback, useState} from 'react';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
-import {Header, HeaderBg, Text, Button} from 'components';
+import {ScrollView, View, StyleSheet, Image} from 'react-native';
+import {Header, HeaderBg, Text, Button, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
-import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
-import Navigator from 'navigations/Navigator';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const RegisterResult = () => {
   const translation = useTranslation();
@@ -67,7 +57,7 @@ const RegisterResult = () => {
               <Text bold fs="h5" mb={16} centered>
                 Thông tin của bạn đã được gửi đi và đang chờ duyệt
               </Text>
-              <Text centered fs="md" color={Colors.l8}>
+              <Text centered fs="md" color={Colors.tp3}>
                 Đăng ký xe ngay để sử dụng dịch vụ thu phí giao thông và tham
                 gia vào nhiều tiện ích khác từ ví.
               </Text>
@@ -109,7 +99,7 @@ const styles = StyleSheet.create({
   //---------------
   pt1: {paddingTop: 72},
   //---------------
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //---------------
   iconOption1: {
     width: 20,
@@ -145,7 +135,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     paddingTop: 10,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
   },
   blockTransaction: {
@@ -154,11 +144,11 @@ const styles = StyleSheet.create({
     paddingVertical: 17,
     paddingHorizontal: 13,
     borderBottomWidth: 1,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,
@@ -166,12 +156,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   blockBlueCircle: {
     width: 110,
     height: 110,
-    backgroundColor: Colors.BACKGROUND_BLUE,
+    backgroundColor: Colors.bg1,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',

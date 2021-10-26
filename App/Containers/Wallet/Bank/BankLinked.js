@@ -29,7 +29,6 @@ import {useUser} from 'context/User';
 import {useUserInfo} from 'context/User/utils';
 import {useMoney} from 'context/Wallet/utils';
 import ListBank from 'components/Wallet/Bank/ListBank';
-// import FooterContainer from 'components/Auth/FooterContainer';
 
 import {useBankInfo} from 'context/Wallet/utils';
 import BankList from 'containers/Wallet/Bank/components/BankList';
@@ -50,7 +49,8 @@ const BankLinked = props => {
       style={styles.alignCenter}
       onPress={() => {
         Navigator.navigate(screen);
-      }}>
+      }}
+    >
       <Image
         source={icon}
         style={[
@@ -62,24 +62,24 @@ const BankLinked = props => {
         ]}
         resizeMode="contain"
       />
-      <Text centered color={Colors.white} bold fs="h6">
+      <Text centered color={Colors.bs4} bold fs="h6">
         {title}
       </Text>
     </TouchableOpacity>
   );
   const dataTest_1 = [
     {
-      icon: Images.ConnectBank.Deposit,
+      icon: Images.Homes.NapTien,
       name: translation.top_up,
       screen: SCREEN.TOP_UP,
     },
     {
-      icon: Images.ConnectBank.Withdraw,
+      icon: Images.Homes.RutTien,
       name: translation.withdraw,
       screen: SCREEN.WITHDRAW,
     },
     {
-      icon: Images.ConnectBank.Exchange,
+      icon: Images.Homes.ChuyenTien,
       name: translation.transfer,
       screen: SCREEN.TRANSFER,
     },
@@ -101,27 +101,25 @@ const BankLinked = props => {
     //TODO: Translate
     <>
       <HeaderBg>
-        <Header back title={'Ví của tôi'} />
+        <Header back title={translation.topup.my_wallet} style={styles.mb} />
 
         <View style={[base.row, styles.block1]}>
           {!showMoney ? (
-            <Text
-              style={[styles.pr1, styles.pt2, styles.textSize2]}
-              color={Colors.white}>
+            <Text style={[styles.pr1, styles.textSize2]} color={Colors.bs4}>
               ******
             </Text>
           ) : (
             <TouchableOpacity onPress={onGetConnectedBank} style={styles.pr1}>
-              <Text bold color={Colors.white}>
+              <Text bold fs="h5" mt={-3} color={Colors.bs4}>
                 {formatMoney(userInfo?.myWallet, true)}
               </Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity onPress={() => setShowMoney(!showMoney)}>
             <Icon
-              icon={showMoney ? Images.Eye : Images.EyeGray}
+              icon={showMoney ? Images.Eye2 : Images.EyeGray2}
               size={20}
-              tintColor={Colors.white}
+              tintColor={Colors.bs4}
             />
           </TouchableOpacity>
         </View>
@@ -132,7 +130,8 @@ const BankLinked = props => {
               width={'33.333%'}
               space={1}
               key={index}
-              style={[styles.mb4, styles.alignCenter]}>
+              style={[styles.mb4, styles.alignCenter]}
+            >
               <Item title={item.name} icon={item.icon} screen={item.screen} />
             </Col>
           ))}
@@ -148,15 +147,16 @@ const BankLinked = props => {
 
         <ScrollView>
           <View style={[styles.wrap, styles.pb1]}>
-            <Text bold fs="h6" mb={12}>
+            <Text bold fs="h6" color={Colors.tp2} mb={12}>
               Thêm ngân hàng nhận tiền
             </Text>
 
             <TouchableOpacity
               style={[base.row, styles.btnAddBank]}
-              onPress={mapBank}>
+              onPress={mapBank}
+            >
               <View style={styles.flex1}>
-                <Text color={Colors.black} fs="h6">
+                <Text color={Colors.bs1} fs="h6">
                   {translation.add_bank_account}
                 </Text>
               </View>
@@ -177,20 +177,6 @@ const BankLinked = props => {
           />
         </ScrollView>
       </View>
-
-      {/* <FooterContainer
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          paddingBottom: Spacing.PADDING * 1.5
-        }}>
-        <Button
-          label={translation.connect_bank}
-          onPress={() => Navigator.navigate(SCREEN.BANK_LIST)}
-        />
-      </FooterContainer> */}
     </>
   );
 };
@@ -198,7 +184,7 @@ const BankLinked = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   //---------------
   wrap: {paddingHorizontal: Spacing.PADDING},
@@ -218,7 +204,7 @@ const styles = StyleSheet.create({
   },
   //---------------
   pt1: {paddingTop: 30},
-  pt2: {paddingTop: 12},
+  pt2: {paddingTop: 2},
   //---------------
   pb1: {paddingBottom: 8},
   //---------------
@@ -236,9 +222,9 @@ const styles = StyleSheet.create({
   },
   //---------------
   blockShadow: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -258,12 +244,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderWidth: 1,
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     borderRadius: 8,
   },
   iconPlus: {
     width: scale(24),
     height: scale(24),
+  },
+  mb: {
+    marginBottom: 28,
   },
 });
 

@@ -76,12 +76,12 @@ const BankList = () => {
         <View style={styles.mt1}>
           <TextInput
             placeholder="Nhập tên Ngân hàng cần tìm "
-            placeholderTextColor={Colors.l5}
+            placeholderTextColor={Colors.tp5}
             leftIcon={Images.ConnectBank.Search}
             // value={value}
             // onChange={_onChange}
             // showErrorLabel={error}
-            // error={'*Số tiền nạp tối thiểu là 10.000 vnđ'}
+            // error={'*Số tiền nạp tối thiểu là 10.000đ'}
           />
         </View>
       </HeaderBg>
@@ -89,7 +89,7 @@ const BankList = () => {
       <ScrollView style={styles.container}>
         <View style={[styles.wrap, styles.py1]}>
           <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
-            <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
+            <Text color={Colors.tp2} bold mb={16} style={styles.textSize1}>
               {translation.bank_linking}
             </Text>
             {/* {renderListBank} */}
@@ -102,14 +102,14 @@ const BankList = () => {
           </View>
 
           <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
-            <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
+            <Text color={Colors.tp2} bold mb={16} style={styles.textSize1}>
               {translation.bank_linking}
             </Text>
             <ListBank listBank={dataBlock} />
           </View>
 
           <View style={[styles.blockShadow, styles.ptb1, styles.mb1]}>
-            <Text color={Colors.black} bold mb={16} style={styles.textSize1}>
+            <Text color={Colors.tp2} bold mb={16} style={styles.textSize1}>
               {translation.bank_linking}
             </Text>
             <ListBank listBank={dataBlock} />
@@ -123,7 +123,7 @@ const BankList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   wrap: {
     paddingHorizontal: Spacing.PADDING,
@@ -146,9 +146,9 @@ const styles = StyleSheet.create({
   textSize1: {fontSize: 18},
   //--------------
   blockShadow: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -11,7 +11,7 @@ const Search = ({onChange, style, ...props}) => (
       autoCapitalize={'none'}
       autoCompleteType={'off'}
       autoCorrect={false}
-      placeholderTextColor={Colors.GRAY}
+      placeholderTextColor={Colors.tp3}
       style={styles.textInput}
       placeholder={TEXT.SEARCH_PLACEHOLDER}
       onChangeText={value => onChange(value?.trim())}
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Spacing.PADDING,
     borderRadius: Spacing.PADDING,
-    backgroundColor: Colors.BACKGROUNDCOMMENT,
+    backgroundColor: Colors.bs3,
     height: Spacing.PADDING * 3,
   },
   textInput: {

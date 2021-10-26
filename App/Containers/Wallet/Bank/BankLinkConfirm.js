@@ -146,14 +146,14 @@ export default function (props) {
 
   const renderTnC = () => {
     return (
-      <Text fs={'md'} color={Colors.gray}>
+      <Text fs={'md'} color={Colors.tp3}>
         Khi nhấn Liên Kết, Quý khách đã xác nhận đồng ý với Thỏa thuận người sử
         dụng của EPAY và Vietcombank
       </Text>
     );
   };
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header back title={'Xác nhận liên kết'} />
       </HeaderBg>
@@ -161,7 +161,8 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         <View alignItems="center" marginBottom={16}>
           <Image
             source={Images.ConnectBank.BankLink}
@@ -188,12 +189,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Spacing.PADDING,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
   shadowButton: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 1, height: 0},
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   shadow: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    backgroundColor: Colors.BACKGROUND_BLUE,
+    backgroundColor: Colors.bg1,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOpacity: 1,
     shadowOffset: {width: 0, height: 0},
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     // borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     color: Colors.cl3,
   },
   textRight: {
-    color: Colors.BLACKTEXT,
+    color: Colors.tp2,
     maxWidth: scale(160),
   },
 });

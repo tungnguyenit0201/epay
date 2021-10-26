@@ -8,18 +8,30 @@ import {useNotify} from 'context/User/utils';
 import Navigator from 'navigations/Navigator';
 import {useUser} from 'context/User';
 import {hidePhone} from 'utils/Functions';
+import _ from 'lodash';
 
 const User = ({data, style}) => {
-  const {personalInfo, phone} = useUser();
-
+  const {personalInfo, phone, listNotify} = useUser();
   const {onGoNotify} = useNotify();
+
+  const numNotify = _.isArray(listNotify)
+    ? listNotify.filter(x => !x.IsRead).length
+    : 0;
+
   return (
-    // TODO: translate
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
-        style={[styles.user, styles.flex1]}>
-        <Text bold style={[styles.text, styles.textSize1]}>
+        style={[styles.user, styles.flex1]}
+      >
+        <Text
+          bold
+          size={Fonts.SM}
+          right
+          color={Colors.bs4}
+          style={styles.lh1}
+          mb={3}
+        >
           {personalInfo?.FullName}
         </Text>
         <Text style={styles.text}>{hidePhone(phone)}</Text>
@@ -40,44 +52,49 @@ const User = ({data, style}) => {
             />
           )}
         </TouchableOpacity>
-        {/* TODO: show notifications count */}
-        {/* <TouchableOpacity
-          style={styles.noti}
-          onPress={() => {
-            Navigator.navigate(SCREEN.NOTIFICATION);
-          }}>
-          <Text style={styles.notiText}>10</Text>
-        </TouchableOpacity> */}
+
+        {!!numNotify && (
+          <TouchableOpacity
+            style={styles.noti}
+            onPress={() => {
+              Navigator.navigate(SCREEN.NOTIFICATION);
+            }}
+          >
+            <Text style={styles.notiText}>{numNotify}</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  lh1: {lineHeight: 18},
+  //-------------
   item: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   wicon: {
     overflow: 'hidden',
     height: 40,
     width: 40,
     borderRadius: 99,
-    backgroundColor: Colors.black,
-    borderWidth: 1,
-    borderColor: Colors.white,
+    backgroundColor: Colors.tp2,
+    borderWidth: 0,
+    borderColor: Colors.bs4,
   },
   user: {
     marginRight: 10,
   },
   text: {
     textAlign: 'right',
-    color: Colors.white,
+    color: Colors.bs4,
   },
-
   noti: {
     width: 16,
     height: 16,
-    backgroundColor: Colors.Highlight,
+    backgroundColor: Colors.hl1,
     position: 'absolute',
     top: -5,
     right: -5,
@@ -86,13 +103,11 @@ const styles = StyleSheet.create({
   notiText: {
     lineHeight: 16,
     textAlign: 'center',
-    color: Colors.white,
+    color: Colors.bs4,
     fontSize: 10,
   },
   //----------------
   flex1: {flex: 1},
-  //----------------
-  textSize1: {fontSize: Fonts.SM},
 });
 
 export default User;

@@ -31,13 +31,15 @@ const BankResult = () => {
               textAlign: 'center',
               width: '100%',
               fontSize: Fonts.H5,
-            }}>
+            }}
+          >
             {translation.successfully_connect}
           </Text>
 
           <Pressable
             onPress={() => Navigator.navigate(SCREEN.TAB_NAVIGATION)}
-            style={styles.items_center}>
+            style={styles.items_center}
+          >
             <Image
               source={Images.Avatar}
               style={{
@@ -55,25 +57,26 @@ const BankResult = () => {
           styles.wrap,
           {
             padding: Spacing.PADDING,
-            backgroundColor: Colors.BACKGROUNDCOLOR,
+            backgroundColor: Colors.bs4,
           },
-        ]}>
+        ]}
+      >
         {/* <View style={[styles.flex_row,styles.justify_between]}>
-          <Button bg={Colors.white}
+          <Button bg={Colors.bs4}
             color={blue_color}
             label={translation.back_to_wallet}
             border={blue_color}
             style={{width: "49%"}}/>
           
           <Button bg={blue_color}
-            color={Colors.white} 
+            color={Colors.bs4} 
             label={translation.minimum_topup_amount_is_10000_vnd}
             style={{width: "49%"}}/>
         </View> */}
 
         <Button
           bg={blue_color}
-          color={Colors.white}
+          color={Colors.bs4}
           label={translation.back}
           // style={{width: '100%'}}
           onPress={() => Navigator.navigate(SCREEN.MY_WALLET)}
@@ -86,7 +89,7 @@ const BankResult = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
   },
 
   wrap: {

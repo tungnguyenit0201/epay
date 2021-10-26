@@ -1,13 +1,21 @@
-const ROOT = 'https://dev2.epayservices.com.vn:9443/api/v2/';
-const TIMEOUT = 10000;
+const ROOT_LIST = [
+  'https://dev2.epayservices.com.vn:9443/api/v2/',
+  'https://test2.epayservices.com.vn:9443/api/v2/',
+  'https://test3.epayservices.com.vn:9443/api/v2/',
+  'https://test4.epayservices.com.vn:9443/api/v2/',
+];
+const ROOT = ROOT_LIST[0];
+const TIMEOUT = 30000;
 
 export default {
   ROOT,
+  ROOT_LIST,
   TIMEOUT,
   AUTH: {
     CHECK_PHONE: 'account/check_exist',
     LOGIN: 'account/login_account',
     REGISTER: 'account/create_account',
+    CHECK_IC_INFO: 'account/identity_card_info_check',
   },
   COMMON: {
     GEN_OTP: 'common/otp/gen_otp',
@@ -78,6 +86,7 @@ export default {
     PROMO_APPLY: 'payment/promo_apply',
     GET_PROMOTION: 'payment/get_promotions',
     PAYMENT: 'payment/payment',
+    PAYMENT_COMFRIM: 'payment/payment_confirm',
     MONEY_TRANSFER: 'wallet/money_transfer',
     GET_SOURCE_MONEY: 'wallet/get_source_money',
   },

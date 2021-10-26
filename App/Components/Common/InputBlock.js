@@ -45,18 +45,20 @@ const InputBlock = ({
 
   return (
     <View>
-      <Text style={styles.inputLabel}>
-        {label} {required && <Text color={'red'}>* </Text>}
-      </Text>
+      {!!label && (
+        <Text style={styles.inputLabel}>
+          {label} {required && <Text color={'red'}>* </Text>}
+        </Text>
+      )}
       {!isSelect ? (
         <TextInput
           textContentType={'oneTimeCode'}
           style={[
             styles.input,
-            {borderColor: isFocused ? Colors.cl1 : Colors.BORDER},
+            {borderColor: isFocused ? Colors.brd1 : Colors.bs2},
             inputStyle,
           ]}
-          placeholderTextColor={Colors.l5}
+          placeholderTextColor={Colors.bs1}
           password={password && !showPassword}
           email={email}
           numeric={numeric}
@@ -69,44 +71,58 @@ const InputBlock = ({
           {...props}
         />
       ) : (
-        <View style={styles.mb1}>
-          <TouchableOpacity
-            style={[styles.select, !!error && styles.error]}
-            onPress={onPress}>
-            <Text style={{color: Colors.TEXT}}>
-              {value ? value : props?.defaultValue}
-            </Text>
-          </TouchableOpacity>
-          {rightIconBgGray && (
+        <>
+          <View style={props.style}>
             <TouchableOpacity
+              style={[styles.select, !!error && styles.error]}
               onPress={onPress}
-              style={[styles.blockArrowRight, styles.pos1]}>
-              <Image
-                source={rightIconBgGray}
-                resizeMode="contain"
-                style={styles.rightIcon}
-              />
+            >
+              <Text style={{color: Colors.tp3}}>
+                {value ? value : props?.defaultValue}
+              </Text>
+              {!!props?.placeholder && !value && !props?.defaultValue && (
+                <Text style={{color: Colors.tp5}}>{props.placeholder}</Text>
+              )}
             </TouchableOpacity>
-          )}
-          {!!error && (
-            <Text color={Colors.ALERT} mt={3} size={scale(12)}>
-              {error}
-            </Text>
-          )}
-        </View>
+            {rightIconBgGray && (
+              <TouchableOpacity
+                onPress={onPress}
+                style={[styles.blockArrowRight, styles.pos1]}
+              >
+                <Image
+                  source={rightIconBgGray}
+                  resizeMode="contain"
+                  style={styles.rightIcon}
+                />
+              </TouchableOpacity>
+            )}
+            {!!error && (
+              <Text color={Colors.hl1} mt={3} size={scale(12)}>
+                {error}
+              </Text>
+            )}
+          </View>
+          <View style={styles.mb1} />
+        </>
       )}
       {rightIcon && (
         <TouchableOpacity
           onPress={onPress}
-          style={[styles.absolute, styles.top1, styles.right1]}>
-          <Icon icon={rightIcon} resizeMode="contain" tintColor={Colors.gray} />
+          style={[
+            styles.absolute,
+            label ? styles.top1 : styles.top2,
+            styles.right1,
+          ]}
+        >
+          <Icon icon={rightIcon} resizeMode="contain" tintColor={Colors.tp3} />
         </TouchableOpacity>
       )}
 
       {!!password && (
         <Pressable
           onPress={() => setShowPassword(!showPassword)}
-          style={[styles.absolute, styles.top1, styles.right1]}>
+          style={[styles.absolute, styles.top1, styles.right1]}
+        >
           <Image
             source={showPassword ? Images.Eye : Images.EyeGray}
             style={[styles.w2, styles.h2]}
@@ -121,11 +137,12 @@ const InputBlock = ({
 export default InputBlock;
 
 const styles = StyleSheet.create({
-  input: {backgroundColor: Colors.BACKGROUNDCOLOR},
+  input: {backgroundColor: Colors.bs4},
   //---------------
   absolute: {position: 'absolute'},
   //----------------
   top1: {top: scale(45)},
+  top2: {top: scale(10)},
   //----------------
   right1: {right: scale(10)},
   //----------------
@@ -138,7 +155,7 @@ const styles = StyleSheet.create({
   pos1: {
     position: 'absolute',
     top: 0,
-    right: 0,
+    right: -1,
   },
   //----------------
   inputLabel: {
@@ -148,16 +165,16 @@ const styles = StyleSheet.create({
   select: {
     paddingHorizontal: Spacing.PADDING / 2,
     paddingVertical: scale(10),
-    height: scale(48),
-    borderColor: Colors.cl4,
+    height: scale(46),
+    borderColor: Colors.bs1,
     borderWidth: 1,
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
   error: {
-    borderColor: Colors.ALERT,
-    borderWidth: 1,
+    borderColor: Colors.hl1,
+    borderWidth: 0.8,
   },
   rightIcon: {
     width: 16,
@@ -165,11 +182,11 @@ const styles = StyleSheet.create({
   },
   //---------------
   blockArrowRight: {
-    height: '100%',
+    height: scale(46),
     justifyContent: 'center',
     alignItems: 'center',
     width: 48,
-    backgroundColor: Colors.l4,
+    backgroundColor: Colors.bs1,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
   },

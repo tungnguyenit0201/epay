@@ -315,7 +315,7 @@ const BankWebConfirm = props => {
     baseUrl: 'http://localhost',
   };
   return (
-    <View flex={1} backgroundColor={Colors.WHITETEXT}>
+    <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header
           back

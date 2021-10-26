@@ -43,14 +43,15 @@ const UserInfo = () => {
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
 
-  const address =
-    AddressInfo?.Address +
-    ', ' +
-    AddressInfo?.Ward +
-    ', ' +
-    AddressInfo?.County +
-    ', ' +
-    AddressInfo?.Provincial;
+  const address = [
+    AddressInfo?.Address,
+    AddressInfo?.Ward,
+    AddressInfo?.County,
+    AddressInfo?.Provincial,
+  ]
+    .filter(x => x)
+    .join(', ');
+
   const data = [
     {
       icon: require('images/profile/User.png'),
@@ -75,7 +76,7 @@ const UserInfo = () => {
     //TODO: Translate
     <>
       <HeaderBg mb={0}>
-        <Header back title="Trang cá nhân" />
+        <Header back title={translation.profile} />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
@@ -83,20 +84,17 @@ const UserInfo = () => {
             <Pressable style={{marginBottom: 15}} onPress={onUpdateAvatar}>
               <View style={styles.avatar}>
                 <Image
-                  style={{width: 94, height: 94}}
+                  style={{width: 120, height: 120}}
                   source={
                     PersonalInfo?.Avatar
                       ? {uri: PersonalInfo.Avatar}
-                      : Images.DefaultUser
+                      : Images.User
                   }
                   resizeMode="cover"
                 />
               </View>
               <View style={styles.wedit}>
-                <Image
-                  style={{width: 16, height: 16, tintColor: Colors.g5}}
-                  source={Images.Edit}
-                />
+                <Image style={styles.iconEdit} source={Images.Profile.Edit2} />
               </View>
             </Pressable>
 
@@ -114,10 +112,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin cá nhân
+                  {translation.perdonal_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  {translation.your_information}
                 </Text>
               </View>
 
@@ -126,7 +124,8 @@ const UserInfo = () => {
                 style={base.leftAuto}
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -142,10 +141,17 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
-                  <Text style={styles.rowTitle}>{item.name}</Text>
-                  <Text style={base.leftAuto}>{item.val}</Text>
+                  <Text style={styles.lh1} mr={3} fs="h6">
+                    {item.name}
+                  </Text>
+                  <View style={styles.flex1}>
+                    <Text fs="h6" style={[base.leftAuto, styles.lh1]} right>
+                      {item.val}
+                    </Text>
+                  </View>
                 </View>
               );
             })}
@@ -155,14 +161,14 @@ const UserInfo = () => {
                 source={require('images/profile/CMND.png')}
               />
               <View>
-                <Text mt={3} mb={5} style={styles.rowTitle}>
-                  CMND/CCCD/Hộ chiếu
+                <Text mt={3} mb={5} fs="h6">
+                  {translation.id_card + '/' + translation.passport}
                 </Text>
-                <Text style={[styles.rowVal]}>
+                <Text>
                   {ICInfor?.ICNumber ? (
                     hideCMND(ICInfor?.ICNumber)
                   ) : (
-                    <Text color={Colors.g4}>Chưa có</Text>
+                    <Text color={Colors.g4}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -173,14 +179,14 @@ const UserInfo = () => {
                 source={require('images/profile/Location.png')}
               />
               <View style={styles.flex1}>
-                <Text mt={3} mb={5} style={styles.rowTitle}>
+                <Text mt={3} mb={5} fs="h6">
                   Địa chỉ
                 </Text>
-                <Text style={[styles.rowVal]}>
+                <Text>
                   {AddressInfo?.Provincial ? (
                     address
                   ) : (
-                    <Text color={Colors.g4}>Chưa có</Text>
+                    <Text color={Colors.g4}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -191,10 +197,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin tài khoản
+                  {translation.account_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  {translation.update_personal_id}
                 </Text>
               </View>
 
@@ -207,7 +213,8 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }>
+                  }
+                >
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -219,10 +226,14 @@ const UserInfo = () => {
             <View style={[base.row]}>
               <Image
                 style={[styles.rowIcon]}
-                source={require('images/profile/Wating.png')}
+                source={
+                  statusVerified == PERSONAL_IC.ACTIVED
+                    ? Images.Profile.Validated
+                    : Images.Profile.Waiting
+                }
               />
               <View>
-                <Text style={styles.rowVal}>{getStatusVerifiedText()}</Text>
+                <Text fs="h6">{getStatusVerifiedText()}</Text>
               </View>
             </View>
           </View>
@@ -231,10 +242,10 @@ const UserInfo = () => {
             <View style={styles.heading}>
               <View>
                 <Text bold fs="h5" mb={5}>
-                  Thông tin Email
+                  {translation.email_information}
                 </Text>
                 <Text style={styles.headingDesc}>
-                  TLorem Ipsum is simply dummy...
+                  {translation.update_contact_information}
                 </Text>
               </View>
 
@@ -244,14 +255,15 @@ const UserInfo = () => {
                   if (PersonalInfo?.Email) {
                     Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
                       type: 'update_email',
-                      headerLabel: 'Nhập mật khẩu',
+                      headerLabel: translation.common.authen,
                     });
                   } else {
                     Navigator.navigate(SCREEN.VERIFY_EMAIL, {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -265,9 +277,9 @@ const UserInfo = () => {
                 source={require('images/profile/Email.png')}
               />
               {PersonalInfo?.Email ? (
-                <Text style={styles.rowTitle}>{PersonalInfo.Email}</Text>
+                <Text fs="h6">{PersonalInfo.Email}</Text>
               ) : (
-                <Text color={Colors.g4}>Chưa có</Text>
+                <Text fs="h6">{translation.empty}</Text>
               )}
             </View>
           </View>
@@ -287,13 +299,26 @@ const UserInfo = () => {
           visible={showModalReVerify}
           onClose={() => onReVerify('hideModal')}
           title="Xác nhận đổi giấy tờ tùy thân"
-          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
-        GTTT cũ. Bạn có chắc chắn muốn 
-        đổi không?" // TODO: translate
+          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với GTTT cũ. Bạn có chắc chắn muốn đổi không?" // TODO: translate
+          icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>
-              <Button mb={10} label="Có" onPress={onReVerify} />
-              <TouchableOpacity onPress={() => onReVerify('hideModal')}>
+              <Button
+                mb={10}
+                bold
+                label="Có"
+                onPress={() => {
+                  onReVerify('hideModal');
+                  Navigator.navigate(SCREEN.CHANGE_PASSWORD, {
+                    type: 'update_account',
+                    headerLabel: translation.common.authen,
+                  });
+                }}
+              />
+              <TouchableOpacity
+                style={styles.textCenter}
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
@@ -306,11 +331,13 @@ const UserInfo = () => {
 const styles = StyleSheet.create({
   avatar: {
     overflow: 'hidden',
-    height: 94,
-    width: 94,
+    height: 120,
+    width: 120,
     borderRadius: 99,
     backgroundColor: Colors.g4,
   },
+
+  buttonGroup: {alignItems: 'center'},
   wedit: {
     overflow: 'hidden',
     borderRadius: 99,
@@ -319,12 +346,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     bottom: 0,
     right: -10,
-    width: 40,
-    height: 40,
+    width: 36,
+    height: 36,
 
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     borderWidth: 1,
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs2,
   },
   heading: {
     flexDirection: 'row',
@@ -332,8 +359,8 @@ const styles = StyleSheet.create({
   },
 
   editBox: {
-    width: scale(46),
-    height: scale(46),
+    width: scale(56),
+    height: scale(56),
     marginTop: -10,
     marginRight: -10,
   },
@@ -355,14 +382,13 @@ const styles = StyleSheet.create({
     height: 24,
     marginRight: 5,
   },
-  rowTitle: {
-    fontSize: Fonts.H6,
-    fontWeight: '500',
-  },
-  rowVal: {
-    //color: Colors.g2,
-  },
-  //tho------------
+  //---------------
   flex1: {flex: 1},
+  //---------------
+  lh1: {lineHeight: 26},
+  //---------------
+  textCenter: {alignSelf: 'center'},
+  //---------------
+  iconEdit: {width: 18, height: 18, tintColor: Colors.g5},
 });
 export default UserInfo;

@@ -19,7 +19,8 @@ const MapBankFlow = () => {
       initialRouteName={MapBankRoutes.BankLinked}
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Stack.Screen
         name={MapBankRoutes.BankLinked}
         component={BankLinked}

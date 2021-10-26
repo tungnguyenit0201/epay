@@ -5,8 +5,9 @@ import {Colors, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
-import {SCREEN} from 'configs/Constants';
+import {GENDER, SCREEN, IC_TPYE} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
+import {eKYCSchema} from 'utils/ValidationSchemas';
 
 const VerifyUserPortrait = ({route}) => {
   const {onUpdateAllInfo, onContinue, verifyInfo} = useVerifyInfo(
@@ -28,6 +29,7 @@ const VerifyUserPortrait = ({route}) => {
     DateOfBirth: extractCardInfo.BirthDay,
     ICNumber: extractCardInfo.CardNumber,
     ICIssuedDate: extractCardInfo.IssueDate,
+    ValidDate: extractCardInfo.ValidDate,
     ICIssuedPlace: extractCardInfo.IssuePlace,
     Provincial: extractCardInfo.Province,
     County: extractCardInfo.District,
@@ -36,11 +38,11 @@ const VerifyUserPortrait = ({route}) => {
     SexType: extractCardInfo.Gender,
   });
 
-  const GENDERS = [
-    {label: translation.male, value: 1},
-    {label: translation.female, value: 2},
-    {label: translation.others, value: 3},
-  ];
+  const GENDERS = {
+    1: translation.male,
+    2: translation.female,
+    3: translation.others,
+  };
 
   const CARD_RULE = useMemo(() => {
     return {
@@ -63,7 +65,8 @@ const VerifyUserPortrait = ({route}) => {
         title: translation.militaryIDNumber,
         regex: '^[0-9]*$',
         minLength: 8,
-        maxLength: 8,
+        fixedLength: true,
+        maxLength: 12,
         keyboardType: 'numeric',
       },
     };
@@ -129,45 +132,84 @@ const VerifyUserPortrait = ({route}) => {
     setInfo({...info, [key]: value});
   };
 
+  const handleValidate = async key => {
+    switch (key) {
+      case 'ICIssuedPlace':
+        if (info[key]?.length > 200)
+          return setError({
+            ...error,
+            [key]: translation?.place_of_issue_maximum_200_characters,
+          });
+        return setError({...error, [key]: ''});
+
+      case 'Address':
+        if (info[key]?.length > 200)
+          return setError({
+            ...error,
+            [key]: translation?.address_maximum_200_characters,
+          });
+        return setError({...error, [key]: ''});
+      case 'ICFullName':
+        let isValid = await eKYCSchema.isValid(info);
+        if (isValid) return setError({...error, [key]: ''});
+
+        return eKYCSchema.validate(info).catch(err => {
+          setError({
+            ...error,
+            [key]: err?.errors?.length > 0 ? err?.errors[0] : '',
+          });
+        });
+      default:
+        break;
+    }
+  };
+
   const buttonEnabled = useMemo(() => {
     return (
       info.ICFullName &&
       !error.ICNumber &&
       info.ICNumber &&
       info.DateOfBirth &&
-      GENDERS.find(gender => gender.value === info.SexType) &&
+      info.SexType &&
       info.ICIssuedDate &&
       info.ICIssuedPlace &&
-      // && (originalInfo?.ValidDate ? info.ValidDate : true)
+      !error?.ICIssuedPlace &&
+      (extractCardInfo?.ValidDate ? info.ValidDate : true) &&
       info.Provincial &&
       info.County &&
       (wardEmpty ? true : info.Ward) &&
       info.Address &&
+      !error?.Address &&
       acceptPolicy
     );
-  }, [info, acceptPolicy, error]);
+  }, [info, acceptPolicy, error, extractCardInfo]);
 
   return (
     <BaseVerifyInfo
+      style={styles.base}
       step={3}
       showInstruction={false}
-      onPressButton={onUpdateAllInfo}
+      onPressButton={() => onUpdateAllInfo(info)}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}>
+      buttonTitle={translation.updateInfo}
+    >
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
           style={styles.mb1}
           onChange={value => handleChange('ICFullName', value)}
+          onBlur={() => handleValidate('ICFullName')}
           value={info.ICFullName}
-          error={error.ICFullName}
+          error={translation[error?.ICFullName]}
           required
           placeholder={translation?.inputFullName}
-          alphanumeric
+          regex={/[^\p{L} ]+/gu}
           trimOnBlur
           multiline
+          maxLength={100}
         />
         <DatePicker
+          onChange={value => handleChange('DateOfBirth', value)}
           label={translation.date_of_birth_ddmmyyyy}
           value={info.DateOfBirth}
           required
@@ -178,7 +220,13 @@ const VerifyUserPortrait = ({route}) => {
             {translation.gender}
           </Text>
           <Radio
-            items={GENDERS}
+            items={Object.entries(GENDERS)
+              .sort((a, b) => b[0] - a[0])
+              .filter(x => x[0] !== '3')
+              .map(([key, value]) => ({
+                label: value,
+                value: parseInt(key),
+              }))}
             onChange={value => handleChange('SexType', value)}
             selectedValue={info.SexType}
           />
@@ -190,10 +238,11 @@ const VerifyUserPortrait = ({route}) => {
           error={error.ICNumber}
           style={styles.mb1}
           required
-          numeric
+          numeric={ICType != IC_TPYE.PASSPORT}
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
           trimOnBlur
+          maxLength={CARD_RULE[ICType || 1].maxLength}
         />
         <DatePicker
           label={translation.valid_date}
@@ -202,16 +251,28 @@ const VerifyUserPortrait = ({route}) => {
           required
           placeholder="dd/mm/yyyy"
         />
+        {!!extractCardInfo.ValidDate && (
+          <DatePicker
+            label={translation.expired_date}
+            onChange={value => handleChange('ValidDate', value)}
+            value={info.ValidDate}
+            required
+            placeholder="dd/mm/yyyy"
+          />
+        )}
         <InputBlock
           label={translation?.issuedPlace}
           onChange={value => handleChange('ICIssuedPlace', value)}
           value={info.ICIssuedPlace}
           error={error.ICIssuedPlace}
+          onBlur={() => handleValidate('ICIssuedPlace')}
           style={styles.mb1}
           required
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
           multiline
+          alphanumeric
+          autoHeight
           maxLength={200}
         />
       </View>
@@ -222,11 +283,14 @@ const VerifyUserPortrait = ({route}) => {
           onChange={value => handleChange('Address', value)}
           value={info.Address}
           error={error.Address}
+          onBlur={() => handleValidate('Address')}
           style={styles.address}
           required
           placeholder={translation?.inputAddress}
           trimOnBlur
+          alphanumeric
           multiline
+          autoHeight
           maxLength={200}
         />
         <InputBlock
@@ -259,17 +323,13 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => !wardEmpty && goRegionSelect('wards')}
           defaultValue={translation.town}
         />
-        <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
+        <View style={[styles.flexRow, styles.pt2, styles.pb1, styles.pr1]}>
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
-            {translation?.iAgreeWith}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>{translation?.userAgreement}</Text>
-            </TouchableOpacity>{' '}
-            {translation?.and}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>
-            </TouchableOpacity>{' '}
+            {translation?.iAgreeWith}{' '}
+            <Text style={styles.firstLink}>{translation?.userAgreement}</Text>{' '}
+            {translation?.and}{' '}
+            <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>{' '}
             {translation?.ofEPAY}
           </Text>
         </View>
@@ -277,10 +337,11 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}
           style={styles.underline}
           centered
-          color={Colors.Highlight}
+          color={Colors.hl1}
           bold
           mb={48}
-          fs="h6">
+          fs="h6"
+        >
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>
@@ -288,6 +349,9 @@ const VerifyUserPortrait = ({route}) => {
   );
 };
 const styles = StyleSheet.create({
+  base: {
+    backgroundColor: Colors.bs4,
+  },
   container: {
     paddingHorizontal: Spacing.PADDING,
     marginTop: Spacing.PADDING,
@@ -298,7 +362,7 @@ const styles = StyleSheet.create({
   //---------------
   h1: {height: 8},
   //---------------
-  mtMinus1: {marginTop: -3},
+  mtMinus1: {marginBottom: -2},
   //---------------
   mb1: {marginBottom: 10},
   //---------------
@@ -306,9 +370,10 @@ const styles = StyleSheet.create({
   pt2: {paddingTop: 10},
   //---------------
   pb1: {paddingBottom: 24},
+  pr1: {paddingRight: 12},
   //---------------
   underline: {textDecorationLine: 'underline'},
-  bgGray: {backgroundColor: Colors.l4},
+  bgGray: {backgroundColor: Colors.bs1},
   //---------------
   firstLink: {
     textDecorationLine: 'underline',
@@ -318,7 +383,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   policy: {
-    marginLeft: 5,
+    marginLeft: 10,
   },
 });
 export default VerifyUserPortrait;

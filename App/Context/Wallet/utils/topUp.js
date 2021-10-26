@@ -11,7 +11,7 @@ import _ from 'lodash';
 import useBankInfo from './bankInfo';
 import {useWallet} from '..';
 import {useTopUpWithdraw} from './topUpWithdraw';
-import {getBankFee} from 'services/wallet';
+import useServiceWallet from 'services/wallet';
 import {useUser} from 'context/User';
 
 const useTopUp = () => {
@@ -26,6 +26,7 @@ const useTopUp = () => {
   const {phone} = useUser();
   const {onGetConnectedBank, onGetDomesticBanks, onGetInternationalBanks} =
     useBankInfo();
+  const {getBankFee} = useServiceWallet();
   const {listConnectBank, listDomesticBank, listInternationalBank} =
     useWallet();
   const [bankFeeData, setBankFeeData] = useState({

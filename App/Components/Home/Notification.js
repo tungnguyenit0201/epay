@@ -11,16 +11,18 @@ const Notification = ({data, style}) => {
       style={[{marginLeft: 'auto', position: 'relative'}]}
       onPress={() => {
         Navigator.navigate(SCREEN.NOTIFICATION);
-      }}>
-      <Icon icon={Images.Noti} tintColor={Colors.white} />
+      }}
+    >
+      <Icon icon={Images.Noti} tintColor={Colors.bs4} />
       <View style={styles.number}>
         <Text
-          color={Colors.white}
+          color={Colors.bs4}
           size={10}
           style={{
             lineHeight: 16,
             textAlign: 'center',
-          }}>
+          }}
+        >
           {data}
         </Text>
       </View>

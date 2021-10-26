@@ -5,11 +5,10 @@ import QRCode from 'react-native-qrcode-svg';
 import {Colors, Fonts, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import {Header, HeaderBg, Button, Col, Row} from 'components';
+import {Header, HeaderBg, Button, Col, Row, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
 import {useQRCode} from 'context/User/utils';
-import FooterContainer from 'components/Auth/FooterContainer';
 const QRPay = ({route}) => {
   const translation = useTranslation();
   const {userInfo} = useUser();
@@ -32,7 +31,7 @@ const QRPay = ({route}) => {
   }; */
   return (
     // TODO: translate
-    <View style={{flex: 1, backgroundColor: Colors.white}}>
+    <View style={{flex: 1, backgroundColor: Colors.bs4}}>
       <HeaderBg>
         <Header
           title="Mã của tôi" // TODO: translate
@@ -49,7 +48,8 @@ const QRPay = ({route}) => {
               textAlign: 'center',
               lineHeight: 25,
               marginBottom: 25,
-            }}>
+            }}
+          >
             Nhận tiền từ bạn bè nhanh hơn bằng mã QR của bạn
           </Text>
           <QRCode
@@ -71,11 +71,8 @@ const QRPay = ({route}) => {
 
       <View style={[base.container, styles.flexCenter]}>
         <Button
-          bg={Colors.white}
-          border={Colors.cl1}
-          color={Colors.white}
+          //mode="outline"
           mb={20}
-          bold
           label={'Nhập số tiền bạn muốn nhận'} // TODO: translate
           onPress={() => {
             Navigator.navigate(SCREEN.SELECT_MONEY);
@@ -86,14 +83,7 @@ const QRPay = ({route}) => {
       <FooterContainer>
         <Row>
           <Col width="50%">
-            <Button
-              mode={'outline'}
-              bg={Colors.white}
-              border={Colors.cl1}
-              color={Colors.white}
-              label={translation.save_photo}
-              bold
-            />
+            <Button mode="outline" label={translation.save_photo} />
           </Col>
           <Col width="50%">
             <Button

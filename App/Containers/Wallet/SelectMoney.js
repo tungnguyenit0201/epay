@@ -1,13 +1,6 @@
 import React, {useRef, useState} from 'react';
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-} from 'react-native';
-import {Header, HeaderBg, Button, Text} from 'components';
+import {View, ScrollView, StyleSheet} from 'react-native';
+import {Header, HeaderBg, Button, Text, FooterContainer} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -19,7 +12,6 @@ import SelectBank from 'components/User/TopUp/SelectBank';
 
 import {SCREEN} from 'configs/Constants';
 import {useTranslation} from 'context/Language';
-import FooterContainer from 'components/Auth/FooterContainer';
 const SelectMoney = () => {
   const translation = useTranslation();
   const [value, setValue] = useState();
@@ -30,12 +22,11 @@ const SelectMoney = () => {
           //title={translation.top_up}
           title="Mã của tôi" // TODO: translate
           back
-          style={{marginBottom: 20}}
         />
       </HeaderBg>
       <ScrollView style={base.wrap}>
-        <View style={base.container}>
-          <Text fs="h6" mb={12} bold>
+        <View style={[base.container, styles.shadow]}>
+          <Text fs="h6" mb={15} bold>
             Nhập số tiền muốn nhận
           </Text>
           <InputMoney handleValue={setValue} />
@@ -47,17 +38,19 @@ const SelectMoney = () => {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <Button
+            mode="outline"
             label="Hủy"
             onPress={() => Navigator.goBack()}
             style={{
               width: '45%',
               borderWidth: 1,
-              borderColor: Colors.cl1,
-              backgroundColor: Colors.white,
+              borderColor: Colors.brd1,
+              backgroundColor: Colors.bs4,
             }}
-            labelStyle={{color: Colors.BLACK}}
+            labelStyle={{color: Colors.tp2}}
           />
           <Button
             label="Xác nhận"
@@ -65,7 +58,6 @@ const SelectMoney = () => {
             disabled={value ? false : true}
             style={{
               width: '45%',
-              borderWidth: 1,
             }}
           />
         </View>
@@ -73,5 +65,22 @@ const SelectMoney = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: Colors.tp2,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: 8,
+    elevation: 8,
+    margin: 10,
+    paddingVertical: 15,
+    backgroundColor: Colors.bs4,
+    borderRadius: 8,
+  },
+});
 
 export default SelectMoney;

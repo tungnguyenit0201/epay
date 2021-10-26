@@ -41,13 +41,15 @@ const Picker = ({
         onPress={() => {
           onChange?.(item);
           onHideModal();
-        }}>
+        }}
+      >
         <View
           paddingH-page
           paddingV-middle
           borderB={borderB}
-          borderColor={Colors.l2}>
-          <Text color={isSelected ? Colors.cl1 : Colors.BLACKTEXT}>
+          borderColor={Colors.bs2}
+        >
+          <Text color={isSelected ? Colors.brd1 : Colors.tp2}>
             {item?.label}
           </Text>
         </View>
@@ -61,13 +63,15 @@ const Picker = ({
       <Pressable
         disabled={disabled}
         onPress={onShowModal}
-        style={styles.inputWrap}>
+        style={styles.inputWrap}
+      >
         {leftComponent}
         <View style={{flex: 1}}>
           <Text
             numberOfLines={1}
             medium
-            color={disabled ? Colors.l4 : Colors.BLACKTEXT}>
+            color={disabled ? Colors.bs1 : Colors.tp2}
+          >
             {value?.label || placeholder}
           </Text>
         </View>
@@ -84,7 +88,8 @@ const Picker = ({
         visible={showModal}
         onDismiss={onHideModal}
         width={'100%'}
-        background-white>
+        background-white
+      >
         <View backgroundColor={'white'} br20 style={{paddingBottom: bottom}}>
           <View paddingH-page paddingV-page borderB>
             <Text bold>{label}</Text>
@@ -105,7 +110,7 @@ const styles = StyleSheet.create({
   inputWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: Colors.BORDER,
+    borderColor: Colors.bs2,
     borderWidth: 1,
     paddingVertical: 11,
     paddingHorizontal: 8,

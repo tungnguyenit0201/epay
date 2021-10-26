@@ -90,14 +90,16 @@ const Confirmation = () => {
                       index + 1 === data.length && {
                         borderBottomWidth: 0,
                       },
-                    ]}>
+                    ]}
+                  >
                     <Text size={Fonts.H6} style={styles.textLeft}>
                       {item.name}
                     </Text>
                     <Text
                       bold={item.bold}
                       size={Fonts.H6}
-                      style={styles.textRight}>
+                      style={styles.textRight}
+                    >
                       {item.value}
                     </Text>
                   </View>
@@ -126,13 +128,14 @@ const Confirmation = () => {
         //style={{flex: 1}}
         useNativeDriver
         hideModalContentWhileAnimating
-        backdropTransitionOutTiming={0}>
+        backdropTransitionOutTiming={0}
+      >
         <View style={base.modal}>
           <Text style={base.modalTitle}>Nhập mật khẩu</Text>
           <TextInput
             placeholder="1 -> next , 0 -> error"
             password
-            placeholderTextColor={Colors.l5}
+            placeholderTextColor={Colors.tp5}
             onChange={handleChange}
           />
           <Text style={styles.textUnderline}>Quên mật khẩu?</Text>
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: Colors.l3,
+    borderBottomColor: Colors.bs1,
     borderBottomWidth: 1,
     paddingVertical: 15,
   },
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
   },
   textRight: {
     fontSize: Fonts.H6,
-    color: Colors.black,
+    color: Colors.tp2,
   },
   confirmButtonContainer: {
     flex: 1,

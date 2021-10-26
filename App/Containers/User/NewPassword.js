@@ -10,6 +10,7 @@ import {
 } from 'components';
 import {useTranslation} from 'context/Language';
 import {base, Colors, Spacing, Images} from 'themes';
+import {scale} from 'utils/Functions';
 import {Formik} from 'formik';
 import {newPasswordSchema} from 'utils/ValidationSchemas';
 import {useUserInfo} from 'context/User/utils';
@@ -73,7 +74,9 @@ const ChangePassword = ({route}) => {
                     onChange={handleChange('newPassword')}
                     onBlur={handleBlur('newPassword')}
                     placeholder={translation.enter_your_password}
-                    error={touched.newPassword && errors.newPassword}
+                    error={
+                      touched.newPassword && translation[errors.newPassword]
+                    }
                     value={values.newPassword}
                     leftIcon={Images.Transfer.Lock}
                   />
@@ -83,13 +86,16 @@ const ChangePassword = ({route}) => {
                     onChange={handleChange('passwordConfirm')}
                     onBlur={handleBlur('passwordConfirm')}
                     placeholder={translation.confirm_password}
-                    error={touched.passwordConfirm && errors.passwordConfirm}
+                    error={
+                      touched.passwordConfirm &&
+                      translation[errors.passwordConfirm]
+                    }
                     value={values.passwordConfirm}
                     leftIcon={Images.Transfer.Lock}
                   />
                   <Text style={styles.note}>
                     {
-                      translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                      translation.note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters
                     }
                   </Text>
                 </ScrollView>
@@ -114,6 +120,11 @@ const ChangePassword = ({route}) => {
   );
 };
 
-export default ChangePassword;
+const styles = StyleSheet.create({
+  note: {
+    fontSize: scale(12),
+    paddingRight: 10,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default ChangePassword;

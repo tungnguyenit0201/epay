@@ -55,7 +55,8 @@ const SelectBank = forwardRef(
                 <Col width="33.33%" space="10" key={index}>
                   <Pressable
                     style={[styles.item]}
-                    onPress={() => onChangeBank({index, type})}>
+                    onPress={() => onChangeBank({index, type})}
+                  >
                     <View style={[styles.wicon]}>
                       <Image
                         source={{uri: BankLogoUrl}}
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   wicon: {
     width: scale(48),
     height: scale(48),
-    backgroundColor: Colors.l1,
+    backgroundColor: Colors.bs2,
     borderRadius: 99,
     marginBottom: 5,
     position: 'relative',

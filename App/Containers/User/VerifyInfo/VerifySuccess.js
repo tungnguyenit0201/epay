@@ -6,12 +6,11 @@ import {
   Image,
   useWindowDimensions,
 } from 'react-native';
-import {Button, HeaderBg, Text} from 'components';
+import {Button, HeaderBg, Text, Header, FooterContainer} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {useUser} from 'context/User';
 
 const VerifySuccess = ({route}) => {
@@ -61,11 +60,12 @@ const VerifySuccess = ({route}) => {
     <>
       <View style={[styles.pb1, styles.bgWhite]}>
         <HeaderBg>
-          <View>
-            <Text centered fs="h6" color={Colors.white} bold mb={5}>
+          {/* <View>
+            <Text centered fs="h6" color={Colors.bs4} bold mb={5}>
               {translation?.account_verification}
             </Text>
-          </View>
+          </View> */}
+          <Header back title={translation?.account_verification} />
         </HeaderBg>
       </View>
       <ScrollView style={styles.container}>
@@ -114,7 +114,8 @@ const VerifySuccess = ({route}) => {
             mt={25}
             mb={Spacing.PADDING - 4}
             bold
-            style={styles.maxWidth1}>
+            style={styles.maxWidth1}
+          >
             {title}
           </Text>
           {!!message && (
@@ -148,8 +149,8 @@ const VerifySuccess = ({route}) => {
               label={action.backTitle}
               style={[styles.buttonHalf, styles.homeButton]}
               onPress={onPressBack}
-              bgImg={0}
-              labelStyle={styles.homeText}
+              mode="outline"
+              // labelStyle={styles.homeText}
             />
             <Button
               label={translation?.verifyAgain}
@@ -165,7 +166,7 @@ const VerifySuccess = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   //---------------
   alignCenter: {alignItems: 'center'},
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
   pb1: {paddingBottom: 70},
   pb2: {paddingBottom: Spacing.PADDING * 2},
   //---------------
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //---------------
   circleRadius: {borderRadius: 100},
   //---------------
@@ -212,12 +213,12 @@ const styles = StyleSheet.create({
     flex: 0.48,
   },
   homeButton: {
-    backgroundColor: Colors.white,
-    borderColor: Colors.primary,
+    backgroundColor: Colors.bs4,
+    borderColor: Colors.grd3,
     borderWidth: 1,
   },
   homeText: {
-    color: Colors.primary,
+    color: Colors.grd3,
   },
   warningIcon: {
     width: 64,

@@ -4,20 +4,22 @@ import {ERROR_CODE, SCREEN, NOTIFY} from 'configs/Constants';
 import {useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
-import {
-  getChargesNotify,
-  getPromotionNotify,
-  getOtherNotify,
-  readNotify,
-  getAllNofify,
-} from 'services/notification';
+import useSErviceNotificaiton from 'services/notification';
 import {getAll} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 
-const useNotify = () => {
+const useNotify = (isMount = true) => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {dispatch, userInfo, phone} = useUser();
-
+  const translation = useTranslation();
+  const {
+    getChargesNotify,
+    getPromotionNotify,
+    getOtherNotify,
+    readNotify,
+    getAllNofify,
+  } = useSErviceNotificaiton();
   let listChargesNotify = [];
   let listPromotionNotify = [];
   let listOtherNotify = [];
@@ -85,12 +87,15 @@ const useNotify = () => {
     }
   };
 
-  const onGetAllNotify = async () => {
+  const onGetAllNotify = async isMount => {
     try {
       setLoading(true);
       const result = await getAllNofify({phone});
       if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-        setError(result);
+        setError({
+          ...result,
+          onClose: () => (isMount ? Navigator.goBack?.() : true),
+        });
         return;
       }
       dispatch({type: 'SET_NOTIFY', data: result?.NotifyInfo});
@@ -124,7 +129,7 @@ const useNotify = () => {
   };
 
   const onGoNotify = async () => {
-    await onGetAllNotify();
+    // await onGetAllNotify();
     Navigator.navigate(SCREEN.NOTIFICATION);
   };
 
@@ -158,6 +163,20 @@ const useNotify = () => {
     item?.Id && !item?.IsRead && onReadNotify(item.Id);
   };
 
+  const onReadAllNotify = async () => {
+    const listNotify = userInfo?.listNotify?.filter(x => !x.IsRead);
+    const listPromise = [];
+    listNotify.forEach(item => {
+      listPromise.push(readNotify({phone, notifyID: item?.Id}));
+    });
+    await Promise.all(listPromise);
+    await onGetAllNotify();
+  };
+
+  useEffect(() => {
+    phone && isMount && onGetAllNotify(true);
+  }, [phone]);
+
   return {
     onGetChargesNotify,
     onGetPromotionNotify,
@@ -167,6 +186,7 @@ const useNotify = () => {
     onReadNotify,
     onPressNotify,
     onGoNotify,
+    onReadAllNotify,
   };
 };
 export default useNotify;

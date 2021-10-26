@@ -2,12 +2,13 @@ import {useState, useEffect, useRef} from 'react';
 import {Platform, Linking} from 'react-native';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN} from 'configs/Constants';
+import useServiceUser from 'services/user';
 import {
-  updatePersonalInfo,
-  updateUserAddress,
-  updateIdentify,
-} from 'services/user';
-import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+  useAsyncStorage,
+  useError,
+  useLoading,
+  useModalPassword,
+} from 'context/Common/utils';
 import _ from 'lodash';
 import {useUser} from '..';
 import {useTranslation} from 'context/Language';
@@ -21,11 +22,7 @@ import {
 import Ekyc from 'utils/Ekyc';
 import EKYC_ERROR from 'configs/Enums/EkycError';
 import KYCType from 'configs/Enums/KYCType';
-import {
-  extractIdentityCardInfo,
-  compareFace,
-  identityCardVerify,
-} from 'services/ekyc';
+import useServiceEKYC from 'services/ekyc';
 import {ConsoleUtils} from 'utils/Console';
 import useAlert from 'utils/Alert';
 import {Images} from 'themes';
@@ -52,11 +49,23 @@ const useVerifyInfo = (initialValue = {}) => {
   const {kycType} = userInfo;
   const [SDKImage, setSDKImage] = useState();
   const strings = useTranslation() || {};
-  const {showError} = useAlert();
+  // const {showError} = useAlert();
+  const {updatePersonalInfo, updateUserAddress, updateIdentify} =
+    useServiceUser();
+  const {onShowModal: onShowModalPassword} = useModalPassword();
+  const {extractIdentityCardInfo, compareFace, identityCardVerify} =
+    useServiceEKYC();
   const documentType = contentRef.current?.identifyCard?.ICType;
   const eKYC = kycType === KYCType.EKYC;
   const bank = contentRef.current?.KYCFlow === KYC_FLOW.BANK;
 
+  const showError = () => {
+    setError({
+      icon: Images.TransactionHistory.Fail,
+      title: strings?.error,
+      ErrorMessage: strings?.unknownError,
+    });
+  };
   const onChange = (key, value) => {
     contentRef.current[key] = value;
     setDisabledIdentify(
@@ -165,42 +174,37 @@ const useVerifyInfo = (initialValue = {}) => {
 
   const onUpdateAllInfo = async value => {
     let resultContent;
-    let result = null;
     try {
       const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
         const {extractCardInfo} = contentRef.current;
-        const {CardID, CardNumber, Step, ICType, ValidDate, Verified} =
+        const {CardID, CardNumber, Step, ICType, Verified} =
           extractCardInfo || {};
-        result = await verifyIdentityCard({
+        await verifyIdentityCard({
           Address: value.Address,
           BirthDay: value.DateOfBirth,
           CardID,
-          CardNumber,
+          CardNumber: value?.ICNumber ? value?.ICNumber : CardNumber,
           District: value.County,
           Step,
           FullName: value.ICFullName,
           Gender: value.SexType,
-          ICType,
+          ICType: documentType,
           IssueDate: value.ICIssuedDate,
           IssuePlace: value.ICIssuedPlace,
           Province: value.Provincial,
-          ValidDate,
+          ValidDate: value.ValidDate,
           Verified,
           Ward: value.Ward,
         });
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-          throw result;
-        }
         resultContent = {
+          success: true,
           title: strings.verifySuccess,
         };
       } else {
-        result = await onUpdateIdentify(updateInfo);
-        if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-          throw result;
-        }
+        await onUpdateIdentify(updateInfo);
         resultContent = {
+          success: true,
           title: strings.kycPendingVerify,
         };
       }
@@ -229,7 +233,7 @@ const useVerifyInfo = (initialValue = {}) => {
         return setShowModalReVerify(false);
       default:
         setShowModalReVerify(false);
-        Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD);
+        onShowModalPassword(() => Navigator.push(SCREEN.CHOOSE_IDENTITY_CARD));
     }
   };
 
@@ -294,7 +298,8 @@ const useVerifyInfo = (initialValue = {}) => {
       return {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
-        titleFront: backSide ? 'Mặt sau' : 'Mặt trước',
+        title: backSide ? 'ẢNH MẶT SAU' : 'ẢNH MẶT TRƯỚC',
+        titleFront: '',
         isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };
@@ -355,18 +360,32 @@ const useVerifyInfo = (initialValue = {}) => {
       if (isRequestPermissionsGranted) {
         openSDK();
       } else {
-        Navigator.showAlert({
+        setError({
           icon: Images.warning,
           title: strings?.kycPermissionTitle,
-          message: strings?.permissionDenied,
-          positiveButton: {
-            title: strings?.acceptRequested,
-            onPress: () => Linking.openSettings(),
-          },
-          negativeButton: {
-            title: strings?.cancelled,
-          },
+          ErrorMessage: strings?.permissionDenied,
+          action: [
+            {
+              label: strings?.acceptRequested,
+              onPress: () => Linking.openSettings(),
+            },
+            {
+              label: strings?.cancelled,
+            },
+          ],
         });
+        // Navigator.showAlert({
+        //   icon: Images.warning,
+        //   title: strings?.kycPermissionTitle,
+        //   message: strings?.permissionDenied,
+        //   positiveButton: {
+        //     title: strings?.acceptRequested,
+        //     onPress: () => Linking.openSettings(),
+        //   },
+        //   negativeButton: {
+        //     title: strings?.cancelled,
+        //   },
+        // });
       }
     }
   };
@@ -405,13 +424,10 @@ const useVerifyInfo = (initialValue = {}) => {
         return extractData;
       } catch (e) {
         setLoading(false);
-        ConsoleUtils.log('ERROR [extractCardInfo]', e);
-        const {ErrorMessage = strings?.unknownError} = e || {};
-        showError({message: ErrorMessage});
+        // const {ErrorMessage = strings?.unknownError} = e || {};
       }
     } else {
       ConsoleUtils.warn('[extractCardInfo] Missing Data!');
-      showError();
     }
   };
 
@@ -433,13 +449,9 @@ const useVerifyInfo = (initialValue = {}) => {
         return result;
       } catch (e) {
         setLoading(false);
-        ConsoleUtils.log('ERROR [compareUserFace]', e);
-        const {ErrorMessage = strings?.unknownError} = e || {};
-        showError({message: ErrorMessage});
       }
     } else {
       ConsoleUtils.warn('[compareUserFace] Missing Data!');
-      showError();
     }
   };
 
@@ -457,13 +469,10 @@ const useVerifyInfo = (initialValue = {}) => {
           resolve(result);
         } catch (e) {
           ConsoleUtils.log('ERROR [verifyIdentityCard]', e);
-          const {ErrorMessage = strings?.unknownError} = e || {};
-          showError({message: ErrorMessage});
           reject(e);
         }
       } else {
         ConsoleUtils.warn('[verifyIdentityCard] Missing Data!');
-        showError();
         reject();
       }
     });

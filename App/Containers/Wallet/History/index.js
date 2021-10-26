@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Keyboard,
   // useWindowDimensions,
 } from 'react-native';
 import {
@@ -27,6 +28,7 @@ import {COMMON_ENUM, TRANS_DETAIL, TRANS_TYPE} from 'configs/Constants';
 import {useHistory} from 'context/Wallet/utils';
 import moment from 'moment';
 import FilterModal from 'components/Wallet/History/FilterModal';
+import Navigator from 'navigations/Navigator';
 
 const History = () => {
   const translation = useTranslation();
@@ -51,7 +53,7 @@ const History = () => {
     <TouchableOpacity onPress={onToggleFilter} style={styles.rightMinus2}>
       <Icon
         icon={Images.WidthDraw.Close}
-        tintColor={Colors.white}
+        tintColor={Colors.bs4}
         style={styles.iconPrimary}
       />
     </TouchableOpacity>
@@ -74,7 +76,8 @@ const History = () => {
           styles.alignCenter,
           styles.blockTransaction,
         ]}
-        onPress={() => onDetail(item)}>
+        onPress={() => onDetail(item)}
+      >
         <View style={styles.blockCardTick}>
           <Image
             source={Images.TransactionHistory.CardTick}
@@ -85,16 +88,15 @@ const History = () => {
           <Text style={[styles.textSize2, styles.mb1]}>{title}</Text>
           <View style={[styles.flexRow, styles.justifyBetween, styles.flex1]}>
             <Text style={[styles.textSize1, {color: gray}]}>
-              {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT).format(
-                'hh:mm   DD/MM/YYYY',
+              {moment(item?.TransTime, COMMON_ENUM.DATETIME_FORMAT_CORE).format(
+                COMMON_ENUM.DATETIME_FORMAT_APP,
               )}
             </Text>
             <Text
               fs="md"
               bold
-              style={
-                item?.isIncome ? {color: blue} : {color: Colors.Highlight}
-              }>
+              style={item?.isIncome ? {color: blue} : {color: Colors.Highlight}}
+            >
               {(item?.isIncome ? '+' : '-') +
                 formatMoney(item?.TransAmount, 'đ')}
             </Text>
@@ -108,7 +110,14 @@ const History = () => {
     <>
       <View style={[styles.bgWhite]}>
         <HeaderBg>
-          <Header back title={translation?.transaction_history} />
+          <Header
+            back
+            title={translation?.transaction_history}
+            onPressBack={() => {
+              Keyboard.dismiss();
+              Navigator.goBack();
+            }}
+          />
         </HeaderBg>
 
         <View style={[styles.wrap, styles.ptb1]}>
@@ -136,7 +145,8 @@ const History = () => {
 
             <TouchableOpacity
               style={[styles.pr1, styles.w1]}
-              onPress={onToggleFilter}>
+              onPress={onToggleFilter}
+            >
               <Text bold>{translation.filter}</Text>
 
               <View style={[styles.absolute, styles.topZero, styles.rightZero]}>
@@ -152,14 +162,16 @@ const History = () => {
                     styles.iconPrimary,
                     styles.cirle,
                     {backgroundColor: red},
-                  ]}>
+                  ]}
+                >
                   <Text
                     style={[
                       styles.textCenter,
                       styles.textSize3,
                       styles.textWhite,
                       styles.lineHeight1,
-                    ]}>
+                    ]}
+                  >
                     3
                   </Text>
                 </View>
@@ -190,7 +202,8 @@ const History = () => {
               styles.alignCenter,
               styles.flex1,
               {justifyContent: 'center'},
-            ]}>
+            ]}
+          >
             <Image
               style={styles.iconBarCross}
               source={
@@ -199,7 +212,7 @@ const History = () => {
                   : Images.TransactionHistory.BarCross
               }
             />
-            <Text centered mt={20} fs="h6" color={Colors.gray}>
+            <Text centered mt={20} fs="h6" color={Colors.tp3}>
               {isFiltering
                 ? 'Không tìm thấy kết quả phù hợp'
                 : 'Chưa có giao dịch để hiển thị'}
@@ -291,7 +304,7 @@ const styles = StyleSheet.create({
   pb2: {paddingBottom: 45},
   pb3: {paddingBottom: 40},
   //end
-  bgWhite: {backgroundColor: Colors.white},
+  bgWhite: {backgroundColor: Colors.bs4},
   //------------------
   zIndex1: {zIndex: 1},
   lineHeight1: {lineHeight: 14},
@@ -303,7 +316,7 @@ const styles = StyleSheet.create({
   cirle: {borderRadius: 100},
   //------------------
   textCenter: {textAlign: 'center'},
-  textWhite: {color: Colors.white},
+  textWhite: {color: Colors.bs4},
   //-----------------
   borderRadius1: {borderRadius: 8},
   //-----------------
@@ -312,10 +325,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(10),
     height: 38,
     borderRadius: scale(8),
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     fontFamily: Fonts.FONT_REGULAR,
-    color: Colors.TEXT,
-    fontSize: Fonts.FONT_MEDIUM,
+    color: Colors.tp3,
+    fontSize: Fonts.MD,
   },
   iconSearch: {
     width: 17,
@@ -348,24 +361,24 @@ const styles = StyleSheet.create({
   blockSumIncome: {
     paddingLeft: 8,
     borderLeftWidth: 0.8,
-    borderColor: Colors.l4,
+    borderColor: Colors.bs1,
   },
   blockCardTick: {
     width: 40,
     height: 40,
     alignItems: 'center',
     paddingTop: 10,
-    backgroundColor: Colors.l2,
+    backgroundColor: Colors.bs2,
     borderRadius: 100,
   },
   blockTransaction: {
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderColor: Colors.l2,
+    borderColor: Colors.bs2,
   },
   blockShadow: {
     borderRadius: 8,
-    shadowColor: Colors.black,
+    shadowColor: Colors.tp2,
     shadowOffset: {
       width: 0,
       height: 1.8,
@@ -373,7 +386,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
   flatList1: {
     // marginLeft: -10,
@@ -396,11 +409,11 @@ const styles = StyleSheet.create({
   grayLine1: {
     paddingTop: 16,
     borderBottomWidth: 1,
-    borderColor: Colors.l3,
+    borderColor: Colors.bs1,
   },
   grayLine2: {
     paddingTop: 8,
-    backgroundColor: Colors.l3,
+    backgroundColor: Colors.bs1,
   },
   bottom: {
     height: scale(80),

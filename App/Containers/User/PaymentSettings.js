@@ -8,12 +8,12 @@ import {
   Alert,
 } from 'react-native';
 
-import {Text, Button, Icon, Header, HeaderBg} from 'components';
+import {Text, Button, Icon, Header, HeaderBg, Modal} from 'components';
 import {SCREEN, TEXT} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import {useTranslation} from 'context/Language';
-
+import {useError} from 'context/Common/utils';
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {useUserInfo} from 'context/User/utils';
 import {formatMoney} from 'utils/Functions';
@@ -21,88 +21,91 @@ const PaymentSettings = () => {
   const translation = useTranslation();
   const [xacNhan, isXacNhan] = useState(false);
   const {onGetLimit} = useUserInfo();
+  const {setError} = useError();
   return (
-    <ScrollView style={base.wrap}>
+    <>
       <HeaderBg>
         <Header back title={translation.payment_setting} />
       </HeaderBg>
+      <ScrollView style={base.wrap}>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => Navigator.navigate(SCREEN.EDIT_AUTO_RECHARGE)}
+        >
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.brd1}
+          />
+          <Text style={styles.text}> Cài đặt nạp tiền tự động</Text>
+          <Icon
+            style={[base.leftAuto]}
+            icon={Images.ArrowRight}
+            size={24}
+            tintColor="#000"
+          />
+        </TouchableOpacity>
+        <View style={styles.item}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.brd1}
+          />
+          <Text style={styles.text}> Xác nhận thanh toán nhanh</Text>
+          <Switch
+            style={base.leftAuto}
+            onColor={Colors.brd1}
+            offColor={Colors.bs1}
+            value={xacNhan}
+            onValueChange={isXacNhan}
+          />
+        </View>
+        <Pressable style={styles.item} onPress={onGetLimit}>
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.brd1}
+          />
+          <Text style={styles.text}> Hạn mức trong ngày</Text>
+        </Pressable>
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() =>
+            setError({
+              ErrorMessage: 'Coming soon',
+              icon: Images.Homes.Setting,
+            })
+          }
+        >
+          <Icon
+            mr={8}
+            icon={Images.Profile.MaThanhToan}
+            size={24}
+            tintColor={Colors.brd1}
+          />
+          <Text style={styles.text}> Đăng ký thanh toán giao thông</Text>
+          <Icon
+            style={[base.leftAuto]}
+            icon={Images.ArrowRight}
+            size={24}
+            tintColor="#000"
+          />
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          // Navigator.navigate(SCREEN.AUTOPAYMENT);
-          Alert.alert('', 'Coming soon');
-        }}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Cài đặt nạp tiền tự động</Text>
-        <Icon
-          style={[base.leftAuto]}
-          icon={Images.ArrowRight}
-          size={24}
-          tintColor="#000"
-        />
-      </TouchableOpacity>
-      <View style={styles.item}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Xác nhận thanh toán nhanh</Text>
-        <Switch
-          style={base.leftAuto}
-          onColor={Colors.cl1}
-          offColor={Colors.l3}
-          value={xacNhan}
-          onValueChange={isXacNhan}
-        />
-      </View>
-      <Pressable style={styles.item} onPress={onGetLimit}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Hạn mức trong ngày</Text>
-      </Pressable>
-      <TouchableOpacity
-        style={styles.item}
-        onPress={() => {
-          // Navigator.navigate(SCREEN.NOTIFICATION);
-          Alert.alert('', 'Coming soon');
-        }}>
-        <Icon
-          mr={8}
-          icon={Images.Profile.MaThanhToan}
-          size={24}
-          tintColor={Colors.cl1}
-        />
-        <Text style={styles.text}> Đăng ký thanh toán giao thông</Text>
-        <Icon
-          style={[base.leftAuto]}
-          icon={Images.ArrowRight}
-          size={24}
-          tintColor="#000"
-        />
-      </TouchableOpacity>
-
-      <View style={[base.container]}>
-        <Text>{`Cài đặt hạn mức: ${formatMoney(50000000)}đ`}</Text>
-      </View>
-    </ScrollView>
+        <View style={[base.container, styles.mt]}>
+          <Text>{`Cài đặt hạn mức: ${formatMoney(50000000)}đ`}</Text>
+        </View>
+      </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: Colors.white,
-    borderBottomColor: Colors.l2,
+    backgroundColor: Colors.bs4,
+    borderBottomColor: Colors.bs2,
     borderBottomWidth: 1,
     flexDirection: 'row',
     paddingVertical: 12,
@@ -112,6 +115,9 @@ const styles = StyleSheet.create({
   text: {
     marginRight: 80,
     fontSize: Fonts.H6,
+  },
+  mt: {
+    marginTop: 10,
   },
 });
 export default PaymentSettings;

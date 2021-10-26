@@ -1,29 +1,42 @@
 import React from 'react';
-import {View, StyleSheet, Image, useWindowDimensions} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  useWindowDimensions,
+} from 'react-native';
 import {base, Colors, Images, Spacing} from 'themes';
-import {Button, Text} from 'components';
-import FooterContainer from 'components/Auth/FooterContainer';
+import {Button, Text, FooterContainer} from 'components';
 import {scale} from 'utils/Functions';
+import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 const Boarding = ({route}) => {
   const indexScreen = route?.params?.indexScreen || 0;
+  const {bottom} = useSafeAreaInsets();
   const {width, height} = useWindowDimensions();
-  // TODO: translate
+  const translation = useTranslation();
+
   const data = [
     {
-      title: 'Thanh toán đơn giản',
-      content: 'Đi kèm công nghệ tiên tiến, đảm bảo mang đến tiện ích tốt nhất',
+      title: translation.simple_payment,
+      content:
+        translation.comes_with_advanced_technology_ensuring_the_best_utility,
+      action: translation.next,
     },
     {
-      title: 'Dịch vụ sân bay',
+      title: translation.airport_service,
       content:
-        'Cung cấp cho khách hàng tiện ích thanh toán vé máy bay qua giao dịch điện tử',
+        translation.provide_customers_with_the_convenience_of_paying_for_airline_tickets_via_electronic_transactions,
+      action: translation.next,
     },
     {
-      title: 'Dịch vụ giao thông',
+      title: translation.traffic_service,
       content:
-        'Hỗ trợ tiếp nhận, truyền dẫn và xử lý dữ liệu trong các giao dịch',
+        translation.support_to_receive_transmit_and_process_data_in_transactions,
+      action: translation.close,
     },
   ];
   const onPress = () => {
@@ -34,38 +47,46 @@ const Boarding = ({route}) => {
         });
   };
   return (
-    <View style={[styles.container, {height: height}]}>
-      <Image source={Images.Boarding[indexScreen]} style={styles.img} />
-      <View style={styles.slide}>
-        {[0, 1, 2].map(index => (
-          <View
-            key={Math.random(1, 100)}
-            style={[
-              styles.circle,
-              indexScreen == index && styles.active,
-            ]}></View>
-        ))}
+    <ImageBackground
+      style={[styles.container, {height: height}]}
+      source={Images.Boarding[indexScreen]}
+    >
+      <View style={styles.bottom}>
+        <View style={styles.slide}>
+          {[0, 1, 2].map(index => (
+            <View
+              key={Math.random(1, 100)}
+              style={[styles.circle, indexScreen == index && styles.active]}
+            ></View>
+          ))}
+        </View>
+        <View style={styles.wrapText}>
+          <Text fs="h5" fw="700" mb={14}>
+            {data[indexScreen].title}
+          </Text>
+          <Text centered style={styles.content}>
+            {data[indexScreen].content}
+          </Text>
+        </View>
+        <FooterContainer
+          style={[
+            // styles.bottomBtn,
+            {width: width},
+            {paddingBottom: bottom ? bottom : Spacing.PADDING},
+          ]}
+        >
+          <Button label={data[indexScreen].action} onPress={onPress} />
+        </FooterContainer>
       </View>
-      <View style={styles.wrapText}>
-        <Text fs="h5" fw="700" mb={14}>
-          {data[indexScreen].title}
-        </Text>
-        <Text centered style={styles.content}>
-          {data[indexScreen].content}
-        </Text>
-      </View>
-      <FooterContainer style={[styles.bottomBtn, {width: width}]}>
-        <Button label={'Bỏ qua'} onPress={onPress} />
-      </FooterContainer>
-    </View>
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
   },
-  img: {width: '100%', height: '67%'},
+  img: {width: '100%'},
   slide: {
     paddingTop: Spacing.PADDING,
     paddingBottom: scale(36),
@@ -76,19 +97,20 @@ const styles = StyleSheet.create({
   circle: {
     width: scale(8),
     height: scale(8),
-    backgroundColor: Colors.cl2,
+    backgroundColor: Colors.brd2,
     borderRadius: scale(4),
     marginRight: Spacing.PADDING / 2,
   },
   active: {
     width: scale(22),
-    backgroundColor: Colors.cl1,
+    backgroundColor: Colors.brd1,
   },
   wrapText: {
     alignItems: 'center',
     paddingHorizontal: scale(38),
+    paddingBottom: Spacing.PADDING,
   },
-  bottomBtn: {
+  bottom: {
     position: 'absolute',
     bottom: 0,
   },

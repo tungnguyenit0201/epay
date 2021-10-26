@@ -23,11 +23,9 @@ const Progress = ({step}) => {
         <LinearGradient
           start={{x: 0, y: 0.75}}
           end={{x: 1, y: 0.25}}
-          colors={[Colors.barLeft, Colors.barRight]}
-          style={[
-            styles.bar,
-            {width: (widthBar / 6) * stepColor + num},
-          ]}></LinearGradient>
+          colors={[Colors.grd1, Colors.grd2]}
+          style={[styles.bar, {width: (widthBar / 6) * stepColor + num}]}
+        ></LinearGradient>
       </View>
 
       <Row justify="space-between" space={1} style={{marginBottom: 20}}>
@@ -39,19 +37,22 @@ const Progress = ({step}) => {
                   {alignItems: 'center'},
                   index == 0 && {marginLeft: -Spacing.PADDING * 2},
                   index == 2 && {paddingLeft: Spacing.PADDING * 2},
-                ]}>
+                ]}
+              >
                 <View style={[styles.circle]}>
                   <View
                     style={[
                       styles.circleInner,
                       index + 1 <= step && styles.circleInnerActive,
-                    ]}></View>
+                    ]}
+                  ></View>
                 </View>
                 <Text
                   style={[styles.text]}
-                  color={Colors.WHITETEXT}
+                  color={Colors.bs4}
                   centered
-                  size={Fonts.SM}>
+                  size={Fonts.SM}
+                >
                   {item.name}
                 </Text>
               </View>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   barWhite: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: '100%',
     marginTop: 10,
     marginBottom: -10,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   circleInner: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bs4,
     width: 12,
     height: 12,
     borderRadius: 99,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   circleInnerActive: {
-    backgroundColor: Colors.barRight,
+    backgroundColor: Colors.grd2,
   },
   text: {
     width: 75,

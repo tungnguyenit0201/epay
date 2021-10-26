@@ -7,6 +7,8 @@ import {
 } from 'react-native-permissions';
 import Navigator from 'navigations/Navigator';
 import {useCommon} from '..';
+import {Images} from 'themes';
+import useError from './error';
 
 export const usePermission = () => {
   const {showModalCamera} = useModalPermission();
@@ -52,13 +54,31 @@ export const usePermission = () => {
 
 export const useModalPermission = () => {
   const {dispatch, showModal} = useCommon();
+  const {setError} = useError();
   const showModalCamera = (value = true, goBack) => {
-    dispatch({
-      type: 'SHOW_MODAL',
-      modal: {type: 'permissionCamera', value},
-      goBack,
+    // dispatch({
+    //   type: 'SHOW_MODAL',
+    //   modal: {type: 'permissionCamera', value},
+    //   goBack,
+    // });
+    setError({
+      title: 'Truy cập camera',
+      ErrorCode: -1,
+      ErrorMessage: 'Epay muốn truy cập camera trên điện thoại của bạn',
+      icon: Images.Modal.Camera,
+      onClose: () => showModalCamera(false),
+      action: [
+        {
+          label: 'Cho phép',
+          onPress: () => askPermission(),
+        },
+        {
+          label: 'Nhắc tôi sau',
+          onPress: () => showModalCamera(false),
+        },
+      ],
     });
-    showModal?.goBack && showModal?.goBack();
+    // showModal?.goBack && showModal?.goBack();
   };
   const askPermission = () => {
     try {

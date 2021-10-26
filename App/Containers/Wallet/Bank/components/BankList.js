@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Colors, Images} from 'themes';
+import {Colors, Fonts, Images, Spacing} from 'themes';
 import {Col, Radio, Row, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
@@ -27,19 +27,12 @@ import RadioICInfo from 'containers/Wallet/Bank/components/RadioICInfo';
 
 const BankItem = ({title, icon, item, callback}) => (
   <TouchableOpacity
-    style={styles.item}
+    style={styles.alignCenter}
     onPress={() => {
       callback?.(item);
-    }}>
-    <View
-      style={{
-        width: 48,
-        height: 48,
-        borderRadius: 100,
-        backgroundColor: Colors.BORDER,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+    }}
+  >
+    <View style={styles.boxCirle1}>
       <Image
         source={icon}
         style={{
@@ -49,7 +42,7 @@ const BankItem = ({title, icon, item, callback}) => (
         resizeMode={'contain'}
       />
     </View>
-    <Text centered style={{marginTop: 10}}>
+    <Text fs="md" mt={4} centered>
       {title}
     </Text>
   </TouchableOpacity>
@@ -245,39 +238,14 @@ const BankList = forwardRef((props, ref) => {
   };
   const renderBankBlock = () => {
     return (
-      <View
-        style={[
-          {
-            backgroundColor: Colors.WHITETEXT,
-            shadowColor: 'rgba(0, 0, 0, 0.16)',
-            shadowOpacity: 1,
-            shadowOffset: {width: 0, height: 0},
-            elevation: 1,
-            marginHorizontal: 16,
-            borderRadius: 16,
-            padding: 16,
-            marginVertical: 8,
-          },
-          style,
-        ]}>
-        <Text
-          size={18}
-          style={{
-            fontWeight: 'bold',
-            marginBottom: 16,
-            fontSize: 18,
-            marginTop: 8,
-          }}>
+      <View style={[styles.boxShadowGray, style]}>
+        <Text size={Fonts.LG} bold mb={16}>
           {title || translation.bank_linking}
         </Text>
         <Row>
           {bankData.map((item, index) => {
             return (
-              <Col
-                width={'33.333%'}
-                space={10}
-                key={index}
-                style={{marginBottom: 16}}>
+              <Col width={'33.3333%'} key={index} style={{marginBottom: 16}}>
                 <BankItem
                   callback={onPress}
                   bankInfo={bankInfo}
@@ -293,7 +261,7 @@ const BankList = forwardRef((props, ref) => {
     );
   };
   if (!loaded) {
-    return <ActivityIndicator color={Colors.BORDER} />;
+    return <ActivityIndicator color={Colors.bs2} />;
   }
   if (!Array.isArray(bankData) || bankData.length === 0) {
     return <View />;
@@ -304,8 +272,14 @@ const BankList = forwardRef((props, ref) => {
 export default BankList;
 
 const styles = StyleSheet.create({
+  flex1: {flex: 1},
+  //-----------------
+  px1: {paddingHorizontal: Spacing.PADDING},
+  //-----------------
+  alignCenter: {alignItems: 'center'},
+  //-----------------
   container: {
-    backgroundColor: Colors.BACKGROUNDCOLOR,
+    backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: 16,
     // padding: 16,
@@ -321,23 +295,45 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRightWidth: 1,
     borderStyle: 'solid',
-    borderColor: Colors.cl4,
+    borderColor: Colors.bs1,
     zIndex: 1,
   },
   input_text: {
     paddingLeft: 50,
     // borderRightWidth: 1,
     // borderStyle: 'solid',
-    // borderColor: Colors.l4,
+    // borderColor: Colors.bs1,
     borderWidth: 0,
     borderRadius: 8,
   },
-  item: {alignItems: 'center', flex: 1},
   radio: {
     marginRight: 0,
     marginTop: 4,
     justifyContent: 'center',
     alignSelf: 'flex-start',
     flexDirection: 'column',
+  },
+  //---------------
+  boxShadowGray: {
+    backgroundColor: Colors.bs4,
+    // shadowColor: 'rgba(0, 0, 0, 0.16)',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 0},
+    elevation: 24,
+    shadowRadius: 8,
+    borderRadius: 8,
+    marginHorizontal: Spacing.PADDING,
+    paddingHorizontal: 16,
+    paddingTop: 24,
+    paddingBottom: 16,
+  },
+  //----------------
+  boxCirle1: {
+    width: 48,
+    height: 48,
+    borderRadius: 100,
+    backgroundColor: Colors.bs2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
