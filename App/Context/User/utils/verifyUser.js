@@ -208,12 +208,10 @@ const useVerifyInfo = (initialValue = {}) => {
           title: strings.kycPendingVerify,
         };
       }
-      await Promise.all([
-        onUpdatePersonalInfo(updateInfo, false),
+      await onUpdatePersonalInfo(updateInfo, false),
         onUpdateUserAddress(updateInfo, false),
         onGetAllInfo(),
-        onClearRegionData(),
-      ]);
+        onClearRegionData();
     } catch (e) {
       const {ErrorMessage = strings?.unknownError} = e || {};
       resultContent = {
@@ -221,9 +219,7 @@ const useVerifyInfo = (initialValue = {}) => {
         message: ErrorMessage,
       };
     } finally {
-      /* onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
-      Navigator.navigate(SCREEN.VERIFY_SUCCESS, {...resultContent, kycType}); */
-      console.log('1231321321546');
+      onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
     }
   };
 

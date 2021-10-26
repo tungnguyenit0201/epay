@@ -111,8 +111,7 @@ const useServiceEKYC = () => {
           const {ErrorCode} = res;
           if (ErrorCode === ERROR_CODE.SUCCESS) {
             resolve(res);
-          } else setError(res);
-          reject(res);
+          } else reject(res);
         },
         // failure: err => {
         //   reject(err);
