@@ -217,11 +217,13 @@ const useVerifyInfo = (initialValue = {}) => {
     } catch (e) {
       const {ErrorMessage = strings?.unknownError} = e || {};
       resultContent = {
-        title: strings.verifyFailed,
+        title: strings.kycPendingVerify,
         message: ErrorMessage,
       };
     } finally {
-      onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
+      /* onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
+      Navigator.navigate(SCREEN.VERIFY_SUCCESS, {...resultContent, kycType}); */
+      console.log('1231321321546');
     }
   };
 
