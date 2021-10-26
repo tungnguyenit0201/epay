@@ -126,11 +126,11 @@ const useIconConfig = () => {
       name: translation.traffic,
       screen: SCREEN.TOP_UP,
     },
-    // {
-    //   icon: Images.Homes.BaoHiem,
-    //   name: 'Bảo hiểm',
-    //   screen: SCREEN.TOP_UP,
-    // },
+    MEDICAN: {
+      icon: Images.Homes.BaoHiem,
+      name: 'Bảo hiểm',
+      screen: SCREEN.TOP_UP,
+    },
     // {
     //   icon: Images.Homes.YTe,
     //   name: 'Y tế',
@@ -144,9 +144,12 @@ const useIconConfig = () => {
   };
   const {config} = useCommon();
   let iconHome = [];
-  config?.EnabledMenu?.split(', ')?.map(item => {
-    if (!!iconList[item]) iconHome.push(iconList[item]);
-  });
+  // Thêm 1 icon bảo hiểm để ở trang chủ có 4 icon cho đẹp, bug 2643
+  config?.EnabledMenu?.concat(', MEDICAN')
+    .split(', ')
+    ?.map(item => {
+      if (!!iconList[item]) iconHome.push(iconList[item]);
+    });
 
   return {iconHome};
 };
