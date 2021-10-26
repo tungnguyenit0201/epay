@@ -126,12 +126,13 @@ async function request({
       // console.log('[Request] URL: ' + buildUrl);
       // console.log('[Request] Data: ' + JSON.stringify(result.data));
       if (status === 200 || status === 201 || status === 203) {
-        if (_.get(result, 'data.TransactionID', '')) {
-          transactionID = _.get(result, 'data.TransactionID', '');
-        }
+        // if (_.get(result, 'data.TransactionID', '')) {
+        //   transactionID = _.get(result, 'data.TransactionID', '');
+        // }
 
         if (typeof success === 'function') {
           let parseData = typeof Data == 'string' ? JSON.parse(Data) : Data;
+          parseData?.TransactionID && (transactionID = parseData.TransactionID);
           if (__DEV__) {
             console.log({...result?.data, ...parseData} || result);
           }
