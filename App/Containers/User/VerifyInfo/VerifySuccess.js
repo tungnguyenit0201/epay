@@ -12,7 +12,8 @@ import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
 import {useUser} from 'context/User';
-
+import WebView from 'components/WebView/Partial';
+import {scale} from 'utils/Functions';
 const VerifySuccess = ({route}) => {
   const {resultContent = {}, KYCFlow} = route?.params || {};
   const {title, message, success} = resultContent;
@@ -114,16 +115,18 @@ const VerifySuccess = ({route}) => {
             mt={25}
             mb={Spacing.PADDING - 4}
             bold
-            style={styles.maxWidth1}
-          >
+            style={styles.maxWidth1}>
             {title}
           </Text>
-          {!!message && (
-            <Text centered style={styles.maxWidth1}>
-              {message}
-            </Text>
-          )}
         </View>
+        {!!message && (
+          <WebView
+            style={[styles.maxWidth1, styles.ml]}
+            source={{
+              html: ` ${message}`,
+            }}
+          />
+        )}
       </ScrollView>
       <Image
         source={Images.Kyc.Wave}
@@ -224,6 +227,9 @@ const styles = StyleSheet.create({
     width: 64,
     height: 52,
     alignSelf: 'center',
+  },
+  ml: {
+    marginLeft: scale(50),
   },
 });
 export default VerifySuccess;
