@@ -1,4 +1,9 @@
-import {useAsyncStorage, useError, usePermission} from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  usePermission,
+} from 'context/Common/utils';
 import {useEffect, useState, useCallback} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import RNQRGenerator from 'rn-qr-generator';
@@ -8,20 +13,47 @@ import {SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import {ERROR_CODE} from 'configs/Constants';
 import {useCommon} from 'context/Common';
-import {RESULTS} from 'react-native-permissions';
 import {useWallet} from 'context/Wallet';
-
+import Images from 'themes/Images';
+import {
+  check,
+  PERMISSIONS,
+  RESULTS,
+  openSettings,
+} from 'react-native-permissions';
 const useScanQR = () => {
   let [flash, setFlash] = useState(false);
-  let [loading, setLoading] = useState(false);
+  let [showCameRa, setCamera] = useState(true);
   let [image, setImage] = useState();
-  const {error} = useCommon();
+  const {error, loading} = useCommon();
   const {getPhone} = useAsyncStorage();
   const {setError} = useError();
+  const {setLoading} = useLoading();
   const {getQRCodeInfo, getTransferUser} = useServiceWallet();
   const {checkPermission} = usePermission();
   const {dispatch} = useWallet();
 
+  const setShowCamera = value => {
+    setCamera(value);
+    if (!value)
+      setError({
+        title: 'Truy cập camera',
+        ErrorMessage: 'Epay muốn truy cập camera trên điện thoại của bạn',
+        icon: Images.Modal.Camera,
+        onClose: () => setCamera(false),
+        action: [
+          {
+            label: 'Cho phép',
+            onPress: () =>
+              openSettings().catch(() => console.log('cannot open settings')),
+          },
+          {
+            label: 'Nhắc tôi sau',
+            onPress: () => setCamera(false),
+          },
+        ],
+      });
+  };
   const onGetQRCodeInfo = async qrCode => {
     if (loading) return;
     setLoading(true);
@@ -91,15 +123,13 @@ const useScanQR = () => {
       dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: {}});
     }, []),
   );
-  useEffect(() => {
-    checkPermission('', () => Navigator.goBack());
-  }, []); // eslint-disable-line
   return {
-    loading,
     image,
     setImage,
     flash,
     setFlash,
+    showCameRa,
+    setShowCamera,
     onGetQRCodeInfo,
     detectQRCode,
   };

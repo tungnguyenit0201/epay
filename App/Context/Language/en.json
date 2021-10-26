@@ -573,5 +573,6 @@
   "use": "Sử dụng",
   "place_of_issue_maximum_200_characters": "Place of issue maximum 200 characters",
   "address_maximum_200_characters": "Address maximum 200 characters",
-  "first_and_last_name_must_not_contain_special_characters": "First and last name must not contain special characters"
+  "first_and_last_name_must_not_contain_special_characters": "First and last name must not contain special characters",
+  "guide": "Guide"
 }

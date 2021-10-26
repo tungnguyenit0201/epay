@@ -610,5 +610,6 @@
   "use": "Sử dụng",
   "place_of_issue_maximum_200_characters": "Nơi cấp không được quá 200 ký tự",
   "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự",
-  "first_and_last_name_must_not_contain_special_characters": "Họ và tên không được chứa ký tự đặc biệt"
+  "first_and_last_name_must_not_contain_special_characters": "Họ và tên không được chứa ký tự đặc biệt",
+  "guide": "Hướng dẫn"
 }
