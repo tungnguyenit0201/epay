@@ -32,6 +32,8 @@ import Keychain from 'react-native-keychain';
 import TouchID from 'react-native-touch-id';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
 import {sha256} from 'react-native-sha256';
+import {isEmpty} from 'lodash';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 
 const DEFAULT_TIMEOUT = 60;
 
@@ -521,10 +523,31 @@ const useCashIn = () => {
     });
     setLoading(false);
 
-    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+    if (result?.ErrorCode !== ERROR_CODE.SUCCESS || isEmpty(result?.Data)) {
       setError(result);
       return;
     }
+    const {Data} = result || {};
+    alert(result);
+    const napasInfo = {};
+    Navigator.push?.(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankWebConfirm,
+      params: {
+        napasInfo: {
+          transCode: Data?.TransCode,
+          bankId: BankId,
+          cardNumber: CardNumber,
+          orderId: Data?.OrderId,
+          orderAmount: Data?.OrderAmount,
+          orderReference: Data?.OrderReference,
+          apiOperation: Data?.ApiOperation,
+          dataKey:
+            'HRqWWEGt8tWaCF5SQj327KU9Mq95mez+1b0cD62tIZHnym2gPaAI4PZfXZgaFkf4CNWlCgnJ559Y/ck07Wsg8wBeN/XXGetiV3YrUWluC5hjAfmkco+1piSjbDyp9y93DefHw5klSBRj2/eqgBoy0DKHao3snizGHnE1pLAwUGZQ/z3ghvu/dH2FtMcwpHWxY28xyXarxl4QgJ4uPiybfBkjw8TpNtSIepAR+URMpC9OxRowNhfAoqTjml5Uu21I9HcxfBF2D6atIXgPlKim6z7Sg4O2tWFfAix3wXMP9MD69qW8InHaCJ9Z+xYrJkI+rrw+ckdtwgm7hIYTZnZKs6joElxzOnRhRQ3H1LTFdC6LtwNLn8rOr6SLrRTsi4ppd38FVEfb5j3gFGBzvXXZy9stJtE8AU8b6T716ZEpEMXwW7VwEwzlzhaYfk/uMFwqzimSqW5Is8gb7pStCbfVpmLxGcU1NuzKXFVoOPVbJTOqYDAkFfAn8Y7I5dr6gwDU',
+          napasKey:
+            'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArbP6iFl0Z9pDHv5ni/fhl4ME6AfP16E5zmrHYftaBlcvq1bWRwk1TH23OrYQ6n6jEGIbmrVXzIM00lk723/ZHtvbyZld8r5TcEh5M+h/jIu3/J9gqNYGTo9jLJ0DvRdSfzbDWJqPImPfcGJDRPTrEtckqmd8HvkU6J3MCPrg0IOGTYplUmw6DZ25g1SpBSb1CAWGqP36nqyxNZ4hNJ08agHQbRc/ICHUb/8+/UjDETX96SYVn+GBKbrMM/NcgiJV7UXbEmQ9OEiM3BbI5srhCOt0oYoCp0sJcpLcLbRlpdC7/nV44KPty1rkZ32KlBufz3UVggXpHPz0k0yxYTvl/wIDAQAB:MIICtTCCAZ0CBgFoko89+DANBgkqhkiG9w0BAQUFADAeMRwwGgYDVQQDExNUZXN0IENBIENlcnRpZmljYXRlMB4XDTE5MDEyODAzNDQ0N1oXDTE5MDEyOTAzNDQ0N1owHjEcMBoGA1UEAxMTVGVzdCBDQSBDZXJ0aWZpY2F0ZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK2z+ohZdGfaQx7+Z4v34ZeDBOgHz9ehOc5qx2H7WgZXL6tW1kcJNUx9tzq2EOp+oxBiG5q1V8yDNNJZO9t/2R7b28mZXfK+U3BIeTPof4yLt/yfYKjWBk6PYyydA70XUn82w1iajyJj33BiQ0T06xLXJKpnfB75FOidzAj64NCDhk2KZVJsOg2duYNUqQUm9QgFhqj9+p6ssTWeITSdPGoB0G0XPyAh1G//Pv1IwxE1/ekmFZ/hgSm6zDPzXIIiVe1F2xJkPThIjNwWyObK4QjrdKGKAqdLCXKS3C20ZaXQu/51eOCj7cta5Gd9ipQbn891FYIF6Rz89JNMsWE75f8CAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAFXK48p71S87EmrnCm5Yvv42Oxzh0B18/q4jn891xS1abFRkW2jdCvpc3IUQL6gy+JFQcY2NSaLhIYgBafmcngiBFt4kkTqUuwSdIWudl3jYkO58SOYKdxW8jbXM5KwTujpb0gYBpf1u5828RmEq6YEog/yx/hYQOFQlfIBBZFNmUJ7U5TDCFL2wT5MqPg2cfb1DirveD3sLSIUc90IJM3eUXfzXqkwdrCKDZRSuV3TMHChi1IRio2fg7zesi9HliFueaekkvynnwXoG41LKaMSBMM/Mdrb2tm29jVYnlYJ8Coj+dOjWhU2y83dFi5DGr8a3ftWOc+rEz2zlOUKRF7Q==',
+        },
+      },
+    });
   };
 
   const onCashInConnectedBank = async () => {

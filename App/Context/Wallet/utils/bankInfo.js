@@ -5,6 +5,7 @@ import {
   SCREEN,
   TRANS_FORM_TYPE,
   TRANS_TYPE,
+  IC_TPYE,
 } from 'configs/Constants';
 
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
@@ -244,9 +245,9 @@ const useBankInfo = (initialValue = {}) => {
 
   const getICLabel = type => {
     const cardList = {
-      [IC_TYPE_CHAR.CMND]: translation?.id_card,
-      [IC_TYPE_CHAR.CMNDQD]: translation?.militaryID,
-      [IC_TYPE_CHAR.PASSPORT]: translation?.passport,
+      [IC_TPYE.CMND]: translation?.id_card,
+      [IC_TPYE.CMNDQD]: translation?.militaryID,
+      [IC_TPYE.PASSPORT]: translation?.passport,
     };
     return cardList?.[type] || '';
   };
@@ -290,6 +291,12 @@ const useBankInfo = (initialValue = {}) => {
 
     try {
       const phone = await getPhone();
+      // PhoneNumber: phone,
+      //     CashInInfo: {
+      //   BankConnectId: BankConnectId,
+      //       BankID: BankId,
+      //       Amount: amount,
+      // },
 
       const param = {
         PhoneNumber: phone,
@@ -337,16 +344,12 @@ const useBankInfo = (initialValue = {}) => {
     try {
       const phone = await getPhone();
       const result = await getIdentifyInfo({phone, BankId});
-      let mockresult = mockIc;
-
-      dispatch({type: 'SET_IC_INFO', data: mockIc});
-      return {result: mockresult};
-      // if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
-      //   dispatch({type: 'SET_IC_INFO', data: result?.data?.IdentityCardInfor});
-      //   return {result: result?.data?.IdentityCardInfor};
-      // } else {
-      //   setError(result);
-      // }
+      if (_.get(result, 'ErrorCode') === ERROR_CODE.SUCCESS) {
+        dispatch({type: 'SET_IC_INFO', data: result?.IdentityCardInfor});
+        return {result: result?.IdentityCardInfor};
+      } else {
+        setError(result);
+      }
     } catch (error) {
       setError(error);
     }

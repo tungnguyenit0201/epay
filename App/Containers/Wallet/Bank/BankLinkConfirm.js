@@ -6,17 +6,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {
-  HeaderBg,
-  Header,
-  Icon,
-  Text,
-  InputBlock,
-  Row,
-  Col,
-  TextInput,
-  Button,
-} from 'components';
+import {HeaderBg, Header, Text, Button} from 'components';
 import Navigator from 'navigations/Navigator';
 
 import {ERROR_CODE, SCREEN, FUNCTION_TYPE, IC_TPYE} from 'configs/Constants';
@@ -40,14 +30,14 @@ export default function (props) {
       BankID: Bank?.BankId,
       BankAccount,
       FullName: optionKyc?.Name,
-      ICType: optionKyc?.Type,
-      ICNumber: optionKyc?.Number,
-      ICFrontPhoto: optionKyc?.Number,
-      ICBackPhoto: optionKyc?.Number,
+      ICType: optionKyc?.ICType,
+      ICNumber: optionKyc?.CardNumber,
+      ICFrontPhoto: optionKyc?.CardNumber,
+      ICBackPhoto: optionKyc?.CardNumber,
       Province: ICAddress?.Province || optionKyc?.Province,
-      District: ICAddress?.Province || optionKyc?.Province,
-      Ward: ICAddress?.Province || optionKyc?.Province,
-      Address: ICAddress?.Province || optionKyc?.Province,
+      District: ICAddress?.District || optionKyc?.Province,
+      Ward: ICAddress?.Ward || optionKyc?.Province,
+      Address: ICAddress?.Address || optionKyc?.Province,
     };
     try {
       const res = await onActiveUser?.({BankConnectInfo});
@@ -78,9 +68,9 @@ export default function (props) {
   const renderContent = () => {
     const {Bank, ICAddress, optionKyc, BankAccount} = params || {};
     const BankName = get(Bank, 'BankName', 'Vietcombank');
-    const Name = get(optionKyc, 'Name', '');
-    const type = get(optionKyc, 'Type', '');
-    const idNumber = get(optionKyc, 'Number', '');
+    const Name = get(optionKyc, 'data.FullName', '');
+    const type = get(optionKyc, 'data.ICType', '');
+    const idNumber = get(optionKyc, 'data.CardNumber', '');
     const iclabel = getICLabel(type);
 
     const address = getFullAddress(ICAddress);
@@ -161,8 +151,7 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         <View alignItems="center" marginBottom={16}>
           <Image
             source={Images.ConnectBank.BankLink}
