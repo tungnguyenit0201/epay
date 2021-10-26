@@ -42,7 +42,7 @@ const useRegister = () => {
 
   const openCallDialog = () => {
     try {
-      Linking.openURL('tel:02432252336');
+      Linking.openURL('tel:19000000');
     } catch {}
   };
 
