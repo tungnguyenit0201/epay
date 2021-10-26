@@ -70,7 +70,6 @@ const RegisterName = () => {
               <Button
                 disabled={!values?.FullName || errors?.FullName || isSubmitting}
                 label={translation.completed}
-                style={styles.btn}
                 onPress={handleSubmit}
               />
             </FooterContainer>
@@ -90,11 +89,6 @@ const RegisterName = () => {
 const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   flex1: {flex: 1},
-  //-----------------------
-  btn: {
-    paddingTop: 15,
-    paddingBottom: 15,
-  },
 });
 
 export default RegisterName;

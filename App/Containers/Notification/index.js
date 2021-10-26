@@ -68,7 +68,7 @@ const Notification = () => {
                   setType(item.title);
                 }}
               >
-                <Text style={[type === item.title && styles.textWhite]}>
+                <Text style={[type === item.title && styles.textWhite]} fs="sm">
                   {item.title} {`(${selectNotify(item.title).length})`}
                 </Text>
               </Pressable>
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.tp1,
   },
 
-  flexRow: {flexDirection: 'row', paddingBottom: 15},
+  flexRow: {flexDirection: 'row', paddingBottom: 30},
   head: {
     paddingBottom: 10,
     //marginBottom: 15,

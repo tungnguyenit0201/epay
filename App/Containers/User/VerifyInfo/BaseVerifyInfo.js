@@ -88,7 +88,7 @@ const VerifyUserInfo = ({
             if (showInstruction) {
               return (
                 <TouchableOpacity onPress={onShowModal}>
-                  <Text fs="md" color={Colors.bs4} style={styles.help}>
+                  <Text fs="md" color={Colors.bs4} style={styles.help} centered>
                     Hướng dẫn
                   </Text>
                 </TouchableOpacity>
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
   },
   help: {
     position: 'relative',
+    maxWidth: 70,
     bottom: scale(2),
   },
   background: {
