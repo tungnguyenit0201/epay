@@ -19,7 +19,6 @@ const ChangePassword = ({route}) => {
   return (
     <>
       <HeaderBg>
-        {console.log('route?.params', route?.params)}
         <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
       </HeaderBg>
       <Formik
