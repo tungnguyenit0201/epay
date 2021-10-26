@@ -89,7 +89,7 @@ const VerifyUserInfo = ({
               return (
                 <TouchableOpacity onPress={onShowModal}>
                   <Text fs="md" color={Colors.bs4} style={styles.help} centered>
-                    Hướng dẫn
+                    {translation?.guide}
                   </Text>
                 </TouchableOpacity>
               );
