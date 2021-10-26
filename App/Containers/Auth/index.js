@@ -6,7 +6,7 @@ import {
   Pressable,
   useWindowDimensions,
 } from 'react-native';
-import {Button, Text, TextInput, Icon} from 'components';
+import {Button, FooterContainer, TextInput} from 'components';
 import {Colors, Images, Spacing, Fonts} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
@@ -18,7 +18,6 @@ import _ from 'lodash';
 // import {scale} from 'utils/Functions';
 import {Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 
 const Auth = () => {
   const {onCheckPhoneExist} = useAuth();

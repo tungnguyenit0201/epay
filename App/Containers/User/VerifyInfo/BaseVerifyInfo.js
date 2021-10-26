@@ -57,7 +57,7 @@ const VerifyUserInfo = ({
         };
       case 3:
         return {
-          right: width - Spacing.PADDING * 2 - 40,
+          right: Spacing.PADDING * 2 + 30 / 2,
         };
     }
   }, [step]);

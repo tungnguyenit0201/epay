@@ -7,7 +7,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
+import {
+  Text,
+  FooterContainer,
+  Header,
+  Button,
+  TextInput,
+  Icon,
+} from 'components';
 import {Colors, Spacing, Images} from 'themes';
 import {useForgetPassword, useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
@@ -18,7 +25,6 @@ import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import {SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 import {HelpModal} from 'components/Auth';
 
 const ForgetNewPassword = ({route}) => {
@@ -27,8 +33,9 @@ const ForgetNewPassword = ({route}) => {
   const translation = useTranslation();
   const {showModal, setShowModal, openCallDialog, onGoTerm} = useRegister();
 
-  const onSubmit = values => {
+  const onSubmit = (values, {resetForm}) => {
     onNewPassword({...values, phone});
+    resetForm();
   };
 
   return (
@@ -115,35 +122,12 @@ const ForgetNewPassword = ({route}) => {
                 />
                 <Text style={styles.note}>
                   {
-                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                    translation.note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters
                   }
                 </Text>
               </ScrollView>
 
               <FooterContainer>
-                {/* <View style={styles.flexRow}>
-                  <Checkbox onPress={onSetActive} />
-                  <Text style={{marginLeft: 5}}>
-                    {translation.iAgreeWith}{' '}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.AGREEMENT)}>
-                      <Text style={styles.firstLink}>
-                        {translation.userAgreement}{' '}
-                      </Text>
-                    </TouchableOpacity>
-                    {translation.and}
-                    <TouchableOpacity
-                      style={styles.mtMinus1}
-                      onPress={() => onGoTerm(SCREEN.POLICY)}>
-                      <Text style={styles.firstLink}>
-                        {translation.privacyPolicy}{' '}
-                      </Text>
-                    </TouchableOpacity>
-                    {translation.ofEPAY}
-                  </Text>
-                </View> */}
-
                 <Button
                   mt={10}
                   disabled={!_.isEmpty(errors) || !values.passwordConfirm}
@@ -181,7 +165,7 @@ const styles = StyleSheet.create({
   },
   note: {
     paddingRight: 10,
-    fontSize: 12,
+    fontSize: scale(12),
   },
   firstLink: {
     textDecorationLine: 'underline',

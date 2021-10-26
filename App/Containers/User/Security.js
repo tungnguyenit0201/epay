@@ -195,14 +195,6 @@ const styles = StyleSheet.create({
     top: -3,
   },
   //---------------
-  bgImg: {
-    width: scale(375),
-    height: scale(375),
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-  },
-  //---------------
   boxShadowGray: {
     backgroundColor: Colors.bs4,
     shadowColor: 'rgba(0, 0, 0, 1)',
@@ -211,6 +203,14 @@ const styles = StyleSheet.create({
     elevation: 24,
     shadowRadius: 8,
     borderRadius: 10,
+  },
+  //---------------
+  bgImg: {
+    width: scale(375),
+    height: scale(375),
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
   },
 });
 export default PaymentSettings;

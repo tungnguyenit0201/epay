@@ -1,6 +1,14 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Text, Checkbox, Header, Button, TextInput, Icon} from 'components';
+import {
+  Text,
+  Checkbox,
+  Header,
+  Button,
+  TextInput,
+  Icon,
+  FooterContainer,
+} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useRegister} from 'context/Auth/utils';
 import {scale} from 'utils/Functions';
@@ -10,7 +18,6 @@ import {useTranslation} from 'context/Language';
 import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import {HelpModal, Content, BigLogo} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 import _ from 'lodash';
 const RegisterPassword = ({route}) => {
   const {phone, functionType} = route?.params;
@@ -115,7 +122,7 @@ const RegisterPassword = ({route}) => {
                 />
                 <Text style={styles.textNote}>
                   {
-                    translation.note_password_needs_to_be_at_least_8_characters_including_lowercase_uppercase_and_number
+                    translation.note_password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters
                   }
                 </Text>
               </ScrollView>
@@ -124,7 +131,16 @@ const RegisterPassword = ({route}) => {
                 <View style={styles.flexRow}>
                   <Checkbox onPress={setActive} />
                   <Text style={{marginLeft: 5}}>
-                    {` Tôi đồng ý với các `}
+                    {`Tôi đồng ý với `}
+                    <Text
+                      onPress={() => onGoTerm(SCREEN.POLICY)}
+                      style={styles.firstLink}
+                      color={Colors.tp1}
+                    >
+                      {'điều kiện & điều khoản '}
+                    </Text>
+                    của EPAY
+                    {/* {` Tôi đồng ý với các `}
                     <Text
                       onPress={() => onGoTerm(SCREEN.AGREEMENT)}
                       style={styles.firstLink}
@@ -138,7 +154,7 @@ const RegisterPassword = ({route}) => {
                     >
                       {'Chính sách quyền riêng tư '}
                     </Text>
-                    của Epay Services
+                    của Epay Services */}
                   </Text>
                 </View>
 
@@ -176,11 +192,10 @@ const styles = StyleSheet.create({
     height: scale(20),
   },
   firstLink: {
-    textDecorationLine: 'underline',
     marginLeft: 3,
   },
   textNote: {
-    fontSize: 12,
+    fontSize: scale(12),
     fontWeight: '500',
     paddingRight: 9,
   },

@@ -115,7 +115,7 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  // Navigator.navigate(SCREEN.SECURITY);
+                  Navigator.navigate(SCREEN.SORT_BANK);
                 }}
               >
                 <Image

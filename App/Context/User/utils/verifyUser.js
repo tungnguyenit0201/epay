@@ -178,22 +178,22 @@ const useVerifyInfo = (initialValue = {}) => {
       const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
         const {extractCardInfo} = contentRef.current;
-        const {CardID, CardNumber, Step, ICType, ValidDate, Verified} =
+        const {CardID, CardNumber, Step, ICType, Verified} =
           extractCardInfo || {};
         await verifyIdentityCard({
           Address: value.Address,
           BirthDay: value.DateOfBirth,
           CardID,
-          CardNumber,
+          CardNumber: value?.ICNumber ? value?.ICNumber : CardNumber,
           District: value.County,
           Step,
           FullName: value.ICFullName,
           Gender: value.SexType,
-          ICType,
+          ICType: documentType,
           IssueDate: value.ICIssuedDate,
           IssuePlace: value.ICIssuedPlace,
           Province: value.Provincial,
-          ValidDate,
+          ValidDate: value.ValidDate,
           Verified,
           Ward: value.Ward,
         });
@@ -299,6 +299,7 @@ const useVerifyInfo = (initialValue = {}) => {
         documentType: 'oneSide',
         helpText: helpText[documentType] || '',
         title: backSide ? 'ẢNH MẶT SAU' : 'ẢNH MẶT TRƯỚC',
+        titleFront: '',
         isShowTutorial: !contentRef.current?.eKYCTutorialShown,
       };
     };

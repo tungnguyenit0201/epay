@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, Image} from 'react-native';
-import {Text, Header, Button, Icon, TextInput} from 'components';
+import {Text, FooterContainer, Button, Icon, TextInput} from 'components';
 import {Colors, Fonts, Spacing, Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import {useUserInfo} from 'context/User/utils';
@@ -10,7 +10,6 @@ import {Formik} from 'formik';
 import {useRegister} from 'context/Auth/utils';
 import {nameSchema} from 'utils/ValidationSchemas';
 import BlueHeader from 'components/Auth/BlueHeader';
-import FooterContainer from 'components/Auth/FooterContainer';
 import _ from 'lodash';
 
 const RegisterName = () => {
@@ -34,6 +33,7 @@ const RegisterName = () => {
         touched,
         errors,
         values,
+        isSubmitting,
       }) => {
         const handleChange = field => value => {
           let valueConvert = value?.replace(/[0-9]/g, '');
@@ -68,7 +68,7 @@ const RegisterName = () => {
 
             <FooterContainer>
               <Button
-                disabled={errors?.FullName}
+                disabled={!values?.FullName || errors?.FullName || isSubmitting}
                 label={translation.completed}
                 style={styles.btn}
                 onPress={handleSubmit}

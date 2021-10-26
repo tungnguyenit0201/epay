@@ -7,6 +7,7 @@ import {
   Image,
   RefreshControl,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Text,
@@ -32,7 +33,8 @@ const Notification = () => {
   const translation = useTranslation();
   const [type, setType] = useState(NOTIFY.ALL.title);
   const [refreshing, setRefreshing] = useState(false);
-  const {selectNotify, onGetAllNotify, onPressNotify} = useNotify();
+  const {selectNotify, onGetAllNotify, onPressNotify, onReadAllNotify} =
+    useNotify();
   const dataType = [
     {id: 0, title: NOTIFY.ALL.title},
     {id: 1, title: NOTIFY.CHARGES.title},
@@ -43,10 +45,20 @@ const Notification = () => {
   return (
     <>
       <HeaderBg>
-        <Header title={translation.notification} back />
-        <Image
-          source={require('images/noti/TickCircle.png')}
-          style={styles.TickCircle}
+        <Header
+          title={translation.notification}
+          back
+          renderRightComponent={() => (
+            <TouchableOpacity
+              onPress={onReadAllNotify}
+              style={{backgroundColor: 'yelllow'}}
+            >
+              <Image
+                source={Images.Notification.TickCircle}
+                style={styles.TickCircle}
+              />
+            </TouchableOpacity>
+          )}
         />
       </HeaderBg>
       <View style={styles.wrap}>
@@ -106,9 +118,10 @@ const Notification = () => {
                         </Text>
                       </View>
                       <Text style={styles.date}>
-                        {moment(item?.Time, COMMON_ENUM.DATETIME_FORMAT).format(
-                          'hh:MMA | DD/MM/YYYY',
-                        )}
+                        {moment(
+                          item?.Time,
+                          COMMON_ENUM.DATETIME_FORMAT_CORE,
+                        ).format(COMMON_ENUM.DATETIME_FORMAT_APP)}
                       </Text>
                     </View>
                     <Text numberOfLines={4}>{item?.Content}</Text>
@@ -164,9 +177,6 @@ const styles = StyleSheet.create({
   TickCircle: {
     width: 24,
     height: 24,
-    position: 'absolute',
-    right: Spacing.PADDING,
-    bottom: 23,
   },
   isRead: {
     backgroundColor: Colors.bs2,

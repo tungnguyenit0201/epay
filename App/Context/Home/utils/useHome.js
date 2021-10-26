@@ -8,12 +8,18 @@ import {Images} from 'themes';
 import {useTranslation} from 'context/Language';
 import * as LocalAuthentication from 'expo-local-authentication';
 import {Linking} from 'react-native';
+import {getAll} from 'utils/Functions';
+import {useUser} from 'context/User';
+import {useRegister} from 'context/Auth/utils';
 
 const useHome = () => {
   const {getPhone, getToken} = useAsyncStorage();
   let [banner, setBanner] = useState();
   const {getBanner} = useServiceCommon();
   const {setError} = useError();
+  const {firstLogin} = useUser();
+  const {setFirstLogin} = useRegister();
+  const translation = useTranslation();
 
   const goSecurity = async () => {
     const isTouchIdEnrolled = await LocalAuthentication.isEnrolledAsync();
@@ -23,6 +29,7 @@ const useHome = () => {
       Linking.openSettings();
     }
   };
+
   const onGetBanner = async () => {
     let phone = await getPhone();
     let token = await getToken();
@@ -30,9 +37,48 @@ const useHome = () => {
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) setBanner(result?.Banners);
     else setError(result);
   };
+
+  const onShowTouchIdSuggestion = async () => {
+    const [biometryType, isTouchIdEnrolled] = await getAll(
+      LocalAuthentication.supportedAuthenticationTypesAsync,
+      LocalAuthentication.isEnrolledAsync,
+    );
+    if (!firstLogin || !isTouchIdEnrolled) {
+      return;
+    }
+    const isFaceId =
+      biometryType?.[0] ===
+      LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION;
+    // TODO: translate
+    setError({
+      icon: isFaceId ? Images.SignUp.FaceId : Images.SignUp.TouchId,
+      title: isFaceId ? 'Đăng nhập khuôn mặt' : translation.log_in_touchid,
+      ErrorCode: -1,
+      ErrorMessage:
+        translation.if_you_have_a_problem_and_need_help_please_call_us_for_advice_and_support,
+      action: [
+        {
+          label: isFaceId ? 'Cài đặt khuôn mặt' : translation.setting_touch_id,
+          onPress: () => {
+            setFirstLogin(false);
+            goSecurity();
+          },
+        },
+        {
+          label: translation.remind_me_later,
+          onPress: () => setFirstLogin(false),
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     onGetBanner();
   }, []);
+
+  useEffect(() => {
+    onShowTouchIdSuggestion();
+  }, [firstLogin]);
 
   return {banner, goSecurity};
 };
@@ -60,6 +106,7 @@ const useModalSmartOTP = () => {
 
   return {smartOTPSuggestion, onGoSmartOTP, onPressNever, onClose};
 };
+
 const useIconConfig = () => {
   const translation = useTranslation();
   let iconList = {
@@ -103,4 +150,5 @@ const useIconConfig = () => {
 
   return {iconHome};
 };
+
 export {useHome, useModalSmartOTP, useIconConfig};

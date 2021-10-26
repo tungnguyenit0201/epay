@@ -16,7 +16,7 @@ import {useWallet} from 'context/Wallet';
 import ImagePicker from 'react-native-image-crop-picker';
 import {getAll} from 'utils/Functions';
 import Keychain from 'react-native-keychain';
-
+import {useTranslation} from 'context/Language';
 const useUserInfo = type => {
   let personalInfo = useRef({
     FullName: '',
@@ -25,7 +25,7 @@ const useUserInfo = type => {
     Avatar: '',
     Email: '',
   });
-
+  const translation = useTranslation();
   const {getPhone, addName} = useAsyncStorage();
   const {setLoading} = useLoading();
   const {setError} = useError();
@@ -226,7 +226,7 @@ const useUserInfo = type => {
         setError(result);
         return;
       }
-      await onGetPersonalInfo();
+      await onGetAllInfo();
     };
 
     switch (type) {
@@ -274,7 +274,10 @@ const useUserInfo = type => {
     });
     setLoading(false);
     if (result?.ErrorCode === ERROR_CODE.SUCCESS) {
-      setError({ErrorCode: -1, ErrorMessage: 'Đổi mật khẩu thành công'}); // TODO: translate
+      setError({
+        ErrorCode: -1,
+        ErrorMessage: translation.password_changed_successfully,
+      });
       Keychain.setGenericPassword(phone, newPasswordEncrypted);
       Navigator.navigate(SCREEN.TAB_NAVIGATION);
       return;

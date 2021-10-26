@@ -11,9 +11,7 @@ import {
   Text,
   Header,
   Button,
-  Row,
-  Col,
-  ListItem,
+  FooterContainer,
   HeaderBg,
   ScreenBackground,
 } from 'components';
@@ -57,7 +55,7 @@ const VerifyEmailResult = ({route}) => {
             </Text>
             <View style={styles.block}>
               {success ? (
-                <Text>
+                <Text centered>
                   Tài khoản đã được xác thực email để nhận thông báo và ưu đã
                   mới nhất từ EPAY
                 </Text>
@@ -75,12 +73,12 @@ const VerifyEmailResult = ({route}) => {
             </View>
           </View>
         </ScrollView>
-        <View style={base.bottom}>
+        <FooterContainer>
           <Button
             label={success ? 'Trang chủ' : 'Trang cá nhân'}
             onPress={() => onAction(success)}
           />
-        </View>
+        </FooterContainer>
       </View>
     </>
   );

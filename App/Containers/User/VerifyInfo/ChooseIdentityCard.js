@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   pt1: {paddingTop: 20},
   selector: {
-    minHeight: 200,
+    minHeight: 150,
   },
   selectorText: {
     marginVertical: 10,

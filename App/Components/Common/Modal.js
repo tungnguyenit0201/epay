@@ -36,7 +36,9 @@ const ModalCustom = ({visible, title, content, buttonGroup, onClose, icon}) => {
             style={styles.bgImg}
             resizeMode="contain"
           />
-          {icon && <Image source={icon} style={styles.icon} />}
+          {icon && (
+            <Image source={icon} style={styles.icon} resizeMode="contain" />
+          )}
         </View>
 
         {title && (

@@ -5,8 +5,9 @@ import {Colors, Spacing, Images} from 'themes';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import {useUser} from 'context/User';
-import {GENDER, SCREEN} from 'configs/Constants';
+import {GENDER, SCREEN, IC_TPYE} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
+import {eKYCSchema} from 'utils/ValidationSchemas';
 
 const VerifyUserPortrait = ({route}) => {
   const {onUpdateAllInfo, onContinue, verifyInfo} = useVerifyInfo(
@@ -28,6 +29,7 @@ const VerifyUserPortrait = ({route}) => {
     DateOfBirth: extractCardInfo.BirthDay,
     ICNumber: extractCardInfo.CardNumber,
     ICIssuedDate: extractCardInfo.IssueDate,
+    ValidDate: extractCardInfo.ValidDate,
     ICIssuedPlace: extractCardInfo.IssuePlace,
     Provincial: extractCardInfo.Province,
     County: extractCardInfo.District,
@@ -63,7 +65,8 @@ const VerifyUserPortrait = ({route}) => {
         title: translation.militaryIDNumber,
         regex: '^[0-9]*$',
         minLength: 8,
-        maxLength: 8,
+        fixedLength: true,
+        maxLength: 12,
         keyboardType: 'numeric',
       },
     };
@@ -129,7 +132,7 @@ const VerifyUserPortrait = ({route}) => {
     setInfo({...info, [key]: value});
   };
 
-  const handleValidate = key => {
+  const handleValidate = async key => {
     switch (key) {
       case 'ICIssuedPlace':
         if (info[key]?.length > 200)
@@ -146,6 +149,16 @@ const VerifyUserPortrait = ({route}) => {
             [key]: translation?.address_maximum_200_characters,
           });
         return setError({...error, [key]: ''});
+      case 'ICFullName':
+        let isValid = await eKYCSchema.isValid(info);
+        if (isValid) return setError({...error, [key]: ''});
+
+        return eKYCSchema.validate(info).catch(err => {
+          setError({
+            ...error,
+            [key]: err?.errors?.length > 0 ? err?.errors[0] : '',
+          });
+        });
       default:
         break;
     }
@@ -161,7 +174,7 @@ const VerifyUserPortrait = ({route}) => {
       info.ICIssuedDate &&
       info.ICIssuedPlace &&
       !error?.ICIssuedPlace &&
-      // && (originalInfo?.ValidDate ? info.ValidDate : true)
+      (extractCardInfo?.ValidDate ? info.ValidDate : true) &&
       info.Provincial &&
       info.County &&
       (wardEmpty ? true : info.Ward) &&
@@ -169,7 +182,7 @@ const VerifyUserPortrait = ({route}) => {
       !error?.Address &&
       acceptPolicy
     );
-  }, [info, acceptPolicy, error]);
+  }, [info, acceptPolicy, error, extractCardInfo]);
 
   return (
     <BaseVerifyInfo
@@ -185,13 +198,15 @@ const VerifyUserPortrait = ({route}) => {
           label={translation.enter_your_full_name}
           style={styles.mb1}
           onChange={value => handleChange('ICFullName', value)}
+          onBlur={() => handleValidate('ICFullName')}
           value={info.ICFullName}
-          error={error.ICFullName}
+          error={translation[error?.ICFullName]}
           required
           placeholder={translation?.inputFullName}
-          alphanumeric
+          regex={/[^\p{L} ]+/gu}
           trimOnBlur
           multiline
+          maxLength={100}
         />
         <DatePicker
           onChange={value => handleChange('DateOfBirth', value)}
@@ -223,10 +238,11 @@ const VerifyUserPortrait = ({route}) => {
           error={error.ICNumber}
           style={styles.mb1}
           required
-          numeric
+          numeric={ICType != IC_TPYE.PASSPORT}
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
           trimOnBlur
+          maxLength={CARD_RULE[ICType || 1].maxLength}
         />
         <DatePicker
           label={translation.valid_date}
@@ -235,6 +251,15 @@ const VerifyUserPortrait = ({route}) => {
           required
           placeholder="dd/mm/yyyy"
         />
+        {!!extractCardInfo.ValidDate && (
+          <DatePicker
+            label={translation.expired_date}
+            onChange={value => handleChange('ValidDate', value)}
+            value={info.ValidDate}
+            required
+            placeholder="dd/mm/yyyy"
+          />
+        )}
         <InputBlock
           label={translation?.issuedPlace}
           onChange={value => handleChange('ICIssuedPlace', value)}
@@ -246,6 +271,8 @@ const VerifyUserPortrait = ({route}) => {
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
           multiline
+          alphanumeric
+          autoHeight
           maxLength={200}
         />
       </View>
@@ -261,7 +288,9 @@ const VerifyUserPortrait = ({route}) => {
           required
           placeholder={translation?.inputAddress}
           trimOnBlur
+          alphanumeric
           multiline
+          autoHeight
           maxLength={200}
         />
         <InputBlock
@@ -294,17 +323,13 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => !wardEmpty && goRegionSelect('wards')}
           defaultValue={translation.town}
         />
-        <View style={[styles.flexRow, styles.pt2, styles.pb1]}>
+        <View style={[styles.flexRow, styles.pt2, styles.pb1, styles.pr1]}>
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
-            {translation?.iAgreeWith}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>{translation?.userAgreement}</Text>
-            </TouchableOpacity>{' '}
-            {translation?.and}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>
-            </TouchableOpacity>{' '}
+            {translation?.iAgreeWith}{' '}
+            <Text style={styles.firstLink}>{translation?.userAgreement}</Text>{' '}
+            {translation?.and}{' '}
+            <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>{' '}
             {translation?.ofEPAY}
           </Text>
         </View>
@@ -312,7 +337,7 @@ const VerifyUserPortrait = ({route}) => {
           onPress={() => onContinue(SCREEN.CHOOSE_IDENTITY_CARD)}
           style={styles.underline}
           centered
-          color={Colors.Highlight}
+          color={Colors.hl1}
           bold
           mb={48}
           fs="h6"
@@ -345,6 +370,7 @@ const styles = StyleSheet.create({
   pt2: {paddingTop: 10},
   //---------------
   pb1: {paddingBottom: 24},
+  pr1: {paddingRight: 12},
   //---------------
   underline: {textDecorationLine: 'underline'},
   bgGray: {backgroundColor: Colors.bs1},

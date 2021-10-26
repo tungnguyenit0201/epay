@@ -7,8 +7,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import {base, Colors, Images, Spacing} from 'themes';
-import {Button, Text} from 'components';
-import FooterContainer from 'components/Auth/FooterContainer';
+import {Button, Text, FooterContainer} from 'components';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';

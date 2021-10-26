@@ -110,6 +110,8 @@ export default {
     ThanhToan: require('images/profile/ThanhToan.png'),
     Translate: require('images/profile/Translate.png'),
     ReVerify: require('images/profile/ReVerify.png'),
+    Waiting: require('images/profile/Waiting.png'),
+    Validated: require('images/profile/Validated.png'),
     BgStandard: require('images/bg/bg-standard.png'),
     BgGold: require('images/bg/bg-gold.png'),
     BgPlantinum: require('images/bg/bg-plantinum.png'),
@@ -123,6 +125,7 @@ export default {
     Key: require('images/icons/key.png'),
     BlueMobile: require('images/icons/mobile.png'),
     GrayMobile: require('images/icons/mobile-unactive.png'),
+    Menu: require('images/icons/menu.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),
@@ -144,6 +147,7 @@ export default {
     Plus: require('images/icons/add.png'),
     Search: require('images/icons/search-normal.png'),
     BankLink: require('images/icon_banklink-2.png'),
+    BgBlue: require('images/bg/bg-blue.png'),
   },
   Bank: {
     Vietinbank: require('images/bank/Vietinbank.png'),
@@ -162,6 +166,7 @@ export default {
     BigPhone: require('images/icons/big-phone.png'),
     BlueWave: require('images/bg/blue-wave.png'),
     TouchId: require('images/icons/touch-id.png'),
+    FaceId: require('images/icons/face-id.png'),
   },
   Kyc: {
     Calendar: require('images/icons/calendar.png'),
@@ -248,5 +253,8 @@ export default {
     BigCar: require('images/icons/big-car.png'),
     BigCamera: require('images/icons/big-camera.png'),
     Wave: require('images/wave.png'),
+  },
+  Notification: {
+    TickCircle: require('images/noti/TickCircle.png'),
   },
 };

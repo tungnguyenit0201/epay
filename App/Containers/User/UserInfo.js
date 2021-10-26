@@ -43,14 +43,15 @@ const UserInfo = () => {
   const AddressInfo = userInfo.personalAddress;
   const ICInfor = userInfo.personalIC;
 
-  const address =
-    AddressInfo?.Address +
-    ', ' +
-    AddressInfo?.Ward +
-    ', ' +
-    AddressInfo?.County +
-    ', ' +
-    AddressInfo?.Provincial;
+  const address = [
+    AddressInfo?.Address,
+    AddressInfo?.Ward,
+    AddressInfo?.County,
+    AddressInfo?.Provincial,
+  ]
+    .filter(x => x)
+    .join(', ');
+
   const data = [
     {
       icon: require('images/profile/User.png'),
@@ -87,7 +88,7 @@ const UserInfo = () => {
                   source={
                     PersonalInfo?.Avatar
                       ? {uri: PersonalInfo.Avatar}
-                      : Images.DefaultUser
+                      : Images.User
                   }
                   resizeMode="cover"
                 />
@@ -225,7 +226,11 @@ const UserInfo = () => {
             <View style={[base.row]}>
               <Image
                 style={[styles.rowIcon]}
-                source={require('images/profile/Wating.png')}
+                source={
+                  statusVerified == PERSONAL_IC.ACTIVED
+                    ? Images.Profile.Validated
+                    : Images.Profile.Waiting
+                }
               />
               <View>
                 <Text fs="h6">{getStatusVerifiedText()}</Text>
@@ -294,9 +299,7 @@ const UserInfo = () => {
           visible={showModalReVerify}
           onClose={() => onReVerify('hideModal')}
           title="Xác nhận đổi giấy tờ tùy thân"
-          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với 
-        GTTT cũ. Bạn có chắc chắn muốn 
-        đổi không?" // TODO: translate
+          content="Giấy tờ tùy thân mới phải có thông tin họ tên, ngày sinh khớp với GTTT cũ. Bạn có chắc chắn muốn đổi không?" // TODO: translate
           icon={Images.Profile.ReVerify}
           buttonGroup={() => (
             <View style={styles.buttonGroup}>

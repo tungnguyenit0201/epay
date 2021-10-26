@@ -15,6 +15,8 @@ import {useNotify} from 'context/User/utils';
 import RNRestart from 'react-native-restart';
 import {useUser} from 'context/User';
 import {Text} from 'components';
+import {getAll} from 'utils/Functions';
+import {useLoginName} from 'context/Auth/utils';
 
 const Stack = createStackNavigator();
 
@@ -100,8 +102,8 @@ import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
-import {getAll} from 'utils/Functions';
-import {useLoginName} from 'context/Auth/utils';
+import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
+import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -110,9 +112,10 @@ const AppNavigator = () => {
     useAsyncStorage();
   const {onGetConfig} = useConfig();
   const isReadyRef = React.useRef(false);
-  const {onPressNotify} = useNotify();
+  const {onPressNotify} = useNotify(false);
   const {dispatch} = useUser();
   const {navigateLoginByName} = useLoginName();
+  const appState = React.useRef(AppState.currentState);
 
   const openNotificaiton = async remoteMessage => {
     const token = await getToken();
@@ -142,10 +145,14 @@ const AppNavigator = () => {
       'change',
       async nextAppState => {
         try {
+          appState.current = nextAppState;
           if (nextAppState === 'background' || nextAppState === 'inactive') {
             await setInactiveTime(Date.now());
           }
-          if (nextAppState === 'active') {
+          if (
+            appState.current?.match(/inactive|background/) &&
+            nextAppState === 'active'
+          ) {
             let config = await onGetConfig();
             let inactiveTime = await getInactiveTime();
             let time =
@@ -467,6 +474,14 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
+          <Stack.Screen
+            name={SCREEN.FORGET_PASSWORD_KYC}
+            component={ForgetPasswordKYC}
+          />
+          <Stack.Screen
+            name={SCREEN.EDIT_AUTO_RECHARGE}
+            component={EditAutoReCharge}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

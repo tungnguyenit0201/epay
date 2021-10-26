@@ -19,7 +19,8 @@ const useAuth = () => {
   const translation = useTranslation();
   const {dispatch, route} = useUser();
   const {setError} = useError();
-  const {setPhone, setToken, getPushToken} = useAsyncStorage();
+  const {setPhone, setToken, getPushToken, setTouchIdEnabled} =
+    useAsyncStorage();
   const {onGetAllInfo} = useUserInfo();
   const {onGetConnectedBank} = useBankInfo();
   const {onGetWalletInfo} = useWalletInfo();
@@ -82,7 +83,7 @@ const useAuth = () => {
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
             title: translation.sign_in,
-            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_15_minutes,
+            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute,
             hotline: '1900-0000',
           },
         });
@@ -96,7 +97,7 @@ const useAuth = () => {
         return;
 
       case ERROR_CODE.SUCCESS:
-        Keychain.setGenericPassword(phone, passwordEncrypted);
+        onUpdateKeychain({phone, passwordEncrypted});
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
@@ -154,6 +155,7 @@ const useAuth = () => {
 
   const onLogout = async () => {
     dispatch({type: 'UPDATE_TOKEN', data: ''});
+    dispatch({type: 'SET_PERSONAL_INFO', data: null});
     setDefaultHeaders({
       Authorization: ``,
     });
@@ -163,6 +165,14 @@ const useAuth = () => {
 
   const onSetMessage = value => {
     setMessage(value);
+  };
+
+  const onUpdateKeychain = async ({phone, passwordEncrypted}) => {
+    const credentials = await Keychain.getGenericPassword();
+    if (credentials?.username !== phone) {
+      setTouchIdEnabled(false);
+    }
+    Keychain.setGenericPassword(phone, passwordEncrypted);
   };
 
   return {

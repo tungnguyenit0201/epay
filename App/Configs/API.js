@@ -15,6 +15,7 @@ export default {
     CHECK_PHONE: 'account/check_exist',
     LOGIN: 'account/login_account',
     REGISTER: 'account/create_account',
+    CHECK_IC_INFO: 'account/identity_card_info_check',
   },
   COMMON: {
     GEN_OTP: 'common/otp/gen_otp',

@@ -31,7 +31,11 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
       setLoading(false);
       if (result?.ErrorCode == ERROR_CODE.SUCCESS)
         return result?.ProvinceInfoList;
-      else setError(result);
+      else
+        setError({
+          ...result,
+          onClose: () => Navigator.reset(SCREEN.TAB_NAVIGATION),
+        });
     } catch (error) {
       setLoading(false);
     }
@@ -45,7 +49,11 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
       setLoading(false);
       if (result?.ErrorCode == ERROR_CODE.SUCCESS)
         return result?.DistrictInfoList;
-      else setError(result);
+      else
+        setError({
+          ...result,
+          onClose: () => Navigator.reset(SCREEN.TAB_NAVIGATION),
+        });
     } catch (error) {
       setLoading(false);
     }
@@ -60,7 +68,11 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
 
       if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
         return result?.WardInfoList;
-      } else setError(result);
+      } else
+        setError({
+          ...result,
+          onClose: () => Navigator.reset(SCREEN.TAB_NAVIGATION),
+        });
     } catch (error) {
       setLoading(false);
     }

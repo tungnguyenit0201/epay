@@ -141,10 +141,6 @@ const styles = StyleSheet.create({
   //----------------
   flex1: {flex: 1},
   //----------------
-  // alignCenter: {alignItems: 'center',},
-  //----------------
-  maxWidth1: {maxWidth: 200},
-  //----------------
   mr1: {marginRight: 8},
   //----------------
   ptb1: {paddingVertical: 24},
@@ -160,13 +156,11 @@ const styles = StyleSheet.create({
     width: scale(28),
     height: scale(28),
   },
-  //----------------
-  boxTime1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    top: -3,
-  },
-  //---------------
+  // boxTime1: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   top: -3,
+  // },
   bgImg: {
     width: scale(375),
     height: scale(375),

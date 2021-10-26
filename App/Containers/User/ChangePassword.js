@@ -3,26 +3,22 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import {
   Button,
   Header,
-  InputBlock,
+  FooterContainer,
   Text,
   HeaderBg,
   TextInput,
 } from 'components';
-import {SCREEN, TEXT} from 'configs/Constants';
-import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
 import {base, Colors, Spacing} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
-import FooterContainer from 'components/Auth/FooterContainer';
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
   const {onConfirmPassword} = useUserInfo(route?.params?.type);
   return (
     <>
       <HeaderBg>
-        {console.log('route?.params', route?.params)}
         <Header back title={route?.params?.headerLabel || 'Đổi mật khẩu'} />
       </HeaderBg>
       <Formik
