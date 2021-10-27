@@ -217,7 +217,7 @@ const useVerifyInfo = (initialValue = {}) => {
     } catch (e) {
       const {ErrorMessage = strings?.unknownError} = e || {};
       resultContent = {
-        title: strings.verifyFailed,
+        title: strings.kycPendingVerify,
         message: ErrorMessage,
       };
     } finally {

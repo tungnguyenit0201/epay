@@ -58,7 +58,7 @@ const CustomText = ({
         },
         underline && {textDecorationLine: 'underline'},
         fs === 'sx' && {fontSize: Fonts.SX, lineHeight: 14},
-        fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 16},
+        fs === 'sm' && {fontSize: Fonts.SM, lineHeight: 18},
         fs === 'md' && {fontSize: Fonts.MD, lineHeight: 20},
         fs === 'lg' && {fontSize: Fonts.LG, lineHeight: 26},
         fs === 'h1' && {fontSize: Fonts.H1, lineHeight: 44},

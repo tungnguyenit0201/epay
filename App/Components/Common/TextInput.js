@@ -11,6 +11,7 @@ import {Colors, Fonts, Images, Spacing} from 'themes';
 import Text from './Text';
 import {View} from 'react-native-ui-lib';
 import {scale} from 'utils/Functions';
+import _ from 'lodash';
 
 export default React.forwardRef(
   (
@@ -22,6 +23,7 @@ export default React.forwardRef(
       password,
       numeric,
       phone,
+      name,
       marginBottom = scale(10),
       error,
       showErrorLabel = true,
@@ -64,7 +66,15 @@ export default React.forwardRef(
         if (regexValid && regex) {
           const regexText = new RegExp(regex);
           onChange?.(text?.replace(regexText, ''));
-        } else onChange?.(text);
+        } else {
+          if (name) {
+            onChange?.(
+              text.replace(/(^\w|\s\w)/g, (match, p1) => p1.toUpperCase()),
+            );
+          } else {
+            onChange?.(text);
+          }
+        }
       }
     };
 
