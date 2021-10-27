@@ -163,7 +163,7 @@ const AutoWithdraw = props => {
               style={[
                 styles.boxBlue1,
                 {
-                  backgroundColor: Colors.brd2,
+                  backgroundColor: Colors.bg2,
                 },
               ]}
             >
