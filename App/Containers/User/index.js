@@ -129,11 +129,11 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  setError({
-                    ErrorMessage: 'Coming soon',
-                    icon: Images.Homes.Setting,
-                  });
+                  Navigator.navigate(SCREEN.AUTO_WITHDRAW);
+                  // setError({
+                  //   ErrorMessage: 'Coming soon',
+                  //   icon: Images.Homes.Setting,
+                  // });
                 }}
               >
                 <Image

@@ -104,6 +104,7 @@ import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
+import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -482,6 +483,8 @@ const AppNavigator = () => {
             name={SCREEN.EDIT_AUTO_RECHARGE}
             component={EditAutoReCharge}
           />
+
+          <Stack.Screen name={SCREEN.AUTO_WITHDRAW} component={AutoWithdraw} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
