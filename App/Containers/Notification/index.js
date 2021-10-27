@@ -49,10 +49,7 @@ const Notification = () => {
           title={translation.notification}
           back
           renderRightComponent={() => (
-            <TouchableOpacity
-              onPress={onReadAllNotify}
-              style={{backgroundColor: 'yelllow'}}
-            >
+            <TouchableOpacity onPress={onReadAllNotify}>
               <Image
                 source={Images.Notification.TickCircle}
                 style={styles.TickCircle}
@@ -74,10 +71,16 @@ const Notification = () => {
                 style={[styles.tag, type === item.title && styles.tagActive]}
                 onPress={() => {
                   setType(item.title);
-                }}
-              >
-                <Text style={[type === item.title && styles.textWhite]}>
-                  {item.title} {`(${selectNotify(item.title).length})`}
+                }}>
+                <Text style={[type === item.title && styles.textWhite]} fs="sm">
+                  {item.title}
+                  {`${
+                    selectNotify(item.title).filter(x => !x.IsRead).length
+                      ? ' (' +
+                        selectNotify(item.title).filter(x => !x.IsRead).length +
+                        ')'
+                      : ''
+                  }`}
                 </Text>
               </Pressable>
             )}
@@ -93,8 +96,7 @@ const Notification = () => {
                 setRefreshing(false);
               }}
             />
-          }
-        >
+          }>
           <View style={[base.container]}>
             {selectNotify(type).length !== 0 ? (
               selectNotify(type).map((item, index) => {
@@ -102,12 +104,10 @@ const Notification = () => {
                   <Pressable
                     style={[base.boxShadow, item?.IsRead ? styles.isRead : '']}
                     key={index}
-                    onPress={() => onPressNotify(item)}
-                  >
+                    onPress={() => onPressNotify(item)}>
                     <View style={styles.head}>
                       <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}
-                      >
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
                         <Image
                           source={require('images/favicon.png')}
                           style={styles.icon}
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(10),
     borderRadius: 99,
     backgroundColor: Colors.bs4,
-    height: 32,
+    // height: 32,
     borderColor: Colors.bs2,
     borderWidth: 1,
     marginRight: scale(5),
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.tp1,
   },
 
-  flexRow: {flexDirection: 'row', paddingBottom: 15},
+  flexRow: {flexDirection: 'row', paddingBottom: 30},
   head: {
     paddingBottom: 10,
     //marginBottom: 15,

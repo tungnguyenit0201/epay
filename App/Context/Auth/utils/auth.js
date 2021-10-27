@@ -153,14 +153,29 @@ const useAuth = () => {
     }
   };
 
-  const onLogout = async () => {
-    dispatch({type: 'UPDATE_TOKEN', data: ''});
-    dispatch({type: 'SET_PERSONAL_INFO', data: null});
-    setDefaultHeaders({
-      Authorization: ``,
+  const onLogout = () => {
+    setError({
+      title: translation.log_out,
+      ErrorCode: -1,
+      ErrorMessage: translation.are_you_sure_you_want_to_logout,
+      action: [
+        {
+          label: translation.yes,
+          onPress: async () => {
+            dispatch({type: 'UPDATE_TOKEN', data: ''});
+            dispatch({type: 'SET_PERSONAL_INFO', data: null});
+            setDefaultHeaders({
+              Authorization: ``,
+            });
+            await setToken('');
+            await resetLoginByName();
+          },
+        },
+        {
+          label: translation.no,
+        },
+      ],
     });
-    await setToken('');
-    await resetLoginByName();
   };
 
   const onSetMessage = value => {

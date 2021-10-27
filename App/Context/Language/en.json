@@ -296,6 +296,9 @@
   "take_a_portrait_photo": "Take a portrait photo",
   "email_authentication": "Email authentication",
   "update_your_email_to_receive_the_latest_announcements_and_offers_from_epay": "Update your email to receive the latest announcements and offers from EPAY",
+  "are_you_sure_you_want_to_logout": "Are you sure you want to logout?",
+  "yes": "Yes",
+  "no": "No",
   "errorCode": {
     "1": "Tài khoản không tồn tại hoặc mật khẩu sai",
     "2": "Tài khoản đang bị khóa",
@@ -570,5 +573,6 @@
   "use": "Sử dụng",
   "place_of_issue_maximum_200_characters": "Place of issue maximum 200 characters",
   "address_maximum_200_characters": "Address maximum 200 characters",
-  "first_and_last_name_must_not_contain_special_characters": "First and last name must not contain special characters"
+  "first_and_last_name_must_not_contain_special_characters": "First and last name must not contain special characters",
+  "guide": "Guide"
 }

@@ -524,6 +524,7 @@ const useServiceWallet = () => {
   const payment = async ({
     phone,
     BankId,
+    TransFormType,
     CardNumber,
     CardHolder,
     CardIssueDate,
@@ -543,6 +544,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         BankId,
+        TransFormType,
         CardNumber,
         CardHolder,
         CardIssueDate,

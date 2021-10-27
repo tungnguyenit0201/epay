@@ -137,7 +137,7 @@ const RegisterPassword = ({route}) => {
                       style={styles.firstLink}
                       color={Colors.tp1}
                     >
-                      {'điều kiện & điều khoản '}
+                      {'Điều kiện & Điều khoản '}
                     </Text>
                     của EPAY
                     {/* {` Tôi đồng ý với các `}

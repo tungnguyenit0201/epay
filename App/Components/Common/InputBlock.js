@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -9,7 +9,6 @@ import {
 import {Icon, Text, TextInput} from 'components';
 import {Colors, Images, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
-import {ColorSwatch} from 'react-native-ui-lib';
 
 const InputBlock = ({
   label,
@@ -31,7 +30,6 @@ const InputBlock = ({
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const positionRef = useRef(0);
 
   const _onFocus = event => {
     setIsFocused(true);
