@@ -29,7 +29,7 @@ const AutoWithdraw = props => {
       <FooterContainer>
         <Button
           // label={translation.continue}
-          label="Hủy liên kết"
+          label={translation.continue}
           // size="lg"
           style={styles.button}
           // onPress={onSubmit}
@@ -49,7 +49,7 @@ const AutoWithdraw = props => {
         contentContainerStyle={[styles.px1, styles.py1]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.boxShadowGray, styles.pxy1]}>
+        <View style={[styles.boxShadowGray, styles.pxy1, styles.mb1]}>
           <Text size={Fonts.LG} bold mb={16}>
             {translation.enter_auto_topup_amount}
           </Text>
@@ -111,59 +111,129 @@ const AutoWithdraw = props => {
           {translation.source}
         </Text>
 
-        <TouchableOpacity
-          style={[styles.boxShadowGray, {backgroundColor: Colors.bg1}]}
-        >
-          <View
+        <View style={styles.mb5}>
+          <TouchableOpacity
             style={[
-              styles.flexRow,
-              {
-                padding: 10,
-              },
+              styles.boxShadowGray,
+              styles.mb5,
+              {backgroundColor: Colors.bg1},
             ]}
           >
-            <View flex={1}>
-              <Text style={styles.subTitle}>asdasd</Text>
+            <View style={[styles.flexRow, styles.pxy2]}>
+              <Image
+                source={Images.ConnectBank.logoAgribank}
+                style={[
+                  {
+                    width: scale(34),
+                    aspectRatio: 1,
+                  },
+                  styles.mr1,
+                ]}
+                resizeMode={'contain'}
+              />
+              <View flex={1} style={styles.flexRow} flexWrap="wrap">
+                <View style={[styles.widthHaft, styles.pr2]}>
+                  <Text bold fs="h6" mb={6}>
+                    Vietcombank
+                  </Text>
+                </View>
+
+                <View style={styles.widthHaft}>
+                  <Image
+                    resizeMode="cover"
+                    source={Images.Check}
+                    style={styles.iconCheck1}
+                  />
+                </View>
+
+                <View style={[styles.widthPercent1, styles.pr2]}>
+                  <Text size={Fonts.SM} color={Colors.tp3}>
+                    **********1234
+                  </Text>
+                </View>
+
+                <View style={styles.widthPercent2}>
+                  <Text size={Fonts.MD} right color={Colors.tp3}>
+                    Phí giao dịch: X.000đ
+                  </Text>
+                </View>
+              </View>
             </View>
-            <Image
-              resizeMode="cover"
-              source={Images.Check}
-              style={{
-                width: 20,
-                height: 20,
-                borderRadius: 16,
-              }}
-            />
-            {/* <View
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 16,
-                  backgroundColor: Colors.bs4,
-                  borderWidth: 1,
-                  borderColor: Colors.tp3,
-                }}
-              /> */}
-          </View>
-          <View
-            style={{
-              padding: 10,
-              backgroundColor: Colors.grd1,
-              borderBottomLeftRadius: 8,
-              borderBottomRightRadius: 8,
-            }}
+            <View
+              style={[
+                styles.boxBlue1,
+                {
+                  backgroundColor: Colors.brd2,
+                },
+              ]}
+            >
+              <Text size={Fonts.SX}>Hạn mức nạp tự động: 2.000.000đ</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.boxShadowGray,
+              styles.mb5,
+              {backgroundColor: Colors.bg1},
+            ]}
           >
-            <Text>asdasd</Text>
-          </View>
-        </TouchableOpacity>
+            <View style={[styles.flexRow, styles.pxy2]}>
+              <Image
+                source={Images.ConnectBank.logoAgribank}
+                style={[
+                  {
+                    width: scale(34),
+                    aspectRatio: 1,
+                  },
+                  styles.mr1,
+                ]}
+                resizeMode={'contain'}
+              />
+              <View flex={1} style={styles.flexRow} flexWrap="wrap">
+                <View style={[styles.widthHaft, styles.pr2]}>
+                  <Text bold fs="h6" mb={6}>
+                    Vietcombank
+                  </Text>
+                </View>
+
+                <View style={styles.widthHaft}>
+                  <View style={[base.leftAuto, styles.iconUnActive1]} />
+                </View>
+
+                <View style={[styles.widthPercent1, styles.pr2]}>
+                  <Text size={Fonts.SM} color={Colors.tp3}>
+                    **********1234
+                  </Text>
+                </View>
+
+                <View style={styles.widthPercent2}>
+                  <Text size={Fonts.MD} right color={Colors.tp3}>
+                    Phí giao dịch: X.000đ
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={[
+                styles.boxBlue1,
+                {
+                  backgroundColor: Colors.bs2,
+                },
+              ]}
+            >
+              <Text size={Fonts.SX}>Hạn mức nạp tự động: 2.000.000đ</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
         <Text bold size={Fonts.LG} mb={16}>
-          Thêm ngân hàng nhận tiền
+          {translation.add_bank}
         </Text>
 
         <TouchableOpacity style={[base.row, styles.btnAddBank]}>
           <View style={styles.flex1}>
-            <Text fs="h6">{translation.add_bank_account}</Text>
+            <Text fs="h6">{translation.add_bank}</Text>
           </View>
           <Image
             source={Images.ConnectBank.Plus}
@@ -183,58 +253,58 @@ const styles = StyleSheet.create({
   flexRow: {flexDirection: 'row'},
   //-----------------
   flex1: {flex: 1},
+  //---------------
+  widthHaft: {width: '50%'},
   //-----------------
-  mb1: {marginBottom: 16},
+  widthPercent1: {width: '40%'},
+  widthPercent2: {width: '60%'},
+  //-----------------
+  mr1: {marginRight: 10},
+  //-----------------
+  mb1: {marginBottom: 24},
   mb2: {marginBottom: 32},
   mb3: {marginBottom: 2},
   mb4: {marginBottom: 8},
+  mb5: {marginBottom: 16},
   //-----------------
   ml1: {marginLeft: 3},
   //-----------------
   pxy1: {
     paddingHorizontal: 12,
-    paddingTop: 32,
+    paddingTop: 30,
     paddingBottom: 32,
+  },
+  pxy2: {
+    paddingVertical: 11,
+    paddingHorizontal: 13,
   },
   //-----------------
   px1: {paddingHorizontal: Spacing.PADDING},
   //-----------------
-  py1: {
-    paddingTop: Spacing.PADDING,
-    paddingBottom: 40,
-  },
+  py1: {paddingVertical: Spacing.PADDING},
   //-----------------
   pr1: {paddingRight: 40},
-  //-----------------
-  image: {
-    width: 20,
-    height: 20,
-  },
-  icon: {
-    position: 'absolute',
-    top: 52,
-    left: 10,
-    paddingRight: 10,
-    borderRightWidth: 1,
-    borderStyle: 'solid',
-    borderColor: Colors.bs1,
-    zIndex: 1,
-  },
-  input_text: {
-    paddingLeft: 50,
-    borderWidth: 0,
-    borderRadius: 8,
-  },
-  item: {alignItems: 'center'},
-  //----------------
-  lineGray1: {
-    height: 12,
-    backgroundColor: Colors.bs2,
-  },
+  pr2: {paddingRight: 8},
   //----------------
   iconPlus: {
     width: scale(24),
     height: scale(24),
+  },
+  //----------------
+  iconCheck1: {
+    width: 20,
+    height: 20,
+    marginLeft: 'auto',
+    borderRadius: 16,
+  },
+  //----------------
+  iconUnActive1: {
+    width: 20,
+    height: 20,
+    borderRadius: 16,
+    backgroundColor: Colors.bs4,
+    borderWidth: 1,
+    borderColor: Colors.tp3,
   },
   //----------------
   btnAddBank: {
@@ -259,5 +329,11 @@ const styles = StyleSheet.create({
     elevation: 24,
     shadowRadius: 8,
     borderRadius: 8,
+  },
+  //----------------
+  boxBlue1: {
+    padding: 10,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
 });
