@@ -112,6 +112,7 @@ export default {
     ReVerify: require('images/profile/ReVerify.png'),
     Waiting: require('images/profile/Waiting.png'),
     Validated: require('images/profile/Validated.png'),
+    Expired: require('images/profile/Expired.png'),
     BgStandard: require('images/bg/bg-standard.png'),
     BgGold: require('images/bg/bg-gold.png'),
     BgPlantinum: require('images/bg/bg-plantinum.png'),
