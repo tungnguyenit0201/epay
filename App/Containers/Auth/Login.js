@@ -63,8 +63,7 @@ const Login = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) => onLogin({phone, password})}
-        validationSchema={passwordSchema}
-      >
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -103,8 +102,7 @@ const Login = ({route}) => {
                     onPress={() => {
                       setFieldValue('password', '');
                       onForgetPassword();
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.forgot_password}?
                     </Text>
@@ -114,8 +112,7 @@ const Login = ({route}) => {
                     onPress={() => {
                       onChangePhone();
                       setFieldValue('password', '');
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.change_the_phone_number}
                     </Text>
@@ -143,8 +140,7 @@ const Login = ({route}) => {
                         onSetMessage('');
                         onTouchID();
                       }}
-                      style={styles.btn}
-                    >
+                      style={styles.btn}>
                       <Icon
                         icon={
                           biometryType ===
@@ -209,7 +205,7 @@ const styles = StyleSheet.create({
     height: scale(17),
   },
   textError: {
-    marginTop: 50,
+    marginTop: scale(26),
     color: Colors.Highlight,
     textAlign: 'center',
     minHeight: 200,

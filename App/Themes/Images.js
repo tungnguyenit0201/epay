@@ -112,6 +112,7 @@ export default {
     ReVerify: require('images/profile/ReVerify.png'),
     Waiting: require('images/profile/Waiting.png'),
     Validated: require('images/profile/Validated.png'),
+    Expired: require('images/profile/Expired.png'),
     BgStandard: require('images/bg/bg-standard.png'),
     BgGold: require('images/bg/bg-gold.png'),
     BgPlantinum: require('images/bg/bg-plantinum.png'),
@@ -126,6 +127,7 @@ export default {
     BlueMobile: require('images/icons/mobile.png'),
     GrayMobile: require('images/icons/mobile-unactive.png'),
     Menu: require('images/icons/menu.png'),
+    Trash: require('images/icons/trash.png'),
   },
   ConnectBank: {
     logoAgribank: require('images/logo-bank/logo-1.png'),

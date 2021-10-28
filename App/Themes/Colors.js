@@ -14,6 +14,7 @@ export default {
 
   //Background
   bg1: '#EEF6FF',
+  bg2: '#D4EDF9',
 
   //Highlight
   hl1: '#D80000',

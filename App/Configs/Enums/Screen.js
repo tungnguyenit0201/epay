@@ -97,5 +97,6 @@ const SCREEN = {
   BANK_OTP: 'BankOTP',
   FORGET_PASSWORD_KYC: 'ForgetPasswordKYC',
   EDIT_AUTO_RECHARGE: 'EditAutoReCharge',
+  AUTO_WITHDRAW: 'AutoWithdraw',
 };
 export default SCREEN;
