@@ -9,11 +9,11 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
-import {useTransactionResult} from 'context/Wallet/utils';
+import {useQRTransfer} from 'context/Wallet/utils';
 
 const TransactionResult = () => {
   const translation = useTranslation();
-  const {message, onRetry, onBackHome} = useTransactionResult();
+  const {onPaymentConfrim} = useQRTransfer();
   const data = [
     {
       label: 'Mã giao dịch',
@@ -117,7 +117,8 @@ const TransactionResult = () => {
             <Button
               type={1}
               label="Thực hiện lại"
-              onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
+              onPress={() => onPaymentConfrim()}
+              // onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
             />
           </Col>
         </Row>

@@ -97,8 +97,8 @@ import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/Wallet/QRPay/TransferConfirm';
-import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
+import TransferConfirm from 'containers/Wallet/QRPay/TransferConfirm';
+import TransferResults from 'containers/Wallet/QRPay/TransferResult';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
@@ -348,12 +348,12 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.MY_QR} component={MyQR} />
           <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
           <Stack.Screen
-            name={SCREEN.TRANSFER_RESULTS}
-            component={TransferResults}
+            name={SCREEN.TRANSFER_COMFIRM}
+            component={TransferConfirm}
           />
           <Stack.Screen
-            name={SCREEN.TRANSFER_SUCCESS}
-            component={TransferSuccess}
+            name={SCREEN.TRANSFER_RESULTS}
+            component={TransferResults}
           />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
           <Stack.Screen

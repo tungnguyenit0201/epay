@@ -33,7 +33,7 @@ const Transfer = () => {
     check,
     onChange,
     onCheckAmountLimit,
-    onContinue,
+    onPayment,
   } = useQRTransfer();
 
   const translation = useTranslation();
@@ -99,7 +99,7 @@ const Transfer = () => {
           label: formatMoney(x),
         }))}
         onPress={amount => onChange('amount', amount)}
-        onContinue={onContinue}
+        onContinue={onPayment}
         isContinueEnabled={check}
       />
     </>

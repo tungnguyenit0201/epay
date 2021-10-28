@@ -2,16 +2,24 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useEffect, useRef, useState} from 'react';
 import useServiceWallet from 'services/wallet';
 import Navigator from 'navigations/Navigator';
-import {SCREEN, TRANS_FORM_TYPE, TRANS_TYPE} from 'configs/Constants';
+import {
+  SCREEN,
+  TRANS_FORM_TYPE,
+  TRANS_TYPE,
+  ERROR_CODE,
+  CONFIRM_METHODS,
+} from 'configs/Constants';
 import _ from 'lodash';
-import {ERROR_CODE} from 'configs/Constants';
 import {useCommon} from 'context/Common';
 import {useUser} from 'context/User';
 import {useWallet} from 'context/Wallet';
 import {hidePhone} from 'utils/Functions';
-import Images from 'themes/Images';
+import {sha256} from 'react-native-sha256';
+import Keychain from 'react-native-keychain';
+import {useTouchID} from 'context/Auth/utils';
+import {useModalSmartOTP} from 'context/User/utils';
 
-export const useQRTransfer = (mount = true) => {
+export const useQRTransfer = () => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {phone} = useUser();
@@ -23,6 +31,12 @@ export const useQRTransfer = (mount = true) => {
     getSourceMoney,
     paymentComfrim,
   } = useServiceWallet();
+  const {onShowModal} = useModalSmartOTP();
+
+  const {biometryType, onTouchID} = useTouchID({
+    isMount: false,
+    onSuccess: () => paymentWithTouchId(),
+  });
   const transfer = useRef({
     amount: null,
     payoneer: 0,
@@ -38,6 +52,22 @@ export const useQRTransfer = (mount = true) => {
     if (key == 'amount') {
       if (value > 100000) return setSuggestion([value, value * 2, value * 3]);
       if (value) setSuggestion([value * 1000, value * 10000, value * 100000]);
+    }
+  };
+
+  const paymentWithTouchId = async () => {
+    console.log('paymentWithTouchId');
+    try {
+      setLoading(true);
+      const credentials = await Keychain.getGenericPassword();
+      const passwordEncrypted = credentials?.password;
+      if (passwordEncrypted) {
+        onPaymentConfrim({ConfirmValue: passwordEncrypted});
+      }
+      setLoading(false);
+      return passwordEncrypted;
+    } catch (error) {
+      __DEV__ && console.log("Keychain couldn't be accessed!", error);
     }
   };
 
@@ -59,7 +89,6 @@ export const useQRTransfer = (mount = true) => {
       Content: transfer.current?.content,
       TransFormType: TRANS_FORM_TYPE.WALLET,
     });
-    // return Navigator.navigate(SCREEN.TRANSFER_RESULTS);
 
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
       dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: transfer.current});
@@ -76,21 +105,53 @@ export const useQRTransfer = (mount = true) => {
       OrderId: qrTransaction?.OrderID,
       MerchantCode: qrTransaction?.MerchantCode,
       TransFormType: TRANS_FORM_TYPE.WALLET,
-      Amount: 100000,
+      Amount: qrTransaction?.Price,
     });
-    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
-    } else setError(result);
     setLoading(false);
+
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      return;
+    } else {
+      if (result?.ErrorCode == ERROR_CODE.PAYMENT_REQUIRED_AUTHENTICATION) {
+        dispatch({
+          type: 'SET_QR_TRANSACTION',
+          qrTransaction: {...qrTransaction, ...result},
+        });
+        for (let i = 0; i < result?.ListConfirmMethod?.length; i++) {
+          let confirmType = _.get(
+            result,
+            `ListConfirmMethod[${i}].ConfirmType`,
+            -1,
+          );
+          // if (confirmType == CONFIRM_METHODS.BIO_ID && biometryType) {
+          //   let done = await onTouchID();
+          //   if (done) return;
+          // }
+          if (confirmType == CONFIRM_METHODS.SMART_OTP) {
+            console.log('method :>> ', confirmType);
+            onShowModal();
+          }
+        }
+        result?.ListConfirmMethod?.map?.(async method => {});
+      } else setError(result);
+    }
   };
 
-  // const onPaymentConfrim = async () => {
-  //   let result = await paymentComfrim({
-  //     phone,
-  //     OrderId: qrTransaction?.OrderID,
-  //     MerchantCode: qrTransaction?.MerchantCode,
-  //     TransFormType: TRANS_FORM_TYPE.WALLET,
-  //   });
-  // };
+  const onPaymentConfrim = async ({ConfirmValue}) => {
+    setLoading(true);
+    console.log('qrTransaction :>> ', qrTransaction);
+    let result = await paymentComfrim({
+      phone,
+      TransCode: qrTransaction?.TransCode,
+      ConfirmMethod: qrTransaction?.ListConfirmMethod[0].ConfirmType,
+      ConfirmValue,
+    });
+    setLoading(false);
+
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+    } else setError(result);
+  };
 
   const onGetSourceMoney = async () => {
     let result = await getSourceMoney({
@@ -103,11 +164,6 @@ export const useQRTransfer = (mount = true) => {
     } else setError(result);
   };
 
-  const onContinue = async () => {
-    // await onMoneyTransfer();
-    await onPayment();
-  };
-
   const onMount = async () => {
     setLoading(true);
 
@@ -115,13 +171,13 @@ export const useQRTransfer = (mount = true) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    mount && onMount();
-    // onCheckAmountLimit({amount: 10000000, transFormType: 3});
-    // onMoneyTransfer({amount: 100000});
-    // onApplyPromo();
-    // onPayment();
-  }, []); // eslint-disable-line
+  // useEffect(() => {
+  //   mount && onMount();
+  //   // onCheckAmountLimit({amount: 10000000, transFormType: 3});
+  //   // onMoneyTransfer({amount: 100000});
+  //   // onApplyPromo();
+  //   // onPayment();
+  // }, []); // eslint-disable-line
   return {
     transfer: transfer.current,
     suggestion,
@@ -129,6 +185,7 @@ export const useQRTransfer = (mount = true) => {
     setSuggestion,
     onChange,
     onCheckAmountLimit,
-    onContinue,
+    onPayment,
+    onPaymentConfrim,
   };
 };

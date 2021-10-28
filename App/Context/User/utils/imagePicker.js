@@ -8,7 +8,7 @@ const imagePickerOptions = {
   includeBase64: true,
 };
 
-const useImagePicker = onSelectImage => {
+const useImagePicker = (onSelectImage, isMount = true) => {
   const [image, setImage] = useState(null);
 
   const onPhoto = (cropping = true) => {
@@ -26,7 +26,7 @@ const useImagePicker = onSelectImage => {
   };
 
   useEffect(() => {
-    onSelectImage && onSelectImage(image);
+    isMount && onSelectImage && onSelectImage(image);
   }, [image]); // eslint-disable-line
 
   return {image, onPhoto, onCamera};
