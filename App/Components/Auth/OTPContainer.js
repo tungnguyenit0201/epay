@@ -47,6 +47,7 @@ const OTPContainer = ({
         autoFocusOnLoad
         codeInputFieldStyle={styles.otp}
         codeInputHighlightStyle={{}}
+        selectionColor={Colors.brd2}
         onCodeFilled={onCodeFilled}
         clearInputs={message}
         code={code}
