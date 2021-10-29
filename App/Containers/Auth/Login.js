@@ -125,7 +125,7 @@ const Login = ({route}) => {
                 {!!message && showWebview && (
                   <WebView
                     style={styles.textError}
-                    source={{html: ` ${message}`}}
+                    source={{html: `<p class="markRed">${message}</p>`}}
                   />
                 )}
               </View>

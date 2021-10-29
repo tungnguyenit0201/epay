@@ -192,7 +192,6 @@ export default React.forwardRef(
             </TouchableOpacity>
           )}
         </View>
-        {console.log('showerror', showError)}
         {!!error && showErrorLabel && !!value && showError && (
           <Text color={Colors.hl1} mt={3} size={scale(12)}>
             {error}

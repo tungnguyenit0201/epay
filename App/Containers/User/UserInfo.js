@@ -127,7 +127,8 @@ const UserInfo = () => {
                 }
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
                   style={
                     statusVerified === PERSONAL_IC.INACTIVE
@@ -147,7 +148,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.lh1} mr={3} fs="h6">
                     {item.name}
@@ -218,7 +220,8 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }>
+                  }
+                >
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -268,7 +271,8 @@ const UserInfo = () => {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -322,7 +326,8 @@ const UserInfo = () => {
               />
               <TouchableOpacity
                 style={styles.textCenter}
-                onPress={() => onReVerify('hideModal')}>
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>

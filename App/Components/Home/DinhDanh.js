@@ -22,7 +22,8 @@ const User = () => {
           Navigator.navigate(SCREEN.MAP_BANK_FLOW);
         onCheckKYCExpired();
       }}
-      style={[styles.item]}>
+      style={[styles.item]}
+    >
       <Image
         style={styles.img}
         resizeMode={'contain'}

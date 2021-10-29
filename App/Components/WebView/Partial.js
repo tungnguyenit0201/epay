@@ -11,9 +11,7 @@ var css = `
     color: ${Colors.tp3} !important
   }
   .markRed {
-    color: ${Colors.hl1}!important
-  }
-  .markRed b {
+    color: ${Colors.hl1}!important;
     font-weight: normal;
   }
   body {
@@ -21,7 +19,6 @@ var css = `
     text-align: center;
    }
   p { max-width: 100% !important; }
-  .color { color : 'red'}
   .content{ padding: 5px 10px 40px !important }
   img { max-width: 100% !important }
   table, tr, td {
@@ -47,7 +44,7 @@ const formatHTML = (content, isFormat) => `<html>
     </style>
   </head>
   <body>
-    <p class="markRed">${!!isFormat ? preProcess(content) : content}</p>
+    ${!!isFormat ? preProcess(content) : content}
   </body>
 </html>`;
 export default class _WebView extends React.Component {

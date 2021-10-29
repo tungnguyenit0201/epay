@@ -227,7 +227,10 @@ const ERROR_CODE = {
   C08_SYSTEM_ERROR_NEW: 524, //Mã lỗi mới của hệ thống
   C08_OTHER_ERROR: -1, //Lỗi không được định nghĩa
 
-  CASHIN_REQUIRED_AUTHENTICATION: 110, //Lỗi không được định nghĩa
+  CASHIN_REQUIRED_AUTHENTICATION: 110,
+
+  //QRPay
+  PAYMENT_REQUIRED_AUTHENTICATION: 110,
 };
 
 export default ERROR_CODE;

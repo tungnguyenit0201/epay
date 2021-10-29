@@ -161,7 +161,8 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+      >
         <View alignItems="center" marginBottom={16}>
           <Image
             source={Images.ConnectBank.BankLink}

@@ -27,13 +27,12 @@ import {useQRTransfer} from 'context/Wallet/utils';
 import {useWallet} from 'context/Wallet';
 const Transfer = () => {
   const {
-    bankFee,
     transfer,
     suggestion,
     check,
     onChange,
-    onCheckAmountLimit,
     onContinue,
+    onCheckAmountLimit,
   } = useQRTransfer();
 
   const translation = useTranslation();
@@ -67,8 +66,8 @@ const Transfer = () => {
             maxLength={100}
             selectTextOnFocus
             numeric
-            onChange={text => onChange('amount', text)}
-            value={transfer?.amount?.toString()}
+            onChange={text => onChange('Price', text)}
+            value={transfer?.Price?.toString()}
             onBlur={onCheckAmountLimit}
           />
 
@@ -76,7 +75,7 @@ const Transfer = () => {
             placeholder="Nhập lời nhắn"
             maxLength={100}
             selectTextOnFocus
-            onChange={text => onChange('content', text)}
+            onChange={text => onChange('Content', text)}
           />
           <Radio
             onChange={value => onChange('payoneer', value)}
@@ -98,8 +97,8 @@ const Transfer = () => {
           value: x,
           label: formatMoney(x),
         }))}
-        onPress={amount => onChange('amount', amount)}
-        onContinue={onContinue}
+        onPress={amount => onChange('Price', amount)}
+        onContinue={() => onContinue(SCREEN.TRANSFER_COMFIRM)}
         isContinueEnabled={check}
       />
     </>

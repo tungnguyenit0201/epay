@@ -90,7 +90,10 @@ const OTPContainer = ({
       </View>
 
       {!!message && (
-        <WebView style={styles.message} source={{html: `${message}`}} />
+        <WebView
+          style={styles.message}
+          source={{html: `<p class="markRed">${message}</p>`}}
+        />
       )}
     </>
   );

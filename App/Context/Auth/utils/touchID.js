@@ -7,7 +7,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import {getAll} from 'utils/Functions';
 import {useIsFocused} from '@react-navigation/native';
 
-const useTouchID = ({onSuccess, autoShow = false}) => {
+const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
   const [biometryType, setBiometryType] = useState(null);
   const {getTouchIdEnabled, getPhone} = useAsyncStorage();
   const {setError} = useError();
@@ -26,6 +26,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
         credentials?.username == (await getPhone())
           ? credentials?.password
           : null;
+      console.log('checkBiometry', passwordEncrypted, touchIdEnabled);
 
       if (!passwordEncrypted || !touchIdEnabled) {
         setBiometryType(null);
@@ -35,6 +36,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
       if (biometryType && !isEnrolled) {
         showNotEnrolledError();
       }
+      console.log('biometryType :>> ', biometryType);
       setBiometryType(biometryType);
     } catch (error) {
       __DEV__ && console.log("Keychain couldn't be accessed!", error);
@@ -69,7 +71,7 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
       } else {
         onSuccess && onSuccess();
       }
-      return;
+      return true;
     }
 
     switch (error) {
@@ -119,10 +121,12 @@ const useTouchID = ({onSuccess, autoShow = false}) => {
   }, [isFocused]); // eslint-disable-line
 
   useEffect(() => {
-    if (autoShow) {
-      onTouchID();
-    } else {
-      textInputRef.current?.focus && textInputRef.current.focus();
+    if (isMount) {
+      if (autoShow) {
+        onTouchID();
+      } else {
+        textInputRef.current?.focus && textInputRef.current.focus();
+      }
     }
   }, [biometryType]); // eslint-disable-line
 
