@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   ScrollView,
@@ -6,24 +6,18 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {
-  HeaderBg,
-  Header,
-  Button,
-  InputBlock,
-  Checkbox,
-  TextInput,
-  Text,
-} from 'components';
+import {HeaderBg, Header, Button, Text, FooterContainer} from 'components';
 import DashedLine from 'react-native-dashed-line';
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {Colors, Spacing, Images, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-
+import Navigator from 'navigations/Navigator';
+import {useAutoWithdraw} from 'context/Wallet/utils';
 const EditAutoReCharge = props => {
   const [xacNhan, isXacNhan] = useState(false);
+  const {listAutoPay} = useAutoWithdraw();
   const translation = useTranslation();
   const dataTest1 = [
     {
@@ -64,6 +58,7 @@ const EditAutoReCharge = props => {
   return (
     //TODO: TRANSLATE
     <View flex={1} backgroundColor={Colors.bs4}>
+      {console.log('listDATA', listAutoPay)}
       <HeaderBg>
         <Header back title={'Nạp ví tự động'} />
       </HeaderBg>
@@ -72,6 +67,13 @@ const EditAutoReCharge = props => {
         contentContainerStyle={[styles.px1, styles.py1]}
         showsVerticalScrollIndicator={false}
       >
+        <View style={[styles.boxShadowGray, styles.mb1]}>
+          <View style={styles.boxBgBlue1}>
+            <Text style={{padding: 20}} centered bold fs="h5">
+              Chưa đăng ký nạp ví tự động nào đang hoạt động
+            </Text>
+          </View>
+        </View>
         <View style={[styles.boxShadowGray, styles.mb1]}>
           <View style={styles.boxBgBlue1}>
             <View flex={1}>
@@ -183,6 +185,13 @@ const EditAutoReCharge = props => {
           </View>
         </View>
       </ScrollView>
+      <FooterContainer>
+        <Button
+          label={'Đăng ký nạp ví tự động'}
+          style={styles.button}
+          onPress={() => Navigator.navigate(SCREEN.AUTO_WITHDRAW)}
+        />
+      </FooterContainer>
     </View>
   );
 };
@@ -207,6 +216,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 22,
   },
+  pd: {
+    padding: 20,
+  },
   //-----------------
   px1: {paddingHorizontal: Spacing.PADDING},
   //-----------------
@@ -221,7 +233,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bs4,
     shadowOpacity: 0.2,
     shadowOffset: {width: 0, height: 0},
-    elevation: 24,
+    elevation: 10,
     shadowRadius: 8,
     borderRadius: 8,
   },

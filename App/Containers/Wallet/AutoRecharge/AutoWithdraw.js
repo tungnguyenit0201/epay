@@ -17,25 +17,50 @@ import {
   FooterContainer,
 } from 'components';
 import {Colors, Spacing, Images, Fonts, base} from 'themes';
-import {SCREEN} from 'configs/Constants';
+import {SCREEN, FUNCTION_TYPE} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
-
+import {useAutoWithdraw} from 'context/Wallet/utils';
+import Navigator from 'navigations/Navigator';
+import {useUser} from 'context/User';
+import {useWallet} from 'context/Wallet';
 const AutoWithdraw = props => {
   const translation = useTranslation();
+  const {phone} = useUser();
+  const {
+    active,
+    setActive,
+    bankInfor,
+    setBankInfo,
+    onRegisterAutoWithdraw,
+    minBalance,
+    setMinBalance,
+    amount,
+    setAmount,
+  } = useAutoWithdraw();
+  const {listConnectBank} = useWallet();
 
   const renderButton = () => {
     return (
       <FooterContainer>
         <Button
-          // label={translation.continue}
+          disabled={!active}
           label={translation.continue}
-          // size="lg"
           style={styles.button}
-          // onPress={onSubmit}
+          onPress={() => {
+            onRegisterAutoWithdraw();
+          }}
         />
       </FooterContainer>
     );
+  };
+
+  const mask_digits = number => {
+    return number.toString().replace(/\d(?=\d{4})/g, '*');
+  };
+
+  const numberWithCommas = number => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   return (
@@ -44,7 +69,6 @@ const AutoWithdraw = props => {
       <HeaderBg>
         <Header back title={'Nạp ví tự động'} />
       </HeaderBg>
-
       <ScrollView
         contentContainerStyle={[styles.px1, styles.py1]}
         showsVerticalScrollIndicator={false}
@@ -57,9 +81,9 @@ const AutoWithdraw = props => {
           <View style={styles.mb3}>
             <InputBlock
               placeholder={translation.enter_auto_topup_amount}
-              // value={bankAccount}
-              // onChangeText={onChangeBankNumber}
-              // keyboardType={'numeric'}
+              value={amount}
+              onChangeText={setAmount}
+              keyboardType={'numeric'}
               // error={err}
               showErrorLabel={true}
               // onBlur={validateInfo}
@@ -82,6 +106,9 @@ const AutoWithdraw = props => {
               placeholder={translation.enter_auto_topup_amount}
               showErrorLabel={true}
               inputStyle={styles.pr1}
+              onChangeText={setMinBalance}
+              keyboardType={'numeric'}
+              value={minBalance}
             />
             <Text bold size={Fonts.LG} style={styles.pos1}>
               đ
@@ -89,9 +116,7 @@ const AutoWithdraw = props => {
           </View>
 
           <View style={styles.flexRow}>
-            <Checkbox
-            // onPress={setActive}
-            />
+            <Checkbox onPress={setActive} />
             <Text ml={6} size={Fonts.MD}>
               {`Tôi đồng ý với `}
               <Text
@@ -112,13 +137,12 @@ const AutoWithdraw = props => {
         </Text>
 
         <View style={styles.mb5}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[
               styles.boxShadowGray,
               styles.mb5,
               {backgroundColor: Colors.bg1},
-            ]}
-          >
+            ]}>
             <View style={[styles.flexRow, styles.pxy2]}>
               <Image
                 source={Images.ConnectBank.logoAgribank}
@@ -165,66 +189,80 @@ const AutoWithdraw = props => {
                 {
                   backgroundColor: Colors.bg2,
                 },
-              ]}
-            >
+              ]}>
               <Text size={Fonts.SX}>Hạn mức nạp tự động: 2.000.000đ</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
-          <TouchableOpacity
-            style={[
-              styles.boxShadowGray,
-              styles.mb5,
-              {backgroundColor: Colors.bg1},
-            ]}
-          >
-            <View style={[styles.flexRow, styles.pxy2]}>
-              <Image
-                source={Images.ConnectBank.logoAgribank}
+          {listConnectBank.map((bank, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
                 style={[
-                  {
-                    width: scale(34),
-                    aspectRatio: 1,
-                  },
-                  styles.mr1,
+                  styles.boxShadowGray,
+                  styles.mb5,
+                  {backgroundColor: Colors.bg1},
                 ]}
-                resizeMode={'contain'}
-              />
-              <View flex={1} style={styles.flexRow} flexWrap="wrap">
-                <View style={[styles.widthHaft, styles.pr2]}>
-                  <Text bold fs="h6" mb={6}>
-                    Vietcombank
+              >
+                <View style={[styles.flexRow, styles.pxy2]}>
+                  <Image
+                    source={{uri: bank.BankLogoUrl}}
+                    style={[
+                      {
+                        width: scale(34),
+                        aspectRatio: 1,
+                      },
+                      styles.mr1,
+                    ]}
+                    resizeMode={'contain'}
+                  />
+                  <View flex={1} style={styles.flexRow} flexWrap="wrap">
+                    <View style={[styles.widthHaft, styles.pr2]}>
+                      <Text bold fs="h6" mb={6}>
+                        {bank.BankName}
+                      </Text>
+                    </View>
+
+                    <View style={styles.widthHaft}>
+                      {bank.BankNumber === bankInfor.BankNumber ? (
+                        <Image
+                          resizeMode="cover"
+                          source={Images.Check}
+                          style={styles.iconCheck1}
+                        />
+                      ) : (
+                        <View style={[base.leftAuto, styles.iconUnActive1]} />
+                      )}
+                    </View>
+
+                    <View style={[styles.widthPercent1, styles.pr2]}>
+                      <Text size={Fonts.SM} color={Colors.tp3}>
+                        {mask_digits(bank.BankNumber)}
+                      </Text>
+                    </View>
+
+                    <View style={styles.widthPercent2}>
+                      <Text size={Fonts.MD} right color={Colors.tp3}>
+                        Phí giao dịch: X.000đ
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={[
+                    styles.boxBlue1,
+                    {
+                      backgroundColor: Colors.bs2,
+                    },
+                  ]}
+                >
+                  <Text size={Fonts.SX}>
+                    Hạn mức nạp tự động: {numberWithCommas(bank.BankLimit)}đ
                   </Text>
                 </View>
-
-                <View style={styles.widthHaft}>
-                  <View style={[base.leftAuto, styles.iconUnActive1]} />
-                </View>
-
-                <View style={[styles.widthPercent1, styles.pr2]}>
-                  <Text size={Fonts.SM} color={Colors.tp3}>
-                    **********1234
-                  </Text>
-                </View>
-
-                <View style={styles.widthPercent2}>
-                  <Text size={Fonts.MD} right color={Colors.tp3}>
-                    Phí giao dịch: X.000đ
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View
-              style={[
-                styles.boxBlue1,
-                {
-                  backgroundColor: Colors.bs2,
-                },
-              ]}
-            >
-              <Text size={Fonts.SX}>Hạn mức nạp tự động: 2.000.000đ</Text>
-            </View>
-          </TouchableOpacity>
+              </TouchableOpacity>
+            );
+          })}
         </View>
 
         <Text bold size={Fonts.LG} mb={16}>

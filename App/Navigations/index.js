@@ -105,7 +105,8 @@ import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
-
+import ActiveAutoWithdraw from 'containers/Wallet/AutoRecharge/ActiveAutoWithdraw';
+import AutoWithDrawResult from 'containers/Wallet/AutoRecharge/AutoWithDrawResult';
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
@@ -373,7 +374,6 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.CONFIRMATION} component={Confirmation} />
           <Stack.Screen name={SCREEN.SECURITY} component={Security} />
           <Stack.Screen name={SCREEN.USER_INFO} component={UserInfo} />
-
           <Stack.Screen name={SCREEN.SORT_BANK} component={SortBank} />
           <Stack.Screen
             name={SCREEN.WALLET_ACCESS_HISTORY}
@@ -384,7 +384,6 @@ const AppNavigator = () => {
             name={SCREEN.LINKED_BANK_DETAIL}
             component={LinkedBankDetail}
           />
-
           <Stack.Screen name={SCREEN.EDIT_INFO} component={EditInfo} />
           <Stack.Screen name={SCREEN.NEW_PASSWORD} component={NewPassword} />
           <Stack.Screen
@@ -483,8 +482,15 @@ const AppNavigator = () => {
             name={SCREEN.EDIT_AUTO_RECHARGE}
             component={EditAutoReCharge}
           />
-
           <Stack.Screen name={SCREEN.AUTO_WITHDRAW} component={AutoWithdraw} />
+          <Stack.Screen
+            name={SCREEN.ACTIVE_AUTO_WITHDRAW}
+            component={ActiveAutoWithdraw}
+          />
+          <Stack.Screen
+            name={SCREEN.AUTO_WITHDRAW_RESULT}
+            component={AutoWithDrawResult}
+          />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

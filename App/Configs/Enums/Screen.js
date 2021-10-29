@@ -98,5 +98,7 @@ const SCREEN = {
   FORGET_PASSWORD_KYC: 'ForgetPasswordKYC',
   EDIT_AUTO_RECHARGE: 'EditAutoReCharge',
   AUTO_WITHDRAW: 'AutoWithdraw',
+  ACTIVE_AUTO_WITHDRAW: 'ActiveAutoWithdraw',
+  AUTO_WITHDRAW_RESULT: 'AutoWithDrawResult',
 };
 export default SCREEN;

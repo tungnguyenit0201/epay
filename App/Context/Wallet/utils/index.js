@@ -13,6 +13,7 @@ import useHistory from './history';
 import useScanQR from './qrPay';
 import {useQRTransfer} from './qrTransfer';
 import useQRPromo from './qrPromotion';
+import useAutoWithdraw from './autoWithdraw';
 export {
   useBankInfo,
   useTopUp,
@@ -28,4 +29,5 @@ export {
   useQRTransfer,
   useWithDraw,
   useQRPromo,
+  useAutoWithdraw,
 };

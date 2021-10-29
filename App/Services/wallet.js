@@ -439,6 +439,44 @@ const useServiceWallet = () => {
     return response;
   };
 
+  const registerAutoPay = async ({
+    phone,
+    Amount,
+    BankConnectId,
+    MinBalance,
+  }) => {
+    let response = null;
+    await doRequest({
+      url: API.WALLET.REGISTER_AUTO_PAY,
+      method: 'post',
+      params: {
+        PhoneNumber: phone,
+        Amount,
+        BankConnectId,
+        MinBalance,
+      },
+      success: res => {
+        response = res;
+      },
+    });
+    return response;
+  };
+
+  const getAutoPay = async ({phone}) => {
+    let response = null;
+    await doRequest({
+      url: API.WALLET.GET_AUTO_PAY,
+      method: 'post',
+      params: {
+        PhoneNumber: phone,
+      },
+      success: res => {
+        response = res;
+      },
+    });
+    return response;
+  };
+
   const moneyTransfer = async ({
     phone,
     Amount,
@@ -632,6 +670,7 @@ const useServiceWallet = () => {
     applyPromo,
     payment,
     paymentComfrim,
+    registerAutoPay,
     getSourceMoney,
   };
 };

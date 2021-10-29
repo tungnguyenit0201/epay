@@ -271,6 +271,7 @@ const useOTPBySmartOTP = () => {
   const {onCashOutConnectedBank} = useCashOut();
   const {onTransaction} = useTransaction();
   const {confirmOTP, genOtp} = useServiceCommon();
+  console.log('transaction', transaction);
   useEffect(() => {
     let interval = null;
     if (code) {
@@ -381,7 +382,10 @@ const useOTPByBankOTP = () => {
 };
 
 const useTransaction = () => {
-  const {dispatch} = useWallet();
+  const {transaction, dispatch} = useWallet();
+  if (transaction.functionType === FUNCTION_TYPE.AUTO_RECHARGE) {
+    Navigator.replaceLast(SCREEN.AUTO_WITHDRAW_RESULT, {type: 'success'});
+  }
   const onTransaction = async result => {
     dispatch({
       type: 'UPDATE_TRANSACTION_INFO',
@@ -795,6 +799,24 @@ const useCashOut = () => {
     onCheckLimitCashOut,
     onCashOutConnectedBank,
   };
+};
+
+const useAutoWithdraw = () => {
+  const {transaction} = useWallet();
+  const {bank, amount, minBalance} = transaction;
+  const {phone} = useUser();
+  const {registerAutoPay} = useServiceWallet();
+
+  let onRegisterAutoWithdraw = async () => {
+    return registerAutoPay({
+      phone,
+      Amount: amount,
+      MinBalance: minBalance,
+      BankConnectId: bank.BankConnectId,
+    });
+  };
+
+  return {onRegisterAutoWithdraw};
 };
 
 const useTransactionResult = () => {

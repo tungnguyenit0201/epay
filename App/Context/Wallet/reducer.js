@@ -66,6 +66,11 @@ export default function userReducer(state, action) {
         ...state,
         sourceMoney: action?.sourceMoney,
       };
+    case 'SET_AUTO_WITHDRAW_DATA':
+      return {
+        ...state,
+        autoWithdraw: {...state.qrTransaction, ...action?.data},
+      };
     default:
       return state;
   }

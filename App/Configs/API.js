@@ -77,6 +77,8 @@ export default {
     CASH_OUT: 'bank/cashout',
     CASH_OUT_CONFIRM: 'bank/cashin_confirm',
     GET_HISTORY_DETAIL: 'history/get_detail',
+    REGISTER_AUTO_PAY: 'autopay/register_auto_pay',
+    GET_AUTO_PAY: 'autopay/get_auto_pay',
     GET_QRCODE_INFO: 'qr/get_qr_info',
     GET_TRANSFER_USER: 'account/get_user_detail',
     CASH_IN: 'bank/cashin',
