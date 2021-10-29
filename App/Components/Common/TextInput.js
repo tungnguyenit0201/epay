@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -31,6 +31,7 @@ export default React.forwardRef(
       label,
       required,
       rightComponent,
+      setShowWebview,
       placeholderTextColor,
       autoCompleteType = 'off',
       textContentType = 'none',
@@ -58,8 +59,17 @@ export default React.forwardRef(
     const [showPassword, setShowPassword] = useState(false);
     const [showError, setShowError] = useState(true);
 
+    const onSetShowError = useCallback(
+      _.debounce(() => {
+        setShowError(true);
+        if (!!setShowWebview) setShowWebview(true);
+      }, 1000),
+      [],
+    );
+
     const onChangeText = text => {
       setShowError(false);
+      if (!!setShowWebview) setShowWebview(false);
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
         onChange?.(text.replace(regexForNonAlphaNum, ''));
@@ -78,10 +88,7 @@ export default React.forwardRef(
           }
         }
       }
-
-      setTimeout(() => {
-        setShowError(true);
-      }, 3000);
+      onSetShowError();
     };
 
     return (
