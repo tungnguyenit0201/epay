@@ -6,6 +6,7 @@ import Keychain from 'react-native-keychain';
 import * as LocalAuthentication from 'expo-local-authentication';
 import {getAll} from 'utils/Functions';
 import {useIsFocused} from '@react-navigation/native';
+import BiometricModule from 'utils/BiometricModule';
 
 const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
   const [biometryType, setBiometryType] = useState(null);
@@ -16,12 +17,14 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
 
   const checkBiometry = async () => {
     try {
-      const [type, isEnrolled, credentials, touchIdEnabled] = await getAll(
+      const [type, isEnrolledResult, credentials, touchIdEnabled] = await getAll(
         LocalAuthentication.supportedAuthenticationTypesAsync,
-        LocalAuthentication.isEnrolledAsync,
+        BiometricModule.isEnrolledAsync,
         Keychain.getGenericPassword,
         getTouchIdEnabled,
       );
+
+      const { isEnrolled, token } = isEnrolledResult || {};
       let passwordEncrypted =
         credentials?.username == (await getPhone())
           ? credentials?.password
