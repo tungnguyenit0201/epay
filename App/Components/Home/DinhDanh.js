@@ -22,8 +22,7 @@ const User = () => {
           Navigator.navigate(SCREEN.MAP_BANK_FLOW);
         onCheckKYCExpired();
       }}
-      style={[styles.item]}
-    >
+      style={[styles.item]}>
       <Image
         style={styles.img}
         resizeMode={'contain'}
@@ -31,7 +30,7 @@ const User = () => {
       />
       <Text style={styles.text}>
         {status == USER_STATUS.INACTIVE_KYC
-          ? translation.verify_accounts_enhance_your_account_security
+          ? 'Bạn cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví'
           : translation.link_banks_to_make_transactions}
       </Text>
       <Image style={styles.arrow} source={Images.Homes.Arrow} />
