@@ -575,5 +575,6 @@
   "place_of_issue_maximum_200_characters": "Place of issue maximum 200 characters",
   "address_maximum_200_characters": "Address maximum 200 characters",
   "first_and_last_name_must_not_contain_special_characters": "First and last name must not contain special characters",
-  "guide": "Guide"
+  "guide": "Guide",
+  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "You need to identify your account to maximize security before using the wallet"
 }
