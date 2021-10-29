@@ -68,6 +68,7 @@ const useScanQR = () => {
     const phone = await getPhone();
     let result = await getQRCodeInfo({
       phone,
+      // QRCode: '02002',
       QRCode: qrCode?.replace('epay://', ''),
       PaymentType: QR_PAYMENT_TYPE.QR,
     });

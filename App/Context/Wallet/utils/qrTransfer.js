@@ -35,48 +35,28 @@ export const useQRTransfer = () => {
 
   const {biometryType, onTouchID} = useTouchID({
     isMount: false,
-    onSuccess: () => paymentWithTouchId(),
+    onSuccess: () => paymentWithPassword(),
   });
   const transfer = useRef({
-    amount: null,
+    Price: null,
     payoneer: 0,
-    content: '',
+    Content: '',
   });
   let [suggestion, setSuggestion] = useState([]);
   let [check, setCheck] = useState(false);
-  let [showModal, setShowModal] = useState(false);
 
   const onChange = (key, value) => {
     console.log('key, value :>> ', key, value);
     transfer.current[key] = value;
-    if (key == 'amount') {
+    if (key == 'Price') {
       if (value > 100000) return setSuggestion([value, value * 2, value * 3]);
       if (value) setSuggestion([value * 1000, value * 10000, value * 100000]);
     }
   };
 
-  const paymentWithTouchId = async () => {
-    console.log('paymentWithTouchId');
-    try {
-      setLoading(true);
-      const credentials = await Keychain.getGenericPassword();
-      const passwordEncrypted = credentials?.password;
-      if (passwordEncrypted) {
-        onPaymentConfrim({ConfirmValue: passwordEncrypted});
-      }
-      setLoading(false);
-      return passwordEncrypted;
-    } catch (error) {
-      __DEV__ && console.log("Keychain couldn't be accessed!", error);
-    }
-  };
-
   const onCheckAmountLimit = async () => {
     setSuggestion([]);
-
     setCheck(true);
-
-    // setCheck(false);
   };
   const onMoneyTransfer = async () => {
     setLoading(true);
@@ -104,8 +84,10 @@ export const useQRTransfer = () => {
       phone,
       OrderId: qrTransaction?.OrderID,
       MerchantCode: qrTransaction?.MerchantCode,
-      TransFormType: TRANS_FORM_TYPE.WALLET,
+      TransFormType: TRANS_FORM_TYPE.CONNECTED_BANK,
       Amount: qrTransaction?.Price,
+      BankId: 1,
+      BankConnectId: 1670,
     });
     setLoading(false);
 
@@ -123,28 +105,45 @@ export const useQRTransfer = () => {
             `ListConfirmMethod[${i}].ConfirmType`,
             -1,
           );
-          // if (confirmType == CONFIRM_METHODS.BIO_ID && biometryType) {
-          //   let done = await onTouchID();
-          //   if (done) return;
-          // }
+          if (confirmType == CONFIRM_METHODS.BIO_ID && biometryType) {
+            let done = await onTouchID();
+            if (done) return;
+          }
           if (confirmType == CONFIRM_METHODS.SMART_OTP) {
             console.log('method :>> ', confirmType);
-            onShowModal();
+            onShowModal(async () => paymentWithPassword());
           }
         }
-        result?.ListConfirmMethod?.map?.(async method => {});
       } else setError(result);
     }
   };
 
-  const onPaymentConfrim = async ({ConfirmValue}) => {
+  const paymentWithPassword = async (
+    ConfirmMethod = CONFIRM_METHODS.BIO_ID,
+  ) => {
+    try {
+      setLoading(true);
+      const credentials = await Keychain.getGenericPassword();
+      const passwordEncrypted = credentials?.password;
+      if (passwordEncrypted) {
+        onPaymentConfrim({ConfirmValue: passwordEncrypted, ConfirmMethod});
+      }
+      setLoading(false);
+      return passwordEncrypted;
+    } catch (error) {
+      __DEV__ && console.log("Keychain couldn't be accessed!", error);
+    }
+  };
+
+  const onPaymentConfrim = async ({ConfirmValue, ConfirmMethod}) => {
     setLoading(true);
     console.log('qrTransaction :>> ', qrTransaction);
     let result = await paymentComfrim({
       phone,
       TransCode: qrTransaction?.TransCode,
-      ConfirmMethod: qrTransaction?.ListConfirmMethod[0].ConfirmType,
+      ConfirmMethod,
       ConfirmValue,
+      BankId: 1,
     });
     setLoading(false);
 
@@ -153,36 +152,21 @@ export const useQRTransfer = () => {
     } else setError(result);
   };
 
-  const onGetSourceMoney = async () => {
-    let result = await getSourceMoney({
-      phone,
-      TransType: TRANS_TYPE.CashTransfer,
+  const onContinue = screen => {
+    console.log('object', {...qrTransaction, ...transfer.current});
+    dispatch({
+      type: 'SET_QR_TRANSACTION',
+      qrTransaction: {...qrTransaction, ...transfer.current},
     });
-    console.log('result :>> ', result);
-    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
-      dispatch({type: 'SET_SOURCE_MONEY', sourceMoney: result?.MoneySources});
-    } else setError(result);
+    Navigator.navigate(screen);
   };
 
-  const onMount = async () => {
-    setLoading(true);
-
-    await Promise.all([onGetSourceMoney()]);
-    setLoading(false);
-  };
-
-  // useEffect(() => {
-  //   mount && onMount();
-  //   // onCheckAmountLimit({amount: 10000000, transFormType: 3});
-  //   // onMoneyTransfer({amount: 100000});
-  //   // onApplyPromo();
-  //   // onPayment();
-  // }, []); // eslint-disable-line
   return {
     transfer: transfer.current,
     suggestion,
     check,
     setSuggestion,
+    onContinue,
     onChange,
     onCheckAmountLimit,
     onPayment,

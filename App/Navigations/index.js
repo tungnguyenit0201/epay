@@ -107,7 +107,7 @@ import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
 
 const AppNavigator = () => {
-  let initialRoute = SCREEN.AUTH;
+  let initialRoute = SCREEN.TRANSFER_RESULTS;
   const {setLanguage} = useTranslation();
   const {getToken, getNameData, getPhone, getInactiveTime, setInactiveTime} =
     useAsyncStorage();
@@ -190,7 +190,7 @@ const AppNavigator = () => {
     };
 
     getCurrentLanguage();
-    checkWelcomeBack();
+    // checkWelcomeBack();
   }, [isReadyRef.current]); // eslint-disable-line
 
   React.useEffect(() => {

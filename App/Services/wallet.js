@@ -524,18 +524,18 @@ const useServiceWallet = () => {
 
   const payment = async ({
     phone,
-    BankId,
+    BankId = 0,
     TransFormType,
-    CardNumber,
-    CardHolder,
-    CardIssueDate,
-    CardConnectId,
-    BankConnectId,
-    PromoCode,
-    AgencyCode,
-    MerchantCode,
-    OrderId,
-    Amount,
+    CardNumber = '',
+    CardHolder = '',
+    CardIssueDate = '',
+    CardConnectId = 0,
+    BankConnectId = 0,
+    PromoCode = '',
+    AgencyCode = '',
+    MerchantCode = '',
+    OrderId = 0,
+    Amount = 0,
   }) => {
     let response = null;
     await doRequest({
