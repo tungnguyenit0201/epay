@@ -31,7 +31,7 @@ const User = () => {
       />
       <Text style={styles.text}>
         {status == USER_STATUS.INACTIVE_KYC
-          ? translation.verify_accounts_enhance_your_account_security
+          ? translation.you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet
           : translation.link_banks_to_make_transactions}
       </Text>
       <Image style={styles.arrow} source={Images.Homes.Arrow} />

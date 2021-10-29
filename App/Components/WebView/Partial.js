@@ -11,13 +11,14 @@ var css = `
     color: ${Colors.tp3} !important
   }
   .markRed {
-    color: ${Colors.hl1}!important
+    color: ${Colors.hl1}!important;
+    font-weight: normal;
   }
   body {
     // white-space: pre-wrap; 
     text-align: center;
    }
-  p { max-width: 100% !important }
+  p { max-width: 100% !important; }
   .content{ padding: 5px 10px 40px !important }
   img { max-width: 100% !important }
   table, tr, td {

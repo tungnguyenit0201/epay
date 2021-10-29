@@ -161,7 +161,7 @@ const GroupFilter = memo(({translation, onSelect, initialData}) => {
             <ItemType1
               title={translation[item.label] || item.label}
               icon={item.icon}
-              isChecked={selectedData.list.includes(item.value)}
+              isChecked={selectedData?.list?.includes(item.value)}
               onChooseOption={() =>
                 _onSelect({value: item.value, type: 'serviceID'})
               }
@@ -184,7 +184,7 @@ const GroupFilter = memo(({translation, onSelect, initialData}) => {
             <ItemType2
               title={translation[item.label] || item.label}
               icon={item.icon}
-              isChecked={selectedData.list.includes(item.value)}
+              isChecked={selectedData?.list?.includes(item.value)}
               onChooseOption={() =>
                 _onSelect({value: item.value, type: 'type2'})
               }

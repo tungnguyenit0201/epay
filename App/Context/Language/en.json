@@ -17,10 +17,11 @@
   "stationservice": "Station/Service",
   "how_to_use_epay": "How to use EPAY",
   "please_verify_click_here_to_protect_your_account": "Please verify (click here) to protect your account",
+  "you_need_to_identify_your_account_for_maximum_security_before_using_the_wallet": "You need to identify your account for maximum security before using the wallet",
   "verified_account_will_have_a_higher_level_of_security_and_greater_limits_for_transactions": "Verified account will have a higher level of security and greater limits for transactions",
   "please_enter_your_phone_number": "Please enter your phone number",
   "sign_insign_up_epay": "Sign in/Sign up EPAY",
-  "incorrect_phone_number": "Incorrect phone number",
+  "incorrect_phone_number": "*Incorrect phone number",
   "enter_otp": "Enter OTP",
   "enter_otp_verification_code": "Enter OTP verification code",
   "resend_the_verification_code_otp_here": "Resend the verification code (OTP) here",
@@ -574,5 +575,6 @@
   "place_of_issue_maximum_200_characters": "Place of issue maximum 200 characters",
   "address_maximum_200_characters": "Address maximum 200 characters",
   "first_and_last_name_must_not_contain_special_characters": "First and last name must not contain special characters",
-  "guide": "Guide"
+  "guide": "Guide",
+  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "You need to identify your account to maximize security before using the wallet"
 }

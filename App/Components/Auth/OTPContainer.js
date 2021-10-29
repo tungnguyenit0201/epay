@@ -47,6 +47,7 @@ const OTPContainer = ({
         autoFocusOnLoad
         codeInputFieldStyle={styles.otp}
         codeInputHighlightStyle={{}}
+        selectionColor={Colors.brd2}
         onCodeFilled={onCodeFilled}
         clearInputs={message}
         code={code}
@@ -89,7 +90,10 @@ const OTPContainer = ({
       </View>
 
       {!!message && (
-        <WebView style={styles.message} source={{html: `${message}`}} />
+        <WebView
+          style={styles.message}
+          source={{html: `<p class="markRed">${message}</p>`}}
+        />
       )}
     </>
   );
