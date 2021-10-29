@@ -37,7 +37,7 @@ export default function (props) {
   const onSubmit = async () => {
     const {item: Bank, ICAddress, optionKyc, BankAccount} = params || {};
     const BankConnectInfo = {
-      BankID: Bank?.BankId,
+      BankId: Bank?.BankId,
       BankAccount,
       FullName: optionKyc?.Name,
       ICType: optionKyc?.Type,
@@ -161,8 +161,7 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         <View alignItems="center" marginBottom={16}>
           <Image
             source={Images.ConnectBank.BankLink}

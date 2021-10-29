@@ -32,7 +32,7 @@ const OTP = props => {
   const onSubmit = async () => {
     try {
       const param = {
-        BankID: bankConnectInfo?.BankId || bankConnectInfo?.BankID,
+        BankId: bankConnectInfo?.BankId,
         TransCode: transCode,
         OtpCode: otp,
       };
@@ -81,16 +81,14 @@ const OTP = props => {
             <Pressable
               style={{marginTop: -3}}
               disabled={countdown > 0}
-              onPress={resentOTP}
-            >
+              onPress={resentOTP}>
               <Text
                 style={[
                   styles.fontSize_1,
                   {
                     color: Colors.brd1,
                   },
-                ]}
-              >
+                ]}>
                 {countdown > 0
                   ? ` 00:${countdown < 10 ? `0${countdown}` : countdown}`
                   : ' Gửi lại'}
@@ -128,8 +126,7 @@ const OTP = props => {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {renderOTP()}
       </ScrollView>
       {renderButton()}
