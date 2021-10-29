@@ -105,6 +105,7 @@ import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
+import PaymentMethods from 'containers/Service/TrafficFee/PaymentMethods';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -383,6 +384,10 @@ const AppNavigator = () => {
           <Stack.Screen
             name={SCREEN.LINKED_BANK_DETAIL}
             component={LinkedBankDetail}
+          />
+          <Stack.Screen
+            name={SCREEN.PAYMENT_METHODS}
+            component={PaymentMethods}
           />
 
           <Stack.Screen name={SCREEN.EDIT_INFO} component={EditInfo} />
