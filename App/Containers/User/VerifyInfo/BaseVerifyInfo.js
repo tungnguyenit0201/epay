@@ -84,18 +84,18 @@ const VerifyUserInfo = ({
         <Header
           back
           title={translation?.account_verification}
-          renderRightComponent={() => {
-            if (showInstruction) {
-              return (
-                <TouchableOpacity onPress={onShowModal}>
-                  <Text fs="md" color={Colors.bs4} style={styles.help} centered>
-                    {translation?.guide}
-                  </Text>
-                </TouchableOpacity>
-              );
-            }
-            return <View />;
-          }}
+          // renderRightComponent={() => {
+          //   if (showInstruction) {
+          //     return (
+          //       <TouchableOpacity onPress={onShowModal}>
+          //         <Text fs="md" color={Colors.bs4} style={styles.help} centered>
+          //           {translation?.guide}
+          //         </Text>
+          //       </TouchableOpacity>
+          //     );
+          //   }
+          //   return <View />;
+          // }}
         />
         <Progress step={step} />
 
