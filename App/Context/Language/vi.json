@@ -261,6 +261,7 @@
   "setting_notification": "Cài đặt thông báo",
   "application_information": "Thông tin ứng dụng",
   "system": "Hệ thống",
+  "you_need_to_identify_your_account_for_maximum_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví",
   "password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters": "Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa, số và ký tự đặc biệt",
   "password_maximum_20_characters": "Mật khẩu tối đa 20 ký tự",
   "simple_payment": "Thanh toán đơn giản",
