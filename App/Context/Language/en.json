@@ -20,7 +20,7 @@
   "verified_account_will_have_a_higher_level_of_security_and_greater_limits_for_transactions": "Verified account will have a higher level of security and greater limits for transactions",
   "please_enter_your_phone_number": "Please enter your phone number",
   "sign_insign_up_epay": "Sign in/Sign up EPAY",
-  "incorrect_phone_number": "Incorrect phone number",
+  "incorrect_phone_number": "*Incorrect phone number",
   "enter_otp": "Enter OTP",
   "enter_otp_verification_code": "Enter OTP verification code",
   "resend_the_verification_code_otp_here": "Resend the verification code (OTP) here",
