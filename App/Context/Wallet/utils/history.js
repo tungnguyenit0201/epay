@@ -6,6 +6,7 @@ import {useEffect, useState, useRef, useCallback} from 'react';
 import useServiceWallet from 'services/wallet';
 import _ from 'lodash';
 import moment from 'moment';
+import {useTranslation} from 'context/Language';
 
 const incomeType = [TRANS_TYPE.CashIn, TRANS_TYPE.CashReceive];
 const expenseType = [
@@ -22,6 +23,7 @@ const useHistory = () => {
   const {setError} = useError();
   const {getHistory, getHistoryDetail} = useServiceWallet();
   const {setLoading} = useLoading();
+  const translation = useTranslation();
   const [showFilter, setShowFilter] = useState(false);
   const contentRef = useRef({
     search: '',
@@ -114,11 +116,20 @@ const useHistory = () => {
 
   const onDetail = async item => {
     setLoading(true);
-    const result = await getHistoryDetail({phone, TransCode: item?.TransCode});
+    const result = await getHistoryDetail({
+      phone,
+      TransCode: item?.TransCode,
+      TransType: item?.TransType,
+      ServiceId: item?.ServiceId,
+    });
     setLoading(false);
 
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-      setError(result);
+      setError({
+        ...result,
+        action: [{label: translation.agree, onPress: Navigator.goBack}],
+      });
+      return;
     }
 
     Navigator.push(SCREEN.DETAIL_HISTORY, {

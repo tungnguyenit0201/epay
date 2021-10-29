@@ -219,7 +219,7 @@ const useServiceWallet = () => {
     return response;
   };
 
-  const getHistoryDetail = async ({phone, TransCode}) => {
+  const getHistoryDetail = async ({phone, TransCode, TransType, ServiceId}) => {
     let response = null;
     await doRequest({
       url: API.WALLET.GET_HISTORY_DETAIL,
@@ -227,6 +227,8 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         TransCode,
+        TransType,
+        ServiceId,
       },
       success: res => {
         response = res;
@@ -244,7 +246,7 @@ const useServiceWallet = () => {
         PhoneNumber: phone,
         CashOutInfo: {
           BankConnectId: BankConnectId,
-          BankID: BankId,
+          BankId: BankId,
           Amount: amount,
         },
       },
@@ -270,7 +272,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         BankConnectId,
-        BankID: BankId,
+        BankId: BankId,
         ConfirmMethod,
         ConfirmValue,
         TransCode,
@@ -346,8 +348,8 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         CashInInfo: {
-          BankConnectId: BankConnectId,
-          BankID: BankId,
+          BankConnectId,
+          BankId,
           Amount: amount,
         },
       },
@@ -373,7 +375,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         BankConnectId,
-        BankID: BankId,
+        BankId: BankId,
         ConfirmMethod,
         ConfirmValue,
         TransCode,
