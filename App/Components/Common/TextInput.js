@@ -81,7 +81,7 @@ export default React.forwardRef(
 
       setTimeout(() => {
         setShowError(true);
-      }, 2000);
+      }, 3000);
     };
 
     return (
