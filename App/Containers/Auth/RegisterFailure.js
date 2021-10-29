@@ -27,8 +27,7 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.bs4}
@@ -76,7 +75,7 @@ const RegisterFailure = ({route}) => {
           // bg={Colors.bs4}
           // color={Colors.tp2}
           border={Colors.bs1}
-          onPress={() => onNavigate(SCREEN.AUTH)}
+          onPress={() => setShowModal(true)}
         />
         <Button
           label={translation.come_back_later}
