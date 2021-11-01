@@ -37,6 +37,8 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
       const biometryType = _.isArray(type) ? type[0] : type;
       if (biometryType && !isEnrolled) {
         showNotEnrolledError();
+        setBiometryType(null);
+        return;
       }
       if (biometryType && touchIdEnabled && token !== touchIdEnabled) {
         setTouchIdEnabled(token);
@@ -128,7 +130,7 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
   };
 
   useEffect(() => {
-    checkBiometry();
+    isFocused && checkBiometry();
   }, [isFocused]); // eslint-disable-line
 
   useEffect(() => {
