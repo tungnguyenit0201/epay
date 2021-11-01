@@ -12,6 +12,7 @@ import {useUserInfo} from 'context/User/utils';
 import {useAsyncStorage} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
 import {useTranslation} from 'context/Language';
+import {stripTags} from 'utils/Functions';
 
 const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {config} = useCommon();
@@ -57,6 +58,9 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
           return Navigator.reset(SCREEN.REGISTER_FAILURE, {
             phone,
             functionType,
+            content: {
+              text: stripTags(result?.ErrorMessage),
+            },
           });
         case FUNCTION_TYPE.AUTH_EMAIL:
         case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
