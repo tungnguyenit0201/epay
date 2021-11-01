@@ -280,8 +280,7 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}
-    >
+      onReady={() => (isReadyRef.current = true)}>
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -290,8 +289,7 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}
-        >
+          }}>
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -503,8 +501,7 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}
-    >
+      }}>
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />
