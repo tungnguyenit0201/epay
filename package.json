@@ -71,7 +71,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-svg": "^12.1.1",
-    "react-native-touch-id": "^4.4.1",
+    "react-native-touch-id": "git+https://oauth2:glpat-wNk7CsmggnzGfLktxt8o@gitlab.com/trinhhcse/react-native-touch-id.git#master_epay",
     "react-native-ui-lib": "^5.27.0",
     "react-native-unimodules": "^0.14.8",
     "react-native-view-shot": "^3.1.2",
