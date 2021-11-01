@@ -10,7 +10,7 @@ import BiometricModule from 'utils/BiometricModule';
 
 const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
   const [biometryType, setBiometryType] = useState(null);
-  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
+  const {getTouchIdEnabled, getPhone, setTouchIdEnabled} = useAsyncStorage();
   const {setError} = useError();
   const textInputRef = useRef(null);
   const isFocused = useIsFocused();
@@ -39,6 +39,7 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
         showNotEnrolledError();
       }
       if (biometryType && touchIdEnabled && token !== touchIdEnabled) {
+        setTouchIdEnabled(token);
         showNotEnrolledError(true);
       }
       setBiometryType(biometryType);
