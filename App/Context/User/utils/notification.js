@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, SCREEN, NOTIFY} from 'configs/Constants';
-import {useError, useLoading} from 'context/Common/utils';
+import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import useSErviceNotificaiton from 'services/notification';
@@ -20,6 +20,7 @@ const useNotify = (isMount = true) => {
     readNotify,
     getAllNofify,
   } = useSErviceNotificaiton();
+  const {getPhone} = useAsyncStorage();
   let listChargesNotify = [];
   let listPromotionNotify = [];
   let listOtherNotify = [];
@@ -90,7 +91,8 @@ const useNotify = (isMount = true) => {
   const onGetAllNotify = async isMount => {
     try {
       setLoading(true);
-      const result = await getAllNofify({phone});
+      const _phone = await getPhone();
+      const result = await getAllNofify({phone: _phone});
       if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
         setError({
           ...result,
