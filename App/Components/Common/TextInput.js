@@ -70,6 +70,7 @@ export default React.forwardRef(
     const onChangeText = text => {
       setShowError(false);
       if (!!setShowWebview) setShowWebview(false);
+      if (!!phone && text[0] !== '0') return;
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
         onChange?.(text.replace(regexForNonAlphaNum, ''));
