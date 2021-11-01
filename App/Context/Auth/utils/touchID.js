@@ -37,6 +37,7 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
       const biometryType = _.isArray(type) ? type[0] : type;
       if (biometryType && !isEnrolled) {
         showNotEnrolledError();
+        setTouchIdEnabled(false);
         setBiometryType(null);
         return;
       }

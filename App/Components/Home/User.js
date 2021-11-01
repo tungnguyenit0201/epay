@@ -22,19 +22,17 @@ const User = ({data, style}) => {
     <View style={[base.shadow, styles.item, style]}>
       <TouchableOpacity
         onPress={() => Navigator.navigate(SCREEN.USER)}
-        style={[styles.user, styles.flex1]}
-      >
+        style={[styles.user, styles.flex1]}>
         <Text
           bold
           size={Fonts.SM}
           right
           color={Colors.bs4}
           style={styles.lh1}
-          mb={3}
-        >
+          mb={3}>
           {personalInfo?.FullName}
         </Text>
-        <Text style={styles.text}>{hidePhone(phone)}</Text>
+        <Text style={styles.text}>{phone ? hidePhone(phone) : ''}</Text>
       </TouchableOpacity>
       <View>
         <TouchableOpacity onPress={onGoNotify} style={styles.wicon}>
@@ -58,8 +56,7 @@ const User = ({data, style}) => {
             style={styles.noti}
             onPress={() => {
               Navigator.navigate(SCREEN.NOTIFICATION);
-            }}
-          >
+            }}>
             <Text style={styles.notiText}>{numNotify}</Text>
           </TouchableOpacity>
         )}
