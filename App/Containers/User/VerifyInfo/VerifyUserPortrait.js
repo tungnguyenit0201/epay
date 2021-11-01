@@ -271,7 +271,7 @@ const VerifyUserPortrait = ({route}) => {
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
           multiline
-          alphanumeric
+          // alphanumeric
           autoHeight
           maxLength={200}
         />
