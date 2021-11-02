@@ -201,7 +201,7 @@ const BankWebConfirm = props => {
   const htmlDev = {
     html: `
             <form id="merchant-form" 
-                action="${`https://dev.epayservices.com.vn:9443/api`}/bank/napas_result?phoneNumber=${phone}&orderId=${orderId}"
+                action="${APP_CONFIG.baseURL}/bank/napas_result?phoneNumber=${phone}&orderId=${orderId}"
                 method="POST"></form>
                 <div id="napas-widget-container"></div>
                 <script type="text/javascript" 
@@ -232,7 +232,6 @@ const BankWebConfirm = props => {
     baseUrl: 'http://localhost',
   };
 
-  console.log("t-->"+htmlDev.html)
   const htmlSimul = {
     html: `<html>
 
