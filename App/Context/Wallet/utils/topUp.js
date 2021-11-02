@@ -8,7 +8,6 @@ import {
   TRANS_FORM_TYPE,
 } from 'configs/Constants';
 import _ from 'lodash';
-import useBankInfo from './bankInfo';
 import {useWallet} from '..';
 import {useTopUpWithdraw} from './topUpWithdraw';
 import useServiceWallet from 'services/wallet';
@@ -24,50 +23,24 @@ const useTopUp = () => {
     onSuggestMoney,
   } = useTopUpWithdraw({transType: TRANS_TYPE.CashIn});
   const {phone} = useUser();
-  const {onGetConnectedBank, onGetDomesticBanks, onGetInternationalBanks} =
-    useBankInfo();
-  const {getBankFee} = useServiceWallet();
-  const {listConnectBank, listDomesticBank, listInternationalBank} =
+  const {getBankFee, getSourceMoney} = useServiceWallet();
+  const { sourceMoneyCashIn, dispatch} =
     useWallet();
-  const [bankFeeData, setBankFeeData] = useState({
-    [TRANS_FORM_TYPE.CONNECTED_BANK]: null,
-    [TRANS_FORM_TYPE.NAPAS_CARD]: null,
-    [TRANS_FORM_TYPE.INTERNATIONAL_CARD]: null,
-  });
-  const bankData = {
-    [TRANS_FORM_TYPE.CONNECTED_BANK]: listConnectBank,
-    [TRANS_FORM_TYPE.NAPAS_CARD]: listDomesticBank,
-    [TRANS_FORM_TYPE.INTERNATIONAL_CARD]: listInternationalBank,
-  };
 
   useEffect(() => {
-    onGetConnectedBank();
-    onGetDomesticBanks();
-    onGetInternationalBanks();
-  }, []); // eslint-disable-line
+    onGetSourceMoney();
+    
+  }, []);
 
-  useEffect(() => {
-    _.forEach(bankData, (banks, transFormType) => {
-      if (bankFeeData[transFormType]) {
-        return;
-      }
-      banks?.forEach?.(async (bank, index) => {
-        const result = await getBankFee({
-          phone,
-          bankID: bank.BankId,
-          transType: TRANS_TYPE.CashIn,
-          transFormType,
-        });
-        setBankFeeData(bankFeeData => {
-          if (!bankFeeData[transFormType]) {
-            bankFeeData[transFormType] = [];
-          }
-          bankFeeData[transFormType][index] = _.get(result, 'FeeInfo', null);
-          return bankFeeData;
-        });
-      });
+  const onGetSourceMoney = async () => {
+    let result = await getSourceMoney({
+      phone,
+      TransType: TRANS_TYPE.CashIn,
     });
-  }, [bankData]); // eslint-disable-line
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      dispatch({type: 'SET_MONEY_SOURCE_CASH_IN', data: result?.MoneySources});
+    } else setError(result);
+  };
 
   const onSelectBank = data => {
     if (!data) {
@@ -75,13 +48,10 @@ const useTopUp = () => {
       return;
     }
     const {index, type} = data || {};
-    let bank = bankData?.[type]?.[index];
-    let fee = bankFeeData?.[type]?.[index];
-    if (!!bank && fee) {
+    let bank = sourceMoneyCashIn?.[index];
+    if (!!bank) {
       onSetBank({
-        bank: bank,
-        transFormType: type,
-        fee: fee,
+        bank
       });
     }
   };
@@ -89,8 +59,7 @@ const useTopUp = () => {
   return {
     inputRef,
     isContinueEnabled,
-    bankData,
-    bankFeeData,
+    bankData: sourceMoneyCashIn,
     onChangeCash,
     onSuggestMoney,
     onSelectBank,

@@ -18,7 +18,6 @@ const TopUp = () => {
     inputRef,
     onSuggestMoney,
     bankData,
-    bankFeeData,
     isContinueEnabled,
     onSelectBank,
     onChangeCash,
@@ -51,7 +50,6 @@ const TopUp = () => {
           <SelectBank
             ref={bankRef}
             data={bankData}
-            feeData={bankFeeData}
             label={translation.source}
             onChange={onSelectBank}
           />

@@ -110,7 +110,10 @@ const Confirmation = () => {
         </View>
       </View>
       <View style={styles.confirmButtonContainer}>
-        <Text size={Fonts.H4} mb={10}>
+        <Text size={14} mb={10} style={{
+          fontSize: 14,
+          lineHeight: 24
+        }}>
           {translation.acceptTerm.when}
           <Text underline>{translation.acceptTerm.contract}</Text>
           {translation.acceptTerm.and}

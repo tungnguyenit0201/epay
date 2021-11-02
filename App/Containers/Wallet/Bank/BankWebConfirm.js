@@ -12,6 +12,9 @@ import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {APP_CONFIG, SCREEN} from 'configs/Constants';
 import TRANS_STATUS from 'configs/Enums/TransStatus';
 import {useUser} from 'context/User';
+import {
+  getUniqueId,
+} from 'react-native-device-info';
 
 const transaction_response = {
   OrderId: 'CE_1633615226236',
@@ -48,8 +51,8 @@ const BankWebConfirm = props => {
   const {onCheckNapasTransStatus} = useBankInfo();
   const {napasInfo = MOCK_BANK_INFO, title} = params || {};
   const {phone} = useUser();
-  let deviceId = '5FADEDCB-05CB-4A37-BE7B-87F7C8299003';
-  let ipAddress = '27.65.248.217';
+  let deviceId = getUniqueId();
+  let ipAddress = '0.0.0.0';
 
   const {
     transCode,
@@ -62,20 +65,7 @@ const BankWebConfirm = props => {
     apiOperation,
     dataKey,
     napasKey,
-  } = {
-    apiOperation: 'PURCHASE_WITH_RETURNED_TOKEN',
-    bankCode: 'BIDVVNVX',
-    bankId: 10,
-    cardNumber: '970400***********018',
-    dataKey:
-      'HRqWWEGt8tWaCF5SQj327KU9Mq95mez+1b0cD62tIZHnym2gPaAI4PZfXZgaFkf4EVlS56f5JECZJiyzXW+WKqRx50krx3caHrGHK2fzqj4vSTJ4z9Hr0INkWkPVxHrjFEp7qn74jnfOlQ4Z9LD25c6tBuyvvj1mjD/RmEiZS44p9u3a1z7aH1imv6P/qsidkixrGNYJebdsKWnFVzC3Z/S67oBPgW7JJbtoNKE/q8OYv/AFu8+EGc8UyxbDkctTqU2QD5EhEHWM4dy4SPnQ6vTq/YwzK3CkDF5Ue1YVzdsI5mXSZaWAPy9l4VAI7cGkiKn++2JtD344E96U80UeYc9Lr/+GmqxE2OGUXGkVJ6hHitlT4jocbJKpDXz2tf0eVdcm/Nit9zFOwbnJsHCP4OhUKUnBqdiF6E8uWdkeOom3jO7SQnIEoeiLZyhDL+Gc8aCK7uU4ArR5nunz/1Sro/ypWDmA14JqDWwq0mG7V6lY23CnJ4U0naHL2WGvdHIy',
-    napasKey:
-      'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArbP6iFl0Z9pDHv5ni/fhl4ME6AfP16E5zmrHYftaBlcvq1bWRwk1TH23OrYQ6n6jEGIbmrVXzIM00lk723/ZHtvbyZld8r5TcEh5M+h/jIu3/J9gqNYGTo9jLJ0DvRdSfzbDWJqPImPfcGJDRPTrEtckqmd8HvkU6J3MCPrg0IOGTYplUmw6DZ25g1SpBSb1CAWGqP36nqyxNZ4hNJ08agHQbRc/ICHUb/8+/UjDETX96SYVn+GBKbrMM/NcgiJV7UXbEmQ9OEiM3BbI5srhCOt0oYoCp0sJcpLcLbRlpdC7/nV44KPty1rkZ32KlBufz3UVggXpHPz0k0yxYTvl/wIDAQAB:MIICtTCCAZ0CBgFoko89+DANBgkqhkiG9w0BAQUFADAeMRwwGgYDVQQDExNUZXN0IENBIENlcnRpZmljYXRlMB4XDTE5MDEyODAzNDQ0N1oXDTE5MDEyOTAzNDQ0N1owHjEcMBoGA1UEAxMTVGVzdCBDQSBDZXJ0aWZpY2F0ZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK2z+ohZdGfaQx7+Z4v34ZeDBOgHz9ehOc5qx2H7WgZXL6tW1kcJNUx9tzq2EOp+oxBiG5q1V8yDNNJZO9t/2R7b28mZXfK+U3BIeTPof4yLt/yfYKjWBk6PYyydA70XUn82w1iajyJj33BiQ0T06xLXJKpnfB75FOidzAj64NCDhk2KZVJsOg2duYNUqQUm9QgFhqj9+p6ssTWeITSdPGoB0G0XPyAh1G//Pv1IwxE1/ekmFZ/hgSm6zDPzXIIiVe1F2xJkPThIjNwWyObK4QjrdKGKAqdLCXKS3C20ZaXQu/51eOCj7cta5Gd9ipQbn891FYIF6Rz89JNMsWE75f8CAwEAATANBgkqhkiG9w0BAQUFAAOCAQEAFXK48p71S87EmrnCm5Yvv42Oxzh0B18/q4jn891xS1abFRkW2jdCvpc3IUQL6gy+JFQcY2NSaLhIYgBafmcngiBFt4kkTqUuwSdIWudl3jYkO58SOYKdxW8jbXM5KwTujpb0gYBpf1u5828RmEq6YEog/yx/hYQOFQlfIBBZFNmUJ7U5TDCFL2wT5MqPg2cfb1DirveD3sLSIUc90IJM3eUXfzXqkwdrCKDZRSuV3TMHChi1IRio2fg7zesi9HliFueaekkvynnwXoG41LKaMSBMM/Mdrb2tm29jVYnlYJ8Coj+dOjWhU2y83dFi5DGr8a3ftWOc+rEz2zlOUKRF7Q==',
-    orderAmount: '200000',
-    orderId: 'CE_1633632741932',
-    orderReference: 'CASHINCE_1633632741932',
-    transCode: 'NT202110080152210034',
-  };
+  } = napasInfo;
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -211,7 +201,7 @@ const BankWebConfirm = props => {
   const htmlDev = {
     html: `
             <form id="merchant-form" 
-                action="${APP_CONFIG.baseURL}/bank/napas_result?phoneNumber=${phone}&orderId=${orderId}"
+                action="${`https://dev.epayservices.com.vn:9443/api`}/bank/napas_result?phoneNumber=${phone}&orderId=${orderId}"
                 method="POST"></form>
                 <div id="napas-widget-container"></div>
                 <script type="text/javascript" 
@@ -242,6 +232,7 @@ const BankWebConfirm = props => {
     baseUrl: 'http://localhost',
   };
 
+  console.log("t-->"+htmlDev.html)
   const htmlSimul = {
     html: `<html>
 
