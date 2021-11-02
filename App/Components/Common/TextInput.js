@@ -23,6 +23,7 @@ export default React.forwardRef(
       password,
       numeric,
       phone,
+      disableSpace,
       name,
       marginBottom = scale(10),
       error,
@@ -58,6 +59,7 @@ export default React.forwardRef(
     const [showPassword, setShowPassword] = useState(false);
 
     const onChangeText = text => {
+      if (!!disableSpace && text[text.length - 1] === ' ') return;
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
         onChange?.(text.replace(regexForNonAlphaNum, ''));
@@ -102,7 +104,8 @@ export default React.forwardRef(
                   top: 14,
                   left: 14,
                 },
-              ]}>
+              ]}
+            >
               <Image source={leftIcon} style={styles.icon_lock_img} />
             </View>
           )}
@@ -115,7 +118,8 @@ export default React.forwardRef(
               (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
               !!autoHeight ? styles.autoHeight : styles.fixedHeight,
               style,
-            ]}>
+            ]}
+          >
             <TextInput
               ref={ref}
               autoCapitalize={'none'}
@@ -147,7 +151,8 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: scale(12),
                 top: scale(12),
-              }}>
+              }}
+            >
               <Image
                 source={showPassword ? Images.Eye2 : Images.EyeGray2}
                 style={{width: scale(20), height: scale(20)}}
@@ -163,7 +168,8 @@ export default React.forwardRef(
                 position: 'absolute',
                 right: 15,
                 top: 18,
-              }}>
+              }}
+            >
               <Icon
                 icon={Images.CloseThin}
                 style={{
