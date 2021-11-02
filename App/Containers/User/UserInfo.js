@@ -245,6 +245,11 @@ const UserInfo = () => {
                 <Text fs="h6">{getStatusVerifiedText()}</Text>
               </View>
             </View>
+            {getStatusVerifiedText() === 'Đã hết hạn' && (
+              <Text underline mt={15}>
+                Xác thực lại
+              </Text>
+            )}
           </View>
 
           <View style={[base.boxShadow]}>
