@@ -554,6 +554,7 @@
   "issuedPlace": "Nơi cấp",
   "verifySuccess": "Tài khoản của quý khách đã được xác thực thành công",
   "kycPendingVerify": "Thông tin của bạn đã được gửi đi và đang chờ duyệt",
+  "every_6_months_epay_requires_a_new_password_change_to_ensure_account_security_the_new_password_cannot_be_the_same_as_the_current_password": "Every 6 months EPAY requires a new password change, to ensure account security. The new password cannot be the same as the current password",
   "verifyFailed": "Xác thực không thành công",
   "updateInfo": "Cập nhật thông tin",
   "verifyAgain": "Xác thực lại",

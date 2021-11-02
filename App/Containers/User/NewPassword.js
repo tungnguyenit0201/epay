@@ -35,8 +35,9 @@ const ChangePassword = ({route}) => {
       </HeaderBg>
       <View style={base.container}>
         <Text mb={20}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
+          {
+            translation.every_6_months_epay_requires_a_new_password_change_to_ensure_account_security_the_new_password_cannot_be_the_same_as_the_current_password
+          }
         </Text>
         <Formik
           initialValues={{
