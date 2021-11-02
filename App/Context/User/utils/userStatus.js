@@ -49,7 +49,7 @@ const useUserStatus = () => {
       case PERSONAL_IC.RE_VERIFYING:
         return 'Đang xác thực lại';
       case PERSONAL_IC.EXPIRED:
-        return 'Xác thực hết hạn';
+        return 'Đã hết hạn';
       case PERSONAL_IC.REJECTED:
         return 'Xác thực bị từ chối';
       default:
