@@ -61,7 +61,9 @@ const Login = ({route}) => {
         initialValues={{
           password: '',
         }}
-        onSubmit={({password}) => onLogin({phone, password})}
+        onSubmit={({password}, {resetForm}) =>
+          onLogin({phone, password, resetForm})
+        }
         validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,

@@ -20,7 +20,11 @@ const ChangePassword = ({route}) => {
   const translation = useTranslation();
   const {onUpdatePassword} = useUserInfo();
   const onSubmit = (values, {resetForm}) => {
-    onUpdatePassword({...values, oldPassword: route?.params?.oldPassword});
+    onUpdatePassword({
+      ...values,
+      oldPassword: route?.params?.oldPassword,
+      callbackScreen: route?.params?.callbackScreen,
+    });
     resetForm();
   };
 
