@@ -10,12 +10,14 @@ import {
 } from 'components';
 import {useTranslation} from 'context/Language';
 import {base, Colors, Spacing} from 'themes';
+import {scale} from 'utils/Functions';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
+import WebView from 'components/WebView/Partial';
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
-  const {onConfirmPassword} = useUserInfo(route?.params?.type);
+  const {onConfirmPassword, message} = useUserInfo(route?.params?.type);
   return (
     <>
       <HeaderBg>
@@ -65,6 +67,9 @@ const ChangePassword = ({route}) => {
                     value={values.password}
                   />
                 </View>
+                {!!message && (
+                  <WebView style={styles.textError} source={{html: message}} />
+                )}
               </View>
               <FooterContainer>
                 <Button
@@ -88,4 +93,10 @@ const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //-------------------
   flex1: {flex: 1, backgroundColor: Colors.bs4},
+  textError: {
+    marginTop: scale(26),
+    color: Colors.Highlight,
+    textAlign: 'center',
+    minHeight: 200,
+  },
 });

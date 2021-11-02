@@ -28,6 +28,7 @@ const useUserInfo = type => {
   const translation = useTranslation();
   const {getPhone, addName} = useAsyncStorage();
   const {setLoading} = useLoading();
+  const [message, setMessage] = useState('');
   const {setError} = useError();
   const {dispatch} = useUser();
   const {showModalSmartOTPSuggestion} = useShowModal();
@@ -46,7 +47,6 @@ const useUserInfo = type => {
     updatePassword,
   } = useServiceUser();
   const [showModal, setShowModal] = useState(null);
-
   const setPersonalInfo = (key, value) => {
     personalInfo.current[key] = value;
   };
@@ -192,7 +192,7 @@ const useUserInfo = type => {
             break;
         }
       } else {
-        setError(result);
+        setMessage(result?.ErrorMessage);
       }
     } catch (error) {
       setLoading(false);
@@ -300,6 +300,8 @@ const useUserInfo = type => {
     showModal,
     setShowModal,
     onUpdatePassword,
+    message,
+    setMessage,
   };
 };
 export default useUserInfo;
