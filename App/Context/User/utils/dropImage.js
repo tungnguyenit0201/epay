@@ -1,17 +1,18 @@
 import RNFetchBlob from 'rn-fetch-blob';
-import { useRef, useState } from 'react';
+import {useRef, useState} from 'react';
 import ImageEditor from '@react-native-community/image-editor';
-import { useWindowDimensions, Platform } from 'react-native';
-import { scale } from 'utils/Functions';
-import { usePermission } from 'context/Common/utils';
+import {useWindowDimensions, Platform} from 'react-native';
+import {scale} from 'utils/Functions';
+import {usePermission} from 'context/Common/utils';
 
 const useDropImage = () => {
   const camera = useRef();
   const [image, setImage] = useState(null);
   const [showCamera, setShow] = useState(false);
+  const [opacity, setOpacity] = useState(false);
   const diemsion = useWindowDimensions();
   let [loading, setLoading] = useState(false);
-  const { checkPermission } = usePermission();
+  const {checkPermission} = usePermission();
   const setShowCamera = async value => {
     let result = await checkPermission(
       () => setShow(value),
@@ -19,7 +20,7 @@ const useDropImage = () => {
     );
   };
   const dropImage = async capturedImg => {
-    const { uri, width, height } = capturedImg;
+    const {uri, width, height} = capturedImg;
     // tỉ lệ màn hình so với tỉ lệ image
     let scaleWidth = width / diemsion.width;
     let scaleHeight = height / diemsion.height;
@@ -33,8 +34,8 @@ const useDropImage = () => {
           x: scale(37) * scaleWidth,
           y: scale(170) * scaleHeight,
         },
-        size: { width: widthImg, height: heightImg },
-        displaySize: { width: widthImg, height: heightImg },
+        size: {width: widthImg, height: heightImg},
+        displaySize: {width: widthImg, height: heightImg},
       },
       error => {
         console.error('Error resizing image: ', error);
@@ -44,16 +45,16 @@ const useDropImage = () => {
       path = path.replace('file://', '');
     }
     let data = await RNFetchBlob.fs.readFile(path, 'base64');
-    return { path, data };
+    return {path, data};
   };
 
   const capturePicture = async (onDropImage, isDrop) => {
     setLoading(true);
     if (camera.current) {
       camera.current
-        .takePictureAsync({ base64: true })
+        .takePictureAsync({base64: true})
         .then(async capturedImg => {
-          const { uri, base64, width, height } = capturedImg;
+          const {uri, base64, width, height} = capturedImg;
           let raito = width / height;
           let result = {
             path: uri,
@@ -82,9 +83,11 @@ const useDropImage = () => {
     camera,
     showCamera,
     loading,
+    opacity,
     setImage,
     setShowCamera,
     capturePicture,
+    setOpacity,
   };
 };
 export default useDropImage;

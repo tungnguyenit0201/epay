@@ -31,8 +31,16 @@ const DropImage = ({
   identify,
 }) => {
   const {width, height} = useWindowDimensions();
-  const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
-    useDropImage();
+  const {
+    image,
+    camera,
+    showCamera,
+    loading,
+    setShowCamera,
+    capturePicture,
+    opacity,
+    setOpacity,
+  } = useDropImage();
   const isFocused = useIsFocused();
   const translation = useTranslation();
   const {
@@ -63,6 +71,7 @@ const DropImage = ({
   const imageSource = useMemo(() => {
     const imagePath = (eKYC ? SDKImage?.path : image?.path) || draft?.path;
     if (imagePath) {
+      setOpacity(true);
       return {uri: imagePath};
     }
     return identify
@@ -124,15 +133,25 @@ const DropImage = ({
                 source={imageSource}
                 resizeMode={'stretch'}
               />
-              <View style={[styles.pos1, styles.blockBlurBlack]}>
-                <Image
-                  style={styles.iconBigCamera}
-                  source={Images.TrafficFee.BigCamera}
-                  resizeMode={'contain'}
-                />
-                <Text color={Colors.bs4} bold centered mt={10} fs="h6">
-                  {translation.take_a_photo_of_gttt}
-                </Text>
+              <View
+                style={[
+                  styles.pos1,
+                  styles.blockBlurBlack,
+                  {opacity: opacity ? 0 : 0.8},
+                ]}
+              >
+                {!opacity && (
+                  <View style={styles.alignCenter}>
+                    <Image
+                      style={styles.iconBigCamera}
+                      source={Images.TrafficFee.BigCamera}
+                      resizeMode={'contain'}
+                    />
+                    <Text color={Colors.bs4} bold centered mt={10} fs="h6">
+                      {translation.take_a_photo_of_gttt}
+                    </Text>
+                  </View>
+                )}
               </View>
             </Pressable>
           </View>
