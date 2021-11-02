@@ -10,8 +10,7 @@ import {useTranslation} from 'context/Language';
 
 const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
   const translation = useTranslation();
-
-  const {BankLogoUrl, CardNumber, BankNumber, BankName} = bankInfo || {};
+  const {SourceAccount , SourceName, LogoUrl} = bankInfo || {};
   return (
     //TODO : translation
     <>
@@ -27,8 +26,8 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
           <Image
             style={[styles.iconBank]}
             source={
-              BankLogoUrl
-                ? {uri: BankLogoUrl}
+              LogoUrl
+                ? {uri: LogoUrl}
                 : require('images/qrpay/Wallet.png')
             }
             resizeMode={'contain'}
@@ -40,10 +39,10 @@ const SelectBank = ({onPress, bankInfo, sourceTitle, disabled}) => {
             width="70%"
           >
             <Text fs="h6" bold>
-              {BankName}
+            {SourceName}
             </Text>
-            {!!CardNumber || !!BankNumber ? (
-              <Text>{CardNumber || BankNumber}</Text>
+            {!!SourceAccount ? (
+              <Text>{SourceAccount}</Text>
             ) : null}
           </Col>
           <View style={styles.itemRight}>

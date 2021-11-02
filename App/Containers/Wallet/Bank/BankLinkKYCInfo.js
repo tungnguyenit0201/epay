@@ -17,8 +17,8 @@ const BankLinkKYCInfo = props => {
   const {params} = useRoute() || {};
   const translation = useTranslation();
   const {onChange, onContinue, onUpdate} = useBankInfo(params);
-  const ICInfo = get(params, 'optionKyc', {});
-
+  const ICInfo = get(params, 'optionKyc.data', {});
+  const {region} = useUser();
   const {goRegionSelect, onClearRegionData} = useSelectRegion({
     callbackScreen: SCREEN.MAP_BANK_FLOW,
   });
@@ -31,15 +31,16 @@ const BankLinkKYCInfo = props => {
   }, []);
 
   const onSubmit = values => {
+    const {Provincial, County} = values || {};
     props?.navigation?.push?.(SCREEN.MAP_BANK_FLOW, {
       screen: MapBankRoutes.BankLinkConfirm,
       params: {
         ...params,
-        ICAddress: values,
+        ICAddress: {...values, Province: Provincial, District: County},
       },
     });
   };
-
+  // console.log(ICInfo);
   return (
     <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
@@ -52,12 +53,12 @@ const BankLinkKYCInfo = props => {
           District: ICInfo?.District,
           Province: ICInfo?.Province,
         }}
-        validationSchema={addressSchema}
-      >
+        validationSchema={addressSchema}>
         <FormikContent
-          region={ICInfo}
+          region={region}
           goRegionSelect={goRegionSelect}
           onSubmit={onSubmit}
+          // handleChangee={}
         />
       </Formik>
     </View>
@@ -66,7 +67,7 @@ const BankLinkKYCInfo = props => {
 
 const FormikContent = ({region, goRegionSelect, onSubmit}) => {
   const {
-    handleChange,
+    handleChange: _handleChange,
     handleBlur,
     setFieldValue,
     setFieldTouched,
@@ -77,29 +78,23 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
   } = useFormikContext();
 
   useEffect(() => {
-    if (region?.Provincial && region?.County) {
+    if (region) {
       for (const [key, value] of Object.entries(region)) {
         setFieldValue(key, value);
       }
     }
   }, [region]);
 
-  const _handleChange = field => value => {
-    setFieldValue(field, value);
-    setFieldTouched(field, true, false);
-  };
-
   return (
     <View flex={1}>
       <ScrollView
         style={{paddingHorizontal: Spacing.PADDING}}
         flex={1}
-        keyboardShouldPersistTaps="handled"
-      >
+        keyboardShouldPersistTaps="handled">
         <InputBlock
           label="Tỉnh / Thành phố"
           error={touched.Province && errors.Province}
-          value={values.Province}
+          value={values.Province || values.Provincial}
           isSelect
           rightIcon={Images.Down}
           onPress={() => goRegionSelect('cites')}
@@ -107,7 +102,7 @@ const FormikContent = ({region, goRegionSelect, onSubmit}) => {
         <InputBlock
           label="Quận"
           error={touched.District && errors.District}
-          value={values.District}
+          value={values.District || values.County}
           isSelect
           rightIcon={Images.Down}
           onPress={() => goRegionSelect('districts')}
