@@ -100,6 +100,7 @@ import QRTransfer from 'containers/Wallet/QRPay/Transfer';
 import TransferConfirm from 'containers/Wallet/QRPay/TransferConfirm';
 import TransferResults from 'containers/Wallet/QRPay/TransferResult';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
+import QRBankOTP from 'containers/Wallet/QRPay/BankOTP';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
@@ -477,6 +478,7 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.QRPAY} component={QRPay} />
           <Stack.Screen name={SCREEN.QR_TRANSFER} component={QRTransfer} />
           <Stack.Screen name={SCREEN.QR_PROMOTION} component={QRPromotion} />
+          <Stack.Screen name={SCREEN.QR_BANK_OTP} component={QRBankOTP} />
           <Stack.Screen name={SCREEN.BANK_OTP} component={BankOTP} />
           <Stack.Screen
             name={SCREEN.FORGET_PASSWORD_KYC}

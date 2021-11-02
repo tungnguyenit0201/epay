@@ -18,12 +18,12 @@ import {sha256} from 'react-native-sha256';
 import Keychain from 'react-native-keychain';
 import {useTouchID} from 'context/Auth/utils';
 import {useModalSmartOTP} from 'context/User/utils';
-
-export const useQRTransfer = () => {
+import {generateTOTP} from 'utils/Functions';
+export const useQRTransfer = (isMount = true) => {
   const {setError} = useError();
   const {setLoading} = useLoading();
   const {phone} = useUser();
-  const {qrTransaction, dispatch} = useWallet();
+  const {qrTransaction, sourceMoney, dispatch} = useWallet();
   const {
     getTransferUser,
     moneyTransfer,
@@ -32,6 +32,7 @@ export const useQRTransfer = () => {
     paymentComfrim,
   } = useServiceWallet();
   const {onShowModal} = useModalSmartOTP();
+  const {getSmartOTPSharedKey} = useAsyncStorage();
 
   const {biometryType, onTouchID} = useTouchID({
     isMount: false,
@@ -41,6 +42,8 @@ export const useQRTransfer = () => {
     Price: null,
     payoneer: 0,
     Content: '',
+    sourceMoney: _.get(qrTransaction, 'sourceMoney', {}),
+    ConfirmValue: '',
   });
   let [suggestion, setSuggestion] = useState([]);
   let [check, setCheck] = useState(false);
@@ -52,6 +55,7 @@ export const useQRTransfer = () => {
       if (value > 100000) return setSuggestion([value, value * 2, value * 3]);
       if (value) setSuggestion([value * 1000, value * 10000, value * 100000]);
     }
+    console.log('object :>> ', transfer?.current?.Price?.toString());
   };
 
   const onCheckAmountLimit = async () => {
@@ -80,14 +84,18 @@ export const useQRTransfer = () => {
 
   const onPayment = async () => {
     setLoading(true);
+
     let result = await payment({
       phone,
       OrderId: qrTransaction?.OrderID,
       MerchantCode: qrTransaction?.MerchantCode,
-      TransFormType: TRANS_FORM_TYPE.CONNECTED_BANK,
+      TransFormType: qrTransaction?.sourceMoney?.SourceType,
       Amount: qrTransaction?.Price,
-      BankId: 1,
-      BankConnectId: 1670,
+      BankId: qrTransaction?.sourceMoney?.BankId,
+      BankConnectId: qrTransaction?.sourceMoney?.SourceId,
+      CardNumber: '9704000000000018',
+      CardHolder: 'NGUYEN VAN A',
+      CardIssueDate: '0307',
     });
     setLoading(false);
 
@@ -95,27 +103,41 @@ export const useQRTransfer = () => {
       return;
     } else {
       if (result?.ErrorCode == ERROR_CODE.PAYMENT_REQUIRED_AUTHENTICATION) {
-        dispatch({
-          type: 'SET_QR_TRANSACTION',
-          qrTransaction: {...qrTransaction, ...result},
-        });
-        for (let i = 0; i < result?.ListConfirmMethod?.length; i++) {
-          let confirmType = _.get(
-            result,
-            `ListConfirmMethod[${i}].ConfirmType`,
-            -1,
+        transfer.current = {...transfer.current, ...result};
+        if (result?.ListConfirmMethod?.length > 0) {
+          let ListConfirmMethod = result?.ListConfirmMethod?.sort?.(
+            (lhs, rhs) => {
+              return lhs?.Priority > rhs?.Priority;
+            },
           );
-          if (confirmType == CONFIRM_METHODS.BIO_ID && biometryType) {
-            let done = await onTouchID();
-            if (done) return;
-          }
-          if (confirmType == CONFIRM_METHODS.SMART_OTP) {
-            console.log('method :>> ', confirmType);
-            onShowModal(async () => paymentWithPassword());
+          for (let i = 0; i < ListConfirmMethod?.length; i++) {
+            let confirmType = ListConfirmMethod?.[i]?.ConfirmType || -1;
+
+            if (confirmType == CONFIRM_METHODS.BIO_ID && biometryType) {
+              let done = await onTouchID();
+              if (done) return;
+            }
+
+            if (confirmType == CONFIRM_METHODS.SMART_OTP) {
+              onShowModal(async () => await paymentWithSmartOTP());
+              return;
+            }
+            if (confirmType == CONFIRM_METHODS.BANK_OTP) {
+              return onContinue(SCREEN.QR_BANK_OTP);
+            }
           }
         }
       } else setError(result);
     }
+  };
+
+  const paymentWithSmartOTP = async () => {
+    const smartOtpSharedKey = await getSmartOTPSharedKey();
+    let otp = generateTOTP({phone, smartOtpSharedKey});
+    await onPaymentConfrim({
+      ConfirmValue: otp,
+      ConfirmMethod: CONFIRM_METHODS.SMART_OTP,
+    });
   };
 
   const paymentWithPassword = async (
@@ -140,20 +162,19 @@ export const useQRTransfer = () => {
     console.log('qrTransaction :>> ', qrTransaction);
     let result = await paymentComfrim({
       phone,
-      TransCode: qrTransaction?.TransCode,
+      TransCode: transfer.current?.TransCode || qrTransaction?.TransCode,
       ConfirmMethod,
       ConfirmValue,
-      BankId: 1,
+      BankId: qrTransaction?.sourceMoney?.BankId,
     });
     setLoading(false);
 
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
-      Navigator.navigate(SCREEN.TRANSFER_RESULTS);
+      onContinue(SCREEN.TRANSFER_RESULTS);
     } else setError(result);
   };
 
   const onContinue = screen => {
-    console.log('object', {...qrTransaction, ...transfer.current});
     dispatch({
       type: 'SET_QR_TRANSACTION',
       qrTransaction: {...qrTransaction, ...transfer.current},
@@ -161,6 +182,10 @@ export const useQRTransfer = () => {
     Navigator.navigate(screen);
   };
 
+  useEffect(() => {
+    isMount &&
+      onChange('sourceMoney', sourceMoney?.length > 0 ? sourceMoney[0] : {});
+  }, []);
   return {
     transfer: transfer.current,
     suggestion,

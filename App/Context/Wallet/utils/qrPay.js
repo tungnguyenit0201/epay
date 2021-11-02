@@ -62,37 +62,40 @@ const useScanQR = () => {
     } else setError(result);
   };
 
-  const onGetQRCodeInfo = async qrCode => {
-    if (loading) return;
-    setLoading(true);
-    const phone = await getPhone();
-    let result = await getQRCodeInfo({
-      phone,
-      // QRCode: '02002',
-      QRCode: qrCode?.replace('epay://', ''),
-      PaymentType: QR_PAYMENT_TYPE.QR,
-    });
-    setLoading(false);
-
-    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
-      await onGetSourceMoney();
-      let userTransfer;
-      if (result?.Payload?.AccountId) {
-        userTransfer = await onGetTransferUser(result?.Payload?.AccountId);
-        console.log('userTransfer :>> ', userTransfer);
-      }
-      dispatch({
-        type: 'SET_QR_TRANSACTION',
-        qrTransaction: {...result?.Payload, ...userTransfer},
+  const onGetQRCodeInfo = useCallback(
+    _.debounce(async qrCode => {
+      if (loading) return;
+      setLoading(true);
+      const phone = await getPhone();
+      let result = await getQRCodeInfo({
+        phone,
+        // QRCode: '02002',
+        QRCode: qrCode?.replace('epay://', ''),
+        PaymentType: QR_PAYMENT_TYPE.QR,
       });
-      if (result?.Payload?.MerchantCode && result?.Payload?.Price) {
-        Navigator.navigate(SCREEN.TRANSFER_COMFIRM);
-      } else Navigator.navigate(SCREEN.QR_TRANSFER, result?.Payload);
-      setCamera(false);
-    } else {
-      setError({...result, onClose: () => setLoading(false)});
-    }
-  };
+      setLoading(false);
+
+      if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+        await onGetSourceMoney();
+        let userTransfer;
+        if (result?.Payload?.AccountId) {
+          userTransfer = await onGetTransferUser(result?.Payload?.AccountId);
+          console.log('userTransfer :>> ', userTransfer);
+        }
+        dispatch({
+          type: 'SET_QR_TRANSACTION',
+          qrTransaction: {...result?.Payload, ...userTransfer},
+        });
+        if (result?.Payload?.MerchantCode && result?.Payload?.Price) {
+          Navigator.navigate(SCREEN.TRANSFER_COMFIRM);
+        } else Navigator.navigate(SCREEN.QR_TRANSFER, result?.Payload);
+        setCamera(false);
+      } else {
+        setError({...result, onClose: () => setLoading(false)});
+      }
+    }, 1000),
+    [],
+  );
 
   const onGetTransferUser = async AccountId => {
     setLoading(true);

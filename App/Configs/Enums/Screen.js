@@ -82,6 +82,7 @@ const SCREEN = {
   QRPAY: 'QRPay',
   QR_TRANSFER: 'QRTransfer',
   QR_PROMOTION: 'QRPromotion',
+  QR_BANK_OTP: 'QRBankOTP',
   MAP_BANK_FLOW: 'MapBankFlow',
   BankCardInfo: 'BankCardInfo',
   BankLinked: 'BankLinked',

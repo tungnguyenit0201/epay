@@ -31,7 +31,7 @@ import DashedLine from 'react-native-dashed-line';
 const TransactionConfirm = () => {
   // TODO: translate
   const {qrTransaction, sourceMoney} = useWallet();
-  const {onPayment} = useQRTransfer();
+  const {onPayment} = useQRTransfer(false);
 
   const translation = useTranslation();
   const [showModal, setShowModal] = React.useState(false);

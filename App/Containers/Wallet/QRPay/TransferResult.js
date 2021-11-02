@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, StyleSheet, View, Image, Pressable} from 'react-native';
 import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
 import ViewShot from 'react-native-view-shot';
@@ -22,7 +16,8 @@ import {useScreenShot} from 'context/Common/utils';
 const TransactionResult = () => {
   const translation = useTranslation();
   const {onPaymentConfrim} = useQRTransfer();
-  const {viewShot, captureAndShareScreenshot} = useScreenShot();
+
+  const {viewShot, captureAndShareScreenshot, saveScreenshot} = useScreenShot();
   const data = [
     {
       label: 'Mã giao dịch',
@@ -85,7 +80,7 @@ const TransactionResult = () => {
               );
             })}
             <View style={[base.row]}>
-              <View style={[base.row]}>
+              <Pressable style={[base.row]} onPress={saveScreenshot}>
                 <Image
                   source={require('images/qrpay/Save.png')}
                   style={[{width: 24, height: 24, marginRight: 5}]}
@@ -93,9 +88,9 @@ const TransactionResult = () => {
                 <Text bold color={Colors.brd1}>
                   Lưu ảnh
                 </Text>
-              </View>
+              </Pressable>
 
-              <TouchableOpacity
+              <Pressable
                 onPress={captureAndShareScreenshot}
                 style={[base.row, base.leftAuto]}
               >
@@ -107,7 +102,7 @@ const TransactionResult = () => {
                   {' '}
                   Chia sẻ ảnh{' '}
                 </Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </View>
         </View>

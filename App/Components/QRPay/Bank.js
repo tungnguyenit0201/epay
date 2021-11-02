@@ -1,5 +1,11 @@
-import React from 'react';
-import {Pressable, View, Image, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Pressable,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {Button, Text} from 'components';
 import {Colors, Images} from 'themes';
 import {scale} from 'utils/Functions';
@@ -10,12 +16,17 @@ import Navigator from 'navigations/Navigator';
 
 const TransferBank = ({sourceMoney = [], onPress}) => {
   console.log('sourceMoney :>> ', sourceMoney);
+  const [isSelect, setSelect] = useState(0);
   const translation = useTranslation();
   const renderItem = (item, index) => {
     const fee = item?.StaticFee;
     return (
-      <View
-        style={[styles.itemBank, !item?.SourceId && styles.itemBankActive]}
+      <TouchableOpacity
+        onPress={() => {
+          onPress(item);
+          setSelect(index);
+        }}
+        style={[styles.itemBank, isSelect == index && styles.itemBankActive]}
         key={`${item?.SourceId}-sourceMoney`}
       >
         <Image
@@ -37,7 +48,7 @@ const TransferBank = ({sourceMoney = [], onPress}) => {
           <Image
             style={[styles.iconCircle]}
             source={
-              !item?.SourceId
+              isSelect == index
                 ? require('images/qrpay/CircleDown.png')
                 : require('images/qrpay/Circle.png')
             }
@@ -60,7 +71,7 @@ const TransferBank = ({sourceMoney = [], onPress}) => {
             />
           </>
         )} */}
-      </View>
+      </TouchableOpacity>
     );
   };
 

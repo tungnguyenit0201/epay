@@ -57,6 +57,7 @@ export default function userReducer(state, action) {
         wallet: action?.WalletInfo,
       };
     case 'SET_QR_TRANSACTION':
+      console.log('action :>> ', action);
       return {
         ...state,
         qrTransaction: {...state.qrTransaction, ...action?.qrTransaction},

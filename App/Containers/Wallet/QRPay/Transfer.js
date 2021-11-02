@@ -37,6 +37,7 @@ const Transfer = () => {
 
   const translation = useTranslation();
   const {qrTransaction, sourceMoney} = useWallet();
+  console.log('transfer?.Price? :>> ', transfer?.Price);
   return (
     // TODO: translate
 
@@ -66,6 +67,7 @@ const Transfer = () => {
             maxLength={100}
             selectTextOnFocus
             numeric
+            alphanumeric
             onChange={text => onChange('Price', text)}
             value={transfer?.Price?.toString()}
             onBlur={onCheckAmountLimit}
@@ -87,7 +89,10 @@ const Transfer = () => {
           />
         </View>
         <View style={[base.container, {paddingTop: 20}]}>
-          <Bank sourceMoney={sourceMoney} />
+          <Bank
+            sourceMoney={sourceMoney}
+            onPress={item => onChange('sourceMoney', item)}
+          />
         </View>
         <View style={{height: 150}}></View>
       </ScrollView>
