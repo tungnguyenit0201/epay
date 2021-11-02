@@ -63,6 +63,7 @@ const useAuth = () => {
     password,
     encrypted = false,
     firstLogin = false,
+    resetForm,
   }) => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
@@ -132,7 +133,11 @@ const useAuth = () => {
         return setError({
           ...result,
           onClose: () => {
-            Navigator.navigate(SCREEN.NEW_PASSWORD, {oldPassword: password});
+            resetForm();
+            Navigator.navigate(SCREEN.NEW_PASSWORD, {
+              oldPassword: password,
+              callbackScreen: SCREEN.LOGIN,
+            });
           },
         });
       default:

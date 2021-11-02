@@ -592,6 +592,7 @@
   "issuedPlace": "Nơi cấp",
   "verifySuccess": "Tài khoản của quý khách đã được xác thực thành công",
   "kycPendingVerify": "Thông tin của bạn đã được gửi đi và đang chờ duyệt",
+  "every_6_months_epay_requires_a_new_password_change_to_ensure_account_security_the_new_password_cannot_be_the_same_as_the_current_password": "Sau mỗi 6 tháng EPAY yêu cầu thay đổi mật khẩu mới, để đảm bảo sự bảo mật tài khoản. Mật khẩu mới không được trùng với mật khẩu hiện tại",
   "verifyFailed": "Xác thực không thành công",
   "updateInfo": "Cập nhật thông tin",
   "verifyAgain": "Xác thực lại",
