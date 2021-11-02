@@ -203,7 +203,7 @@ const VerifyUserPortrait = ({route}) => {
           error={translation[error?.ICFullName]}
           required
           placeholder={translation?.inputFullName}
-          regex={/[^\p{L} ]+/gu}
+          regex={/[^\p{L} ]|[\u03C0]+/gu}
           trimOnBlur
           multiline
           maxLength={100}

@@ -219,18 +219,18 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert(
-        remoteMessage?.notification?.title,
-        remoteMessage?.notification?.body,
-        [
-          {
-            text: 'Huỷ',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'Xem', onPress: () => openNotificaiton(remoteMessage)},
-        ],
-      );
+      // Alert.alert(
+      //   remoteMessage?.notification?.title,
+      //   remoteMessage?.notification?.body,
+      //   [
+      //     {
+      //       text: 'Huỷ',
+      //       onPress: () => console.log('Cancel Pressed'),
+      //       style: 'cancel',
+      //     },
+      //     {text: 'Xem', onPress: () => openNotificaiton(remoteMessage)},
+      //   ],
+      // );
     });
 
     return unsubscribe;
