@@ -23,7 +23,7 @@ export default React.forwardRef(
       password,
       numeric,
       phone,
-      deleteSpace,
+      disableSpace,
       name,
       marginBottom = scale(10),
       error,
@@ -59,7 +59,7 @@ export default React.forwardRef(
     const [showPassword, setShowPassword] = useState(false);
 
     const onChangeText = text => {
-      if (!!deleteSpace && text[text.length - 1] === ' ') return;
+      if (!!disableSpace && text[text.length - 1] === ' ') return;
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
         onChange?.(text.replace(regexForNonAlphaNum, ''));
