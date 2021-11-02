@@ -148,55 +148,32 @@ const BankPickerScreen = props => {
 export default BankPickerScreen;
 
 const styles = StyleSheet.create({
-  flex1: {flex: 1},
   //---------------
   mb1: {marginBottom: 16},
-  mb2: {marginBottom: 32},
-  //---------------
-  px1: {paddingHorizontal: Spacing.PADDING},
   //---------------
   container: {
     backgroundColor: Colors.bs4,
     paddingBottom: 40,
     marginTop: Spacing.PADDING,
   },
-  image: {
-    width: 20,
-    height: 20,
-  },
-  icon: {
-    position: 'absolute',
-    top: 52,
-    left: 10,
-    paddingRight: 10,
-    borderRightWidth: 1,
-    borderStyle: 'solid',
-    borderColor: Colors.bs1,
-    zIndex: 1,
-  },
+  // image: {
+  //   width: 20,
+  //   height: 20,
+  // },
+  // icon: {
+  //   position: 'absolute',
+  //   top: 52,
+  //   left: 10,
+  //   paddingRight: 10,
+  //   borderRightWidth: 1,
+  //   borderStyle: 'solid',
+  //   borderColor: Colors.bs1,
+  //   zIndex: 1,
+  // },
   input_text: {
     paddingLeft: 50,
     borderWidth: 0,
     borderRadius: 8,
   },
-  item: {alignItems: 'center'},
-  //----------------
-  lineGray1: {
-    height: 12,
-    backgroundColor: Colors.bs2,
-  },
-  //----------------
-  iconPlus: {
-    width: scale(24),
-    height: scale(24),
-  },
-  //----------------
-  btnAddBank: {
-    marginBottom: Spacing.PADDING,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: Colors.bs1,
-    borderRadius: 8,
-  },
+  // item: {alignItems: 'center'},
 });

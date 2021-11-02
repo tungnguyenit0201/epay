@@ -42,7 +42,7 @@ const BankItem = ({title, icon, item, callback}) => (
       resizeMode={'contain'}
     />
     <View style={styles.flex1}>
-      <Text fs="h6" bold size={Fonts.SM}>
+      <Text fs="h6" bold>
         {title}
       </Text>
       <Text color={Colors.tp3}>**********1234</Text>

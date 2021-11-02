@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import {HeaderBg, Header, TextInput, Text} from 'components';
+import {HeaderBg, Header, TextInput, Text, ButtonAdd} from 'components';
 import {Colors, Spacing, Images, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
@@ -130,6 +130,7 @@ const LinkedBank = props => {
     );
   };
   return (
+    //TODO: TRANSLATE
     <View flex={1} backgroundColor={Colors.bs4}>
       <HeaderBg>
         <Header back title={translation.bank_linking} />
@@ -144,9 +145,13 @@ const LinkedBank = props => {
         <View style={[styles.lineGray1, styles.mb2]}></View>
         <View style={styles.px1}>
           <Text bold size={Fonts.LG} mb={16}>
-            Thêm ngân hàng nhận tiền
+            {'Thêm ngân hàng nhận tiền'}
           </Text>
 
+          <ButtonAdd label={translation.add_bank_account} mb={20}
+            onPress={mapBank}/>
+          
+          {/*delete when no use 
           <TouchableOpacity
             style={[base.row, styles.btnAddBank]}
             onPress={mapBank}
@@ -159,7 +164,7 @@ const LinkedBank = props => {
               style={styles.iconPlus}
               resizeMode="contain"
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </View>
@@ -205,17 +210,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bs2,
   },
   //----------------
-  iconPlus: {
-    width: scale(24),
-    height: scale(24),
-  },
+  // iconPlus: {
+  //   width: scale(24),
+  //   height: scale(24),
+  // },
   //----------------
-  btnAddBank: {
-    marginBottom: Spacing.PADDING,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: Colors.bs1,
-    borderRadius: 8,
-  },
+  // btnAddBank: {
+  //   marginBottom: Spacing.PADDING,
+  //   paddingHorizontal: 16,
+  //   paddingVertical: 12,
+  //   borderWidth: 1,
+  //   borderColor: Colors.bs1,
+  //   borderRadius: 8,
+  // },
 });

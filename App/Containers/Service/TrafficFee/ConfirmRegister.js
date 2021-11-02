@@ -15,23 +15,27 @@ import {
   Checkbox,
   Button,
 } from 'components';
+import { Title } from 'components/Service';
 import DashedLine from 'react-native-dashed-line';
 import {Colors, Spacing, Images, Fonts} from 'themes';
 import {scale} from 'utils/Functions';
+import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
+import {useUser} from 'context/User';
 
 import {GENDER, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 
-const ItemType1 = ({title, item, callback}) => (
+const ItemType1 = ({title, item, callback, mb=10}) => (
   <TouchableOpacity
-    style={[styles.mb1,styles.boxItem1, styles.boxShadowGray]}
+    style={[styles.boxItem1, styles.boxShadowBlue,
+      {marginBottom: mb}]}
     onPress={() => {
       callback?.(item);
     }}
   >
     <Image
-      source={Images.TrafficFee.Logo}
+      source={Images.TrafficFee.LogoType1}
       style={[
         styles.mr1,
         {
@@ -63,7 +67,7 @@ const ItemType1 = ({title, item, callback}) => (
   </TouchableOpacity>
 );
 
-const PaymentMethods = () => {
+const ConfirmRegister = () => {
   const translation = useTranslation() || {};
   const dataTest1 = [
     {
@@ -94,7 +98,7 @@ const PaymentMethods = () => {
 
   const renderInfoType1 = (name, data, lastChild) => (
     <View>
-      <View style={[styles.flexRow, styles.mxy1]}>
+      <View style={[styles.flexRow, styles.my1]}>
         <View style={styles.wPercent1}>
           <Text fs="h6" mr={10} color={Colors.cl3}>
             {name}
@@ -117,26 +121,37 @@ const PaymentMethods = () => {
     //TODO: TRANSLATE
     <View flex={1} style={styles.bgWhite}>
       <HeaderBg>
-        <Header back title="Phương thức thanh toán" />
+        <Header back title="Xác nhận đăng ký xe" />
       </HeaderBg>
 
       <ScrollView contentContainerStyle={[styles.wrap, styles.py1]}>
-        <ItemType1
-          // callback={onPress}
-          // callback={() => Navigator.navigate(SCREEN.LINKED_BANK_DETAIL)}
-          // bankInfo={bankInfo}
-          // title={item.BankName}
-          // icon={{uri: item.BankLogoUrl}}
-          // item={item}
-          title={'Ví EPAY 0909000999'}
-          // item={item}
-        />
+        <Title>{'Phương thức thanh toán'}</Title>
+        <ItemType1 title={'Ví EPAY 0909000999'} mb={30}/>
+        <Title mb={2}>{'Chi tiết đăng ký'}</Title>
+        
+        <View>
+          <View style={[styles.posCenter,styles.top1]}>
+            <Image
+              source={Images.TransactionHistory.LogoBg}
+              style={styles.logoBg}
+              resizeMode="contain"
+            />
+          </View>
+
+          {dataTest1.map((e, index) => {
+            if (index === dataTest1.length - 1) {
+              return renderInfoType1(e.name, e.data, true);
+            } else {
+              return renderInfoType1(e.name, e.data);
+            }
+          })}
+        </View>
       </ScrollView>
 
       <FooterContainer>
         <Button
-          label={translation?.continue}
-          onPress={() => Navigator.navigate(SCREEN.CONFIRM_REGISTER_VEHICLE)}
+          label={translation?.sign_up}
+          onPress={() => Navigator.navigate(SCREEN.TRAFFIC_REGISTER_RESULT)}
         />
       </FooterContainer>
     </View>
@@ -148,15 +163,25 @@ const styles = StyleSheet.create({
   //---------------
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
-  // alignCenter: {alignItems: 'center'},
+  //---------------
+  posCenter: {
+    position: 'absolute',
+    right: 0,
+    left: 0,
+    alignItems: 'center',
+  },
+  //---------------
+  top1: {top: 50},
   //---------------
   widthHaft: {width: '50%'},
+  wPercent1: {width: '48%'},
+  wPercent2: {width: '52%'},
   //---------------
   bgWhite: {backgroundColor: Colors.bs4},
   //---------------
-  mr1: {marginRight: 10},
+  my1: {marginVertical: 12},
   //---------------
-  mb1: {marginBottom: 20},
+  mr1: {marginRight: 10},
   //---------------
   py1: {
     paddingTop: 20,
@@ -165,21 +190,27 @@ const styles = StyleSheet.create({
   //---------------
   pr1: {paddingRight: 8},
   //---------------
-  boxShadowGray: {
-    backgroundColor: Colors.bs4,
+  pb1: {paddingBottom: 22},
+  //---------------
+  logoBg: {
+    width: 109,
+    height: 101,
+  },
+  //---------------
+  boxItem1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+  },
+  boxShadowBlue: {
+    backgroundColor: Colors.bg1,
     shadowOpacity: 0.2,
     shadowOffset: {width: 0, height: 0},
     elevation: 24,
     shadowRadius: 8,
     borderRadius: 8,
   },
-  //---------------
-  boxItem1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-  },
 });
 
-export default PaymentMethods;
+export default ConfirmRegister;
