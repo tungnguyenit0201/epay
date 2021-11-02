@@ -85,7 +85,13 @@ const VerifyUserInfo = ({
       <HeaderBg style={styles.header}>
         <View style={styles.back}>
           <Pressable
-            onPress={() => Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD)}
+            onPress={() => {
+              if (step === 3) {
+                Navigator.navigate(SCREEN.USER_INFO);
+              } else {
+                Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+              }
+            }}
             hitSlop={{
               right: scale(30),
               top: scale(20),
