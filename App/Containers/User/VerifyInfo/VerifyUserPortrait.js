@@ -239,7 +239,7 @@ const VerifyUserPortrait = ({route}) => {
           error={error.ICNumber}
           style={styles.mb1}
           required
-          passport
+          deleteSpace
           numeric={ICType != IC_TPYE.PASSPORT}
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
