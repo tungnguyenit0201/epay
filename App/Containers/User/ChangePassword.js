@@ -57,6 +57,7 @@ const ChangePassword = ({route}) => {
                   </Text>
                   <TextInput
                     password
+                    disableSpace
                     placeholder={translation.enter_password}
                     placeholderTextColor={Colors.tp5}
                     onChange={handleChange('password')}

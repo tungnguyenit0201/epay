@@ -75,6 +75,7 @@ const ChangePassword = ({route}) => {
                   <TextInput
                     password
                     required
+                    disableSpace
                     onChange={handleChange('newPassword')}
                     onBlur={handleBlur('newPassword')}
                     placeholder={translation.enter_your_password}
@@ -87,6 +88,7 @@ const ChangePassword = ({route}) => {
                   <TextInput
                     password
                     required
+                    disableSpace
                     onChange={handleChange('passwordConfirm')}
                     onBlur={handleBlur('passwordConfirm')}
                     placeholder={translation.confirm_password}
