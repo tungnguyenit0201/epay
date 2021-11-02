@@ -19,8 +19,9 @@ import _ from 'lodash';
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
   const {onUpdatePassword} = useUserInfo();
-  const onSubmit = values => {
+  const onSubmit = (values, {resetForm}) => {
     onUpdatePassword({...values, oldPassword: route?.params?.oldPassword});
+    resetForm();
   };
 
   return (
@@ -39,8 +40,7 @@ const ChangePassword = ({route}) => {
             passwordConfirm: '',
           }}
           validationSchema={newPasswordSchema}
-          onSubmit={onSubmit}
-        >
+          onSubmit={onSubmit}>
           {({
             handleChange: _handleChange,
             handleBlur,
@@ -60,8 +60,7 @@ const ChangePassword = ({route}) => {
               <View>
                 <ScrollView
                   showsVerticalScrollIndicator={false}
-                  keyboardShouldPersistTaps="always"
-                >
+                  keyboardShouldPersistTaps="always">
                   {/* <Content
                     title="Đặt lại mật khẩu"
                     text={
