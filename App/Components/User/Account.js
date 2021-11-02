@@ -51,8 +51,7 @@ const Account = () => {
     <ImageBackground
       source={Images.Profile.BgStandard}
       resizeMode="stretch"
-      style={[base.shadow, styles.flex1, styles.pxy1]}
-    >
+      style={[base.shadow, styles.flex1, styles.pxy1]}>
       {/* <View style={styles.wbg}>
           <Image style={styles.bg} source={require('images/profile/wave.png')} />
         </View> */}
@@ -94,8 +93,7 @@ const Account = () => {
         )}
         <TouchableOpacity
           style={base.leftAuto}
-          onPress={() => setShowMoney(!showMoney)}
-        >
+          onPress={() => setShowMoney(!showMoney)}>
           <Icon
             icon={showMoney ? Images.Eye2 : Images.EyeGray2}
             size={20}
@@ -110,8 +108,7 @@ const Account = () => {
         <TouchableOpacity
           style={base.row}
           // onPress={goToBankLinked}
-          onPress={mapBank}
-        >
+          onPress={mapBank}>
           <Text semibold mr={8} color={Colors.bs4}>
             {translation.bank_linking}{' '}
             <Text color={Colors.bs4} semibold>
@@ -124,8 +121,7 @@ const Account = () => {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => Navigator.navigate(SCREEN.LINKED_BANK)}
-        >
+          onPress={() => Navigator.navigate(SCREEN.LINKED_BANK)}>
           <Text fs="sm" color={Colors.bs4}>
             Xem tất cả
           </Text>
@@ -134,8 +130,10 @@ const Account = () => {
 
       {listConnectBank?.length ? (
         <View style={[base.row, styles.fWrap]}>
-          {listConnectBank.map(({BankName, BankLogoUrl}) => (
-            <View style={[styles.boxCircle1, styles.mr1, styles.mb3]}>
+          {listConnectBank.map(({BankName, BankLogoUrl}, index) => (
+            <View
+              key={index}
+              style={[styles.boxCircle1, styles.mr1, styles.mb3]}>
               <Image
                 style={{width: 25, aspectRatio: 1}}
                 source={{uri: BankLogoUrl}}
