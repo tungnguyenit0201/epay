@@ -31,6 +31,10 @@ const OTPContainer = ({
     }, 500);
   }, [code, message]);
 
+  useEffect(() => {
+    otpRef.current?.focusField(0);
+  }, []);
+
   return (
     <>
       <Text bold fs="h3" style={[styles.textWhite, styles.mb1, titleStyle]}>
@@ -63,16 +67,14 @@ const OTPContainer = ({
           <Pressable
             //style={{marginTop: -3}}
             disabled={countdown > 0}
-            onPress={resentOTP}
-          >
+            onPress={resentOTP}>
             <Text
               style={[
                 styles.fontSize_1,
                 {
                   color: Colors.brd1,
                 },
-              ]}
-            >
+              ]}>
               {countdown > 0
                 ? ` 0:${countdown < 10 ? `0${countdown}` : countdown}`
                 : translation.otp.resend}
