@@ -24,19 +24,6 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
         Keychain.getGenericPassword,
         getTouchIdEnabled,
       );
-      console.log("isEnrolledResult: "+JSON.stringify(isEnrolledResult))
-
-      TouchID.authenticate('test title', {
-        sensorDescription: "sensorDescription",
-        sensorErrorDescription: "sensorErrorDescription",
-        cancelText: "cancelText"
-      })
-      .then(success => {
-        console.log('Authenticated Successfully');
-      })
-      .catch(error => {
-        console.log('Authentication Failed');
-      });
 
       const { isEnrolled, token } = isEnrolledResult || {};
       let passwordEncrypted =
