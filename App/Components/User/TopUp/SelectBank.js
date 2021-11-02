@@ -16,8 +16,7 @@ import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import Navigator from 'navigations/Navigator';
 
 const SelectBank = forwardRef(
-  ({data, feeData, label, style, onChange}, ref) => {
-    const translation = useTranslation();
+  ({ data, label, style, onChange }, ref) => {
     const [checked, setChecked] = useState({
       type: null,
       index: null,
@@ -47,40 +46,33 @@ const SelectBank = forwardRef(
         <Text bold fs="h6" mb={20}>
           {label}
         </Text>
-
-        {_.map(data, (bankType, type) => (
-          <Row space="10" key={type} style={styles.row}>
-            {bankType.map((item, index) => {
-              const {BankName, BankLogoUrl} = item;
-              return (
-                <Col width="33.33%" space="10" key={index}>
-                  <Pressable
-                    style={[styles.item]}
-                    onPress={() => onChangeBank({index, type})}
-                  >
-                    <View style={[styles.wicon]}>
-                      <Image
-                        source={{uri: BankLogoUrl}}
-                        style={[styles.icon]}
-                      />
-                      {checked &&
-                        checked.type === type &&
-                        checked.index === index && (
-                          <Image
-                            source={require('images/qrpay/CircleDown.png')}
-                            style={styles.activeImg}
-                          />
-                        )}
-                    </View>
-                    <Text centered size={12} mt={5}>
-                      {BankName}
-                    </Text>
-                  </Pressable>
-                </Col>
-              );
-            })}
-          </Row>
+        <Row>
+        {_.map(data, ({SourceName, LogoUrl },index) => (
+          <Col width="33.33%" space="10" key={index}>
+            <Pressable
+              style={[styles.item]}
+              onPress={() => onChangeBank({ index })}
+            >
+              <View style={[styles.wicon]}>
+                <Image
+                  source={{ uri:  !!LogoUrl ? LogoUrl : null}}
+                  style={[styles.icon]}
+                />
+                {checked &&
+                  checked.index === index && (
+                    <Image
+                      source={require('images/qrpay/CircleDown.png')}
+                      style={styles.activeImg}
+                    />
+                  )}
+              </View>
+              <Text centered size={12} mt={5}>
+                {SourceName}
+              </Text>
+            </Pressable>
+          </Col>
         ))}
+        </Row>
         <Row space="10" style={styles.row}>
           <Col width="33.33%" space="10">
             <Pressable style={[styles.item]} onPress={mapBank}>

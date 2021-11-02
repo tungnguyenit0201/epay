@@ -92,6 +92,7 @@ const SCREEN = {
   BankLinkResult: 'BankLinkResult',
   BankLinkInfo: 'BankLinkInfo',
   BankLinkOTP: 'BankLinkOTP',
+  BANK_WEB_CONFIRM: 'BankWebConfirm',
   BANK_PICKER_SCREEN: 'BankPickerScreen',
   BANK_KYC_SCREEN: 'BankKYCInfo',
   BANK_OTP: 'BankOTP',
