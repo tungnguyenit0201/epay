@@ -59,6 +59,7 @@ export default React.forwardRef(
     const [showPassword, setShowPassword] = useState(false);
 
     const onChangeText = text => {
+      if (!!phone && text[0] !== '0') return;
       if (!!disableSpace && text[text.length - 1] === ' ') return;
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
