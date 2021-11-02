@@ -207,6 +207,7 @@ const VerifyUserPortrait = ({route}) => {
           regex={/[^\p{L} ]|[\u03C0]+/gu}
           trimOnBlur
           multiline
+          autoHeight
           maxLength={100}
         />
         <DatePicker
