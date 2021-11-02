@@ -92,11 +92,15 @@ const SCREEN = {
   BankLinkResult: 'BankLinkResult',
   BankLinkInfo: 'BankLinkInfo',
   BankLinkOTP: 'BankLinkOTP',
+  BANK_WEB_CONFIRM: 'BankWebConfirm',
   BANK_PICKER_SCREEN: 'BankPickerScreen',
   BANK_KYC_SCREEN: 'BankKYCInfo',
   BANK_OTP: 'BankOTP',
   FORGET_PASSWORD_KYC: 'ForgetPasswordKYC',
   EDIT_AUTO_RECHARGE: 'EditAutoReCharge',
   AUTO_WITHDRAW: 'AutoWithdraw',
+  MY_ORDER: 'MyOrder',
+  ORDER_DETAIL: 'OrderDetail',
+  RECEIPT: 'Receipt',
 };
 export default SCREEN;
