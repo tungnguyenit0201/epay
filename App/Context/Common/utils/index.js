@@ -8,6 +8,7 @@ import {usePermission, useModalPermission} from './permission';
 import useModalPassword from './password';
 import {useHandleBack} from './handleBack';
 import useRequest from './useRequest';
+import useScreenShot from './screenshot';
 
 export {
   useLoading,
@@ -21,4 +22,5 @@ export {
   useModalPassword,
   useHandleBack,
   useRequest,
+  useScreenShot,
 };

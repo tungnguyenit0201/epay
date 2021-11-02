@@ -12,6 +12,7 @@ import {setDefaultHeaders} from 'utils/Axios';
 import Keychain from 'react-native-keychain';
 import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
 import useLoginName from './loginName';
+import {stripTags} from 'utils/Functions';
 
 const useAuth = () => {
   const [message, setMessage] = useState('');
@@ -83,7 +84,9 @@ const useAuth = () => {
           functionType: FUNCTION_TYPE.FORGOT_PASS,
           content: {
             title: translation.sign_in,
-            text: translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute,
+            text: result?.ErrorMessage
+              ? stripTags(result.ErrorMessage)
+              : translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute,
             hotline: '1900-0000',
           },
         });

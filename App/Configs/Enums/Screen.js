@@ -29,7 +29,7 @@ const SCREEN = {
   MY_QR: 'MyQR',
   TRANSFER: 'Transfer',
   TRANSFER_RESULTS: 'TransferResults',
-  TRANSFER_SUCCESS: 'TransferSuccess',
+  TRANSFER_COMFIRM: 'TransferComfirm',
   TRAFFIC_FEE: 'TrafficFee',
   TRAFFIC_VIOLATION_PAYMENT: 'TrafficViolationPayment',
   TRAFFIC_REGISTER: 'RegisterFee',
@@ -99,5 +99,8 @@ const SCREEN = {
   FORGET_PASSWORD_KYC: 'ForgetPasswordKYC',
   EDIT_AUTO_RECHARGE: 'EditAutoReCharge',
   AUTO_WITHDRAW: 'AutoWithdraw',
+  MY_ORDER: 'MyOrder',
+  ORDER_DETAIL: 'OrderDetail',
+  RECEIPT: 'Receipt',
 };
 export default SCREEN;

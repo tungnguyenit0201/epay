@@ -16,7 +16,6 @@ import {SCREEN} from 'configs/Constants';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useScanQR} from 'context/Wallet/utils';
 import {useImagePicker} from 'context/User/utils';
-import {getTranslation} from 'react-native-ui-lib/generatedTypes/src/incubator/panView/panningUtil';
 import {useTranslation} from 'context/Language';
 const QRPay = () => {
   const camera = useRef();
@@ -34,7 +33,7 @@ const QRPay = () => {
     onGetQRCodeInfo,
     detectQRCode,
   } = useScanQR();
-  const {onPhoto} = useImagePicker(detectQRCode);
+  const {onPhoto} = useImagePicker(detectQRCode, false);
   return (
     // TODO: translate
     <View>

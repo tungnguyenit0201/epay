@@ -17,6 +17,7 @@ import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
 import CONFIRM_METHODS from './Enums/ConfirmMethod';
+import QR_PAYMENT_TYPE from './Enums/QRPaymentType';
 
 export {
   TEXT,
@@ -38,4 +39,5 @@ export {
   TERM_TYPE,
   TRANS_DETAIL,
   CONFIRM_METHODS,
+  QR_PAYMENT_TYPE,
 };

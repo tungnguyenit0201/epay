@@ -122,11 +122,19 @@ const UserInfo = () => {
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
               <TouchableOpacity
                 style={base.leftAuto}
+                disabled={
+                  statusVerified === PERSONAL_IC.INACTIVE ? true : false
+                }
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
-                }}>
+                }}
+              >
                 <Image
-                  style={[styles.editBox]}
+                  style={
+                    statusVerified === PERSONAL_IC.INACTIVE
+                      ? styles.boxDisabled
+                      : styles.editBox
+                  }
                   source={require('images/profile/Edit2.png')}
                 />
               </TouchableOpacity>
@@ -140,7 +148,8 @@ const UserInfo = () => {
                     base.row,
                     index == 0 && styles.rowFirst,
                   ]}
-                  key={index}>
+                  key={index}
+                >
                   <Image style={[styles.rowIcon]} source={item.icon} />
                   <Text style={styles.lh1} mr={3} fs="h6">
                     {item.name}
@@ -211,7 +220,8 @@ const UserInfo = () => {
                     statusVerified == PERSONAL_IC.INACTIVE
                       ? onVerify
                       : () => onReVerify('showModal')
-                  }>
+                  }
+                >
                   <Image
                     style={[styles.editBox]}
                     source={require('images/profile/Edit2.png')}
@@ -261,7 +271,8 @@ const UserInfo = () => {
                       functionType: FUNCTION_TYPE.AUTH_EMAIL,
                     });
                   }
-                }}>
+                }}
+              >
                 <Image
                   style={[styles.editBox]}
                   source={require('images/profile/Edit2.png')}
@@ -315,7 +326,8 @@ const UserInfo = () => {
               />
               <TouchableOpacity
                 style={styles.textCenter}
-                onPress={() => onReVerify('hideModal')}>
+                onPress={() => onReVerify('hideModal')}
+              >
                 <Text>Không, cảm ơn</Text>
               </TouchableOpacity>
             </View>
@@ -387,5 +399,12 @@ const styles = StyleSheet.create({
   textCenter: {alignSelf: 'center'},
   //---------------
   iconEdit: {width: 18, height: 18, tintColor: Colors.g5},
+  boxDisabled: {
+    width: scale(56),
+    height: scale(56),
+    marginTop: -10,
+    marginRight: -10,
+    opacity: 0.3,
+  },
 });
 export default UserInfo;
