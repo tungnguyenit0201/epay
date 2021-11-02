@@ -36,7 +36,7 @@ const VerifyUserPortrait = ({route}) => {
     County: extractCardInfo.District,
     Ward: wardEmpty ? '' : extractCardInfo.Ward,
     Address: extractCardInfo.Address,
-    SexType: extractCardInfo.Gender,
+    SexType: extractCardInfo.Gender || 1,
   });
 
   const GENDERS = {
@@ -192,7 +192,8 @@ const VerifyUserPortrait = ({route}) => {
       showInstruction={false}
       onPressButton={() => onUpdateAllInfo(info)}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}>
+      buttonTitle={translation.updateInfo}
+    >
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -329,13 +330,15 @@ const VerifyUserPortrait = ({route}) => {
             {translation?.iAgreeWith}{' '}
             <Text
               onPress={() => onGoTerm(SCREEN.POLICY)}
-              style={styles.firstLink}>
+              style={styles.firstLink}
+            >
               {translation?.userAgreement}
             </Text>{' '}
             {translation?.and}{' '}
             <Text
               onPress={() => onGoTerm(SCREEN.POLICY)}
-              style={styles.firstLink}>
+              style={styles.firstLink}
+            >
               {translation?.privacyPolicy}
             </Text>{' '}
             {translation?.ofEPAY}
@@ -348,7 +351,8 @@ const VerifyUserPortrait = ({route}) => {
           color={Colors.hl1}
           bold
           mb={48}
-          fs="h6">
+          fs="h6"
+        >
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>
