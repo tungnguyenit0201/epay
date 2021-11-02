@@ -69,7 +69,7 @@ const RegisterName = () => {
 
             <FooterContainer>
               <Button
-                disabled={!values?.FullName || errors?.FullName || isSubmitting}
+                disabled={errors?.FullName || isSubmitting}
                 label={translation.completed}
                 onPress={handleSubmit}
               />
