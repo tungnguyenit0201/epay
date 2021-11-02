@@ -26,10 +26,10 @@
   "please_verify_click_here_to_protect_your_account": "Vui lòng định danh (bấm vào đây) để bảo vệ tài khoản của bạn",
   "verified_account_will_have_a_higher_level_of_security_and_greater_limits_for_transactions": "Tài khoản được định danh sẽ có mức độ bảo mật cao hơn và giới hạn lớn hơn cho các giao dịch",
   "please_enter_your_phone_number": "Vui lòng nhập số điện thoại",
-  "sign_insign_up_epay": "Đăng ký/đăng nhập EPAY ngay!",
+  "sign_insign_up_epay": "Đăng ký/Đăng nhập EPAY ngay!",
   "enter_phone_number": "Nhập số điện thoại",
   "continue": "Tiếp tục",
-  "incorrect_phone_number": "Số điện thoại không hợp lệ",
+  "incorrect_phone_number": "*Số điện thoại không hợp lệ",
   "enter_otp": "Nhập OTP",
   "enter_otp_verification_code": "Nhập mã OTP xác thực",
   "you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute": "Bạn đã nhập sai mật khẩu quá 3 lần, vui lòng quay lại sau 1 phút",
@@ -261,6 +261,7 @@
   "setting_notification": "Cài đặt thông báo",
   "application_information": "Thông tin ứng dụng",
   "system": "Hệ thống",
+  "you_need_to_identify_your_account_for_maximum_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường bảo mật tối đa trước khi sử dụng ví",
   "password_must_have_at_least_8_characters_including_lowercase_uppercase_numbers_and_special_characters": "Mật khẩu cần có ít nhất 8 ký tự gồm chữ thường, chữ hoa, số và ký tự đặc biệt",
   "password_maximum_20_characters": "Mật khẩu tối đa 20 ký tự",
   "simple_payment": "Thanh toán đơn giản",
@@ -298,6 +299,9 @@
   "take_a_portrait_photo": "Chụp ảnh chân dung",
   "email_authentication": "Xác thực Email",
   "update_your_email_to_receive_the_latest_announcements_and_offers_from_epay": "Cập nhật email để nhận thông báo và ưu đãi mới nhất từ EPAY",
+  "are_you_sure_you_want_to_logout": "Bạn có chắc muốn thoát tài khoản?",
+  "yes": "Có",
+  "no": "Không",
   "errorCode": {
     "1": "Tài khoản không tồn tại hoặc mật khẩu sai",
     "2": "Tài khoản đang bị khóa",
@@ -607,5 +611,7 @@
   "use": "Sử dụng",
   "place_of_issue_maximum_200_characters": "Nơi cấp không được quá 200 ký tự",
   "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự",
-  "first_and_last_name_must_not_contain_special_characters": "Họ và tên không được chứa ký tự đặc biệt"
+  "first_and_last_name_must_not_contain_special_characters": "Họ và tên không được chứa ký tự đặc biệt",
+  "guide": "Hướng dẫn",
+  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường tối đa bảo mật trước khi sử dụng ví"
 }

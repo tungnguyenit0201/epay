@@ -16,7 +16,6 @@ import {SCREEN} from 'configs/Constants';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {useScanQR} from 'context/Wallet/utils';
 import {useImagePicker} from 'context/User/utils';
-import {getTranslation} from 'react-native-ui-lib/generatedTypes/src/incubator/panView/panningUtil';
 import {useTranslation} from 'context/Language';
 const QRPay = () => {
   const camera = useRef();
@@ -25,140 +24,123 @@ const QRPay = () => {
   const isFocused = useIsFocused();
   const translation = useTranslation();
   const {
-    loading,
     image,
     setImage,
     flash,
     setFlash,
+    showCameRa,
+    setShowCamera,
     onGetQRCodeInfo,
     detectQRCode,
   } = useScanQR();
-  const {onPhoto} = useImagePicker(detectQRCode);
+  const {onPhoto} = useImagePicker(detectQRCode, false);
   return (
     // TODO: translate
-    isFocused ? (
-      <RNCamera
-        ref={camera}
-        captureAudio={false}
-        style={styles.preview}
-        type={RNCamera.Constants.Type.back}
-        flashMode={
-          flash
-            ? RNCamera.Constants.FlashMode.torch
-            : RNCamera.Constants.FlashMode.off
-        }
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        androidRecordAudioPermissionOptions={{
-          title: 'Permission to use audio recording',
-          message: 'We need your permission to use your audio',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-        onBarCodeRead={qrCode => {
-          onGetQRCodeInfo(qrCode?.data);
-        }}
-      >
-        {({camera, status, recordAudioPermissionStatus}) => {
-          if (status !== 'READY') return <FWLoading />;
-          return (
-            <View
-              style={{
-                width: width,
-                height: height,
-              }}
-            >
-              <Header
-                back
-                avoidStatusBar
-                title={'Quét mã'}
-                style={{zIndex: 10}}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  width: width,
-                  height: height,
-                }}
-              >
-                {image?.path && (
-                  <View style={styles.wrapQRImg}>
-                    <Image source={{uri: image?.path}} style={styles.qrImg} />
-                  </View>
-                )}
-                <Image
-                  source={Images.Camera.ScanQR}
-                  style={{width: width, height: height}}
-                />
+    <View>
+      <View style={{zIndex: 1, width: width, height: height}}>
+        <Header back avoidStatusBar title={'Quét mã'} style={{zIndex: 10}} />
+        {image?.path && (
+          <View style={styles.wrapQRImg}>
+            <Image source={{uri: image?.path}} style={styles.qrImg} />
+          </View>
+        )}
+        <Image
+          source={Images.Camera.ScanQR}
+          style={{width: width, height: height, position: 'absolute'}}
+        />
 
-                {loading && <FWLoading />}
-                <View style={[styles.wrapText, {top: scale(112)}]}>
-                  <Text color={Colors.bs4} fs="h6" fw="700" centered>
-                    {translation.point_the_camera_frame_at_the_qr_code_to_scan}
-                  </Text>
-                </View>
-                <View style={styles.wrapAction}>
-                  <Pressable
-                    style={styles.action}
-                    onPress={() => setFlash(!flash)}
-                  >
-                    <Icon
-                      icon={Images.Camera.Flash}
-                      tintColor={Colors.bs4}
-                      mr={Spacing.PADDING / 4}
-                    />
-                    <Text fw="700" fs="h6" color={Colors.bs4}>
-                      {translation.flash_on}
-                    </Text>
-                  </Pressable>
-                  <Pressable
-                    style={[styles.action, {marginLeft: Spacing.PADDING}]}
-                    onPress={() => setFlash(!flash)}
-                  >
-                    <Icon
-                      icon={Images.Camera.Gallery}
-                      tintColor={Colors.bs4}
-                      mr={Spacing.PADDING / 2}
-                    />
-                    <Text
-                      fw="700"
-                      fs="h6"
-                      color={Colors.bs4}
-                      onPress={() => onPhoto(false)}
-                    >
-                      Chọn hình có sẵn
-                    </Text>
-                  </Pressable>
-                </View>
-                <View style={styles.wrapBtn}>
-                  <Button
-                    label={translation.payment_qr}
-                    bgImg={false}
-                    leftIcon={Images.Camera.QR}
-                    mode="outline"
-                    mr={Spacing.PADDING / 2}
-                    style={styles.outline}
-                    color={Colors.bs4}
-                  />
-                  <Button
-                    bgImg={false}
-                    label={translation.scan_qr}
-                    leftIcon={Images.Camera.Scan}
-                    // onPress={detectQRCode}
-                    style={{flex: 1}}
-                  />
-                </View>
-              </View>
-            </View>
-          );
-        }}
-      </RNCamera>
-    ) : null
+        <View style={[styles.wrapText]}>
+          <Text color={Colors.bs4} fs="h6" fw="700" centered>
+            {translation.point_the_camera_frame_at_the_qr_code_to_scan}
+          </Text>
+        </View>
+
+        <View style={styles.wrapAction}>
+          <Pressable style={styles.action} onPress={() => setFlash(!flash)}>
+            <Icon
+              icon={Images.Camera.Flash}
+              tintColor={Colors.bs4}
+              mr={Spacing.PADDING / 4}
+            />
+            <Text fw="700" fs="h6" color={Colors.bs4}>
+              {translation.flash_on}
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[styles.action, {marginLeft: Spacing.PADDING}]}
+            onPress={() => setFlash(!flash)}
+          >
+            <Icon
+              icon={Images.Camera.Gallery}
+              tintColor={Colors.bs4}
+              mr={Spacing.PADDING / 2}
+            />
+            <Text
+              fw="700"
+              fs="h6"
+              color={Colors.bs4}
+              onPress={() => onPhoto(false)}
+            >
+              Chọn hình có sẵn
+            </Text>
+          </Pressable>
+        </View>
+        <View style={styles.wrapBtn}>
+          <Button
+            label={translation.payment_qr}
+            bgImg={false}
+            leftIcon={Images.Camera.QR}
+            mode="outline"
+            mr={Spacing.PADDING / 2}
+            style={styles.outline}
+            color={Colors.bs4}
+            onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+          />
+          <Button
+            bgImg={false}
+            label={translation.scan_qr}
+            leftIcon={Images.Camera.Scan}
+            onPress={() => !showCameRa && setShowCamera(false)}
+            style={{flex: 1}}
+          />
+        </View>
+      </View>
+      {showCameRa && (
+        <RNCamera
+          ref={camera}
+          captureAudio={false}
+          style={[styles.preview, {width: width, height: height}]}
+          type={RNCamera.Constants.Type.back}
+          flashMode={
+            flash
+              ? RNCamera.Constants.FlashMode.torch
+              : RNCamera.Constants.FlashMode.off
+          }
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+          androidRecordAudioPermissionOptions={{
+            title: 'Permission to use audio recording',
+            message: 'We need your permission to use your audio',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+          onBarCodeRead={qrCode => {
+            onGetQRCodeInfo(qrCode?.data);
+          }}
+        >
+          {({camera, status, recordAudioPermissionStatus}) => {
+            console.log('status :>> ', status);
+            if (status === 'PENDING_AUTHORIZATION') return <FWLoading />;
+            if (status === 'NOT_AUTHORIZED') setShowCamera(false);
+          }}
+        </RNCamera>
+      )}
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -167,6 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     alignSelf: 'stretch',
+    position: 'absolute',
   },
   wrapAction: {
     position: 'absolute',
@@ -185,8 +168,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   wrapText: {
-    position: 'absolute',
     alignSelf: 'center',
+    paddingTop: scale(24),
+    paddingBottom: Spacing.PADDING,
+    paddingHorizontal: Spacing.PADDING,
   },
   wrapQRImg: {
     width: scale(252),

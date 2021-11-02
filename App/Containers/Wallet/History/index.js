@@ -140,6 +140,7 @@ const History = () => {
                 placeholder={translation.search_a_transaction}
                 onChangeText={onSearch}
                 style={[styles.textInput, styles.pl1]}
+                maxLength={30}
               />
             </View>
 

@@ -79,27 +79,25 @@ const DetailHistory = ({route}) => {
     TransFormType,
     TransTime,
     Status,
-    Description,
     TransFee,
-    RequestedAmount,
     TransAmount,
     CommittedAmount,
-    Payoneer,
+    AdditionalInfo,
     isIncome,
   } = _.get(route, 'params.data', {});
 
   const dataRowMain = {
     default: [
       {title: 'Tài khoản nguồn', value: SrcAccount},
-      {title: translation.amount, value: formatMoney(RequestedAmount)},
+      {title: translation.amount, value: formatMoney(TransAmount)},
       {title: translation.transaction_fee, value: formatMoney(TransFee)},
       {
         title: translation.total,
-        value: formatMoney(TransAmount) || formatMoney(CommittedAmount),
+        value: formatMoney(CommittedAmount),
       },
     ],
     [TRANS_TYPE.CashReceive]: [
-      {title: translation.amount, value: formatMoney(RequestedAmount)},
+      {title: translation.amount, value: formatMoney(TransAmount)},
       {title: translation.transaction_fee, value: formatMoney(TransFee)},
       {
         title: translation.total,
@@ -108,7 +106,7 @@ const DetailHistory = ({route}) => {
     ],
     [TRANS_TYPE.CashOut]: [
       {title: 'Tài khoản đích', value: DstAccount},
-      {title: translation.amount, value: formatMoney(RequestedAmount)},
+      {title: translation.amount, value: formatMoney(TransAmount)},
       {title: translation.transaction_fee, value: formatMoney(TransFee)},
       {
         title: translation.total,
@@ -117,37 +115,82 @@ const DetailHistory = ({route}) => {
     ],
   };
   const dataRowMoreInfo = {
-    [TRANS_TYPE.PaymentToll]: [
-      {title: 'Số quyết định ', value: '51G-5678, Loại 1 < 12 chỗ biển trắng'},
-      {title: 'Họ tên người vi phạm ', value: 'Nguyen Van A'},
-      {title: 'CMND/CCCD/Hộ chiếu ', value: '12******678'},
-      {title: 'Số tiền ', value: '1.000.000đ'},
+    [TRANS_TYPE.CashTransfer]: [
+      {title: 'Người nhận', value: AdditionalInfo?.Receiver},
       {
-        title: 'Hành vi vi phạm ',
-        value:
-          '51G-5678, Loại 1 < 12 chỗ biển trắng,51G-5678, Loại 1 < 12 chỗ biển trắng',
+        title: 'Số tài khoản',
+        value: AdditionalInfo?.ReceiverAccount || SrcAccount,
       },
-      {title: 'Thời gian vi phạm ', value: '11-09-2021 '},
       {
-        title: 'Hình thức phạt bổ sung ',
-        value:
-          'Lorem ipsum dolor sit amet conse Lorem ipsum dolor sit amet conse',
+        title: 'Người chịu phí',
+        value: AdditionalInfo?.Payoneer ? 'Người nhận' : 'Người gửi',
       },
-      {title: 'Từ ngày phạt bổ sung ', value: '11-09-2021 '},
-      {title: 'Đến ngày phạt bổ sung ', value: '11-09-2021 '},
-      {title: 'Địa điểm vi phạm ', value: '123, Đống Đa '},
-      {title: 'Ngày ra quyết định ', value: '20-10-2021 '},
-      {title: 'Cơ quan quyết định ', value: 'CSGT số 1/ TP HN'},
-      {title: 'Trang thái quyết định ', value: 'Đã có quyết định'},
+      {title: 'Nội dung', value: AdditionalInfo?.Description},
     ],
     [TRANS_TYPE.CashReceive]: [
-      {title: 'Số tài khoản', value: SrcAccount},
-      {title: 'Nội dung', value: Description},
+      {title: 'Người gửi', value: AdditionalInfo?.Sender},
+      {
+        title: 'Số tài khoản',
+        value: AdditionalInfo?.SenderAccount || SrcAccount,
+      },
+      {title: 'Nội dung', value: AdditionalInfo?.Description},
     ],
-    [TRANS_TYPE.CashTransfer]: [
-      {title: 'Số tài khoản', value: DstAccount},
-      {title: 'Người chịu phí', value: Payoneer ? 'Người nhận' : 'Người gửi'},
-      {title: 'Nội dung', value: Description},
+    [TRANS_TYPE.PaymentMerchant]: [
+      {
+        title: 'Nhà cung cấp ',
+        value: AdditionalInfo?.MerchantCode,
+      },
+      {
+        title: 'Mã đại lý',
+        value: AdditionalInfo?.AgencyCode,
+      },
+      {
+        title: 'Số hóa đơn',
+        value: AdditionalInfo?.BillCode,
+      },
+      {
+        ...(true
+          ? {title: 'Người gửi', value: AdditionalInfo?.DiscountAmount}
+          : {}),
+      },
+      {title: 'Nội dung', value: AdditionalInfo?.Description},
+    ],
+    [TRANS_TYPE.AutoCashIn]: [
+      {
+        title: 'Loại giao dịch',
+        value: translation.automatically_top_up,
+      },
+      {
+        title: 'Số dư trong ví tối thiểu',
+        value: AdditionalInfo?.MinAmountConfig,
+      },
+    ],
+    [TRANS_TYPE.PaymentToll]: [
+      {title: 'Số quyết định ', value: AdditionalInfo?.DecistionCode},
+      {title: 'Họ tên người vi phạm ', value: AdditionalInfo?.FullName},
+      {title: 'CMND/CCCD/Hộ chiếu ', value: AdditionalInfo?.IdentityNumber},
+      {title: 'Số tiền ', value: AdditionalInfo?.Amount},
+      {
+        title: 'Hành vi vi phạm ',
+        value: AdditionalInfo?.Violation,
+      },
+      {title: 'Thời gian vi phạm ', value: AdditionalInfo?.Time},
+      {
+        title: 'Hình thức phạt bổ sung ',
+        value: AdditionalInfo?.AdditionalSanctioning,
+      },
+      {
+        title: 'Từ ngày phạt bổ sung ',
+        value: AdditionalInfo?.AdditionalFromDate,
+      },
+      {
+        title: 'Đến ngày phạt bổ sung ',
+        value: AdditionalInfo?.AdditionalToDate,
+      },
+      {title: 'Địa điểm vi phạm ', value: AdditionalInfo?.Place},
+      {title: 'Ngày ra quyết định ', value: AdditionalInfo?.DecisionDate},
+      {title: 'Cơ quan quyết định ', value: AdditionalInfo?.Organization},
+      {title: 'Trang thái quyết định ', value: AdditionalInfo?.State},
     ],
   };
   const dataRow = dataRowMain[TransType] || dataRowMain['default'];
@@ -174,11 +217,13 @@ const DetailHistory = ({route}) => {
           <View style={[styles.alignCenter, styles.pb2]}>
             <Text fs="h5" bold style={styles.maxWidth1} centered mb={7}>
               {translation[
-                TRANS_DETAIL.SERVICE.find(x => x.value === TransType).label
+                TRANS_DETAIL.SERVICE.find(x => x.value === TransType)?.label
               ] +
                 ' ' +
                 translation[
-                  TRANS_DETAIL.STATUS.find(x => x.value === Status).label
+                  Status
+                    ? TRANS_DETAIL.STATUS.find(x => x.value === Status)?.label
+                    : 'failed'
                 ].toLowerCase()}
             </Text>
 
@@ -224,11 +269,8 @@ const DetailHistory = ({route}) => {
           </View>
 
           {dataRow.map((item, index) => (
-            <>
-              <View
-                style={[styles.flexRow, styles.pt2, styles.pb3]}
-                key={index}
-              >
+            <View key={index}>
+              <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
                 <Text fs="h6" style={[styles.haftWidth, styles.pr1]}>
                   {item.title}
                 </Text>
@@ -248,7 +290,7 @@ const DetailHistory = ({route}) => {
                   dashColor={Colors.bs1}
                 />
               )}
-            </>
+            </View>
           ))}
 
           <LinearGradient
@@ -297,25 +339,27 @@ const DetailHistory = ({route}) => {
                   styles.py2,
                 ]}
               >
-                {dataRowMoreInfo[TransType].map((item, index) => (
-                  <View key={index}>
-                    <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
-                      <Text fs="md" style={[styles.haftWidth, styles.pr1]}>
-                        {item.title}
-                      </Text>
-                      <View style={[styles.haftWidth]}>
-                        <ToggleRightText text={item.value} />
+                {dataRowMoreInfo[TransType].map((item, index) =>
+                  item ? (
+                    <View key={'item-more-' + index}>
+                      <View style={[styles.flexRow, styles.pt2, styles.pb3]}>
+                        <Text fs="md" style={[styles.haftWidth, styles.pr1]}>
+                          {item.title}
+                        </Text>
+                        <View style={[styles.haftWidth]}>
+                          <ToggleRightText text={item.value} />
+                        </View>
                       </View>
+                      {index < dataRowMoreInfo[TransType].length - 1 && (
+                        <DashedLine
+                          dashLength={4}
+                          dashThickness={1}
+                          dashColor={Colors.bs1}
+                        />
+                      )}
                     </View>
-                    {index < dataRowMoreInfo[TransType].length - 1 && (
-                      <DashedLine
-                        dashLength={4}
-                        dashThickness={1}
-                        dashColor={Colors.bs1}
-                      />
-                    )}
-                  </View>
-                ))}
+                  ) : null,
+                )}
               </View>
             </>
           )}

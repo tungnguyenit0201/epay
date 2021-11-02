@@ -83,7 +83,8 @@ const useCheckInfo = () => {
       icon: Images.Modal.UserTick,
       // title: translation.notification,
       ErrorCode: -1,
-      ErrorMessage: translation.verify_accounts_enhance_your_account_security,
+      ErrorMessage:
+        translation.you_need_to_identify_your_account_for_maximum_security_before_using_the_wallet,
       // onClose: () => checkInfo({value: false}),
       action: [
         {

@@ -15,7 +15,7 @@ const useQRPromo = () => {
   const promotion = useRef({});
   let [promoCode, setPromoCode] = useState(false);
 
-  const {MerchantCode, AgencyCode, Amount} = qrTransaction;
+  const {MerchantCode, AgencyCode, Price} = qrTransaction;
 
   const onChange = (key, value) => {
     if (key == 'promoCode') return setPromoCode(value);
@@ -27,9 +27,9 @@ const useQRPromo = () => {
       phone,
       MerchantCode,
       AgencyCode,
-      PromoCode: promotion.current?.promoCode,
-      //   PromoCode: 'HAPPYDAY',
-      Amount,
+      // PromoCode: promotion.current?.promoCode,
+      PromoCode: 'HAPPYDAY',
+      Amount: Price,
     });
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
       promotion.current.promotions = result?.Promotions;

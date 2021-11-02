@@ -1,26 +1,66 @@
-import {useAsyncStorage, useError, usePermission} from 'context/Common/utils';
+import {
+  useAsyncStorage,
+  useError,
+  useLoading,
+  usePermission,
+} from 'context/Common/utils';
 import {useEffect, useState, useCallback} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import RNQRGenerator from 'rn-qr-generator';
 import useServiceWallet from 'services/wallet';
 import Navigator from 'navigations/Navigator';
-import {SCREEN} from 'configs/Constants';
+import {SCREEN, QR_PAYMENT_TYPE} from 'configs/Constants';
 import _ from 'lodash';
-import {ERROR_CODE} from 'configs/Constants';
+import {ERROR_CODE, TRANS_TYPE, TRANS_FORM_TYPE} from 'configs/Constants';
 import {useCommon} from 'context/Common';
-import {RESULTS} from 'react-native-permissions';
 import {useWallet} from 'context/Wallet';
-
+import Images from 'themes/Images';
+import {openSettings} from 'react-native-permissions';
 const useScanQR = () => {
   let [flash, setFlash] = useState(false);
-  let [loading, setLoading] = useState(false);
+  let [showCameRa, setCamera] = useState(true);
   let [image, setImage] = useState();
-  const {error} = useCommon();
+  const {error, loading} = useCommon();
+  // const [loading, setLoading] = useState(false);
   const {getPhone} = useAsyncStorage();
   const {setError} = useError();
-  const {getQRCodeInfo, getTransferUser} = useServiceWallet();
-  const {checkPermission} = usePermission();
+  const {setLoading} = useLoading();
+  const {getQRCodeInfo, getTransferUser, getSourceMoney, payment} =
+    useServiceWallet();
   const {dispatch} = useWallet();
+
+  const setShowCamera = value => {
+    setCamera(value);
+    if (!value)
+      setError({
+        title: 'Truy cập camera',
+        ErrorMessage: 'Epay muốn truy cập camera trên điện thoại của bạn',
+        icon: Images.Modal.Camera,
+        onClose: () => setCamera(false),
+        action: [
+          {
+            label: 'Cho phép',
+            onPress: () =>
+              openSettings().catch(() => console.log('cannot open settings')),
+          },
+          {
+            label: 'Nhắc tôi sau',
+            onPress: () => setCamera(false),
+          },
+        ],
+      });
+  };
+  const onGetSourceMoney = async () => {
+    const phone = await getPhone();
+    let result = await getSourceMoney({
+      phone,
+      TransType: TRANS_TYPE.CashTransfer,
+    });
+    console.log('result :>> ', result);
+    if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      dispatch({type: 'SET_SOURCE_MONEY', sourceMoney: result?.MoneySources});
+    } else setError(result);
+  };
 
   const onGetQRCodeInfo = async qrCode => {
     if (loading) return;
@@ -28,27 +68,27 @@ const useScanQR = () => {
     const phone = await getPhone();
     let result = await getQRCodeInfo({
       phone,
+      // QRCode: '02002',
       QRCode: qrCode?.replace('epay://', ''),
+      PaymentType: QR_PAYMENT_TYPE.QR,
     });
-    console.log('onGetQRCodeInfo :>> ', result, _.get(result, 'ErrorCode'));
+    setLoading(false);
 
     if (result?.ErrorCode == ERROR_CODE.SUCCESS) {
+      await onGetSourceMoney();
       let userTransfer;
-      if (result?.Payload?.AccountId)
+      if (result?.Payload?.AccountId) {
         userTransfer = await onGetTransferUser(result?.Payload?.AccountId);
-      // if (result?.Payload?.MerchantCode && result?.Payload?.TransAmount)
-      //   Navigator.navigate(SCREEN.TRANSFER_RESULTS, result?.Payload);
-      // else Navigator.navigate(SCREEN.QR_TRANSFER, result?.Payload);
-      console.log('userTransfer :>> ', userTransfer);
+        console.log('userTransfer :>> ', userTransfer);
+      }
       dispatch({
         type: 'SET_QR_TRANSACTION',
         qrTransaction: {...result?.Payload, ...userTransfer},
       });
-
-      Navigator.navigate(SCREEN.QR_TRANSFER);
-      setLoading(false);
-
-      return {result};
+      if (result?.Payload?.MerchantCode && result?.Payload?.Price) {
+        Navigator.navigate(SCREEN.TRANSFER_COMFIRM);
+      } else Navigator.navigate(SCREEN.QR_TRANSFER, result?.Payload);
+      setCamera(false);
     } else {
       setError({...result, onClose: () => setLoading(false)});
     }
@@ -80,8 +120,9 @@ const useScanQR = () => {
       });
 
       if (qrCode?.values?.length > 0) {
+        console.log('object :>> ', qrCode?.values);
         onGetQRCodeInfo(qrCode?.values[0]);
-      } else setError({ErrorMessage: 'Mã QR không đúng!', ErrorCode: -1}); // TODO: translate
+      } else setError({ErrorMessage: 'Mã QR không đúng!'}); // TODO: translate
     } catch (error) {
       console.log('detectQRCode error :>> ', error);
     }
@@ -91,15 +132,13 @@ const useScanQR = () => {
       dispatch({type: 'SET_QR_TRANSACTION', qrTransaction: {}});
     }, []),
   );
-  useEffect(() => {
-    checkPermission('', () => Navigator.goBack());
-  }, []); // eslint-disable-line
   return {
-    loading,
     image,
     setImage,
     flash,
     setFlash,
+    showCameRa,
+    setShowCamera,
     onGetQRCodeInfo,
     detectQRCode,
   };

@@ -32,7 +32,7 @@ const OTP = props => {
   const onSubmit = async () => {
     try {
       const param = {
-        BankID: bankConnectInfo?.BankId || bankConnectInfo?.BankID,
+        BankId: bankConnectInfo?.BankId,
         TransCode: transCode,
         OtpCode: otp,
       };

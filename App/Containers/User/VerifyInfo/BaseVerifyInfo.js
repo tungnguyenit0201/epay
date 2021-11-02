@@ -84,18 +84,18 @@ const VerifyUserInfo = ({
         <Header
           back
           title={translation?.account_verification}
-          renderRightComponent={() => {
-            if (showInstruction) {
-              return (
-                <TouchableOpacity onPress={onShowModal}>
-                  <Text fs="md" color={Colors.bs4} style={styles.help}>
-                    Hướng dẫn
-                  </Text>
-                </TouchableOpacity>
-              );
-            }
-            return <View />;
-          }}
+          // renderRightComponent={() => {
+          //   if (showInstruction) {
+          //     return (
+          //       <TouchableOpacity onPress={onShowModal}>
+          //         <Text fs="md" color={Colors.bs4} style={styles.help} centered>
+          //           {translation?.guide}
+          //         </Text>
+          //       </TouchableOpacity>
+          //     );
+          //   }
+          //   return <View />;
+          // }}
         />
         <Progress step={step} />
 
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
   },
   help: {
     position: 'relative',
+    maxWidth: 70,
     bottom: scale(2),
   },
   background: {

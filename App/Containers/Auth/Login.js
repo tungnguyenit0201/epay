@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
 import {
   Text,
@@ -32,7 +32,7 @@ const Login = ({route}) => {
     onSetMessage,
   } = useAuth();
   const translation = useTranslation();
-
+  let [showWebview, setShowWebview] = useState(true);
   const {biometryType, onTouchID, textInputRef} = useTouchID({
     autoShow: !name,
     onSuccess: () => onLoginByTouchID({phone}),
@@ -92,6 +92,7 @@ const Login = ({route}) => {
                   placeholder={translation.enter_password}
                   error={touched.password && translation[errors.password]}
                   value={values.password}
+                  setShowWebview={setShowWebview}
                   //leftIcon={Images.Transfer.Lock}
                   // autoFocus
                   style={styles.wrap}
@@ -121,10 +122,10 @@ const Login = ({route}) => {
                     </Text>
                   </Pressable>
                 </View>
-                {!!message && (
+                {!!message && showWebview && (
                   <WebView
                     style={styles.textError}
-                    source={{html: ` ${message}`}}
+                    source={{html: `<p class="markRed">${message}</p>`}}
                   />
                 )}
               </View>
@@ -209,7 +210,7 @@ const styles = StyleSheet.create({
     height: scale(17),
   },
   textError: {
-    marginTop: 50,
+    marginTop: scale(26),
     color: Colors.Highlight,
     textAlign: 'center',
     minHeight: 200,

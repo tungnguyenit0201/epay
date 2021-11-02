@@ -122,12 +122,19 @@ const UserInfo = () => {
               {/* {statusVerified == PERSONAL_IC.ACTIVED && ( */}
               <TouchableOpacity
                 style={base.leftAuto}
+                disabled={
+                  statusVerified === PERSONAL_IC.INACTIVE ? true : false
+                }
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
                 }}
               >
                 <Image
-                  style={[styles.editBox]}
+                  style={
+                    statusVerified === PERSONAL_IC.INACTIVE
+                      ? styles.boxDisabled
+                      : styles.editBox
+                  }
                   source={require('images/profile/Edit2.png')}
                 />
               </TouchableOpacity>
@@ -229,6 +236,8 @@ const UserInfo = () => {
                 source={
                   statusVerified == PERSONAL_IC.ACTIVED
                     ? Images.Profile.Validated
+                    : statusVerified == PERSONAL_IC.EXPIRED
+                    ? Images.Profile.Expired
                     : Images.Profile.Waiting
                 }
               />
@@ -390,5 +399,12 @@ const styles = StyleSheet.create({
   textCenter: {alignSelf: 'center'},
   //---------------
   iconEdit: {width: 18, height: 18, tintColor: Colors.g5},
+  boxDisabled: {
+    width: scale(56),
+    height: scale(56),
+    marginTop: -10,
+    marginRight: -10,
+    opacity: 0.3,
+  },
 });
 export default UserInfo;

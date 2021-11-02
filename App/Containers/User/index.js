@@ -57,7 +57,7 @@ const User = () => {
             <Col space={15}>
               <TouchableOpacity
                 style={styles.item}
-                onPress={() => Navigator.navigate(SCREEN.MY_QR)}
+                onPress={() => Navigator.navigate(SCREEN.MY_ORDER)}
               >
                 <Image
                   style={[styles.icon, styles.mb3]}
@@ -129,11 +129,11 @@ const User = () => {
               <TouchableOpacity
                 style={styles.item}
                 onPress={() => {
-                  // Navigator.navigate(SCREEN.LANGUAGE_SETTING);
-                  setError({
-                    ErrorMessage: 'Coming soon',
-                    icon: Images.Homes.Setting,
-                  });
+                  Navigator.navigate(SCREEN.AUTO_WITHDRAW);
+                  // setError({
+                  //   ErrorMessage: 'Coming soon',
+                  //   icon: Images.Homes.Setting,
+                  // });
                 }}
               >
                 <Image

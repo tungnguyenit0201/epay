@@ -219,7 +219,7 @@ const useServiceWallet = () => {
     return response;
   };
 
-  const getHistoryDetail = async ({phone, TransCode}) => {
+  const getHistoryDetail = async ({phone, TransCode, TransType, ServiceId}) => {
     let response = null;
     await doRequest({
       url: API.WALLET.GET_HISTORY_DETAIL,
@@ -227,6 +227,8 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         TransCode,
+        TransType,
+        ServiceId,
       },
       success: res => {
         response = res;
@@ -244,7 +246,7 @@ const useServiceWallet = () => {
         PhoneNumber: phone,
         CashOutInfo: {
           BankConnectId: BankConnectId,
-          BankID: BankId,
+          BankId: BankId,
           Amount: amount,
         },
       },
@@ -270,7 +272,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         BankConnectId,
-        BankID: BankId,
+        BankId: BankId,
         ConfirmMethod,
         ConfirmValue,
         TransCode,
@@ -305,7 +307,7 @@ const useServiceWallet = () => {
     return response;
   };
 
-  const getQRCodeInfo = async ({phone, QRCode}) => {
+  const getQRCodeInfo = async ({phone, QRCode = '', PaymentType = 0}) => {
     let response = null;
     await doRequest({
       url: API.WALLET.GET_QRCODE_INFO,
@@ -313,6 +315,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         QRCode,
+        PaymentType,
       },
       success: res => {
         response = res;
@@ -346,8 +349,8 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         CashInInfo: {
-          BankConnectId: BankConnectId,
-          BankID: BankId,
+          BankConnectId,
+          BankId,
           Amount: amount,
         },
       },
@@ -373,7 +376,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         BankConnectId,
-        BankID: BankId,
+        BankId: BankId,
         ConfirmMethod,
         ConfirmValue,
         TransCode,
@@ -480,10 +483,10 @@ const useServiceWallet = () => {
 
   const getPromotion = async ({
     phone,
-    MerchantCode,
-    AgencyCode,
-    PromoCode,
-    Amount,
+    MerchantCode = '',
+    AgencyCode = '',
+    PromoCode = '',
+    Amount = 0,
   }) => {
     let response = null;
     await doRequest({
@@ -523,26 +526,27 @@ const useServiceWallet = () => {
 
   const payment = async ({
     phone,
-    BankId,
-    CardNumber,
-    CardHolder,
-    CardIssueDate,
-    CardConnectId,
-    BankConnectId,
-    PromoCode,
-    AgencyCode,
-    MerchantCode,
-    OrderId,
-    Amount,
+    BankId = 0,
+    TransFormType,
+    CardNumber = '',
+    CardHolder = '',
+    CardIssueDate = '',
+    CardConnectId = 0,
+    BankConnectId = 0,
+    PromoCode = '',
+    AgencyCode = '',
+    MerchantCode = '',
+    OrderId = 0,
+    Amount = 0,
   }) => {
     let response = null;
-
     await doRequest({
       url: API.WALLET.PAYMENT,
       method: 'post',
       params: {
         PhoneNumber: phone,
         BankId,
+        TransFormType,
         CardNumber,
         CardHolder,
         CardIssueDate,
@@ -563,10 +567,10 @@ const useServiceWallet = () => {
 
   const paymentComfrim = async ({
     phone,
-    TransCode,
-    ConfirmMethod,
-    ConfirmValue,
-    BankId,
+    TransCode = '',
+    ConfirmMethod = 0,
+    ConfirmValue = '',
+    BankId = 0,
   }) => {
     let response = null;
     await doRequest({

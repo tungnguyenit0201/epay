@@ -97,13 +97,17 @@ import PopupModal from 'containers/Modal/PopupModal';
 import AlertModal from 'containers/Modal/AlertModal';
 import QRPay from 'containers/Wallet/QRPay';
 import QRTransfer from 'containers/Wallet/QRPay/Transfer';
-import TransferResults from 'containers/Wallet/QRPay/TransferConfirm';
-import TransferSuccess from 'containers/Wallet/QRPay/TransferSuccess';
+import TransferConfirm from 'containers/Wallet/QRPay/TransferConfirm';
+import TransferResults from 'containers/Wallet/QRPay/TransferResult';
 import QRPromotion from 'containers/Wallet/QRPay/Promotion';
 import BankOTP from 'containers/Wallet/BankOTP';
 import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
+import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
+import MyOrder from 'containers/User/MyOrder';
+import DetailOrder from 'containers/User/MyOrder/Detail';
+import Receipt from 'containers/User/MyOrder/Receipt';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -348,12 +352,12 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.MY_QR} component={MyQR} />
           <Stack.Screen name={SCREEN.TRANSFER} component={Transfer} />
           <Stack.Screen
-            name={SCREEN.TRANSFER_RESULTS}
-            component={TransferResults}
+            name={SCREEN.TRANSFER_COMFIRM}
+            component={TransferConfirm}
           />
           <Stack.Screen
-            name={SCREEN.TRANSFER_SUCCESS}
-            component={TransferSuccess}
+            name={SCREEN.TRANSFER_RESULTS}
+            component={TransferResults}
           />
           <Stack.Screen name={SCREEN.TRAFFIC_FEE} component={TrafficFee} />
           <Stack.Screen
@@ -482,6 +486,12 @@ const AppNavigator = () => {
             name={SCREEN.EDIT_AUTO_RECHARGE}
             component={EditAutoReCharge}
           />
+
+          <Stack.Screen name={SCREEN.AUTO_WITHDRAW} component={AutoWithdraw} />
+
+          <Stack.Screen name={SCREEN.MY_ORDER} component={MyOrder} />
+          <Stack.Screen name={SCREEN.ORDER_DETAIL} component={DetailOrder} />
+          <Stack.Screen name={SCREEN.RECEIPT} component={Receipt} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

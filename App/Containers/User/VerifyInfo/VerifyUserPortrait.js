@@ -8,8 +8,9 @@ import {useUser} from 'context/User';
 import {GENDER, SCREEN, IC_TPYE} from 'configs/Constants';
 import BaseVerifyInfo from './BaseVerifyInfo';
 import {eKYCSchema} from 'utils/ValidationSchemas';
-
+import {useRegister} from 'context/Auth/utils';
 const VerifyUserPortrait = ({route}) => {
+  const {onGoTerm} = useRegister();
   const {onUpdateAllInfo, onContinue, verifyInfo} = useVerifyInfo(
     route?.params,
   );
@@ -191,8 +192,7 @@ const VerifyUserPortrait = ({route}) => {
       showInstruction={false}
       onPressButton={() => onUpdateAllInfo(info)}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}
-    >
+      buttonTitle={translation.updateInfo}>
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -327,9 +327,17 @@ const VerifyUserPortrait = ({route}) => {
           <Checkbox onPress={setAcceptPolicy} />
           <Text style={styles.policy} fs="md">
             {translation?.iAgreeWith}{' '}
-            <Text style={styles.firstLink}>{translation?.userAgreement}</Text>{' '}
+            <Text
+              onPress={() => onGoTerm(SCREEN.POLICY)}
+              style={styles.firstLink}>
+              {translation?.userAgreement}
+            </Text>{' '}
             {translation?.and}{' '}
-            <Text style={styles.firstLink}>{translation?.privacyPolicy}</Text>{' '}
+            <Text
+              onPress={() => onGoTerm(SCREEN.POLICY)}
+              style={styles.firstLink}>
+              {translation?.privacyPolicy}
+            </Text>{' '}
             {translation?.ofEPAY}
           </Text>
         </View>
@@ -340,8 +348,7 @@ const VerifyUserPortrait = ({route}) => {
           color={Colors.hl1}
           bold
           mb={48}
-          fs="h6"
-        >
+          fs="h6">
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>

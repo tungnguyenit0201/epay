@@ -1,7 +1,14 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, Image, Pressable} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {Text, Header, Button, Row, Col, ListItem, HeaderBg} from 'components';
 import {Colors, Fonts, Images, Spacing, base} from 'themes';
+import ViewShot from 'react-native-view-shot';
 
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
@@ -9,11 +16,13 @@ import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 
 import {useTranslation} from 'context/Language';
-import {useTransactionResult} from 'context/Wallet/utils';
+import {useQRTransfer} from 'context/Wallet/utils';
+import {useScreenShot} from 'context/Common/utils';
 
 const TransactionResult = () => {
   const translation = useTranslation();
-  const {message, onRetry, onBackHome} = useTransactionResult();
+  const {onPaymentConfrim} = useQRTransfer();
+  const {viewShot, captureAndShareScreenshot} = useScreenShot();
   const data = [
     {
       label: 'Mã giao dịch',
@@ -25,7 +34,11 @@ const TransactionResult = () => {
     },
   ];
   return (
-    <>
+    <ViewShot
+      style={{flex: 1}}
+      ref={viewShot}
+      options={{format: 'jpg', quality: 0.9}}
+    >
       <HeaderBg>
         <Header title="Kết quả giao dịch" back />
       </HeaderBg>
@@ -82,7 +95,10 @@ const TransactionResult = () => {
                 </Text>
               </View>
 
-              <View style={[base.row, base.leftAuto]}>
+              <TouchableOpacity
+                onPress={captureAndShareScreenshot}
+                style={[base.row, base.leftAuto]}
+              >
                 <Image
                   source={require('images/qrpay/Share.png')}
                   style={[{width: 24, height: 24}]}
@@ -91,7 +107,7 @@ const TransactionResult = () => {
                   {' '}
                   Chia sẻ ảnh{' '}
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -117,12 +133,13 @@ const TransactionResult = () => {
             <Button
               type={1}
               label="Thực hiện lại"
-              onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
+              onPress={() => onPaymentConfrim()}
+              // onPress={() => Navigator.navigate(SCREEN.QR_TRANSFER)}
             />
           </Col>
         </Row>
       </View>
-    </>
+    </ViewShot>
   );
 };
 const styles = StyleSheet.create({

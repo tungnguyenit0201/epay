@@ -18,6 +18,7 @@ import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
 import CONFIRM_METHODS from './Enums/ConfirmMethod';
 import APP_CONFIG from 'configs/Enums/AppConfig';
+import QR_PAYMENT_TYPE from './Enums/QRPaymentType';
 
 export {
   APP_CONFIG,
@@ -40,4 +41,5 @@ export {
   TERM_TYPE,
   TRANS_DETAIL,
   CONFIRM_METHODS,
+  QR_PAYMENT_TYPE,
 };

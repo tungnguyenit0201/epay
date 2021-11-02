@@ -8,14 +8,15 @@ import {useTranslation} from 'context/Language';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 
-const TransferBank = ({sourceMoney = []}) => {
+const TransferBank = ({sourceMoney = [], onPress}) => {
+  console.log('sourceMoney :>> ', sourceMoney);
   const translation = useTranslation();
   const renderItem = (item, index) => {
     const fee = item?.StaticFee;
     return (
       <View
         style={[styles.itemBank, !item?.SourceId && styles.itemBankActive]}
-        key={`${Math.random(1, 100)}-sourceMoney`}
+        key={`${item?.SourceId}-sourceMoney`}
       >
         <Image
           style={[styles.iconBank]}

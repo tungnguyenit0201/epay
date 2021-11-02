@@ -28,10 +28,10 @@ import {useWallet} from 'context/Wallet';
 import {useQRTransfer} from 'context/Wallet/utils';
 import DashedLine from 'react-native-dashed-line';
 
-const TransactionResult = () => {
+const TransactionConfirm = () => {
   // TODO: translate
   const {qrTransaction, sourceMoney} = useWallet();
-  const {bankFee} = useQRTransfer();
+  const {onPayment} = useQRTransfer();
 
   const translation = useTranslation();
   const [showModal, setShowModal] = React.useState(false);
@@ -87,8 +87,8 @@ const TransactionResult = () => {
     },
     {
       label: 'Phí giao dịch ',
-      value: qrTransaction?.TransFee
-        ? `${formatMoney(qrTransaction?.TransFee)}đ`
+      value: qrTransaction?.TransAmount
+        ? `${formatMoney(qrTransaction?.TransAmount)}đ`
         : 'Miễn phí',
     },
   ];
@@ -170,13 +170,7 @@ const TransactionResult = () => {
         <View style={{height: 50}}></View>
       </ScrollView>
       <View style={[base.boxBottom]}>
-        <Button
-          onPress={() => {
-            Navigator.navigate(SCREEN.TRANSFER_SUCCESS);
-          }}
-          type={1}
-          label="Chuyển tiền"
-        />
+        <Button onPress={() => onPayment()} type={1} label="Chuyển tiền" />
       </View>
 
       <ModalBottom visible={showModal} onClose={() => setShowModal(false)}>
@@ -215,4 +209,4 @@ const styles = StyleSheet.create({
   },
   sepa: {marginLeft: -Spacing.PADDING, marginTop: -1},
 });
-export default TransactionResult;
+export default TransactionConfirm;
