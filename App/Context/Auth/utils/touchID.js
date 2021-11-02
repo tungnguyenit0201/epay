@@ -10,26 +10,25 @@ import BiometricModule from 'utils/BiometricModule';
 
 const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
   const [biometryType, setBiometryType] = useState(null);
-  const {getTouchIdEnabled, getPhone} = useAsyncStorage();
+  const {getTouchIdEnabled, getPhone, setTouchIdEnabled} = useAsyncStorage();
   const {setError} = useError();
   const textInputRef = useRef(null);
   const isFocused = useIsFocused();
 
   const checkBiometry = async () => {
     try {
-      const [type, isEnrolledResult, credentials, touchIdEnabled] = await getAll(
-        LocalAuthentication.supportedAuthenticationTypesAsync,
-        BiometricModule.isEnrolledAsync,
-        Keychain.getGenericPassword,
-        getTouchIdEnabled,
-      );
-
-      const { isEnrolled, token } = isEnrolledResult || {};
+      const [type, isEnrolledResult, credentials, touchIdEnabled] =
+        await getAll(
+          LocalAuthentication.supportedAuthenticationTypesAsync,
+          BiometricModule.isEnrolledAsync,
+          Keychain.getGenericPassword,
+          getTouchIdEnabled,
+        );
+      const {isEnrolled, token} = isEnrolledResult || {};
       let passwordEncrypted =
         credentials?.username == (await getPhone())
           ? credentials?.password
           : null;
-      console.log('checkBiometry', passwordEncrypted, touchIdEnabled);
 
       if (!passwordEncrypted || !touchIdEnabled) {
         setBiometryType(null);
@@ -38,8 +37,14 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
       const biometryType = _.isArray(type) ? type[0] : type;
       if (biometryType && !isEnrolled) {
         showNotEnrolledError();
+        setTouchIdEnabled(false);
+        setBiometryType(null);
+        return;
       }
-      console.log('biometryType :>> ', biometryType);
+      if (biometryType && touchIdEnabled && token !== touchIdEnabled) {
+        setTouchIdEnabled(token);
+        showNotEnrolledError(true);
+      }
       setBiometryType(biometryType);
     } catch (error) {
       __DEV__ && console.log("Keychain couldn't be accessed!", error);
@@ -52,15 +57,14 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
     }
     Keyboard.dismiss();
 
+    const biometryText =
+      biometryType === LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
+        ? 'Khuôn mặt'
+        : 'Vân tay';
     const options = {
       promptMessage: passcode
         ? 'Vui lòng nhập mật khẩu thiết bị để kích hoạt'
-        : `Đăng nhập bằng ${
-            biometryType ===
-            LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
-              ? 'Face ID'
-              : 'Touch ID'
-          }`,
+        : `Đăng nhập bằng ${biometryText}`,
       cancelLabel: 'Hủy',
       fallbackLabel: '',
       disableDeviceFallback: !passcode,
@@ -84,7 +88,7 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
       case 'authentication_failed':
         return setError({
           ErrorCode: -1,
-          ErrorMessage: 'Dấu vân tay không hợp lệ. Vui lòng thử lại',
+          ErrorMessage: biometryText + ' không hợp lệ. Vui lòng thử lại',
         }); // TODO: translate
       case 'lockout':
         if (Platform.OS === 'ios') {
@@ -98,7 +102,7 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
         } else {
           setError({
             ErrorCode: -1,
-            ErrorMessage: 'Dấu vân tay không hợp lệ. Vui lòng thử lại sau',
+            ErrorMessage: biometryText + ' không hợp lệ. Vui lòng thử lại sau',
           }); // TODO: translate
         }
         return;
@@ -109,18 +113,25 @@ const useTouchID = ({onSuccess, autoShow = false, isMount = true}) => {
     }
   };
 
-  const showNotEnrolledError = () => {
+  const showNotEnrolledError = (isChanged = false) => {
+    const biometryText =
+      biometryType === LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
+        ? 'khuôn mặt'
+        : 'vân tay';
     setError({
       ErrorCode: -1,
-      title: 'Cài đặt vân tay',
-      ErrorMessage:
-        'Quý khách chưa cài đặt vân tay trên thiết bị. Vui lòng cài đặt để sử dụng',
+      title: 'Cài đặt ' + biometryText,
+      ErrorMessage: isChanged
+        ? `${
+            biometryText.charAt(0).toUpperCase() + biometryText.substr(1)
+          } của quý khách đã được thay đổi trên thiết bị. Vui lòng cài đặt lại ${biometryText}`
+        : `Quý khách chưa cài đặt ${biometryText} trên thiết bị. Vui lòng cài đặt để sử dụng`,
       action: [{label: 'Cài đặt', onPress: Linking.openSettings}],
     }); // TODO: translate
   };
 
   useEffect(() => {
-    checkBiometry();
+    isFocused && checkBiometry();
   }, [isFocused]); // eslint-disable-line
 
   useEffect(() => {

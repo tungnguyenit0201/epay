@@ -36,7 +36,7 @@ const VerifyUserPortrait = ({route}) => {
     County: extractCardInfo.District,
     Ward: wardEmpty ? '' : extractCardInfo.Ward,
     Address: extractCardInfo.Address,
-    SexType: extractCardInfo.Gender,
+    SexType: extractCardInfo.Gender || 1,
   });
 
   const GENDERS = {
@@ -192,7 +192,8 @@ const VerifyUserPortrait = ({route}) => {
       showInstruction={false}
       onPressButton={() => onUpdateAllInfo(info)}
       disableButton={!buttonEnabled}
-      buttonTitle={translation.updateInfo}>
+      buttonTitle={translation.updateInfo}
+    >
       <View style={styles.container}>
         <InputBlock
           label={translation.enter_your_full_name}
@@ -203,9 +204,10 @@ const VerifyUserPortrait = ({route}) => {
           error={translation[error?.ICFullName]}
           required
           placeholder={translation?.inputFullName}
-          regex={/[^\p{L} ]+/gu}
+          regex={/[^\p{L} ]|[\u03C0]+/gu}
           trimOnBlur
           multiline
+          autoHeight
           maxLength={100}
         />
         <DatePicker
@@ -238,6 +240,7 @@ const VerifyUserPortrait = ({route}) => {
           error={error.ICNumber}
           style={styles.mb1}
           required
+          disableSpace
           numeric={ICType != IC_TPYE.PASSPORT}
           placeholder={translation.inputNumberType?.replace?.('$type', label)}
           alphanumeric
@@ -271,7 +274,7 @@ const VerifyUserPortrait = ({route}) => {
           placeholder={translation?.inputIssuedPlace}
           trimOnBlur
           multiline
-          alphanumeric
+          // alphanumeric
           autoHeight
           maxLength={200}
         />
@@ -329,13 +332,15 @@ const VerifyUserPortrait = ({route}) => {
             {translation?.iAgreeWith}{' '}
             <Text
               onPress={() => onGoTerm(SCREEN.POLICY)}
-              style={styles.firstLink}>
+              style={styles.firstLink}
+            >
               {translation?.userAgreement}
             </Text>{' '}
             {translation?.and}{' '}
             <Text
               onPress={() => onGoTerm(SCREEN.POLICY)}
-              style={styles.firstLink}>
+              style={styles.firstLink}
+            >
               {translation?.privacyPolicy}
             </Text>{' '}
             {translation?.ofEPAY}
@@ -348,7 +353,8 @@ const VerifyUserPortrait = ({route}) => {
           color={Colors.hl1}
           bold
           mb={48}
-          fs="h6">
+          fs="h6"
+        >
           {translation?.verifyAgainFromBeginning}
         </Text>
       </View>

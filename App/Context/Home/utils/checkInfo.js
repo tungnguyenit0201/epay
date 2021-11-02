@@ -111,7 +111,7 @@ const useCheckInfo = () => {
           });
           break;
         case PERSONAL_IC.EXPIRED:
-          onCheckKYCExpired();
+          screen !== SCREEN.TOP_UP && onCheckKYCExpired();
           break;
         case USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK:
           showConnectBank();

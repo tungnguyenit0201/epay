@@ -32,7 +32,6 @@ const Login = ({route}) => {
     onSetMessage,
   } = useAuth();
   const translation = useTranslation();
-  let [showWebview, setShowWebview] = useState(true);
   const {biometryType, onTouchID, textInputRef} = useTouchID({
     autoShow: !name,
     onSuccess: () => onLoginByTouchID({phone}),
@@ -63,8 +62,7 @@ const Login = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) => onLogin({phone, password})}
-        validationSchema={passwordSchema}
-      >
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -87,12 +85,14 @@ const Login = ({route}) => {
                   ref={textInputRef}
                   password
                   required
-                  onChange={handleChange('password')}
+                  onChange={value => {
+                    handleChange('password')(value);
+                    message && onSetMessage('');
+                  }}
                   onBlur={handleBlur('password')}
                   placeholder={translation.enter_password}
                   error={touched.password && translation[errors.password]}
                   value={values.password}
-                  setShowWebview={setShowWebview}
                   //leftIcon={Images.Transfer.Lock}
                   // autoFocus
                   style={styles.wrap}
@@ -104,8 +104,7 @@ const Login = ({route}) => {
                     onPress={() => {
                       setFieldValue('password', '');
                       onForgetPassword();
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.forgot_password}?
                     </Text>
@@ -115,14 +114,13 @@ const Login = ({route}) => {
                     onPress={() => {
                       onChangePhone();
                       setFieldValue('password', '');
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.change_the_phone_number}
                     </Text>
                   </Pressable>
                 </View>
-                {!!message && showWebview && (
+                {!!message && (
                   <WebView
                     style={styles.textError}
                     source={{html: `<p class="markRed">${message}</p>`}}
@@ -144,8 +142,7 @@ const Login = ({route}) => {
                         onSetMessage('');
                         onTouchID();
                       }}
-                      style={styles.btn}
-                    >
+                      style={styles.btn}>
                       <Icon
                         icon={
                           biometryType ===

@@ -6,8 +6,9 @@ import {useUser} from 'context/User';
 import _ from 'lodash';
 import {useAuth} from 'context/Auth/utils';
 import useServiceUser from 'services/user';
-import * as LocalAuthentication from 'expo-local-authentication';
+// import * as LocalAuthentication from 'expo-local-authentication';
 import {Linking} from 'react-native';
+import BiometricModule from 'utils/BiometricModule';
 
 const useSecuritySettings = () => {
   const {setTouchIdEnabled, getTouchIdEnabled} = useAsyncStorage();
@@ -24,7 +25,7 @@ const useSecuritySettings = () => {
   useEffect(() => {
     const loadSettings = async () => {
       setLoading(true);
-      const touchIdEnabled = await getTouchIdEnabled();
+      const touchIdEnabled = !!(await getTouchIdEnabled());
       const result = await getSettingsInfo({phone});
       setSettings({
         ..._.get(result, 'SettingInfo', {}),
@@ -37,8 +38,8 @@ const useSecuritySettings = () => {
   }, []); // eslint-disable-line
 
   const onTouchId = async value => {
-    const isTouchIdEnrolled = await LocalAuthentication.isEnrolledAsync();
-    if (value && !isTouchIdEnrolled) {
+    const {isEnrolled, token} = await BiometricModule.isEnrolledAsync();
+    if (value && !isEnrolled) {
       setError({
         ErrorCode: -1,
         title: 'Cài đặt vân tay',
@@ -48,8 +49,12 @@ const useSecuritySettings = () => {
       }); // TODO: translate
       return false;
     }
-    setTouchIdEnabled(value);
-    value && onLogout();
+    if (value) {
+      setTouchIdEnabled(token || true);
+      onLogout();
+    } else {
+      setTouchIdEnabled(false);
+    }
     return true;
   };
 
