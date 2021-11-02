@@ -67,6 +67,12 @@ export default function userReducer(state, action) {
         ...state,
         sourceMoney: action?.sourceMoney,
       };
+    case 'SET_MONEY_SOURCE_CASH_IN':
+        return {
+          ...state,
+          sourceMoneyCashIn: action?.data,
+        };
+  
     default:
       return state;
   }
