@@ -6,6 +6,7 @@ import {
   InputBlock,
   Text,
   HeaderBg,
+  FooterContainer,
   TextInput,
 } from 'components';
 import {useTranslation} from 'context/Language';
@@ -45,7 +46,8 @@ const ChangePassword = ({route}) => {
             passwordConfirm: '',
           }}
           validationSchema={newPasswordSchema}
-          onSubmit={onSubmit}>
+          onSubmit={onSubmit}
+        >
           {({
             handleChange: _handleChange,
             handleBlur,
@@ -65,7 +67,8 @@ const ChangePassword = ({route}) => {
               <View>
                 <ScrollView
                   showsVerticalScrollIndicator={false}
-                  keyboardShouldPersistTaps="always">
+                  keyboardShouldPersistTaps="always"
+                >
                   {/* <Content
                     title="Đặt lại mật khẩu"
                     text={
@@ -106,7 +109,7 @@ const ChangePassword = ({route}) => {
                   </Text>
                 </ScrollView>
 
-                <View style={base.bottom}>
+                <View style={styles.bottom}>
                   <Button
                     label={translation.continue}
                     onPress={handleSubmit}
@@ -130,6 +133,12 @@ const styles = StyleSheet.create({
   note: {
     fontSize: scale(12),
     paddingRight: 10,
+  },
+  bottom: {
+    paddingHorizontal: Spacing.PADDING,
+    paddingVertical: 14,
+    position: 'relative',
+    backgroundColor: Colors.bs4,
   },
 });
 
