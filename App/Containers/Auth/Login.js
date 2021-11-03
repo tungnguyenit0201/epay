@@ -33,7 +33,8 @@ const Login = ({route}) => {
   } = useAuth();
   const translation = useTranslation();
   const {biometryType, onTouchID, textInputRef} = useTouchID({
-    autoShow: !name,
+    // autoShow: !name,
+    autoShow: true,
     onSuccess: () => onLoginByTouchID({phone}),
   });
 
@@ -107,8 +108,7 @@ const Login = ({route}) => {
                     onPress={() => {
                       setFieldValue('password', '');
                       onForgetPassword();
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.forgot_password}?
                     </Text>
@@ -118,8 +118,7 @@ const Login = ({route}) => {
                     onPress={() => {
                       onChangePhone();
                       setFieldValue('password', '');
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.change_the_phone_number}
                     </Text>
@@ -147,8 +146,7 @@ const Login = ({route}) => {
                         onSetMessage('');
                         onTouchID();
                       }}
-                      style={styles.btn}
-                    >
+                      style={styles.btn}>
                       <Icon
                         icon={
                           biometryType ===
