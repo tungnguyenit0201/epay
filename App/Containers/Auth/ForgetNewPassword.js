@@ -47,8 +47,7 @@ const ForgetNewPassword = ({route}) => {
         renderRightComponent={() => (
           <TouchableOpacity
             style={styles.pr1}
-            onPress={() => setShowModal(true)}
-          >
+            onPress={() => setShowModal(true)}>
             <Icon
               icon={Images.Register.Info}
               style={styles.firstIcon}
@@ -65,8 +64,7 @@ const ForgetNewPassword = ({route}) => {
           passwordConfirm: '',
         }}
         validationSchema={newPasswordSchema}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -87,8 +85,7 @@ const ForgetNewPassword = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}
-              >
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
                   title={translation.reset_your_password}
                   text={
