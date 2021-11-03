@@ -282,7 +282,7 @@ const VerifyUserPortrait = ({route}) => {
       <View style={[styles.bgGray, styles.h1]} />
       <View style={[styles.wrap, styles.pt1]}>
         <InputBlock
-          label={translation.address}
+          label={'Địa chỉ thường trú'}
           onChange={value => handleChange('Address', value)}
           value={info.Address}
           error={error.Address}

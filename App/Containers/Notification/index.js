@@ -27,14 +27,14 @@ import moment from 'moment';
 import {useTranslation} from 'context/Language';
 
 // import FooterNotification from 'components/Home/FooterNotification';
-import {useNotify} from 'context/User/utils';
+import {useNotify, useNotifyFocus} from 'context/User/utils';
 
 const Notification = () => {
   const translation = useTranslation();
   const [type, setType] = useState(NOTIFY.ALL.title);
   const [refreshing, setRefreshing] = useState(false);
   const {selectNotify, onGetAllNotify, onPressNotify, onReadAllNotify} =
-    useNotify();
+    useNotifyFocus();
   const dataType = [
     {id: 0, title: NOTIFY.ALL.title},
     {id: 1, title: NOTIFY.CHARGES.title},
