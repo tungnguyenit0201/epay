@@ -255,6 +255,8 @@ export default {
     BigCar: require('images/icons/big-car.png'),
     BigCamera: require('images/icons/big-camera.png'),
     Wave: require('images/wave.png'),
+    Logo: require('images/icons/logo.png'),
+    LogoType1: require('images/icons/logo-1.png'),
   },
   Notification: {
     TickCircle: require('images/noti/TickCircle.png'),

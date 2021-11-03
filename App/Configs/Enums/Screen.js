@@ -48,6 +48,7 @@ const SCREEN = {
   LINKED_BANK: 'LinkedBank',
   LINKED_BANK_DETAIL: 'LinkedBankDetail',
   PAYMENT_SETTINGS: 'PaymentSettings',
+  PAYMENT_METHODS: 'PaymentMethods',
   LIMIT_SETTING: 'LimitSetting',
   EDIT_INFO: 'EditInfo',
   NEW_PASSWORD: 'NewPassword',
@@ -102,5 +103,6 @@ const SCREEN = {
   MY_ORDER: 'MyOrder',
   ORDER_DETAIL: 'OrderDetail',
   RECEIPT: 'Receipt',
+  CONFIRM_REGISTER_VEHICLE: 'ConfirmRegister'
 };
 export default SCREEN;

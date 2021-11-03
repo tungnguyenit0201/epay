@@ -1,6 +1,7 @@
 export {default as BottomButton} from './Common/BottomButton';
 export {default as Button} from './Common/Button';
 export {default as SecondaryButton} from './Common/SecondaryButton';
+export {default as ButtonAdd} from './Common/ButtonAdd';
 export {default as Cart} from './Common/Cart';
 export {default as DatePicker} from './Common/DatePicker';
 export {default as FWLoading} from './Common/FWLoading';

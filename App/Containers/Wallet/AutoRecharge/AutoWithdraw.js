@@ -15,6 +15,7 @@ import {
   TextInput,
   Text,
   FooterContainer,
+  ButtonAdd,
 } from 'components';
 import {Colors, Spacing, Images, Fonts, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
@@ -231,16 +232,8 @@ const AutoWithdraw = props => {
           {translation.add_bank}
         </Text>
 
-        <TouchableOpacity style={[base.row, styles.btnAddBank]}>
-          <View style={styles.flex1}>
-            <Text fs="h6">{translation.add_bank}</Text>
-          </View>
-          <Image
-            source={Images.ConnectBank.Plus}
-            style={styles.iconPlus}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        <ButtonAdd label={translation.add_bank}
+          onPress={()=>{}} mb={Spacing.PADDING}/>
       </ScrollView>
 
       {renderButton()}
@@ -286,11 +279,6 @@ const styles = StyleSheet.create({
   pr1: {paddingRight: 40},
   pr2: {paddingRight: 8},
   //----------------
-  iconPlus: {
-    width: scale(24),
-    height: scale(24),
-  },
-  //----------------
   iconCheck1: {
     width: 20,
     height: 20,
@@ -305,15 +293,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bs4,
     borderWidth: 1,
     borderColor: Colors.tp3,
-  },
-  //----------------
-  btnAddBank: {
-    marginBottom: Spacing.PADDING,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: Colors.bs1,
-    borderRadius: 8,
   },
   //----------------
   pos1: {

@@ -47,7 +47,7 @@ const BankItem = ({title, icon, overBalance, item, callback}) => (
       resizeMode={'contain'}
     />
     <View style={[styles.flex1, styles.pr1]}>
-      <Text fs="h6" bold size={Fonts.SM}>
+      <Text fs="h6" bold>
         {title}
       </Text>
       <Text color={Colors.tp3}>Số dư: {overBalance}</Text>

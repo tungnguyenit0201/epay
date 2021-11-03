@@ -17,6 +17,7 @@ import {
   Text,
   Row,
   Col,
+  ButtonAdd,
 } from 'components';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
@@ -151,21 +152,9 @@ const BankLinked = props => {
               Thêm ngân hàng nhận tiền
             </Text>
 
-            <TouchableOpacity
-              style={[base.row, styles.btnAddBank]}
-              onPress={mapBank}
-            >
-              <View style={styles.flex1}>
-                <Text color={Colors.bs1} fs="h6">
-                  {translation.add_bank_account}
-                </Text>
-              </View>
-              <Image
-                source={Images.ConnectBank.Plus}
-                style={styles.iconPlus}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
+            <ButtonAdd label={translation.add_bank_account}
+              color={Colors.bs1}
+              onPress={mapBank}/>
           </View>
 
           <BankList
@@ -238,18 +227,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     height: 400,
-  },
-  btnAddBank: {
-    marginBottom: Spacing.PADDING,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: Colors.bs1,
-    borderRadius: 8,
-  },
-  iconPlus: {
-    width: scale(24),
-    height: scale(24),
   },
   mb: {
     marginBottom: 28,
