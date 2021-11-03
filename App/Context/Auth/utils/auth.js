@@ -126,6 +126,11 @@ const useAuth = () => {
         return;
 
       case ERROR_CODE.PASSWORD_CHANGE_REQUIRED_AFTER_LONG_TIME_NO_CHANGE:
+        setDefaultHeaders({
+          Authorization: `Bearer ${result?.Token}`,
+        });
+        await setToken(result?.Token);
+        dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
         return setError({
           ...result,
           onClose: () => {

@@ -64,7 +64,7 @@ const ChangePassword = ({route}) => {
                 contentContainerStyle={[base.container,{paddingTop: 20}]}
               >
                 <Text mb={20} fs={'lg'} style={[{color:Colors.tp3}]}>
-                {translation.every_6_months_epay_requires_a_new_password_change_to_ensure_account_security_the_new_password_cannot_be_the_same_as_the_current_password}
+                  {translation.every_6_months_epay_requires_a_new_password_change_to_ensure_account_security_the_new_password_cannot_be_the_same_as_the_current_password}
                 </Text>
                 <TextInput
                   password
