@@ -81,18 +81,15 @@ const useCheckInfo = () => {
   const showKYC = () => {
     setError({
       icon: Images.Modal.UserTick,
-      // title: translation.notification,
+      title: translation.verify_your_account,
       ErrorCode: -1,
       ErrorMessage:
         translation.you_need_to_identify_your_account_for_maximum_security_before_using_the_wallet,
       // onClose: () => checkInfo({value: false}),
       action: [
         {
-          label: translation.verify_now,
+          label: translation.verify_your_account_now,
           onPress: () => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD),
-        },
-        {
-          label: translation.close,
         },
       ],
     });
