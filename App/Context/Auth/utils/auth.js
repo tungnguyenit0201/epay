@@ -50,8 +50,12 @@ const useAuth = () => {
     }
   };
 
-  const onChangePhone = () => {
-    Navigator.navigate(SCREEN.AUTH);
+  const onChangePhone = functionType => {
+    Navigator.navigate(
+      functionType === FUNCTION_TYPE.FORGOT_PASS
+        ? SCREEN.FORGET_PASSWORD
+        : SCREEN.AUTH,
+    );
   };
 
   const onForgetPassword = () => {
