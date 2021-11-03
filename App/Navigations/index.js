@@ -110,6 +110,7 @@ import MyOrder from 'containers/User/MyOrder';
 import DetailOrder from 'containers/User/MyOrder/Detail';
 import Receipt from 'containers/User/MyOrder/Receipt';
 import ConfirmRegister from 'containers/Service/TrafficFee/ConfirmRegister';
+import CarDetail from 'containers/Service/TrafficFee/CarDetail';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -502,6 +503,8 @@ const AppNavigator = () => {
           {/* S5-registerFee */}
           <Stack.Screen name={SCREEN.CONFIRM_REGISTER_VEHICLE} 
             component={ConfirmRegister}/>
+          <Stack.Screen name={SCREEN.CAR_DETAIL} 
+            component={CarDetail}/>
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

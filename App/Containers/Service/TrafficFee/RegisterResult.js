@@ -1,12 +1,43 @@
 import React, {useCallback, useState} from 'react';
-import {ScrollView, View, StyleSheet, Image} from 'react-native';
+import {ScrollView, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Header, HeaderBg, Text, Button, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
+import { InfoLineBottom, ServiceTitle, BlockLogoBlue } from 'components/Service';
+
+import {GENDER, SCREEN} from 'configs/Constants';
+import Navigator from 'navigations/Navigator';
 
 const RegisterResult = () => {
   const translation = useTranslation();
+
+  const dataTest = [
+    {
+      name: 'Chủ phương tiện',
+      data: 'NGUYEN VAN B ',
+    },
+    {
+      name: 'Biển số xe',
+      data: '51G-7890',
+    },
+    {
+      name: 'Loại dịch vụ',
+      data: 'Vé lượt',
+    },
+    {
+      name: 'Số thẻ RFID',
+      data: '1234567900987654321',
+    },
+    {
+      name: 'Loại biển',
+      data: 'Biển trắng',
+    },
+    {
+      name: 'Phương thức thanh toán',
+      data: 'Ví EPAY',
+    },
+  ];
   return (
     //TODO: TRANGSLATE
     <>
@@ -14,17 +45,17 @@ const RegisterResult = () => {
         <Header title="Dịch vụ giao thông" style={styles.pbZero} />
       </HeaderBg>
 
-      <View style={[base.bgWhite, styles.flex1, styles.pt1]}>
+      <View flex={1} style={base.bgWhite}>
         <Image
           source={Images.TrafficFee.Wave}
           style={styles.bgImg}
           resizeMode="stretch"
         />
 
-        <ScrollView style={base.container}>
+        <ScrollView contentContainerStyle={[base.container,styles.pt1]}>
           <View style={[styles.alignCenter, styles.mb1]}>
             <View style={[styles.w1, styles.pxy1]}>
-              <View style={styles.blockBlueCircle}>
+              <View style={styles.boxBlueCircle1}>
                 <Image
                   source={Images.TrafficFee.BigCar}
                   style={styles.iconBigCar}
@@ -66,7 +97,8 @@ const RegisterResult = () => {
         </ScrollView>
 
         <FooterContainer>
-          <Button label={translation.homePage} />
+          <Button label={translation.homePage} 
+            onPress={() => Navigator.navigate(SCREEN.HOME)}/>
         </FooterContainer>
       </View>
     </>
@@ -74,9 +106,6 @@ const RegisterResult = () => {
 };
 
 const styles = StyleSheet.create({
-  flex1: {flex: 1},
-  flexRow: {flexDirection: 'row'},
-  //------------------
   alignCenter: {alignItems: 'center'},
   //---------------
   absolute: {position: 'absolute'},
@@ -101,14 +130,6 @@ const styles = StyleSheet.create({
   //---------------
   bgWhite: {backgroundColor: Colors.bs4},
   //---------------
-  iconOption1: {
-    width: 20,
-    height: 20,
-  },
-  iconRight1: {
-    width: 15,
-    height: 20,
-  },
   iconBigCar: {
     width: 64,
     height: 53,
@@ -130,35 +151,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   //------------
-  blockCardTick: {
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    paddingTop: 10,
-    backgroundColor: Colors.bs2,
-    borderRadius: 100,
-  },
-  blockTransaction: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 17,
-    paddingHorizontal: 13,
-    borderBottomWidth: 1,
-    borderColor: Colors.bs2,
-  },
-  blockShadow: {
-    borderRadius: 8,
-    shadowColor: Colors.tp2,
-    shadowOffset: {
-      width: 0,
-      height: 1.8,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 8,
-    elevation: 24,
-    backgroundColor: Colors.bs4,
-  },
-  blockBlueCircle: {
+  boxBlueCircle1: {
     width: 110,
     height: 110,
     backgroundColor: Colors.bg1,

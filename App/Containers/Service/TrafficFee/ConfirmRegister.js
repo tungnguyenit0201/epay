@@ -15,8 +15,8 @@ import {
   Checkbox,
   Button,
 } from 'components';
-import { Title } from 'components/Service';
-import DashedLine from 'react-native-dashed-line';
+import { InfoLineBottom, ServiceTitle,BlockLogoBlue } from 'components/Service';
+// import DashedLine from 'react-native-dashed-line';
 import {Colors, Spacing, Images, Fonts} from 'themes';
 import {scale} from 'utils/Functions';
 import {useVerifyInfo, useSelectRegion} from 'context/User/utils';
@@ -25,47 +25,6 @@ import {useUser} from 'context/User';
 
 import {GENDER, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-
-const ItemType1 = ({title, item, callback, mb=10}) => (
-  <TouchableOpacity
-    style={[styles.boxItem1, styles.boxShadowBlue,
-      {marginBottom: mb}]}
-    onPress={() => {
-      callback?.(item);
-    }}
-  >
-    <Image
-      source={Images.TrafficFee.LogoType1}
-      style={[
-        styles.mr1,
-        {
-          width: scale(24),
-          aspectRatio: 1,
-        },
-      ]}
-      resizeMode={'contain'}
-    />
-    <View style={styles.flex1}>
-      <Text fs="h6" bold mb={4}>
-        {title}
-      </Text>
-
-      <View style={styles.flexRow}>
-        <View style={[styles.widthHaft, styles.pr1]}>
-          <Text size={Fonts.SM} color={Colors.tp3}>
-            Số dư: 5.000.000đ
-          </Text>
-        </View>
-
-        <View style={styles.widthHaft}>
-          <Text size={Fonts.SM} right color={Colors.tp3}>
-            X% phí giao dịch
-          </Text>
-        </View>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
 
 const ConfirmRegister = () => {
   const translation = useTranslation() || {};
@@ -96,26 +55,27 @@ const ConfirmRegister = () => {
     },
   ];
 
-  const renderInfoType1 = (name, data, lastChild) => (
-    <View>
-      <View style={[styles.flexRow, styles.my1]}>
-        <View style={styles.wPercent1}>
-          <Text fs="h6" mr={10} color={Colors.cl3}>
-            {name}
-          </Text>
-        </View>
+  // Delete if no use
+  // const renderInfoType1 = (name, data, lastChild) => (
+  //   <>
+  //     <View style={[styles.flexRow, styles.my1]}>
+  //       <View style={styles.wPercent1}>
+  //         <Text fs="h6" mr={10} color={Colors.cl3}>
+  //           {name}
+  //         </Text>
+  //       </View>
 
-        <View style={styles.wPercent2}>
-          <Text fs="h6" right>
-            {data}
-          </Text>
-        </View>
-      </View>
-      {!lastChild && (
-        <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
-      )}
-    </View>
-  );
+  //       <View style={styles.wPercent2}>
+  //         <Text fs="h6" right>
+  //           {data}
+  //         </Text>
+  //       </View>
+  //     </View>
+  //     {!lastChild && (
+  //       <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
+  //     )}
+  //   </>
+  // );
 
   return (
     //TODO: TRANSLATE
@@ -125,9 +85,9 @@ const ConfirmRegister = () => {
       </HeaderBg>
 
       <ScrollView contentContainerStyle={[styles.wrap, styles.py1]}>
-        <Title>{'Phương thức thanh toán'}</Title>
-        <ItemType1 title={'Ví EPAY 0909000999'} mb={30}/>
-        <Title mb={2}>{'Chi tiết đăng ký'}</Title>
+        <ServiceTitle>{'Phương thức thanh toán'}</ServiceTitle>
+        <BlockLogoBlue title={'Ví EPAY 0909000999'} mb={30}/>
+        <ServiceTitle mb={2}>{'Chi tiết đăng ký'}</ServiceTitle>
         
         <View>
           <View style={[styles.posCenter,styles.top1]}>
@@ -140,9 +100,11 @@ const ConfirmRegister = () => {
 
           {dataTest1.map((e, index) => {
             if (index === dataTest1.length - 1) {
-              return renderInfoType1(e.name, e.data, true);
+              // return renderInfoType1(e.name, e.data, true);
+              return <InfoLineBottom key={index} name={e.name} 
+                data={e.data} noLine={true}/>;
             } else {
-              return renderInfoType1(e.name, e.data);
+              return <InfoLineBottom key={index} name={e.name} data={e.data}/>;
             }
           })}
         </View>
@@ -174,13 +136,12 @@ const styles = StyleSheet.create({
   top1: {top: 50},
   //---------------
   widthHaft: {width: '50%'},
-  wPercent1: {width: '48%'},
-  wPercent2: {width: '52%'},
-  //---------------
-  bgWhite: {backgroundColor: Colors.bs4},
-  //---------------
-  my1: {marginVertical: 12},
-  //---------------
+  
+  // Delete if no use func renderInfoType1
+  // wPercent1: {width: '48%'},
+  // wPercent2: {width: '52%'},
+  // my1: {marginVertical: 12},
+  
   mr1: {marginRight: 10},
   //---------------
   py1: {
@@ -190,7 +151,7 @@ const styles = StyleSheet.create({
   //---------------
   pr1: {paddingRight: 8},
   //---------------
-  pb1: {paddingBottom: 22},
+  bgWhite: {backgroundColor: Colors.bs4},
   //---------------
   logoBg: {
     width: 109,

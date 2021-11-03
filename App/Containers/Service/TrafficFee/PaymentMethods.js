@@ -92,27 +92,6 @@ const PaymentMethods = () => {
     },
   ];
 
-  const renderInfoType1 = (name, data, lastChild) => (
-    <View>
-      <View style={[styles.flexRow, styles.mxy1]}>
-        <View style={styles.wPercent1}>
-          <Text fs="h6" mr={10} color={Colors.cl3}>
-            {name}
-          </Text>
-        </View>
-
-        <View style={styles.wPercent2}>
-          <Text fs="h6" right>
-            {data}
-          </Text>
-        </View>
-      </View>
-      {!lastChild && (
-        <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
-      )}
-    </View>
-  );
-
   return (
     //TODO: TRANSLATE
     <View flex={1} style={styles.bgWhite}>
@@ -148,7 +127,6 @@ const styles = StyleSheet.create({
   //---------------
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
-  // alignCenter: {alignItems: 'center'},
   //---------------
   widthHaft: {width: '50%'},
   //---------------

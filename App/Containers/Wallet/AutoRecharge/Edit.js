@@ -15,10 +15,12 @@ import {
   TextInput,
   Text,
 } from 'components';
-import DashedLine from 'react-native-dashed-line';
+import { InfoLineBottom } from 'components/Service';
+
+// import DashedLine from 'react-native-dashed-line';
 import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {Colors, Spacing, Images, Fonts, base} from 'themes';
-import {SCREEN} from 'configs/Constants';
+// import {SCREEN} from 'configs/Constants';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
 
@@ -40,26 +42,27 @@ const EditAutoReCharge = props => {
     },
   ];
 
-  const renderInfoType1 = (name, data, lastChild) => (
-    <View>
-      <View style={[styles.flexRow, styles.mxy1]}>
-        <View style={styles.wPercent1}>
-          <Text fs="h6" mr={10} color={Colors.cl3}>
-            {name}
-          </Text>
-        </View>
+  // delete when no use
+  //  const renderInfoType1 = (name, data, lastChild) => (
+  //   <View>
+  //     <View style={[styles.flexRow, styles.mxy1]}>
+  //       <View style={styles.wPercent1}>
+  //         <Text fs="h6" mr={10} color={Colors.cl3}>
+  //           {name}
+  //         </Text>
+  //       </View>
 
-        <View style={styles.wPercent2}>
-          <Text fs="h6" right bold>
-            {data}
-          </Text>
-        </View>
-      </View>
-      {!lastChild && (
-        <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
-      )}
-    </View>
-  );
+  //       <View style={styles.wPercent2}>
+  //         <Text fs="h6" right bold>
+  //           {data}
+  //         </Text>
+  //       </View>
+  //     </View>
+  //     {!lastChild && (
+  //       <DashedLine dashLength={4} dashThickness={1} dashColor={Colors.bs1} />
+  //     )}
+  //   </View>
+  // );
 
   return (
     //TODO: TRANSLATE
@@ -94,9 +97,11 @@ const EditAutoReCharge = props => {
           <View style={styles.pxy1}>
             {dataTest1.map((e, index) => {
               if (index === dataTest1.length - 1) {
-                return renderInfoType1(e.name, e.data, true);
+                return <InfoLineBottom key={index} name={e.name} 
+                  data={e.data} noLine={true} widthName='70%' widthData='30%'/>;
               } else {
-                return renderInfoType1(e.name, e.data);
+                return <InfoLineBottom key={index} name={e.name} data={e.data}
+                  widthName='70%' widthData='30%'/>;
               }
             })}
 
@@ -138,9 +143,11 @@ const EditAutoReCharge = props => {
           <View style={styles.pxy1}>
             {dataTest1.map((e, index) => {
               if (index === dataTest1.length - 1) {
-                return renderInfoType1(e.name, e.data, true);
+                return <InfoLineBottom key={index} name={e.name} 
+                  data={e.data} noLine={true} widthName='70%' widthData='30%'/>;
               } else {
-                return renderInfoType1(e.name, e.data);
+                return <InfoLineBottom key={index} name={e.name} data={e.data}
+                  widthName='70%' widthData='30%'/>;
               }
             })}
           </View>
@@ -175,9 +182,13 @@ const EditAutoReCharge = props => {
           <View style={styles.pxy1}>
             {dataTest1.map((e, index) => {
               if (index === dataTest1.length - 1) {
-                return renderInfoType1(e.name, e.data, true);
+                return <InfoLineBottom key={index} name={e.name} 
+                  data={e.data} noLine={true}
+                  widthName='70%' widthData='30%'/>;
               } else {
-                return renderInfoType1(e.name, e.data);
+                return <InfoLineBottom key={index} 
+                  name={e.name} data={e.data}
+                  widthName='70%' widthData='30%'/>;
               }
             })}
           </View>
@@ -193,8 +204,9 @@ const styles = StyleSheet.create({
   //---------------
   alignCenter: {alignItems: 'center'},
   //---------------
-  wPercent1: {width: '70%'},
-  wPercent2: {width: '30%'},
+  //delete if no use func renderInfoType1
+  // wPercent1: {width: '70%'},
+  // wPercent2: {width: '30%'},
   //---------------
   mxy1: {marginVertical: 8},
   //-----------------

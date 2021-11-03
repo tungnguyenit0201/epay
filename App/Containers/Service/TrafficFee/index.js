@@ -107,11 +107,11 @@ const TrafficFee = () => {
     //TODO: TRANGSLATE
     <>
       <HeaderBg>
-        <Header back title="Dịch vụ giao thông" style={styles.pbZero} />
+        <Header title="Dịch vụ giao thông" style={styles.pbZero} />
       </HeaderBg>
 
       {/* layout no register fee */}
-      <View style={[base.wrap, styles.flex1, styles.pt1]}>
+      <View flex={1} style={[base.wrap, styles.pt1]}>
         <Image
           source={require('images/wave.png')}
           style={styles.bgImg}
@@ -129,15 +129,15 @@ const TrafficFee = () => {
         </View>
       </View>
 
-      {/* layout registered Vehicle
-      <ScrollView 
+      {/* layout registered Vehicle */}
+      {/* <ScrollView 
         contentContainerStyle={[base.wrap, styles.flex1]}>
         <View style={[base.container,styles.pb1]}>
           <Text size={Fonts.LG} bold mb={16}>Xe đã đăng ký</Text>
 
           <ItemType1
             // callback={onPress}
-            // callback={() => Navigator.navigate(SCREEN.LINKED_BANK_DETAIL)}
+            callback={() => Navigator.navigate(SCREEN.CAR_DETAIL)}
             // bankInfo={bankInfo}
             // title={item.BankName}
             // icon={{uri: item.BankLogoUrl}}
