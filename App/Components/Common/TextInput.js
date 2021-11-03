@@ -85,6 +85,7 @@ export default React.forwardRef(
           onChange?.(text?.replace(regexText, ''));
         } else {
           if (name) {
+            text = text.replace(/\W/g, '');
             onChange?.(
               text.replace(/(^\w|\s\w)/g, (match, p1) => p1.toUpperCase()),
             );
