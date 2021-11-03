@@ -210,7 +210,7 @@ const useVerifyInfo = (initialValue = {}) => {
       }
       await Promise.all([
         onUpdatePersonalInfo(updateInfo, false),
-        onUpdateUserAddress(updateInfo, false),
+        // onUpdateUserAddress(updateInfo, false),
         onGetAllInfo(),
         onClearRegionData(),
       ]);
