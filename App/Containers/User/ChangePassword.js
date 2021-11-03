@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, Pressable} from 'react-native';
 import {
   Button,
   Header,
@@ -7,15 +7,24 @@ import {
   Text,
   HeaderBg,
   TextInput,
+  Icon,
 } from 'components';
 import {useTranslation} from 'context/Language';
-import {base, Colors, Spacing} from 'themes';
+import {base, Colors, Images, Spacing} from 'themes';
 import {useUserInfo} from 'context/User/utils';
 import {Formik} from 'formik';
 import {passwordSchema} from 'utils/ValidationSchemas';
+import * as LocalAuthentication from 'expo-local-authentication';
+import {useAuth} from 'context/Auth/utils';
+import {scale} from 'utils/Functions';
+
 const ChangePassword = ({route}) => {
   const translation = useTranslation();
   const {onConfirmPassword} = useUserInfo(route?.params?.type);
+  const {onForgetPassword} = useAuth();
+
+  let biometryType = null;
+
   return (
     <>
       <HeaderBg>
@@ -26,8 +35,7 @@ const ChangePassword = ({route}) => {
           password: '',
         }}
         onSubmit={({password}) => onConfirmPassword({password})}
-        validationSchema={passwordSchema}
-      >
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -65,15 +73,46 @@ const ChangePassword = ({route}) => {
                     error={touched.password && translation[errors.password]}
                     value={values.password}
                   />
+                  <Pressable
+                    onPress={() => {
+                      setFieldValue('password', '');
+                      onForgetPassword();
+                    }}>
+                    <Text style={[styles.linkText]}>
+                      {translation.forgot_password}?
+                    </Text>
+                  </Pressable>
                 </View>
               </View>
               <FooterContainer>
-                <Button
-                  mb={10}
-                  label="Xác nhận"
-                  onPress={handleSubmit}
-                  disabled={!values.password || errors.password}
-                />
+                <View style={[styles.flexRow]}>
+                  <Button
+                    label="Xác nhận"
+                    onPress={handleSubmit}
+                    disabled={!values.password || errors.password}
+                    style={!biometryType ? styles.flex1 : styles.firstBtn}
+                  />
+                  {!!biometryType && (
+                    <Pressable
+                      onPress={() => {
+                        // onSetMessage('');
+                        // onTouchID();
+                      }}
+                      style={styles.btn}>
+                      <Icon
+                        icon={
+                          biometryType ===
+                          LocalAuthentication.AuthenticationType
+                            .FACIAL_RECOGNITION
+                            ? Images.SignIn.Face
+                            : Images.SignIn.FingerPrint
+                        }
+                        style={styles.iconSize}
+                        tintColor={Colors.bs4}
+                      />
+                    </Pressable>
+                  )}
+                </View>
               </FooterContainer>
             </View>
           );
@@ -89,4 +128,34 @@ const styles = StyleSheet.create({
   wrap: {paddingHorizontal: Spacing.PADDING},
   //-------------------
   flex1: {flex: 1, backgroundColor: Colors.bs4},
+  linkText: {
+    textDecorationStyle: 'solid',
+    textDecorationColor: Colors.tp2,
+  },
+  flexRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  btn: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: 48,
+    height: '100%',
+    backgroundColor: Colors.brd2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  firstBtn: {
+    flex: 1,
+    marginRight: 50,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  iconSize: {
+    width: scale(17),
+    height: scale(17),
+  },
 });

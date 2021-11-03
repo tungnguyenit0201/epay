@@ -17,7 +17,8 @@ const useLoginName = () => {
   };
 
   const resetLoginByName = async phone => {
-    Navigator.reset(SCREEN.LOGIN, await getParams(phone));
+    Navigator.reset(SCREEN.AUTH);
+    Navigator.navigate(SCREEN.LOGIN, await getParams(phone));
   };
 
   return {navigateLoginByName, resetLoginByName};
