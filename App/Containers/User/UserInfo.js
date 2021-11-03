@@ -76,7 +76,11 @@ const UserInfo = () => {
     //TODO: Translate
     <>
       <HeaderBg mb={0}>
-        <Header back title={translation.profile} />
+        <Header
+          back
+          onPressBack={() => Navigator.navigate(SCREEN.USER)}
+          title={translation.profile}
+        />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
