@@ -109,6 +109,10 @@ const useUserInfo = type => {
         dispatch({type: 'SET_PERSONAL_ADDRESS', data: result?.AddressInfo});
         dispatch({type: 'SET_PERSONAL_IC', data: result?.ICInfor});
         dispatch({
+          type: 'SET_IDENTITY_CARD_INFO',
+          data: result?.IdentityCardInfor,
+        });
+        dispatch({
           type: 'SET_PERSONAL_INFO',
           personalInfo: result?.PersonalInfo,
         });

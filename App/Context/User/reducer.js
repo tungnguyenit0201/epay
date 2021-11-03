@@ -40,6 +40,11 @@ export default function userReducer(state, action) {
         ...state,
         icInfo: action?.data,
       };
+    case 'SET_IDENTITY_CARD_INFO':
+      return {
+        ...state,
+        identityCardInfor: action?.data,
+      };
     case 'SET_BANK_LINK_INFO':
       return {
         ...state,

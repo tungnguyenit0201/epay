@@ -244,6 +244,7 @@ const useVerifyInfo = (initialValue = {}) => {
     if (eKYC) {
       const result = await extractCardInfo();
       if (result) {
+        onGetAllInfo();
         onChange('extractCardInfo', {...result});
         onContinue(screen);
       }
@@ -260,6 +261,7 @@ const useVerifyInfo = (initialValue = {}) => {
         CardId: cardInfo?.CardID,
       });
       if (result) {
+        onGetAllInfo();
         onContinue(SCREEN.VERIFY_USER_PORTRAIT);
       }
     } else {

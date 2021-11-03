@@ -5,10 +5,12 @@ import {Colors, base} from 'themes';
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
 import {useTranslation} from 'context/Language';
-import autoMergeLevel1 from 'redux-persist/es/stateReconciler/autoMergeLevel1';
+import {useCheckInfo} from 'context/Home/utils';
+
 const DinhDanh = () => {
   //TODO : translation
   const translation = useTranslation();
+  const {onCheckStepEKYC} = useCheckInfo();
   return (
     <View style={base.boxShadow}>
       <View style={styles.ico}>
@@ -33,9 +35,7 @@ const DinhDanh = () => {
       <Button
         type="img"
         label={translation.verify_now}
-        onPress={() => {
-          Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
-        }}
+        onPress={() => onCheckStepEKYC()}
         size="sm"
         style={[styles.maxWidth2, styles.marginCenter]}
       />

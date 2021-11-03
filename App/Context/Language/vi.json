@@ -614,5 +614,7 @@
   "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự",
   "first_and_last_name_must_not_contain_special_characters": "Họ và tên không được chứa ký tự đặc biệt",
   "guide": "Hướng dẫn",
-  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường tối đa bảo mật trước khi sử dụng ví"
+  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường tối đa bảo mật trước khi sử dụng ví",
+  "ask_re_ekyc": "Bạn có muốn định danh tài khoản trước đó",
+  "no_and_again": "Không, tôi muốn làm lại"
 }
