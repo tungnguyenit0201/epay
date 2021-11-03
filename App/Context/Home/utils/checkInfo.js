@@ -23,7 +23,7 @@ const useCheckInfo = () => {
   const {dispatch, showModal} = useCommon();
   const {getModalSmartOTPDisabled} = useAsyncStorage();
   const translation = useTranslation();
-  const {token, phone} = useUser();
+  const {token, phone, identityCardInfor} = useUser();
   const {status, getStatus} = useUserStatus();
   const {setError} = useError();
   const modalSmartOTP = useModalSmartOTP();
@@ -152,6 +152,30 @@ const useCheckInfo = () => {
     }
     return true;
   };
+  const onCheckStepEKYC = () => {
+    // return Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+    if (identityCardInfor?.Step > 0) {
+      setError({
+        ErrorMessage: translation?.ask_re_ekyc,
+        action: [
+          {
+            onPress: () =>
+              Navigator.navigate(
+                identityCardInfor?.Step == 1
+                  ? SCREEN.VERIFY_IDENTITY_CARD
+                  : SCREEN.VERIFY_USER_PORTRAIT,
+                {extractCardInfo: identityCardInfor},
+              ),
+            label: translation?.agree,
+          },
+          {
+            onPress: () => Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD),
+            label: translation?.no_and_again,
+          },
+        ],
+      });
+    } else Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+  };
 
   return {
     KYC: showModal.KYC,
@@ -160,6 +184,7 @@ const useCheckInfo = () => {
     checkInfo,
     onNavigate,
     onCheckKYCExpired,
+    onCheckStepEKYC,
   };
 };
 

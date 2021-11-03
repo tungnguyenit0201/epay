@@ -57,6 +57,14 @@ export default React.forwardRef(
       : 'default';
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showError, setShowError] = useState(true);
+
+    const onSetShowError = useCallback(
+      _.debounce(() => {
+        setShowError(true);
+      }, 1000),
+      [],
+    );
 
     const onChangeText = text => {
       if (!!phone) {
@@ -64,6 +72,8 @@ export default React.forwardRef(
         if (text[0] !== '0') return;
         text = text.replace(/[^0-9]/g, '');
       }
+      setShowError(false);
+      onSetShowError();
       if (!!disableSpace && text[text.length - 1] === ' ') return;
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
@@ -125,7 +135,7 @@ export default React.forwardRef(
           <View
             style={[
               styles.inputContainer,
-              error && !!value && [styles.error, errorStyle],
+              error && !!value && showError && [styles.error, errorStyle],
               Boolean(leftIcon) && {paddingLeft: 50},
               (isDeleted || password) && {paddingRight: Spacing.PADDING * 2},
               !!autoHeight ? styles.autoHeight : styles.fixedHeight,
@@ -147,6 +157,7 @@ export default React.forwardRef(
               keyboardType={keyboardType}
               secureTextEntry={password && !showPassword}
               value={value}
+              onEndEditing={() => setShowError(true)}
               onBlur={event => {
                 if (value && trimOnBlur) {
                   onChangeText?.(value.trim?.());
@@ -195,7 +206,7 @@ export default React.forwardRef(
             </TouchableOpacity>
           )}
         </View>
-        {!!error && showErrorLabel && !!value && (
+        {!!error && showErrorLabel && !!value && showError && (
           <Text color={Colors.hl1} mt={3} size={scale(12)}>
             {error}
           </Text>

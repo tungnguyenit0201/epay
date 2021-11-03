@@ -83,28 +83,16 @@ const VerifyUserInfo = ({
   return (
     <View style={styles.wrapper}>
       <HeaderBg style={styles.header}>
-        <View style={styles.back}>
-          <Pressable
-            onPress={() => {
-              if (step === 3) {
-                Navigator.navigate(SCREEN.USER_INFO);
-              } else {
-                Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
-              }
-            }}
-            hitSlop={{
-              right: scale(30),
-              top: scale(20),
-              bottom: scale(20),
-              left: scale(30),
-            }}
-          >
-            <View>
-              <Icon icon={Images.ArrowLeft} tintColor={Colors.bs4} />
-            </View>
-          </Pressable>
-        </View>
+        <View style={styles.back}></View>
         <Header
+          back
+          onPressBack={() => {
+            if (step === 3) {
+              Navigator.navigate(SCREEN.USER_INFO);
+            } else {
+              Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+            }
+          }}
           title={translation?.account_verification}
           // renderRightComponent={() => {
           //   if (showInstruction) {

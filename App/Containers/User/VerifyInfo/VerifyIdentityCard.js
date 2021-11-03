@@ -5,12 +5,14 @@ import {useVerifyInfo} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import BaseVerifyInfo from './BaseVerifyInfo';
 import CapturePicture from 'components/User/VerifyInfo/CapturePicture';
+import {useUser} from 'context/User';
 
 const VerifyIdentityCard = ({route}) => {
   const {onDoneCaptureFace, onChange, verifyInfo} = useVerifyInfo(
     route?.params,
   );
   const translation = useTranslation();
+  const {identityCardInfor} = useUser();
 
   return (
     <BaseVerifyInfo
@@ -27,6 +29,7 @@ const VerifyIdentityCard = ({route}) => {
           style={styles.drop}
           draft={verifyInfo?.Avatar}
           verifyParams={route?.params}
+          mountShowCamera={identityCardInfor?.Step == 1}
         />
       </View>
     </BaseVerifyInfo>
