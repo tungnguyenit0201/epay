@@ -12,7 +12,7 @@ import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {useOTP} from 'context/Common/utils';
 import {useRegister} from 'context/Auth/utils';
-import {SCREEN} from 'configs/Constants';
+import {FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {Content} from 'components/Auth';
 import {HelpModal} from 'components/Auth';
@@ -27,8 +27,7 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.bs4}
@@ -36,6 +35,7 @@ const RegisterFailure = ({route}) => {
       />
     </TouchableOpacity>
   );
+
   return (
     // TODO: translate
     <>
@@ -45,7 +45,11 @@ const RegisterFailure = ({route}) => {
           // blackIcon
           // avoidStatusBar
           logo={Images.logoEpay}
-          onPressBack={() => onNavigate(SCREEN.AUTH)}
+          onPressBack={() =>
+            route?.params?.functionType === FUNCTION_TYPE.FORGOT_PASS
+              ? onNavigate(SCREEN.LOGIN)
+              : onNavigate(SCREEN.AUTH)
+          }
           renderRightComponent={() => renderRightComponent()}
         />
         <View style={styles.wrap}>
@@ -85,7 +89,11 @@ const RegisterFailure = ({route}) => {
           // color={Colors.tp2}
           border={Colors.bs1}
           mode="outline"
-          onPress={() => onNavigate(SCREEN.AUTH)}
+          onPress={() =>
+            route?.params?.functionType === FUNCTION_TYPE.FORGOT_PASS
+              ? onNavigate(SCREEN.LOGIN)
+              : onNavigate(SCREEN.AUTH)
+          }
           bgImg={0}
         />
       </FooterContainer>

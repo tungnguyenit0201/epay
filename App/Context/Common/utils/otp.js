@@ -74,12 +74,14 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
             message: _.get(result, 'ErrorMessage', ''),
           });
         case FUNCTION_TYPE.FORGOT_PASS:
-          return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+          return Navigator.navigate(SCREEN.REGISTER_FAILURE, {
             phone,
             functionType,
             content: {
               title: translation.password_change,
-              text: translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
+              text:
+                stripTags(result?.ErrorMessage) ||
+                translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
               hotline: '1900-0000',
             },
           });

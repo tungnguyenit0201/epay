@@ -19,15 +19,13 @@ const ForgetPassword = () => {
   return (
     <BlueHeader>
       {/* <Header back blackIcon avoidStatusBar /> */}
-      {console.log('showModal', showModal)}
       <Header
         style={(styles.mt, styles.mb)}
         back
         renderRightComponent={() => (
           <TouchableOpacity
             style={{paddingRight: Spacing.PADDING}}
-            onPress={() => setShowModal(true)}
-          >
+            onPress={() => setShowModal(true)}>
             <Icon
               icon={Images.Register.Info}
               style={styles.iconSize}
@@ -51,8 +49,7 @@ const ForgetPassword = () => {
           phone: phone || '',
         }}
         validationSchema={phoneSchema}
-        onSubmit={onSubmitPhone}
-      >
+        onSubmit={onSubmitPhone}>
         {({
           handleChange: _handleChange,
           handleBlur,
