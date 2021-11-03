@@ -103,6 +103,7 @@ const SCREEN = {
   MY_ORDER: 'MyOrder',
   ORDER_DETAIL: 'OrderDetail',
   RECEIPT: 'Receipt',
-  CONFIRM_REGISTER_VEHICLE: 'ConfirmRegister'
+  CONFIRM_REGISTER_VEHICLE: 'ConfirmRegister',
+  CAR_DETAIL: 'CarDetail',
 };
 export default SCREEN;
