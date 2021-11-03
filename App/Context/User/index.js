@@ -8,6 +8,7 @@ const defaultUserInfo = {
   firstLogin: false,
   personalInfo: null,
   personalAddress: '',
+  identityCardInfor: '',
   personalIC: '',
   phone: null,
   myWallet: '',

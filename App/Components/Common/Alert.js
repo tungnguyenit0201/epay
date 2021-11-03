@@ -81,7 +81,7 @@ const AlertCustom = () => {
                         style={styles.btnOutline}
                         onPress={() => onPressAction(item?.onPress)}
                       >
-                        <Text>{item?.label}</Text>
+                        <Text color={Colors.tp3}>{item?.label}</Text>
                       </TouchableOpacity>
                     )}
                   </View>
