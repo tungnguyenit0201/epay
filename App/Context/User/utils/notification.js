@@ -5,8 +5,8 @@ import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
 import useSErviceNotificaiton from 'services/notification';
-import {getAll} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
+import {useIsFocused} from '@react-navigation/native';
 
 const useNotify = (isMount = true) => {
   const {setLoading} = useLoading();
@@ -191,4 +191,16 @@ const useNotify = (isMount = true) => {
     onReadAllNotify,
   };
 };
-export default useNotify;
+
+const useNotifyFocus = () => {
+  const isFocused = useIsFocused();
+  const data = useNotify(false);
+
+  useEffect(() => {
+    isFocused && data?.onGetAllNotify();
+  }, [isFocused]);
+
+  return data;
+};
+
+export {useNotify, useNotifyFocus};
