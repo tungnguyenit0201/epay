@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, StyleSheet, View, Pressable} from 'react-native';
+import {StyleSheet, View, Pressable} from 'react-native';
 import {
   Text,
   Header,
@@ -62,10 +62,13 @@ const Login = ({route}) => {
         initialValues={{
           password: '',
         }}
-        onSubmit={({password}, {resetForm}) =>
-          onLogin({phone, password, resetForm})
-        }
-        validationSchema={passwordSchema}>
+        onSubmit={({password}, {resetForm}) => {
+          onLogin({phone, password, resetForm});
+
+          textInputRef?.current?.blur();
+        }}
+        validationSchema={passwordSchema}
+      >
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -108,7 +111,8 @@ const Login = ({route}) => {
                     onPress={() => {
                       setFieldValue('password', '');
                       onForgetPassword();
-                    }}>
+                    }}
+                  >
                     <Text style={[styles.linkText]}>
                       {translation.forgot_password}?
                     </Text>
@@ -118,7 +122,8 @@ const Login = ({route}) => {
                     onPress={() => {
                       onChangePhone();
                       setFieldValue('password', '');
-                    }}>
+                    }}
+                  >
                     <Text style={[styles.linkText]}>
                       {translation.change_the_phone_number}
                     </Text>
@@ -146,7 +151,8 @@ const Login = ({route}) => {
                         onSetMessage('');
                         onTouchID();
                       }}
-                      style={styles.btn}>
+                      style={styles.btn}
+                    >
                       <Icon
                         icon={
                           biometryType ===
