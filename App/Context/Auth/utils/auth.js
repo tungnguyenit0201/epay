@@ -129,7 +129,7 @@ const useAuth = () => {
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
-        await setToken(result?.Token);
+        await setToken(result?.Token || '');
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
         return setError({
           ...result,
