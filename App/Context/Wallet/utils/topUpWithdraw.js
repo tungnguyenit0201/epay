@@ -34,6 +34,7 @@ import TouchID from 'react-native-touch-id';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
 import {sha256} from 'react-native-sha256';
 import {isEmpty} from 'lodash';
+import useServiceBank from 'services/bank';
 
 const DEFAULT_TIMEOUT = 60;
 
@@ -465,8 +466,9 @@ const useCashIn = () => {
   const {confirmUsingBioID, checkBiometry} = useConfirmMethod();
   const {onShowModal: onShowModalPassword} = useModalPassword();
   const {cashIn, cashInConfirm, cashInNapas} = useServiceWallet();
+  const {checkTransNapas} = useServiceBank();
   const {bank, amount, transType, ConfirmType, TransCode} = transaction;
-  const {SourceId, BankId, CardNumber, CardHolder, CardIssueDate, BankCode} =
+  const {SourceId, BankId, CardNumber, SourceType, CardIssueDate, BankCode} =
     bank || {};
   const cashInRef = useRef({
     ConfirmType,
@@ -522,11 +524,30 @@ const useCashIn = () => {
           napasKey: result?.NapasKey,
         },
         onBackOtp: ()=>{
+          onCashInNapasBack();
           return true;
         }
       },
     });
   };
+
+  const onCashInNapasBack = async () => {
+    setLoading(true);
+    let result = await checkTransNapas({
+      phone,
+      TransCode: TransCode,
+      TransType: transType,
+      TransFormType: SourceType
+    });
+    setLoading(false);
+
+    if (result?.ErrorCode !== ERROR_CODE.SUCCESS || isEmpty(result?.Data)) {
+      setError(result);
+      return;
+    }
+
+    console.log("t-->"+JSON.stringify(result))
+  }
 
   const onCashInConnectedBank = async () => {
     let result = await onCashInToGetConfirmMethod();
@@ -564,7 +585,7 @@ const useCashIn = () => {
     setLoading(true);
     let result = await cashIn({
       phone,
-      BankConnectId,
+      BankConnectId: SourceId,
       BankId,
       amount,
     });
@@ -658,7 +679,7 @@ const useCashIn = () => {
     let {TransCode, ConfirmType} = cashInRef.current || {};
     return cashInConfirm({
       phone,
-      BankConnectId: BankConnectId,
+      BankConnectId: SourceId,
       BankId: BankId,
       ConfirmValue: password,
       ConfirmMethod: ConfirmType,
@@ -772,7 +793,7 @@ const useCashOut = () => {
     return cashOutConfirm({
       phone,
       BankConnectId: BankConnectId,
-      BankId: BankId,
+      BankId,
       ConfirmValue: password,
       ConfirmMethod: ConfirmType,
       TransCode: TransCode,

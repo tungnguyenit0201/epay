@@ -347,7 +347,7 @@ const useServiceWallet = () => {
         PhoneNumber: phone,
         CashInInfo: {
           BankConnectId: BankConnectId,
-          BankID: BankId,
+          BankId,
           Amount: amount,
         },
       },
@@ -373,7 +373,7 @@ const useServiceWallet = () => {
       params: {
         PhoneNumber: phone,
         BankConnectId,
-        BankID: BankId,
+        BankId,
         ConfirmMethod,
         ConfirmValue,
         TransCode,
