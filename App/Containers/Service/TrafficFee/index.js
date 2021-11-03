@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {ButtonAdd, Header, HeaderBg, Text} from 'components';
+import {ButtonAdd, Header, HeaderBg, InputBlock, Select, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useError} from 'context/Common/utils';
+import { InfoLineBottom } from 'components/Service';
 
 const ItemType1 = ({title, item, callback, checked}) => (
   <TouchableOpacity
@@ -24,7 +25,7 @@ const ItemType1 = ({title, item, callback, checked}) => (
     }}
   >
     <View style={[styles.alignCenter,styles.flexRow]}>
-      <View style={styles.flex1}>
+      <View flex={1}>
         <Text bold size={Fonts.LG} mb={4}>
           {title}
           {checked && <Image
@@ -42,6 +43,26 @@ const ItemType1 = ({title, item, callback, checked}) => (
         resizeMode={'contain'}
       />
     </View>
+  </TouchableOpacity>
+);
+
+const ItemType2 = ({title, item, callback,mb=16}) => (
+  <TouchableOpacity
+    style={[styles.boxItem2, styles.boxShadowGray,
+      {marginBottom: mb}]}
+    onPress={() => {callback?.(item);}}
+  >
+    <View flex={1}>
+      <Text size={Fonts.LG} bold mr={10}>
+        {title}
+      </Text>
+    </View>
+
+    <Image
+      source={Images.Right}
+      style={styles.iconRight3}
+      resizeMode='contain'
+    />
   </TouchableOpacity>
 );
 
@@ -85,7 +106,7 @@ const TrafficFee = () => {
           Navigator.navigate(item.screen)
         }
       >
-        <View style={[styles.flex1, styles.flexRow, styles.alignCenter]}>
+        <View flex={1} flexDirection='row' alignItems={'center'}>
           <Image
             source={item.img}
             style={styles.iconOption1}
@@ -98,6 +119,7 @@ const TrafficFee = () => {
         <Image
           source={Images.TrafficFee.ArrowRight}
           style={styles.iconRight1}
+          resizeMode='contain'
         />
       </TouchableOpacity>
     );
@@ -156,6 +178,34 @@ const TrafficFee = () => {
           <ButtonAdd label={'Thêm đăng ký xe'}/>
         </View>
       </ScrollView> */}
+
+      {/* <ScrollView contentContainerStyle={[base.container,styles.py1]} 
+        style={base.bgWhite}>
+        <ItemType2
+          // callback={() => Navigator.navigate(SCREEN.LINKED_BANK_DETAIL)}
+          title={'Phí giao thông'}
+        />
+
+        <View>
+          <InputBlock
+            rightIcon={Images.Down}
+            isSelect
+            // required={!wardEmpty}
+            // value={info?.Ward}
+            // error={error.Ward}
+            // onPress={() => !wardEmpty && goRegionSelect('wards')}
+            defaultValue={'Tháng 10'}
+          />
+          <InputBlock
+            rightIcon={Images.Down}
+            isSelect
+            defaultValue={'Tháng 10'}
+          />
+        </View>
+
+        <InfoLineBottom name={'Gia hạn tự động'} 
+          data={'Gia hạn tự động'}/>
+      </ScrollView> */}
     </>
   );
 };
@@ -182,8 +232,8 @@ const styles = StyleSheet.create({
     height: 20,
   },
   iconRight1: {
-    width: 15,
-    height: 20,
+    width: 20,
+    aspectRatio: 1,
   },
   iconRight2: {
     width: 20,
@@ -234,6 +284,31 @@ const styles = StyleSheet.create({
   lineGray1: {
     height: 12,
     backgroundColor: Colors.bs2,
+  },
+
+  //layout buy ticket
+  py1: {paddingVertical: Spacing.PADDING},
+  //---------------
+  iconRight3: {
+    width: 20,
+    tintColor: Colors.tp3,
+    aspectRatio: 1,
+  },
+  //---------------
+  boxShadowGray: {
+    backgroundColor: Colors.bs4,
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 0},
+    elevation: 24,
+    shadowRadius: 8,
+    borderRadius: 8,
+  },
+  //---------------
+  boxItem2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 17,
+    paddingHorizontal: 16,
   },
 });
 
