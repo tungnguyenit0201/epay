@@ -23,7 +23,7 @@ const useCheckInfo = () => {
   const {dispatch, showModal} = useCommon();
   const {getModalSmartOTPDisabled} = useAsyncStorage();
   const translation = useTranslation();
-  const {token, phone} = useUser();
+  const {token, phone, identityCardInfor} = useUser();
   const {status, getStatus} = useUserStatus();
   const {setError} = useError();
   const modalSmartOTP = useModalSmartOTP();
@@ -81,18 +81,15 @@ const useCheckInfo = () => {
   const showKYC = () => {
     setError({
       icon: Images.Modal.UserTick,
-      // title: translation.notification,
+      title: translation.verify_your_account,
       ErrorCode: -1,
       ErrorMessage:
         translation.you_need_to_identify_your_account_for_maximum_security_before_using_the_wallet,
       // onClose: () => checkInfo({value: false}),
       action: [
         {
-          label: translation.verify_now,
+          label: translation.verify_your_account_now,
           onPress: () => onNavigate(SCREEN.CHOOSE_IDENTITY_CARD),
-        },
-        {
-          label: translation.close,
         },
       ],
     });
@@ -111,7 +108,7 @@ const useCheckInfo = () => {
           });
           break;
         case PERSONAL_IC.EXPIRED:
-          onCheckKYCExpired();
+          screen !== SCREEN.TOP_UP && onCheckKYCExpired();
           break;
         case USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK:
           showConnectBank();
@@ -152,6 +149,30 @@ const useCheckInfo = () => {
     }
     return true;
   };
+  const onCheckStepEKYC = () => {
+    // return Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+    if (identityCardInfor?.Step > 0) {
+      setError({
+        ErrorMessage: translation?.ask_re_ekyc,
+        action: [
+          {
+            onPress: () =>
+              Navigator.navigate(
+                identityCardInfor?.Step == 1
+                  ? SCREEN.VERIFY_IDENTITY_CARD
+                  : SCREEN.VERIFY_USER_PORTRAIT,
+                {extractCardInfo: identityCardInfor},
+              ),
+            label: translation?.agree,
+          },
+          {
+            onPress: () => Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD),
+            label: translation?.no_and_again,
+          },
+        ],
+      });
+    } else Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+  };
 
   return {
     KYC: showModal.KYC,
@@ -160,6 +181,7 @@ const useCheckInfo = () => {
     checkInfo,
     onNavigate,
     onCheckKYCExpired,
+    onCheckStepEKYC,
   };
 };
 

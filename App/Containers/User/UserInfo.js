@@ -56,18 +56,22 @@ const UserInfo = () => {
     {
       icon: require('images/profile/User.png'),
       name: 'Họ tên',
-      val: PersonalInfo?.FullName || <Text color={Colors.g4}>Chưa có</Text>,
+      val: PersonalInfo?.FullName || (
+        <Text style={{color: Colors.tp5}}>Chưa có</Text>
+      ),
     },
     {
       icon: require('images/profile/Date.png'),
       name: 'Ngày sinh',
-      val: PersonalInfo?.DateOfBirth || <Text color={Colors.g4}>Chưa có</Text>,
+      val: PersonalInfo?.DateOfBirth || (
+        <Text style={{color: Colors.tp5}}>Chưa có</Text>
+      ),
     },
     {
       icon: require('images/profile/GioiTinh.png'),
       name: 'Giới tính',
       val: GENDER[PersonalInfo?.SexType] || (
-        <Text color={Colors.g4}>Chưa có</Text>
+        <Text style={{color: Colors.tp5}}>Chưa có</Text>
       ),
     },
   ];
@@ -76,7 +80,11 @@ const UserInfo = () => {
     //TODO: Translate
     <>
       <HeaderBg mb={0}>
-        <Header back title={translation.profile} />
+        <Header
+          back
+          onPressBack={() => Navigator.navigate(SCREEN.USER)}
+          title={translation.profile}
+        />
       </HeaderBg>
       <ScrollView style={base.wrap}>
         <View style={[base.container]}>
@@ -123,7 +131,10 @@ const UserInfo = () => {
               <TouchableOpacity
                 style={base.leftAuto}
                 disabled={
-                  statusVerified === PERSONAL_IC.INACTIVE ? true : false
+                  statusVerified === PERSONAL_IC.INACTIVE ||
+                  statusVerified === PERSONAL_IC.RE_VERIFYING
+                    ? true
+                    : false
                 }
                 onPress={() => {
                   Navigator.navigate(SCREEN.EDIT_INFO);
@@ -131,7 +142,8 @@ const UserInfo = () => {
               >
                 <Image
                   style={
-                    statusVerified === PERSONAL_IC.INACTIVE
+                    statusVerified === PERSONAL_IC.INACTIVE ||
+                    statusVerified === PERSONAL_IC.RE_VERIFYING
                       ? styles.boxDisabled
                       : styles.editBox
                   }
@@ -155,7 +167,20 @@ const UserInfo = () => {
                     {item.name}
                   </Text>
                   <View style={styles.flex1}>
-                    <Text fs="h6" style={[base.leftAuto, styles.lh1]} right>
+                    <Text
+                      fs="h6"
+                      style={[
+                        base.leftAuto,
+                        styles.lh1,
+                        {
+                          color:
+                            statusVerified === PERSONAL_IC.VERIFYING
+                              ? Colors.tp5
+                              : Colors.tp3,
+                        },
+                      ]}
+                      right
+                    >
                       {item.val}
                     </Text>
                   </View>
@@ -171,11 +196,18 @@ const UserInfo = () => {
                 <Text mt={3} mb={5} fs="h6">
                   {translation.id_card + '/' + translation.passport}
                 </Text>
-                <Text>
+                <Text
+                  style={{
+                    color:
+                      statusVerified === PERSONAL_IC.VERIFYING
+                        ? Colors.tp5
+                        : Colors.tp3,
+                  }}
+                >
                   {ICInfor?.ICNumber ? (
                     hideCMND(ICInfor?.ICNumber)
                   ) : (
-                    <Text color={Colors.g4}>{translation.empty}</Text>
+                    <Text color={Colors.tp5}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -189,11 +221,18 @@ const UserInfo = () => {
                 <Text mt={3} mb={5} fs="h6">
                   Địa chỉ
                 </Text>
-                <Text>
+                <Text
+                  style={{
+                    color:
+                      statusVerified === PERSONAL_IC.VERIFYING
+                        ? Colors.tp5
+                        : Colors.tp3,
+                  }}
+                >
                   {AddressInfo?.Provincial ? (
                     address
                   ) : (
-                    <Text color={Colors.g4}>{translation.empty}</Text>
+                    <Text color={Colors.tp5}>{translation.empty}</Text>
                   )}
                 </Text>
               </View>
@@ -245,6 +284,11 @@ const UserInfo = () => {
                 <Text fs="h6">{getStatusVerifiedText()}</Text>
               </View>
             </View>
+            {getStatusVerifiedText() === 'Đã hết hạn' && (
+              <Text underline mt={15}>
+                Xác thực lại
+              </Text>
+            )}
           </View>
 
           <View style={[base.boxShadow]}>

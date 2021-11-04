@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
-import {Linking} from 'react-native';
+import {AppState, Linking} from 'react-native';
 import useServiceCommon from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
 import _ from 'lodash';
@@ -12,6 +12,8 @@ import {useUserInfo} from 'context/User/utils';
 import {useAsyncStorage} from 'context/Common/utils';
 import {useCommon} from 'context/Common';
 import {useTranslation} from 'context/Language';
+import {stripTags} from 'utils/Functions';
+import moment from 'moment';
 
 const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {config} = useCommon();
@@ -27,6 +29,10 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {setResend, getResend} = useAsyncStorage();
   const {confirmOTP, genOtp} = useServiceCommon();
   const translation = useTranslation();
+  const contentRef = useRef({
+    countdownTime: null,
+  });
+
   const onChange = value => {
     setCode(value);
     errorMessage && setErrorMessage(null);
@@ -57,6 +63,9 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
           return Navigator.reset(SCREEN.REGISTER_FAILURE, {
             phone,
             functionType,
+            content: {
+              text: stripTags(result?.ErrorMessage),
+            },
           });
         case FUNCTION_TYPE.AUTH_EMAIL:
         case FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL:
@@ -65,12 +74,14 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
             message: _.get(result, 'ErrorMessage', ''),
           });
         case FUNCTION_TYPE.FORGOT_PASS:
-          return Navigator.reset(SCREEN.REGISTER_FAILURE, {
+          return Navigator.navigate(SCREEN.REGISTER_FAILURE, {
             phone,
             functionType,
             content: {
               title: translation.password_change,
-              text: translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
+              text:
+                stripTags(result?.ErrorMessage) ||
+                translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
               hotline: '1900-0000',
             },
           });
@@ -147,7 +158,10 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const resentOTP = async () => {
     try {
       setLoading(true);
-      let canSend = await checkResend();
+      // check if can resend (app)
+      // let canSend = await checkResend();
+      // disable canSend to get canSend from core
+      let canSend = true;
       if (canSend !== false) {
         let result = await genOtp({
           phone,
@@ -156,11 +170,20 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
         let errorCode = _.get(result, 'ErrorCode', '');
         if (errorCode == ERROR_CODE.SUCCESS) {
           setCountdown(config?.ResendOtpTime || 60);
-        } else
+        } else if (errorCode === ERROR_CODE.FEATURE_LOCK_BY_RESEND_OTP) {
+          Navigator.reset(SCREEN.REGISTER_FAILURE, {
+            phone,
+            functionType,
+            content: {
+              text: stripTags(result?.ErrorMessage),
+            },
+          });
+        } else {
           setError({
             ...result,
             onClose: () => Navigator.goBack?.(),
           });
+        }
       }
 
       setLoading(false);
@@ -193,7 +216,30 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
     ) &&
       isMount &&
       onGenOtp();
-  }, [phone, functionType]); // eslint-disable-line
+
+    const subscription = AppState.addEventListener(
+      'change',
+      async nextAppState => {
+        try {
+          if (nextAppState === 'background' || nextAppState === 'inactive') {
+            contentRef.current.countdownTime = moment();
+          }
+          if (nextAppState === 'active') {
+            const lastCountdownTime = contentRef.current.countdownTime;
+            const diff = moment().diff(lastCountdownTime, 'seconds');
+            diff > 0 &&
+              setCountdown(countdown =>
+                countdown < diff ? 0 : countdown - diff,
+              );
+          }
+        } catch (error) {}
+      },
+    );
+
+    return () => {
+      subscription?.remove?.();
+    };
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     let timer = setInterval(() => setCountdown(countdown - 1), 1000);

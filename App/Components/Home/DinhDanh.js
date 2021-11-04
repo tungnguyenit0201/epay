@@ -11,13 +11,12 @@ import {useCheckInfo} from 'context/Home/utils';
 const User = () => {
   const {status} = useUserStatus();
   const translation = useTranslation();
-  const {onCheckKYCExpired} = useCheckInfo();
+  const {onCheckKYCExpired, onCheckStepEKYC} = useCheckInfo();
 
   return status != USER_STATUS.DONE && status != USER_STATUS.VERIFYING_KYC ? (
     <TouchableOpacity
       onPress={() => {
-        status == USER_STATUS.INACTIVE_KYC &&
-          Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+        status == USER_STATUS.INACTIVE_KYC && onCheckStepEKYC();
         status == USER_STATUS.ACTIVED_KYC_NO_CONNECTED_BANK &&
           Navigator.navigate(SCREEN.MAP_BANK_FLOW);
         onCheckKYCExpired();

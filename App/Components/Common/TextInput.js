@@ -23,6 +23,7 @@ export default React.forwardRef(
       password,
       numeric,
       phone,
+      disableSpace,
       name,
       marginBottom = scale(10),
       error,
@@ -31,7 +32,6 @@ export default React.forwardRef(
       label,
       required,
       rightComponent,
-      setShowWebview,
       placeholderTextColor,
       autoCompleteType = 'off',
       textContentType = 'none',
@@ -62,14 +62,19 @@ export default React.forwardRef(
     const onSetShowError = useCallback(
       _.debounce(() => {
         setShowError(true);
-        if (!!setShowWebview) setShowWebview(true);
       }, 1000),
       [],
     );
 
     const onChangeText = text => {
+      if (!!phone) {
+        //Số đầu tiên bắt buộc phải là 0
+        if (text[0] !== '0') return;
+        text = text.replace(/[^0-9]/g, '');
+      }
       setShowError(false);
-      if (!!setShowWebview) setShowWebview(false);
+      onSetShowError();
+      if (!!disableSpace && text[text.length - 1] === ' ') return;
       if (alphanumeric) {
         const regexForNonAlphaNum = new RegExp(/[^\p{L}\p{N} ]+/gu);
         onChange?.(text.replace(regexForNonAlphaNum, ''));
@@ -80,6 +85,7 @@ export default React.forwardRef(
           onChange?.(text?.replace(regexText, ''));
         } else {
           if (name) {
+            text = text.replace(/\W/g, '');
             onChange?.(
               text.replace(/(^\w|\s\w)/g, (match, p1) => p1.toUpperCase()),
             );
@@ -88,8 +94,14 @@ export default React.forwardRef(
           }
         }
       }
-      onSetShowError();
     };
+
+    const onShowPassword = useCallback(
+      _.debounce(() => {
+        setShowPassword(false);
+      }, 1500),
+      [],
+    );
 
     return (
       <>
@@ -145,8 +157,8 @@ export default React.forwardRef(
               onChangeText={onChangeText}
               keyboardType={keyboardType}
               secureTextEntry={password && !showPassword}
-              onEndEditing={() => setShowError(true)}
               value={value}
+              onEndEditing={() => setShowError(true)}
               onBlur={event => {
                 if (value && trimOnBlur) {
                   onChangeText?.(value.trim?.());
@@ -158,7 +170,10 @@ export default React.forwardRef(
           </View>
           {!!password && (
             <Pressable
-              onPress={() => setShowPassword(!showPassword)}
+              onPressIn={() => {
+                setShowPassword(true);
+                onShowPassword();
+              }}
               style={{
                 position: 'absolute',
                 right: scale(12),

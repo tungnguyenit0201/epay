@@ -141,6 +141,7 @@
   "exit": "Thoát",
   "unverified": "Chưa xác thực",
   "verify_your_account": "Định danh tài khoản",
+  "verify_your_account_now": "Định danh tài khoản ngay",
   "verify_now": "Định danh ngay",
   "bank_linking": "Ngân hàng liên kết",
   "payment_code": "Mã thanh toán của tôi",
@@ -592,6 +593,7 @@
   "issuedPlace": "Nơi cấp",
   "verifySuccess": "Tài khoản của quý khách đã được xác thực thành công",
   "kycPendingVerify": "Thông tin của bạn đã được gửi đi và đang chờ duyệt",
+  "every_6_months_epay_requires_a_new_password_change_to_ensure_account_security_the_new_password_cannot_be_the_same_as_the_current_password": "Sau mỗi 6 tháng EPAY yêu cầu thay đổi mật khẩu mới, để đảm bảo sự bảo mật tài khoản. Mật khẩu mới không được trùng với mật khẩu hiện tại",
   "verifyFailed": "Xác thực không thành công",
   "updateInfo": "Cập nhật thông tin",
   "verifyAgain": "Xác thực lại",
@@ -613,5 +615,8 @@
   "address_maximum_200_characters": "Địa chỉ không được quá 200 ký tự",
   "first_and_last_name_must_not_contain_special_characters": "Họ và tên không được chứa ký tự đặc biệt",
   "guide": "Hướng dẫn",
-  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường tối đa bảo mật trước khi sử dụng ví"
+  "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "Bạn cần định danh tài khoản để tăng cường tối đa bảo mật trước khi sử dụng ví",
+  "ask_re_ekyc": "Bạn có muốn định danh tài khoản trước đó",
+  "no_and_again": "Không, tôi muốn làm lại",
+  "back_alert": "Thoát phiên đăng nhập"
 }

@@ -31,6 +31,12 @@ const OTPContainer = ({
     }, 500);
   }, [code, message]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      otpRef.current?.focusField(0);
+    }, 500);
+  }, []);
+
   return (
     <>
       <Text bold fs="h3" style={[styles.textWhite, styles.mb1, titleStyle]}>

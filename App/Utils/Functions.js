@@ -238,7 +238,7 @@ const hidePhone = phone =>
 const hideCMND = number =>
   number?.slice(0, 2) +
   '*********' +
-  number?.slice(number?.length - 2, number?.length);
+  number?.slice(number?.length - 3, number?.length);
 
 function formatCurrency(number, currency = '') {
   if (!number || isNaN(number) || Number(number) == 0) {

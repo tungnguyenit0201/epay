@@ -26,6 +26,7 @@ const InputBlock = ({
   isSelect,
   onPress,
   inputStyle,
+  disabled,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -66,6 +67,7 @@ const InputBlock = ({
           onChange={onChange}
           onFocus={_onFocus}
           onBlur={_onBlur}
+          disabled={disabled}
           {...props}
         />
       ) : (
@@ -73,8 +75,8 @@ const InputBlock = ({
           <View style={props.style}>
             <TouchableOpacity
               style={[styles.select, !!error && styles.error]}
-              onPress={onPress}
-            >
+              disabled={disabled}
+              onPress={onPress}>
               <Text style={{color: Colors.tp3}}>
                 {value ? value : props?.defaultValue}
               </Text>
@@ -84,9 +86,9 @@ const InputBlock = ({
             </TouchableOpacity>
             {rightIconBgGray && (
               <TouchableOpacity
+                disabled={disabled}
                 onPress={onPress}
-                style={[styles.blockArrowRight, styles.pos1]}
-              >
+                style={[styles.blockArrowRight, styles.pos1]}>
                 <Image
                   source={rightIconBgGray}
                   resizeMode="contain"
@@ -101,6 +103,11 @@ const InputBlock = ({
             )}
           </View>
           <View style={styles.mb1} />
+          {!!disabled && (
+            <View
+              style={[StyleSheet.absoluteFill, styles.select, styles.disabled]}
+            />
+          )}
         </>
       )}
       {rightIcon && (
@@ -110,8 +117,7 @@ const InputBlock = ({
             styles.absolute,
             label ? styles.top1 : styles.top2,
             styles.right1,
-          ]}
-        >
+          ]}>
           <Icon icon={rightIcon} resizeMode="contain" tintColor={Colors.tp3} />
         </TouchableOpacity>
       )}
@@ -119,8 +125,7 @@ const InputBlock = ({
       {!!password && (
         <Pressable
           onPress={() => setShowPassword(!showPassword)}
-          style={[styles.absolute, styles.top1, styles.right1]}
-        >
+          style={[styles.absolute, styles.top1, styles.right1]}>
           <Image
             source={showPassword ? Images.Eye : Images.EyeGray}
             style={[styles.w2, styles.h2]}
@@ -187,5 +192,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bs1,
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
+  },
+  //---------------
+  disabled: {
+    backgroundColor: Colors.tp2,
+    opacity: 0.1,
   },
 });

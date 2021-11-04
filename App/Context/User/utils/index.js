@@ -9,7 +9,7 @@ import {
   useModalSmartOTP,
 } from './smartOTP';
 import useSelectRegion from './selectRegion';
-import useNotify from './notification';
+import {useNotify, useNotifyFocus} from './notification';
 import useUserStatus from './userStatus';
 import useQRCode from './useQRCode';
 import useEmail from './email';
@@ -24,6 +24,7 @@ export {
   useSyncSmartOTP,
   useSelectRegion,
   useNotify,
+  useNotifyFocus,
   useUserStatus,
   useQRCode,
   useEmail,
