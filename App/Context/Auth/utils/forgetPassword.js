@@ -11,6 +11,7 @@ import Keychain from 'react-native-keychain';
 import useRegister from './register';
 import {Keyboard} from 'react-native';
 import {stripTags} from 'utils/Functions';
+import useLoginName from './loginName';
 
 const useForgetPassword = () => {
   const translation = useTranslation();
@@ -23,6 +24,8 @@ const useForgetPassword = () => {
   const [message, setMessage] = useState('');
   const {openCallDialog} = useRegister();
   let [showModal, setShowModal] = useState(false);
+  const {resetLoginByName} = useLoginName();
+
   const onSubmitPhone = async ({phone}) => {
     const result = await checkPhone(phone);
     const errorCode = _.get(result, 'ErrorCode', '');
@@ -95,7 +98,8 @@ const useForgetPassword = () => {
         {
           label: translation.agree,
           onPress: () => {
-            Navigator.reset(SCREEN.AUTH);
+            // Navigator.reset(SCREEN.AUTH);
+            resetLoginByName(phone);
             Keychain.setGenericPassword(phone, passwordEncrypted);
           },
         },
