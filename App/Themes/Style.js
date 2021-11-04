@@ -104,5 +104,14 @@ const styles = StyleSheet.create({
   footer: {
     height: 100,
   },
+  //----------------
+  boxShadowGray: {
+    backgroundColor: Colors.bs4,
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 0},
+    elevation: 24,
+    shadowRadius: 8,
+    borderRadius: 8,
+  },
 });
 export default styles;

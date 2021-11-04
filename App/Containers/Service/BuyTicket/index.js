@@ -14,7 +14,7 @@ import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useError} from 'context/Common/utils';
-// import { BlockShadowGray, BlockTicket, InfoLineBottom, SwitchLineBottom } from 'components/Service';
+import { BlockShadowGray, BlockTicket, InfoLineBottom, SwitchLineBottom } from 'components/Service';
 
 const ItemTypeOne = ({title, item, callback, checked}) => (
   <TouchableOpacity
@@ -158,6 +158,60 @@ const TrafficFee = () => {
           <ButtonAdd label={'Thêm đăng ký xe'}/>
         </View>
       </ScrollView> */}
+
+      {/* <ScrollView contentContainerStyle={[base.container,styles.py1]} 
+        style={base.bgWhite}>
+        <BlockShadowGray
+          callback={() => Navigator.navigate(SCREEN.EDIT_AUTO_RECHARGE)}
+          title={'Phí giao thông'} noArrow/>
+
+        <View>
+          <InputBlock
+            rightIcon={Images.Down}
+            isSelect
+            // required={!wardEmpty}
+            // value={info?.Ward}
+            // error={error.Ward}
+            // onPress={() => !wardEmpty && goRegionSelect('wards')}
+            defaultValue={'Tháng 10'}
+          />
+          <InputBlock
+            rightIcon={Images.Down}
+            isSelect
+            defaultValue={'Tháng 10'}
+          />
+        </View>
+
+        <InfoLineBottom name={'Gia hạn tự động'} 
+          data={'Gia hạn tự động'}/>
+        
+        <SwitchLineBottom name={'Gia hạn tự động'}/>
+
+        <BlockTicket 
+          arrayData={[
+            {
+              name: 'Xe',
+              data: '51G-6789',
+            },
+            {
+              name: 'Loại vé',
+              data: 'Vé tháng',
+            },
+            {
+              name: 'Giá vé',
+              data: '450.000đ',
+            },
+            {
+              name: 'Nguồn tiền',
+              data: 'Ví EPAY',
+            },
+            {
+              name: 'Tự động gia hạn',
+              switch: true,
+            },
+          ]}
+          mt={10}/>
+      </ScrollView> */}
     </>
   );
 };
@@ -236,6 +290,31 @@ const styles = StyleSheet.create({
   lineGray1: {
     height: 12,
     backgroundColor: Colors.bs2,
+  },
+
+  //layout buy ticket
+  py1: {paddingVertical: Spacing.PADDING},
+  //---------------
+  iconRight3: {
+    width: 20,
+    tintColor: Colors.tp3,
+    aspectRatio: 1,
+  },
+  //---------------
+  boxShadowGray: {
+    backgroundColor: Colors.bs4,
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 0},
+    elevation: 24,
+    shadowRadius: 8,
+    borderRadius: 8,
+  },
+  //---------------
+  boxItem2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 17,
+    paddingHorizontal: 16,
   },
 });
 

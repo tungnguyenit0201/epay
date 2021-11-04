@@ -75,7 +75,7 @@ const EditAutoReCharge = props => {
         contentContainerStyle={[styles.px1, styles.py1]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.boxShadowGray, styles.mb1]}>
+        <View style={[base.boxShadowGray, styles.mb1]}>
           <View style={styles.boxBgBlue1}>
             <View flex={1}>
               <Text fs="sm" mr={10} color={Colors.tp3}>
@@ -114,7 +114,7 @@ const EditAutoReCharge = props => {
           </View>
         </View>
 
-        <View style={[styles.boxShadowGray, styles.mb1]}>
+        <View style={[base.boxShadowGray, styles.mb1]}>
           <View style={styles.boxBgBlue1}>
             <View flex={1}>
               <Text fs="sm" mr={10} color={Colors.tp3}>
@@ -153,7 +153,7 @@ const EditAutoReCharge = props => {
           </View>
         </View>
 
-        <View style={[styles.boxShadowGray, styles.mb1]}>
+        <View style={[base.boxShadowGray, styles.mb1]}>
           <View style={styles.boxBgBlue1}>
             <View flex={1}>
               <Text fs="sm" mr={10} color={Colors.tp3}>
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   pxy1: {
     paddingHorizontal: 12,
     paddingTop: 10,
-    paddingBottom: 22,
+    paddingBottom: 20,
   },
   //-----------------
   px1: {paddingHorizontal: Spacing.PADDING},
@@ -229,15 +229,6 @@ const styles = StyleSheet.create({
     height: 24,
   },
   //-----------------
-  boxShadowGray: {
-    backgroundColor: Colors.bs4,
-    shadowOpacity: 0.2,
-    shadowOffset: {width: 0, height: 0},
-    elevation: 24,
-    shadowRadius: 8,
-    borderRadius: 8,
-  },
-  //----------------
   boxBgBlue1: {
     flexDirection: 'row',
     alignItems: 'center',

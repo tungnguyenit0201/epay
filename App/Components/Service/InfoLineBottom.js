@@ -16,10 +16,10 @@ const InfoLineBottom = ({
   mt=12,mb=12,
   widthName='48%',widthData='52%'}) => (
   <>
-    <View style={[styles.flexRow, {
+    <View flexDirection='row' style={{
       marginTop: mt,
       marginBottom: mb,
-    }]}>
+    }}>
       <View style={{width: widthName}}>
         <Text fs="h6" mr={10} color={Colors.cl3}>
           {name}
@@ -37,14 +37,5 @@ const InfoLineBottom = ({
     )}
   </>
 );
-
-const styles = StyleSheet.create({
-  flexRow: {flexDirection: 'row'},
-  //---------------
-  // wPercent1: {width: '48%'},
-  // wPercent2: {width: '52%'},
-  //---------------
-  my1: {marginVertical: 12},
-});
 
 export default InfoLineBottom;
