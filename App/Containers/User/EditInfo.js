@@ -45,7 +45,8 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}>
+        onSubmit={onUpdateUserInfo}
+      >
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -135,7 +136,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           </View>
           <View pointerEvents="none" style={styles.mb2}>
             <InputBlock
-              label="CMND / CCCD"
+              label={translation.id_card + '/' + translation.passport}
               value={
                 personalIC?.ICNumber
                   ? hideCMND(personalIC?.ICNumber)
