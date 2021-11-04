@@ -45,7 +45,8 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}>
+        onSubmit={onUpdateUserInfo}
+      >
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -88,6 +89,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     3: translation.others,
   };
 
+  let a = '1-1-1111';
   return (
     <>
       <ScrollView style={{backgroundColor: Colors.bs4}}>
@@ -105,7 +107,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <View pointerEvents="none" style={styles.mb1}>
             <InputBlock
               label="Ngày sinh"
-              value={personalInfo?.DateOfBirth?.replaceAll?.('-', '/')}
+              value={personalInfo?.DateOfBirth?.replace?.(/-/g, '/')}
               style={{
                 backgroundColor: Colors.bg1,
                 textTransform: 'uppercase',
