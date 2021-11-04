@@ -3,10 +3,12 @@ import Navigator from 'navigations/Navigator';
 import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
 import useServiceUser from 'services/user';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
+import {useTranslation} from 'context/Language';
 import _ from 'lodash';
 import {useUser} from '..';
 
 const useEmail = ({functionType} = {}) => {
+  const {agree, new_email_must_different_to_current_email} = useTranslation();
   const {setLoading} = useLoading();
   const {phone, personalInfo} = useUser();
   const {setError} = useError();
@@ -17,7 +19,7 @@ const useEmail = ({functionType} = {}) => {
     if (email === oldEmail) {
       setError({
         ErrorCode: -1,
-        ErrorMessage: 'Email mới không được trùng email hiện tại', // TODO: translate
+        ErrorMessage: new_email_must_different_to_current_email, // TODO: translate
       });
       return;
     }
@@ -29,7 +31,20 @@ const useEmail = ({functionType} = {}) => {
     const result = await emailFunction({phone, email});
     setLoading(false);
     if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-      setError(result);
+      setError({
+        ...result,
+        action: [
+          {
+            label: agree,
+            onPress: () => {
+              if (functionType === FUNCTION_TYPE.CHANGE_EMAIL_BY_EMAIL) {
+                Navigator.navigate(SCREEN.TAB_NAVIGATION);
+                Navigator.navigate(SCREEN.HOME);
+              }
+            },
+          },
+        ],
+      });
       return;
     }
     Navigator.push(SCREEN.OTP, {
