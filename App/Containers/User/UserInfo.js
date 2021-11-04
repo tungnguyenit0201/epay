@@ -284,8 +284,12 @@ const UserInfo = () => {
                 <Text fs="h6">{getStatusVerifiedText()}</Text>
               </View>
             </View>
-            {getStatusVerifiedText() === 'Đã hết hạn' && (
-              <Text underline mt={15}>
+            {getStatusVerifiedText() === PERSONAL_IC.EXPIRED && (
+              <Text
+                onPress={() => Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD)}
+                underline
+                mt={15}
+              >
                 Xác thực lại
               </Text>
             )}
