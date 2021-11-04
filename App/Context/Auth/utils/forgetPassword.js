@@ -27,7 +27,9 @@ const useForgetPassword = () => {
   const {resetLoginByName} = useLoginName();
 
   const onSubmitPhone = async ({phone}) => {
+    setLoading(true);
     const result = await checkPhone(phone);
+    setLoading(false);
     const errorCode = _.get(result, 'ErrorCode', '');
     if (
       errorCode === ERROR_CODE.SUCCESS ||
