@@ -28,7 +28,7 @@ import {useTranslation} from 'context/Language';
 import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import BlueHeader from 'components/Auth/BlueHeader';
-
+import WebView from 'components/WebView/Partial';
 const ForgetPasswordKYC = ({route}) => {
   const {phone, isNeedCheckIC, isNeedCheckBankAccount} = route?.params;
   const {onSubmitKYC, message, onCustomerSupport} = useForgetPassword();
@@ -123,7 +123,12 @@ const ForgetPasswordKYC = ({route}) => {
                     marginBottom={Spacing.PADDING}
                   />
                 )}
-                <Text style={styles.message}>{message}</Text>
+                {!!message && (
+                  <WebView
+                    style={styles.textError}
+                    source={{html: `<p class="markRed">${message}</p>`}}
+                  />
+                )}
               </ScrollView>
 
               <FooterContainer>
@@ -196,6 +201,12 @@ const styles = StyleSheet.create({
   customerCare2: {
     fontSize: Fonts.H6,
     color: Colors.tp1,
+  },
+  textError: {
+    marginTop: scale(26),
+    color: Colors.Highlight,
+    textAlign: 'center',
+    minHeight: 200,
   },
 });
 export default ForgetPasswordKYC;
