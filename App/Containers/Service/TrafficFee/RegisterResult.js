@@ -4,7 +4,6 @@ import {Header, HeaderBg, Text, Button, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
-// import { InfoLineBottom, ServiceTitle, BlockLogoBlue } from 'components/Service';
 
 import {GENDER, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';

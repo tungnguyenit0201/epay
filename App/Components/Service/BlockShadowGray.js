@@ -11,7 +11,8 @@ import {Text} from 'components';
 // import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 
-const BlockShadowGray = ({title, callback, mb=16, noArrow=false}) => (
+const BlockShadowGray = ({title, callback, 
+  text,mb=16, noArrow=false}) => (
   <TouchableOpacity
     style={[styles.boxItem1, base.boxShadowGray,
       {marginBottom: mb}]}
@@ -21,6 +22,8 @@ const BlockShadowGray = ({title, callback, mb=16, noArrow=false}) => (
       <Text size={Fonts.LG} bold mr={10}>
         {title}
       </Text>
+      {!!text && 
+      <Text size={Fonts.MD} color={Colors.tp3} mt={5}>{text}</Text>}
     </View>
 
     {!noArrow && <Image

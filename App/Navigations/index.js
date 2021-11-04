@@ -112,6 +112,13 @@ import Receipt from 'containers/User/MyOrder/Receipt';
 import ConfirmRegister from 'containers/Service/TrafficFee/ConfirmRegister';
 import CarDetail from 'containers/Service/TrafficFee/CarDetail';
 
+//S5:Buy Ticket
+import BuyTicket from 'containers/Service/BuyTicket';
+import TicketResult from 'containers/Service/BuyTicket/TicketResult';
+import ChooseVehicle from 'containers/Service/BuyTicket/ChooseVehicle';
+import ChooseStation from 'containers/Service/BuyTicket/ChooseStation';
+import ChooseTerm from 'containers/Service/BuyTicket/ChooseTerm';
+
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
   const {setLanguage} = useTranslation();
@@ -505,6 +512,19 @@ const AppNavigator = () => {
             component={ConfirmRegister}/>
           <Stack.Screen name={SCREEN.CAR_DETAIL} 
             component={CarDetail}/>
+          
+          {/* S5:Buy Ticket */}
+          <Stack.Screen name={SCREEN.BUY_TICKET} 
+            component={BuyTicket}/>
+          <Stack.Screen name={SCREEN.TICKET_RESULT} 
+            component={TicketResult}/>
+          <Stack.Screen name={SCREEN.CHOOSE_VEHICLE} 
+            component={ChooseVehicle}/>
+          <Stack.Screen name={SCREEN.CHOOSE_STATION} 
+            component={ChooseStation}/>
+          <Stack.Screen name={SCREEN.CHOOSE_TERM} 
+            component={ChooseTerm}/>
+
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

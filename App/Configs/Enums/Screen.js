@@ -105,5 +105,12 @@ const SCREEN = {
   RECEIPT: 'Receipt',
   CONFIRM_REGISTER_VEHICLE: 'ConfirmRegister',
   CAR_DETAIL: 'CarDetail',
+
+  //S5:Buy ticket
+  BUY_TICKET: 'BuyTicket',
+  TICKET_RESULT: 'TicketResult',
+  CHOOSE_VEHICLE: 'ChooseVehicle',
+  CHOOSE_STATION: 'ChooseStation',
+  CHOOSE_TERM: 'ChooseTerm',
 };
 export default SCREEN;
