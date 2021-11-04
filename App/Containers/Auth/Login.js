@@ -121,6 +121,7 @@ const Login = ({route}) => {
                   <Pressable
                     onPress={() => {
                       onChangePhone();
+                      onSetMessage('');
                       setFieldValue('password', '');
                     }}
                   >
