@@ -199,11 +199,11 @@ const getAll = async (...functionList) => {
   });
 };
 
-const calculateFee = ({cash, feeData, fixedFee, bankFee, minFee, maxFee}) => {
-  const _fixedFee = fixedFee || feeData?.FixedFee;
-  const _bankFee = bankFee || feeData?.BankFee;
-  const _minFee = minFee || feeData?.MinFee;
-  const _maxFee = maxFee || feeData?.MaxFee;
+const calculateFee = ({cash, bank}) => {
+  const _fixedFee = bank?.StaticFee || 0;
+  const _bankFee = bank?.RatioFee || 0;
+  const _minFee = bank?.MinFee || 0;
+  const _maxFee = bank?.MaxFee || 0;
 
   let total = _fixedFee + cash * _bankFee;
   return total < _minFee ? _minFee : total > _maxFee ? _maxFee : total;

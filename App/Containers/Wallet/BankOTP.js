@@ -62,7 +62,7 @@ const BankOTP = props => {
         {renderHeader()}
         {renderOTP()}
 
-        {renderTime()}
+        {/* {renderTime()} */}
       </View>
     </View>
   );
