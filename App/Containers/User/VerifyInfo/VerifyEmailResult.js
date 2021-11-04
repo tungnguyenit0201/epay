@@ -32,7 +32,7 @@ const VerifyEmailResult = ({route}) => {
   return (
     <>
       <HeaderBg>
-        <Header title={'Xác thực email'} back />
+        <Header title={'Xác thực email'} />
       </HeaderBg>
       <View style={[base.bgWhite, styles.flex1]}>
         <ScreenBackground />
