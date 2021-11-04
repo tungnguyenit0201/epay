@@ -28,7 +28,7 @@ import {useTranslation} from 'context/Language';
 import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import BlueHeader from 'components/Auth/BlueHeader';
-
+import {PHONE_CENTER} from 'configs/Constants';
 const ForgetPasswordKYC = ({route}) => {
   const {phone, isNeedCheckIC, isNeedCheckBankAccount} = route?.params;
   const {onSubmitKYC, message, onCustomerSupport} = useForgetPassword();
@@ -140,7 +140,7 @@ const ForgetPasswordKYC = ({route}) => {
                 >
                   <Text style={styles.customerCare1}>Hỗ trợ khách hàng</Text>
                   <Text bold style={styles.customerCare2}>
-                    Gọi 1900-000
+                    {translation.call + ' ' + PHONE_CENTER}
                   </Text>
                 </Pressable>
               </FooterContainer>
