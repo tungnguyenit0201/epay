@@ -45,7 +45,8 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}>
+        onSubmit={onUpdateUserInfo}
+      >
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -174,6 +175,8 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <InputBlock
             label="Địa chỉ"
             // required
+            multiline
+            autoHeight
             onChange={handleChange('Address')}
             onBlur={handleBlur('Address')}
             error={touched.Address && errors.Address}
