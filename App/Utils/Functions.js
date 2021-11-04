@@ -287,11 +287,11 @@ function fromCurrency(money) {
   if (money) {
     money = money.toString();
     let moneyString = money
-      .replaceAll(',', '')
-      .replaceAll('đ', '')
-      .replaceAll('VND', '')
-      .replaceAll('.', '')
-      .replaceAll(' ', '');
+      .replace(/,/g, '')
+      .replace(/đ/g, '')
+      .replace(/VND/g, '')
+      .replace(/./g, '')
+      .replace(/\s/g, '');
     let number = Number(moneyString);
     if (isNaN(number)) {
       return 0;
