@@ -1,7 +1,7 @@
 import {useState, useRef} from 'react';
 import useServiceAuth from 'services/auth';
 import useServiceCommon from 'services/common';
-import {ERROR_CODE, TERM_TYPE} from 'configs/Constants';
+import {ERROR_CODE, SCREEN, TERM_TYPE} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
@@ -56,13 +56,16 @@ const useRegister = () => {
       const result = await register({
         phone,
         password: passwordEncrypted,
+        // errorAction: () => Navigator?.reset(SCREEN.AUTH),//chờ epay xác nhận
       });
       setLoading(false);
       let errorCode = _.get(result, 'ErrorCode', '');
-      if (errorCode == ERROR_CODE.SUCCESS) {
+      console.log('errorCode :>> ', errorCode);
+      if (errorCode === ERROR_CODE.SUCCESS) {
         setFirstLogin(true);
         onLogin({phone, password: newPassword, firstLogin: true});
-      } else setError(result);
+      } else
+        setError({...result, onClose: () => Navigator?.reset(SCREEN.AUTH)});
       setLoading(false);
     } catch (error) {
       setLoading(false);

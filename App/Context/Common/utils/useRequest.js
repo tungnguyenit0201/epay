@@ -14,11 +14,11 @@ let baseUrl = null;
   baseUrl =
     (await AsyncStorage.getItem(ASYNC_STORAGE_KEY.COMMON.DOMAIN)) || API.ROOT;
 })();
-
+// TODO:translate
 const useRequest = () => {
   const {setError} = useError();
 
-  const handleError = (error, failure) => {
+  const handleError = (error, failure, errorAction) => {
     if (typeof failure == 'function') return failure(error);
     if (
       error?.message == 'Network Error' ||
@@ -29,6 +29,7 @@ const useRequest = () => {
       return setError({
         ErrorMessage:
           'Mất kết nối hoặc đường truyền quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoặc thử lại sau ít phút',
+        onClose: () => (errorAction ? errorAction() : true),
       });
     }
 
@@ -46,6 +47,7 @@ const useRequest = () => {
     params,
     success,
     failure,
+    errorAction,
   }) => {
     if (!baseUrl) {
       baseUrl =
@@ -58,7 +60,7 @@ const useRequest = () => {
       method,
       params,
       success,
-      failure: error => handleError(error, failure),
+      failure: error => handleError(error, failure, errorAction),
     });
   };
 

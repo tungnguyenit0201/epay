@@ -45,6 +45,10 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
       functionType,
       OtpCode: otp,
       OtpType: OTP_TYPE.EPAY,
+      errorAction: () =>
+        functionType == FUNCTION_TYPE.REGISTER_ACCOUNT
+          ? Navigator.reset?.(SCREEN.AUTH)
+          : true,
     });
     setCode('');
     setLoading(false);
@@ -91,12 +95,13 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
           return;
       }
     }
+    //other error
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
       return setError({
         ...result,
         onClose: () =>
-          _.get(result, 'ErrorCode', '') === ERROR_CODE.PHONE_IS_REGISTERED
-            ? Navigator.navigate(SCREEN.AUTH)
+          functionType == FUNCTION_TYPE.REGISTER_ACCOUNT
+            ? Navigator.reset(SCREEN.AUTH)
             : true,
       });
     }
@@ -166,6 +171,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
         let result = await genOtp({
           phone,
           functionType,
+          errorAction: () => Navigator.goBack?.(),
         });
         let errorCode = _.get(result, 'ErrorCode', '');
         if (errorCode == ERROR_CODE.SUCCESS) {

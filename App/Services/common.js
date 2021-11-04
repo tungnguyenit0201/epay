@@ -5,7 +5,7 @@ import {useRequest} from 'context/Common/utils';
 const useServiceCommon = () => {
   const {doRequest} = useRequest();
 
-  const genOtp = async ({phone, functionType}) => {
+  const genOtp = async ({phone, functionType, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.COMMON.GEN_OTP,
@@ -15,6 +15,7 @@ const useServiceCommon = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
@@ -24,6 +25,7 @@ const useServiceCommon = () => {
     functionType,
     OtpCode,
     OtpType = OTP_TYPE.EPAY,
+    errorAction,
   }) => {
     let response = null;
     await doRequest({
@@ -38,6 +40,7 @@ const useServiceCommon = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
