@@ -208,12 +208,15 @@ const useVerifyInfo = (initialValue = {}) => {
           title: strings.kycPendingVerify,
         };
       }
-      await Promise.all([
-        onUpdatePersonalInfo(updateInfo, false),
-        onUpdateUserAddress(updateInfo, false),
-        onGetAllInfo(),
-        onClearRegionData(),
-      ]);
+      // await Promise.all([
+      //   onUpdatePersonalInfo(updateInfo, false),
+      //   // onUpdateUserAddress(updateInfo, false),
+      //   onGetAllInfo(),
+      //   onClearRegionData(),
+      // ]);
+      await onUpdatePersonalInfo(updateInfo, false);
+      onGetAllInfo();
+      onClearRegionData();
     } catch (e) {
       const {ErrorMessage = strings?.unknownError} = e || {};
       resultContent = {
@@ -244,6 +247,7 @@ const useVerifyInfo = (initialValue = {}) => {
     if (eKYC) {
       const result = await extractCardInfo();
       if (result) {
+        onGetAllInfo();
         onChange('extractCardInfo', {...result});
         onContinue(screen);
       }
@@ -260,6 +264,7 @@ const useVerifyInfo = (initialValue = {}) => {
         CardId: cardInfo?.CardID,
       });
       if (result) {
+        onGetAllInfo();
         onContinue(SCREEN.VERIFY_USER_PORTRAIT);
       }
     } else {

@@ -45,8 +45,7 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}
-      >
+        onSubmit={onUpdateUserInfo}>
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -70,6 +69,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     values,
   } = useFormikContext();
   const translation = useTranslation();
+
   useEffect(() => {
     if (region?.Provincial && region?.County)
       for (const [key, value] of Object.entries(region)) {
@@ -209,6 +209,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('wards')}
             placeholder="Phường/Xã"
+            disabled={region?.wardEmpty}
           />
         </View>
       </ScrollView>

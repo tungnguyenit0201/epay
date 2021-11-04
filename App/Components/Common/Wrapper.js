@@ -74,7 +74,10 @@ const Wrapper = React.memo(
     useEffect(() => {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
-        () => true,
+        () => {
+          console.log('hardwardeBackPress');
+          return true;
+        },
       );
       return () => backHandler.remove();
     }, []);

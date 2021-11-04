@@ -43,7 +43,7 @@ const Debug = () => {
               <Text>Close</Text>
             </Pressable>
             <DomainPicker onclose={() => setShow(false)} />
-            <KYCTypePicker onclose={() => setShow(false)} />
+            {/*<KYCTypePicker onclose={() => setShow(false)} />*/}
             <Text fs="h6" bold>
               API logs:
             </Text>

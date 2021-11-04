@@ -11,7 +11,7 @@ import {HelpModal} from 'components/Auth';
 import BlueHeader from 'components/Auth/BlueHeader';
 import {useUser} from 'context/User';
 import {scale} from 'utils/Functions';
-import {FUNCTION_TYPE} from 'configs/Constants';
+
 const OTP = ({route}) => {
   const {onChangePhone} = useAuth();
   const {token: isLoggedIn} = useUser();
@@ -34,8 +34,7 @@ const OTP = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}
-    >
+      style={styles.iconRight}>
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.bs4}
@@ -52,7 +51,9 @@ const OTP = ({route}) => {
       code={code}
       countdown={countdown}
       resentOTP={resentOTP}
-      onChangePhone={isLoggedIn ? null : onChangePhone}
+      onChangePhone={
+        isLoggedIn ? null : () => onChangePhone(route?.params?.functionType)
+      }
       // TODO: translate
       label={
         route?.params?.email
@@ -75,8 +76,7 @@ const OTP = ({route}) => {
               styles.wrap,
               base.bgWhite,
               {paddingTop: scale(28), flex: 1},
-            ]}
-          >
+            ]}>
             {renderOTPContainer()}
           </View>
         </>
@@ -99,8 +99,7 @@ const OTP = ({route}) => {
       <View style={styles.wrapCalMe}>
         <TouchableOpacity
           style={styles.callMe}
-          onPress={() => setShowModal(true)}
-        >
+          onPress={() => setShowModal(true)}>
           <Image source={Images.Phone} style={styles.iconPhone} />
           <Text mb={-3} centered fw="700">
             {translation.call_epay}

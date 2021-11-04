@@ -26,6 +26,7 @@ const CapturePicture = ({
   draft,
   verifyParams,
   type,
+  mountShowCamera,
 }) => {
   const {width, height} = useWindowDimensions();
   const {image, camera, showCamera, loading, setShowCamera, capturePicture} =
@@ -46,6 +47,9 @@ const CapturePicture = ({
       onDropImage(SDKImage);
     }
   }, [SDKImage, eKYC]);
+  useEffect(() => {
+    mountShowCamera && captureFaceImage();
+  }, []);
 
   const KYCFunction = useMemo(() => {
     if (eKYC) {

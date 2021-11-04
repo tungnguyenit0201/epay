@@ -50,8 +50,12 @@ const useAuth = () => {
     }
   };
 
-  const onChangePhone = () => {
-    Navigator.navigate(SCREEN.AUTH);
+  const onChangePhone = functionType => {
+    Navigator.navigate(
+      functionType === FUNCTION_TYPE.FORGOT_PASS
+        ? SCREEN.FORGET_PASSWORD
+        : SCREEN.AUTH,
+    );
   };
 
   const onForgetPassword = () => {
@@ -63,6 +67,7 @@ const useAuth = () => {
     password,
     encrypted = false,
     firstLogin = false,
+    resetForm,
   }) => {
     setLoading(true);
     const passwordEncrypted = encrypted ? password : await sha256(password);
@@ -124,19 +129,23 @@ const useAuth = () => {
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
-        await setToken(result?.Token);
+        await setToken(result?.Token || '');
         dispatch({type: 'UPDATE_TOKEN', data: result?.Token});
-        onGetAllInfo();
-        onGetWalletInfo();
-        onGetConnectedBank();
         return setError({
           ...result,
           onClose: () => {
+            resetForm();
             Navigator.navigate(SCREEN.NEW_PASSWORD, {oldPassword: password});
           },
         });
       default:
-        return setError(result);
+        return setError({
+          ...result,
+          onClose: () => {
+            resetForm();
+            Navigator.reset(SCREEN.AUTH);
+          },
+        });
     }
   };
 

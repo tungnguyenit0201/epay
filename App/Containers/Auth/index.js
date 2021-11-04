@@ -65,6 +65,7 @@ const Auth = () => {
               <TextInput
                 placeholder={translation.enter_phone_number}
                 numeric
+                phone
                 onChange={handleChange('phone')}
                 onBlur={handleBlur('phone')}
                 error={touched.phone && translation[errors.phone]}

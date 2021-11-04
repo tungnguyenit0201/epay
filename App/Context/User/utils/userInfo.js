@@ -109,6 +109,10 @@ const useUserInfo = type => {
         dispatch({type: 'SET_PERSONAL_ADDRESS', data: result?.AddressInfo});
         dispatch({type: 'SET_PERSONAL_IC', data: result?.ICInfor});
         dispatch({
+          type: 'SET_IDENTITY_CARD_INFO',
+          data: result?.IdentityCardInfor,
+        });
+        dispatch({
           type: 'SET_PERSONAL_INFO',
           personalInfo: result?.PersonalInfo,
         });
@@ -260,7 +264,11 @@ const useUserInfo = type => {
     result?.ErrorCode && setError(result);
   };
 
-  const onUpdatePassword = async ({oldPassword, newPassword}) => {
+  const onUpdatePassword = async ({
+    oldPassword,
+    newPassword,
+    callbackScreen = SCREEN.TAB_NAVIGATION,
+  }) => {
     setLoading(true);
     const [oldPasswordEncrypted, newPasswordEncrypted, phone] = await getAll(
       async () => await sha256(oldPassword),
@@ -277,9 +285,11 @@ const useUserInfo = type => {
       setError({
         ErrorCode: -1,
         ErrorMessage: translation.password_changed_successfully,
+        onClose: () => {
+          Navigator.navigate(callbackScreen);
+        },
       });
       Keychain.setGenericPassword(phone, newPasswordEncrypted);
-      Navigator.navigate(SCREEN.TAB_NAVIGATION);
       return;
     }
     setError(result);

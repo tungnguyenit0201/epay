@@ -6,8 +6,9 @@ import {
   View,
   TouchableOpacity,
   useWindowDimensions,
+  Pressable,
 } from 'react-native';
-import {Text, Header, Button, HeaderBg} from 'components';
+import {Text, Header, Button, HeaderBg, Icon} from 'components';
 import {Images, Colors, Spacing} from 'themes';
 import Progress from 'components/User/VerifyInfo/Progress';
 import {useTranslation} from 'context/Language';
@@ -15,7 +16,8 @@ import Modal from 'react-native-modal';
 import Row from 'components/Common/Row';
 import Col from 'components/Common/Col';
 import {scale} from 'utils/Functions';
-
+import Navigator from 'navigations/Navigator';
+import {SCREEN} from 'configs/Constants';
 const VerifyUserInfo = ({
   children,
   disableButton,
@@ -81,8 +83,16 @@ const VerifyUserInfo = ({
   return (
     <View style={styles.wrapper}>
       <HeaderBg style={styles.header}>
+        <View style={styles.back}></View>
         <Header
           back
+          onPressBack={() => {
+            if (step === 3) {
+              Navigator.navigate(SCREEN.USER_INFO);
+            } else {
+              Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
+            }
+          }}
           title={translation?.account_verification}
           // renderRightComponent={() => {
           //   if (showInstruction) {
@@ -316,6 +326,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.16,
     shadowRadius: 8,
     elevation: 24,
+  },
+  back: {
+    paddingHorizontal: Spacing.PADDING / 2,
+    position: 'absolute',
+    left: 20,
+    top: 48,
   },
   bottom: {
     backgroundColor: Colors.bs4,
