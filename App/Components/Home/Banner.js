@@ -38,10 +38,7 @@ const Banner = ({
         },
       ]}
     >
-      <TouchableOpacity
-        style={[styles.item, styleItem]}
-        onPress={() => openLink(item?.RedirectUrl)}
-      >
+      <TouchableOpacity style={[styles.item, styleItem]} onPress={() => {}}>
         <Image source={{uri: item?.ImageUrl}} style={[styles.img, styleImg]} />
         <View style={styles.wrapText}>
           <Text fs="h6" fw="900" color={Colors.bs4}>

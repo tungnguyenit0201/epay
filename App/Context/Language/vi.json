@@ -540,8 +540,8 @@
   },
   "acceptTerm": {
     "when": "Khi nhấn Nạp tiền, bạn đã xác nhận rằng Bạn đồng ý với",
-    "contract": "Thoả thuận Người sử dụng, Chính sách quyền riêng tư",
-    "topup": "Chính sách nạp tiền",
+    "contract": " Thoả thuận Người sử dụng, Chính sách quyền riêng tư",
+    "topup": " Chính sách nạp tiền ",
     "and": " và",
     "of": "của Epay"
   },
