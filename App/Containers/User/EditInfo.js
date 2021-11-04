@@ -89,7 +89,6 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
     3: translation.others,
   };
 
-  let a = '1-1-1111';
   return (
     <>
       <ScrollView style={{backgroundColor: Colors.bs4}}>
