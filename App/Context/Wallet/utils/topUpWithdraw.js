@@ -1,5 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import Navigator from 'navigations/Navigator';
+import {MapBankRoutes} from 'containers/Wallet/Bank/MapBankFlow';
 import {
   CONFIRM_METHODS,
   ERROR_CODE,
@@ -29,9 +30,10 @@ import {useTranslation} from 'context/Language';
 import {useModalSmartOTP, useSmartOTP} from 'context/User/utils';
 import TRANS_STATUS from 'configs/Enums/TransStatus';
 import Keychain from 'react-native-keychain';
-import TouchID from 'react-native-touch-id';
+import TouchID from 'rn-touch-id';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
 import {sha256} from 'react-native-sha256';
+import {isEmpty} from 'lodash';
 
 const DEFAULT_TIMEOUT = 60;
 
@@ -43,7 +45,6 @@ const useTopUpWithdraw = ({transType}) => {
     bank: null,
     inputValue: '',
     transFormType: null,
-    fee: null,
   });
   const {dispatch} = useWallet();
   const {onCheckLimitCashOut} = useCashOut();
@@ -55,6 +56,13 @@ const useTopUpWithdraw = ({transType}) => {
         : translation.topup.cashInMinError;
 
     inputRef?.current?.setError(errMsg.replace('%', formatCurrency(10000)));
+    dispatch({
+      type: 'UPDATE_TRANSACTION_INFO',
+      data: {
+        transType,
+      },
+    });
+
     return () => {};
   }, []);
 
@@ -86,21 +94,19 @@ const useTopUpWithdraw = ({transType}) => {
         bank: null,
         inputValue: '',
         transFormType: null,
-        fee: null,
       };
     } else {
-      let {bank, transFormType, fee} = props;
+      let {bank, transFormType} = props;
       contentRef.current.bank = bank;
       contentRef.current.transFormType = transFormType;
-      contentRef.current.fee = fee;
     }
 
     onCheckContinueEnabled();
   };
 
   const onCheckContinueEnabled = () => {
-    const {bank, inputValue, fee} = contentRef.current || {};
-    const {MinLimit, MaxLimit, DailyLimit} = fee || {};
+    const {bank, inputValue} = contentRef.current || {};
+    const {MinLimit, MaxLimit} = bank || {};
     let validMoney = false;
 
     const minErr =
@@ -135,7 +141,7 @@ const useTopUpWithdraw = ({transType}) => {
   };
 
   const onContinue = async () => {
-    const {bank, inputValue, transFormType, fee} = contentRef.current;
+    const {bank, inputValue, transFormType} = contentRef.current;
     switch (transType) {
       case TRANS_TYPE.CashOut: {
         const canCashout = await onCheckLimitCashOut();
@@ -149,7 +155,6 @@ const useTopUpWithdraw = ({transType}) => {
               transFormType,
               amount: inputValue,
               bank,
-              fee,
             },
           });
           Navigator.push(SCREEN.CONFIRMATION, {transType});
@@ -164,7 +169,6 @@ const useTopUpWithdraw = ({transType}) => {
             transFormType,
             amount: inputValue,
             bank,
-            fee,
           },
         });
         Navigator.push(SCREEN.CONFIRMATION);
@@ -186,18 +190,16 @@ const useTopUpWithdraw = ({transType}) => {
 const useConfirmation = () => {
   const translation = useTranslation();
   const {transaction} = useWallet();
-  const {phone} = useUser();
-  const {setError} = useError();
 
-  const {transType, bank, fee, amount} = transaction;
+  const {transType, bank, amount} = transaction;
   const transTypeText =
     transType === TRANS_TYPE.CashIn ? translation.top_up : translation.withdraw;
   const sourceTitle =
     transType === TRANS_TYPE.CashIn
-      ? transaction.topup.moneySource
+      ? translation.topup.moneySource
       : 'Ngân hàng nhận tiền'; //TODO: translate
   const enableSourcePicker = transType === TRANS_TYPE.CashIn;
-  const feeValue = calculateFee({cash: amount, feeData: fee});
+  const feeValue = calculateFee({cash: amount, bank});
   const total = feeValue + amount;
   const feeDes =
     feeValue == 0
@@ -212,11 +214,11 @@ const useConfirmation = () => {
       value: formatCurrency(amount, translation.topup.currency),
     },
     {
-      name: transaction.fee,
+      name: translation.fee,
       value: feeDes,
     },
     {
-      name: transaction.total,
+      name: translation.total,
       value: formatCurrency(total, translation.topup.currency),
       bold: true,
     },
@@ -340,24 +342,8 @@ const useOTPBySmartOTP = () => {
 const useOTPByBankOTP = () => {
   const {transaction} = useWallet();
   const [code, setCode] = useState('');
-  const [time, setTime] = useState(DEFAULT_TIMEOUT);
   const {transType} = transaction;
-  const {onCashInConfirmOTP, onRetrySendBankOTP} = useCashIn();
-
-  useEffect(() => {
-    let interval = null;
-    interval = setInterval(() => {
-      if (time != 0) {
-        setTime(time - 1);
-      } else {
-        interval && clearInterval(interval);
-        onRetry();
-      }
-    }, 1000);
-    return () => {
-      interval && clearInterval(interval);
-    };
-  }, [time]);
+  const {onCashInConfirmOTP} = useCashIn();
 
   const onCodeFilled = async code => {
     switch (transType) {
@@ -368,16 +354,11 @@ const useOTPByBankOTP = () => {
     }
   };
 
-  const onRetry = async () => {
-    await onRetrySendBankOTP();
-    setTime(DEFAULT_TIMEOUT);
-  };
-
   const onCodeChanged = async value => {
     setCode(value);
   };
 
-  return {code, time, onCodeChanged, onCodeFilled};
+  return {code, onCodeChanged, onCodeFilled};
 };
 
 const useTransaction = () => {
@@ -484,7 +465,7 @@ const useCashIn = () => {
   const {onShowModal: onShowModalPassword} = useModalPassword();
   const {cashIn, cashInConfirm, cashInNapas} = useServiceWallet();
   const {bank, amount, transType, ConfirmType, TransCode} = transaction;
-  const {BankConnectId, BankId, CardNumber, CardHolder, CardIssueDate} =
+  const {SourceId, BankId, CardNumber, CardHolder, CardIssueDate, BankCode} =
     bank || {};
   const cashInRef = useRef({
     ConfirmType,
@@ -492,9 +473,10 @@ const useCashIn = () => {
   });
 
   const onCashIn = async () => {
-    const ConnectionType = transaction?.bank?.ConnectionType;
-
-    switch (ConnectionType) {
+    const SourceType = transaction?.bank?.SourceType;
+    console.log(SourceType);
+    console.log(JSON.stringify(transaction.bank));
+    switch (SourceType) {
       case BANK_LINKED_TYPE.CONNECTED:
         onCashInConnectedBank();
         break;
@@ -510,21 +492,39 @@ const useCashIn = () => {
       phone,
       Amount: amount,
       BankId,
-      CardNumber,
-      CardHolder,
-      CardIssueDate,
-      CardConnectId: BankConnectId,
+      CardNumber: '',
+      CardHolder: '',
+      CardIssueDate: '',
+      CardConnectId: SourceId,
       IsSaveCard: 0,
-      IsPayment: 0,
-      PaymentPartnerCode: '',
-      BusinessType: '',
     });
     setLoading(false);
 
-    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
+    if (result?.ErrorCode !== ERROR_CODE.SUCCESS || isEmpty(result?.Data)) {
       setError(result);
       return;
     }
+
+    Navigator.push?.(SCREEN.MAP_BANK_FLOW, {
+      screen: MapBankRoutes.BankWebConfirm,
+      params: {
+        napasInfo: {
+          transCode: result?.TransCode,
+          bankId: BankId,
+          bankCode: BankCode,
+          cardNumber: CardNumber,
+          orderId: result?.OrderId,
+          orderAmount: result?.OrderAmount,
+          orderReference: result?.OrderReference,
+          apiOperation: result?.ApiOperation,
+          dataKey: result?.DataKey,
+          napasKey: result?.NapasKey,
+        },
+        onBackOtp: () => {
+          return true;
+        },
+      },
+    });
   };
 
   const onCashInConnectedBank = async () => {
@@ -665,20 +665,9 @@ const useCashIn = () => {
     });
   };
 
-  //Currently only for cash in connected bank
-  const onRetrySendBankOTP = async () => {
-    let result = await onCashInToGetConfirmMethod();
-    if (result?.ErrorCode !== ERROR_CODE.SUCCESS) {
-      setError(result);
-      return;
-    }
-    return true;
-  };
-
   return {
     onCashIn,
     onCashInOTP,
-    onRetrySendBankOTP,
     onCashInConfirmOTP,
   };
 };

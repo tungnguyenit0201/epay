@@ -13,7 +13,7 @@ import Keychain from 'react-native-keychain';
 import {useBankInfo, useWalletInfo} from 'context/Wallet/utils';
 import useLoginName from './loginName';
 import {stripTags} from 'utils/Functions';
-
+import {PHONE_CENTER} from 'configs/Constants';
 const useAuth = () => {
   const [message, setMessage] = useState('');
   const {setLoading} = useLoading();
@@ -92,7 +92,7 @@ const useAuth = () => {
             text: result?.ErrorMessage
               ? stripTags(result.ErrorMessage)
               : translation.you_have_entered_the_wrong_password_more_than_3_times_please_come_back_in_1_minute,
-            hotline: '1900-0000',
+            hotline: PHONE_CENTER,
           },
         });
       case ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED:
@@ -126,6 +126,7 @@ const useAuth = () => {
         return;
 
       case ERROR_CODE.PASSWORD_CHANGE_REQUIRED_AFTER_LONG_TIME_NO_CHANGE:
+        //chỉ hoạt động với các tài khoản đã xác thực
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
@@ -134,7 +135,6 @@ const useAuth = () => {
         return setError({
           ...result,
           onClose: () => {
-            resetForm();
             Navigator.navigate(SCREEN.NEW_PASSWORD, {oldPassword: password});
           },
         });
@@ -142,7 +142,7 @@ const useAuth = () => {
         return setError({
           ...result,
           onClose: () => {
-            resetForm();
+            resetForm?.();
             Navigator.reset(SCREEN.AUTH);
           },
         });

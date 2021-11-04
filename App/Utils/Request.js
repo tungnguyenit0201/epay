@@ -86,6 +86,13 @@ async function request({
       'Content-Type': 'application/json',
     };
   }
+  //Giả lập mất kết nối internet
+  // if (url?.search('create_account') != -1) {
+  //   console.log('create_account');
+  //   return failure({
+  //     message: 'Network Error',
+  //   });
+  // }
 
   if (typeof requestMethod[method] === 'function') {
     try {

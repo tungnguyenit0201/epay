@@ -17,9 +17,11 @@ import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
 import CONFIRM_METHODS from './Enums/ConfirmMethod';
+import APP_CONFIG from 'configs/Enums/AppConfig';
 import QR_PAYMENT_TYPE from './Enums/QRPaymentType';
-
+const PHONE_CENTER = '0243252336';
 export {
+  APP_CONFIG,
   TEXT,
   SCREEN,
   ERROR_CODE,
@@ -40,4 +42,5 @@ export {
   TRANS_DETAIL,
   CONFIRM_METHODS,
   QR_PAYMENT_TYPE,
+  PHONE_CENTER,
 };

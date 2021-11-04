@@ -45,7 +45,7 @@ export default function (props) {
   const {personalIC} = userInfo || {};
   const errorMessage = 'Vui lòng nhập thông tin số thẻ/tài khoản';
   const [err, setShowErr] = useState('');
-  const [selectedIc, setSelectedIc] = useState({ICInfo: optionKyc?.data});
+  const [selectedIc, setSelectedIc] = useState(optionKyc);
 
   useEffect(() => {
     return Keyboard?.dismiss?.();
@@ -86,12 +86,12 @@ export default function (props) {
     const isValid = validateInfo?.();
     onChange('BankAccount', bankAccount);
     if (isValid) {
-      if (selectedIc?.ICInfo) {
+      if (selectedIc?.data) {
         props?.navigation?.push?.(SCREEN.MAP_BANK_FLOW, {
           screen: MapBankRoutes.BankLinkKYCInfo,
           params: {
             ...params,
-            optionKyc: selectedIc?.ICInfo,
+            optionKyc: selectedIc,
           },
         });
       } else {
@@ -137,8 +137,7 @@ export default function (props) {
         style={[
           styles.shadow,
           {backgroundColor: isSelected ? Colors.bg1 : Colors.bs4},
-        ]}
-      >
+        ]}>
         <View style={{flexDirection: 'row'}}>
           <View flex={1}>
             <Text style={styles.subTitle}>{nameText}</Text>
@@ -178,8 +177,8 @@ export default function (props) {
   const renderListKYCOptions = ICBankInfor => {
     if (!Array.isArray(ICBankInfor) && typeof ICBankInfor === 'object') {
       const info = {
-        title: optionKyc?.data?.Name || personalIC.ICFullName,
-        number: optionKyc?.data?.Number,
+        title: optionKyc?.data?.FullName || personalIC.ICFullName,
+        number: optionKyc?.CardNumber,
         // type:
         isSelected: true,
       };
@@ -188,14 +187,15 @@ export default function (props) {
     } else {
       return ICBankInfor?.map?.((item, index) => {
         const {ICInfo} = item;
-
+        const {FullName: Name, ICType, CardNumber} = item || {};
         const info = {
-          title: ICInfo?.Name,
-          number: ICInfo?.Number,
-          isSelected: selectedIc?.ICInfo?.Number === ICInfo?.Number,
-          icLabel: getICLabel(ICInfo.Type),
+          title: Name,
+          number: CardNumber || ICInfo?.Number,
+          isSelected: selectedIc?.CardNumber === ICInfo?.CardNumber,
+          icLabel: getICLabel(ICType),
           callback: () => setSelectedIc(item),
           keyExtractor: 'ic' + index,
+          // data:item
         };
         return renderKYCCard(info);
       });
@@ -252,8 +252,7 @@ export default function (props) {
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {renderBankInfo()}
         {renderBankInput()}
         {renderListKYCOptions(icInfo)}

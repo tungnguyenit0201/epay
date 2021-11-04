@@ -31,7 +31,7 @@ const useServiceAuth = () => {
     return response;
   };
 
-  const register = async ({phone, password}) => {
+  const register = async ({phone, password, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.AUTH.REGISTER,
@@ -40,6 +40,7 @@ const useServiceAuth = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
