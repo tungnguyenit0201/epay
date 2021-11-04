@@ -175,6 +175,8 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <InputBlock
             label="Địa chỉ"
             // required
+            multiline
+            autoHeight
             onChange={handleChange('Address')}
             onBlur={handleBlur('Address')}
             error={touched.Address && errors.Address}
