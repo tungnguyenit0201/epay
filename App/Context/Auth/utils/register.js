@@ -1,7 +1,7 @@
 import {useState, useRef} from 'react';
 import useServiceAuth from 'services/auth';
 import useServiceCommon from 'services/common';
-import {ERROR_CODE, SCREEN, TERM_TYPE} from 'configs/Constants';
+import {ERROR_CODE, PHONE_CENTER, TERM_TYPE, SCREEN} from 'configs/Constants';
 import _ from 'lodash';
 import Navigator from 'navigations/Navigator';
 import {sha256} from 'react-native-sha256';
@@ -42,7 +42,7 @@ const useRegister = () => {
 
   const openCallDialog = () => {
     try {
-      Linking.openURL('tel:19000000');
+      Linking.openURL('tel:' + PHONE_CENTER);
     } catch {}
   };
 

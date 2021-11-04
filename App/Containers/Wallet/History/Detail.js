@@ -3,6 +3,7 @@ import {useTranslation} from 'context/Language';
 import React, {useState, useCallback, useEffect} from 'react';
 import DashedLine from 'react-native-dashed-line';
 import LinearGradient from 'react-native-linear-gradient';
+import {PHONE_CENTER} from 'configs/Constants';
 import {
   ScrollView,
   View,
@@ -307,7 +308,7 @@ const DetailHistory = ({route}) => {
           >
             <TouchableOpacity
               style={[styles.flexRow]}
-              onPress={() => Linking.openURL('tel:19000000')}
+              onPress={() => Linking.openURL('tel:' + PHONE_CENTER)}
             >
               <View style={[styles.flexRow, styles.flex1, styles.pr1]}>
                 <Icon
@@ -320,7 +321,7 @@ const DetailHistory = ({route}) => {
                 </Text>
               </View>
               <Text color={Colors.bs4} bold>
-                1900-0000
+                {PHONE_CENTER}
               </Text>
             </TouchableOpacity>
           </LinearGradient>

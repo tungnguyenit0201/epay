@@ -136,7 +136,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           </View>
           <View pointerEvents="none" style={styles.mb2}>
             <InputBlock
-              label="CMND / CCCD"
+              label={translation.id_card + '/' + translation.passport}
               value={
                 personalIC?.ICNumber
                   ? hideCMND(personalIC?.ICNumber)
@@ -175,6 +175,8 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <InputBlock
             label="Địa chỉ"
             // required
+            multiline
+            autoHeight
             onChange={handleChange('Address')}
             onBlur={handleBlur('Address')}
             error={touched.Address && errors.Address}
