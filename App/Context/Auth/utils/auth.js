@@ -126,6 +126,7 @@ const useAuth = () => {
         return;
 
       case ERROR_CODE.PASSWORD_CHANGE_REQUIRED_AFTER_LONG_TIME_NO_CHANGE:
+        //chỉ hoạt động với các tài khoản đã xác thực
         setDefaultHeaders({
           Authorization: `Bearer ${result?.Token}`,
         });
@@ -134,7 +135,6 @@ const useAuth = () => {
         return setError({
           ...result,
           onClose: () => {
-            resetForm();
             Navigator.navigate(SCREEN.NEW_PASSWORD, {oldPassword: password});
           },
         });
@@ -142,7 +142,7 @@ const useAuth = () => {
         return setError({
           ...result,
           onClose: () => {
-            resetForm();
+            resetForm?.();
             Navigator.reset(SCREEN.AUTH);
           },
         });

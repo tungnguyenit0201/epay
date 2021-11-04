@@ -17,7 +17,7 @@ const useServiceUser = () => {
     return response;
   };
 
-  const updatePersonalInfo = async ({phone, personalInfo}) => {
+  const updatePersonalInfo = async ({phone, personalInfo, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.USER.UPDATE_PERSONAL_INFO,
@@ -26,6 +26,7 @@ const useServiceUser = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
