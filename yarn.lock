@@ -11772,11 +11772,6 @@ react-native-text-size@4.0.0-rc.1:
   resolved "https://registry.yarnpkg.com/react-native-text-size/-/react-native-text-size-4.0.0-rc.1.tgz#1e048d345dd6a5a8e1269e0585c1a5948c478da5"
   integrity sha512-CysqjU2jK6Yc+a+kEI222pUyTY2ywcU2HqbFqf1KHymW6OPTdvBBHqbEJKL0QiLhQaFYDbqicM+h990s9TP00g==
 
-react-native-touch-id@^4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/react-native-touch-id/-/react-native-touch-id-4.4.1.tgz#8b1bb2d04c30bac36bb9696d2d723e719c4a8b08"
-  integrity sha512-1jTl8fC+0fxvqegy/XXTyo6vMvPhjzkoDdaqoYZx0OH8AT250NuXnNPyKktvigIcys3+2acciqOeaCall7lrvg==
-
 react-native-ui-lib@^5.27.0:
   version "5.30.2"
   resolved "https://registry.yarnpkg.com/react-native-ui-lib/-/react-native-ui-lib-5.30.2.tgz#a02a57f1da2e3f8dbe14d554c01ecce246b23909"
@@ -12392,6 +12387,11 @@ rn-qr-generator@^1.1.7:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.2.0.tgz#c604f3c1379652b65c697a4b19c9a696bc60e96e"
   integrity sha512-eymfK0yHZ//iEz9WhTA39jHYZzH4h8uBFRgDVxpr/JBKLp0gvjkQF0chX5lwVtc6MYK97cWeJ8SDsLHR2Ti2lw==
+
+rn-touch-id@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rn-touch-id/-/rn-touch-id-1.0.0.tgz#2abfb6d1b14a0cbe1ebcb41ea6c916d3ac073865"
+  integrity sha512-V41ZOudzIbHn72QA0B+HHMJxl1Rqd9WlAP7Hx7RGKw0URgMpKnt+bUvt3I3pl1gQpYkLu417lxLgsRyE6GUZcw==
 
 roarr@^2.15.3:
   version "2.15.4"
