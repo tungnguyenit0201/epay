@@ -1,5 +1,10 @@
 import {useEffect, useState, useRef} from 'react';
-import {ERROR_CODE, FUNCTION_TYPE, SCREEN} from 'configs/Constants';
+import {
+  ERROR_CODE,
+  FUNCTION_TYPE,
+  PHONE_CENTER,
+  SCREEN,
+} from 'configs/Constants';
 import {AppState, Linking} from 'react-native';
 import useServiceCommon from 'services/common';
 import OTP_TYPE from 'configs/Enums/OTPType';
@@ -14,7 +19,6 @@ import {useCommon} from 'context/Common';
 import {useTranslation} from 'context/Language';
 import {stripTags} from 'utils/Functions';
 import moment from 'moment';
-
 const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   const {config} = useCommon();
   const [errorMessage, setErrorMessage] = useState(null);
@@ -86,7 +90,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
               text:
                 stripTags(result?.ErrorMessage) ||
                 translation.the_information_entered_is_incorrect_please_call_the_operator_if_you_need_assistance,
-              hotline: '1900-0000',
+              hotline: PHONE_CENTER,
             },
           });
         default:
@@ -199,7 +203,7 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
   };
   const openCallDialog = () => {
     try {
-      Linking.openURL('tel:19000000');
+      Linking.openURL('tel:' + PHONE_CENTER);
     } catch {}
   };
 
