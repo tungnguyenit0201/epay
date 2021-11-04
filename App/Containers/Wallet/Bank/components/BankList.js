@@ -30,8 +30,7 @@ const BankItem = ({title, icon, item, callback}) => (
     style={styles.alignCenter}
     onPress={() => {
       callback?.(item);
-    }}
-  >
+    }}>
     <View style={styles.boxCirle1}>
       <Image
         source={icon}
@@ -178,15 +177,19 @@ const BankList = forwardRef((props, ref) => {
   const onPressBankLink = async item => {
     try {
       const icInfor = await onGetIcInfor(item?.BankId);
-      if (Array.isArray(icInfor?.result) && icInfor?.result.length > 0) {
+      if (Array.isArray(icInfor?.result) && icInfor?.result?.length > 0) {
         let formatIcInfo = [];
-
         icInfor?.result?.forEach((item, index) => {
-          const {ICInfo} = item || {};
-          const {Number, Type} = ICInfo || {};
+          const {
+            ICInfo,
+            FullName,
+            ICType: Type,
+            CardNumber: Number,
+          } = item || {};
+          // const {Number, Type} = ICInfo || {};
           const IDNumber = censorCardNumber(Number);
           const label = getICLabel(Type) + IDNumber;
-          const kycInfo = {label: label, value: index + 1, data: ICInfo};
+          const kycInfo = {label: label, value: index + 1, data: item};
           formatIcInfo.push(kycInfo);
         });
 

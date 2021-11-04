@@ -105,6 +105,9 @@ import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
+import MyOrder from 'containers/User/MyOrder';
+import DetailOrder from 'containers/User/MyOrder/Detail';
+import Receipt from 'containers/User/MyOrder/Receipt';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -483,6 +486,10 @@ const AppNavigator = () => {
           />
 
           <Stack.Screen name={SCREEN.AUTO_WITHDRAW} component={AutoWithdraw} />
+
+          <Stack.Screen name={SCREEN.MY_ORDER} component={MyOrder} />
+          <Stack.Screen name={SCREEN.ORDER_DETAIL} component={DetailOrder} />
+          <Stack.Screen name={SCREEN.RECEIPT} component={Receipt} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
