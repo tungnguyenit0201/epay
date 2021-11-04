@@ -32,7 +32,8 @@ import WebView from 'components/WebView/Partial';
 import {PHONE_CENTER} from 'configs/Constants';
 const ForgetPasswordKYC = ({route}) => {
   const {phone, isNeedCheckIC, isNeedCheckBankAccount} = route?.params;
-  const {onSubmitKYC, message, onCustomerSupport} = useForgetPassword();
+  const {onSubmitKYC, message, onCustomerSupport, onClearMessage} =
+    useForgetPassword();
   const translation = useTranslation();
 
   // TODO: Translate
@@ -51,8 +52,7 @@ const ForgetPasswordKYC = ({route}) => {
             ? forgetPasswordKYCBankSchema
             : forgetPasswordKYCSchema
         }
-        onSubmit={values => onSubmitKYC({...values, phone})}
-      >
+        onSubmit={values => onSubmitKYC({...values, phone})}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -64,6 +64,7 @@ const ForgetPasswordKYC = ({route}) => {
           values,
         }) => {
           const handleChange = field => value => {
+            onClearMessage?.();
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
           };
@@ -73,20 +74,17 @@ const ForgetPasswordKYC = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}
-              >
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
                   title={'Xác nhận thông tin cá nhân'}
                   titleMb={Spacing.PADDING * 2}
-                  //   text={
-                  //     translation.password_for_account_security_and_transaction_confirmation_at_checkout
-                  //   }
+                  text={`Vui lòng nhập thông tin ${'CMND/CCCD'} đã xác thực với ví`} // TODO: translate
                 />
                 <TextInput
                   required
                   onChange={handleChange('icNumber')}
                   onBlur={handleBlur('icNumber')}
-                  placeholder={translation.enter_id_code}
+                  placeholder={'Nhập số GTTT'} // TODO: translate
                   error={
                     touched.icNumber &&
                     (translation[errors.icNumber] || errors.icNumber)
@@ -142,8 +140,7 @@ const ForgetPasswordKYC = ({route}) => {
                 />
                 <Pressable
                   style={styles.outline}
-                  onPress={() => onCustomerSupport({phone})}
-                >
+                  onPress={() => onCustomerSupport({phone})}>
                   <Text style={styles.customerCare1}>Hỗ trợ khách hàng</Text>
                   <Text bold style={styles.customerCare2}>
                     {translation.call + ' ' + PHONE_CENTER}

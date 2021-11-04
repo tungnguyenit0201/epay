@@ -141,6 +141,10 @@ const useForgetPassword = () => {
     });
   };
 
+  const onClearMessage = () => {
+    setMessage('');
+  };
+
   return {
     onSubmitPhone,
     onNewPassword,
@@ -152,6 +156,7 @@ const useForgetPassword = () => {
     onSubmitKYC,
     message,
     onCustomerSupport,
+    onClearMessage,
   };
 };
 

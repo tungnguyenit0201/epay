@@ -105,7 +105,7 @@ const useTouchID = ({onSuccess, isMount = true}) => {
         const errorCode = Platform.OS === 'ios' ? error?.name : error?.code;
         switch (errorCode) {
           case 'LAErrorSystemCancel':
-            forceShow && onTouchID({passcode, forceShow: true});
+            forceShow && onTouchID({passcode, forceShow});
             return;
           case 'LAErrorTouchIDNotEnrolled':
             showNotEnrolledError();
@@ -120,18 +120,14 @@ const useTouchID = ({onSuccess, isMount = true}) => {
   };
 
   const showNotEnrolledError = (isChanged = false) => {
-    const biometryText =
-      biometryType === LocalAuthentication.AuthenticationType.FACIAL_RECOGNITION
-        ? 'khuôn mặt'
-        : 'vân tay';
     setError({
       ErrorCode: -1,
-      title: 'Cài đặt ' + biometryText,
+      title: 'Cài đặt ' + getBiometryText(),
       ErrorMessage: isChanged
-        ? `${
-            biometryText.charAt(0).toUpperCase() + biometryText.substr(1)
-          } của quý khách đã được thay đổi trên thiết bị. Vui lòng cài đặt lại ${biometryText}`
-        : `Quý khách chưa cài đặt ${biometryText} trên thiết bị. Vui lòng cài đặt để sử dụng`,
+        ? `${getBiometryText(
+            true,
+          )} của quý khách đã được thay đổi trên thiết bị. Vui lòng cài đặt lại ${getBiometryText()}`
+        : `Quý khách chưa cài đặt ${getBiometryText()} trên thiết bị. Vui lòng cài đặt để sử dụng`,
       action: [{label: 'Cài đặt', onPress: Linking.openSettings}],
     }); // TODO: translate
   };
