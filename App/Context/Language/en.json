@@ -585,5 +585,6 @@
   "you_need_to_identify_your_account_to_maximize_security_before_using_the_wallet": "You need to identify your account to maximize security before using the wallet",
   "ask_re_ekyc": "Bạn có muốn định danh tài khoản trước đó",
   "no_and_again": "Không, tôi muốn làm lại",
-  "back_alert": "Thoát phiên đăng nhập"
+  "back_alert": "Thoát phiên đăng nhập",
+  "new_email_must_different_to_current_email": "Email mới không được trùng email hiện tại"
 }
