@@ -904,7 +904,7 @@ PODS:
   - RNSVG (12.1.1):
     - React
   - TOCropViewController (2.6.0)
-  - TouchID (4.4.1):
+  - TouchID (1.0.0):
     - React
   - UMAppLoader (2.2.0)
   - UMCore (7.1.2)
@@ -1008,7 +1008,7 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - TouchID (from `../node_modules/react-native-touch-id`)
+  - TouchID (from `../node_modules/rn-touch-id`)
   - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - "UMCore (from `../node_modules/@unimodules/core/ios`)"
   - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
@@ -1181,7 +1181,7 @@ EXTERNAL SOURCES:
   RNSVG:
     :path: "../node_modules/react-native-svg"
   TouchID:
-    :path: "../node_modules/react-native-touch-id"
+    :path: "../node_modules/rn-touch-id"
   UMAppLoader:
     :path: "../node_modules/unimodules-app-loader/ios"
   UMCore:
@@ -1288,7 +1288,7 @@ SPEC CHECKSUMS:
   RNShare: edd621a71124961e29a7ba43a84bd1c6f9980d88
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
-  TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
+  TouchID: b45a79273ea5d90787951523f9f3d40384817888
   UMAppLoader: 21af63390e55c82e037fb9752d93114a80ecf16e
   UMCore: ce3a4faa010239063b8343895b29a6d97b01069d
   UMReactNativeAdapter: d03cefd0e4e4179ab8c490408589f1c8a6c8b785

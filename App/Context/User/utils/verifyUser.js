@@ -263,6 +263,7 @@ const useVerifyInfo = (initialValue = {}) => {
         CardId: cardInfo?.CardID,
       });
       if (result) {
+        await onGetAllInfo();
         onContinue(SCREEN.VERIFY_USER_PORTRAIT);
       }
     } else {

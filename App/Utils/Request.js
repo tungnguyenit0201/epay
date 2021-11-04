@@ -87,7 +87,7 @@ async function request({
     };
   }
   //Giả lập mất kết nối internet
-  // if (url?.search('identity_card_info_check') != -1) {
+  // if (url?.search('compare_face') != -1) {
   //   return failure({
   //     message: 'Network Error',
   //   });

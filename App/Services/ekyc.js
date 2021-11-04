@@ -44,7 +44,7 @@ const useServiceEKYC = () => {
                   onPress: () => {
                     ErrorCode == ERROR_CODE.EXTRACT_IDENTITY_CARD_OVER_TIMES
                       ? Navigator.navigate(SCREEN.USER)
-                      : Navigator?.goBack?.();
+                      : Navigator?.navigate(SCREEN.TAB_NAVIGATION);
                   },
                 },
               ],
@@ -52,9 +52,7 @@ const useServiceEKYC = () => {
           }
           reject(res);
         },
-        // failure: err => {
-        //   reject(err);
-        // },
+        errorAction: () => Navigator.navigate(SCREEN.TAB_NAVIGATION),
       });
     });
   };
@@ -81,6 +79,8 @@ const useServiceEKYC = () => {
                 {
                   label: translation.agree,
                   onPress: () => {
+                    if ([1, 2, 4, 98, 99].indexOf(ErrorCode) !== -1)
+                      return Navigator.navigate(SCREEN.TAB_NAVIGATION);
                     Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);
                   },
                 },
@@ -88,6 +88,8 @@ const useServiceEKYC = () => {
             });
           reject(res);
         },
+        errorAction: () => Navigator.navigate(SCREEN.TAB_NAVIGATION),
+
         // failure: err => {
         //   reject(err);
         // },
