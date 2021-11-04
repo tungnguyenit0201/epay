@@ -87,8 +87,7 @@ async function request({
     };
   }
   //Giả lập mất kết nối internet
-  // if (url?.search('create_account') != -1) {
-  //   console.log('create_account');
+  // if (url?.search('identity_card_info_check') != -1) {
   //   return failure({
   //     message: 'Network Error',
   //   });

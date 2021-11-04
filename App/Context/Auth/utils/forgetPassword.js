@@ -10,6 +10,7 @@ import useServiceUser from 'services/user';
 import Keychain from 'react-native-keychain';
 import useRegister from './register';
 import {Keyboard} from 'react-native';
+import {stripTags} from 'utils/Functions';
 
 const useForgetPassword = () => {
   const translation = useTranslation();
@@ -67,6 +68,7 @@ const useForgetPassword = () => {
     const result = await updateForgotPassword({
       password: passwordEncrypted,
       phone,
+      errorAction: () => Navigator.navigate(SCREEN.LOGIN),
     });
     setLoading(false);
     const errorCode = _.get(result, 'ErrorCode', '');
@@ -113,6 +115,7 @@ const useForgetPassword = () => {
       IcNumber: icNumber,
       IcDate: validDate,
       BankNumber: lastBankNumber,
+      errorAction: () => Navigator.navigate(SCREEN.LOGIN),
     });
     setLoading(false);
     Keyboard.dismiss();
@@ -124,7 +127,9 @@ const useForgetPassword = () => {
       });
       return;
     }
-    setMessage(result?.ErrorMessage);
+    if (result?.ErrorCode === ERROR_CODE.USER_INFO_NOT_MATCH)
+      return setMessage(stripTags?.(result?.ErrorMessage));
+    setError({...result, onClose: () => Navigator.navigate(SCREEN.LOGIN)});
   };
 
   const onCustomerSupport = ({phone}) => {

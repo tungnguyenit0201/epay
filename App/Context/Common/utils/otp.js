@@ -45,10 +45,12 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
       functionType,
       OtpCode: otp,
       OtpType: OTP_TYPE.EPAY,
-      errorAction: () =>
-        functionType == FUNCTION_TYPE.REGISTER_ACCOUNT
-          ? Navigator.reset?.(SCREEN.AUTH)
-          : true,
+      errorAction: () => {
+        functionType == FUNCTION_TYPE.REGISTER_ACCOUNT &&
+          Navigator.reset(SCREEN.AUTH);
+        functionType == FUNCTION_TYPE.FORGOT_PASS &&
+          Navigator.navigate(SCREEN.LOGIN);
+      },
     });
     setCode('');
     setLoading(false);
@@ -99,10 +101,12 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
     if (_.get(result, 'ErrorCode', '') !== ERROR_CODE.SUCCESS) {
       return setError({
         ...result,
-        onClose: () =>
-          functionType == FUNCTION_TYPE.REGISTER_ACCOUNT
-            ? Navigator.reset(SCREEN.AUTH)
-            : true,
+        onClose: () => {
+          functionType == FUNCTION_TYPE.REGISTER_ACCOUNT &&
+            Navigator.reset(SCREEN.AUTH);
+          functionType == FUNCTION_TYPE.FORGOT_PASS &&
+            Navigator.navigate(SCREEN.LOGIN);
+        },
       });
     }
 
@@ -171,7 +175,11 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
         let result = await genOtp({
           phone,
           functionType,
-          errorAction: () => Navigator.goBack?.(),
+          errorAction: () => {
+            if (functionType == FUNCTION_TYPE.FORGOT_PASS)
+              return Navigator.navigate(SCREEN.LOGIN);
+            return Navigator.goBack?.();
+          },
         });
         let errorCode = _.get(result, 'ErrorCode', '');
         if (errorCode == ERROR_CODE.SUCCESS) {
@@ -187,7 +195,11 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
         } else {
           setError({
             ...result,
-            onClose: () => Navigator.goBack?.(),
+            onClose: () => {
+              if (functionType == FUNCTION_TYPE.FORGOT_PASS)
+                return Navigator.navigate(SCREEN.LOGIN);
+              return Navigator.goBack?.();
+            },
           });
         }
       }

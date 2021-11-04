@@ -53,7 +53,8 @@ const stripTags = html =>
       .replace(/&amp;/g, '&')
       .replace(/&#160;/g, ' ')
       .replace(/&#038;/g, '&')
-      .replace(/&#8217;/g, "'")) ||
+      .replace(/&#8217;/g, "'")
+      .replace(/class="marRed"/g, '')) ||
   '';
 const detetedBreakline = str => str.replace(/\r?\n|\r/g, '');
 const formatOrderNumber = id => `${id}`.padStart(9, '0');

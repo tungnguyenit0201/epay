@@ -45,7 +45,8 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}>
+        onSubmit={onUpdateUserInfo}
+      >
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -188,7 +189,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             // rightIcon={Images.Down}
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('cites')}
-            placeholder="Tỉnh/Thành"
+            placeholder={translation?.provice}
           />
           <InputBlock
             // label="Quận"
@@ -197,7 +198,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             isSelect
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('districts')}
-            placeholder="Quận"
+            placeholder={translation?.district}
           />
           <InputBlock
             // label="Phường / Xã"
