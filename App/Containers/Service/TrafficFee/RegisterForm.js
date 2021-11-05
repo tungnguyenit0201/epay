@@ -21,15 +21,12 @@ const RegisterForm = () => {
   const translation = useTranslation() || {};
   return (
     //TODO: TRANSLATE
-    <>
+    <View flex={1} style={styles.bgWhite}>
       <HeaderBg>
         <Header back title="Dịch vụ giao thông" />
       </HeaderBg>
 
-      <ScrollView
-        style={[styles.wrap, styles.bgWhite]}
-        contentContainerStyle={styles.ptb1}
-      >
+      <ScrollView contentContainerStyle={[styles.wrap, styles.ptb1]}>
         <InputBlock
           label={'Chủ phương tiện'}
           style={styles.mb1}
@@ -64,11 +61,18 @@ const RegisterForm = () => {
           placeholder={'123456789123456789123456789'}
         />
         <InputBlock
-          label={'Mã đăng kiểm'}
+          label={'Loại biển'}
           rightIconBgGray={Images.Right}
           isSelect
           style={styles.mb1}
-          defaultValue={'45678912345784'}
+          defaultValue={'Biển trắng'}
+        />
+        <InputBlock
+          label={'Mã đăng kiểm'}
+          // rightIconBgGray={Images.Right}
+          // isSelect
+          style={styles.mb1}
+          defaultValue={''}
         />
         <InputBlock
           label={'Số thẻ RFID'}
@@ -79,14 +83,14 @@ const RegisterForm = () => {
         <View style={[styles.flexRow, styles.pt1]}>
           <Checkbox />
           <Text fs="md" ml={10} style={styles.flex1}>
-            {translation?.iAgreeWith}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.link1}>{translation?.userAgreement}</Text>
-            </TouchableOpacity>{' '}
-            {translation?.and}
-            <TouchableOpacity style={styles.mtMinus1}>
-              <Text style={styles.link1}>{translation?.privacyPolicy}</Text>
-            </TouchableOpacity>{' '}
+            {translation?.iAgreeWith}{' '}
+            <Text style={styles.link1} onPress={() => {}}>
+              {translation?.userAgreement}
+            </Text>{' '}
+            {translation?.and}{' '}
+            <Text onPress={() => {}} style={styles.link1}>
+              {translation?.privacyPolicy}
+            </Text>{' '}
             {translation?.ofEPAY}
           </Text>
         </View>
@@ -96,11 +100,12 @@ const RegisterForm = () => {
         <FooterContainer>
           <Button
             label={translation?.continue}
-            onPress={() => Navigator.navigate(SCREEN.TRAFFIC_RFID)}
+            // onPress={() => Navigator.navigate(SCREEN.TRAFFIC_RFID)}
+            onPress={() => Navigator.navigate(SCREEN.PAYMENT_METHODS)}
           />
         </FooterContainer>
       </View>
-    </>
+    </View>
   );
 };
 
@@ -110,9 +115,7 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
   //---------------
-  bgWhite: {backgroundColor: Colors.white},
-  //---------------
-  mtMinus1: {marginBottom: -1},
+  bgWhite: {backgroundColor: Colors.bs4},
   //---------------
   mb1: {marginBottom: 10},
   //---------------

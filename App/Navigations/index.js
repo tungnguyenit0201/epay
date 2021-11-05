@@ -105,6 +105,7 @@ import Boarding from 'containers/Boarding';
 import ForgetPasswordKYC from 'containers/Auth/ForgetPasswordKYC';
 import EditAutoReCharge from 'containers/Wallet/AutoRecharge/Edit';
 import AutoWithdraw from 'containers/Wallet/AutoRecharge/AutoWithdraw';
+import PaymentMethods from 'containers/Service/TrafficFee/PaymentMethods';
 import MyOrder from 'containers/User/MyOrder';
 import DetailOrder from 'containers/User/MyOrder/Detail';
 import Receipt from 'containers/User/MyOrder/Receipt';
@@ -115,6 +116,8 @@ import TrafficFinesDecision from 'containers/Service/TrafficFines/DetailDecision
 import TrafficFinesConfirm from 'containers/Service/TrafficFines/Comfirm';
 import TrafficFinesResult from 'containers/Service/TrafficFines/Result';
 import TrafficFinesReceipt from 'containers/Service/TrafficFines/Receipt';
+import ConfirmRegister from 'containers/Service/TrafficFee/ConfirmRegister';
+import CarDetail from 'containers/Service/TrafficFee/CarDetail';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -394,6 +397,10 @@ const AppNavigator = () => {
             name={SCREEN.LINKED_BANK_DETAIL}
             component={LinkedBankDetail}
           />
+          <Stack.Screen
+            name={SCREEN.PAYMENT_METHODS}
+            component={PaymentMethods}
+          />
 
           <Stack.Screen name={SCREEN.EDIT_INFO} component={EditInfo} />
           <Stack.Screen name={SCREEN.NEW_PASSWORD} component={NewPassword} />
@@ -525,6 +532,11 @@ const AppNavigator = () => {
             name={SCREEN.TRAFFIC_FINES_RESULT}
             component={TrafficFinesResult}
           />
+          {/* S5-registerFee */}
+          <Stack.Screen name={SCREEN.CONFIRM_REGISTER_VEHICLE} 
+            component={ConfirmRegister}/>
+          <Stack.Screen name={SCREEN.CAR_DETAIL} 
+            component={CarDetail}/>
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
