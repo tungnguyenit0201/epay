@@ -293,7 +293,7 @@ const useVerifyInfo = (initialValue = {}) => {
 
     const ekycSDKConfig = () => {
       const helpText = {
-        1: 'CMND',
+        1: 'CMND/CCCD',
         2: 'Passport',
         3: 'CMTQD',
       };
