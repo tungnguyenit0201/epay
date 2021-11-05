@@ -3,9 +3,8 @@ import _ from 'lodash';
 import {Keyboard, Linking, Platform, AppState} from 'react-native';
 import {useError, useAsyncStorage} from 'context/Common/utils';
 import Keychain from 'react-native-keychain';
-import * as LocalAuthentication from 'expo-local-authentication';
 import {getAll} from 'utils/Functions';
-import TouchID from 'rn-touch-id';
+import TouchID from 'react-native-touch-id';
 import {useIsFocused} from '@react-navigation/native';
 
 const useTouchID = ({onSuccess, isMount = true}) => {
@@ -19,30 +18,27 @@ const useTouchID = ({onSuccess, isMount = true}) => {
   });
   const isFocused = useIsFocused();
 
-  const checkBiometry = async () => {
+  const onCheckBiometry = async () => {
     try {
-      const [biometryType, credentials, touchIdEnabled, isAvailable] =
-        await getAll(
-          checkBiometryType,
-          Keychain.getGenericPassword,
-          getTouchIdEnabled,
-          checkIsEnrolled,
-        );
+      const [biometryData, credentials, touchIdEnabled] = await getAll(
+        checkBiometry,
+        Keychain.getGenericPassword,
+        getTouchIdEnabled,
+      );
+      const {biometricType, token, isEnrolled, error} = biometryData || {};
       let passwordEncrypted =
         credentials?.username == (await getPhone())
           ? credentials?.password
           : null;
 
       // if phone changed or touch id setting is disabled or device doesn't suppport biometry
-      if (!passwordEncrypted || !touchIdEnabled || !biometryType) {
+      if (!passwordEncrypted || !touchIdEnabled || !biometricType) {
         setBiometryType(null);
         return;
       }
 
-      const {isEnrolled, token} = (await TouchID.isEnrolledAsync()) || {};
-
-      // if device supports biometry but not activated
-      if (!isAvailable) {
+      // if device supports biometry but not activated or no fingerprint is set
+      if (!isEnrolled) {
         showNotEnrolledError();
         setTouchIdEnabled(false);
         setBiometryType(null);
@@ -50,17 +46,18 @@ const useTouchID = ({onSuccess, isMount = true}) => {
       }
 
       // if change biometry token
-      if (isEnrolled && token !== touchIdEnabled) {
-        setTouchIdEnabled(token);
+      const isChanged = token !== touchIdEnabled && error !== 'LOCKOUT';
+      if (isChanged) {
+        setTouchIdEnabled(token || '');
         showNotEnrolledError(true);
       }
 
       // happy case
-      setBiometryType(biometryType);
+      setBiometryType(biometricType);
 
       if (contentRef.current.isMount) {
         contentRef.current.isMount = false;
-        onTouchID({passcode: !isEnrolled, forceShow: true});
+        !isChanged && onTouchID({passcode: false, forceShow: true});
       }
     } catch (error) {
       __DEV__ && console.log(error);
@@ -82,7 +79,7 @@ const useTouchID = ({onSuccess, isMount = true}) => {
         getBiometryText(true) + ' không hợp lệ. Vui lòng thử lại', // Android
       cancelText: 'Hủy bỏ', // Android
       fallbackLabel: '', // iOS (if empty, then label is hidden)
-      unifiedErrors: false, // use unified error messages (default false)
+      unifiedErrors: true, // use unified error messages (default false)
       passcodeFallback: true, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
     }; // TODO: translate
 
@@ -102,15 +99,19 @@ const useTouchID = ({onSuccess, isMount = true}) => {
         onSuccess?.(success);
       })
       .catch(error => {
-        const errorCode = Platform.OS === 'ios' ? error?.name : error?.code;
+        const errorCode = error?.code;
+        //LOCKOUT
         switch (errorCode) {
-          case 'LAErrorSystemCancel':
+          // case 'LAErrorSystemCancel':
+          case 'SYSTEM_CANCELED':
             forceShow && onTouchID({passcode, forceShow});
             return;
-          case 'LAErrorTouchIDNotEnrolled':
+          // case 'LAErrorTouchIDNotEnrolled':
+          case 'NOT_ENROLLED':
             showNotEnrolledError();
             return;
-          case 'LAErrorTouchIDLockout':
+          // case 'LAErrorTouchIDLockout':
+          case 'LOCKOUT':
             onTouchID({passcode: true});
             return;
           default:
@@ -132,26 +133,22 @@ const useTouchID = ({onSuccess, isMount = true}) => {
     }); // TODO: translate
   };
 
-  const checkBiometryType = async () => {
+  const checkBiometry = async () => {
     return await new Promise((resolve, reject) => {
-      TouchID.isSupported()
-        .then(biometryType => {
-          resolve(Platform.OS === 'android' ? 'TouchID' : biometryType);
+      TouchID.isSupported({passcodeFallback: false, unifiedErrors: true})
+        .then(data => {
+          console.log('data', data);
+          resolve({...data, isEnrolled: true, error: null});
+          // resolve(Platform.OS === 'android' ? 'TouchID' : biometryType);
         })
-        .catch(error => {
-          resolve(null);
-        });
-    });
-  };
-
-  const checkIsEnrolled = async () => {
-    return await new Promise((resolve, reject) => {
-      TouchID.isSupported({passcodeFallback: true})
-        .then(biometryType => {
-          resolve(true);
-        })
-        .catch(error => {
-          resolve(false);
+        .catch(err => {
+          console.log('errr', Object.keys(err));
+          const error = err?.code;
+          resolve({
+            biometricType: 'unknown',
+            error,
+            isEnrolled: error !== 'NOT_ENROLLED',
+          });
         });
     });
   };
@@ -173,7 +170,7 @@ const useTouchID = ({onSuccess, isMount = true}) => {
             nextAppState === 'active' &&
             contentRef.current.currentAppState === 'background'
           ) {
-            checkBiometry();
+            onCheckBiometry();
           }
         } catch (error) {}
         contentRef.current.currentAppState = nextAppState;
@@ -185,15 +182,16 @@ const useTouchID = ({onSuccess, isMount = true}) => {
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    isFocused && checkBiometry();
+    isFocused && onCheckBiometry();
   }, [isFocused]); // eslint-disable-line
 
   return {
     biometryType,
     onTouchID,
     getTouchIdEnabled,
-    checkBiometryType,
+    onCheckBiometry,
     textInputRef,
+    checkBiometry,
   };
 };
 

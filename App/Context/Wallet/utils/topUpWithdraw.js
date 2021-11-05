@@ -30,7 +30,7 @@ import {useTranslation} from 'context/Language';
 import {useModalSmartOTP, useSmartOTP} from 'context/User/utils';
 import TRANS_STATUS from 'configs/Enums/TransStatus';
 import Keychain from 'react-native-keychain';
-import TouchID from 'rn-touch-id';
+import TouchID from 'react-native-touch-id';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
 import {sha256} from 'react-native-sha256';
 import {isEmpty} from 'lodash';

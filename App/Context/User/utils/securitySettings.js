@@ -4,11 +4,10 @@ import {SCREEN} from 'configs/Constants';
 import {useAsyncStorage, useError, useLoading} from 'context/Common/utils';
 import {useUser} from 'context/User';
 import _ from 'lodash';
-import {useAuth} from 'context/Auth/utils';
+import {useAuth, useTouchID} from 'context/Auth/utils';
 import useServiceUser from 'services/user';
 // import * as LocalAuthentication from 'expo-local-authentication';
 import {Linking} from 'react-native';
-import TouchID from 'rn-touch-id';
 
 const useSecuritySettings = () => {
   const {setTouchIdEnabled, getTouchIdEnabled} = useAsyncStorage();
@@ -17,6 +16,7 @@ const useSecuritySettings = () => {
   const {setLoading} = useLoading();
   const {setError} = useError();
   const {getSettingsInfo} = useServiceUser();
+  const {checkBiometry} = useTouchID({isMount: false});
   const [settings, setSettings] = useState({
     touchIdEnabled: false,
     // data from getSettingsInfo()
@@ -38,8 +38,8 @@ const useSecuritySettings = () => {
   }, []); // eslint-disable-line
 
   const onTouchId = async value => {
-    const {isEnrolled, token} = await TouchID.isEnrolledAsync();
-    if (value && !isEnrolled) {
+    const {biometricType, token, isEnrolled} = await checkBiometry();
+    if (value && (!biometricType || !isEnrolled)) {
       setError({
         ErrorCode: -1,
         title: 'Cài đặt vân tay',

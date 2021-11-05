@@ -19,7 +19,6 @@ import Content from 'components/Auth/Content';
 import {passwordSchema} from 'utils/ValidationSchemas';
 import {useError} from 'context/Common/utils';
 import BlueHeader from 'components/Auth/BlueHeader';
-import * as LocalAuthentication from 'expo-local-authentication';
 import WebView from 'components/WebView/Partial';
 const Login = ({route}) => {
   const {phone, name} = _.get(route, 'params', {});
@@ -67,8 +66,7 @@ const Login = ({route}) => {
 
           textInputRef?.current?.blur();
         }}
-        validationSchema={passwordSchema}
-      >
+        validationSchema={passwordSchema}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -111,8 +109,7 @@ const Login = ({route}) => {
                     onPress={() => {
                       setFieldValue('password', '');
                       onForgetPassword();
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.forgot_password}?
                     </Text>
@@ -123,8 +120,7 @@ const Login = ({route}) => {
                       onChangePhone();
                       onSetMessage('');
                       setFieldValue('password', '');
-                    }}
-                  >
+                    }}>
                     <Text style={[styles.linkText]}>
                       {translation.change_the_phone_number}
                     </Text>
@@ -152,13 +148,10 @@ const Login = ({route}) => {
                         onSetMessage('');
                         onTouchID();
                       }}
-                      style={styles.btn}
-                    >
+                      style={styles.btn}>
                       <Icon
                         icon={
-                          biometryType ===
-                          LocalAuthentication.AuthenticationType
-                            .FACIAL_RECOGNITION
+                          biometryType === 'FaceID'
                             ? Images.SignIn.Face
                             : Images.SignIn.FingerPrint
                         }

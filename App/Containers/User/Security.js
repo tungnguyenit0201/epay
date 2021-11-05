@@ -35,8 +35,7 @@ const PaymentSettings = () => {
                   type: 'confirm_password_response',
                   headerLabel: 'Đổi mật khẩu',
                 });
-              }}
-            >
+              }}>
               <Image
                 source={Images.Profile.Lock}
                 resizeMode="contain"
@@ -67,8 +66,7 @@ const PaymentSettings = () => {
 
             <TouchableOpacity
               style={styles.item}
-              onPress={() => Navigator.navigate(SCREEN.WALLET_ACCESS_HISTORY)}
-            >
+              onPress={() => Navigator.navigate(SCREEN.WALLET_ACCESS_HISTORY)}>
               <Image
                 source={Images.Profile.Clock}
                 resizeMode="contain"
@@ -119,7 +117,7 @@ const PaymentSettings = () => {
                   Thanh toán cho giao dịch dưới 5 triệu.
                 </Text>
               </View>
-              <Switch onColor={Colors.brd2} />
+              <Switch onColor={Colors.brd1} />
             </View>
 
             <TouchableOpacity style={styles.item}>
