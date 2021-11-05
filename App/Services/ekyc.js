@@ -118,26 +118,30 @@ const useServiceEKYC = () => {
           if (ErrorCode === ERROR_CODE.SUCCESS) {
             resolve(res);
           } else {
-            if (ErrorCode === ERROR_CODE.WAIT_FOR_CONFIRMATION) reject(res);
-            else
-              setError({
-                ...res,
-                action: [
-                  {
-                    label: translation.agree,
-                    onPress: () => {
-                      if ([49, 612].indexOf(ErrorCode) !== -1)
-                        return Navigator.navigate(SCREEN.TAB_NAVIGATION, {
-                          screen: SCREEN.USER,
-                        });
-                      Navigator.navigate(SCREEN.TAB_NAVIGATION);
-                    },
-                  },
-                ],
-              });
+            // if (ErrorCode === ERROR_CODE.WAIT_FOR_CONFIRMATION) reject(res);
+            // else
+            //   setError({
+            //     ...res,
+            //     action: [
+            //       {
+            //         label: translation.agree,
+            //         onPress: () => {
+            //           if ([49, 612].indexOf(ErrorCode) !== -1)
+            //             return Navigator.navigate(SCREEN.TAB_NAVIGATION, {
+            //               screen: SCREEN.USER,
+            //             });
+            //           Navigator.navigate(SCREEN.TAB_NAVIGATION);
+            //         },
+            //       },
+            //     ],
+            //   });
+            reject(res);
           }
         },
-        errorAction: () => Navigator.navigate(SCREEN.TAB_NAVIGATION),
+        failure: () =>
+          Navigator.navigate(SCREEN.VERIFY_SUCCESS, {
+            resultContent: {title: translation.network_error},
+          }),
         // failure: err => {
         //   reject(err);
         // },

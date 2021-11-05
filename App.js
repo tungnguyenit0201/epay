@@ -23,6 +23,7 @@ const App = () => {
 
   const getFcmToken = async () => {
     let token = await messaging().getToken();
+    console.log('token :>> ', token);
     if (token) return saveTokenToDatabase(token);
   };
 

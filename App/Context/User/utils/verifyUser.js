@@ -216,14 +216,11 @@ const useVerifyInfo = (initialValue = {}) => {
       onClearRegionData();
     } catch (error) {
       resultContent = {
-        title: strings.kycPendingVerify,
-        message: error?.ErrorMessage,
+        title: error?.ErrorMessage || strings.kycPendingVerify,
       };
     } finally {
       setLoading(false);
-
-      resultContent?.message &&
-        onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
+      onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
     }
   };
 

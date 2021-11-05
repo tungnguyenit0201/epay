@@ -184,6 +184,7 @@ const useSelectRegion = ({items, type, parentType, callbackScreen} = {}) => {
   };
 
   const onClearRegionData = () => {
+    console.log('object');
     dispatch({
       type: 'SET_REGION',
       data: {

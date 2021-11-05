@@ -72,31 +72,39 @@ const VerifySuccess = ({route}) => {
       <ScrollView style={styles.container}>
         <View style={styles.alignCenter}>
           <View style={[styles.w1, styles.pxy1]}>
-            <>
+            {success ? (
+              <>
+                <Image
+                  source={avatar}
+                  style={[styles.fullWidth, styles.h1, styles.circleRadius]}
+                  resizeMode="contain"
+                />
+                <Image
+                  source={Images.Kyc.BigCircle}
+                  style={[
+                    styles.absolute,
+                    styles.topZero,
+                    styles.leftZero,
+                    styles.iconBigCircle,
+                  ]}
+                />
+                <Image
+                  source={Images.Kyc.SpecialArrow}
+                  style={[
+                    styles.absolute,
+                    styles.bot1,
+                    styles.right1,
+                    styles.iconArrow,
+                  ]}
+                />
+              </>
+            ) : (
               <Image
-                source={avatar}
-                style={[styles.fullWidth, styles.h1, styles.circleRadius]}
+                source={Images.warning}
+                style={styles.warningIcon}
                 resizeMode="contain"
               />
-              <Image
-                source={Images.Kyc.BigCircle}
-                style={[
-                  styles.absolute,
-                  styles.topZero,
-                  styles.leftZero,
-                  styles.iconBigCircle,
-                ]}
-              />
-              <Image
-                source={Images.Kyc.SpecialArrow}
-                style={[
-                  styles.absolute,
-                  styles.bot1,
-                  styles.right1,
-                  styles.iconArrow,
-                ]}
-              />
-            </>
+            )}
           </View>
         </View>
 
@@ -112,14 +120,14 @@ const VerifySuccess = ({route}) => {
             {title}
           </Text>
         </View>
-        {!!message && (
+        {/* {!!message && (
           <WebView
             style={[styles.maxWidth1, styles.ml]}
             source={{
               html: ` ${message}`,
             }}
           />
-        )}
+        )} */}
       </ScrollView>
       <Image
         source={Images.Kyc.Wave}
@@ -133,11 +141,28 @@ const VerifySuccess = ({route}) => {
       />
 
       <FooterContainer>
-        <Button
-          label={action.doneTitle}
-          style={styles.btn}
-          onPress={onPressDone}
-        />
+        {success ? (
+          <Button
+            label={action.doneTitle}
+            style={styles.btn}
+            onPress={onPressDone}
+          />
+        ) : (
+          <View style={styles.buttonRow}>
+            <Button
+              label={action.backTitle}
+              style={[styles.buttonHalf, styles.homeButton]}
+              onPress={onPressBack}
+              mode="outline"
+              // labelStyle={styles.homeText}
+            />
+            <Button
+              label={translation?.verifyAgain}
+              style={styles.buttonHalf}
+              onPress={() => Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD)}
+            />
+          </View>
+        )}
       </FooterContainer>
     </>
   );

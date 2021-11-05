@@ -1,12 +1,14 @@
 import {request} from 'utils/Request';
-import {useError} from 'context/Common/utils';
+import {useError, useLoading} from 'context/Common/utils';
 import Navigator from 'navigations/Navigator';
-import {ASYNC_STORAGE_KEY, SCREEN} from 'configs/Constants';
+import {ASYNC_STORAGE_KEY, ERROR_CODE, SCREEN} from 'configs/Constants';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import API from 'configs/API';
 import {setDefaultHeaders} from 'utils/Axios';
 import RNRestart from 'react-native-restart';
+import useAsyncStorage from './asyncStorage';
+import {useTranslation} from 'context/Language';
 
 let baseUrl = null;
 
@@ -17,8 +19,11 @@ let baseUrl = null;
 // TODO:translate
 const useRequest = () => {
   const {setError} = useError();
-
+  const {addName, setPhone} = useAsyncStorage();
+  const {setLoading} = useLoading();
+  const translation = useTranslation();
   const handleError = (error, failure, errorAction) => {
+    setLoading(false);
     if (typeof failure == 'function') return failure(error);
     if (
       error?.message == 'Network Error' ||
@@ -27,8 +32,7 @@ const useRequest = () => {
       error?.message == 'Request failed with status code 503'
     ) {
       return setError({
-        ErrorMessage:
-          'Mất kết nối hoặc đường truyền quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoặc thử lại sau ít phút',
+        ErrorMessage: translation.network_error,
         onClose: () => (errorAction ? errorAction() : true),
       });
     }
@@ -39,6 +43,24 @@ const useRequest = () => {
           'Tài khoản đã được đăng nhập ở một thiết bị khác hoặc phiên đăng nhập hết hạn!',
         onClose: onLogout,
       });
+  };
+
+  const handleSuccess = (res, success, url) => {
+    // xử lý các error chung ở đây
+    // console.log(
+    //   'url?.search(API.AUTH.LOGIN) === -1 :>> ',
+    //   url?.search(API.AUTH.LOGIN) === -1,
+    // );
+    // if (
+    //   res?.ErrorCode == ERROR_CODE.NEW_DEVICE_CONFIRM_REQUIRED &&
+    //   url?.search(API.AUTH.LOGIN) === -1
+    // ) {
+    //   return setError({
+    //     ...res,
+    //     onClose: onLogout,
+    //   });
+    // }
+    typeof success === 'function' && success(res);
   };
 
   const doRequest = async ({
@@ -59,7 +81,7 @@ const useRequest = () => {
       url,
       method,
       params,
-      success,
+      success: res => handleSuccess(res, success, url),
       failure: error => handleError(error, failure, errorAction),
     });
   };
@@ -70,10 +92,12 @@ const useRequest = () => {
     onLogout();
   };
 
-  const onLogout = () => {
+  const onLogout = async () => {
     setDefaultHeaders({
       Authorization: ``,
     });
+    await addName('');
+    await setPhone('');
     RNRestart.Restart();
   };
 

@@ -380,5 +380,6 @@
   "ask_re_ekyc": "Bạn có muốn định danh tài khoản trước đó",
   "no_and_again": "Không, tôi muốn làm lại",
   "back_alert": "Thoát phiên đăng nhập",
-  "new_email_must_different_to_current_email": "Email mới không được trùng email hiện tại"
+  "new_email_must_different_to_current_email": "Email mới không được trùng email hiện tại",
+  "network_error": "Mất kết nối hoặc đường truyền quá chậm. Quý khách vui lòng kiểm tra kết nối mạng hoặc thử lại sau ít phút"
 }

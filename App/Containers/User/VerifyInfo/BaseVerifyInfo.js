@@ -18,6 +18,7 @@ import Col from 'components/Common/Col';
 import {scale} from 'utils/Functions';
 import Navigator from 'navigations/Navigator';
 import {SCREEN} from 'configs/Constants';
+import {useSelectRegion} from 'context/User/utils';
 const VerifyUserInfo = ({
   children,
   disableButton,
@@ -31,6 +32,7 @@ const VerifyUserInfo = ({
   const translation = useTranslation();
   const {width} = useWindowDimensions();
   const [showModal, setShowModal] = useState(false);
+  const {onClearRegionData} = useSelectRegion({});
   const ruleTexts = [
     'Hình chụp phải đủ sáng, không bị mờ, chói sáng.',
     'Chứng từ phải nguyên vẹn, không mất góc.',
@@ -88,6 +90,7 @@ const VerifyUserInfo = ({
           back
           onPressBack={() => {
             if (step === 3) {
+              onClearRegionData();
               Navigator.navigate(SCREEN.USER_INFO);
             } else {
               Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD);

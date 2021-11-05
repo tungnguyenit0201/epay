@@ -225,6 +225,7 @@ const AppNavigator = () => {
 
   React.useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('remoteMessage :>> ', remoteMessage);
       // Alert.alert(
       //   remoteMessage?.notification?.title,
       //   remoteMessage?.notification?.body,
@@ -286,7 +287,8 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}>
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -295,7 +297,8 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -499,10 +502,11 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.RECEIPT} component={Receipt} />
 
           {/* S5-registerFee */}
-          <Stack.Screen name={SCREEN.CONFIRM_REGISTER_VEHICLE} 
-            component={ConfirmRegister}/>
-          <Stack.Screen name={SCREEN.CAR_DETAIL} 
-            component={CarDetail}/>
+          <Stack.Screen
+            name={SCREEN.CONFIRM_REGISTER_VEHICLE}
+            component={ConfirmRegister}
+          />
+          <Stack.Screen name={SCREEN.CAR_DETAIL} component={CarDetail} />
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>
@@ -521,7 +525,8 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}>
+      }}
+    >
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />
