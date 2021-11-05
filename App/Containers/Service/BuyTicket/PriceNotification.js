@@ -52,7 +52,8 @@ const PriceNotification = () => {
         <Header back title="Phí giao thông" style={styles.pbZero} />
       </HeaderBg>
 
-			<View style={[styles.bgLogo]} alignItems='center' justifyContent='center'>
+			<View style={[styles.bgLogo]} alignItems='center' 
+        justifyContent='center'>
         <Image
           source={Images.TransactionHistory.LogoBg}
           style={styles.logoBg}

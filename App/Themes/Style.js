@@ -104,7 +104,11 @@ const styles = StyleSheet.create({
   footer: {
     height: 100,
   },
-  //----------------
+  //tho-----------
+  // pbZero: {paddingBottom: 0},
+  //--------------
+  py1: {paddingVertical: 20},
+  //--------------
   boxShadowGray: {
     backgroundColor: Colors.bs4,
     shadowOpacity: 0.2,

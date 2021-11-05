@@ -7,19 +7,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Header, HeaderBg, 
-	FooterContainer,TextInput, Select, Text, Button, Row, Col, DatePicker} from 'components';
+	FooterContainer, Text, Button,} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
-import { BlockShadowGray } from 'components/Service';
 import Title from 'components/Service/Title';
 
 import {SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
-import { Calendar } from 'react-native-calendars';
 import FilterTerm from './FilterTerm';
-
-const dataTest=['Lán Hòa Lạc','Quốc lộ 5', 'An Sương'];
 
 const ChooseTerm = () => {
   const translation = useTranslation();
@@ -28,7 +24,7 @@ const ChooseTerm = () => {
     //TODO: TRANGSLATE
     <View flex={1} style={base.bgWhite}>
       <HeaderBg>
-        <Header back title="Phí giao thông" style={styles.pbZero} />
+        <Header back title="Phí giao thông" style={styles.pbZero}/>
       </HeaderBg>
 
       <ScrollView contentContainerStyle={styles.py1}>
@@ -59,10 +55,7 @@ const ChooseTerm = () => {
 };
 
 const styles = StyleSheet.create({
-	mb1: {marginBottom: 10},
-	mb2: {marginBottom: 20},
-	//----------------
-  pbZero: {paddingBottom: 0},
+	pbZero: {paddingBottom: 0},
 	//----------------
 	py1: {paddingVertical: Spacing.PADDING},
 	//---------------

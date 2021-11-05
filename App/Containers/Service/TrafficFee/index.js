@@ -167,7 +167,6 @@ const TrafficFee = () => {
 };
 
 const styles = StyleSheet.create({
-  flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
   //------------------
   alignCenter: {alignItems: 'center'},
@@ -177,10 +176,6 @@ const styles = StyleSheet.create({
   ml1: {marginLeft: 10},
   //------------------
   pbZero: {paddingBottom: 0},
-  //------------------
-  pt1: {paddingTop: 40},
-  //------------------
-  pb1: {paddingBottom: 4},
   //------------------
   iconOption1: {
     width: 20,
