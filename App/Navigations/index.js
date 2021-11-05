@@ -109,6 +109,13 @@ import PaymentMethods from 'containers/Service/TrafficFee/PaymentMethods';
 import MyOrder from 'containers/User/MyOrder';
 import DetailOrder from 'containers/User/MyOrder/Detail';
 import Receipt from 'containers/User/MyOrder/Receipt';
+import TrafficFines from 'containers/Service/TrafficFines';
+import TrafficFinesAddress from 'containers/Service/TrafficFines/Address';
+import TrafficFinesTransport from 'containers/Service/TrafficFines/Transport';
+import TrafficFinesDecision from 'containers/Service/TrafficFines/DetailDecision';
+import TrafficFinesConfirm from 'containers/Service/TrafficFines/Comfirm';
+import TrafficFinesResult from 'containers/Service/TrafficFines/Result';
+import TrafficFinesReceipt from 'containers/Service/TrafficFines/Receipt';
 import ConfirmRegister from 'containers/Service/TrafficFee/ConfirmRegister';
 import CarDetail from 'containers/Service/TrafficFee/CarDetail';
 
@@ -286,7 +293,8 @@ const AppNavigator = () => {
       ref={Navigator.setContainer}
       linking={linking}
       fallback={<Text></Text>}
-      onReady={() => (isReadyRef.current = true)}>
+      onReady={() => (isReadyRef.current = true)}
+    >
       <KeyboardStateProvider>
         <Stack.Navigator
           initialRouteName={initialRoute}
@@ -295,7 +303,8 @@ const AppNavigator = () => {
           screenOptions={{
             ...TransitionPresets.SlideFromRightIOS,
             headerShown: false,
-          }}>
+          }}
+        >
           <Stack.Screen
             name={SCREEN.MODAL_NAVIGATION}
             component={ModalNavigation}
@@ -498,6 +507,31 @@ const AppNavigator = () => {
           <Stack.Screen name={SCREEN.ORDER_DETAIL} component={DetailOrder} />
           <Stack.Screen name={SCREEN.RECEIPT} component={Receipt} />
 
+          <Stack.Screen name={SCREEN.TRAFFIC_FINES} component={TrafficFines} />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_FINES_ADDRESS}
+            component={TrafficFinesAddress}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_FINES_TRANSPORT}
+            component={TrafficFinesTransport}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_FINES_DECISION}
+            component={TrafficFinesDecision}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_FINES_CONFIRM}
+            component={TrafficFinesConfirm}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_FINES_RECEIPT}
+            component={TrafficFinesReceipt}
+          />
+          <Stack.Screen
+            name={SCREEN.TRAFFIC_FINES_RESULT}
+            component={TrafficFinesResult}
+          />
           {/* S5-registerFee */}
           <Stack.Screen name={SCREEN.CONFIRM_REGISTER_VEHICLE} 
             component={ConfirmRegister}/>
@@ -521,7 +555,8 @@ const ModalNavigation = () => {
           backgroundColor: 'transparent',
           opacity: 0.99,
         },
-      }}>
+      }}
+    >
       <Stack.Screen name={SCREEN.ALERT_MODAL} component={AlertModal} />
       <Stack.Screen name={SCREEN.POPUP_MODAL} component={PopupModal} />
       <Stack.Screen name={SCREEN.BOTTOM_MODAL} component={BottomModal} />
