@@ -84,14 +84,7 @@ export default React.forwardRef(
           const regexText = new RegExp(regex);
           onChange?.(text?.replace(regexText, ''));
         } else {
-          if (name) {
-            text = text.replace(/\W/g, '');
-            onChange?.(
-              text.replace(/(^\w|\s\w)/g, (match, p1) => p1.toUpperCase()),
-            );
-          } else {
-            onChange?.(text);
-          }
+          onChange?.(text);
         }
       }
     };
@@ -145,7 +138,6 @@ export default React.forwardRef(
           >
             <TextInput
               ref={ref}
-              autoCapitalize={'none'}
               autoFocus={false}
               // autoCorrect={false}
               autoCompleteType={autoCompleteType}
@@ -157,6 +149,7 @@ export default React.forwardRef(
               onChangeText={onChangeText}
               keyboardType={keyboardType}
               secureTextEntry={password && !showPassword}
+              autoCapitalize={!!name ? 'words' : 'none'}
               value={value}
               onEndEditing={() => setShowError(true)}
               onBlur={event => {

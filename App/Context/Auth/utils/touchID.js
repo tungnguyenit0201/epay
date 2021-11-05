@@ -32,6 +32,7 @@ const useTouchID = ({onSuccess, isMount = true}) => {
         credentials?.username == (await getPhone())
           ? credentials?.password
           : null;
+      !passwordEncrypted && Keychain.resetGenericPassword();
 
       // if phone changed or touch id setting is disabled or device doesn't suppport biometry
       if (!passwordEncrypted || !touchIdEnabled || !biometryType) {

@@ -27,7 +27,8 @@ const RegisterFailure = ({route}) => {
   const renderRightComponent = () => (
     <TouchableOpacity
       onPress={() => setShowModal(true)}
-      style={styles.iconRight}>
+      style={styles.iconRight}
+    >
       <Icon
         icon={Images.Register.Info}
         tintColor={Colors.bs4}
@@ -41,7 +42,6 @@ const RegisterFailure = ({route}) => {
     <>
       <BlueHeader heightBg="100%" style={styles.pt1}>
         <Header
-          back
           // blackIcon
           // avoidStatusBar
           logo={Images.logoEpay}
