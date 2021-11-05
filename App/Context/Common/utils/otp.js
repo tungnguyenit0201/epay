@@ -83,6 +83,16 @@ const useOTP = ({functionType, phone, password, encrypted, isMount = true}) => {
             type: 'failure',
             message: _.get(result, 'ErrorMessage', ''),
           });
+        case FUNCTION_TYPE.CONFIRM_NEW_DEVICE:
+          return Navigator.navigate(SCREEN.REGISTER_FAILURE, {
+            phone,
+            functionType,
+            content: {
+              title: translation.sign_in,
+              text: stripTags(result.ErrorMessage),
+              hotline: PHONE_CENTER,
+            },
+          });
         case FUNCTION_TYPE.FORGOT_PASS:
           return Navigator.navigate(SCREEN.REGISTER_FAILURE, {
             phone,
