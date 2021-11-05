@@ -26,19 +26,25 @@ export default function (props) {
 
   const onSubmit = async () => {
     const {item: Bank, ICAddress, optionKyc, BankAccount} = params || {};
+    const BankName = get(Bank, 'BankName', 'Vietcombank');
+    const Name = get(optionKyc, 'data.FullName', '');
+    const type = get(optionKyc, 'data.ICType', '');
+    const idNumber = get(optionKyc, 'data.CardNumber', '');
+    const iclabel = getICLabel(type);
     const BankConnectInfo = {
       BankID: Bank?.BankId,
       BankAccount,
-      FullName: optionKyc?.Name,
-      ICType: optionKyc?.ICType,
-      ICNumber: optionKyc?.CardNumber,
-      ICFrontPhoto: optionKyc?.CardNumber,
-      ICBackPhoto: optionKyc?.CardNumber,
+      FullName: Name,
+      ICType: type,
+      ICNumber:idNumber,
+      ICFrontPhoto: '',
+      ICBackPhoto: '',
       Province: ICAddress?.Province || optionKyc?.Province,
       District: ICAddress?.District || optionKyc?.Province,
       Ward: ICAddress?.Ward || optionKyc?.Province,
       Address: ICAddress?.Address || optionKyc?.Province,
     };
+    alert(JSON.stringify(BankConnectInfo));
     try {
       const res = await onActiveUser?.({BankConnectInfo});
       console.log({...params, ...res, bankConnectInfo: BankConnectInfo});
