@@ -42,9 +42,13 @@ const useServiceEKYC = () => {
                 {
                   label: translation.agree,
                   onPress: () => {
+                    if ([1, 2, 4, 98, 99].indexOf(ErrorCode) !== -1)
+                      return Navigator.navigate(SCREEN.TAB_NAVIGATION);
                     ErrorCode == ERROR_CODE.EXTRACT_IDENTITY_CARD_OVER_TIMES
-                      ? Navigator.navigate(SCREEN.USER)
-                      : Navigator?.navigate(SCREEN.TAB_NAVIGATION);
+                      ? Navigator.navigate(SCREEN.TAB_NAVIGATION, {
+                          screen: SCREEN.USER,
+                        })
+                      : Navigator?.goBack();
                   },
                 },
               ],
@@ -113,8 +117,27 @@ const useServiceEKYC = () => {
           const {ErrorCode} = res;
           if (ErrorCode === ERROR_CODE.SUCCESS) {
             resolve(res);
-          } else reject(res);
+          } else {
+            if (ErrorCode === ERROR_CODE.WAIT_FOR_CONFIRMATION) reject(res);
+            else
+              setError({
+                ...res,
+                action: [
+                  {
+                    label: translation.agree,
+                    onPress: () => {
+                      if ([49, 612].indexOf(ErrorCode) !== -1)
+                        return Navigator.navigate(SCREEN.TAB_NAVIGATION, {
+                          screen: SCREEN.USER,
+                        });
+                      Navigator.navigate(SCREEN.TAB_NAVIGATION);
+                    },
+                  },
+                ],
+              });
+          }
         },
+        errorAction: () => Navigator.navigate(SCREEN.TAB_NAVIGATION),
         // failure: err => {
         //   reject(err);
         // },

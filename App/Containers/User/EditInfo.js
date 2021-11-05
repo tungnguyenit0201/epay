@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   blockIcon1: {
     position: 'absolute',
     right: 0,
-    bottom: 12,
+    bottom: 11,
     justifyContent: 'center',
     alignItems: 'center',
     width: 48,

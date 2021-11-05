@@ -112,7 +112,7 @@ const useServiceUser = () => {
     return response;
   };
 
-  const confirmPassword = async ({phone, password}) => {
+  const confirmPassword = async ({phone, password, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.USER.CONFIRM_PASSWORD,
@@ -121,6 +121,7 @@ const useServiceUser = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };

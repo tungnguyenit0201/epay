@@ -13,6 +13,7 @@ import {IC_TPYE, SCREEN} from 'configs/Constants';
 import {useVerifyInfo} from 'context/User/utils';
 import {useTranslation} from 'context/Language';
 import Navigator from 'navigations/Navigator';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const ChooseIdentityCard = ({route}) => {
   const translation = useTranslation();
@@ -88,8 +89,11 @@ const ChooseIdentityCard = ({route}) => {
 
 const DocumentTypeSelector = (props = {}) => {
   const {data, onPress, requestClose, selectedItem = {}} = props;
+  const {bottom} = useSafeAreaInsets();
   return (
-    <ScrollView style={styles.selector}>
+    <ScrollView
+      style={[styles.selector, {marginBottom: bottom + Spacing.PADDING / 2}]}
+    >
       {data?.map(item => {
         const selected = item.ICType === selectedItem.ICType;
         const selectedStyle = {
@@ -97,7 +101,7 @@ const DocumentTypeSelector = (props = {}) => {
         };
         const color = selected ? Colors.tp2 : Colors.tp3;
         return (
-          <View key={`${Math.random(1, 100)}-dropdown`}>
+          <View key={`${item?.ICType}-dropdown`}>
             <TouchableOpacity
               style={selectedStyle}
               onPress={() => {
@@ -127,6 +131,7 @@ const styles = StyleSheet.create({
   pt1: {paddingTop: 20},
   selector: {
     minHeight: 150,
+    backgroundColor: Colors.bs4,
   },
   selectorText: {
     marginVertical: 10,

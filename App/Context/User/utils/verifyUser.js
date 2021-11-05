@@ -175,6 +175,8 @@ const useVerifyInfo = (initialValue = {}) => {
   const onUpdateAllInfo = async value => {
     let resultContent;
     try {
+      setLoading(true);
+
       const updateInfo = {...contentRef.current, ...value};
       if (eKYC) {
         const {extractCardInfo} = contentRef.current;
@@ -208,23 +210,20 @@ const useVerifyInfo = (initialValue = {}) => {
           title: strings.kycPendingVerify,
         };
       }
-      // await Promise.all([
-      //   onUpdatePersonalInfo(updateInfo, false),
-      //   // onUpdateUserAddress(updateInfo, false),
-      //   onGetAllInfo(),
-      //   onClearRegionData(),
-      // ]);
+
       await onUpdatePersonalInfo(updateInfo, false);
       onGetAllInfo();
       onClearRegionData();
-    } catch (e) {
-      const {ErrorMessage = strings?.unknownError} = e || {};
+    } catch (error) {
       resultContent = {
         title: strings.kycPendingVerify,
-        message: ErrorMessage,
+        message: error?.ErrorMessage,
       };
     } finally {
-      onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
+      setLoading(false);
+
+      resultContent?.message &&
+        onContinue(SCREEN.VERIFY_SUCCESS, {resultContent});
     }
   };
 
