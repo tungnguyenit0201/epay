@@ -164,6 +164,40 @@ const TrafficFee = () => {
             },
           ]}
           mt={10}/>
+
+        <BlockTicketBank
+          arrayData={[
+            {
+              name: 'Xe',
+              data: '51G-6789',
+            },
+            {
+              name: 'Loại vé',
+              data: 'Vé tháng',
+            },
+            {
+              name: 'Thời gian hiệu lực',
+              data: '09/09/21 - 09/10/21',
+            },
+            {
+              name: 'Giá vé',
+              data: '450.000đ',
+            },
+            {
+              name: 'Nguồn tiền',
+              data: 'Vietcombank',
+            },
+            {
+              name: 'Tự động gia hạn',
+              switch: true,
+            },
+          ]}
+          mt={10}/>
+
+        <BlockInfoTypeOne 
+          title={'Địa chỉ'} 
+          text='Tầng 10, Tòa nhà 319 ĐBP, Số 63 Lê Văn Lương,
+            Phường Trung Hòa, Quận Cầu Giấy, Hà Nội'/>
       </ScrollView>
     </>
   );

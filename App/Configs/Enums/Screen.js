@@ -112,5 +112,8 @@ const SCREEN = {
   CHOOSE_VEHICLE: 'ChooseVehicle',
   CHOOSE_STATION: 'ChooseStation',
   CHOOSE_TERM: 'ChooseTerm',
+  CONFIRM_BUY_TICKET: 'ConfirmBuyTicket',
+  PRICE_NOTIFICATION:'PriceNotification',
+  LIST_TICKET: 'ListTicket',
 };
 export default SCREEN;

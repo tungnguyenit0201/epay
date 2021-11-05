@@ -5,8 +5,12 @@ import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 
-const BlockLogoBlue = ({title, item, callback, mb=10,
-  text="Số dư: 5.000.000đ", text2="X% phí giao dịch"}) => (
+//example:
+{/* <BlockLogoBlue title={'Ví EPAY'} iconEdit 
+  status="Miễn phí" mb={32}/> */}
+
+const BlockLogoBlue = ({title, item, callback, mb=10, iconEdit=false,
+  text="Số dư: 5.000.000đ", status="X% phí giao dịch"}) => (
   <TouchableOpacity
     style={[styles.boxItem1, styles.boxShadowBlue,
       {marginBottom: mb}]}
@@ -23,23 +27,34 @@ const BlockLogoBlue = ({title, item, callback, mb=10,
           aspectRatio: 1,
         },
       ]}
-      resizeMode={'contain'}
+      resizeMode='contain'
     />
-    <View style={styles.flex1}>
-      <Text fs="h6" bold mb={7}>
-        {title}
-      </Text>
+    <View flex={1}>
+      <View flexDirection='row'>
+        <View flex={1} style={styles.pr1}>
+          <Text fs="h6" bold mb={10}>{title}</Text>
+        </View>
 
-      <View style={styles.flexRow}>
-        <View style={[styles.widthHaft, styles.pr1]}>
+        {!!iconEdit && <Image
+          source={Images.TrafficFee.Edit}
+          style={{
+            width: scale(24),
+            aspectRatio: 1,
+          }}
+          resizeMode='contain'
+        />}
+      </View>
+
+      <View flexDirection='row'>
+        <View style={styles.pr1} width="50%">
           <Text size={Fonts.SM} color={Colors.tp3}>
             {text}
           </Text>
         </View>
 
-        <View style={styles.widthHaft}>
+        <View width="50%">
           <Text size={Fonts.SM} right color={Colors.tp3}>
-						{text2}
+						{status}
           </Text>
         </View>
       </View>
@@ -48,12 +63,6 @@ const BlockLogoBlue = ({title, item, callback, mb=10,
 );
 
 const styles = StyleSheet.create({
-  flex1: {flex: 1},
-  //---------------
-  flexRow: {flexDirection: 'row'},
-  //---------------
-  widthHaft: {width: '50%'},
-  //---------------
   mr1: {marginRight: 10},
   //---------------
   pr1: {paddingRight: 8},

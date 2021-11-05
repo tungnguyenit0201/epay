@@ -118,6 +118,9 @@ import TicketResult from 'containers/Service/BuyTicket/TicketResult';
 import ChooseVehicle from 'containers/Service/BuyTicket/ChooseVehicle';
 import ChooseStation from 'containers/Service/BuyTicket/ChooseStation';
 import ChooseTerm from 'containers/Service/BuyTicket/ChooseTerm';
+import ConfirmBuyTicket from 'containers/Service/BuyTicket/Confirm';
+import PriceNotification from 'containers/Service/BuyTicket/PriceNotification';
+import ListTicket from 'containers/Service/BuyTicket/ListTicket';
 
 const AppNavigator = () => {
   let initialRoute = SCREEN.AUTH;
@@ -522,7 +525,12 @@ const AppNavigator = () => {
             component={ChooseStation}/>
           <Stack.Screen name={SCREEN.CHOOSE_TERM} 
             component={ChooseTerm}/>
-
+          <Stack.Screen name={SCREEN.CONFIRM_BUY_TICKET} 
+            component={ConfirmBuyTicket}/>
+          <Stack.Screen name={SCREEN.PRICE_NOTIFICATION} 
+            component={PriceNotification}/>
+          <Stack.Screen name={SCREEN.LIST_TICKET} 
+            component={ListTicket}/>
         </Stack.Navigator>
       </KeyboardStateProvider>
     </NavigationContainer>

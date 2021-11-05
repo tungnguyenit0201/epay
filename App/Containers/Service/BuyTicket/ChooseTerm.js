@@ -51,7 +51,7 @@ const ChooseTerm = () => {
 				<Button
 					label={translation?.continue}
 					// onPress={handleSubmit}
-					onPress={() => Navigator.navigate(SCREEN.TICKET_RESULT)}
+					onPress={() => Navigator.navigate(SCREEN.PRICE_NOTIFICATION)}
 				/>
 			</FooterContainer>
     </View>

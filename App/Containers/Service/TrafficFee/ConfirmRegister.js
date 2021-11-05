@@ -90,7 +90,7 @@ const ConfirmRegister = () => {
         <ServiceTitle mb={2}>{'Chi tiết đăng ký'}</ServiceTitle>
         
         <View>
-          <View style={[styles.posCenter,styles.top1]}>
+          <View style={styles.bgLogo}>
             <Image
               source={Images.TransactionHistory.LogoBg}
               style={styles.logoBg}
@@ -126,14 +126,13 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   flexRow: {flexDirection: 'row'},
   //---------------
-  posCenter: {
+  bgLogo: {
     position: 'absolute',
+    top: 50,
     right: 0,
     left: 0,
     alignItems: 'center',
   },
-  //---------------
-  top1: {top: 50},
   //---------------
   widthHaft: {width: '50%'},
   

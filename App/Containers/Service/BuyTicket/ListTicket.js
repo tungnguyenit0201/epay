@@ -7,46 +7,16 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {ButtonAdd, Header, HeaderBg, InputBlock, Select, Text} from 'components';
+import {Button, Header, HeaderBg, Text, FooterContainer} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useError} from 'context/Common/utils';
-// import { BlockShadowGray, BlockTicket, InfoLineBottom, SwitchLineBottom } from 'components/Service';
+import { BlockTicket, BlockTicketBank } from 'components/Service';
 
-const ItemTypeOne = ({title, item, callback, checked}) => (
-  <TouchableOpacity
-    style={[styles.boxItem1, base.boxShadow,
-      checked || {backgroundColor: Colors.g2}]}
-    onPress={() => {
-      callback?.(item);
-    }}
-  >
-    <View style={[styles.alignCenter,styles.flexRow]}>
-      <View flex={1}>
-        <Text bold size={Fonts.LG} mb={4}>
-          {title}
-          {checked && <Image
-            source={Images.TransactionHistory.Success}
-            style={[styles.ml1,styles.iconSuccess]}
-            resizeMode={'contain'}
-          />}
-        </Text>
-
-        <Text fs='md' color={Colors.tp3}>{'Hoạt động  |  Xe loại 1: Xe < 12 chỗ'}</Text>
-      </View>
-      <Image
-        source={Images.Right}
-        style={styles.iconRight2}
-        resizeMode={'contain'}
-      />
-    </View>
-  </TouchableOpacity>
-);
-
-const TrafficFee = () => {
+const ListTicket = () => {
   const translation = useTranslation();
   const {setError} = useError();
   const options = [
@@ -73,7 +43,7 @@ const TrafficFee = () => {
     {
       img: Images.TransactionHistory.Car,
       title: 'Phí gửi xe',
-      screen: SCREEN.LIST_TICKET,
+      screen: SCREEN.TRAFFIC_REGISTER,
     },
   ];
 
@@ -114,54 +84,73 @@ const TrafficFee = () => {
     //TODO: TRANGSLATE
     <View flex={1} style={base.bgWhite}>
       <HeaderBg>
-        <Header back title="Dịch vụ giao thông" style={styles.pbZero} />
+        <Header back title={translation?.buy_monthlyquarterly_tickets} 
+					style={styles.pbZero} />
       </HeaderBg>
 
-      {/* layout no register fee */}
-      <View flex={1} paddingBottom={Spacing.PADDING} paddingTop={Spacing.PADDING*2}>
-        <Image
-          source={require('images/wave.png')}
-          style={styles.bgImg}
-          resizeMode="stretch"
-        />
-        <View style={[base.container]}>
-          <View style={[styles.boxShadow]}>
-            <FlatList
-              data={options}
-              renderItem={renderOption}
-              // keyExtractor={item => item?.TransCode}
-              keyExtractor={item => `item-${Math.random(0, 100)}`}
-            />
-          </View>
-        </View>
-      </View>
+      <ScrollView contentContainerStyle={[base.wrap,base.container]}>
+				<BlockTicket
+					arrayData={[
+						{
+							name: 'Xe',
+							data: '51G-6789',
+						},
+						{
+							name: 'Loại vé',
+							data: 'Vé tháng',
+						},
+						{
+							name: 'Thời gian hiệu lực',
+							data: '09/09/21 - 09/10/21',
+						},
+						{
+							name: 'Giá vé',
+							data: '450.000đ',
+						},
+						{
+							name: 'Nguồn tiền',
+							data: 'Vietcombank',
+						},
+						{
+							name: 'Tự động gia hạn',
+							switch: true,
+						},
+					]}/>
+				<BlockTicketBank
+					arrayData={[
+						{
+							name: 'Xe',
+							data: '51G-6789',
+						},
+						{
+							name: 'Loại vé',
+							data: 'Vé tháng',
+						},
+						{
+							name: 'Thời gian hiệu lực',
+							data: '09/09/21 - 09/10/21',
+						},
+						{
+							name: 'Giá vé',
+							data: '450.000đ',
+						},
+						{
+							name: 'Nguồn tiền',
+							data: 'Vietcombank',
+						},
+						{
+							name: 'Tự động gia hạn',
+							switch: true,
+						},
+					]}/>
+      </ScrollView>
 
-      {/* layout registered Vehicle */}
-      {/* <ScrollView contentContainerStyle={base.wrap}>
-        <View style={base.container}>
-          <Text size={Fonts.LG} bold mb={16}>Xe đã đăng ký</Text>
-
-          <ItemTypeOne
-            // callback={onPress}
-            callback={() => Navigator.navigate(SCREEN.CAR_DETAIL)}
-            // bankInfo={bankInfo}
-            // title={item.BankName}
-            // icon={{uri: item.BankLogoUrl}}
-            // item={item}
-            title={'51G-6789'}
-            checked
-            // item={item}
-          />
-          <ItemTypeOne title={'51G-6789'}/>
-        </View>
-
-        <View style={[styles.lineGray1, styles.mb1]}></View>
-
-        <View style={base.container}>
-          <Text size={Fonts.LG} bold mb={16}>Thêm đăng ký xe</Text>
-          <ButtonAdd label={'Thêm đăng ký xe'} mb={20}/>
-        </View>
-      </ScrollView> */}
+			<FooterContainer>
+				<Button
+					label={'Mua vé xe'}
+					// onPress={() => Navigator.navigate(SCREEN.CONFIRM_BUY_TICKET)}
+				/>
+			</FooterContainer>
     </View>
   );
 };
@@ -242,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TrafficFee;
+export default ListTicket;

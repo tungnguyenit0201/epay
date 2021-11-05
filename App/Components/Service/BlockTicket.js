@@ -1,16 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
-  ScrollView,
-  TouchableOpacity,
   StyleSheet,
-  Image,
 } from 'react-native';
-import {
-  Text,Row,Col
-} from 'components';
+import {Text} from 'components';
 import { InfoLineBottom,SwitchLineBottom } from 'components/Service';
-import {Switch} from 'react-native-ui-lib'; //eslint-disable-line
 import {Colors, base} from 'themes';
 // import {SCREEN} from 'configs/Constants';
 // import {scale} from 'utils/Functions';
@@ -46,34 +40,6 @@ const BlockTicket = ({
         </View>
       </View>
 
-      {/* <Row space={15} style={styles.px1}>
-        <Col
-          width={`30%`}
-          space={15}
-          key={1}
-          style={{backgroundColor: 'yellow'}}
-        >
-          <Text bold fs="h6" mr={10}>{nameStation}</Text>
-          <Text fs="sm" color={Colors.tp3}>{status}</Text>
-        </Col>
-        <Col
-          width={`30%`}
-          space={15}
-          key={2} style={{backgroundColor: 'yellow'}}
-        >
-          <Text bold fs="h6" mr={10}>{nameStation}</Text>
-          <Text fs="sm" color={Colors.tp3}>{status}</Text>
-        </Col>
-        <Col
-          width={`40%`}
-          space={15}
-          key={3}
-          style={{backgroundColor: 'yellow'}}>
-          <Text bold fs="h6" mr={10}>{nameStation}</Text>
-          <Text fs="sm" color={Colors.tp3}>{status}</Text>
-        </Col>
-      </Row> */}
-
       <View style={styles.pxy1}>
         {arrayData.map((e, index) => {
             if (index === arrayData.length - 1) {
@@ -95,14 +61,11 @@ const BlockTicket = ({
 export default BlockTicket;
 
 const styles = StyleSheet.create({
-  mr1: {marginRight: 10},
-  //-----------------
   pxy1: {
     paddingHorizontal: 12,
     paddingTop: 10,
     paddingBottom: 18,
   },
-  px1: {paddingHorizontal: 8},
   //----------------
   boxBgBlue: {
     paddingHorizontal: 12,

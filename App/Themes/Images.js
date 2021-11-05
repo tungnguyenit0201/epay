@@ -259,6 +259,7 @@ export default {
     Logo: require('images/icons/logo.png'),
     LogoType1: require('images/icons/logo-1.png'),
     Search: require('images/icons/search-normal-2.png'),
+    Edit: require('images/icons/edit-3.png'),
   },
   Notification: {
     TickCircle: require('images/noti/TickCircle.png'),

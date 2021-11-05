@@ -5,16 +5,15 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  FlatList,
 } from 'react-native';
-import {ButtonAdd, Header, HeaderBg, InputBlock, Select, Text} from 'components';
+import {Header, HeaderBg, Text} from 'components';
 import {useTranslation} from 'context/Language';
 import {scale} from 'utils/Functions';
 import {SCREEN} from 'configs/Constants';
 import {Images, Colors, Spacing, Fonts, base} from 'themes';
 import Navigator from 'navigations/Navigator';
 import {useError} from 'context/Common/utils';
-import { BlockShadowGray, BlockTicket, InfoLineBottom, SwitchLineBottom } from 'components/Service';
+import { BlockShadowGray } from 'components/Service';
 import Title from 'components/Service/Title';
 
 export default () => {
