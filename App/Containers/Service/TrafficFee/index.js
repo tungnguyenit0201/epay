@@ -26,7 +26,7 @@ const TrafficFee = () => {
     {
       img: Images.TransactionHistory.Warning,
       title: 'Vi phạm giao thông',
-      screen: SCREEN.TRAFFIC_REGISTER_RESULT,
+      screen: SCREEN.TRAFFIC_FINES,
     },
     {
       img: Images.TrafficFee.Station,
