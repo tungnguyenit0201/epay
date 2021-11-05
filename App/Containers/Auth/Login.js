@@ -121,6 +121,7 @@ const Login = ({route}) => {
                   <Pressable
                     onPress={() => {
                       onChangePhone();
+                      onSetMessage('');
                       setFieldValue('password', '');
                     }}
                   >
@@ -132,7 +133,7 @@ const Login = ({route}) => {
                 {!!message && (
                   <WebView
                     style={styles.textError}
-                    source={{html: `<p class="markRed">${message}</p>`}}
+                    source={{html: `<p class="red">${message}</p>`}}
                   />
                 )}
               </View>

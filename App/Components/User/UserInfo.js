@@ -42,7 +42,7 @@ const User = ({style}) => {
           {userInfo?.personalInfo?.FullName}
         </Text>
         <View style={[styles.flexRow, styles.alignCenter]}>
-          <Text style={styles.flex1}>{hidePhone(phone)}</Text>
+          <Text style={styles.flex1}>{hidePhone(userInfo.phone)}</Text>
           <StatusUser size="xxs" />
         </View>
       </View>

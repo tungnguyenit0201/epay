@@ -45,7 +45,8 @@ const EditInfo = () => {
           SexType: personalInfo?.SexType,
         }}
         validationSchema={addressSchema}
-        onSubmit={onUpdateUserInfo}>
+        onSubmit={onUpdateUserInfo}
+      >
         <FormikContent
           region={region}
           goRegionSelect={goRegionSelect}
@@ -105,7 +106,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <View pointerEvents="none" style={styles.mb1}>
             <InputBlock
               label="Ngày sinh"
-              value={personalInfo?.DateOfBirth?.replaceAll?.('-', '/')}
+              value={personalInfo?.DateOfBirth?.replace?.(/-/g, '/')}
               style={{
                 backgroundColor: Colors.bg1,
                 textTransform: 'uppercase',
@@ -135,7 +136,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           </View>
           <View pointerEvents="none" style={styles.mb2}>
             <InputBlock
-              label="CMND / CCCD"
+              label={translation.id_card + '/' + translation.passport}
               value={
                 personalIC?.ICNumber
                   ? hideCMND(personalIC?.ICNumber)
@@ -174,6 +175,8 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
           <InputBlock
             label="Địa chỉ"
             // required
+            multiline
+            autoHeight
             onChange={handleChange('Address')}
             onBlur={handleBlur('Address')}
             error={touched.Address && errors.Address}
@@ -188,7 +191,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             // rightIcon={Images.Down}
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('cites')}
-            placeholder="Tỉnh/Thành"
+            placeholder={translation?.provice}
           />
           <InputBlock
             // label="Quận"
@@ -197,7 +200,7 @@ const FormikContent = ({region, goRegionSelect, personalInfo, personalIC}) => {
             isSelect
             rightIconBgGray={Images.Right}
             onPress={() => goRegionSelect('districts')}
-            placeholder="Quận"
+            placeholder={translation?.district}
           />
           <InputBlock
             // label="Phường / Xã"
@@ -256,7 +259,7 @@ const styles = StyleSheet.create({
   blockIcon1: {
     position: 'absolute',
     right: 0,
-    bottom: 12,
+    bottom: 11,
     justifyContent: 'center',
     alignItems: 'center',
     width: 48,

@@ -11,6 +11,8 @@ import {Linking} from 'react-native';
 import {getAll} from 'utils/Functions';
 import {useUser} from 'context/User';
 import {useRegister} from 'context/Auth/utils';
+import {useUserInfo} from 'context/User/utils';
+import {useIsFocused} from '@react-navigation/native';
 
 const useHome = () => {
   const {getPhone, getToken} = useAsyncStorage();
@@ -20,6 +22,8 @@ const useHome = () => {
   const {firstLogin} = useUser();
   const {setFirstLogin} = useRegister();
   const translation = useTranslation();
+  const {onGetAllInfo} = useUserInfo();
+  const isFocused = useIsFocused();
 
   const goSecurity = async () => {
     const isTouchIdEnrolled = await LocalAuthentication.isEnrolledAsync();
@@ -75,6 +79,10 @@ const useHome = () => {
   useEffect(() => {
     onGetBanner();
   }, []);
+
+  useEffect(() => {
+    isFocused && onGetAllInfo();
+  }, [isFocused]);
 
   useEffect(() => {
     onShowTouchIdSuggestion();

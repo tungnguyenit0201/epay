@@ -103,6 +103,13 @@ const SCREEN = {
   MY_ORDER: 'MyOrder',
   ORDER_DETAIL: 'OrderDetail',
   RECEIPT: 'Receipt',
+  TRAFFIC_FINES: 'TrafficFines',
+  TRAFFIC_FINES_ADDRESS: 'TrafficFinesAddress',
+  TRAFFIC_FINES_TRANSPORT: 'TrafficFinesTransport',
+  TRAFFIC_FINES_DECISION: 'TrafficFinesDecision',
+  TRAFFIC_FINES_CONFIRM: 'TrafficFinesConfirm',
+  TRAFFIC_FINES_RESULT: 'TrafficFinesResult',
+  TRAFFIC_FINES_RECEIPT: 'TrafficFinesReceipt',
   CONFIRM_REGISTER_VEHICLE: 'ConfirmRegister',
   CAR_DETAIL: 'CarDetail',
 

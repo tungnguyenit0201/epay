@@ -8,7 +8,7 @@ import {useAuth} from 'context/Auth/utils';
 import useServiceUser from 'services/user';
 // import * as LocalAuthentication from 'expo-local-authentication';
 import {Linking} from 'react-native';
-import BiometricModule from 'utils/BiometricModule';
+import TouchID from 'rn-touch-id';
 
 const useSecuritySettings = () => {
   const {setTouchIdEnabled, getTouchIdEnabled} = useAsyncStorage();
@@ -38,7 +38,7 @@ const useSecuritySettings = () => {
   }, []); // eslint-disable-line
 
   const onTouchId = async value => {
-    const {isEnrolled, token} = await BiometricModule.isEnrolledAsync();
+    const {isEnrolled, token} = await TouchID.isEnrolledAsync();
     if (value && !isEnrolled) {
       setError({
         ErrorCode: -1,

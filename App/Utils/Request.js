@@ -86,6 +86,12 @@ async function request({
       'Content-Type': 'application/json',
     };
   }
+  //Giả lập mất kết nối internet
+  // if (url?.search('compare_face') != -1) {
+  //   return failure({
+  //     message: 'Network Error',
+  //   });
+  // }
 
   if (typeof requestMethod[method] === 'function') {
     try {

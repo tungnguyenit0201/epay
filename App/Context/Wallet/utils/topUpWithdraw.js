@@ -30,7 +30,7 @@ import {useTranslation} from 'context/Language';
 import {useModalSmartOTP, useSmartOTP} from 'context/User/utils';
 import TRANS_STATUS from 'configs/Enums/TransStatus';
 import Keychain from 'react-native-keychain';
-import TouchID from 'react-native-touch-id';
+import TouchID from 'rn-touch-id';
 import BANK_LINKED_TYPE from 'configs/Enums/BankLinkedType';
 import {sha256} from 'react-native-sha256';
 import {isEmpty} from 'lodash';
@@ -59,7 +59,7 @@ const useTopUpWithdraw = ({transType}) => {
     dispatch({
       type: 'UPDATE_TRANSACTION_INFO',
       data: {
-        transType
+        transType,
       },
     });
 
@@ -96,7 +96,7 @@ const useTopUpWithdraw = ({transType}) => {
         transFormType: null,
       };
     } else {
-      let {bank, transFormType } = props;
+      let {bank, transFormType} = props;
       contentRef.current.bank = bank;
       contentRef.current.transFormType = transFormType;
     }
@@ -105,8 +105,8 @@ const useTopUpWithdraw = ({transType}) => {
   };
 
   const onCheckContinueEnabled = () => {
-    const {bank, inputValue, } = contentRef.current || {};
-    const {MinLimit, MaxLimit } = bank || {};
+    const {bank, inputValue} = contentRef.current || {};
+    const {MinLimit, MaxLimit} = bank || {};
     let validMoney = false;
 
     const minErr =
@@ -141,7 +141,7 @@ const useTopUpWithdraw = ({transType}) => {
   };
 
   const onContinue = async () => {
-    const {bank, inputValue, transFormType } = contentRef.current;
+    const {bank, inputValue, transFormType} = contentRef.current;
     switch (transType) {
       case TRANS_TYPE.CashOut: {
         const canCashout = await onCheckLimitCashOut();
@@ -225,7 +225,6 @@ const useConfirmation = () => {
   ];
 
   const onContinue = async () => {
-    
     switch (transType) {
       case TRANS_TYPE.CashIn:
         onCashIn();
@@ -475,8 +474,8 @@ const useCashIn = () => {
 
   const onCashIn = async () => {
     const SourceType = transaction?.bank?.SourceType;
-    console.log(SourceType)
-    console.log(JSON.stringify(transaction.bank))
+    console.log(SourceType);
+    console.log(JSON.stringify(transaction.bank));
     switch (SourceType) {
       case BANK_LINKED_TYPE.CONNECTED:
         onCashInConnectedBank();
@@ -493,9 +492,9 @@ const useCashIn = () => {
       phone,
       Amount: amount,
       BankId,
-      CardNumber: "",
-      CardHolder: "",
-      CardIssueDate: "",
+      CardNumber: '',
+      CardHolder: '',
+      CardIssueDate: '',
       CardConnectId: SourceId,
       IsSaveCard: 0,
     });
@@ -521,9 +520,9 @@ const useCashIn = () => {
           dataKey: result?.DataKey,
           napasKey: result?.NapasKey,
         },
-        onBackOtp: ()=>{
+        onBackOtp: () => {
           return true;
-        }
+        },
       },
     });
   };

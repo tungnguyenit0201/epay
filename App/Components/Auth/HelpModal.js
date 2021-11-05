@@ -4,6 +4,7 @@ import {Text, Button, Modal} from 'components';
 import {Images, Colors, Spacing} from 'themes';
 import {scale} from 'utils/Functions';
 import {useTranslation} from 'context/Language';
+import {PHONE_CENTER} from 'configs/Constants';
 const HelpModal = ({showModal, setShowModal, onPress}) => {
   const translation = useTranslation();
   return (
@@ -16,7 +17,11 @@ const HelpModal = ({showModal, setShowModal, onPress}) => {
       }
       buttonGroup={() => (
         <>
-          <Button mb={15} label={translation.call_19000000} onPress={onPress} />
+          <Button
+            mb={15}
+            label={translation.call + ' ' + PHONE_CENTER}
+            onPress={onPress}
+          />
           <TouchableOpacity onPress={() => setShowModal(false)}>
             <Text style={styles.textSecondary}>{translation.no_thank_you}</Text>
           </TouchableOpacity>

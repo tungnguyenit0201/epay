@@ -5,23 +5,26 @@ import {Colors, Images, Spacing} from 'themes';
 import Navigator from 'navigations/Navigator';
 import region from './region';
 import {useSelectRegion} from 'context/User/utils';
+import {useTranslation} from 'context/Language';
 
-const TITLES = {
-  // TODO: translate
-  cites: 'Chọn thành phố / tỉnh',
-  districts: 'Chọn quận / huyện',
-  wards: 'Chọn phường / xã',
-};
 const escapeRegex = string => string?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 const RegionSelect = ({route}) => {
   const {items, type, parentType, callbackScreen} = route.params;
+  const translation = useTranslation();
   const {onSelected} = useSelectRegion({
     items,
     type,
     parentType,
     callbackScreen,
   });
+
+  const TITLES = {
+    // TODO: translate
+    cites: translation?.choose_provice,
+    districts: translation?.choose_district,
+    wards: translation?.choose_town,
+  };
   const renderItem = ({item}) => {
     let isSelected = false;
     // if (type === 'cites') {

@@ -53,7 +53,8 @@ const stripTags = html =>
       .replace(/&amp;/g, '&')
       .replace(/&#160;/g, ' ')
       .replace(/&#038;/g, '&')
-      .replace(/&#8217;/g, "'")) ||
+      .replace(/&#8217;/g, "'")
+      .replace(/class="marRed"/g, '')) ||
   '';
 const detetedBreakline = str => str.replace(/\r?\n|\r/g, '');
 const formatOrderNumber = id => `${id}`.padStart(9, '0');
@@ -287,11 +288,11 @@ function fromCurrency(money) {
   if (money) {
     money = money.toString();
     let moneyString = money
-      .replaceAll(',', '')
-      .replaceAll('đ', '')
-      .replaceAll('VND', '')
-      .replaceAll('.', '')
-      .replaceAll(' ', '');
+      .replace(/,/g, '')
+      .replace(/đ/g, '')
+      .replace(/VND/g, '')
+      .replace(/./g, '')
+      .replace(/\s/g, '');
     let number = Number(moneyString);
     if (isNaN(number)) {
       return 0;
