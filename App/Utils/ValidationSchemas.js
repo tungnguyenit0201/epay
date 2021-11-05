@@ -149,5 +149,5 @@ export const forgetPasswordKYCBankSchema = yup.object().shape({
   lastBankNumber: yup
     .string()
     .required('4 số cuối ngân hàng liên kết không được bỏ trống.')
-    .length(4, '4 số cuối ngân hàng đã liên kiết không đủ'),
+    .length(4, 'Yêu cầu nhập đủ 4 ký tự số'),
 });
