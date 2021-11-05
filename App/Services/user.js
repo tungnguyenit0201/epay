@@ -4,7 +4,7 @@ import {useRequest} from 'context/Common/utils';
 
 const useServiceUser = () => {
   const {doRequest} = useRequest();
-  const updateForgotPassword = async ({phone, password}) => {
+  const updateForgotPassword = async ({phone, password, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.USER.UPDATE_FORGOT_PASSWORD,
@@ -13,11 +13,12 @@ const useServiceUser = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
 
-  const updatePersonalInfo = async ({phone, personalInfo}) => {
+  const updatePersonalInfo = async ({phone, personalInfo, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.USER.UPDATE_PERSONAL_INFO,
@@ -26,6 +27,7 @@ const useServiceUser = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
@@ -110,7 +112,7 @@ const useServiceUser = () => {
     return response;
   };
 
-  const confirmPassword = async ({phone, password}) => {
+  const confirmPassword = async ({phone, password, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.USER.CONFIRM_PASSWORD,
@@ -119,6 +121,7 @@ const useServiceUser = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };

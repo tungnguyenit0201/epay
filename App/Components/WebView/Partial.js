@@ -8,11 +8,15 @@ var css = `
   *{
     font-family: SVN-Gilroy !important;
     font-size: ${Fonts.MD} !important;
-    color: ${Colors.tp3} !important
+    color: ${Colors.tp3} !important;
+    line-height: 22.4px;
   }
   .markRed {
     color: ${Colors.hl1}!important;
-    font-weight: normal;
+    font-weight: bold;
+  }
+  .red {
+    color: ${Colors.hl1}!important;
   }
   body {
     // white-space: pre-wrap; 

@@ -78,6 +78,7 @@ const useUserInfo = type => {
       let result = await updatePersonalInfo({
         phone,
         personalInfo: {FullName: personalInfo.current?.FullName?.trim()},
+        // errorAction: () => Navigator?.reset(SCREEN.AUTH),//chờ epay xác nhận
       });
       setLoading(false);
       if (_.get(result, 'ErrorCode') == ERROR_CODE.SUCCESS) {
@@ -85,7 +86,7 @@ const useUserInfo = type => {
         // showModalSmartOTPSuggestion(true);
         Navigator.reset(SCREEN.TAB_NAVIGATION);
       } else {
-        setError(result);
+        setError({...result, onClose: () => Navigator.reset(SCREEN.AUTH)});
       }
     } catch (error) {
       setLoading(false);

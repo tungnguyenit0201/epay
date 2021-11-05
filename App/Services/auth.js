@@ -31,7 +31,7 @@ const useServiceAuth = () => {
     return response;
   };
 
-  const register = async ({phone, password}) => {
+  const register = async ({phone, password, errorAction}) => {
     let response = null;
     await doRequest({
       url: API.AUTH.REGISTER,
@@ -40,11 +40,18 @@ const useServiceAuth = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };
 
-  const checkICInfo = async ({phone, IcNumber, IcDate, BankNumber}) => {
+  const checkICInfo = async ({
+    phone,
+    IcNumber,
+    IcDate,
+    BankNumber,
+    errorAction,
+  }) => {
     let response = null;
     await doRequest({
       url: API.AUTH.CHECK_IC_INFO,
@@ -58,6 +65,7 @@ const useServiceAuth = () => {
       success: res => {
         response = res;
       },
+      errorAction,
     });
     return response;
   };

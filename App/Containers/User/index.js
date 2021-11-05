@@ -16,6 +16,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  Keyboard,
 } from 'react-native';
 import {PERSONAL_IC, SCREEN} from 'configs/Constants';
 import Navigator from 'navigations/Navigator';
@@ -27,17 +28,26 @@ import UserInfo from 'components/User/UserInfo';
 import Account from 'components/User/Account';
 import DinhDanh from 'components/User/DinhDanh';
 
-import {useSmartOTP} from 'context/User/utils';
+import {useSmartOTP, useUserInfo} from 'context/User/utils';
 import {useUser} from 'context/User';
 import {useAuth} from 'context/Auth/utils';
 import {useError} from 'context/Common/utils';
-import {FLEX_KEY_PATTERN} from 'react-native-ui-lib/generatedTypes/src/commons/modifiers';
+import {useIsFocused} from '@react-navigation/native';
+
 const User = () => {
   const translation = useTranslation();
   const {userInfo} = useUser();
   const {onLogout} = useAuth();
   const {onGoSmartOTP} = useSmartOTP();
   const {setError} = useError();
+  const {onGetAllInfo} = useUserInfo();
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    isFocused && onGetAllInfo();
+    isFocused && Keyboard.dismiss();
+  }, [isFocused]);
+
   return (
     <View>
       <HeaderBg mb={0}>

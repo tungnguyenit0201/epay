@@ -231,6 +231,9 @@ const ERROR_CODE = {
 
   //QRPay
   PAYMENT_REQUIRED_AUTHENTICATION: 110,
+
+  //eKYC
+  WAIT_FOR_CONFIRMATION: 37,
 };
 
 export default ERROR_CODE;

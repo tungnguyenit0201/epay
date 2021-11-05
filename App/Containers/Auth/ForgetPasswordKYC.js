@@ -28,10 +28,12 @@ import {useTranslation} from 'context/Language';
 import Content from 'components/Auth/Content';
 import _ from 'lodash';
 import BlueHeader from 'components/Auth/BlueHeader';
-
+import WebView from 'components/WebView/Partial';
+import {PHONE_CENTER} from 'configs/Constants';
 const ForgetPasswordKYC = ({route}) => {
   const {phone, isNeedCheckIC, isNeedCheckBankAccount} = route?.params;
-  const {onSubmitKYC, message, onCustomerSupport} = useForgetPassword();
+  const {onSubmitKYC, message, onCustomerSupport, onClearMessage} =
+    useForgetPassword();
   const translation = useTranslation();
 
   // TODO: Translate
@@ -63,6 +65,7 @@ const ForgetPasswordKYC = ({route}) => {
           values,
         }) => {
           const handleChange = field => value => {
+            onClearMessage?.();
             setFieldValue(field, value);
             setFieldTouched(field, true, false);
           };
@@ -77,15 +80,13 @@ const ForgetPasswordKYC = ({route}) => {
                 <Content
                   title={'Xác nhận thông tin cá nhân'}
                   titleMb={Spacing.PADDING * 2}
-                  //   text={
-                  //     translation.password_for_account_security_and_transaction_confirmation_at_checkout
-                  //   }
+                  text={`Vui lòng nhập thông tin ${'CMND/CCCD'} đã xác thực với ví`} // TODO: translate
                 />
                 <TextInput
                   required
                   onChange={handleChange('icNumber')}
                   onBlur={handleBlur('icNumber')}
-                  placeholder={translation.enter_id_code}
+                  placeholder={'Nhập số GTTT'} // TODO: translate
                   error={
                     touched.icNumber &&
                     (translation[errors.icNumber] || errors.icNumber)
@@ -123,7 +124,12 @@ const ForgetPasswordKYC = ({route}) => {
                     marginBottom={Spacing.PADDING}
                   />
                 )}
-                <Text style={styles.message}>{message}</Text>
+                {!!message && (
+                  <WebView
+                    style={styles.textError}
+                    source={{html: `<p class="red">${message}</p>`}}
+                  />
+                )}
               </ScrollView>
 
               <FooterContainer>
@@ -140,7 +146,7 @@ const ForgetPasswordKYC = ({route}) => {
                 >
                   <Text style={styles.customerCare1}>Hỗ trợ khách hàng</Text>
                   <Text bold style={styles.customerCare2}>
-                    Gọi 1900-000
+                    {translation.call + ' ' + PHONE_CENTER}
                   </Text>
                 </Pressable>
               </FooterContainer>
@@ -196,6 +202,12 @@ const styles = StyleSheet.create({
   customerCare2: {
     fontSize: Fonts.H6,
     color: Colors.tp1,
+  },
+  textError: {
+    marginTop: scale(26),
+    color: Colors.Highlight,
+    textAlign: 'center',
+    minHeight: 200,
   },
 });
 export default ForgetPasswordKYC;

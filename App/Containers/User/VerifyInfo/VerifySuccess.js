@@ -72,39 +72,31 @@ const VerifySuccess = ({route}) => {
       <ScrollView style={styles.container}>
         <View style={styles.alignCenter}>
           <View style={[styles.w1, styles.pxy1]}>
-            {success ? (
-              <>
-                <Image
-                  source={avatar}
-                  style={[styles.fullWidth, styles.h1, styles.circleRadius]}
-                  resizeMode="contain"
-                />
-                <Image
-                  source={Images.Kyc.BigCircle}
-                  style={[
-                    styles.absolute,
-                    styles.topZero,
-                    styles.leftZero,
-                    styles.iconBigCircle,
-                  ]}
-                />
-                <Image
-                  source={Images.Kyc.SpecialArrow}
-                  style={[
-                    styles.absolute,
-                    styles.bot1,
-                    styles.right1,
-                    styles.iconArrow,
-                  ]}
-                />
-              </>
-            ) : (
+            <>
               <Image
-                source={Images.warning}
-                style={styles.warningIcon}
+                source={avatar}
+                style={[styles.fullWidth, styles.h1, styles.circleRadius]}
                 resizeMode="contain"
               />
-            )}
+              <Image
+                source={Images.Kyc.BigCircle}
+                style={[
+                  styles.absolute,
+                  styles.topZero,
+                  styles.leftZero,
+                  styles.iconBigCircle,
+                ]}
+              />
+              <Image
+                source={Images.Kyc.SpecialArrow}
+                style={[
+                  styles.absolute,
+                  styles.bot1,
+                  styles.right1,
+                  styles.iconArrow,
+                ]}
+              />
+            </>
           </View>
         </View>
 
@@ -115,7 +107,8 @@ const VerifySuccess = ({route}) => {
             mt={25}
             mb={Spacing.PADDING - 4}
             bold
-            style={styles.maxWidth1}>
+            style={styles.maxWidth1}
+          >
             {title}
           </Text>
         </View>
@@ -140,28 +133,11 @@ const VerifySuccess = ({route}) => {
       />
 
       <FooterContainer>
-        {success ? (
-          <Button
-            label={action.doneTitle}
-            style={styles.btn}
-            onPress={onPressDone}
-          />
-        ) : (
-          <View style={styles.buttonRow}>
-            <Button
-              label={action.backTitle}
-              style={[styles.buttonHalf, styles.homeButton]}
-              onPress={onPressBack}
-              mode="outline"
-              // labelStyle={styles.homeText}
-            />
-            <Button
-              label={translation?.verifyAgain}
-              style={styles.buttonHalf}
-              onPress={() => Navigator.navigate(SCREEN.CHOOSE_IDENTITY_CARD)}
-            />
-          </View>
-        )}
+        <Button
+          label={action.doneTitle}
+          style={styles.btn}
+          onPress={onPressDone}
+        />
       </FooterContainer>
     </>
   );
