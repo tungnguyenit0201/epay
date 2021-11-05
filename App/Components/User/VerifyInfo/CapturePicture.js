@@ -84,16 +84,18 @@ const CapturePicture = ({
                 resizeMode={'contain'}
               />
             )}
-            <View style={styles.imageCover}>
-              <Image
-                style={styles.iconBigCamera}
-                source={Images.TrafficFee.BigCamera}
-                resizeMode={'contain'}
-              />
-              <Text color={Colors.bs4} bold centered mt={10} fs="h6">
-                {translation?.face_authentication}
-              </Text>
-            </View>
+            {!imagePath && (
+              <View style={styles.imageCover}>
+                <Image
+                  style={styles.iconBigCamera}
+                  source={Images.TrafficFee.BigCamera}
+                  resizeMode={'contain'}
+                />
+                <Text color={Colors.bs4} bold centered mt={10} fs="h6">
+                  {translation?.face_authentication}
+                </Text>
+              </View>
+            )}
           </Pressable>
         </View>
       )}
