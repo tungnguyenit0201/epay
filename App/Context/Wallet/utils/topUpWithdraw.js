@@ -48,7 +48,7 @@ const useTopUpWithdraw = ({transType}) => {
     transFormType: null,
   });
   const {dispatch} = useWallet();
-  const {onCheckLimitCashOut} = useCashOut();
+  // const {onCheckLimitCashOut} = useCashOut();
 
   useEffect(() => {
     const errMsg =
@@ -467,7 +467,7 @@ const useCashIn = () => {
   const {cashIn, cashInConfirm, cashInNapas} = useServiceWallet();
   const {checkTransNapas} = useServiceBank();
   const {bank, amount, transType, ConfirmType, TransCode} = transaction;
-  const {SourceId, BankId, CardNumber, SourceType, CardIssueDate, BankCode} =
+  const {SourceId, BankId, CardNumber, CardHolder, CardIssueDate, BankCode} =
     bank || {};
   const cashInRef = useRef({
     ConfirmType,
@@ -522,7 +522,7 @@ const useCashIn = () => {
           dataKey: result?.DataKey,
           napasKey: result?.NapasKey,
         },
-        onBackOtp: ()=>{
+        onBackOtp: () => {
           onCashInNapasBack();
           return true;
         },
@@ -536,7 +536,7 @@ const useCashIn = () => {
       phone,
       TransCode: TransCode,
       TransType: transType,
-      TransFormType: SourceType
+      TransFormType: SourceType,
     });
     setLoading(false);
 
@@ -545,8 +545,8 @@ const useCashIn = () => {
       return;
     }
 
-    console.log("t-->"+JSON.stringify(result))
-  }
+    console.log('t-->' + JSON.stringify(result));
+  };
 
   const onCashInConnectedBank = async () => {
     let result = await onCashInToGetConfirmMethod();
