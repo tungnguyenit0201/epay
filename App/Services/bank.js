@@ -143,6 +143,30 @@ const useServiceBank = () => {
     });
     return response;
   };
+  
+  const checkTransNapas = async ({
+    phone,
+    TransCode,
+    TransType,
+    TransFormType
+  }) => {
+    let response = null;
+    await doRequest({
+      url: API.BANK.CHECK_TRANS_NAPAS,
+      method: 'post',
+      params: {
+        PhoneNumber: phone,
+        TransCode,
+        TransType,
+        TransFormType
+      },
+      success: res => {
+        response = res;
+      },
+    });
+    return response;
+  };
+
   return {
     mapBankNapas,
     cashinNapas,
@@ -154,6 +178,7 @@ const useServiceBank = () => {
     getNapasBank,
     getInternationalBank,
     getConnectedBankDetail,
+    checkTransNapas
   };
 };
 export default useServiceBank;

@@ -137,23 +137,28 @@ const BankWebConfirm = props => {
   }, []);
 
   const back = () => {
-    // Navigator.showAlert({
-    //   title: 'Huỷ giao dịch',
-    //   message: 'Bạn có chắc chắn muốn huỷ giao dịch này?',
-    //   positiveButton: {
-    //     title: 'TIẾP TỤC',
-    //     onPress: () => {
-    //       return;
-    //     },
-    //   },
-    //   negativeButton: {
-    //     title: 'HỦY NGAY',
-    //     onPress: () => {
-    //       _cancelTransaction();
-    //       onBackOtp?.();
-    //     },
-    //   },
-    // });
+    Navigator.showAlert({
+      title: 'Huỷ giao dịch',
+      message: 'Bạn có chắc chắn muốn huỷ giao dịch này?',
+      positiveButton: {
+        title: 'TIẾP TỤC',
+        onPress: () => {
+          return;
+        },
+      },
+      negativeButton: {
+        title: 'HỦY NGAY',
+        onPress: () => {
+          if(onBackOtp) {
+            onBackOtp?.();
+            Navigator.goBack();
+          } else {
+            _cancelTransaction();
+          }
+          ;
+        },
+      },
+    });
   };
 
   const _cancelTransaction = () => {
@@ -311,7 +316,7 @@ const BankWebConfirm = props => {
         <Header
           back
           title={title || translation.connect_bank}
-          // onPressBack={back}
+          onPressBack={back}
         />
       </HeaderBg>
       <WebView
