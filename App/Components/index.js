@@ -39,3 +39,7 @@ export {default as DropDown} from './Common/DropDown';
 export {default as LinearView} from './Common/LinearView';
 export {default as ScreenBackground} from './Common/ScreenBackground';
 export {default as FooterContainer} from './Common/FooterContainer';
+export {default as EPayAvatar} from './Common/EPayAvatar';
+export {default as TransferMoneyTextInput} from './Common/TransferMoneyTextInput';
+export {default as MoneySource} from './MoneySource/MoneySource';
+export {default as MoneySourceItem} from './MoneySource/MoneySource';

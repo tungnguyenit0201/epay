@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
-import {Colors, Fonts} from 'themes';
+import {Colors} from 'themes';
 import {scale} from 'utils/Functions';
 import Text from './Text';
 
@@ -13,6 +13,7 @@ export default ({
   error,
   selectedValue,
   showErrorLabel = true,
+  groupStyle,
 }) => {
   const [checked, setChecked] = React.useState(selectedValue);
 

@@ -59,6 +59,36 @@ const ListItem = ({
   const {checkInfo} = useCheckInfo();
   const translation = useTranslation();
 
+  const Item = ({item}) => (
+    <TouchableOpacity
+      style={[styles.item, styleItem]}
+      onPress={() => {
+        // !!item?.checkSmartOTP
+        //   ? checkInfo({screen: item.screen})
+        //   : Navigator.navigate(item.screen);
+        if (item.checkPermission) {
+          item.checkPermission().then(() => {
+            Navigator.navigate(item.screen);
+          });
+        } else {
+          Navigator.navigate(item.screen);
+        }
+      }}>
+      <Image
+        source={item.icon}
+        style={[
+          {width: scale(sizeIcon), height: scale(sizeIcon)},
+          styles.icon,
+          styleIcon,
+        ]}
+      />
+
+      <Text centered bold mt={5} style={styleText}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
+
   const renderItem = ({item, index}) => (
     <View
       style={[

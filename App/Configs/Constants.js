@@ -16,6 +16,7 @@ import GENDER from './Enums/Gender';
 import KYCType from './Enums/KYCType';
 import TERM_TYPE from './Enums/TermType';
 import TRANS_DETAIL from './Enums/TransDetail';
+import TRANS_TYPE_NAME from './Enums/TransTypeName';
 import CONFIRM_METHODS from './Enums/ConfirmMethod';
 import APP_CONFIG from 'configs/Enums/AppConfig';
 import QR_PAYMENT_TYPE from './Enums/QRPaymentType';
@@ -40,6 +41,7 @@ export {
   KYCType,
   TERM_TYPE,
   TRANS_DETAIL,
+  TRANS_TYPE_NAME,
   CONFIRM_METHODS,
   QR_PAYMENT_TYPE,
   PHONE_CENTER,

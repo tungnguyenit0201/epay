@@ -90,6 +90,7 @@ export default {
     PAYMENT_COMFRIM: 'payment/payment_confirm',
     MONEY_TRANSFER: 'wallet/money_transfer',
     GET_SOURCE_MONEY: 'wallet/get_source_money',
+    GET_RECENT_USERS: 'wallet/get_recent_users',
   },
   ADDRESS: {
     GET_PROVINCE: 'region/get_province_info',

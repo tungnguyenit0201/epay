@@ -186,7 +186,7 @@ const useBankInfo = (initialValue = {}) => {
   const {setError} = useError();
   const {dispatch} = useWallet();
   const translation = useTranslation();
-  const {changeLimit} = useServiceWallet();
+  const {changeLimit, getSourceMoney} = useServiceWallet();
   const {
     activeCustomerOtp,
     activeUser,
@@ -502,6 +502,17 @@ const useBankInfo = (initialValue = {}) => {
     }
   };
 
+  const getListSourceMoney = async () => {
+    try {
+      setLoading(true);
+      const result = await getSourceMoney();
+      setLoading(false);
+      return {result};
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   const onUpdateUserAddress = async ({Address, Ward, District, Province}) => {
     onChange('ICAddress', {Address, Ward, District, Province});
   };
@@ -528,6 +539,7 @@ const useBankInfo = (initialValue = {}) => {
     onGetIcInfor,
     onUpdate,
     onCheckNapasTransStatus,
+    getListSourceMoney,
   };
 };
 

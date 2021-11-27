@@ -303,6 +303,19 @@ function fromCurrency(money) {
   }
 }
 
+const maskText = (text, padLeft, padRight, maskedCharacter = '*') => {
+  try {
+    const maskedText = maskedCharacter.repeat(
+      text?.length - padRight - padLeft,
+    );
+    const partOne = text.slice(0, padLeft);
+    const partTwo = text.slice(text?.length - padRight);
+    return partOne + maskedText + partTwo;
+  } catch (e) {
+    return text;
+  }
+};
+
 export {
   toObjectKeys,
   buildURL,
@@ -328,4 +341,5 @@ export {
   hideCMND,
   fromCurrency,
   formatCurrency,
+  maskText,
 };

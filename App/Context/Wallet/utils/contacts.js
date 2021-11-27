@@ -2,9 +2,10 @@ import {useError} from 'context/Common/utils';
 import React, {useEffect, useState, useRef} from 'react';
 import {PermissionsAndroid, Platform} from 'react-native';
 import Contacts from 'react-native-contacts';
+import {getRecentUsers} from 'services/wallet';
 
 const useContacts = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const {setError} = useError();
 
   const contentRef = useRef({
@@ -27,6 +28,7 @@ const useContacts = () => {
   };
 
   const loadData = async () => {
+    const ePayRecentUser = await getRecentUsers();
     Contacts.getAll()
       .then(contacts => {
         contentRef.current.contacts = contacts;
@@ -35,6 +37,7 @@ const useContacts = () => {
       .catch(e => {
         setError({ErrorCode: -1, ErrorMessage: 'Không thể truy cập danh bạ.'});
       });
+
     Contacts.checkPermission();
   };
 
