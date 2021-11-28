@@ -36,7 +36,7 @@ export default function (props) {
       BankAccount,
       FullName: Name,
       ICType: type,
-      ICNumber:idNumber,
+      ICNumber: idNumber,
       ICFrontPhoto: '',
       ICBackPhoto: '',
       Province: ICAddress?.Province || optionKyc?.Province,
@@ -44,7 +44,6 @@ export default function (props) {
       Ward: ICAddress?.Ward || optionKyc?.Province,
       Address: ICAddress?.Address || optionKyc?.Province,
     };
-    alert(JSON.stringify(BankConnectInfo));
     try {
       const res = await onActiveUser?.({BankConnectInfo});
       console.log({...params, ...res, bankConnectInfo: BankConnectInfo});
@@ -172,7 +171,6 @@ export default function (props) {
             {translation.connect_bank}
           </Text>
         </View>
-
         {renderContent()}
         {renderTnC()}
       </ScrollView>
