@@ -14,7 +14,7 @@
     "build-storybook": "build-storybook",
     "prestorybook": "rnstl",
     "port": "react-native start --reset-cache --port 8000",
-    "all": "watchman watch-del-all && rm -rf package-lock.json && rm -rf node_modules/ && rm -fr $TMPDIR/metro* && npm install --legacy-peer-deps && cd ios && rm -rf Pods && rm -rf Podfile.lock && pod install && cd .."
+    "all": "watchman watch-del-all && rm -rf package-lock.json && rm -rf node_modules/ && rm -fr $TMPDIR/metro* && npm install && cd ios && rm -rf Pods && rm -rf Podfile.lock && pod install && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -71,7 +71,6 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-svg": "^12.1.1",
-    "react-native-touch-id": "^4.4.1",
     "react-native-ui-lib": "^5.27.0",
     "react-native-unimodules": "^0.14.8",
     "react-native-view-shot": "^3.1.2",
