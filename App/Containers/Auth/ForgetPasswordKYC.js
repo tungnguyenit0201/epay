@@ -52,8 +52,7 @@ const ForgetPasswordKYC = ({route}) => {
             ? forgetPasswordKYCBankSchema
             : forgetPasswordKYCSchema
         }
-        onSubmit={values => onSubmitKYC({...values, phone})}
-      >
+        onSubmit={values => onSubmitKYC({...values, phone})}>
         {({
           handleChange: _handleChange,
           handleBlur,
@@ -75,8 +74,7 @@ const ForgetPasswordKYC = ({route}) => {
               <ScrollView
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps="always"
-                contentContainerStyle={[styles.wrap, styles.py1]}
-              >
+                contentContainerStyle={[styles.wrap, styles.py1]}>
                 <Content
                   title={'Xác nhận thông tin cá nhân'}
                   titleMb={Spacing.PADDING * 2}
@@ -142,8 +140,7 @@ const ForgetPasswordKYC = ({route}) => {
                 />
                 <Pressable
                   style={styles.outline}
-                  onPress={() => onCustomerSupport({phone})}
-                >
+                  onPress={() => onCustomerSupport({phone})}>
                   <Text style={styles.customerCare1}>Hỗ trợ khách hàng</Text>
                   <Text bold style={styles.customerCare2}>
                     {translation.call + ' ' + PHONE_CENTER}
